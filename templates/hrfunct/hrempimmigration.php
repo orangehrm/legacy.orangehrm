@@ -39,6 +39,14 @@ function addPassport() {
 		return;
 	}
 	
+	startDate = createDate(document.frmEmp.txtPPIssDat.value);
+	endDate = createDate(document.frmEmp.txtPPExpDat.value);
+	
+	if(startDate >= endDate) {
+		alert("Issued Day should be before Expiration Date");
+		return;
+	}
+	
 	document.frmEmp.passportSTAT.value="ADD";
 	qCombo(10);
 }
@@ -50,6 +58,33 @@ function viewPassport(pSeq) {
 }
 
 function editPassport() {
+
+	if(document.frmEmp.txtPPNo.value == '') {
+		alert('Field Empty');
+		document.frmEmp.txtPPNo.focus();
+		return;
+	}
+
+	if(document.frmEmp.txtPPIssDat.value == '') {
+		alert('Field Empty');
+		document.frmEmp.txtPPIssDat.focus();
+		return;
+	}
+	
+	if(document.frmEmp.txtPPExpDat.value == '') {
+		alert('Field Empty');
+		document.frmEmp.txtPPExpDat.focus();
+		return;
+	}
+	
+	startDate = createDate(document.frmEmp.txtPPIssDat.value);
+	endDate = createDate(document.frmEmp.txtPPExpDat.value);
+	
+	if(startDate >= endDate) {
+		alert("Issued Day should be before Expiration Date");
+		return;
+	}
+	
 	document.frmEmp.passportSTAT.value="EDIT";
 	qCombo(10);
 }

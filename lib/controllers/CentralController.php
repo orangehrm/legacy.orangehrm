@@ -142,7 +142,7 @@ define('MT', 'MOD003');
 switch ($moduletype) {   
 	case 'admin'	:	$locRights = $rights->getRights($_SESSION['userGroup'],Admin); break;
 	case 'hr'		:	$locRights = $rights->getRights($_SESSION['userGroup'],PIM); break;
-	case 'mt'		:	$locRights = $rights->getRights($_SESSION['userGroup'],MT); break;
+	case 'mt'		:	$locRights = $rights->getRights($_SESSION['userGroup'],Admin); break;
 }
 
 if(!is_array($locRights) && $locRights == false)

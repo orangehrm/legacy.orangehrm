@@ -133,8 +133,13 @@ else
 			document.standardView.loc_code.Focus();
 			return;
 		};
-		document.standardView.captureState.value = 'SearchMode';		
+		document.standardView.captureState.value = 'SearchMode';
+				
+<?   if(isset($_GET['USR'])) { ?>
+		document.standardView.action="./emppop.php?reqcode=<?=$_GET['reqcode']?>&USR=USR"
+<?   } else { ?>
 		document.standardView.action="./emppop.php?reqcode=<?=$_GET['reqcode']?>"
+<?   } ?>
 		document.standardView.pageNO.value=1;
 		document.standardView.submit();
 	}	

@@ -820,7 +820,7 @@ function disableSerPeriodField() {
 									else
 										echo "<option value='" .$values[$c]. "'>" .$keys[$c]. "</option>"; 
 								} else {
-									if($criteriaData['AGE'][0]==$values[$c])
+									if(isset($criteriaData['AGE']) && $criteriaData['AGE'][0]==$values[$c])
 										echo "<option selected value='" .$values[$c]. "'>" .$keys[$c]. "</option>";
 									else
 										echo "<option value='" .$values[$c]. "'>" .$keys[$c]. "</option>"; 
@@ -850,7 +850,7 @@ function disableSerPeriodField() {
 							else
 								echo "<option value='" .$grdlist[$c][0]. "'>" .$grdlist[$c][1]. "</option>";
 						} else {
-							if($criteriaData['PAYGRD'][0]==$grdlist[$c][0])
+							if(isset($criteriaData['PAYGRD']) && $criteriaData['PAYGRD'][0]==$grdlist[$c][0])
 								echo "<option selected value='" .$grdlist[$c][0]. "'>" .$grdlist[$c][1]. "</option>";
 							else
 								echo "<option value='" .$grdlist[$c][0]. "'>" .$grdlist[$c][1]. "</option>";
@@ -893,7 +893,7 @@ function disableSerPeriodField() {
 									else
 										echo "<option>" .$arrEmpType[$c]. "</option>";
 								} else {
-									if($criteriaData['EMPSTATUS'][0]==$arrEmpType[$c])
+									if(isset($criteriaData['EMPSTATUS']) && $criteriaData['EMPSTATUS'][0]==$arrEmpType[$c])
 										echo "<option selected>" .$arrEmpType[$c]. "</option>";
 									else
 										echo "<option>" .$arrEmpType[$c]. "</option>";
@@ -949,7 +949,7 @@ function disableSerPeriodField() {
 										else
 											echo "<option value='" .$deslist[$c][0]. "'>" .$deslist[$c][1]. "</option>";
 								} else {
-									 if($criteriaData['JOBTITLE'][0]==$deslist[$c][0])
+									 if(isset($criteriaData['JOBTITLE']) && $criteriaData['JOBTITLE'][0]==$deslist[$c][0])
 										
 											echo "<option selected value='" .$deslist[$c][0]. "'>" .$deslist[$c][1]. "</option>";
 										else

@@ -401,10 +401,10 @@ function setSize() {
 <?			} else*/if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) { ?>
                     <TD width=158>
                     <ul id="menu">
-  						<li id="viewemprep"><A href="index.php?repcode=EMPVIEW&menu_no=1&submenutop=HR&menu_no_top=rep">View Employee Reports</A></li>
+  						<li id="viewemprep"><A href="index.php?repcode=EMPVIEW&menu_no=1&submenutop=HR&menu_no_top=rep">View Reports</A></li>
                     	
 <?                  if($arrRights['repDef']) {?>
-						<li id="defemprep"><A href="index.php?repcode=EMPDEF&menu_no=1&submenutop=HR&menu_no_top=rep">Define Employee Reports</A></li>
+						<li id="defemprep"><A href="index.php?repcode=EMPDEF&menu_no=1&submenutop=HR&menu_no_top=rep">Define Reports</A></li>
 <?					}
 					} ?>
 					</ul>						
@@ -694,7 +694,7 @@ function setSize() {
 <? } ?>
 <table width="100%">
 <tr>
-<td align="center"><a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 1.2_RC_4 &copy; hSenid Software 2005 - 2006 All rights reserved.</td>
+<td align="center"><a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 1.2 &copy; hSenid Software 2005 - 2006 All rights reserved.</td>
 </tr>
 </table>
 </body>

@@ -270,17 +270,19 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 <? } else if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'updatemode')) {
 	 $backtype = isset($_GET['backtype']) ? $_GET['backtype'] : $backtype;
 	
-	 if (isset($_GET['backtype'])) {
+	 if (isset($_GET['backtype']) && ($_GET['backtype'] == 1)) {
 	 	if (isset($_GET['refcapturemode']) && ($_GET['refcapturemode'] == 'addmode')) {
 		
 			$referer = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?uniqcode=JOB&capturemode=".$_GET['refcapturemode'];
 			
-		} else {
+		} else if (isset($_GET['refcapturemode']) && ($_GET['refcapturemode'] == 'updatemode')) {
 		
 			$referer = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id=".$_GET['refid']."&uniqcode=JOB&capturemode=".$_GET['refcapturemode'];
 			
-		}
-	 } else { 
+		} else {
+	 		$referer = isset($_POST['referer']) ? $_POST['referer'] : $_SERVER['HTTP_REFERER'];
+	 	}
+	 } else {
 	 	$referer = isset($_POST['referer']) ? $_POST['referer'] : $_SERVER['HTTP_REFERER'];
 	 }
 	 $message = $this->popArr['editArr'];

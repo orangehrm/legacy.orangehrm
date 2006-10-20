@@ -20,7 +20,7 @@ Boston, MA  02110-1301, USA
 
 require_once ROOT_PATH . '/lib/confs/sysConf.php';
 
-$srchlist[0] = array( 0 , 1 , 2 );
+$srchlist[0] = array( -1 , 0 , 1 );
 $srchlist[1] = array( '-Select-' , 'ID' , 'Description' );
 
 	$sysConst = new sysConf(); 

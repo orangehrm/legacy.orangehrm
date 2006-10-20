@@ -324,7 +324,7 @@ class ReportGenerator {
 				}
 
 
-			return $SQL1;
+			return strtolower($SQL1);
 		}
 		
 		function  reportDisplay($repDetails) {

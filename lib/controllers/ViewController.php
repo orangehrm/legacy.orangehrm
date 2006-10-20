@@ -1764,6 +1764,7 @@ class ViewController {
 									
 				case 'USG'  :		$usergroups = new UserGroups();
 									$usergroups = $object;
+									$id = $usergroups ->getUserGroupID();
 									$res = $usergroups -> addUserGroups();
 									break;
 			}
@@ -1802,6 +1803,10 @@ class ViewController {
 					case 'CUR' : 
 								if($noRedirect)
 									break;
+									
+					case 'USG' : header("Location: ./CentralController.php?uniqcode=UGR&id=$id");
+								break;
+								
 					default:
 								$showMsg = "ADD_SUCCESS"; //If $message is 1 setting up the 
 								
@@ -2214,6 +2219,7 @@ class ViewController {
 									} elseif($action == 'EDIT')
 										$ratgrd->updateRatGrd();
 									break;
+									
 				case 'UGR'  :		$ugrights = new Rights();
 									$ugrights = $object;
 									if($action == 'ADD')
@@ -2300,6 +2306,7 @@ class ViewController {
 								
 								    $ratgrd -> delRatGrd($arr);
 								    break;
+								    
 				case 'UGR'  :		
 									$urights = new Rights();
 										  
