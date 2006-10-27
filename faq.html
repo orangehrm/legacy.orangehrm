@@ -51,7 +51,7 @@ Instead of installing above mentioned pre-requisities seperately, it is possible
 <h2>2.  How to install OrangeHRM manually on Linux?</h2>
 <p>
 For Linux Installation these steps should be followed;
-	<ol>
+  <ol>
   		<li>Retrieve the PHP source of OrangeHRM onto the directory that is configured as 
      		Apache Server htdocs directory; <div class="code">ex: /var/html/orangehrm/</div>
 		</li>  
@@ -62,9 +62,10 @@ For Linux Installation these steps should be followed;
 				chown apache /var/html/orangehrm/
 			</div>
 			</li>
-  		<li>now you need to create the database. To do this get MySQL prompt (you should be logged in as a user having rights create databases and users). Create the database using command; (please note down the database name)
+  		<li>now you need to create the database. To do this get MySQL prompt (you should be logged in as a user having rights create databases and users). Create the database using command; (please note down the database name), and change into the database using 'USE'.
 			<div class="bash">
-				CREATE DATABASE &lt;orangehrm-db-name&gt;
+				CREATE DATABASE &lt;orangehrm-db-name&gt;<br/>
+				USE &lt;orangehrm-db-name&gt;
 			</div>
      		then you need to create the tables using the script dbscript.sql residing in 
      /orangehrm/dbscript directory. Then type in command</li>
