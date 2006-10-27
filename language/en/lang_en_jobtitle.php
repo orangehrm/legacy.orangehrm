@@ -1,4 +1,4 @@
-<?
+<?php
 $heading		= 'Job : Job Title';
 $jobtitid		= 'Job Title ID';
 $jobtitname		= 'Job Title Name';

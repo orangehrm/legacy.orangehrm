@@ -1,4 +1,4 @@
-<?
+<?php 
 /*
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures 
  * all the essential functionalities required for any enterprise. 
@@ -164,12 +164,12 @@ function setSize() {
 <tr>
   <td colspan="2"><table cellspacing="0" cellpadding="0" border="0" width="100%">
       <tr height="50">
-        <td width="23%"><img src=<? echo '"' . "themes/" . $styleSheet . "/pictures/orange3.png" . '"'; ?>  width="264" height="62" alt="Company Logo" border="0" style="margin-left: 10px;"></td>
+        <td width="23%"><img src=<?php  echo '"' . "themes/" . $styleSheet . "/pictures/orange3.png" . '"'; ?>  width="264" height="62" alt="Company Logo" border="0" style="margin-left: 10px;"></td>
         <td width="77%" align="right" nowrap class="myArea"><img src="themes/beyondT/pictures/top_img.jpg" width="300" height="62">
         </td>
       </tr>
       <tr>
-        <? 
+        <?php  
 	if (!isset($_GET['menu_no_top'])) {
 		$_GET['menu_no_top'] = "home";
 	} 
@@ -189,7 +189,7 @@ function setSize() {
                   <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                 </tr>
             </table></td>
-            <? } else { ?>
+            <?php  } else { ?>
             <td colspan="2"><table cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr height="20">
                   <td><img src="" width="8" height="1" border="0" alt="Home"></td>
@@ -201,8 +201,8 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } ?>
-                  <? 
+                  <?php  } ?>
+                  <?php  
                   if($_SESSION['isAdmin']=='Yes') {
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="eim") && $arrRights['view']) {  
 									
@@ -217,7 +217,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } else { ?>
+                  <?php  } else { ?>
                   <td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #E5E5E5;">
                       <tr height="20">
                         <td style="background-image : url(themes/beyondT/pictures/otherTab_left.png);" ><img src="" width="8" height="1" border="0" alt="My Portal"></td>
@@ -226,8 +226,8 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } ?>
-                  <? 
+                  <?php  } ?>
+                  <?php  
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="hr") && $arrRights['view']) {  
 					?>
                   <td style="background-image : url();" ></td>
@@ -240,7 +240,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } else { ?>
+                  <?php  } else { ?>
                   <td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #E5E5E5;">
                       <tr height="20">
                         <td style="background-image : url(themes/beyondT/pictures/otherTab_left.png);" ><img src="" width="8" height="1" border="0" alt="My Portal"></td>
@@ -249,8 +249,8 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } ?>
-                  <? 
+                  <?php  } ?>
+                  <?php  
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) {  
 					?>
                   <td style="background-image : url();" ></td>
@@ -263,7 +263,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } else { ?>
+                  <?php  } else { ?>
                   <td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #E5E5E5;">
                       <tr height="20">
                         <td style="background-image : url(themes/beyondT/pictures/otherTab_left.png);" ><img src="" width="8" height="1" border="0" alt="My Portal"></td>
@@ -272,8 +272,8 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } ?>
-                  <? /*
+                  <?php  } ?>
+                  <?php  /*
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="mt") && $arrRights['view']) {  
 					?>
                   <td style="background-image : url();" ></td>
@@ -286,7 +286,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } else { ?>
+                  <?php  } else { ?>
                   <td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #E5E5E5;">
                       <tr height="20">
                         <td style="background-image : url(themes/beyondT/pictures/otherTab_left.png);" ><img src="" width="8" height="1" border="0" alt="My Portal"></td>
@@ -295,7 +295,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } */
+                  <?php  } */
                   } else { 
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess")) {  
 					?>
@@ -309,7 +309,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } else { ?>
+                  <?php  } else { ?>
                   <td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #E5E5E5;">
                       <tr height="20">
                         <td style="background-image : url(themes/beyondT/pictures/otherTab_left.png);" ><img src="" width="8" height="1" border="0" alt="My Portal"></td>
@@ -318,7 +318,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } 
+                  <?php  } 
                   }
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="bug")) {  
 									
@@ -333,7 +333,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } else { ?>
+                  <?php  } else { ?>
                   <td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #E5E5E5;">
                       <tr height="20">
                         <td style="background-image : url(themes/beyondT/pictures/otherTab_left.png);" ><img src="" width="8" height="1" border="0" alt="My Portal"></td>
@@ -342,7 +342,7 @@ function setSize() {
                         <td style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <? } ?>
+                  <?php  } ?>
                   <td width="100%" style="background-image : url(themes/beyondT/pictures/emptyTabSpace.png);"><img src="" width="1" height="1" border="0" alt=""></td>
                 </tr>
             </table></td>
@@ -353,8 +353,8 @@ function setSize() {
             <input type="hidden" name="search_form" value="false">
             <td class="subTabBar" colspan="2"><table width="100%" cellspacing="0" cellpadding="0" border="0" height="20">
                 <tr>
-                  <td class="welcome" width="100%">Welcome <?=(isset($_SESSION['fname'])) ? $_SESSION['fname'] : '' ?></td>
-                  <td class="search" align="right" nowrap="nowrap"><a href="./lib/controllers/CentralController.php?mtcode=CPW&capturemode=updatemode&id=<?=$_SESSION['user']?>" target="rightMenu"><strong>Change Password</strong></a></td>
+                  <td class="welcome" width="100%">Welcome <?php echo (isset($_SESSION['fname'])) ? $_SESSION['fname'] : '' ?></td>
+                  <td class="search" align="right" nowrap="nowrap"><a href="./lib/controllers/CentralController.php?mtcode=CPW&capturemode=updatemode&id=<?php echo $_SESSION['user']?>" target="rightMenu"><strong>Change Password</strong></a></td>
                   <td class="search" style="padding: 0px" align="right" width="11"><img src="themes/beyondT/pictures/nSearchSeparator.gif" width="12" height="20" border="0" alt="Search"></td>
                   <td class="search" style="padding: 0px" align="right" nowrap="nowrap">&nbsp;&nbsp;<a href="./index.php?ACT=logout"><strong>Logout</strong></a></td>
                   <td class="search" nowrap>&nbsp;&nbsp; </td>
@@ -364,7 +364,7 @@ function setSize() {
         </table>        
       </table>
       
-<? if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']!="hr" && $_GET['menu_no_top']!="ess" )) {  ?>
+<?php  if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']!="hr" && $_GET['menu_no_top']!="ess" )) {  ?>
 
 	<table border="0" align="top" cellpadding="0" cellspacing="0">
           <tr>
@@ -372,7 +372,7 @@ function setSize() {
               <TABLE cellSpacing=0 cellPadding=0 border=0>
                 <TBODY>
                   <TR vAlign=top>
-<?			if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="eim") && $arrRights['view']) {  ?>
+<?php 			if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="eim") && $arrRights['view']) {  ?>
                     <TD width=158>
                         <!--<A onmouseover="swapImage('Button5','','themes/beyondT/pictures/buttons05_on.gif',1);ypSlideOutMenu.showMenu('menu5');" onmouseout="swapImgRestore();ypSlideOutMenu.hideMenu('menu5');"> <IMG height=22 src="themes/beyondT/pictures/buttons05.gif" width=150 border=0 name=Button5></A><BR>-->
                         <!--<A onmouseover="swapImage('Button6','','themes/beyondT/pictures/buttons06_on.gif',1);ypSlideOutMenu.showMenu('menu6');" onmouseout="swapImgRestore();ypSlideOutMenu.hideMenu('menu6');"> <IMG height=22 src="themes/beyondT/pictures/buttons06.gif" width=150 border=0 name=Button6></A><BR>-->
@@ -389,7 +389,7 @@ function setSize() {
   						<li id="natandrace"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu9');" onMouseOut="ypSlideOutMenu.hideMenu('menu9');">nationality & race</a></li> 
 						<li id="users"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu12');" onMouseOut="ypSlideOutMenu.hideMenu('menu12');">Users</a></li>
 </ul></TD>
-<?			} else /* if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="mt") && $arrRights['view']) {  ?>
+<?php 			} else /* if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="mt") && $arrRights['view']) {  ?>
                     <TD width=158><P>
                     	<A href="index.php?mtcode=USR&menu_no=1&submenutop=HR&menu_no_top=mt" onMouseOver="swapImage('Button1','','themes/beyondT/pictures/buttons22_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons22.gif" width=150 border=0 name=Button1></A><BR>
                     	<A href="index.php?mtcode=USG&menu_no=1&submenutop=BR&menu_no_top=mt" onMouseOver="swapImage('Button2','','themes/beyondT/pictures/buttons23_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons23.gif" width=150 border=0 name=Button2></A><BR>
@@ -398,25 +398,25 @@ function setSize() {
                     	<A href="index.php?mtcode=DVR&menu_no=1&submenutop=BR&menu_no_top=mt" onMouseOver="swapImage('Button5','','themes/beyondT/pictures/buttons26_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons26.gif" width=150 border=0 name=Button5></A><BR>
                     	<A href="index.php?mtcode=FVR&menu_no=1&submenutop=BR&menu_no_top=mt" onMouseOver="swapImage('Button6','','themes/beyondT/pictures/buttons27_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons27.gif" width=150 border=0 name=Button6></A><BR>
                       </P></TD>
-<?			} else*/if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) { ?>
+<?php 			} else*/if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) { ?>
                     <TD width=158>
                     <ul id="menu">
   						<li id="viewemprep"><A href="index.php?repcode=EMPVIEW&menu_no=1&submenutop=HR&menu_no_top=rep">View Reports</A></li>
                     	
-<?                  if($arrRights['repDef']) {?>
+<?php                   if($arrRights['repDef']) {?>
 						<li id="defemprep"><A href="index.php?repcode=EMPDEF&menu_no=1&submenutop=HR&menu_no_top=rep">Define Reports</A></li>
-<?					}
+<?php 					}
 					} ?>
 					</ul>						
                       </TD>
                       
-<?		/*} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="bug" || $_GET['menu_swapImgRestore()no_top']=="ess")) {  ?>
+<?php 		/*} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="bug" || $_GET['menu_swapImgRestore()no_top']=="ess")) {  ?>
                   <TD height="800" bgcolor="#FFB121" width=158><p><br>
                     </p></TD>   ?>
-<?			} else */ if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="bug" )) { ?>
+<?php 			} else */ if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="bug" )) { ?>
 				  <TD height="800" bgcolor="#FFB121" width=158><p><br>
                     </p></TD>
-<?			} /*elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess") )  {  ?>
+<?php 			} /*elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess") )  {  ?>
                    <TD width=158><P>
                     	<A href="index.php?reqcode=EMP&menu_no=1&submenutop=HR&menu_no_top=ess" onMouseOver="swapImage('Button1','','themes/beyondT/pictures/buttons21_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons21.gif" width=150 border=0 name=Button1></A><BR>
                         <A href="index.php?reqcode=QUA&menu_no=1&submenutop=HR&menu_no_top=ess" onMouseOver="swapImage('Button2','','themes/beyondT/pictures/buttons03_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons03.gif" width=150 border=0 name=Button2></A><BR>
@@ -431,7 +431,7 @@ function setSize() {
                         <A href="index.php?reqcode=CXT&menu_no=1&submenutop=HR&menu_no_top=ess" onMouseOver="swapImage('Button11','','themes/beyondT/pictures/buttons19_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons19.gif" width=150 border=0 name=Button11></A><BR>
                         <A href="index.php?reqcode=REP&menu_no=1&submenutop=HR&menu_no_top=ess" onMouseOver="swapImage('Button12','','themes/beyondT/pictures/buttons20_on.gif',1);" onMouseOut="swapImgRestore();"> <IMG height=22 src="themes/beyondT/pictures/buttons20.gif" width=150 border=0 name=Button12></A><BR>
                       </P></TD>
-<? } */ ?>                   
+<?php  } */ ?>                   
                 </TR>
                 </TBODY>
               </TABLE>
@@ -658,43 +658,43 @@ function setSize() {
               <!-- End SubMenu12 -->
               <!--------------------- End Menu --------------------->
             </td>
-<?			if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="home")) {  ?>
+<?php 			if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="home")) {  ?>
 			<tr>
 			<td><iframe src="home.html" id="rightMenu" name="rightMenu" width="1024" height="450" frameborder="0"></iframe>
 			</td>
 			</tr>
-<?			}   ?>
+<?php 			}   ?>
             <td width="779" valign="top"><table width='100%' cellpadding='0' cellspacing='0' border='0' class='moduleTitle'>
               <tr>
                 <td>
             <td width="78%" valign="top">
-<?			if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="eim") && $arrRights['view']) {  ?>
-              <iframe src="./lib/controllers/CentralController.php?uniqcode=<?=(isset($_GET['uniqcode'])) ? $_GET['uniqcode'] : 'GEN'?>&VIEW=MAIN<?=isset($_GET['isAdmin'])? ('&isAdmin='.$_GET['isAdmin']) : ''?>" id="rightMenu" name="rightMenu" width="100%" height="550" frameborder="0"> </iframe>
-<?			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="hr") && $arrRights['view']) {  ?>
-              <iframe src="./lib/controllers/CentralController.php?reqcode=<?=(isset($_GET['reqcode'])) ? $_GET['reqcode'] : 'EMP'?>&VIEW=MAIN" id="rightMenu" name="rightMenu" width="100%" height="800" frameborder="0"> </iframe>
-<?			} else /* if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="mt") && $arrRights['view']) {  ?>
+<?php 			if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="eim") && $arrRights['view']) {  ?>
+              <iframe src="./lib/controllers/CentralController.php?uniqcode=<?php echo (isset($_GET['uniqcode'])) ? $_GET['uniqcode'] : 'GEN'?>&VIEW=MAIN<?php echo isset($_GET['isAdmin'])? ('&isAdmin='.$_GET['isAdmin']) : ''?>" id="rightMenu" name="rightMenu" width="100%" height="550" frameborder="0"> </iframe>
+<?php 			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="hr") && $arrRights['view']) {  ?>
+              <iframe src="./lib/controllers/CentralController.php?reqcode=<?php echo (isset($_GET['reqcode'])) ? $_GET['reqcode'] : 'EMP'?>&VIEW=MAIN" id="rightMenu" name="rightMenu" width="100%" height="800" frameborder="0"> </iframe>
+<?php 			} else /* if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="mt") && $arrRights['view']) {  ?>
               <iframe id="rightMenu" name="rightMenu" width="100%" frameborder="0">Sorry page you are looking for doesn't exsist anymore.</iframe>
-<?			} else  */ if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="bug")) {  ?>
+<?php 			} else  */ if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="bug")) {  ?>
               <iframe src="./lib/controllers/CentralController.php?mtcode=BUG&capturemode=addmode" id="rightMenu" name="rightMenu" width="100%" height="800" frameborder="0"> </iframe>
-<?			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) {  ?>
-              <iframe src="./lib/controllers/CentralController.php?repcode=<?=isset($_GET['repcode']) ? $_GET['repcode'] : 'EMPVIEW'?>&VIEW=MAIN" id="rightMenu" name="rightMenu" width="100%" height="1000" frameborder="0"> </iframe>
-<?			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess")) {  ?>
-              <iframe src="./lib/controllers/CentralController.php?reqcode=ESS&id=<?=$_SESSION['empID']?>&capturemode=updatemode" id="rightMenu" name="rightMenu" width="100%" height="850" frameborder="0"> </iframe>
-<?			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess")) {  ?>
-              <iframe src="./lib/controllers/CentralController.php?reqcode=<?=(isset($_GET['reqcode'])) ? $_GET['reqcode'] : 'ESS'?>&id=<?=$_SESSION['empID']?>" id="rightMenu" name="rightMenu" width="100%" height="850" frameborder="0"> </iframe>        
-         <? } ?>
+<?php 			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) {  ?>
+              <iframe src="./lib/controllers/CentralController.php?repcode=<?php echo isset($_GET['repcode']) ? $_GET['repcode'] : 'EMPVIEW'?>&VIEW=MAIN" id="rightMenu" name="rightMenu" width="100%" height="1000" frameborder="0"> </iframe>
+<?php 			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess")) {  ?>
+              <iframe src="./lib/controllers/CentralController.php?reqcode=ESS&id=<?php echo $_SESSION['empID']?>&capturemode=updatemode" id="rightMenu" name="rightMenu" width="100%" height="850" frameborder="0"> </iframe>
+<?php 			} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess")) {  ?>
+              <iframe src="./lib/controllers/CentralController.php?reqcode=<?php echo (isset($_GET['reqcode'])) ? $_GET['reqcode'] : 'ESS'?>&id=<?php echo $_SESSION['empID']?>" id="rightMenu" name="rightMenu" width="100%" height="850" frameborder="0"> </iframe>        
+         <?php  } ?>
             
             </td>
           </tr>
 </table>
-<?	} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="hr") && $arrRights['view']) {  ?>
-              <iframe src="./lib/controllers/CentralController.php?reqcode=<?=(isset($_GET['reqcode'])) ? $_GET['reqcode'] : 'EMP'?>&VIEW=MAIN" id="rightMenu" name="rightMenu" width="100%" height="800" frameborder="0"> </iframe>
-<? } elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess")) { ?>
-              <iframe src="./lib/controllers/CentralController.php?reqcode=ESS&id=<?=$_SESSION['empID']?>&capturemode=updatemode" id="rightMenu" name="rightMenu" width="100%" height="800" frameborder="0"> </iframe>
-<? } ?>
+<?php 	} elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="hr") && $arrRights['view']) {  ?>
+              <iframe src="./lib/controllers/CentralController.php?reqcode=<?php echo (isset($_GET['reqcode'])) ? $_GET['reqcode'] : 'EMP'?>&VIEW=MAIN" id="rightMenu" name="rightMenu" width="100%" height="800" frameborder="0"> </iframe>
+<?php  } elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="ess")) { ?>
+              <iframe src="./lib/controllers/CentralController.php?reqcode=ESS&id=<?php echo $_SESSION['empID']?>&capturemode=updatemode" id="rightMenu" name="rightMenu" width="100%" height="800" frameborder="0"> </iframe>
+<?php  } ?>
 <table width="100%">
 <tr>
-<td align="center"><a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 1.2 &copy; hSenid Software 2005 - 2006 All rights reserved.</td>
+<td align="center"><a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 1.2.1 &copy; hSenid Software 2005 - 2006 All rights reserved.</td>
 </tr>
 </table>
 </body>

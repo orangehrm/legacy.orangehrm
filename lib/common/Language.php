@@ -1,4 +1,4 @@
-<?
+<?php
 define('LANG_DIR','/language');
 
  class  Language {
