@@ -902,24 +902,22 @@ function filterNotEqualRecordSet($filID) {
 		}
 	}
 
-function listReports($userGroup, $page, $str = '' ,$mode = 0) {
+function listReports($userGroup, $page, $str = '' ,$mode = -1) {
 	
 		$SQL1 = "SELECT a.REP_CODE, a.REP_NAME FROM HS_HR_EMPREPORT a, HS_HR_EMPREP_USERGROUP b WHERE a.REP_CODE = b.REP_CODE AND b.USERG_ID = '" .$userGroup . "'";
 
-		if($mode!=0)
-				{
+		if($mode != (-1)) {
+			
                 $SQL1 = $SQL1 . " AND ";
                 
-                    switch($mode)
-                            {
-                              case 1 : $SQL1 = $SQL1 . 'a.REP_CODE LIKE \'%' . trim($str) .'%\'';
+                    switch($mode) {
+                    	
+                        case 0 : $SQL1 = $SQL1 . 'a.REP_CODE LIKE \'%' . trim($str) .'%\'';
                                         break;
-                              case 2:  $SQL1 = $SQL1 . 'a.REP_NAME LIKE \'%' . trim($str) .'%\'';
+                        case 1:  $SQL1 = $SQL1 . 'a.REP_NAME LIKE \'%' . trim($str) .'%\'';
                                         break;
-                                    }
-                }
-
-		
+                    }
+        }
 		
 		$SQL1 = $SQL1 . " GROUP BY a.REP_CODE";
 
