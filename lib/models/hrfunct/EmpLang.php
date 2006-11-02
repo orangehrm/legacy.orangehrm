@@ -260,6 +260,7 @@ class EmpLanguage {
 		$arrFieldList[0] = 'EMP_NUMBER';
 		$arrFieldList[1] = 'LANG_CODE';
 		$arrFieldList[2] = 'ELANG_TYPE';
+		$arrFieldList[3] = 'COMPETENCY';
 
 		$sql_builder = new SQLQBuilder();
 		

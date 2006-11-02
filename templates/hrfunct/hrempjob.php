@@ -64,11 +64,16 @@
 			  		<option value="0">---Select <?php echo $jobtitle?>---</option>
 			  		<?php $jobtit = $this->popArr['jobtit'];
 			  			for ($c=0; $jobtit && count($jobtit)>$c ; $c++) 
-			  				if($edit1[0][2] == $jobtit[$c][0])
-				  				echo "<option selected value='" . $jobtit[$c][0] . "'>" .$jobtit[$c][1]. "</option>";
-				  			else
-				  				echo "<option value='" . $jobtit[$c][0] . "'>" .$jobtit[$c][1]. "</option>";
-			  			 ?>
+			  				if(isset($this->postArr['cmbJobTitle'])) {
+			  					if($this->postArr['cmbJobTitle'] == $jobtit[$c][0])
+					  				echo "<option selected value='" . $jobtit[$c][0] . "'>" .$jobtit[$c][1]. "</option>";
+					  			else
+					  				echo "<option value='" . $jobtit[$c][0] . "'>" .$jobtit[$c][1]. "</option>";
+			  				} elseif($edit1[0][2] == $jobtit[$c][0])
+					  				echo "<option selected value='" . $jobtit[$c][0] . "'>" .$jobtit[$c][1]. "</option>";
+					  			else
+					  				echo "<option value='" . $jobtit[$c][0] . "'>" .$jobtit[$c][1]. "</option>";
+			  		?>
 
 			  			
 			  <td width="50">&nbsp;</td>
@@ -109,8 +114,8 @@
 			  
 			  <td width="50">&nbsp;</td>
 			  <td nowrap><?php echo $workstation?></td>
-			  <td nowrap><input type="text"  name="txtLocation" value="<?php echo $edit1[0][4]?>" readonly />
-			  			 <input type="hidden"  name="cmbLocation" value="<?php echo $edit1[0][6]?>" readonly />
+			  <td nowrap><input type="text"  name="txtLocation" value="<?php echo isset($this->postArr['txtLocation']) ? $this->postArr['txtLocation'] : $edit1[0][4]?>" readonly />
+			  			 <input type="hidden"  name="cmbLocation" value="<?php echo isset($this->postArr['cmbLocation']) ? $this->postArr['cmbLocation'] : $edit1[0][6]?>" readonly />
 			  <input type="button" name="popLoc" value="..." onclick="returnLocDet()" <?php echo (isset($this->postArr['EditMode']) && $this->postArr['EditMode']=='1') ? '' : 'disabled'?> class="button" /></td>
 			  </tr>
 			  <tr>
