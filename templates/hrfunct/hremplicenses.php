@@ -57,9 +57,14 @@ function createDate(str) {
 }
 
 function addEXTLicense() {
- 	
+	
 	var fromDate = createDate(document.frmEmp.txtEmpLicDat.value)
 	var toDate = createDate(document.frmEmp.txtEmpreDat.value);
+
+	if(document.frmEmp.cmbLicCode.value == '0') {
+		alert("No license selected");
+		return;
+	}
 	
 	if(toDate <= fromDate){
 		alert("From Date should be before To date");
