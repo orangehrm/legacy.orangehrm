@@ -148,7 +148,7 @@ class ReportGenerator {
  			$parentTableName['ADDRESS1']	     = 'HS_HR_EMPLOYEE a';
  			$existingTableFieldName['ADDRESS1']  = 'a.EMP_STREET1';
  			$existingTableName['ADDRESS1']	     = 'HS_HR_EMPLOYEE a';
- 			$parentTableDescription['ADDRESS1']  = 'a.EMP_STREET1';
+ 			$parentTableDescription['ADDRESS1']  = "CONCAT(a.EMP_STREET1, a.EMP_STREET2)";
  		}   
  		
  		if(isset($this->field['ADDRESS2'])==1){	

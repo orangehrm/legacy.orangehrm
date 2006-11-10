@@ -20,11 +20,14 @@
 			  <td><?php echo $empstatus?></td>
 			  <td><select <?php echo $locRights['add'] ? '':'disabled'?> name="cmbType">
 			  		<option value="0"><?php echo $selempstat?></option>
-<?php					for($c=0;count($arrEmpType)>$c;$c++)
-						if(isset($this->postArr['cmbType']) && $this->postArr['cmbType']==$arrEmpType[$c])
-							echo "<option selected>" .$arrEmpType[$c]. "</option>";
-						else
-							echo "<option>" .$arrEmpType[$c]. "</option>";
+<?php				if(isset($this->postArr['cmbType'])) {
+						$arrEmpType = $this->popArr['empstatlist'];
+						for($c=0;count($arrEmpType)>$c;$c++)
+							if($this->postArr['cmbType']==$arrEmpType[$c][0])
+								echo "<option selected value='".$arrEmpType[$c][0]."'>" .$arrEmpType[$c][1]. "</option>";
+							else
+								echo "<option value='".$arrEmpType[$c][0]."'>" .$arrEmpType[$c][1]. "</option>";
+					}
 ?>			        
 			  </select></td>
               </tr>
