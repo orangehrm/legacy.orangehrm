@@ -318,7 +318,7 @@ class SQLQBuilder {
 		
 	}
 
-	function addNewRecordFeature2($quoteCorrect = true) { 
+	function addNewRecordFeature2($quoteCorrect = true, $duplicateInsert = false) { 
 		
 		if ($this->flg_insert == 'true') { // check whether the flg_insert is 'True'
 
@@ -332,39 +332,42 @@ class SQLQBuilder {
 			$SQL1 = 'INSERT INTO ' . strtolower($this->table_name) . ' ( ';
 
 			for ($i=0;$i<count($arrayRecordList); $i++) {
-				
 				if ($i == ($countArrSize - 1))  { //String Manipulation
-				
 					$SQL1 = $SQL1 . $arrayFieldList[$i] . ' ';		
-				
 				} else {
-				
 					$SQL1 = $SQL1 . $arrayFieldList[$i] . ', ';
-					
 				}
 			}
 			
 			$SQL1 = $SQL1 . ' ) VALUES (';
 			
 			for ($i=0;$i<count($arrayRecordList); $i++) {
-				
 				if ($i == ($countArrSize - 1))  { //String Manipulation
-				
 					$SQL1 = $SQL1 . $arrayRecordList[$i] . ' ';		
-				
 				} else {
-				
 					$SQL1 = $SQL1 . $arrayRecordList[$i] . ', ';
-					
 				}
 			}
 			
 			$SQL1 = $SQL1 . ')';
+			
+			if($duplicateInsert) {
+
+				$SQL1 = $SQL1 . ' ON DUPLICATE KEY UPDATE ';
+
+				for ($i = 0; $i<count($arrayFieldList); $i++) {
+					if ($i == ($countArrSize - 1))  { //String Manipulation
+						$SQL1 = $SQL1 . $arrayFieldList[$i] . '=' . $arrayRecordList[$i];		
+					} else {
+						$SQL1 = $SQL1 . $arrayFieldList[$i] . '=' . $arrayRecordList[$i]. ', ';
+					}
+				}
+			}
+			
 			//$exception_handler = new ExceptionHandler();
 	  	 	//$exception_handler->logW($SQL1);
 
 			return $SQL1; //returning the SQL1 which has the SQL Query
-			
 			
 		} else {
 			
