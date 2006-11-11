@@ -107,8 +107,8 @@
  //payment
  $paygrade 				= 'Pay Grade';
  $currency				= 'Currency';
- $minpoint				= 'Min Point';
- $maxpoint				= 'Max Point';
+ $minpoint				= 'Min Salary';
+ $maxpoint				= 'Max Salary';
  $bassalary				= 'Basic Salary';
  $assignedsalary		= 'Assigned Salary';
  

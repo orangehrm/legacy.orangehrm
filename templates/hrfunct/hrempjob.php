@@ -1,6 +1,6 @@
 <script language="javascript">
 	function returnLocDet(){
-		var popup=window.open('CentralController.php?uniqcode=CST&VIEW=MAIN&esp=1','Locations','height=450,width=400');
+		var popup=window.open('CentralController.php?uniqcode=CST&VIEW=MAIN&esp=1','Locations','height=450,width=400,resizable=1');
         if(!popup.opener) popup.opener=self;	
 	}
 </script>
