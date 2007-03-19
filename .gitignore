@@ -1,0 +1,10 @@
+/*.eap
+/.project
+build/dist
+build/reports
+lib/confs/Conf.php
+lib/confs/mailConf.php
+lib/logs/logDB.txt
+/registration
+/test.php
+/view
