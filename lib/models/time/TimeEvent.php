@@ -20,6 +20,7 @@
 
 require_once ROOT_PATH . '/lib/dao/DMLFunctions.php';
 require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
+require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 
 /**
  * Handles all function related to Time Event
@@ -140,35 +141,14 @@ class TimeEvent {
 	}
 
 	/**
-	 * Compute the new Time event id
-	 */
-	private function _getNewTimeEventId() {
-		$sql_builder = new SQLQBuilder();
-
-		$selectTable = self::TIME_EVENT_DB_TABLE_TIME_EVENT;
-		$selectFields[0] = self::TIME_EVENT_DB_FIELD_TIME_EVENT_ID;
-		$selectOrder = "DESC";
-		$selectLimit = 1;
-		$sortingField = self::TIME_EVENT_DB_FIELD_TIME_EVENT_ID;
-
-		$query = $sql_builder->simpleSelect($selectTable, $selectFields, null, $sortingField, $selectOrder, $selectLimit);
-
-		$dbConnection = new DMLFunctions();
-
-		$result = $dbConnection->executeQuery($query);
-
-		$row = mysql_fetch_row($result);
-
-		$this->setTimeEventId($row[0]+1);
-	}
-
-	/**
 	 * Add new time event
 	 *
 	 * Time event id will be over written
 	 */
 	public function addTimeEvent() {
-		$this->_getNewTimeEventId();
+
+		$newId = UniqueIDGenerator::getInstance()->getNextID(self::TIME_EVENT_DB_TABLE_TIME_EVENT, self::TIME_EVENT_DB_FIELD_TIME_EVENT_ID);
+		$this->setTimeEventId($newId);
 
 		$sqlBuilder = new SQLQBuilder();
 

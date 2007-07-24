@@ -3,6 +3,7 @@
 /INSTALL.html -text
 /README.TXT -text
 build/build.xml -text
+build/fix-ids.php -text
 build/report-styles/coverage-frames.xsl -text
 build/report-styles/log.xsl -text
 build/report-styles/phpunit2-frames.xsl -text
@@ -123,6 +124,8 @@ lib/common/CommonFunctions.php -text
 lib/common/FormCreator.php -text
 lib/common/Language.php -text
 lib/common/TemplateMerger.php -text
+lib/common/UniqueIDGenerator.php -text
+lib/common/UniqueIDGeneratorTest.php -text
 lib/common/authorize.php -text
 lib/common/authorizeTest.php -text
 lib/common/calendar.php -text
@@ -241,7 +244,6 @@ lib/models/eimadmin/NationalityInfo.php -text
 lib/models/eimadmin/Projects.php -text
 lib/models/eimadmin/ProjectsTest.php -text
 lib/models/eimadmin/ProvinceInfo.php -text
-lib/models/eimadmin/Qualifications.php -text
 lib/models/eimadmin/SalCurDet.php -text
 lib/models/eimadmin/SalaryGrades.php -text
 lib/models/eimadmin/Skills.php -text

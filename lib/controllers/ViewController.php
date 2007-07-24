@@ -1111,8 +1111,8 @@ class ViewController {
 
 				case 'JOB'  :		$jobtit = new JobTitle();
 									$jobtit = $object;
-									$id = $jobtit->getJobId();
 									$res = $jobtit ->addJobTitles();
+									$id = $jobtit->getJobId();
 									break;
 
 				case 'CST'  :
@@ -1229,8 +1229,8 @@ class ViewController {
 
 				case 'SGR'  :		$salgread = new SalaryGrades();
 									$salgread = $object;
-									$id = $salgread->getSalGrdId();
 									$res = $salgread -> addSalaryGrades();
+									$id = $salgread->getSalGrdId();
 									break;
 
 				case 'SKI'  :		$skill = new Skills();
@@ -1323,11 +1323,6 @@ class ViewController {
 									$res = $desig -> addDesignations();
 									break;
 
-				case 'PRO'  :		$prov = new ProvinceInfo();
-									$prov = $object;
-									$res = $prov -> addProvinceInfo();
-									break;
-
 				case 'DIS'  :		$disinfo = new DistrictInfo();
 									$disinfo = $object;
 									$res = $disinfo -> addDistrictInfo();
@@ -1346,15 +1341,15 @@ class ViewController {
 
 				case 'CUS'  :		$customer = new Customer();
 									$customer = $object;
-									$id= $customer->getCustomerId();
 									$res= $customer->addCustomer();
+									$id= $customer->getCustomerId();
 
 									break;
 
 				case 'PRJ'  :		$project = new Projects();
 									$project = $object;
-									$id= $project->getProjectId();
 									$res= $project->addProject();
+									$id= $project->getProjectId();
 									break;
 
 
@@ -1365,8 +1360,8 @@ class ViewController {
 
 				case 'USG'  :		$usergroups = new UserGroups();
 									$usergroups = $object;
-									$id = $usergroups ->getUserGroupID();
 									$res = $usergroups -> addUserGroups();
+									$id = $usergroups ->getUserGroupID();
 									break;
 
 
@@ -1682,11 +1677,6 @@ class ViewController {
 				case 'DSG'  :		$desig = new Designations();
 									$desig = $object;
 									$res = $desig -> updateDesignations();
-									break;
-
-				case 'PRO'  :		$prov = new ProvinceInfo();
-									$prov = $object;
-									$res = $prov -> updateProvinceInfo();
 									break;
 
 				case 'DIS'  :		$disinfo = new DistrictInfo();
@@ -2035,9 +2025,7 @@ class ViewController {
 			case 'COU' :	$form_creator ->formPath = '/templates/eimadmin/countryinformation.php';
 							$country = new CountryInfo();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $country ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $country ->filterCountryInfo($getArr['id']);
 							}
 
@@ -2046,9 +2034,7 @@ class ViewController {
 			case 'CUR' :	$form_creator ->formPath = '/templates/eimadmin/currencytypes.php';
 							$currency = new CurrencyTypes();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $currency ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $currency ->filterCurrencyTypes($getArr['id']);
 							}
 
@@ -2160,9 +2146,7 @@ class ViewController {
 
 							$form_creator->popArr['cntlist'] = $country->getCountryCodes();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $loc ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 
 								$province = new ProvinceInfo();
 								$district = new DistrictInfo();
@@ -2188,9 +2172,7 @@ class ViewController {
 			case 'MEM' :	$form_creator ->formPath = '/templates/eimadmin/membershiptypes.php';
 							$memtype = new MembershipType();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $memtype ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $memtype ->filterMembershipType($getArr['id']);
 							}
 
@@ -2206,9 +2188,7 @@ class ViewController {
 			case 'NAT' :	$form_creator ->formPath = '/templates/eimadmin/nationalityinformation.php';
 							$natinfo = new NationalityInfo();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $natinfo ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $natinfo ->filterNationalityInfo($getArr['id']);
 							}
 
@@ -2262,9 +2242,7 @@ class ViewController {
 							$salgrade = new SalaryGrades();
 							$salcurdet = new SalCurDet();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $salgrade ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $salgrade ->filterSalaryGrades($getArr['id']);
 								$form_creator ->popArr['assCurrency'] = $salcurdet->getAssSalCurDet($getArr['id']);
 
@@ -2283,9 +2261,7 @@ class ViewController {
 			case 'SKI' :	$form_creator ->formPath = '/templates/eimadmin/skills.php';
 							$skill = new Skills();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $skill ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $skill ->filterSkills($getArr['id']);
 							}
 
@@ -2294,9 +2270,7 @@ class ViewController {
 			case 'ETH' :	$form_creator ->formPath = '/templates/eimadmin/ethnicrace.php';
 							$ethnicrace = new EthnicRace();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $ethnicrace ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $ethnicrace ->filterEthnicRace($getArr['id']);
 
 							}
@@ -2322,7 +2296,6 @@ class ViewController {
 							$memtype = new  MembershipType();
 
 							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $meminfo   ->getLastRecord();
 								$form_creator ->popArr['getResultSet'] = $memtype ->getMembershipTypeCodes();
 							} elseif($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] =$meminfo   ->filterMembershipInfo($getArr['id']);
@@ -2351,10 +2324,7 @@ class ViewController {
 			case 'LAN' :	$form_creator ->formPath = '/templates/eimadmin/languageinformation.php';
 							$laninfo = new LanguageInfo();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $laninfo   ->getLastRecord();
-
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] =$laninfo  ->filterLanguageInfo($getArr['id']);
 
 							}
@@ -2409,17 +2379,9 @@ class ViewController {
 
 		case 'EDU' :	$form_creator ->formPath = '/templates/eimadmin/qualifications.php';
 							$edu = new Education();
-							//$qualtype = new QualificationType();
-							//$rattype = new RatingTypes();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $edu ->getLastRecord();
-								//$form_creator ->popArr['qTypes'] = $qualtype->getQualTypes();
-								//$form_creator ->popArr['ratings'] =$rattype ->getRatings();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $edu ->filterEducation($getArr['id']);
-								//$form_creator ->popArr['qTypes'] = $qualtype->getQualTypes();
-								//$form_creator ->popArr['ratings'] = $rattype->getRatings();
 							}
 
 							break;
@@ -2504,20 +2466,6 @@ class ViewController {
 
 							break;
 
-			case 'PRO' :	$form_creator ->formPath = '/templates/eimadmin/provinceinformation.php';
-							$prov = new ProvinceInfo();
-							$country = new CountryInfo();
-
-							 $form_creator ->popArr['countrylist'] = $country->getCountryCodes();
-
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $prov ->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
-								$form_creator ->popArr['editArr'] = $prov ->filterProvinceInfo($getArr['id']);
-							}
-
-							break;
-
 			case 'DIS' :	$form_creator ->formPath = '/templates/eimadmin/districtinformation.php';
 							$disinfo = new DistrictInfo();
 							$prov = new ProvinceInfo();
@@ -2526,7 +2474,6 @@ class ViewController {
 							$form_creator ->popArr['countrylist'] = $country->getCountryCodes();
 
 							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $disinfo ->getLastRecord();
 
 								if($object != null) {
 									$form_creator -> popArr['txtDistrictDesc'] = $object -> txtDistrictDesc;
@@ -2658,9 +2605,7 @@ class ViewController {
 			case 'EEC' :	$form_creator ->formPath = '/templates/eimadmin/eeojobcat.php';
 							$eeojobcat = new EEOJobCat();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $eeojobcat->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $eeojobcat->filterEEOJobCat($getArr['id']);
 							}
 
@@ -2669,9 +2614,7 @@ class ViewController {
 			case 'LIC' :	$form_creator ->formPath = '/templates/eimadmin/licenses.php';
 							$licenses = new Licenses();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $licenses->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $licenses->filterLicenses($getArr['id']);
 							}
 
@@ -2704,9 +2647,7 @@ class ViewController {
 
 							$form_creator ->popArr['paygrade'] = $paygrade->getSalGrades();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $jobtitle->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $jobtitle->filterJobTitles($getArr['id']);
 								$form_creator ->popArr['assEmploymentStat'] = $jobtit_empstat->getAssEmpStat($getArr['id']);
 								$form_creator ->popArr['unAssEmploymentStat'] = $jobtit_empstat->getUnAssEmpStat($getArr['id']);
@@ -2718,9 +2659,7 @@ class ViewController {
 
 							$empstat = new EmploymentStatus();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $empstat->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $empstat->filterEmpStat($getArr['id']);
 							}
 
@@ -2755,9 +2694,7 @@ class ViewController {
 			case 'CUS' :	$form_creator->formPath = '/templates/eimadmin/customer.php';
 							$customer = new Customer();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $customer->getLastRecord();
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $customer->fetchCustomer($getArr['id']);
 							}
 							break;
@@ -2768,11 +2705,7 @@ class ViewController {
 							$customer = new Customer ();
 							$form_creator->popArr['cusid'] = $customer->fetchCustomers();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$project->getNewProjectId();
-								$form_creator ->popArr['newID'] = $project->getProjectId();
-
- 							} elseif($getArr['capturemode'] == 'updatemode') {
+ 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $project->fetchProject($getArr['id']) ;
 							}
 							break;
@@ -2781,7 +2714,6 @@ class ViewController {
 							$user= new Users();
 
 							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $user->getLastRecord();
 								$form_creator ->popArr['emplist'] = $user->getEmployeeCodes();
 								$form_creator ->popArr['uglist'] = $user->getUserGroupCodes();
 							} elseif($getArr['capturemode'] == 'updatemode') {
@@ -2794,10 +2726,7 @@ class ViewController {
 			case 'USG'  :	$form_creator ->formPath = '/templates/maintenance/usergroups.php';
 							$usrgrp = new UserGroups();
 
-							if($getArr['capturemode'] == 'addmode') {
-								$form_creator ->popArr['newID'] = $usrgrp->getLastRecord();
-
-							} elseif($getArr['capturemode'] == 'updatemode') {
+							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $usrgrp->filterUserGroups($getArr['id']);
 
 							}

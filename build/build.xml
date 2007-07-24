@@ -75,12 +75,7 @@
     </tar>
   </target>
 
-  <target name="dist.major">
-  	<phingcall target="dist" />
-  	<phingcall target="dist.bin.win" />
-  </target>
-
-  <target name="dist.bin.win">
+  <target name="win-dist" depends="build">
   	<echo message="Copying XAMPP files..." />
     <copy todir="${dist.dir}/installer-tmp/SOURCE/xampp">
     	<fileset dir="${xampp.dir}" >
@@ -100,11 +95,7 @@
     	</fileset>
     </copy>
     <echo message="Creating the installer..." />
-    <exec command="makensis ${dist.dir}/installer-tmp/SPEC/main.nsi" checkreturn="true" />
-  </target>
-
-  <target name="dist.win" depends="build">
-  	<phingcall target="dist.bin.win" />
+    <exec command="makensis ${dist.dir}/installer-tmp/SPEC/main.nsi" />
   </target>
 
   <target name="clean">
@@ -122,6 +113,7 @@
               </fileset>
           </batchtest>
       </phpunit2>
+      <phingcall target="fix-ids"/>
   </target>
 
   <target name="test.report" depends="prepare">
@@ -133,6 +125,7 @@
               </fileset>
           </batchtest>
       </phpunit2>
+      <phingcall target="fix-ids"/>
       <phpunit2report infile="${test.reports.dir}/testreport.xml"
           format="frames" todir="${test.reports.dir}" styledir="report-styles"/>
   </target>
@@ -141,6 +134,7 @@
   <target name="coverage" depends="prepare">
 	<exec command="phpunit --report ${test.coverage.dir} AllTests ${project.dir}/lib/AllTests.php"
 		checkreturn="true" dir="${project.basedir}" passthru="true"/>
+        <phingcall target="fix-ids"/>
   </target>
 
   <!-- The coverage target will not work if the php XDebug extension is not installed -->
@@ -188,6 +182,7 @@
               </fileset>
           </batchtest>
       </phpunit2>
+        <phingcall target="fix-ids"/>
 
       <coverage-report outfile="${test.coverage.dir}/coverage.xml">
           <report todir="${test.coverage.dir}" styledir="report-styles"/>
@@ -218,4 +213,9 @@
       <phpdoc title="OrangeHRM API Documentation" destdir="${apidocs.dir}"
           sourcepath="${project.dir}/lib" output="HTML:Smarty:PHP"/>
   </target>
-</project>
+
+  <target name="fix-ids" depends="prepare">
+      <exec command="php fix-ids.php" checkreturn="true" dir="${project.basedir}" passthru="true"/>
+  </target>
+
+</project>

@@ -43,12 +43,6 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'u
 
  	function addSave() {
 
-        if(document.frmProject.txtId.value == '') {
-            alert("<?php echo $lang_Admin_Project_Error_PleaseDSpecifyTheProjectId; ?>");
-            document.frmProject.txtId.focus();
-            return;
-        }
-
         if(document.frmProject.cmbCustomerId.value == 0) {
             alert("<?php echo $lang_Admin_Project_Error_PleaseSelectACustomer; ?>");
             document.frmProject.customerId.focus();
@@ -198,8 +192,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'u
         <input type="hidden" name="sqlState" value="">
         <div class="roundbox">
       <?php if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'addmode')) { ?>
-            <label for="txtId"><?php echo $lang_Commn_code; ?></label>
-            <input type="text" id="txtId" name="txtId" value="<?php echo $this->popArr['newID']; ?>" tabindex="1" readonly/>
+            <input type="hidden" id="txtId" name="txtId" value="" />
             <br/>
             <label for="cmbCustomerId"><span class="error">*</span> <?php echo $lang_view_CustomerName; ?></label>
             <?php
