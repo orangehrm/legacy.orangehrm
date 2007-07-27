@@ -1,6 +1,11 @@
 New & Changed Features for OrangeHRM ver 2.2_01
 
 	1. ID's now maintained in hs_hr_unique_id table.
+	   Note that if you insert data directly into the database using SQL,
+           you should run the script php build/fix-ids.php (or phing fix-ids).
+
+	2. Upgrader attempts to fix any corruption in database tables (due to running
+           on myISAM tables) before applying foreign key constraints.
 
 	BugId     Name
 	1754656   Email configuration Error

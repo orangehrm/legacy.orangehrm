@@ -10,6 +10,8 @@ build/report-styles/phpunit2-frames.xsl -text
 build/report-styles/phpunit2-noframes.xsl -text
 build/report-styles/str.replace.function.xsl -text
 build/testConf.php -text
+build/verify-constraints.sh -text
+dbscript/constraints.php -text
 dbscript/dbscript-1.sql -text
 dbscript/dbscript-2.sql -text
 dbscript/dbscript-u1.sql -text
@@ -299,6 +301,8 @@ lib/models/time/TimesheetSubmissionPeriodTest.php -text
 lib/models/time/TimesheetTest.php -text
 lib/test.bat -text
 lib/utils/AllTests.php -text
+lib/utils/ConstraintHandler.php -text
+lib/utils/ConstraintHandlerTest.php -text
 lib/utils/InstallUtilTest.php -text
 lib/utils/installUtil.php -text
 license/3RDPARTY.TXT -text
