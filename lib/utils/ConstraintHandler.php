@@ -293,9 +293,22 @@ class ConstraintHandler {
 		$checkNull = implode(" OR ", $checkNullArray);
 		$whereClause = implode(" AND ", $whereArray);
 
-		$sql = sprintf("DELETE FROM `{$table}` USING `{$table}`, `{$childTable}` WHERE NOT ({$checkNull}) AND NOT EXISTS(SELECT 1 FROM `{$childTable}` " .
-				" WHERE {$whereClause} )");
+		$countSql = "SELECT COUNT(*) FROM `{$childTable}`";
+		$result = mysql_query($countSql);
+		if (!$result) {
+			throw new ConstraintHandlerException("Error when running query: $sql. MysqlError:" . mysql_error());
+		}
+		$row = mysql_fetch_array($result, MYSQL_NUM);
+		$count = $row[0];
 
+		/* If no parents all the children have to be deleted */
+		if ($count == 0) {
+			$sql = sprintf("DELETE FROM `{$table}`");
+		} else {
+
+			$sql = sprintf("DELETE FROM `{$table}` USING `{$table}`, `{$childTable}` WHERE NOT ({$checkNull}) AND NOT EXISTS(SELECT 1 FROM `{$childTable}` " .
+					" WHERE {$whereClause} )");
+		}
 		$result = mysql_query($sql);
 
 		if (!$result) {

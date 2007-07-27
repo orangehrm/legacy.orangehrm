@@ -188,6 +188,53 @@ class ConstraintHandlerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, count($constraintHandler->getMissingConstraints($fkConstraints)));
     }
 
+    /**
+     * Test method applyConstraints() with simple on delete set null constraint
+     */
+    public function testSimpleSetNullWithNoParents() {
+
+    	$fkConstraints = array(array("test_employee", array("nation_code"), "test_nationality", array("nat_code"), "null"));
+
+		$this->assertTrue(mysql_query("INSERT INTO test_employee(emp_number,emp_firstname, nation_code) VALUES(1, 'John', 2), " .
+				"(2, 'Ruwan', 1), (3, 'Kamal', 2)"));
+
+    	$constraintHandler = new ConstraintHandler();
+    	$failed = $constraintHandler->applyConstraints($fkConstraints);
+		$this->assertEquals(0, count($failed));
+
+    	$this->assertEquals(3, $this->_countRows("test_employee"), "Shouldn't delete employees");
+    	$this->assertEquals(0, $this->_countRows("test_nationality"), "Shouldn't change nationality");
+
+    	/* Verify that nation_code is null for all employees */
+    	$this->assertEquals(3, $this->_countRows("test_employee", "nation_code IS NULL"));
+
+		/* Check the foreign key constraints have been set */
+		$this->assertEquals(0, count($constraintHandler->getMissingConstraints($fkConstraints)));
+    }
+
+    /**
+     * Test method applyConstraints() with simple on delete cascade constraint with no entries in
+     * the parent table.
+     */
+    public function testSimpleCascadeConstraintWithNoParents() {
+
+		$this->assertTrue(mysql_query("INSERT INTO test_emp_dependents(emp_number, ed_seqno, ed_name) " .
+				"VALUES(1, 1, 'Ruwan'), (1, 2, 'Kamani'), (3, 1, 'Sena'), (4, 1, 'Ravi'), (4, 2, 'Janesh'), " .
+				"(5, 1, 'Wimal')"), "Mysql Error: ". mysql_error());
+
+		$fkConstraints = array(array("test_emp_dependents", array("emp_number"), "test_employee", array("emp_number"), "cascade"));
+    	$constraintHandler = new ConstraintHandler();
+    	$failed = $constraintHandler->applyConstraints($fkConstraints);
+
+		$this->assertEquals(0, count($failed));
+
+    	$this->assertEquals(0, $this->_countRows("test_employee"), "Shouldn't delete employees");
+    	$this->assertEquals(0, $this->_countRows("test_emp_dependents"));
+
+		/* Check the foreign key constraints have been set */
+		$this->assertEquals(0, count($constraintHandler->getMissingConstraints($fkConstraints)));
+    }
+
 	/**
 	 * Test getConstraintSQL method.
 	 */
