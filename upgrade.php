@@ -105,6 +105,7 @@ function back($currScreen) {
 					break;
 
 		case 10 	: 	return false; break;
+		case 11 	: 	return false; break;
  	}
 
  	$currScreen--;
@@ -236,9 +237,17 @@ if(isset($_POST['actionResponse'])) {
 								exit(0);
 								break;
 
-		case 'REGISTER'  :	$_SESSION['CONFDONE'] = 'OK';
+		case 'REGISTER'  :	if (isset($_SESSION['UPGRADE_NOTES'])) {
+								$_SESSION['CONFDONE'] = 'OK';
+							} else {
+
+								//
+								$_SESSION['NOTESDONE'] = 'OK';
+							}
 							break;
 
+		case 'NOTESOK'   :  $_SESSION['NOTESDONE'] = 'OK';
+							break;
 
 		case 'REGINFO' 	:	$reqAccept = sockComm($_POST);
 							break;

@@ -91,6 +91,60 @@ function applyConstraints() {
 
 }
 
+/**
+ * Checks whether a module entry is there and inserts a new entry if not.
+ *
+ * @param string $modId Module ID
+ * @param string $name  Module Name
+ * @param string $owner Module owner
+ * @param string $ownerEmail Owner Email
+ * @param string $version Module version
+ * @param string $description Module description.
+ */
+function checkAndInsertModule($modId, $name, $owner, $ownerEmail, $version, $description) {
+
+	// Check if module already there
+	$countSql = "SELECT COUNT(mod_id) FROM hs_hr_module WHERE mod_id = '{$modId}'";
+	$result = mysql_query($countSql);
+
+	if (!$result) {
+		throw new Exception("Error when running query: $countSql. MysqlError:" . mysql_error());
+	}
+	$row = mysql_fetch_array($result, MYSQL_NUM);
+	$count = $row[0];
+
+	// If module is missing
+	if ($count == 0) {
+
+		if (isset($_SESSION['UPGRADE_NOTES'])) {
+			$upgradeNotes = $_SESSION['UPGRADE_NOTES'];
+		}
+
+		$upgradeNotes[] = "A new module named {$name} was added. All Admin user groups have been granted access to this module. " .
+						  "Please use the \"Users->Admin User Groups\" menu item in the Admin module to restrict access to this module as needed.";
+		$_SESSION['UPGRADE_NOTES'] = $upgradeNotes;
+
+		// Insert entry into modules table
+		$insertSql = sprintf("INSERT INTO `hs_hr_module`(mod_id, name, owner, owner_email, version, description) " .
+							 "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+							 $modId, $name, $owner, $ownerEmail, $version, $description);
+
+		$result = mysql_query($insertSql);
+		if (!$result || mysql_affected_rows() != 1) {
+			throw new Exception("Error when running query: $insertSql. MysqlError:" . mysql_error());
+		}
+
+		// Add rights to admin user groups for the new module
+		$addRightsSql = sprintf("INSERT IGNORE INTO hs_hr_rights(userg_id, mod_id, addition, editing, deletion, viewing) " .
+					"SELECT hs_hr_user_group.userg_id, '%s', 1, 1, 1, 1 FROM hs_hr_user_group", $modId);
+		$result = mysql_query($addRightsSql);
+		if (!$result) {
+			throw new Exception("Error when running query: $addRightsSql. MysqlError:" . mysql_error());
+		}
+	}
+
+}
+
 function alterOldData() {
 	connectDB();
 	$sqlQString = "UPDATE `hs_hr_employee` SET `employee_id` = `emp_number` WHERE `employee_id` IS NULL";
@@ -100,6 +154,17 @@ function alterOldData() {
 	if (!$res) {
 		$err = mysql_errno();
 		error_log (date("r")." Alter Old Data failed  with $err\n",3, "log.txt");
+		return false;
+	}
+
+	/* Insert any missing modules and assign module rights to new modules inserted */
+	try {
+		checkAndInsertModule("MOD005", "Leave", "Mohanjith", "mohanjith@beyondm.net", "VER001", "Leave Tracking");
+		checkAndInsertModule("MOD006", "Time", "Mohanjith", "mohanjith@orangehrm.com", "VER001", "Time Tracking");
+	} catch (Exception $e) {
+		$errMsg = $e->getMessage();
+		$_SESSION['error'] = $errMsg;
+		error_log (date("r")." Insert module failed with: $errMsg\n",3, "log.txt");
 		return false;
 	}
 

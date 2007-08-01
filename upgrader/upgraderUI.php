@@ -25,7 +25,9 @@ $cupath = realpath(dirname(__FILE__).'/../');
 
 define('ROOT_PATH', $cupath);
 
-if(isset($_SESSION['CONFDONE'])) {
+if(isset($_SESSION['NOTESDONE'])) {
+	$currScreen = 11;
+} else if(isset($_SESSION['CONFDONE'])) {
 	$currScreen = 10;
 } else if(isset($_SESSION['RESTORING'])) {
 	$currScreen = 9;
@@ -62,11 +64,12 @@ $steps = array('welcome',
 			   'disclaimer',
 			   'options',
 			   'OrangeHRM X.X',
-			   'Backup Data',
+			   'Backup',
 			   'database',
 			   'System Check',
 			   'Upload',
 			   'upgrading',
+			   'notes',
 			   'registration');
 
 $helpLink = array("#welcome",
@@ -79,6 +82,7 @@ $helpLink = array("#welcome",
 				  '#syscheck',
 				  "#upload",
 				  '#upgrading',
+				  '#notes',
 				  "#registration");
 
 ?>
@@ -153,7 +157,8 @@ switch ($currScreen) {
 	case 7 	: 	require(ROOT_PATH . '/upgrader/checkSystem.php'); break;
 	case 8 	: 	require(ROOT_PATH . '/upgrader/restore/restoreData.php'); break;
 	case 9 	: 	require(ROOT_PATH . '/upgrader/restore/processing.php'); break;
-	case 10	: 	require(ROOT_PATH . '/upgrader/registration.php'); break;
+	case 10	: 	require(ROOT_PATH . '/upgrader/upgradeNotes.php'); break;
+	case 11	: 	require(ROOT_PATH . '/upgrader/registration.php'); break;
 }
 ?>
 

@@ -712,6 +712,7 @@ upgrader/restore/restoreBackup.php -text
 upgrader/restore/restoreData.php -text
 upgrader/restore/restoringData.php -text
 upgrader/style.css -text
+upgrader/upgradeNotes.php -text
 upgrader/upgraderUI.php -text
 upgrader/welcome.php -text
 /view.php -text
