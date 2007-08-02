@@ -703,7 +703,6 @@ upgrader/images/progress_bar.gif -text
 upgrader/images/system_check_01.gif -text
 upgrader/images/top.gif -text
 upgrader/license.php -text
-upgrader/options.php -text
 upgrader/registration.php -text
 upgrader/restore/Restore.php -text
 upgrader/restore/RestoreTest.php -text

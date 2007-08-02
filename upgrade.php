@@ -117,20 +117,19 @@ function back($currScreen) {
 		case 0 	: 	unset($_SESSION['WELCOME']); break;
 		case 1 	: 	unset($_SESSION['LICENSE']); break;
 		case 2 	: 	unset($_SESSION['DISCLAIMER']); break;
-		case 3 	: 	unset($_SESSION['LOCCONFOPT']);	break;
-		case 4 	: 	unset($_SESSION['LOCCONF']); break;
-		case 5 	: 	unset($_SESSION['DOWNLOAD']); break;
-		case 6 	: 	unset($_SESSION['DBCONFIG']); unset($_SESSION['DBCONFOPT']); break;
-		case 7 	: 	unset($_SESSION['SYSCHECK']); break;
-		case 8 	: 	unset($_SESSION['RESTORE']); break;
-		case 9 	: 	unset($_SESSION['RESTORING']);
+		case 3 	: 	unset($_SESSION['LOCCONF']); break;
+		case 4 	: 	unset($_SESSION['DOWNLOAD']); break;
+		case 5 	: 	unset($_SESSION['DBCONFIG']); break;
+		case 6 	: 	unset($_SESSION['SYSCHECK']); break;
+		case 7 	: 	unset($_SESSION['RESTORE']); break;
+		case 8 	: 	unset($_SESSION['RESTORING']);
 					if(isset($_SESSION['DATABASE_BACKUP'])) {
 				 		include(ROOT_PATH.'/upgrader/restore/restoreBackup.php');
 					}
 					break;
 
+		case 9  	: 	return false; break;
 		case 10 	: 	return false; break;
-		case 11 	: 	return false; break;
  	}
 
  	$currScreen--;
@@ -239,8 +238,6 @@ if(isset($_POST['actionResponse'])) {
 							  }
 							  //echo '1'.$error;
 							  break;
-		case 'DBCONF'		: $_SESSION['DBCONFOPT'] = 'OK'; break;
-		case 'LOCCONF'		: $_SESSION['LOCCONFOPT'] = 'OK'; break;
 		case 'DBINFO'		: extractDbInfo();
 							  /*if (!isset($_SESSION['DBCONFIG'])) {
 							  	break;
