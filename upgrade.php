@@ -21,7 +21,7 @@
 
 function needToUpgrade() {
 
-	$currentVersion = '2.2_01';
+	$currentVersion = '2.2.0.2';
 
 	if (is_file(ROOT_PATH . '/lib/confs/Conf.php') && !isset($_SESSION['RESTORING'])) {
 
@@ -31,6 +31,12 @@ function needToUpgrade() {
 
 		$installedVersion = $confObj->version;
 
+		/* Need to handle 2.2_01 specially due to numbering change from then on.
+                 * Next version was: 2.2.0.2
+                 */
+		if ($installedVersion == "2.2_01") {
+			$installedVersion = "2.2.0.1";
+		}
 		if ((version_compare($installedVersion, $currentVersion) >= 0) && isset($confObj->upgrade) && ($confObj->upgrade)) {
 			quit();
 		}

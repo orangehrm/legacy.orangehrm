@@ -1,3 +1,13 @@
+New & Changed Features for OrangeHRM ver 2.2.0.2
+
+	1. Removed 'Create New Database' option from the upgrader
+
+	BugId     Name
+	1764128   Upgrading from 2.1 to 2.2 will not show the time module
+	1765590   Upgrading to 2.2 from 2.0 or 2.1 hides leave module
+	1765840   Upgrade from 2.0 to latest (2.2) fails due to leave changes	
+	1764192   Upgrade guide instructions may overwrite old version
+
 New & Changed Features for OrangeHRM ver 2.2_01
 
 	1. ID's now maintained in hs_hr_unique_id table.
