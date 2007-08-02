@@ -335,6 +335,7 @@ function alterOldData() {
 		UniqueIDGenerator::getInstance()->initTable();
 	} catch (IDGeneratorException $e) {
 		$errMsg = $e->getMessage() . ". Trace = " . $e->getTraceAsString();
+		$_SESSION['error'] = $errMsg;
 		error_log (date("r")." Initializing hs_hr_unique_id table failed with: $errMsg\n",3, "log.txt");
 		return false;
 	}
