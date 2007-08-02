@@ -39,7 +39,32 @@ function needToUpgrade() {
 }
 
 function parseOldData($str) {
-	return preg_replace("/EMP([0-9]{3})/", "$1", $str);
+
+	// Replace old employee ID's
+	$newStr = preg_replace("/EMP([0-9]{3})/", "$1", $str);
+
+	// Check for old format leave table (version 2.0.x)
+	$_SESSION['OLD_LEAVE_TABLE'] = false;
+
+	// Look for hs_hr_leave_requests table. It's only found in 2.1 upwards
+	$pos1 = stripos($newStr, "`hs_hr_leave_requests`");
+
+	if ($pos1 === false) {
+
+		// Look for hs_hr_leave table.
+		$pos2 = stripos($newStr, "`hs_hr_leave`");
+
+		// If we have hs_hr_leave but no hs_hr_leave_requests, we have a 2.0.x database.
+		if ($pos2 !== false) {
+
+			$_SESSION['OLD_LEAVE_TABLE'] = true;
+
+			// change hs_hr_leave to a temporary table.
+			$newStr = str_ireplace("`hs_hr_leave`", "`hs_hr_temp_leave`", $newStr);
+		}
+	}
+
+	return $newStr;
 }
 
 function quit() {

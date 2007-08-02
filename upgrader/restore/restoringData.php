@@ -35,17 +35,26 @@ function connectDB() {
 	return $connect;
 }
 
+function selectDB() {
+	if(!mysql_select_db($_SESSION['dbInfo']['dbName'])) {
+		$_SESSION['error'] = 'Unable to connect to Database!';
+		error_log (date("r")." Unable to connect to Database\n",3, "log.txt");
+		return false;
+	}
+	return true;
+}
+
 /**
  * Apply database constraints.
  *
  * @return boolean true if succeeded, false if failed.
  */
 function applyConstraints() {
-	connectDB();
-	if(!mysql_select_db($_SESSION['dbInfo']['dbName'])) {
-		$_SESSION['error'] = 'Unable to create Database!';
-		error_log (date("r")." Fill Data Phase $phase - Error - Unable to create Database\n",3, "log.txt");
-		return;
+	if (!connectDB()) {
+		return false;
+	}
+	if (!selectDB()) {
+		return false;
 	}
 
 	require_once ROOT_PATH.'/dbscript/constraints.php';
@@ -92,6 +101,24 @@ function applyConstraints() {
 }
 
 /**
+ * Convenience method that returns the count by running the given sql
+ *
+ * Throws an exception on error.
+ * @return int count
+ */
+function _getCount($sql) {
+
+	$result = mysql_query($sql);
+
+	if (!$result) {
+		throw new Exception("Error when running query: {$sql}. MysqlError:" . mysql_error());
+	}
+	$row = mysql_fetch_array($result, MYSQL_NUM);
+	$count = $row[0];
+	return $count;
+}
+
+/**
  * Checks whether a module entry is there and inserts a new entry if not.
  *
  * @param string $modId Module ID
@@ -105,13 +132,7 @@ function checkAndInsertModule($modId, $name, $owner, $ownerEmail, $version, $des
 
 	// Check if module already there
 	$countSql = "SELECT COUNT(mod_id) FROM hs_hr_module WHERE mod_id = '{$modId}'";
-	$result = mysql_query($countSql);
-
-	if (!$result) {
-		throw new Exception("Error when running query: $countSql. MysqlError:" . mysql_error());
-	}
-	$row = mysql_fetch_array($result, MYSQL_NUM);
-	$count = $row[0];
+	$count = _getCount($countSql);
 
 	// If module is missing
 	if ($count == 0) {
@@ -143,6 +164,90 @@ function checkAndInsertModule($modId, $name, $owner, $ownerEmail, $version, $des
 		}
 	}
 
+}
+
+/**
+ * Migrate old data from temporary tables
+ */
+function migrateOldData() {
+
+	if (isset($_SESSION['OLD_LEAVE_TABLE']) && ($_SESSION['OLD_LEAVE_TABLE'] === true)) {
+
+		// Double check that there are no entries in hs_hr_leave or hs_hr_leave_requests
+		$sql = "SELECT COUNT(*) FROM `hs_hr_leave`";
+		$leaveCount = _getCount($sql);
+
+		$sql = "SELECT COUNT(*) FROM `hs_hr_leave_requests`";
+		$requestCount = _getCount($sql);
+
+		if (($leaveCount == 0) && ($requestCount == 0)) {
+
+			/* We use the leave_id as the leave_request_id */
+			$insertRequestsSql = "insert into hs_hr_leave_requests(leave_request_id, leave_type_id, " .
+					"leave_type_name, date_applied, employee_id) select A.leave_id, A.leave_type_id, " .
+					"A.leave_type_name, A.date_applied, A.employee_id From hs_hr_temp_leave As A;";
+
+			$result = mysql_query($insertRequestsSql);
+			if (!$result) {
+				throw new Exception("Error when running query: $insertRequestsSql. MysqlError:" . mysql_error());
+			}
+
+	 		$insertLeave = "insert into hs_hr_leave(leave_id, leave_date, leave_length, leave_status, " .
+	 				"leave_comments, leave_request_id, leave_type_id, employee_id) select A.leave_id, " .
+	 				"A.leave_date, A.leave_length, A.leave_status, A.leave_comments, A.leave_id, A.leave_type_id, " .
+	 				"A.employee_id From hs_hr_temp_leave As A;";
+
+			$result = mysql_query($insertLeave);
+			if (!$result) {
+				throw new Exception("Error when running query: $insertLeave. MysqlError:" . mysql_error());
+			}
+
+		} else {
+			$errMsg = "Data migration: unexpected entries found in leave tables";
+			error_log (date("r")." {$errMsg}\n",3, "log.txt");
+			throw new Exception($errMsg);
+		}
+	}
+}
+
+/**
+ * Create temporary tables
+ */
+function createTempTables() {
+
+	if (isset($_SESSION['OLD_LEAVE_TABLE']) && ($_SESSION['OLD_LEAVE_TABLE'] === true)) {
+
+		$sql = 'create table `hs_hr_temp_leave` (' .
+			  '`leave_id` int(11) not null, ' .
+			  '`employee_id` varchar(6) not null, ' .
+			  '`leave_type_id` varchar(6) not null, ' .
+			  '`leave_type_name` varchar(20) not null, ' .
+			  '`date_applied` date default null, ' .
+			  '`leave_date` date default null, ' .
+			  '`leave_length` smallint(6) default null, ' .
+			  '`leave_status` smallint(6) default null, ' .
+			  '`leave_comments` varchar(80) default null, ' .
+			  'primary key  (`leave_id`,`employee_id`,`leave_type_id`) ' .
+			  ') engine=innodb default charset=utf8';
+
+
+		$result = mysql_query($sql);
+		if (!$result) {
+			$errMsg = mysql_error();
+			$_SESSION['error'] = $errMsg;
+			error_log (date("r")." Create hs_hr_temp_leave table Failed\nError: {$errMsg}",3, "log.txt");
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Drop temporary tables created earlier.
+ */
+function dropTempTables() {
+	mysql_query("DROP TABLE IF EXISTS `hs_hr_temp_leave`");
 }
 
 function alterOldData() {
@@ -354,23 +459,45 @@ if (isset($_SESSION['RESTORING'])) {
 
 		case 2	:	error_log (date("r")." Getting the file content  - \n",3, "log.txt");
 					error_log (date("r")." File content ok  - \n",3, "log.txt");
-					$restorex = new Restore();
-					//$connection = mysql_connect($_SESSION['dbInfo']['dbHostName'], $_SESSION['dbInfo']['dbUserName'], $_SESSION['dbInfo']['dbPassword']);	 			//
-					//mysql_close();
-					$restorex->setConnection($conn);
-					$restorex->setDatabase($_SESSION['dbInfo']['dbName']);
-					$restorex->setFileSource($_SESSION['FILEDUMP']);
-					error_log (date("r")." Fill Data  - Starting\n",3, "log.txt");
-					$res = $restorex->fillDatabase();
-					if ($res) {
-						$_SESSION['RESTORING'] = 3;
-						error_log (date("r")." Fill Data - Finished \n",3, "log.txt");
 
-					} else {
-						$_SESSION['error'] = mysql_error();
-						error_log (date("r")." Fill Data - Failed \n",3, "log.txt");
-						error_log (date("r")." Fill Data - Error \n ".mysql_error()."\n" ,3, "log.txt");
+					$res = connectDB();
+					if ($res) {
+						$res = selectDB();
 					}
+
+					if ($res) {
+						$res = createTempTables();
+					}
+
+					if ($res) {
+						$restorex = new Restore();
+						//$connection = mysql_connect($_SESSION['dbInfo']['dbHostName'], $_SESSION['dbInfo']['dbUserName'], $_SESSION['dbInfo']['dbPassword']);	 			//
+						//mysql_close();
+						$restorex->setConnection($conn);
+						$restorex->setDatabase($_SESSION['dbInfo']['dbName']);
+						$restorex->setFileSource($_SESSION['FILEDUMP']);
+						error_log (date("r")." Fill Data  - Starting\n",3, "log.txt");
+						$res = $restorex->fillDatabase();
+						if ($res) {
+							error_log (date("r")." Fill Data - Finished \n",3, "log.txt");
+
+							/* Migrate old data */
+							try {
+								migrateOldData();
+								$_SESSION['RESTORING'] = 3;
+								error_log (date("r")." Data migration finished\n",3, "log.txt");
+							} catch (Exception $e) {
+								$errMsg = $e->getMessage();
+								$_SESSION['error'] = $errMsg;
+								error_log (date("r")." Data migration failed with: $errMsg\n",3, "log.txt");
+							}
+						} else {
+							$_SESSION['error'] = mysql_error();
+							error_log (date("r")." Fill Data - Failed \n",3, "log.txt");
+							error_log (date("r")." Fill Data - Error \n ".mysql_error()."\n" ,3, "log.txt");
+						}
+					}
+					dropTempTables();
 					break;
 		case 3 	:	if(applyConstraints()) {
 						fillData(2);
