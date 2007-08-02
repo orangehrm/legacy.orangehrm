@@ -9,6 +9,7 @@ New & Changed Features for OrangeHRM ver 2.2.0.2
 	1764192   Upgrade guide instructions may overwrite old version
 	1766085   Adding image when creating employee in PIM - fails
 	1766090   Adding first user after install fails
+	1766276	  Newly added supervisor not seen
 
 New & Changed Features for OrangeHRM ver 2.2_01
 
