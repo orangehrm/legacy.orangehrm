@@ -7,6 +7,7 @@ New & Changed Features for OrangeHRM ver 2.2.0.2
 	1765590   Upgrading to 2.2 from 2.0 or 2.1 hides leave module
 	1765840   Upgrade from 2.0 to latest (2.2) fails due to leave changes	
 	1764192   Upgrade guide instructions may overwrite old version
+	1766085   Adding image when creating employee in PIM - fails
 
 New & Changed Features for OrangeHRM ver 2.2_01
 
