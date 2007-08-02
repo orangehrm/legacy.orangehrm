@@ -101,6 +101,20 @@ function applyConstraints() {
 }
 
 /**
+ * Convenience method that adds the given message to the upgrade notes list
+ *
+ * @param string $note The upgrade note to add to the list
+ */
+function _appendUpgradeNote($note) {
+
+	if (isset($_SESSION['UPGRADE_NOTES'])) {
+		$upgradeNotes = $_SESSION['UPGRADE_NOTES'];
+	}
+	$upgradeNotes[] = $note;
+	$_SESSION['UPGRADE_NOTES'] = $upgradeNotes;
+}
+
+/**
  * Convenience method that returns the count by running the given sql
  *
  * Throws an exception on error.
@@ -116,6 +130,44 @@ function _getCount($sql) {
 	$row = mysql_fetch_array($result, MYSQL_NUM);
 	$count = $row[0];
 	return $count;
+}
+
+/**
+ * Fix issue with 2.1 and 2.0 where admin groups didn't have permission for
+ * the leave module by default. The admin groups could view the leave module without permission
+ * due to a bug.
+ */
+function fixLeaveModulePermissions() {
+
+	if (isset($_SESSION['PREV_VERSION'])) {
+		$prevVersion = $_SESSION['PREV_VERSION'];
+
+		/* check if version between 2.0 and 2.1 (inclusive) */
+		if (version_compare($prevVersion, "2.0", ">=") && version_compare($prevVersion, "2.1", "<=")) {
+
+			$leaveModId = "MOD005";
+			error_log (date("r")." Previous version {$prevVersion} is between 2.0 and 2.1.\n",3, "log.txt");
+
+			/* Check if at least one group has permissions to view the leave module */
+			$sql = "SELECT COUNT(*) FROM hs_hr_rights WHERE mod_id = '{$leaveModId}' ";
+			$count = _getCount($sql);
+
+			if ($count == 0) {
+
+				/* Unlikely that no admin group has access to the leave module. Therefore grant access */
+				$addRightsSql = "INSERT IGNORE INTO hs_hr_rights(userg_id, mod_id, addition, editing, deletion, viewing) " .
+							    "SELECT hs_hr_user_group.userg_id, '{$leaveModId}', 1, 1, 1, 1 FROM hs_hr_user_group";
+				$result = mysql_query($addRightsSql);
+				if (!$result) {
+					throw new Exception("Error when running query: {$addRightsSql}. MysqlError:" . mysql_error());
+				}
+
+			}
+			$message = "Access rights to the Leave module may have changed due to changes in the way OrangeHRM handles access rights. " .
+                       "Please use the \"Users->Admin User Groups\" menu item in the Admin module to restrict access to this module as needed.";
+			_appendUpgradeNote($message);
+		}
+	}
 }
 
 /**
@@ -137,13 +189,9 @@ function checkAndInsertModule($modId, $name, $owner, $ownerEmail, $version, $des
 	// If module is missing
 	if ($count == 0) {
 
-		if (isset($_SESSION['UPGRADE_NOTES'])) {
-			$upgradeNotes = $_SESSION['UPGRADE_NOTES'];
-		}
-
-		$upgradeNotes[] = "A new module named {$name} was added. All Admin user groups have been granted access to this module. " .
-						  "Please use the \"Users->Admin User Groups\" menu item in the Admin module to restrict access to this module as needed.";
-		$_SESSION['UPGRADE_NOTES'] = $upgradeNotes;
+		$note = "A new module named {$name} was added. All Admin user groups have been granted access to this module. " .
+                "Please use the \"Users->Admin User Groups\" menu item in the Admin module to restrict access to this module as needed.";
+		_appendUpgradeNote($note);
 
 		// Insert entry into modules table
 		$insertSql = sprintf("INSERT INTO `hs_hr_module`(mod_id, name, owner, owner_email, version, description) " .
@@ -270,6 +318,15 @@ function alterOldData() {
 		$errMsg = $e->getMessage();
 		$_SESSION['error'] = $errMsg;
 		error_log (date("r")." Insert module failed with: $errMsg\n",3, "log.txt");
+		return false;
+	}
+
+	try {
+		fixLeaveModulePermissions();
+	} catch (Exception $e) {
+		$errMsg = $e->getMessage();
+		$_SESSION['error'] = $errMsg;
+		error_log (date("r")." Fixing leave module failed with: $errMsg\n",3, "log.txt");
 		return false;
 	}
 

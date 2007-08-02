@@ -155,6 +155,11 @@ function fetchDbInfo($location) {
 
 		$_SESSION['dbInfo'] = $dbInfo;
 
+		/* Conf->version only available from 2.0 */
+		if (isset($confObj->version)) {
+			$_SESSION['PREV_VERSION'] = ($confObj->version);
+		}
+
 		if(@mysql_connect($dbInfo['dbHostName'].':'.$dbInfo['dbHostPort'], $dbInfo['dbOHRMUserName'], $dbInfo['dbOHRMPassword'])) {
 
 			if (!mysql_select_db($dbInfo['dbName'])) {
