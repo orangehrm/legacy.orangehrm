@@ -11,6 +11,8 @@ New & Changed Features for OrangeHRM ver 2.2.0.2
 	1766090   Adding first user after install fails
 	1766276	  Newly added supervisor not seen
 	1769115   Leave Module not listed after upgrading to 2.2.0.2
+	1755261   The images for tabs don't work in IE
+	1769824   Report-to - do not assign with non English language packs
 
 New & Changed Features for OrangeHRM ver 2.2_01
 
