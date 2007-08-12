@@ -459,6 +459,10 @@
 	$lang_hremp_name 						= "Name";
 	$lang_hremp_InvalidPhone				= "Not a valid phone/fax number";
 	$lang_hremp_largefileignore				= "1M Max, any larger attachments will be ignored";
+	$lang_hremp_PleaseSelectFile				= "Please select a file.";
+	$lang_hremp_ShowFile					= "Show File";
+	$lang_hremp_Save					= "Save";
+	$lang_hremp_Delete					= "Delete";
 	$lang_lang_uploadfailed					= "Upload Failed";
 
 	$lang_hremp_browse						= "Browse";

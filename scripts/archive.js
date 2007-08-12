@@ -125,3 +125,12 @@
 		//need to work
 		document.forms[0].reset('');
 	}
+
+	/**
+	 * Trim whitespace from a string.
+	 */
+	function trim(s) {
+		return s.replace(/^\s+|\s+$/g,"");
+	}
+
+
