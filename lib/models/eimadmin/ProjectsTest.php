@@ -151,6 +151,21 @@ class ProjectTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($expected[$i][3], $res[$i]->getProjectDescription(),'Wrong Project Description ');
 			$this->assertEquals($expected[$i][4], $res[$i]->getDeleted(),'Invalid description');
       	}
+
+      	// Delete one project
+      	mysql_query("UPDATE `hs_hr_project` SET deleted = 1 WHERE project_id = 1001");
+
+      	// By default, all projects are returned
+      	$res = $this->classProject->fetchProjects();
+      	$this->assertNotNull($res, "record Not found");
+      	$this->assertEquals(count($res), 3,'count incorrect');
+
+      	// Fetch only NOT DELETED projects
+      	$res = $this->classProject->setDeleted(Projects::PROJECT_NOT_DELETED);
+      	$res = $this->classProject->fetchProjects();
+      	$this->assertNotNull($res, "record Not found");
+      	$this->assertEquals(count($res), 2,'count incorrect');
+
 	}
 
 	public function testGetListOfProjects() {

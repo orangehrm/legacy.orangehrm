@@ -345,7 +345,7 @@ function deleteTimeEvents() {
 
 				$projectDet = $projectObj->fetchProject($projectId);
 
-				$customerDet = $customerObj->fetchCustomer($projectDet->getCustomerId());
+				$customerDet = $customerObj->fetchCustomer($projectDet->getCustomerId(), true);
 			?>
 			<tr id="row[<?php echo $row; ?>]">
 				<td class="tableMiddleLeft"></td>

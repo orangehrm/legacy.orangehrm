@@ -187,6 +187,7 @@ class TimeController {
 			$projectObj->setCustomerId($customerId);
 		}
 
+		$projectObj->setDeleted(Projects::PROJECT_NOT_DELETED);
 		$projects = $projectObj->fetchProjects();
 
 		$projectArr = null;
@@ -360,6 +361,8 @@ class TimeController {
 
 		$customers = $customerObj->fetchCustomers();
 
+		// Only fetch non-deleted projects
+		$projectObj->setDeleted(Projects::PROJECT_NOT_DELETED);
 		$projects = $projectObj->fetchProjects();
 
 		$employeeObj = new EmpInfo();

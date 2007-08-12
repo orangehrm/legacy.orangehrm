@@ -212,7 +212,7 @@ function actionApprove() {
 
 			foreach ($timeExpenses as $project=>$timeExpense) {
 				$projectDet = $projectObj->fetchProject($project);
-				$customer = $customerObj->fetchCustomer($projectDet->getCustomerId());
+				$customer = $customerObj->fetchCustomer($projectDet->getCustomerId(), true);
 			?>
 			<tr>
 				<td class="tableMiddleLeft"></td>
