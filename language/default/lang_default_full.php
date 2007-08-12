@@ -838,11 +838,15 @@
 	$lang_rep_WorkExperience = "Work Experience";
 
 	$lang_rep_SelectAtLeaseOneUserGroupToAssign = "Select at least one User Group check box to assign";
+	$lang_rep_SelectAtLeaseOneUserGroupToDelete = "Select at least one User Group check box to delete";
 
 	$lang_rep_ReportDefinition = "Report Definition";
 	$lang_rep_AssignUserGroups = "Assign User Groups";
 	$lang_rep_UserGroups = "User Groups";
+	$lang_rep_UserGroup = "User Group";
 	$lang_rep_NoUserGroupsAssigned = "No User Groups Assigned";
+	$lang_rep_SelectUserGroup = "Select User Group";
+	$lang_rep_NoGroupSelected = "Please select a user group to assign";
 
 	// Skills
 	$lang_Admin_Skill_Errors_NameCannotBeBlank = "Name cannot be a blank value!";

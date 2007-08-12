@@ -1,3 +1,8 @@
+New & Changed Features for OrangeHRM ver 2.2.0.3
+
+	BugId     Name
+	1758646   Define Report - Assign User Group - No option to save
+
 New & Changed Features for OrangeHRM ver 2.2.0.2
 
 	1. Removed 'Create New Database' option from the upgrader
