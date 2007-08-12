@@ -2,6 +2,12 @@ New & Changed Features for OrangeHRM ver 2.2.0.3
 
 	BugId     Name
 	1758646   Define Report - Assign User Group - No option to save
+	1747768   ESS user Attachments pane should not view 
+	1720647   No validation for SMTP port no
+	1739556   Admin-> Pay Grade : step increase can exceed Maximum salary
+	1756630   When customer deleted, related timesheets not shown
+	1756632   When customer deleted, related projects are not deleted
+	1739533   Russian language pack     88912
 
 New & Changed Features for OrangeHRM ver 2.2.0.2
 
