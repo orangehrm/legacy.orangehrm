@@ -210,6 +210,7 @@
 
 	$lang_Common_Sort_ASC = "Ascending";
 	$lang_Common_Sort_DESC = "Descending";
+	$lang_Common_EncounteredTheFollowingProblems = "Encountered the following problems";
 
 	$lang_Leave_Common_Weekend 				= "Weekend";
 
@@ -755,6 +756,8 @@
 	$lang_SmtpPort = "SMTP Port";
 	$lang_SmtpUser = "SMTP User";
 	$lang_SmtpPassword = "SMTP Password";
+	$lang_Error_Invalid_Port = "Invalid SMTP Port";
+
 	//Projects
 	$lang_view_ProjectId = "Project Id";
 	$lang_view_ProjectName = "Project Name";
