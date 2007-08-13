@@ -2,12 +2,13 @@ New & Changed Features for OrangeHRM ver 2.2.0.3
 
 	BugId     Name
 	1758646   Define Report - Assign User Group - No option to save
-	1747768   ESS user Attachments pane should not view 
+	1747768   ESS user Attachments pane should not view
 	1720647   No validation for SMTP port no
 	1739556   Admin-> Pay Grade : step increase can exceed Maximum salary
 	1756630   When customer deleted, related timesheets not shown
 	1756632   When customer deleted, related projects are not deleted
 	1739533   Russian language pack     88912
+	1759410   No of days of leave in subject is incorrect
 
 New & Changed Features for OrangeHRM ver 2.2.0.2
 
@@ -16,7 +17,7 @@ New & Changed Features for OrangeHRM ver 2.2.0.2
 	BugId     Name
 	1764128   Upgrading from 2.1 to 2.2 will not show the time module
 	1765590   Upgrading to 2.2 from 2.0 or 2.1 hides leave module
-	1765840   Upgrade from 2.0 to latest (2.2) fails due to leave changes	
+	1765840   Upgrade from 2.0 to latest (2.2) fails due to leave changes
 	1764192   Upgrade guide instructions may overwrite old version
 	1766085   Adding image when creating employee in PIM - fails
 	1766090   Adding first user after install fails
