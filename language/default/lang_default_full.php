@@ -160,12 +160,13 @@
 	$lang_Menu_Leave_DefineDaysOff_Weekends 			= "Weekends";
 	$lang_Menu_Leave_DefineDaysOff_SpecificHolidays 	= "Specific Holidays";
 
- 	$lang_Leave_Title_Apply_Leave 						= "Apply Leave";
- 	$lang_Leave_Title_Assign_Leave 						= "Assign Leave";
-	$lang_Leave_APPLY_SUCCESS 						= "Apply succeeded";
-	$lang_Leave_APPLY_FAILURE 						= "Apply failed";
-	$lang_Leave_APPROVE_SUCCESS 						= "Leave Assigned";
-	$lang_Leave_APPROVE_FAILURE 						= "Leave Assign failed";
+ 	$lang_Leave_Title_Apply_Leave = "Apply Leave";
+ 	$lang_Leave_Title_Assign_Leave = "Assign Leave";
+	$lang_Leave_APPLY_SUCCESS = "Apply succeeded";
+	$lang_Leave_APPLY_FAILURE = "Apply failed";
+	$lang_Leave_APPROVE_SUCCESS = "Leave Assigned";
+	$lang_Leave_APPROVE_FAILURE = "Leave Assign failed";
+	$lang_Leave_CANCEL_SUCCESS = "Successfully cancelled";
 
 	// Report
 	$lang_Menu_Reports = "Reports";
@@ -998,4 +999,10 @@
 	$lang_mtview_ADD_FAILURE 				= "Failed to Add";
 	$lang_mtview_UPDATE_FAILURE 			= "Failed to Update";
 	$lang_mtview_DELETE_FAILURE 			= "Failed to Delete";
+
+	$lang_Common_Yes = "Yes";
+	$lang_Common_No = "No";
+
+	$lang_Leave_DoYouWantToCancelTheLeaveYouJustAssigned = "Do you want to cancel the leave you just assigned?";
+	$lang_Leave_PleaseProvideAReason = "Please provide a reason";
 ?>

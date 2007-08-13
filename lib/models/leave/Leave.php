@@ -262,7 +262,7 @@ class Leave {
 		$joinConditions[2] = "a.`employee_id` = c.`emp_number`";
 
 		$query = $sqlBuilder->selectFromMultipleTable($arrFields, $arrTables, $joinConditions, $selectConditions);
-		//echo $query."<br>";
+
 		$dbConnection = new DMLFunctions();
 
 		$result = $dbConnection->executeQuery($query);
