@@ -32,41 +32,43 @@ class EXTRACTOR_TimeEvent {
 		for ($i=0; $i<count($postArr['cmbCustomer']); $i++) {
 				$tmpObj = new TimeEvent();
 
-				$tmpObj->setProjectId($postArr['cmbProject'][$i]);
-
-				if (!empty($postArr['txtStartTime'][$i])) {
-					$tmpObj->setStartTime($postArr['txtStartTime'][$i]);
+				$projectId = $postArr['cmbProject'][$i];
+				if (empty($projectId)) {
+					continue;
 				}
 
-				if (!empty($postArr['txtEndTime'][$i])) {
-					$tmpObj->setEndTime($postArr['txtEndTime'][$i]);
+				$tmpObj->setProjectId($projectId);
+
+				$txtStartTime = trim($postArr['txtStartTime'][$i]);
+				if (!empty($txtStartTime)) {
+					$tmpObj->setStartTime($txtStartTime);
 				}
 
-				$tmpObj->setReportedDate($postArr['txtReportedDate'][$i]);
+				$txtEndTime = trim($postArr['txtEndTime'][$i]);
+				if (!empty($txtEndTime)) {
+					$tmpObj->setEndTime($txtEndTime);
+				}
 
-				if (isset($postArr['txtDuration'][$i]) && !empty($postArr['txtDuration'][$i])) {
-					$tmpObj->setDuration($postArr['txtDuration'][$i]*3600);
-				} else if (isset($postArr['txtStartTime'][$i]) && isset($postArr['txtEndTime'][$i])){
-					$startTime=strtotime($postArr['txtStartTime'][$i]);
-					$endTime=strtotime($postArr['txtEndTime'][$i]);
-					if ($endTime > $startTime) {
-						$tmpObj->setDuration($endTime-$startTime);
-					} else {
-						$tmpObj->setDuration(0);
+				$txtReportedDate = trim($postArr['txtReportedDate'][$i]);
+				$tmpObj->setReportedDate($txtReportedDate);
+
+				if (isset($postArr['txtDuration'][$i])) {
+
+					$txtDuration = trim($postArr['txtDuration'][$i]);
+					if (!empty($txtDuration)) {
+						$tmpObj->setDuration($txtDuration*3600);
 					}
 				}
 
 				$tmpObj->setDescription(stripslashes($postArr['txtDescription'][$i]));
 
 				if (isset($postArr['txtTimeEventId'][$i])) {
-					$tmpObj->setTimeEventId($postArr['txtTimeEventId'][$i]);
+					$tmpObj->setTimeEventId(trim($postArr['txtTimeEventId'][$i]));
 				}
-				$tmpObj->setEmployeeId($postArr['txtEmployeeId']);
-				$tmpObj->setTimesheetId($postArr['txtTimesheetId']);
+				$tmpObj->setEmployeeId(trim($postArr['txtEmployeeId']));
+				$tmpObj->setTimesheetId(trim($postArr['txtTimesheetId']));
 
-				if (!empty($postArr['cmbProject'][$i])) {
-					$tmpArr[] = $tmpObj;
-				}
+				$tmpArr[] = $tmpObj;
 		}
 
 		return $tmpArr;

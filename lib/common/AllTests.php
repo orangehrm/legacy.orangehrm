@@ -22,11 +22,12 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'common_AllTests::main');
 }
 set_include_path(get_include_path() . PATH_SEPARATOR . "../../build");
- 
+
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
- 
+
 require_once 'authorizeTest.php';
+require_once 'CommonFunctionsTest.php';
 require_once 'UniqueIDGeneratorTest.php';
 
  
@@ -36,16 +37,17 @@ class common_AllTests
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
- 
+
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('OrangeHRM common');
         $suite->addTestSuite('authorizeTest');
+        $suite->addTestSuite('CommonFunctionsTest');
 	$suite->addTestSuite('UniqueIDGeneratorTest');
         return $suite;
     }
 }
- 
+
 if (PHPUnit_MAIN_METHOD == 'common_AllTests::main') {
     common_AllTests::main();
 }
