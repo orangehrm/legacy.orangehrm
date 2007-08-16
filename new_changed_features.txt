@@ -10,6 +10,7 @@ New & Changed Features for OrangeHRM ver 2.2.0.3
 	1739533   Russian language pack     88912
 	1759410   No of days of leave in subject is incorrect
 	1755951   Unable to delete/edit Leave
+	1756001   Upgrade issue from 2.2-rc2 to 2.2 (Upload limit)
 
 New & Changed Features for OrangeHRM ver 2.2.0.2
 
