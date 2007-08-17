@@ -275,7 +275,7 @@
 	$lang_Leave_Leave_Type_Summary_Title 	= "Leave Types";
 	$lang_Leave_Leave_Holiday_Specific_Title = "Define Days Off : Specific Holidays";
 	$lang_Leave_Leave_Holiday_Weeked_Title 	= "Define Days Off : Weekend";
-	$lang_Leave_Summary_Deleted_Types_Shown = "Denotes deleted leave types."; 
+	$lang_Leave_Summary_Deleted_Types_Shown = "Denotes deleted leave types.";
         $lang_Leave_Summary_Deleted_Types_MoreInfo = "Deleted leave types are shown here if employees have used these leave types before they were deleted. Deleted leave types are retained in the system but cannot be used for new leave requests.";
         $lang_Leave_Summary_Deleted_Types_Manage = "If you wish to completely remove them from the system, click: ";
         $lang_Leave_Summary_Deleted_Types_Manage_LoginAsAdmin = "Login as an Admin to manage deleted leave types.";
@@ -1007,10 +1007,12 @@
 
 	$lang_Time_Errors_PleaseAddAComment = "Please add a comment";
 
-	$lang_mtview_ADD_SUCCESS 				= "Successfully Added";
-	$lang_mtview_UPDATE_SUCCESS 			= "Successfully Updated";
-	$lang_mtview_DELETE_SUCCESS 			= "Successfully Deleted";
-	$lang_mtview_ADD_FAILURE 				= "Failed to Add";
-	$lang_mtview_UPDATE_FAILURE 			= "Failed to Update";
-	$lang_mtview_DELETE_FAILURE 			= "Failed to Delete";
+	$lang_mtview_ADD_SUCCESS = "Successfully Added";
+	$lang_mtview_UPDATE_SUCCESS = "Successfully Updated";
+	$lang_mtview_DELETE_SUCCESS = "Successfully Deleted";
+	$lang_mtview_ADD_FAILURE = "Failed to Add";
+	$lang_mtview_UPDATE_FAILURE = "Failed to Update";
+	$lang_mtview_DELETE_FAILURE = "Failed to Delete";
+
+	$Lang_view_DUPLICATE_NAME_FAILURE = "The same name is already used";
 ?>

@@ -1020,4 +1020,6 @@
 
 	$lang_Leave_DoYouWantToCancelTheLeaveYouJustAssigned = "Do you want to cancel the leave you just assigned?";
 	$lang_Leave_PleaseProvideAReason = "Please provide a reason";
+
+	$lang_view_DUPLICATE_NAME_FAILURE = "The same name is already used";
 ?>

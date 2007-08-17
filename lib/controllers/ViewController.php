@@ -1,21 +1,21 @@
 <?php
-/*
-* OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
-* all the essential functionalities required for any enterprise.
-* Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
-*
-* OrangeHRM is free software; you can redistribute it and/or modify it under the terms of
-* the GNU General Public License as published by the Free Software Foundation; either
-* version 2 of the License, or (at your option) any later version.
-*
-* OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along with this program;
-* if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-* Boston, MA  02110-1301, USA
-*/
+/**
+ * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * all the essential functionalities required for any enterprise.
+ * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ *
+ * OrangeHRM is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA
+ */
 
 require_once ROOT_PATH . '/lib/exception/ExceptionHandler.php';
 
@@ -1096,7 +1096,7 @@ class ViewController {
 
 
 	function addData($index,$object,$noRedirect = false) {
-
+		try {
 			switch ($index) {
 
 				case 'EST'  :		$empstat = new EmploymentStatus();
@@ -1366,7 +1366,12 @@ class ViewController {
 
 
 			}
-
+		} catch (Exception $e) {
+			if ($e->getCode() == 1) {
+				$res=false;
+				$showMsg="DUPLICATE_NAME_FAILURE";
+			}
+		}
 			// Checking whether the $message Value returned is 1 or 0
 			if ($res) {
 
@@ -1421,7 +1426,9 @@ class ViewController {
 
 				$esp = isset($_GET['isAdmin'])? ('&isAdmin='.$_GET['isAdmin']) : '';
 
-				$showMsg = "ADD_FAILURE";
+				if (!isset($showMsg) || empty($showMsg)) {
+					$showMsg = "ADD_FAILURE";
+				}
 
 				$uniqcode = $index;
 				header("Location: ./CentralController.php?msg=$showMsg&capturemode=addmode&uniqcode={$uniqcode}{$esp}");
@@ -1461,7 +1468,7 @@ class ViewController {
     }
 
 	function updateData($index,$id,$object,$noRedirect = false) {
-
+		try {
 			switch ($index) {
 
 				case 'EST'  :		$empstat = new EmploymentStatus();
@@ -1730,7 +1737,12 @@ class ViewController {
 									}
 									break;
 			}
-
+		} catch (Exception $e) {
+			if ($e->getCode() == 1) {
+				$res=false;
+				$showMsg="DUPLICATE_NAME_FAILURE";
+			}
+		}
 			// Checking whether the $message Value returned is 1 or 0
 			if ($res) {
 
@@ -1757,8 +1769,9 @@ class ViewController {
 				}
 
 			} else {
-
-				$showMsg = "UPDATE_FAILURE";
+				if (!isset($showMsg) || empty($showMsg)) {
+					$showMsg = "UPDATE_FAILURE";
+				}
 
 				$uniqcode = $index;
 
