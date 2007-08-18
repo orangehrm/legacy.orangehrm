@@ -667,7 +667,7 @@ class TimeController {
 			}
 		} else if (!empty($eventStartTime) && !empty($eventEndTime)) {
 
-			if (!empty($duration) && $newEvent) {var_dump($duration);
+			if (!empty($duration) && $newEvent) {
 				return self::NotAllowedToSpecifyDurationAndInterval_ERROR;
 			}
 
