@@ -397,6 +397,7 @@ templates/hrfunct/hrempwrkexp.php -text
 templates/hrfunct/photohandler.php -text
 templates/hrfunct/relogin.htm -text
 templates/leave/changeStatus.php -text
+templates/leave/deletedLeaveInfo.php -text
 templates/leave/footer.php -text
 templates/leave/header.php -text
 templates/leave/leaveApply.php -text

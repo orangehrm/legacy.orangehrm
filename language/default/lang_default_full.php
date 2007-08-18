@@ -278,11 +278,21 @@
 	$lang_Leave_Leave_Holiday_Weeked_Title 	= "Define Days Off : Weekend";
 	$lang_Leave_Summary_Deleted_Types_Shown = "Denotes deleted leave types.";
         $lang_Leave_Summary_Deleted_Types_MoreInfo = "Deleted leave types are shown here if employees have used these leave types before they were deleted. Deleted leave types are retained in the system but cannot be used for new leave requests.";
-        $lang_Leave_Summary_Deleted_Types_Manage = "If you wish to completely remove them from the system, click: ";
-        $lang_Leave_Summary_Deleted_Types_Manage_LoginAsAdmin = "Login as an Admin to manage deleted leave types.";
-        $lang_Leave_Summary_Manage_Deleted_Types = "Manage deleted leave types";
 
 	$lang_Leave_Holiday = "Holiday";
+
+	$lang_Leave_Define_IsDeletedName  	= "Deleted Leave Type exists with the same name.";
+	$lang_Leave_Define_UndeleteLeaveType    = "To re-use deleted leave type instead of creating a new leave type, click:";
+	$lang_Leave_NAME_IN_USE_ERROR 		= "Leave Type name is in use. Choose another name.";
+	$lang_Leave_ADD_FAILURE			= "Failed to Add";
+	$lang_Leave_ADD_SUCCESS 		= "Successfully Added";
+	$lang_Leave_LEAVE_TYPE_NOT_FOUND_ERROR 	= "Leave type not found";
+	$lang_Leave_UNDELETE_SUCCESS		= "Leave type successfully undeleted.";
+	$lang_Leave_DUPLICATE_LEAVE_TYPE_ERROR  = "Duplicate leave type names specified. Leave type names should be unique.";
+	$lang_Leave_LEAVE_TYPE_EDIT_ERROR       = "Error saving changes";
+	$lang_Leave_LEAVE_TYPE_EDIT_SUCCESS     = "Changes saved successfully";
+	$lang_Leave_NO_CHANGES_TO_SAVE_WARNING  = "No changes to save";
+	$lang_Leave_Undelete			= "Undelete";
 
 	$lang_bankInformation_code 				= "Code";
 	$lang_bankInformation_description 		= "Description";

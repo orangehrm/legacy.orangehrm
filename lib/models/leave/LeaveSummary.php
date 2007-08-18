@@ -110,7 +110,7 @@ class LeaveSummary extends LeaveQuota {
 	/**
 	 * Leave summary of all employees
 	 */
-	public function fetchAllEmployeeLeaveSummary($employeeId, $year, $leaveTypeId = self::LEAVESUMMARY_CRITERIA_ALL, $searchBy="employee", $sortField=null, $sortOrder=null) {
+	public function fetchAllEmployeeLeaveSummary($employeeId, $year, $leaveTypeId = self::LEAVESUMMARY_CRITERIA_ALL, $searchBy="employee", $sortField=null, $sortOrder=null, $hideDeleted=false) {
 
 		$selectFields[0] = "a.`emp_number` as emp_number";
 		$selectFields[1] = "CONCAT(a.`emp_firstname`, ' ', a.`emp_lastname`) as employee_name";
@@ -158,7 +158,11 @@ class LeaveSummary extends LeaveQuota {
 		$query = $sqlBuilder->selectFromMultipleTable($selectFields, $arrTables, $joinConditions, $selectConditions, null, $orderBy, $sortOrder, null, $groupBy);
 
 		$objLeaveType = new LeaveType();
-		$query = "SELECT * FROM ( $query ) subsel WHERE available_flag = {$objLeaveType->availableStatusFlag} OR leave_taken > 0 OR leave_scheduled > 0";
+
+		$query = "SELECT * FROM ( $query ) subsel WHERE available_flag = {$objLeaveType->availableStatusFlag}";
+		if (!$hideDeleted) {
+			$query = $query . " OR leave_taken > 0 OR leave_scheduled > 0";
+		}
 
 		$dbConnection = new DMLFunctions();
 		$result = $dbConnection->executeQuery($query);

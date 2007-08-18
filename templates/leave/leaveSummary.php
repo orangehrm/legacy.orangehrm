@@ -24,6 +24,7 @@
 
  array_pop($records);
 
+ $deletedLeaveTypesFound = false;
  $auth = $modifier[1];
  $dispYear = $modifier[2];
 
@@ -161,7 +162,6 @@
 	}
 
 ?>
-
 </script>
 <h2><?php echo $lang_Title; ?><hr/></h2>
 <?php
@@ -291,27 +291,32 @@
 	$j = 0;
 	if (is_array($records[0])) {
 		  foreach ($records[0] as $record) {
-			if(!($j%2)) {
-				$cssClass = 'odd';
-			 } else {
-			 	$cssClass = 'even';
-			 }
-			 $j++;
+			$cssClass = (!($j%2)) ? 'odd' : 'even';
+			$j++;
+
+			if ($record['available_flag'] == $leaveTypeObj->availableStatusFlag) {
+				$deletedLeaveType = false;
+			} else {
+				$deletedLeaveTypesFound = true;
+				$deletedLeaveType = true;
+			}
 ?>
   <tr>
   	<td class="tableMiddleLeft"></td>
    	<?php if ((isset($_REQUEST['id']) && empty($_REQUEST['id'])) && (!isset($_SESSION['empID']) || (isset($_SESSION['empID']) && ($empInfo[0] != $_SESSION['empID'])))) { ?>
   	<td class="<?php echo $cssClass; ?>"><?php echo $record['employee_name'] ?></td>
   	<?php } ?>
-    <td class="<?php echo $cssClass; ?>"><?php echo $record['leave_type_name'] ?></td>
+    <td class="<?php echo $cssClass; ?>">
+    <?php echo $record['leave_type_name'];
+          if ($deletedLeaveType) {
+          	echo '<span class="error">*</span>';
+          }
+    ?></td>
     <?php if (($auth === 'admin') && ($modifier === 'display')) { ?>
     <td class="<?php echo $cssClass; ?>"><?php echo $record['no_of_days_allotted']; ?></td>
     <?php } else if (($auth === 'admin') && ($modifier === 'edit')) {
 
-    				$readOnly = "readonly";
-    				if ($record['available_flag'] == $leaveTypeObj->availableStatusFlag) {
-    					$readOnly = "";
-    				}
+    				$readOnly = ($deletedLeaveType) ? "readonly" : "";
     ?>
     <td class="<?php echo $cssClass; ?>">
     <input type="hidden" name="txtLeaveTypeId[]" value="<?php echo $record['leave_type_id']; ?>"/>
@@ -361,5 +366,8 @@
 </form>
 
 <?php
+	if ($deletedLeaveTypesFound) {
+		include ROOT_PATH . "/templates/leave/deletedLeaveInfo.php";
+	}
 }
 ?>

@@ -124,6 +124,43 @@ class LeaveController {
 		}
 	}
 
+	public function editLeaveTypes($leaveTypes) {
+
+		$changedCount = 0;
+
+		if (isset($leaveTypes)) {
+
+			// Test for duplicate names
+			$leaveTypeNames = array();
+			foreach ($leaveTypes as $leaveType) {
+
+				$name = $leaveType->getLeaveTypeName();
+				if (in_array($name, $leaveTypeNames)) {
+					$this->redirect("DUPLICATE_LEAVE_TYPE_ERROR");
+					return;
+				}
+				$leaveTypeNames[] = $name;
+			}
+
+			foreach ($leaveTypes as $leaveType) {
+				$this->setObjLeave($leaveType);
+				$res = $this->editLeaveType();
+				if ($res === false) {
+					$this->redirect("LEAVE_TYPE_EDIT_ERROR");
+					return;
+				} else {
+					$changedCount += $res;
+				}
+			}
+		}
+
+		if ($changedCount > 0) {
+			$this->redirect("LEAVE_TYPE_EDIT_SUCCESS");
+		} else {
+			$this->redirect("NO_CHANGES_TO_SAVE_WARNING");
+		}
+	}
+
 	public function editLeaves($modifier="summary", $year=null, $esp=null, $sortField = null, $sortOrder = null) {
 		switch ($modifier) {
 			case "summary" : $this->setObjLeave(new LeaveSummary());
@@ -498,12 +535,14 @@ class LeaveController {
 
 	public function displayLeaveTypeDefine() {
 
-		$tmpObj = new LeaveType();
+		$leaveType = new LeaveType();
 
-		$this->setObjLeave($tmpObj);
+		$this->setObjLeave($leaveType);
 
 		$path = "/templates/leave/leaveTypeDefine.php";
 
+		$tmpObj[0] = $leaveType;
+		$tmpObj[1] = $leaveType->fetchLeaveTypes(true);
 		$template = new TemplateMerger($tmpObj, $path);
 
 		$template->display();
@@ -513,13 +552,47 @@ class LeaveController {
 	public function addLeaveType() {
 
 		$tmpObj = $this->getObjLeave();
-		$res = $tmpObj->addLeaveType();
+		$newName = $tmpObj->getLeaveTypeName();
 
-		if ($res) {
-			$message="";
+		$action = "Leave_Type_View_Define";
+
+		if ($tmpObj->getLeaveTypeWithName($newName)) {
+			$message = "NAME_IN_USE_ERROR";
 		} else {
-			$message="FAILURE";
+			$res = $tmpObj->addLeaveType();
+			if ($res) {
+				$action = "Leave_Type_Summary";
+				$message="ADD_SUCCESS";
+			} else {
+				$message="ADD_FAILURE";
+			}
 		}
+
+		$this->redirect(null, array("?leavecode=Leave&action={$action}&message={$message}"));
+	}
+
+	/**
+	 * Undelete Leave type
+	 */
+	public function undeleteLeaveType() {
+
+		$tmpObj = $this->getObjLeave();
+		$newName = $tmpObj->getLeaveTypeName();
+
+		$action = "Leave_Type_View_Define";
+
+		$leaveTypes = $tmpObj->getLeaveTypeWithName($newName, true);
+		if ($leaveTypes) {
+			foreach($leaveTypes as $leaveType) {
+				$leaveType->undeleteLeaveType();
+			}
+			$message = "UNDELETE_SUCCESS";
+			$action = "Leave_Type_Summary";
+		} else {
+			$message="LEAVE_TYPE_NOT_FOUND";
+		}
+
+		$this->redirect(null, array("?leavecode=Leave&action={$action}&message={$message}"));
 	}
 
 	public function displayLeaveTypeSummary(){
@@ -528,7 +601,7 @@ class LeaveController {
 
 		$this->setObjLeave($tmpObj);
 
-		$tmpObjArr = $tmpObj->fetchLeaveTypes();
+		$tmpObjArr = $tmpObj->fetchLeaveTypes(true);
 
 		$path = "/templates/leave/leaveTypeSummary.php";
 
@@ -544,7 +617,8 @@ class LeaveController {
 
 		$this->setObjLeave($tmpObj);
 
-		$tmpOb = $tmpObj->retriveLeaveType($this->getId());
+		$tmpOb[0] = $tmpObj->retriveLeaveType($this->getId());
+		$tmpObj[1] = $leaveType->fetchLeaveTypes();
 
 		$path = "/templates/leave/leaveTypeDefine.php";
 
@@ -556,15 +630,8 @@ class LeaveController {
 	public function editLeaveType() {
 
 		$tmpObj = $this->getObjLeave();
-
 		$res = $tmpObj->editLeaveType();
-
-		if ($res) {
-			$message="FAILURE";
-		} else {
-			$message="";
-		}
-		return $message;
+		return $res;
 	}
 
 	public function LeaveTypeDelete() {

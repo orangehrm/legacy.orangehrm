@@ -1300,11 +1300,15 @@ switch ($moduletype) {
 
 													case 'Leave_Type_Define'		: 	$obj = $LeaveTypeExtractor->parseLeaveType($_POST);
 																						$leaveController->setObjLeave($obj);
-																						$mes = $leaveController->addLeaveType();
-																						$leaveController->redirect(null, array('?leavecode=Leave&action=Leave_Type_Summary&message='.$mes));
+																						$leaveController->addLeaveType();
 																						break;
 
 													case 'Leave_Type_Summary'		: 	$leaveController->displayLeaveTypeSummary();
+																						break;
+
+													case 'Leave_Type_Undelete'		:	$obj = $LeaveTypeExtractor->parseLeaveType($_POST);
+																						$leaveController->setObjLeave($obj);
+																						$leaveController->undeleteLeaveType();
 																						break;
 
 													case 'Leave_List_Taken'			: 	$id = isset($_REQUEST['id'])? $_REQUEST['id'] : $_SESSION['empID'];
@@ -1314,15 +1318,7 @@ switch ($moduletype) {
 																						break;
 
 													case 'Leave_Type_Edit'			: 	$objs = $LeaveTypeExtractor->parseEditData($_POST);
-																						$mes="";
-																						if (isset($objs)) {
-																							foreach ($objs as $obj) {
-																								$leaveController->setObjLeave($obj);
-																								$leaveController->setId($obj->getLeaveTypeId());
-																								$mes = $leaveController->editLeaveType();
-																							}
-																						}
-																						$leaveController->redirect($mes);
+																						$leaveController->editLeaveTypes($objs);
 																						break;
 
 													case 'Leave_Type_Delete'		: 	$objs = $LeaveTypeExtractor->parseDeleteData($_POST);
