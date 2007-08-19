@@ -123,6 +123,7 @@ language/ru/lang_ru_view.php -text
 lib/AllTests.php -text
 lib/common/AllTests.php -text
 lib/common/CommonFunctions.php -text
+lib/common/CommonFunctionsTest.php -text
 lib/common/FormCreator.php -text
 lib/common/Language.php -text
 lib/common/TemplateMerger.php -text
