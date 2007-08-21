@@ -148,11 +148,6 @@ function edit() {
 }
 
 function addUpdate() {
-	if(document.frmchange.txtUserName.value=='') {
-		alert("Enter Your Username");
-		document.frmchange.txtUserName.focus();
-		return;
-	}
 
 	if(document.frmchange.txtOldPassword.value=='') {
 		alert("<?php echo $lang_Admin_Change_Password_Errors_EnterYourOldPassword; ?>");

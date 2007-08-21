@@ -62,6 +62,8 @@
 	$lang_Error_ChangePane							= "Please save the changes before you move onto another pane!";
 
 	$lang_Error_UploadFailed						= "Upload failed!";
+	$lang_Errro_WorkEmailIsNotValid                 = "The work email is not valid";
+	$lang_Errro_OtherEmailIsNotValid                = "The other email is not valid";
 
 	// Company Structure
 	$lang_Error_Company_General_Undefined 				= "Please define Company General Information first!";
@@ -199,6 +201,7 @@
 
 	$lang_Common_Edit = "Edit";
 	$lang_Common_New = "New";
+	$lang_Common_Save = "Save";
 
 	//days
 	$lang_Common_Monday 					= "Monday";
@@ -218,6 +221,9 @@
 	// admin module
 	$lang_Admin_Common_Institute 			= "Institute";
 	$lang_Admin_Common_Course 				= "Course";
+	$lang_Admin_education_InstituteCannotBeBlank = "Institute Cannot be a Blank Value!";
+	$lang_Admin_CourseCannotBeBlank         = "Course Cannot be a Blank Value!";
+	$lang_Admin_License_DescriptionCannotBeBlank = "License description cannot be blank!";
 
 	// leave module
 	$lang_Leave_Common_Date 				= "Date";
@@ -356,6 +362,8 @@
 
  	$lang_eeojobcat_heading 						= "Job : EEO Job Category";
 	$lang_eeojobcat_description 					= "Title";
+	$lang_eeojobcat_TitleContainsNumbers            = "Title contains numbers. Do you want to continue?";
+	$lang_eeojobcat_TitleMustBeSpecified            = "Title must be specified.";
 
  	$lang_electorateinformation_heading 			= "Electorate Information : Geo Information";
 	$lang_emprepinfo_heading						= "Define Employee Reports";
@@ -373,6 +381,8 @@
 	$lang_empview_searchby 					= "Search By:";
 	$lang_empview_description 				= "Search For:";
 	$lang_empview_norecorddisplay 			= "No Records to Display";
+	$lang_empstatus_PleaseEnterEmploymentStatus = "Please enter Employment Status Description";
+	$lang_empview_SelectField               = "Select the field to search!";
 
 	$lang_empview_last 						= "Last";
 	$lang_empview_next 						= "Next";
@@ -402,6 +412,7 @@
 	$lang_empview_EmploymentStatus			= "Employment status";
 
  	$lang_ethnicrace_heading 				= "Nationality & Race :Ethnic Races";
+ 	$lang_ethnicrace_NameShouldBeSpecified  = "Ethnic Race Name should be specified";
 
  	$lang_extracurractcat_heading 			= "Extra Curricular Activities Category : Qualifications Information";
 
@@ -596,6 +607,7 @@
 	$lang_hrEmpMain_YearsOfExperiencWrongFormat = "Years of Experience - Wrong input format";
 	$lang_hrEmpMain_YearsOfExperiencBetween = "Years of Experience should be a value between #range";
 	$lang_hrEmpMain_Skill 					= "Skill";
+	$lang_hrEmpMain_EnterFromDateFirst      = "Enter From Date first";
 
 	$lang_hrEmpMain_subown_Company = 'Company';
 	$lang_hrEmpMain_subown_Individual = 'Individual';
@@ -627,20 +639,38 @@
 	$lang_jobtitle_addempstat 				= "Add Employment Status";
 	$lang_jobtitle_editempstat 				= "Edit Employment Status";
 	$lang_jobtitle_empstat 					= "Employment Status";
+	$lang_jobtitle_NameShouldBeSpecified    = "Job Title Name should be specified";
+	$lang_jobtitle_DescriptionShouldBeSpecified = "Job Description should be specified";
+	$lang_jobtitle_PayGradeNotSelected      = "Pay Grade not selected";
+    $lang_jobtitle_ShowingSavedValues       = "Currently showing the values saved in session when you last edited this record.";
+    $lang_jobtitle_NoSelection              = "No Selection!";
+    $lang_jobtitle_PleaseSelectEmploymentStatus = "Please select employement status";
+    $lang_jobtitle_EnterEmploymentStatus    = "Please enter a value for Employment Status.";
 
  	$lang_languageinformation_heading 		= "Skills : Language";
 
  	$lang_licenses_heading 					= "Qualification : Licenses";
 
  	$lang_locations_heading 				= "Company Info : Locations";
+ 	$lang_locations_NameHasToBeSpecified    = "Location Name has to be specified";
+ 	$lang_locations_CountryShouldBeSelected = "Country should be selected!";
+ 	$lang_locations_AddressShouldBeSpecified = "Address should be specified";
+ 	$lang_locations_ZipCodeShouldBeSpecified = "Zip Code should be specified";
+ 	$lang_locations_ZipContainsNonNumericChars = "Zip - Code Contains non-numeric characters. Do you want to continue?";
+ 	$lang_locations_InvalidCharsInPhone = "Phone number contains invalid characters";
+ 	$lang_locations_InvalidCharsInFax = "Fax contains invalid characters";
 
  	$lang_membershipinfo_heading 			= "Memberships : Membership";
 	$lang_membershipinfo_membershiptype 	= "Membership Type";
 	$lang_membershipinfor_selectmember 		= "Select Membership";
+	$lang_membershipinfo_MembershipShouldBeSpecified = "Membership Name should be specified";
+	$lang_membershipinfo_MembershipTypeShouldBeSelected = "Membership Type should be selected";
 
  	$lang_membershiptypes_heading 			= "Memeberships : Membership Type";
+ 	$lang_membershiptypes_NameShouldBeSpecified = "Membership Type name should be specified";
 
  	$lang_nationalityinformation_heading 	= "Nationality & Race : Nationality";
+ 	$lang_nationalityinformation_PleaseEnterNationality = "Please Enter a Nationality Name";
 
  	$lang_provinceinformation_heading 		= "State/Province Information : Geo Information";
 
@@ -663,6 +693,7 @@
     $lang_salarygrades_minGreaterThanMax	= "Minimum Salary > Maximum Salary !";
 	$lang_salarygrades_stepPlusMinGreaterThanMax = "Step Salary plus Minimum Salary should be less than Maximum salary";
 	$lang_salarygrades_stepGreaterThanMax = "Step Salary should be less than Maximum salary";
+	$lang_salarygrades_NameCannotBeBlank = "Pay Grade Name cannot be blank!";
 
 	$lang_salcurrdet_heading 				= "Currency Assignment to Salary Grade";
 	$lang_salcurrdet_assigncurr 			= "Assigned Currency";
@@ -872,6 +903,7 @@
 	$lang_rep_NoUserGroupsAssigned = "No User Groups Assigned";
 	$lang_rep_SelectUserGroup = "Select User Group";
 	$lang_rep_NoGroupSelected = "Please select a user group to assign";
+	$lang_rep_ReportNameEmpty = "Report Name Empty";
 
 	// Skills
 	$lang_Admin_Skill_Errors_NameCannotBeBlank = "Name cannot be a blank value!";
@@ -893,6 +925,7 @@
 	$lang_Admin_Users_Errors_FieldShouldBeSelected = "Field should be selected";
 	$lang_Admin_Users_Errors_ViewShouldBeSelected = "View should be selected";
 	$lang_Admin_Users_Errors_PasswordsAreNotMatchingRetypeYourNewPassword = "Passwords Are Not Matching.Retype Your New Password";
+	$lang_Admin_Users_WrongPassword = "Mismatch with your old password";
 
 	$lang_Admin_Users_Errors_DoYouWantToClearRights = "Do you want to clear Rights";
 	$lang_Admin_Users_Errors_SameGroup = "Your login account belongs to the same User Group, you are not allowed change rights to this group";
@@ -1032,4 +1065,30 @@
 	$lang_Leave_PleaseProvideAReason = "Please provide a reason";
 
 	$lang_view_DUPLICATE_NAME_FAILURE = "The same name is already used";
+
+	// bug tracker
+    $lang_bugtracker_Title = "Report Bugs";
+    $lang_bugtracker_FoundInRelease = "Found in Release";
+	$lang_bugtracker_Category = "Category";
+	$lang_common_None = "None";
+	$lang_bugtracker_Category_Interface = "Interface";
+	$lang_bugtracker_Category_PHP = "PHP";
+	$lang_bugtracker_Category_Database = "Database";
+	$lang_bugtracker_Category_LanguagePack = "Language Pack";
+	$lang_bugtracker_Category_WebInstaller = "Web-Installer";
+	$lang_bugtracker_Module = "Module";
+	$lang_bugtracker_SelectModule = "Select Module";
+	$lang_bugtracker_Priority = "Priority";
+	$lang_bugtracker_Priority_Lowest = "Lowest";
+	$lang_bugtracker_Priority_Medium = "Medium";
+	$lang_bugtracker_Priority_Highest = "Highest";
+	$lang_bugtracker_Summary = "Summary";
+	$lang_bugtracker_YourEmail = "Your Email";
+	$lang_bugtracker_Description = "Description";
+
+	$lang_bugtracker_PleaseSelectABugCategory = "Please select a bug category";
+    $lang_bugtracker_PleaseSelectAModule = "Please select a module";
+	$lang_bugtracker_PleaseSpecifyBugSummary = "Please specify the bug summary";
+	$lang_bugtracker_PleaseSpecifyBugDescription = "Please specify the bug description";
+	$lang_bugtracker_EmailNotVaild = "The email entered is not valid";
 ?>

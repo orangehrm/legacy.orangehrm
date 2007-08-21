@@ -42,7 +42,7 @@ require_once($lan->getLangPath("full.php"));
 	function addSave() {
 
 		if (document.frmEthnicRace.txtEthnicRaceDesc.value == '') {
-			alert ("Description Cannot be a Blank Value!");
+			alert ('<?php echo $lang_ethnicrace_NameShouldBeSpecified; ?>');
 			return false;
 		}
 
@@ -212,7 +212,7 @@ function edit()
 	}
 
 	var frm=document.frmEthnicRace;
-//  alert(frm.elements.length);
+
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.jpg";
@@ -222,7 +222,7 @@ function edit()
 	function addUpdate() {
 
 		if (document.frmEthnicRace.txtEthnicRaceDesc.value == '') {
-			alert ("Description Cannot be a Blank Value!");
+			alert ('<?php echo $lang_ethnicrace_NameShouldBeSpecified; ?>');
 			return false;
 		}
 

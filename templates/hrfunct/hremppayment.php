@@ -121,7 +121,6 @@ function delEXTPayment() {
 		return;
 	}
 
-    //alert(cntrl.value);
     document.frmEmp.paymentSTAT.value="DEL";
 	qCombo(14);
 }

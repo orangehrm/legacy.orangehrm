@@ -95,7 +95,7 @@ function addEXTWrkExp() {
 function calcYearMonth() {
 
 	if(document.frmEmp.txtEmpExpFromDat.value == '') {
-		alert("Enter From Date first");
+		alert('<?php echo $lang_hrEmpMain_EnterFromDateFirst; ?>');
 		return;
 	}
 	var fromDate = createDate(document.frmEmp.txtEmpExpFromDat.value)
@@ -171,8 +171,6 @@ function delEXTWrkExp() {
 		return;
 	}
 
-
-    //alert(cntrl.value);
     document.frmEmp.wrkexpSTAT.value="DEL";
     qCombo(17);
 }

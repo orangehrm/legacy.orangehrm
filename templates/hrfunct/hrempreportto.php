@@ -117,7 +117,6 @@ function delSupEXTReportTo() {
               return;
         }
 
-    //alert(cntrl.value);
     document.frmEmp.delSupSub.value='sup';
     document.frmEmp.reporttoSTAT.value="DEL";
     qCombo(15);
@@ -139,7 +138,6 @@ function delSubEXTReportTo() {
               return;
         }
 
-    //alert(cntrl.value);
     document.frmEmp.delSupSub.value='sub';
     document.frmEmp.reporttoSTAT.value="DEL";
     qCombo(15);

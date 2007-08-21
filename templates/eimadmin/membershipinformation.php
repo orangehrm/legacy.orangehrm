@@ -42,12 +42,12 @@ require_once($lan->getLangPath("full.php"));
 	function addSave() {
 
 		if (document.frmMembershipInformation.txtMembershipInfoDesc.value == '') {
-			alert ("Description Cannot be a Blank Value!");
+			alert ('<?php echo $lang_membershipinfo_MembershipShouldBeSpecified; ?>');
 			return false;
 		}
 
 		if(document.frmMembershipInformation.selMembershipType.value=="0") {
-			alert("Field should be selected");
+			alert('<?php echo $lang_membershipinfo_MembershipTypeShouldBeSelected; ?>');
 			document.frmMembershipInformation.selMembershipType.focus();
 			return;
 		}
@@ -211,7 +211,7 @@ function edit()
 	}
 
 	var frm=document.frmMembershipInformation;
-//  alert(frm.elements.length);
+
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.jpg";
@@ -221,8 +221,14 @@ function edit()
 	function addUpdate() {
 
 		if (document.frmMembershipInformation.txtMembershipInfoDesc.value == '') {
-			alert ("Description Cannot be a Blank Value!");
+			alert ('<?php echo $lang_membershipinfo_MembershipShouldBeSpecified; ?>');
 			return false;
+		}
+
+		if(document.frmMembershipInformation.selMembershipType.value=="0") {
+			alert('<?php echo $lang_membershipinfo_MembershipTypeShouldBeSelected; ?>');
+			document.frmMembershipInformation.selMembershipType.focus();
+			return;
 		}
 
 		document.frmMembershipInformation.sqlState.value = "UpdateRecord";

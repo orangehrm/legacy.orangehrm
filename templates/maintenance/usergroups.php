@@ -170,7 +170,7 @@ function edit()
 	}
 
 	var frm=document.frmUserGroup;
-//  alert(frm.elements.length);
+
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.jpg";

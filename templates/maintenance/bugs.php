@@ -34,24 +34,24 @@
     function addSave() {
 
         if(document.frmBugs.category_id.value=='100') {
-            alert("Please select a bug category");
+            alert('<?php echo $lang_bugtracker_PleaseSelectABugCategory; ?>');
             document.frmBugs.cmbSource.focus();
             return;
         }
 
         if(document.frmBugs.cmbModule.value=='0') {
-            alert("Please select a module");
+            alert('<?php echo $lang_bugtracker_PleaseSelectAModule; ?>');
             document.frmBugs.cmbModulse.focus();
             return;
         }
 
         if (document.frmBugs.summary.value == '') {
-            alert ("Please specify the bug summary");
+            alert ('<?php echo $lang_bugtracker_PleaseSpecifyBugSummary; ?>');
             return false;
         }
 
         if (document.frmBugs.txtDescription.value == '') {
-            alert ("Please specify the bug description");
+            alert ('<?php echo $lang_bugtracker_PleaseSpecifyBugDescription; ?>');
             return false;
         }
 
@@ -59,7 +59,7 @@
         var email = document.frmBugs.txtEmail.value;
         if (email != '') {
             if( !checkEmail(email) ){
-                alert ("The email entered is not valid");
+                alert ('<?php echo $lang_bugtracker_EmailNotVaild; ?>');
                 return false;
             }
         }
@@ -141,7 +141,7 @@
     </head>
 
     <body>
-    <h2>Report Bugs</h2>
+    <h2><?php echo $lang_bugtracker_Title; ?></h2>
 
     <form name="frmBugs" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?mtcode=<?php echo $this->getArr['mtcode']?>">
         <input type="hidden" name="sqlState" value="">
@@ -163,51 +163,51 @@
 
         <div class="roundbox">
 
-            <label for="dummy1">Found in Release</label><div class="version_label">2.2.0.2</div></br>
+            <label for="dummy1"><?php echo $lang_bugtracker_FoundInRelease; ?></label><div class="version_label">2.2.0.2</div></br>
             <input type="hidden" readonly name="artifact_group_id" value="734172">
 
-            <label for="category_id">Category</label>
+            <label for="category_id"><span class="error">*</span><?php echo $lang_bugtracker_Category; ?></label>
             <select id="category_id" name="category_id" tabindex="1">
-                <option VALUE="100">None</OPTION>
-                <option VALUE="803416">Interface</OPTION>
-                <OPTION VALUE="813016">PHP</OPTION>
-                <OPTION VALUE="813015">Database</OPTION>
-                <OPTION VALUE="864255">Language Pack</OPTION>
-                <OPTION VALUE="883366">Web-Installer</OPTION>
+                <option VALUE="100"><?php echo $lang_common_None; ?></OPTION>
+                <option VALUE="803416"><?php echo $lang_bugtracker_Category_Interface; ?></OPTION>
+                <OPTION VALUE="813016"><?php echo $lang_bugtracker_Category_PHP; ?></OPTION>
+                <OPTION VALUE="813015"><?php echo $lang_bugtracker_Category_Database; ?></OPTION>
+                <OPTION VALUE="864255"><?php echo $lang_bugtracker_Category_LanguagePack; ?></OPTION>
+                <OPTION VALUE="883366"><?php echo $lang_bugtracker_Category_WebInstaller; ?></OPTION>
             </select><br>
 
-            <label for="cmbModule">Module</label>
+            <label for="cmbModule"><span class="error">*</span><?php echo $lang_bugtracker_Module;?></label>
             <select id="cmbModule" name="cmbModule" tabindex="2">
-                <option value="0">--Select Module--</option>
+                <option value="0">--<?php echo $lang_bugtracker_SelectModule;?>--</option>
                 <?php  $module = $this->popArr['module'];
                 for($c=0;$c < count($module);$c++)
                 echo "<option>" . $module[$c][1] ."</option>";
                 ?>
             </select><br>
 
-            <label for="priority">Priority</label>
+            <label for="priority"><span class="error">*</span><?php echo $lang_bugtracker_Priority = "Priority"?></label>
             <select id="priority" name="priority" tabindex="3">
-                <option value="1">1 - Lowest</option>
+                <option value="1">1 - <?php echo $lang_bugtracker_Priority_Lowest; ?></option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
-                <option value="5" selected="selected">5 - Medium</option>
+                <option value="5" selected="selected">5 - <?php echo $lang_bugtracker_Priority_Medium; ?></option>
                 <option value="6">6</option>
                 <option value="7">7</option>
                 <option value="8">8</option>
-                <option value="9">9 - Highest</option>
+                <option value="9">9 - <?php echo $lang_bugtracker_Priority_Highest; ?></option>
             </select><br>
 
-            <label for="summary">Summary</label>
+            <label for="summary"><span class="error">*</span><?php echo $lang_bugtracker_Summary; ?></label>
             <input type="text" id="summary" name="summary" tabindex="4">
 
             <div style="float:right">
-                <label for="txtEmail">Your Email</label>
+                <label for="txtEmail"><?php echo $lang_bugtracker_YourEmail; ?></label>
                 <input type="text" id="txtEmail" name="txtEmail" tabindex="5"
                     value="<?php echo isset($_POST['txtEmail']) ? $_POST['txtEmail'] : ''?>">
             </div><br>
 
-            <label for="txtDescription">Description</label>
+            <label for="txtDescription"><span class="error">*</span><?php echo $lang_bugtracker_Description;?></label>
             <textarea name='txtDescription' id="txtDescription" rows="3" cols="30" tabindex="6"></textarea><br>
 
             <div align="center" >
@@ -225,6 +225,6 @@
         -->
         </script>
     </form>
-
+	<span id="notice"><?php echo preg_replace('/#star/', '<span class="error">*</span>', $lang_Commn_RequiredFieldMark); ?>.</span>
 </body>
 </html>

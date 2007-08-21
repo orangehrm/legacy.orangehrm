@@ -62,7 +62,7 @@ function goBack() {
 		 * Purpose-  To modify the Descrption in the UI to accept all Characters
 		 */
 		if(txt.value=="") {
-			alert("License cannot be blank value");
+			alert('<?php echo $lang_Admin_License_DescriptionCannotBeBlank; ?>');
 			txt.focus();
 			return;
 		}
@@ -225,7 +225,7 @@ function edit()
 	}
 
 	var frm=document.frmlicenses;
-//  alert(frm.elements.length);
+
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.jpg";
@@ -238,7 +238,7 @@ function edit()
 		 * Purpose-  To modify the Descrption in the UI to accept all Characters
 		 */
 		if(document.frmlicenses.txtLicensesDesc.value=="") {
-			alert("License cannot be blank value");
+			alert('<?php echo $lang_Admin_License_DescriptionCannotBeBlank; ?>');
 			document.frmlicenses.txtLicensesDesc.focus();
 			return;
 		}

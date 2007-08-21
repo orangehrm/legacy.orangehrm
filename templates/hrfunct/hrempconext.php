@@ -52,7 +52,7 @@ function addConExt() {
 	endDate = createDate(document.frmEmp.txtEmpConExtEndDat.value);
 
 	if(startDate >= endDate) {
-		alert("Starting Day should be before ending Date");
+		alert('<?php echo $lang_hremp_StaringDateShouldBeBeforeEnd; ?>');
 		return;
 	}
 

@@ -67,7 +67,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 		}
 
 		<?php if ($_REQUEST['action'] == "Leave_Type_Edit_View") {?>
-		//alert("test");
+
 			document.DefineLeaveType.action = '?leavecode=Leave&action=Leave_Type_Edit';
 		<?php } else {?>
 		document.DefineLeaveType.action = '?leavecode=Leave&action=Leave_Type_Define';

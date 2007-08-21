@@ -208,7 +208,7 @@ return $objResponse->getXML();
 
 		if(document.frmJobTitle.txtJobTitleName.value == '') {
 
-			alert ("Name Field Empty!");
+			alert ('<?php echo $lang_jobtitle_NameShouldBeSpecified; ?>');
 
 			document.frmJobTitle.txtJobTitleName.focus();
 
@@ -220,7 +220,7 @@ return $objResponse->getXML();
 
 		if(document.frmJobTitle.txtJobTitleDesc.value == '') {
 
-			alert ("Description Empty!");
+			alert ('<?php echo $lang_jobtitle_DescriptionShouldBeSpecified; ?>');
 
 			document.frmJobTitle.txtJobTitleDesc.focus();
 
@@ -232,7 +232,7 @@ return $objResponse->getXML();
 
 		if(document.frmJobTitle.cmbPayGrade.value == '0') {
 
-			alert ("Field not Selected!");
+			alert ('<?php echo $lang_jobtitle_PayGradeNotSelected; ?>');
 
 			document.frmJobTitle.cmbPayGrade.focus();
 
@@ -302,7 +302,6 @@ function edit() {
 
 	var frm=document.frmJobTitle;
 
-//  alert(frm.elements.length);
 
 	for (var i=0; i < frm.elements.length; i++)
 
@@ -322,7 +321,7 @@ function edit() {
 
 		if(document.frmJobTitle.txtJobTitleName.value == '') {
 
-			alert ("Name Field Empty!");
+			alert ('<?php echo $lang_jobtitle_NameShouldBeSpecified; ?>');
 
 			document.frmJobTitle.txtJobTitleName.focus();
 
@@ -334,7 +333,7 @@ function edit() {
 
 		if(document.frmJobTitle.txtJobTitleDesc.value == '') {
 
-			alert ("Description Empty!");
+			alert ('<?php echo $lang_jobtitle_DescriptionShouldBeSpecified; ?>');
 
 			document.frmJobTitle.txtJobTitleDesc.focus();
 
@@ -346,7 +345,7 @@ function edit() {
 
 		if(document.frmJobTitle.cmbPayGrade.value == '0') {
 
-			alert ("Field not Selected!");
+			alert ('<?php echo $lang_jobtitle_PayGradeNotSelected; ?>');
 
 			document.frmJobTitle.cmbPayGrade.focus();
 
@@ -370,7 +369,7 @@ function assignEmploymentStatus() {
 
 	if(document.frmJobTitle.cmbUnAssEmploymentStatus.selectedIndex == -1) {
 
-		alert('No Selection!');
+		alert('<?php echo $lang_jobtitle_NoSelection; ?>');
 
 		return;
 
@@ -378,7 +377,7 @@ function assignEmploymentStatus() {
 
 
 
-	document.getElementById('status').innerHTML = 'Please Wait....';
+	document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait;?>....';
 
 
 
@@ -394,7 +393,7 @@ function unAssignEmploymentStatus() {
 
 	if(document.frmJobTitle.cmbAssEmploymentStatus.selectedIndex == -1) {
 
-		alert('No Selection!');
+		alert('<?php echo $lang_jobtitle_NoSelection; ?>');
 
 		return;
 
@@ -402,7 +401,7 @@ function unAssignEmploymentStatus() {
 
 
 
-	document.getElementById('status').innerHTML = 'Please Wait....';
+	document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait;?>....';
 
 
 
@@ -461,7 +460,7 @@ function editPayGrade() {
 	paygrade = document.frmJobTitle.cmbPayGrade.value;
 
 	if(paygrade == '0') {
-		alert('Please Select!');
+		alert('<?php echo $lang_jobtitle_PayGradeNotSelected; ?>');
 		document.frmJobTitle.cmbPayGrade.focus();
 		return;
 	}
@@ -482,7 +481,7 @@ function showEditForm() {
 
 	if(document.frmJobTitle.cmbUnAssEmploymentStatus.selectedIndex == -1) {
 
-		alert('Please Select!');
+		alert('<?php echo $lang_jobtitle_PleaseSelectEmploymentStatus; ?>');
 
 		document.frmJobTitle.cmbUnAssEmploymentStatus.focus();
 
@@ -504,7 +503,7 @@ function addFormData() {
 
 	if(document.frmJobTitle.txtEmpStatDesc.value == '') {
 
-		alert("Empty Field!");
+		alert('<?php echo $lang_jobtitle_EnterEmploymentStatus; ?>');
 
 		document.frmJobTitle.txtEmpStatDesc.focus();
 
@@ -514,7 +513,7 @@ function addFormData() {
 
 
 
-	document.getElementById('status').innerHTML = 'Please Wait....';
+	document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait;?>....';
 
 	xajax_addExt(xajax.getFormValues('frmJobTitle'));
 
@@ -528,7 +527,7 @@ function editFormData() {
 
 	if(document.frmJobTitle.txtEmpStatDesc.value == '') {
 
-		alert("Empty Field!");
+		alert('<?php echo $lang_jobtitle_EnterEmploymentStatus; ?>');
 
 		document.frmJobTitle.txtEmpStatDesc.focus();
 
@@ -538,7 +537,7 @@ function editFormData() {
 
 
 
-	document.getElementById('status').innerHTML = 'Please Wait....';
+	document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait;?>....';
 
 	xajax_editExt(xajax.getFormValues('frmJobTitle'));
 
@@ -580,7 +579,7 @@ function writeCookie(name, value, expire) {
 }
 
 function promptUseCookieValues() {
-	if (!confirm('Currently showing the values saved in session\n when you last edited this record.\n Do you want to continue?')) {
+	if (!confirm('<?php echo $lang_jobtitle_ShowingSavedValues . "\\n" . $lang_Error_DoYouWantToContinue; ?>')) {
 		history.go();
 	}
 }

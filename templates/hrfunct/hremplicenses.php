@@ -82,7 +82,7 @@ function editEXTLicense() {
 	var toDate = createDate(document.frmEmp.txtEmpreDat.value);
 
 	if(fromDate >= toDate){
-		alert("From Date should be before To date");
+		alert('<?php echo $lang_hremp_FromDateShouldBeBeforeToDate; ?>');
 		return;
 	}
 
@@ -106,7 +106,6 @@ function delEXTLicense() {
 		return;
 	}
 
-    //alert(cntrl.value);
     document.frmEmp.licenseSTAT.value="DEL";
 	qCombo(12);
 }

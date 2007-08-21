@@ -410,7 +410,7 @@ function updateEmpMain() {
         var workEmail = document.frmEmp.txtWorkEmail.value;
         if (workEmail != '') {
             if( !checkEmail(workEmail) ){
-                alert ("The work email is not valid");
+                alert ('<?php echo $lang_Errro_WorkEmailIsNotValid; ?>');
                 return false;
             }
         }
@@ -419,7 +419,7 @@ function updateEmpMain() {
         var otherEmail = document.frmEmp.txtOtherEmail.value;
         if (otherEmail != '') {
             if( !checkEmail(otherEmail) ){
-                alert ("The other email is not valid");
+                alert ('<?php echo $lang_Errro_OtherEmailIsNotValid; ?>');
                 return false;
             }
         }
@@ -514,7 +514,7 @@ function displayLayer(panelNo) {
 }
 
 function setUpdate(opt) {
-		//alert(opt);
+
 		switch(eval(opt)) {
           	case 0 : document.frmEmp.main.value=1; break;
           	case 1 : document.frmEmp.personalFlag.value=1; break;

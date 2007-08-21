@@ -25,105 +25,6 @@ require_once($lan->getLangPath("full.php"));
 	$locRights=$_SESSION['localRights'];
 	$common_func = new CommonFunctions();
 
-function showAddCurrencyForm() {
-
-    $objResponse = new xajaxResponse();
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.disabled = false;");
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.focus();");
-
-	$objResponse->addAssign('buttonLayer','innerHTML',"<input type='button' value='Save' onClick='addFormData();'>");
-	$objResponse->addAssign('status','innerHTML','');
-
-	return $objResponse->getXML();
-}
-
-function showEditCurrencyForm($currCode) {
-
-	$view_controller = new ViewController();
-	$editArr = $view_controller->xajaxObjCall($currCode,'SCD','currencyEdit');
-
-	$objResponse = new xajaxResponse();
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.disabled = false;");
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeID.value = '" .$editArr[0][0]."';");
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.value = '" .$editArr[0][1]."';");
-
-	$objResponse->addAssign('buttonLayer','innerHTML',"<input type='button' value='Save' onClick='editFormData();'>");
-	$objResponse->addAssign('status','innerHTML','');
-
-	return $objResponse->getXML();
-}
-
-function addExt($arrElements) {
-
-	$view_controller = new ViewController();
-	$ext_currtype = new EXTRACTOR_CurrencyTypes();
-
-	$objCurrType = $ext_currtype->parseAddData($arrElements);
-	$view_controller -> addData('CUR',$objCurrType,true);
-
-	$view_controller = new ViewController();
-	$currlist = $view_controller->xajaxObjCall($arrElements['txtSalGrdID'],'SCD','unAssCurrency');
-
-	$objResponse = new xajaxResponse();
-	$xajaxFiller = new xajaxElementFiller();
-	$objResponse = $xajaxFiller->cmbFiller($objResponse,$currlist,0,'frmSalCurDet','cmbUnAssCurrency');
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.value = '';");
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.disabled = true;");
-	$objResponse->addAssign('buttonLayer','innerHTML','');
-	$objResponse->addAssign('status','innerHTML','');
-
-return $objResponse->getXML();
-}
-
-function editExt($arrElements) {
-
-	$view_controller = new ViewController();
-	$ext_currtype = new EXTRACTOR_CurrencyTypes();
-
-	$objCurrType = $ext_currtype -> parseEditData($arrElements);
-	$view_controller->updateData('CUR',$arrElements['txtCurrencyTypeID'],$objCurrType,true);
-
-	$view_controller = new ViewController();
-	$currlist = $view_controller->xajaxObjCall($arrElements['txtSalGrdID'],'SCD','unAssCurrency');
-
-	$objResponse = new xajaxResponse();
-	$xajaxFiller = new xajaxElementFiller();
-	$objResponse = $xajaxFiller->cmbFiller($objResponse,$currlist,0,'frmSalCurDet','cmbUnAssCurrency');
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeID.value = '';");
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.value = '';");
-	$objResponse->addScript("document.frmSalCurDet.txtCurrencyTypeDesc.disabled = true;");
-	$objResponse->addAssign('buttonLayer','innerHTML','');
-	$objResponse->addAssign('status','innerHTML','');
-
-return $objResponse->getXML();
-}
-
-function delExt($salgrd,$currCode) {
-
-	$arrList[0][0] = $currCode;
-
-	$view_controller = new ViewController();
-	$view_controller ->delParser('CUR',$arrList);
-
-	$view_controller = new ViewController();
-	$currlist = $view_controller->xajaxObjCall($salgrd,'SCD','unAssCurrency');
-
-	$objResponse = new xajaxResponse();
-	$xajaxFiller = new xajaxElementFiller();
-	$objResponse = $xajaxFiller->cmbFiller($objResponse,$currlist,0,'frmSalCurDet','cmbUnAssCurrency');
-	$objResponse->addAssign('status','innerHTML','');
-
-return $objResponse->getXML();
-}
-
-$objAjax = new xajax();
-$objAjax->registerFunction('showAddCurrencyForm');
-$objAjax->registerFunction('showEditCurrencyForm');
-$objAjax->registerFunction('addExt');
-$objAjax->registerFunction('editExt');
-$objAjax->registerFunction('delExt');
-$objAjax->processRequests();
-
 	$_SERVER['HTTP_REFERER'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $_SERVER['REQUEST_URI'];
 
 	$idens = split('uniqcode=', isset($_POST['referer']) ? $_POST['referer'] : $_SERVER['HTTP_REFERER']);
@@ -181,7 +82,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 	function addSave() {
 
 		if (document.frmSalGrd.txtSalGrdDesc.value == '') {
-			alert ("Description Cannot be a Blank Value!");
+			alert ('<?php echo $lang_salarygrades_NameCannotBeBlank; ?>');
 			return false;
 		}
 
@@ -291,7 +192,6 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 <head>
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<?php $objAjax->printJavascript(); ?>
 <script language="JavaScript">
 	function numeric(txt) {
 		var flag=true;
@@ -364,7 +264,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 	function addUpdate() {
 
 		if (document.frmSalGrd.txtSalGrdDesc.value == '') {
-			alert ("Description Cannot be a Blank Value!");
+			alert ('<?php echo $lang_salarygrades_NameCannotBeBlank; ?>');
 			return false;
 		}
 
@@ -514,7 +414,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 	        }
 
 	        if(check==0) {
-	          alert("Select atleast one check box");
+	          alert('<?php echo $lang_Error_SelectAtLeastOneRecordToDelete; ?>');
 	          return;
 	        }
 
@@ -564,51 +464,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 		document.frmSalGrd.txtSalGrdDesc.value = '';
 	}
 
-function addFormData() {
 
-	if(document.frmSalCurDet.txtCurrencyTypeDesc.value == '') {
-		alert("Empty Field!");
-		document.frmSalCurDet.txtCurrencyTypeDesc.focus();
-		return;
-	}
-
-	document.getElementById('status').innerHTML = 'Please Wait....';
-	xajax_addExt(xajax.getFormValues('frmSalCurDet'));
-}
-
-function showEditForm() {
-
-	if(document.frmSalCurDet.cmbUnAssCurrency.value == '0') {
-		alert("No Selection!");
-		return;
-	} else {
-		document.getElementById('status').innerHTML = 'Please Wait....';
-		xajax_showEditCurrencyForm(document.frmSalCurDet.cmbUnAssCurrency.value);
-	}
-}
-
-function editFormData() {
-
-	if(document.frmSalCurDet.txtCurrencyTypeDesc.value == '') {
-		alert("Empty Field!");
-		document.frmSalCurDet.txtCurrencyTypeDesc.focus();
-		return;
-	}
-
-	document.getElementById('status').innerHTML = 'Please Wait....';
-	xajax_editExt(xajax.getFormValues('frmSalCurDet'));
-}
-
-function delCurrency() {
-
-	if(document.frmSalCurDet.cmbUnAssCurrency.value == '0') {
-		alert("No Selection!");
-		return;
-	} else {
-		document.getElementById('status').innerHTML = 'Please Wait....';
-		xajax_delExt(document.frmSalCurDet.txtSalGrdID.value, document.frmSalCurDet.cmbUnAssCurrency.value);
-	}
-}
 </script>
 <link href="../../themes/beyondT/css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">@import url("../../themes/beyondT/css/style.css"); </style>

@@ -42,13 +42,13 @@ require_once($lan->getLangPath("full.php"));
 	function addSave() {
 
 		if(document.frmEducation.txtUni.value=="") {
-			alert("University Cannot be a Blank Value!");
+			alert('<?php echo $lang_Admin_education_InstituteCannotBeBlank; ?>');
 			document.frmEducation.txtUni.focus();
 			return;
 		}
 
 		if(document.frmEducation.txtDeg.value=="") {
-			alert("Degree Cannot be a Blank Value!");
+			alert('<?php echo $lang_Admin_CourseCannotBeBlank; ?>');
 			document.frmEducation.txtDeg.focus();
 			return;
 		}
@@ -225,7 +225,7 @@ function edit()
 	}
 
 	var frm=document.frmEducation;
-//  alert(frm.elements.length);
+
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.jpg";
@@ -236,13 +236,13 @@ function edit()
 	function addUpdate() {
 
 		if(document.frmEducation.txtUni.value=="") {
-			alert("University Cannot be a Blank Value!");
+			alert('<?php echo $lang_Admin_education_InstituteCannotBeBlank; ?>');
 			document.frmEducation.txtUni.focus();
 			return;
 		}
 
 		if(document.frmEducation.txtDeg.value=="") {
-			alert("Degree Cannot be a Blank Value!");
+			alert('<?php echo $lang_Admin_CourseCannotBeBlank; ?>');
 			document.frmEducation.txtDeg.focus();
 			return;
 		}

@@ -39,7 +39,7 @@ function goBack() {
 function addSave() {
 		var txt=document.frmEmpStat.txtEmpStatDesc;
 		if (txt.value == '') {
-				alert ("Description Error!");
+				alert ('<?php echo $lang_empstatus_PleaseEnterEmploymentStatus; ?>');
 				txt.focus();
 				return;
 			}
@@ -199,7 +199,7 @@ function edit() {
 function addUpdate() {
 	var txt=document.frmEmpStat.txtEmpStatDesc;
 	if (txt.value == '') {
-		alert ("Description Error!");
+		alert ('<?php echo $lang_empstatus_PleaseEnterEmploymentStatus; ?>');
 		return;
 	}
 	document.frmEmpStat.sqlState.value = "UpdateRecord";

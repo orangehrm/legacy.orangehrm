@@ -356,7 +356,6 @@ scripts/yui/yahoo/yahoo.js -text
 /sysinfo.php -text
 templates/eimadmin/compstruct.php -text
 templates/eimadmin/customer.php -text
-templates/eimadmin/education.php -text
 templates/eimadmin/eeojobcat.php -text
 templates/eimadmin/emailConfiguration.php -text
 templates/eimadmin/emailNotificationConfiguration.php -text
@@ -373,7 +372,6 @@ templates/eimadmin/nationalityinformation.php -text
 templates/eimadmin/project.php -text
 templates/eimadmin/qualifications.php -text
 templates/eimadmin/salarygrades.php -text
-templates/eimadmin/salcurrdet.php -text
 templates/eimadmin/skills.php -text
 templates/hrfunct/download.php -text
 templates/hrfunct/emppop.php -text

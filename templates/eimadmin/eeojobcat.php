@@ -62,12 +62,12 @@ function goBack() {
 
 	function addSave() {
 		var txt=document.frmeeojobcat.txtEEOJobCatDesc;
-		if ((txt.value != '') && !alpha(txt) && !confirm("Title contains numerals. Do you want to continue?"))
+		if ((txt.value != '') && !alpha(txt) && !confirm('<?php echo $lang_eeojobcat_TitleContainsNumbers; ?>'))
 		{
 			txt.focus();
 			return;
 		} else if (txt.value == '') {
-			alert('Title empty!');
+			alert('<?php echo $lang_eeojobcat_TitleMustBeSpecified; ?>');
 			txt.focus();
 			return;
 		}
@@ -234,7 +234,7 @@ function edit()
 	}
 
 	var frm=document.frmeeojobcat;
-//  alert(frm.elements.length);
+
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.jpg";
@@ -243,12 +243,12 @@ function edit()
 
 	function addUpdate() {
 		var txt=document.frmeeojobcat.txtEEOJobCatDesc;
-		if ((txt.value != '') && !alpha(txt) && !confirm("Title contains numerals. Do you want to continue?"))
+		if ((txt.value != '') && !alpha(txt) && !confirm('<?php echo $lang_eeojobcat_TitleContainsNumbers; ?>'))
 		{
 			txt.focus();
 			return;
 		} else if (txt.value == '') {
-			alert('Title empty!');
+			alert('<?php echo $lang_eeojobcat_TitleMustBeSpecified; ?>');
 			txt.focus();
 			return;
 		}

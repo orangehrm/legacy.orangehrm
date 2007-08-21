@@ -87,43 +87,31 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 		var frm = document.frmLocation;
 
 		if (frm.txtLocDescription.value == '') {
-			alert ("Location Description empty!");
+			alert ('<?php echo $lang_locations_NameHasToBeSpecified; ?>');
 			frm.txtLocDescription.focus();
 			return;
 		}
 
 		if (frm.cmbCountry.value == '0') {
-			alert ("Country not selected!");
+			alert ('<?php echo $lang_locations_CountryShouldBeSelected; ?>');
 			frm.cmbCountry.focus();
 			return;
 		}
 
-		if ( frm.cmbProvince.value == '0') {
-			alert ("State not selected!");
-			frm.cmbProvince.focus();
-			return;
-		}
-
-		if ( frm.cmbDistrict.value == '0') {
-			alert ("City Cannot be empty!");
-			frm.cmbDistrict.focus();
-			return;
-		}
-
 		if ( frm.txtAddress.value == '') {
-			alert ("Address empty!");
+			alert ('<?php echo $lang_locations_AddressShouldBeSpecified; ?>');
 			frm.txtAddress.focus();
 			return;
 		}
 
 		if ( frm.txtZIP.value == '' ){
-			alert ("Zip - Code Cannot be empty!");
+			alert ('<?php echo $lang_locations_ZipCodeShouldBeSpecified; ?>');
 			frm.txtZIP.focus();
 			return;
 		}
 
 		if ( (frm.txtZIP.value != '') && (!numbers(frm.txtZIP)) ){
-			if ( ! confirm ("Zip - Code Contains non-numeric characters! Here they are"+nonNumbers(frm.txtZIP)+". Do you want to continue?") ) {
+			if ( ! confirm ('<?php echo $lang_locations_ZipContainsNonNumericChars; ?>') ) {
 				frm.txtZIP.focus();
 			return;
 			}
@@ -131,14 +119,14 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 
 
 		if (frm.txtPhone.value != '' && !numeric(frm.txtPhone)) {
-			alert("Should be Numeric!");
+			alert('<?php echo $lang_locations_InvalidCharsInPhone; ?>');
 			frm.txtPhone.focus();
 			return;
 		}
 
 		 if(frm.txtFax.value != '' && !numeric(frm.txtFax)) {
 
-			alert("Should be Numeric!");
+			alert('<?php echo $lang_locations_InvalidCharsInFax; ?>');
 			frm.txtFax.focus();
 			return;
 		}
@@ -305,7 +293,7 @@ function edit()
 	}
 
 	var frm=document.frmLocation;
-//  alert(frm.elements.length);
+
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.jpg";
@@ -335,58 +323,44 @@ function mover() {
 		var frm = document.frmLocation;
 
 		if (frm.txtLocDescription.value == '') {
-			alert ("Location Description empty!");
+			alert ('<?php echo $lang_locations_NameHasToBeSpecified; ?>');
 			frm.txtLocDescription.focus();
 			return;
 		}
 
 		if (frm.cmbCountry.value == '0') {
-			alert ("Country not selected!");
+			alert ('<?php echo $lang_locations_CountryShouldBeSelected; ?>');
 			frm.cmbCountry.focus();
 			return;
 		}
 
-		if ( frm.cmbProvince.value == '0') {
-			alert ("State not selected!");
-			frm.cmbProvince.focus();
-			return;
-		}
-
-		/*if ( frm.cmbDistrict.value == '' ){
-			alert ("City Cannot be empty!");
-			frm.cmbDistrict.focus();
-			return;
-		}*/
-
 		if ( frm.txtAddress.value == '') {
-			alert ("Address empty!");
+			alert ('<?php echo $lang_locations_AddressShouldBeSpecified; ?>');
 			frm.txtAddress.focus();
 			return;
 		}
 
 		if ( frm.txtZIP.value == '' ){
-			alert ("Zip - Code Cannot be empty!");
+			alert ('<?php echo $lang_locations_ZipCodeShouldBeSpecified; ?>');
 			frm.txtZIP.focus();
 			return;
 		}
 
 		if ( (frm.txtZIP.value != '') && (!numbers(frm.txtZIP)) ){
-			if ( ! confirm ("Zip - Code Contains non-numeric characters! Here they are"+nonNumbers(frm.txtZIP)+". Do you want to continue?") ) {
+			if ( ! confirm ('<?php echo $lang_locations_ZipContainsNonNumericChars; ?>') ) {
 				frm.txtZIP.focus();
 			return;
 			}
 		}
 
 		if (frm.txtPhone.value != '' && !numeric(frm.txtPhone)) {
-
-			alert("Should be Numeric!");
+			alert('<?php echo $lang_locations_InvalidCharsInPhone; ?>');
 			frm.txtPhone.focus();
 			return;
 		}
 
 		if (frm.txtFax.value != '' && !numeric(frm.txtFax)) {
-
-			alert("Should be Numeric!");
+			alert('<?php echo $lang_locations_InvalidCharsInFax; ?>');
 			frm.txtFax.focus();
 			return;
 		}
@@ -449,7 +423,7 @@ function mover() {
 						   	<td><strong><?php echo $message[0][0]?></strong></td>
 						  </tr>
 						  <tr>
-						    <td><span class="error">*</span> <?php echo $lang_Commn_description; ?></td>
+						    <td><span class="error">*</span> <?php echo $lang_compstruct_Name; ?></td>
 						  	<td> <textarea name='txtLocDescription' rows="3" disabled tabindex='3' cols="30"><?php echo $message[0][1]?></textarea>
 						    </td>
 						  </tr>

@@ -160,7 +160,7 @@ else
 
 	function Search() {
 		if (document.standardView.loc_code.value == -1) {
-			alert("Select the field to search!");
+			alert('<?php echo $lang_empview_SelectField; ?>');
 			document.standardView.loc_code.Focus();
 			return;
 		};

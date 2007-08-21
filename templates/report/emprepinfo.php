@@ -326,7 +326,7 @@ function disableSerPeriodField() {
  function validation() {
 
  		if(document.frmEmpRepTo.txtRepName.value=='') {
- 			alert("Report Name Empty");
+ 			alert('<?php echo $lang_rep_ReportNameEmpty; ?>');
 			document.frmEmpRepTo.txtRepName.focus();
 			return false;
  		}
