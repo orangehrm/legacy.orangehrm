@@ -28,6 +28,7 @@
  $auth = $modifier[1];
  $dispYear = $modifier[2];
 
+ $copyQuota = $modifier[3];
 
 
  $modifier = $modifier[0];
@@ -73,12 +74,7 @@
  	}
  	$lang_Title = preg_replace(array('/#employeeName/', '/#dispYear/'), array($employeeName, $dispYear), $lang_Leave_Leave_Summary_SUP_Title);
  }
-
- if (isset($_GET['message'])) {
 ?>
-<var><?php echo $_GET['message']; ?></var>
-<?php } ?>
-
 <script language="javascript">
 	function actForm() {
 		document.frmSummary.action = '<?php echo $frmAction; ?>';
@@ -104,6 +100,10 @@
 	function actTakenLeave() {
 		document.frmSummary.action = '?leavecode=Leave&action=Leave_List_Taken';
 		document.frmSummary.submit();
+	}
+
+	function actCopyLeaveQuota() {
+		window.location = '?leavecode=Leave&action=Leave_Quota_Copy_Last_Year&currYear=<?php echo $dispYear; ?>';
 	}
 
 <?php	} ?>
@@ -164,8 +164,25 @@
 ?>
 </script>
 <h2><?php echo $lang_Title; ?><hr/></h2>
+<?php if (isset($_GET['message']) && $_GET['message'] != 'xx') {
+
+	$expString  = $_GET['message'];
+	$expString = explode ("_",$expString);
+	$length = count($expString);
+
+	$col_def=strtolower($expString[$length-1]);
+
+	$expString='lang_Leave_'.$_GET['message'];
+	if (isset($$expString)) {
+?>
+	<font class="<?php echo $col_def?>" size="-1" face="Verdana, Arial, Helvetica, sans-serif">
+<?php echo $$expString; ?>
+	</font>
 <?php
-	if (!is_array($records[0])) {
+	}
+}
+
+if (!is_array($records[0])) {
 ?>
 	<img title="Back" onMouseOut="this.src='../../themes/beyondT/pictures/btn_back.jpg';" onMouseOver="this.src='../../themes/beyondT/pictures/btn_back_02.jpg';"  src="../../themes/beyondT/pictures/btn_back.jpg" onClick="goBack();">
 	<h5><?php echo $lang_Error_NoRecordsFound; ?></h5>
@@ -187,6 +204,9 @@
 		<input type="image" name="btnAct" src="<?php echo $btnImage; ?>" onMouseOut="this.src='<?php echo $btnImage; ?>';" onMouseOver="this.src='<?php echo $btnImageMO; ?>';">
 	<?php if (isset($_REQUEST['id']) && ($_REQUEST['id'] != LeaveQuota::LEAVEQUOTA_CRITERIA_ALL)) {?>
 		<a href="javascript:actTakenLeave()"><?php echo $lang_Leave_Common_ListOfTakenLeave; ?></a>
+	<?php } ?>
+	<?php if ($copyQuota) { ?>
+		<a href="javascript:actCopyLeaveQuota()"><?php echo $lang_Leave_CopyLeaveQuotaFromLastYear; ?></a>
 	<?php } ?>
 	</p>
 <?php

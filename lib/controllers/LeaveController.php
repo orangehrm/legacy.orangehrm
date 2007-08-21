@@ -1,6 +1,5 @@
 <?php
-/*
- *
+/**
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
  * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
@@ -18,7 +17,6 @@
  * Boston, MA  02110-1301, USA
  *
  */
-
 
 //the model objects are included here
 
@@ -333,7 +331,7 @@ class LeaveController {
 		return $tmpObj->cancelLeave($this->getId());
 	}
 
-	public function redirect($message=null, $url = null, $id = null) {
+	public function redirect($message=null, $url = null, $id = null, $cust=null) {
 		if (isset($message)) {
 
 			preg_replace('/[&|?]+id=[A-Za-z0-9]*/', "", $_SERVER['HTTP_REFERER']);
@@ -362,6 +360,10 @@ class LeaveController {
 			}
 		}
 
+		if (isset($cust)) {
+			$url[0].=$cust;
+		}
+
 		header("Location: {$url[0]}{$message}{$id}");
 	}
 
@@ -388,6 +390,7 @@ class LeaveController {
 		$message = ($res) ? "APPROVE_SUCCESS" : "APPROVE_FAILURE";
 		return $message;
 	}
+
 	public function displayLeaveInfo($admin=false) {
 		$authorizeObj = $this->authorize;
 
@@ -437,6 +440,44 @@ class LeaveController {
 		$template->display();
 	}
 
+	public function copyLeaveQuotaFromLastYear($currYear) {
+		$leaveQuotaObj = new LeaveQuota();
+
+		$res = false;
+
+		if ($this->_validToCopyQuotaFromLastYear($currYear)) {
+			$res = $leaveQuotaObj->copyQuota($currYear-1, $currYear);
+		}
+
+		if ($res) {
+			$this->redirect("LEAVE_QUOTA_COPY_SUCCESS", null, null, "&year=$currYear&id=0");
+		} else {
+			$this->redirect("LEAVE_QUOTA_COPY_FAILURE", null, null, "&year=$currYear&id=0");
+		}
+	}
+
+	private function _validToCopyQuotaFromLastYear($currYear) {
+		if ($_SESSION['isAdmin'] !== 'Yes') {
+			trigger_error("Unauthorized access", E_USER_NOTICE);
+		}
+
+		$leaveQuotaObj = new LeaveQuota();
+
+		$leaveQuotaObj->setYear($currYear);
+		$currYearQuota = $leaveQuotaObj->fetchLeaveQuota(0);
+
+		$leaveQuotaObj->setYear($currYear-1);
+		$prevYearQuota = $leaveQuotaObj->fetchLeaveQuota(0);
+
+		$copyQuota = false;
+
+		if ((count($currYearQuota) == 0) && (count($prevYearQuota) > 0)) {
+			$copyQuota = true;
+		}
+
+		return $copyQuota;
+	}
+
 	/**
 	 * Displays the Leave Summary
 	 *
@@ -448,7 +489,9 @@ class LeaveController {
 
 		$auth = $this->_authenticateViewLeaveSummary();
 
-		$modifier = array($modifier, $auth, $year);
+		$copyQuota = $this->_validToCopyQuotaFromLastYear($year);
+
+		$modifier = array($modifier, $auth, $year, $copyQuota);
 
 		$empInfoObj = new EmpInfo();
 

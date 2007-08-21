@@ -15,7 +15,8 @@ New & Changed Features for OrangeHRM ver 2.2.0.3
 	1741094   There is an unnecessary line in ESS Employee Box
 	1756638   Timesheets allow entering times outside of timesheet period
 	1619852   Duplicate values for Languages, Races, Skills etc.
-	1761859   Leave Summery List Deleted Leave Types 
+	1761859   Leave Summery List Deleted Leave Types
+	1756437   Not Display Properly(Leave Summary/Quota)
 
 New & Changed Features for OrangeHRM ver 2.2.0.2
 

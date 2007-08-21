@@ -1057,7 +1057,8 @@
 	$lang_mtview_UPDATE_FAILURE = "Failed to Update";
 	$lang_mtview_DELETE_FAILURE = "Failed to Delete";
 
-	$Lang_view_DUPLICATE_NAME_FAILURE = "The same name is already used";
+	$lang_view_DUPLICATE_NAME_FAILURE = "The same name is already used";
+
 
 	// bug tracker
     $lang_bugtracker_Title = "Report Bugs";
