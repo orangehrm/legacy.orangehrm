@@ -534,7 +534,7 @@ create table `hs_hr_leavetype` (
 ) engine=innodb default charset=utf8;
 
 create table `hs_hr_employee_leave_quota` (
-  `year` date NOT NULL,
+  `year` year(4) NOT NULL,
   `leave_type_id` varchar(13) not null,
   `employee_id` int(7) not null,
   `no_of_days_allotted` smallint(6) default null,
