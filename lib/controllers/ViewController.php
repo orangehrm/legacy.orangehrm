@@ -1367,8 +1367,8 @@ class ViewController {
 
 			}
 		} catch (Exception $e) {
+			$res = false;
 			if ($e->getCode() == 1) {
-				$res=false;
 				$showMsg="DUPLICATE_NAME_FAILURE";
 			}
 		}
