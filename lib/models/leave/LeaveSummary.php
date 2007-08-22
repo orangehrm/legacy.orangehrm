@@ -18,9 +18,9 @@
  *
  */
 
-require_once "Leave.php";
-require_once "LeaveQuota.php";
-require_once ROOT_PATH . '/lib/logs/LogFileWriter.php';
+require_once ROOT_PATH."/lib/models/leave/Leave.php";
+require_once ROOT_PATH."/lib/models/leave/LeaveQuota.php";
+require_once ROOT_PATH.'/lib/logs/LogFileWriter.php';
 
 //require_once "LeaveType.php";
 
