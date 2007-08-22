@@ -131,7 +131,7 @@ $objAjax->processRequests();
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title></title>
+<title>OrangeHRM - Employee Details</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../../scripts/archive.js"></script>
 <?php
@@ -537,8 +537,31 @@ function resetAdd(panel) {
 	document.frmEmp.submit();
 }
 
+function showAddPane(paneName) {
+	YAHOO.OrangeHRM.container.wait.show();
 
+	addPane = document.getElementById('addPane'+paneName);
+	editPane = document.getElementById('editPane'+paneName);
+	parentPane = document.getElementById('parentPane'+paneName);
+
+	if (addPane && addPane.style) {
+		addPane.style.display = tableDisplayStyle;
+	}
+
+	if (editPane && parentPane) {
+		parentPane.removeChild(editPane);
+	}
+
+	YAHOO.OrangeHRM.container.wait.hide();
+}
+
+tableDisplayStyle = "table";
 </script>
+<!--[if IE]>
+<script type="text/javascript">
+	tableDisplayStyle = "block";
+</script>
+<![endif]-->
 
 <link href="../../themes/beyondT/css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">@import url("../../themes/beyondT/css/hrEmpMain.css"); </style>

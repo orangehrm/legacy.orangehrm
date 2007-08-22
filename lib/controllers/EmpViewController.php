@@ -1573,33 +1573,30 @@ class EmpViewController {
 
 								$form_creator->popArr['empDpAss'] = $depen ->getAssEmpDep($getArr['id']);
 
-								if(!isset($getArr['PPSEQ']))
-									$form_creator->popArr['newPPID'] = $pport->getLastRecord($getArr['id']);
-								elseif(isset($getArr['PPSEQ'])) {
+								$form_creator->popArr['newPPID'] = $pport->getLastRecord($getArr['id']);
+								if(isset($getArr['PPSEQ'])) {
 									$arr[0]=$getArr['id'];
 									$arr[1]=$getArr['PPSEQ'];
 									$form_creator->popArr['editPPForm'] = $pport->filterEmpPP($arr);
 								}
 
-								if(!isset($getArr['ECSEQ']))
-									$form_creator->popArr['newECID'] = $econ->getLastRecord($getArr['id']);
-								elseif(isset($getArr['ECSEQ'])) {
+								$form_creator->popArr['newECID'] = $econ->getLastRecord($getArr['id']);
+								if(isset($getArr['ECSEQ'])) {
 									$arr[0]=$getArr['id'];
 									$arr[1]=$getArr['ECSEQ'];
 									$form_creator->popArr['editECForm'] = $econ->filterEmpEC($arr);
 								}
 
-								if(!isset($getArr['depSEQ']))
-									$form_creator->popArr['newDepID'] = $dep->getLastRecord($getArr['id']);
-								elseif(isset($getArr['depSEQ'])) {
+								$form_creator->popArr['newDepID'] = $dep->getLastRecord($getArr['id']);
+								if(isset($getArr['depSEQ'])) {
 									$arr[0]=$getArr['id'];
 									$arr[1]=$getArr['depSEQ'];
 									$form_creator->popArr['editDepForm'] = $dep->filterEmpDep($arr);
 								}
 
-								if(!isset($getArr['CHSEQ']))
-									$form_creator->popArr['newCID'] = $chi->getLastRecord($getArr['id']);
-								elseif(isset($getArr['CHSEQ'])) {
+
+								$form_creator->popArr['newCID'] = $chi->getLastRecord($getArr['id']);
+								if(isset($getArr['CHSEQ'])) {
 									$arr[0]=$getArr['id'];
 									$arr[1]=$getArr['CHSEQ'];
 									$form_creator->popArr['editChiForm'] = $chi->filterEmpChi($arr);
@@ -1677,10 +1674,9 @@ class EmpViewController {
 		   					    $form_creator->popArr['editPaymentArr'] = $edit = $empbassal->filterEmpBasSal($arr);
 		   					    $form_creator->popArr['currlist'] = $empbassal-> getCurrCodes($edit[0][1]);
 
-							} else {
-
-								$form_creator->popArr['currlist'] = $empbassal->getUnAssCurrCodes($salGrd,$getArr['id']);
 							}
+
+							$form_creator->popArr['unAssCurrList'] = $empbassal->getUnAssCurrCodes($salGrd,$getArr['id']);
 
 							$form_creator->popArr['rsetPayment'] = $empbassal->getAssEmpBasSal($getArr['id']);
 						    $form_creator->popArr['currAlllist'] = $currTyp->getAllCurrencyCodes();
@@ -1775,14 +1771,14 @@ class EmpViewController {
 
 							$empconext = new EmpConExt();
 
-							if(isset($getArr['CONEXT'])) {
+							$form_creator->popArr['newConExtID'] = $empconext->getLastRecord($getArr['id']);
 
+							if(isset($getArr['CONEXT'])) {
 	   							$arr[0]=$getArr['id'];
     							$arr[1]=$getArr['CONEXT'];
 
     							$form_creator->popArr['editConExtArr'] = $empconext->filterConExt($arr);
-
-							} else $form_creator->popArr['newConExtID'] = $empconext->getLastRecord($getArr['id']);
+							}
 
 							$form_creator->popArr['rsetConExt'] = $empconext ->getAssConExt($getArr['id']);
 							}
