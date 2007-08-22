@@ -242,14 +242,14 @@ function viewPayment(pay,curr) {
 						<td valign="top"><?php echo $lang_hrEmpMain_minpoint?></td>
 						<td align="left" valign="top"><strong>
 							<input type='hidden' name='txtMinCurrency' id='txtMinCurrency'>
-							<div id='divMinCurrency'>-N/A-</div>
+							<div id='divMinCurrency'>-<?php echo $lang_Common_NotApplicable;?>-</div>
 						</strong></td>
 					  </tr>
 					  <tr>
 						<td valign="top"><?php echo $lang_hrEmpMain_maxpoint?></td>
 						<td align="left" valign="top"><strong>
 							<input type='hidden' name='txtMaxCurrency' id='txtMaxCurrency'>
-							<div id='divMaxCurrency'>-N/A-</div>
+							<div id='divMaxCurrency'>-<?php echo $lang_Common_NotApplicable;?>-</div>
 						</strong></td>
 					  </tr>
 					  <tr>

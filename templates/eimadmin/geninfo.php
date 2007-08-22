@@ -65,7 +65,7 @@ $objAjax->processRequests();
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php $objAjax->printJavascript(); ?>
 <script type="text/javascript" src="../../scripts/archive.js"></script>
@@ -234,7 +234,7 @@ function edit()
 							  <tr>
 							    <td><?php echo $lang_compstruct_country; ?></td>
 							    <td><select name='cmbCountry' disabled onChange="OnCountryChange(this.value);">
-							    		<option value="0">--- Select ---</option>
+							    		<option value="0">--- <?php echo $lang_Common_Select;?> ---</option>
 							    <?php		$cntlist = $this->popArr['cntlist'];
 							    		for($c=0; $cntlist && count($cntlist)>$c ;$c++)
 							    			if(isset($editArr['COUNTRY']) && ($editArr['COUNTRY'] == $cntlist[$c][0]))
@@ -257,7 +257,7 @@ function edit()
 							    <td><div id="lrState" name="lrState">
 							    <?php if (isset($editArr['COUNTRY']) && ($editArr['COUNTRY'] == 'US')) { ?>
 							    	<select name="txtState" id="txtState" disabled>
-							    		<option value="0">--- Select ---</option>
+							    		<option value="0">--- <?php echo $lang_Common_Select;?>---</option>
 							     	<?php	$statlist = $this->popArr['provlist'];
 							    		for($c=0; $statlist && count($statlist)>$c ;$c++)
 							    			if($editArr['STATE'] == $statlist[$c][1])

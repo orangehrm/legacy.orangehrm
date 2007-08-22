@@ -176,7 +176,7 @@ if(isset($this->popArr['editSkillArr'])) {
                     <tr>
                       <td width="200"><?php echo $lang_hrEmpMain_Skill?></td>
     				  <td><select name="cmbSkilCode" <?php echo $locRights['add'] ? '':'disabled'?>>
-    				  		<option selected value="0">-----------Select Skill-------------</option>
+    				  		<option selected value="0">-----------<?php echo $lang_rep_SelectSkill;?>-------------</option>
 <?php
 						$skilllist= $this->popArr['uskilllist'];
 						for($c=0;$skilllist && count($skilllist)>$c;$c++)

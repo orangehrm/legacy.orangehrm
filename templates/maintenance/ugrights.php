@@ -30,7 +30,7 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 <!DOCCIDE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 
 <script language="JavaScript">
 
@@ -282,7 +282,7 @@ $ugDet = $this ->popArr['ugDet'];
 						<td valign="top"><?php echo $lang_Admin_Users_Modules; ?></td>
 						<td align="left" valign="top">
 						<select name="cmbModuleID" <?php echo $locRights['add'] ? '':'disabled'?>>
-									<option value="0">--Select Module--</option>
+									<option value="0">--<?php echo $lang_Admin_Users_SelectModule;?>--</option>
 <?php
 						$modlist = $this->popArr['modlistUnAss'];
 						for($c=0;$modlist && count($modlist)>$c;$c++)

@@ -27,7 +27,7 @@ $editArr = $this->popArr['editArr'];
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>E-mail Cofiguration</title>
+<title><?php echo $lang_Admin_EMX_MailConfiguration; ?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="../../themes/beyondT/css/style.css" rel="stylesheet" type="text/css">
 <link href="../../themes/beyondT/css/leave.css" rel="stylesheet" type="text/css" />

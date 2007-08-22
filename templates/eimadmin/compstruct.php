@@ -114,7 +114,7 @@
 <html>
 
 <head>
-<title>Company Structure</title>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="../../themes/beyondT/pictures/styles.css" rel="stylesheet" type="text/css">
 <link href="../../themes/beyondT/css/style.css" rel="stylesheet" type="text/css">

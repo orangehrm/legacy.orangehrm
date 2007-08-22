@@ -73,7 +73,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php $objAjax->printJavascript(); ?>
 <script type="text/javascript" src="../../scripts/archive.js"></script>
@@ -278,7 +278,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php $objAjax->printJavascript(); ?>
 <script type="text/javascript" src="../../scripts/archive.js"></script>
@@ -429,7 +429,7 @@ function mover() {
 						  </tr>
 				  <tr>
 						  <td><span class="error">*</span> <?php echo $lang_compstruct_country; ?></td>
-						  <td><select name="cmbCountry" disabled onChange="document.getElementById('status').innerHTML = 'Please Wait....'; xajax_populateStates(this.value);">
+						  <td><select name="cmbCountry" disabled onChange="document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait; ?>....'; xajax_populateStates(this.value);">
 						  		<option value="0">--<?php echo $lang_districtinformation_selectcounlist; ?>--</option>
 					<?php
 								$cntlist = $this->popArr['cntlist'];

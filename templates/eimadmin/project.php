@@ -32,7 +32,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'u
 ?>
 <html>
 <head>
-<title>Project</title>
+<title><?php echo $lang_view_Project_Heading;?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../../scripts/archive.js"></script>
 <?php require_once ROOT_PATH . '/scripts/octopus.js'; ?>
@@ -169,7 +169,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'u
 		<table width='100%' cellpadding='0' cellspacing='0' border='0' class='moduleTitle'>
 			<tr>
 		  		<td width='100%'>
-		  			<h2>Project</h2>
+		  			<h2><?php echo $lang_view_Project_Heading;?></h2>
 		  		</td>
 	  		<td valign='top' align='right' nowrap style='padding-top:3px; padding-left: 5px;'></td></tr>
 		</table>

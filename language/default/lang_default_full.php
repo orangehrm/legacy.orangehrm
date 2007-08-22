@@ -198,6 +198,11 @@
 	$lang_Commn_PleaseWait					= "Please wait";
 	$lang_Common_Select 				= "Select";
 	$lang_Commn_Email						= "E-mail";
+	$lang_Common_Loading				= "Loading";
+	$lang_Common_LoadingPage                        = "Loading Page";
+	$lang_Common_NotApplicable                      = "N/A";
+	$lang_Common_Male                      		= "Male";
+	$lang_Common_Female                    		= "Female";
 
 	$lang_Common_Edit = "Edit";
 	$lang_Common_New = "New";
@@ -226,6 +231,7 @@
 	$lang_Admin_License_DescriptionCannotBeBlank = "License description cannot be blank!";
 
 	// leave module
+	$lang_Leave_Title = "OrangeHRM - Leave Module";
 	$lang_Leave_Common_Date 				= "Date";
 
 	$lang_Leave_Common_FromDate 			= "From Date";
@@ -245,6 +251,7 @@
 	$lang_Leave_Common_Rejected 			= "Rejected";
 	$lang_Leave_Common_Taken 				= "Taken";
 	$lang_Leave_Common_InvalidStatus 		= "Invalid Status";
+	$lang_Leave_Common_StatusDiffer 		= "Status Differ";
 	$lang_Leave_Common_FullDay 				= "Full Day";
 	$lang_Leave_Common_HalfDayMorning 		= "Half Day / Morning";
 	$lang_Leave_Common_HalfDayAfternoon 	= "Half Day / Afternoon";
@@ -286,6 +293,8 @@
         $lang_Leave_Summary_Deleted_Types_MoreInfo = "Deleted leave types are shown here if employees have used these leave types before they were deleted. Deleted leave types are retained in the system but cannot be used for new leave requests.";
 
 	$lang_Leave_Holiday = "Holiday";
+	$lang_Leave_NoOfDays = "No of Days";
+	$lang_Leave_Period = "Leave Period";
 
 	$lang_Leave_Define_IsDeletedName  	= "Deleted Leave Type exists with the same name.";
 	$lang_Leave_Define_UndeleteLeaveType    = "To re-use deleted leave type instead of creating a new leave type, click:";
@@ -410,6 +419,7 @@
 	$lang_empview_JobTitle					= "Job Title";
 	$lang_empview_Supervisor 				= "Supervisor";
 	$lang_empview_EmploymentStatus			= "Employment status";
+	$lang_emppop_title                                      = "Search Employees";
 
  	$lang_ethnicrace_heading 				= "Nationality & Race :Ethnic Races";
  	$lang_ethnicrace_NameShouldBeSpecified  = "Ethnic Race Name should be specified";
@@ -498,6 +508,8 @@
 	$lang_hremp_AreYouSureYouWantToDeleteThePhotograph = "Are you sure you want to delete the photograph";
 
 	$lang_hremp_SelectAPhoto				= "Select a Photo";
+	$lang_hremp_PhotoMaxSize				= "1M Max";
+	$lang_hremp_PhotoDimensions				= "Dimensions 100x120";
 
 	$lang_hremp_IssedDateShouldBeBeforeExp	= "Issued date should be before expiration date";
 	$lang_hremp_FromDateShouldBeBeforeToDate= "From date should be before To date";
@@ -790,6 +802,7 @@
 	//Customer
 	$lang_view_CustomerId = "Customer Id";
 	$lang_view_CustomerName = "Customer Name";
+	$lang_customer_Heading          = "Customer";
 
 	$lang_index_WelcomeMes 			= "Welcome #username";
 	$lang_index_ChangePassword 		= "Change Password";
@@ -808,6 +821,7 @@
 	$lang_Error_Invalid_Port = "Invalid SMTP Port";
 
 	//Projects
+	$lang_view_Project_Heading = "Project";
 	$lang_view_ProjectId = "Project Id";
 	$lang_view_ProjectName = "Project Name";
 
@@ -936,6 +950,7 @@
 	$lang_Admin_Users_RightsAssignedToUserGroups = "Rights Assigned to User Groups";
 	$lang_Admin_Users_UserGroup = "User Group";
 	$lang_Admin_Users_UserGroupId = "User Group ID";
+	$lang_Admin_Users_SelectModule = "Select Module";
 
 	$lang_Admin_Users_UserName = "User Name";
 	$lang_Admin_Users_Password = "Password";
@@ -982,6 +997,7 @@
 	$lang_Admin_Customer_Error_PleaseSpecifyTheName = "Please specify the name";
 
 	//timesheet
+	$lang_Time_Module_Title = "OrangeHRM - Time and Attendance Module";
 	$lang_Time_Timesheet_TimesheetForViewTitle = "Timesheet for #periodName starting #startDate";
 	$lang_Time_Timesheet_TimesheetForEditTitle = "Edit timesheet for #periodName starting #startDate";
 

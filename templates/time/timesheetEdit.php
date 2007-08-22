@@ -455,7 +455,7 @@ function deleteTimeEvents() {
 			<tr id="row[<?php echo $row; ?>]">
 				<td class="tableMiddleLeft"></td>
 				<td ><input type="checkbox" id="deleteEvent[]" name="deleteEvent[]" value="<?php echo $timeExpense->getTimeEventId(); ?>" /></td>
-				<td ><select id="cmbCustomer[<?php echo $row; ?>]" name="cmbCustomer[]" onfocus="looseCurrFocus();" onchange="$('status').innerHTML='Loading...'; xajax_populateProjects(this.value, <?php echo $row; ?>);">
+				<td ><select id="cmbCustomer[<?php echo $row; ?>]" name="cmbCustomer[]" onfocus="looseCurrFocus();" onchange="$('status').innerHTML='<?php echo $lang_Common_Loading;?>...'; xajax_populateProjects(this.value, <?php echo $row; ?>);">
 				<?php if (is_array($customers)) { ?>
 						<option value="0">--<?php echo $lang_Leave_Common_Select;?>--</option>
 				<?php	foreach ($customers as $customer) {
@@ -503,7 +503,7 @@ function deleteTimeEvents() {
 			<tr id="row[<?php echo $row; ?>]">
 				<td class="tableMiddleLeft"></td>
 				<td ><input type="checkbox" id="deleteEvent[]" name="deleteEvent[]" disabled="disabled" /></td>
-				<td ><select id="cmbCustomer[<?php echo $row; ?>]" name="cmbCustomer[]" onfocus="looseCurrFocus();" onchange="$('status').innerHTML='Loading...'; xajax_populateProjects(this.value, <?php echo $row; ?>);" >
+				<td ><select id="cmbCustomer[<?php echo $row; ?>]" name="cmbCustomer[]" onfocus="looseCurrFocus();" onchange="$('status').innerHTML='<?php echo $lang_Common_Loading;?>...'; xajax_populateProjects(this.value, <?php echo $row; ?>);" >
 				<?php if (is_array($customers)) { ?>
 						<option value="0">--<?php echo $lang_Leave_Common_Select;?>--</option>
 				<?php	foreach ($customers as $customer) { ?>

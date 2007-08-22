@@ -28,7 +28,7 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 <script language="JavaScript">
 
 function assignUSG()

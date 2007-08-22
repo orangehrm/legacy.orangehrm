@@ -131,7 +131,7 @@ $objAjax->processRequests();
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../../scripts/archive.js"></script>
 <?php
@@ -562,7 +562,7 @@ function resetAdd(panel) {
     <td valign='top'>&nbsp; </td>
     <td width='100%'><h2 align="center"><?php echo $lang_empview_EmployeeInformation; ?></h2></td>
     <td valign='top' align='right' nowrap style='padding-top:3px; padding-left: 5px;'>
-    <b><div align="right" id="status" style="display: none;"><img src="../../themes/beyondT/icons/loading.gif" width="20" height="20" style="vertical-align:bottom;"/> <span style="vertical-align:text-top">Loading Page...</span></div></b></td>
+    <b><div align="right" id="status" style="display: none;"><img src="../../themes/beyondT/icons/loading.gif" width="20" height="20" style="vertical-align:bottom;"/> <span style="vertical-align:text-top"><?php echo $lang_Common_LoadingPage; ?>...</span></div></b></td>
   </tr>
 </table>
 

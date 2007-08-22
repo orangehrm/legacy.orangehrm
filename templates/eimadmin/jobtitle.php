@@ -196,7 +196,7 @@ return $objResponse->getXML();
 
 <head>
 
-<title>Untitled Document</title>
+<title></title>
 <?php $objAjax->printJavascript(); ?>
 <script language="JavaScript">
 

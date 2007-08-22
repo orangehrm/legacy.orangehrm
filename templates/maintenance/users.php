@@ -32,46 +32,10 @@ require_once($lan->getLangPath("full.php"));
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../../scripts/archive.js"></script>
 <script>
-
-function echeck(str) {
-
-		var lat=str.indexOf('@');
-		var lstr=str.length;
-		var ldot=str.indexOf('.');
-		if (str.indexOf('@')==-1){
-		   return false;
-		}
-
-		if (str.indexOf('@')==-1 || str.indexOf('@')==0 || str.indexOf('@')==lstr){
-		   return false;
-		}
-
-		if (str.indexOf('.')==-1 || str.indexOf('.')==0 || str.indexOf('.')==lstr){
-		    return false;
-		}
-
-		 if (str.indexOf('@',(lat+1))!=-1){
-		    return false;
-		 }
-
-		 if (str.substring(lat-1,lat)=='.' || str.substring(lat+1,lat+2)=='.'){
-		    return false;
-		 }
-
-		 if (str.indexOf('.',(lat+2))==-1){
-		    return false;
-		 }
-
-		 if (str.indexOf(" ")!=-1){
-		    return false;
-		 }
-
- 		 return true;
-	}
 
 function name(txt)
 {
@@ -273,45 +237,10 @@ function goBack() {
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../../scripts/archive.js"></script>
 <script>
-function echeck(str) {
-
-		var lat=str.indexOf('@');
-		var lstr=str.length;
-		var ldot=str.indexOf('.');
-		if (str.indexOf('@')==-1){
-		   return false;
-		}
-
-		if (str.indexOf('@')==-1 || str.indexOf('@')==0 || str.indexOf('@')==lstr){
-		   return false;
-		}
-
-		if (str.indexOf('.')==-1 || str.indexOf('.')==0 || str.indexOf('.')==lstr){
-		    return false;
-		}
-
-		 if (str.indexOf('@',(lat+1))!=-1){
-		    return false;
-		 }
-
-		 if (str.substring(lat-1,lat)=='.' || str.substring(lat+1,lat+2)=='.'){
-		    return false;
-		 }
-
-		 if (str.indexOf('.',(lat+2))==-1){
-		    return false;
-		 }
-
-		 if (str.indexOf(" ")!=-1){
-		    return false;
-		 }
-
- 		 return true;
-	}
 
 function name(txt)
 {
