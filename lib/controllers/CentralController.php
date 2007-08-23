@@ -1272,7 +1272,7 @@ switch ($moduletype) {
 																							}
 																						}
 
-																						$leaveController->redirect("CANCEL_SUCCESS");
+																						$leaveController->redirect("CHANGE_STATUS_SUCCESS");
 																						break;
 
 													case 'Leave_Apply'				: 	$obj = $leaveRequestsExtractor->parseAddData($_POST);
