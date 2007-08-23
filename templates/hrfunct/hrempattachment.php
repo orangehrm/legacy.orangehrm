@@ -126,7 +126,6 @@ function editAttach() {
 		</table>
 	</div>
 <?php } ?>
-
 <?php
 	$rset = $this->popArr['empAttAss'] ;
 	if ($rset != null){ ?>

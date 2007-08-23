@@ -1705,19 +1705,18 @@ class EmpViewController {
 
 							$form_creator ->popArr['allSkilllist'] =  $skill ->getSkillCodes();
 
+							$form_creator ->popArr['uskilllist']   = $skill ->getUnAssSkillCodes($getArr['id']);
+
 							if(isset($getArr['SKILL'])) {
 								    $arr[0]=$getArr['id'];
     								$arr[1]=$getArr['SKILL'];
 
 								$form_creator -> popArr['editSkillArr'] = $empskill ->filterEmpSkill($arr);
-
-							} else {
-
-								$form_creator ->popArr['uskilllist']   = $skill ->getUnAssSkillCodes($getArr['id']);
 							}
 
 							$form_creator ->popArr['rsetSkill']    = $empskill ->getAssEmpSkill($getArr['id']);
 
+							$form_creator->popArr['newWrkExpID'] = $empworkex ->getLastRecord($getArr['id']);
 
 							if(isset($getArr['WRKEXP'])) {
 
@@ -1726,25 +1725,21 @@ class EmpViewController {
 
     							$form_creator-> popArr['editWrkExpArr'] = $edit =  $empworkex->filterEmpWorkExp($arr);
 
-							} else {
-
-								$form_creator->popArr['newWrkExpID'] = $empworkex ->getLastRecord($getArr['id']);
 							}
+
 
 							$form_creator-> popArr['rsetWrkExp']  =  $empworkex ->getAssEmpWorkExp($getArr['id']);
 
 
 							$form_creator->popArr['allEduCodes'] = $education->getListofEducation(0,'',0);
 
-							if(isset($getArr['EDU'])) {
+							$form_creator->popArr['unAssEduCodes'] = $empeducation->getUnAssEduCodes($getArr['id']);
 
+							if (isset($getArr['EDU'])) {
 								$arr[0] = $getArr['id'];
 								$arr[1] = $getArr['EDU'];
 
 								$form_creator->popArr['editEducationArr'] = $empeducation->filterEmpEducation($arr);
-
-							} else {
-								$form_creator->popArr['unAssEduCodes'] = $empeducation->getUnAssEduCodes($getArr['id']);
 							}
 
 							$form_creator->popArr['rsetEducation'] = $empeducation->getAssEmpEducation($getArr['id']);
