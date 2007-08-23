@@ -47,13 +47,25 @@ if ($modifier === "SUP") {
  	$action = "Leave_Request_CancelLeave";
  	$detailAction = "Leave_FetchDetailsEmployee";
  }
-
- if (isset($_GET['message'])) {
 ?>
-<var><?php echo $_GET['message']; ?></var>
-<?php } ?>
 <h2><?php echo $lang_Title?><hr/></h2>
+<?php if (isset($_GET['message']) && $_GET['message'] != 'xx') {
+
+	$expString  = $_GET['message'];
+	$expString = explode ("_",$expString);
+	$length = count($expString);
+
+	$col_def=strtolower($expString[$length-1]);
+
+	$expString='lang_Leave_'.$_GET['message'];
+	if (isset($$expString)) {
+?>
+	<font class="<?php echo $col_def?>" size="-1" face="Verdana, Arial, Helvetica, sans-serif">
+<?php echo $$expString; ?>
+	</font>
 <?php
+	}
+}
 	if (!is_array($records)) {
 ?>
 	<h5><?php echo $lang_Error_NoRecordsFound; ?></h5>

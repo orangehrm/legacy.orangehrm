@@ -441,6 +441,10 @@ class LeaveController {
 	}
 
 	public function copyLeaveQuotaFromLastYear($currYear) {
+		if ($_SESSION['isAdmin'] !== 'Yes') {
+			trigger_error("Unauthorized access", E_USER_NOTICE);
+		}
+
 		$leaveQuotaObj = new LeaveQuota();
 
 		$res = false;
@@ -458,7 +462,7 @@ class LeaveController {
 
 	private function _validToCopyQuotaFromLastYear($currYear) {
 		if ($_SESSION['isAdmin'] !== 'Yes') {
-			trigger_error("Unauthorized access", E_USER_NOTICE);
+			return false;
 		}
 
 		$leaveQuotaObj = new LeaveQuota();
