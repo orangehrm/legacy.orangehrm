@@ -406,9 +406,13 @@ templates/leave/leaveSelectEmployeeAndYear.php -text
 templates/leave/leaveSummary.php -text
 templates/leave/leaveTypeDefine.php -text
 templates/leave/leaveTypeSummary.php -text
+templates/leave/mails/subordinate/approval-subject.txt -text
 templates/leave/mails/subordinate/approval.txt -text
+templates/leave/mails/subordinate/rejected-subject.txt -text
 templates/leave/mails/subordinate/rejected.txt -text
+templates/leave/mails/supervisor/applied-subject.txt -text
 templates/leave/mails/supervisor/applied.txt -text
+templates/leave/mails/supervisor/cancelled-subject.txt -text
 templates/leave/mails/supervisor/cancelled.txt -text
 templates/leave/specificHolidaysDefine.php -text
 templates/leave/specificHolidaysList.php -text
