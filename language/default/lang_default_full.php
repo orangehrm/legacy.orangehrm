@@ -169,6 +169,7 @@
 	$lang_Leave_APPROVE_SUCCESS = "Leave Assigned";
 	$lang_Leave_APPROVE_FAILURE = "Leave Assign failed";
 	$lang_Leave_CANCEL_SUCCESS = "Successfully cancelled";
+	$lang_Leave_CHANGE_STATUS_SUCCESS = "Successfully changed the leave status";
 
 	// Report
 	$lang_Menu_Reports = "Reports";
