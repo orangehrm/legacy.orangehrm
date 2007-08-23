@@ -207,6 +207,8 @@
 	$lang_Common_New = "New";
 	$lang_Common_Save = "Save";
 
+	$lang_Common_AccessDenied = "Access Denied";
+
 	//days
 	$lang_Common_Monday 					= "Monday";
 	$lang_Common_Tuesday 					= "Tuesday";
@@ -761,6 +763,7 @@
 	$lang_view_Membership 					= "Membership";
 	$lang_view_MembershipType 				= "Membership Type";
 	$lang_view_MembershipName 				= "Membership Name";
+	$lang_view_Type 					= "Type";
 	$lang_view_message22 					= "Deletion might affect employee membership";
 	$lang_view_ExtraActivities 				= "Extra Curricular Activities";
 	$lang_view_ExtraActivitiesName 			= "Extra Curricular Activities Name";
@@ -1075,30 +1078,20 @@
 
 	$lang_view_DUPLICATE_NAME_FAILURE = "The same name is already used";
 
+	// login page
+	$lang_login_title = "OrangeHRM - New Level of HR Management";
+	$lang_login_UserNameNotGiven = "User Name not given!";
+	$lang_login_PasswordNotGiven = "Password not given!";
+	$lang_login_NeedJavascript = "You need a JavaScript enabled Browser. Ex. ";
+	$lang_login_MozillaFirefox = "Mozilla Firefox";
+	$lang_login_YourSessionExpired = "Your session expired because you were inactive. Please re-login.";
+	$lang_login_LoginName = "Login Name";
+	$lang_login_Password = "Password";
+	$lang_login_Login = "Login";
+	$lang_login_Clear = "Clear";
+	$lang_login_InvalidLogin = "Invalid Login";
+	$lang_login_UserDisabled = "User Disabled";
+	$lang_login_NoEmployeeAssigned = "No Employee assigned to the ESS user account";
+	$lang_login_OrangeHRMDescription = " comes as a comprehensive solution for the efficient management and development of your Human Resource. It will assist you in the complex and strategic process of managing this crucial resource of your enterprise. Based on modular architecture, it facilitates a vastrange of HR activities, with features that reflect the main HR management activities. It comes as a web-enabled application and considering the available flexibility, OrangeHRM is a perfect platform for reengineering your HR processes and achieving a new level of HR Management.";
 
-	// bug tracker
-    $lang_bugtracker_Title = "Report Bugs";
-    $lang_bugtracker_FoundInRelease = "Found in Release";
-	$lang_bugtracker_Category = "Category";
-	$lang_common_None = "None";
-	$lang_bugtracker_Category_Interface = "Interface";
-	$lang_bugtracker_Category_PHP = "PHP";
-	$lang_bugtracker_Category_Database = "Database";
-	$lang_bugtracker_Category_LanguagePack = "Language Pack";
-	$lang_bugtracker_Category_WebInstaller = "Web-Installer";
-	$lang_bugtracker_Module = "Module";
-	$lang_bugtracker_SelectModule = "Select Module";
-	$lang_bugtracker_Priority = "Priority";
-	$lang_bugtracker_Priority_Lowest = "Lowest";
-	$lang_bugtracker_Priority_Medium = "Medium";
-	$lang_bugtracker_Priority_Highest = "Highest";
-	$lang_bugtracker_Summary = "Summary";
-	$lang_bugtracker_YourEmail = "Your Email";
-	$lang_bugtracker_Description = "Description";
-
-	$lang_bugtracker_PleaseSelectABugCategory = "Please select a bug category";
-    $lang_bugtracker_PleaseSelectAModule = "Please select a module";
-	$lang_bugtracker_PleaseSpecifyBugSummary = "Please specify the bug summary";
-	$lang_bugtracker_PleaseSpecifyBugDescription = "Please specify the bug description";
-	$lang_bugtracker_EmailNotVaild = "The email entered is not valid";
 ?>

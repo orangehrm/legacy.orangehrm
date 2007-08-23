@@ -17,14 +17,43 @@
  * Boston, MA  02110-1301, USA
  *
  */
+	// Language constants, defined here since we don't want the bug tracker page to be translated
+	// since we can only handle english bug reports.
+	// Move to the language files if we need to translate the bug tracker in the future.
+
+        $lang_bugtracker_Title = "Report Bugs";
+        $lang_bugtracker_FoundInRelease = "Found in Release";
+        $lang_bugtracker_Category = "Category";
+        $lang_bugtracker_None = "None";
+        $lang_bugtracker_Category_Interface = "Interface";
+        $lang_bugtracker_Category_PHP = "PHP";
+        $lang_bugtracker_Category_Database = "Database";
+        $lang_bugtracker_Category_LanguagePack = "Language Pack";
+        $lang_bugtracker_Category_WebInstaller = "Web-Installer";
+        $lang_bugtracker_Module = "Module";
+        $lang_bugtracker_SelectModule = "Select Module";
+        $lang_bugtracker_Priority = "Priority";
+        $lang_bugtracker_Priority_Lowest = "Lowest";
+        $lang_bugtracker_Priority_Medium = "Medium";
+        $lang_bugtracker_Priority_Highest = "Highest";
+        $lang_bugtracker_Summary = "Summary";
+        $lang_bugtracker_YourEmail = "Your Email";
+        $lang_bugtracker_Description = "Description";
+
+        $lang_bugtracker_PleaseSelectABugCategory = "Please select a bug category";
+        $lang_bugtracker_PleaseSelectAModule = "Please select a module";
+        $lang_bugtracker_PleaseSpecifyBugSummary = "Please specify the bug summary";
+        $lang_bugtracker_PleaseSpecifyBugDescription = "Please specify the bug description";
+        $lang_bugtracker_EmailNotVaild = "The email entered is not valid";
+
 ?>
+
 <html>
 <head>
-<title>Bugs-Add</title>
+<title><?php echo $lang_bugtracker_Title; ?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../../scripts/archive.js"></script>
 <?php require_once ROOT_PATH . '/scripts/octopus.js'; ?>
-
 <script>
 
     function goBack() {
@@ -168,7 +197,7 @@
 
             <label for="category_id"><span class="error">*</span><?php echo $lang_bugtracker_Category; ?></label>
             <select id="category_id" name="category_id" tabindex="1">
-                <option VALUE="100"><?php echo $lang_common_None; ?></OPTION>
+                <option VALUE="100"><?php echo $lang_bugtracker_None; ?></OPTION>
                 <option VALUE="803416"><?php echo $lang_bugtracker_Category_Interface; ?></OPTION>
                 <OPTION VALUE="813016"><?php echo $lang_bugtracker_Category_PHP; ?></OPTION>
                 <OPTION VALUE="813015"><?php echo $lang_bugtracker_Category_Database; ?></OPTION>

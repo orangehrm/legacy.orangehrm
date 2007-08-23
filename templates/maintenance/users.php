@@ -460,7 +460,7 @@ function edit() {
 			<?php	if($locRights['edit']) { ?>
 						<img src="../../themes/beyondT/pictures/btn_edit.jpg" title="Edit" onMouseOut="mout();" onMouseOver="mover();" name="Edit" onClick="edit();">
 			<?php	} else { ?>
-						<img src="../../themes/beyondT/pictures/btn_edit.jpg" onClick="alert('<?php echo $sysConst->accessDenied?>');">
+						<img src="../../themes/beyondT/pictures/btn_edit.jpg" onClick="alert('<?php echo $lang_Common_AccessDenied;?>');">
 			<?php	}  ?>
 						</td>
 						<td>

@@ -988,7 +988,7 @@ function clearAll() {
 
 <?php			} else { ?>
 
-			        <img src="../../themes/beyondT/pictures/btn_edit.jpg" onClick="alert('<?php echo $sysConst->accessDenied?>');">
+			        <img src="../../themes/beyondT/pictures/btn_edit.jpg" onClick="alert('<?php echo $lang_Common_AccessDenied;?>');">
 
 <?php			}  ?>
 

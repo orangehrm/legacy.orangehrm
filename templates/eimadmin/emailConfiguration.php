@@ -203,7 +203,7 @@ function mover() {
 			   if($locRights['edit']) { ?>
 			        <input type="image" class="button1" id="btnEdit" src="../../themes/beyondT/pictures/btn_save.jpg" title="Save" onMouseOut="mout();" onMouseOver="mover();" name="Save" />
 <?php			} else { ?>
-			        <input type="image" class="button1" id="btnEdit" src="../../themes/beyondT/pictures/btn_edit.jpg" onClick="alert('<?php echo $sysConst->accessDenied?>'); return false;" />
+			        <input type="image" class="button1" id="btnEdit" src="../../themes/beyondT/pictures/btn_edit.jpg" onClick="alert('<?php echo $lang_Common_AccessDenied;?>'); return false;" />
 <?php			}  ?></td>
         <td class="tableMiddleRight"></td>
       </tr>
