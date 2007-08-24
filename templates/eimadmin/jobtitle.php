@@ -21,6 +21,9 @@ require_once ROOT_PATH . '/lib/controllers/ViewController.php';
 require_once ROOT_PATH . '/lib/confs/sysConf.php';
 require_once($lan->getLangPath("full.php"));
 
+$GLOBALS['lang_Common_Select'] = $lang_Common_Select;
+$GLOBALS['lang_Common_Save'] = $lang_Common_Save;
+
 function assignEmploymentStatus($valArr) {
 
 	$view_controller = new ViewController();
@@ -33,6 +36,7 @@ function assignEmploymentStatus($valArr) {
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
+	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
 	$objResponse = $xajaxFiller->cmbFiller($objResponse,$assList,0,'frmJobTitle','cmbAssEmploymentStatus',0);
 	$objResponse = $xajaxFiller->cmbFiller($objResponse,$unAssList,0,'frmJobTitle','cmbUnAssEmploymentStatus',0);
 	$objResponse->addAssign('status','innerHTML','');
@@ -56,6 +60,7 @@ function unAssignEmploymentStatus($jobtit,$empstat) {
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
+	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
 	$objResponse = $xajaxFiller->cmbFiller($objResponse,$assList,0,'frmJobTitle','cmbAssEmploymentStatus',0);
 	$objResponse = $xajaxFiller->cmbFiller($objResponse,$unAssList,0,'frmJobTitle','cmbUnAssEmploymentStatus',0);
 
@@ -74,7 +79,7 @@ function showAddEmpStatForm() {
 	$objResponse->addScript("document.getElementById('layerEmpStat').style.visibility='visible';");
 	//$parent::
 	$objResponse->addAssign('layerEmpStat','style','visibility:hidden;');
-	$objResponse->addAssign('buttonLayer','innerHTML',"<input type='button' value='Save' onClick='addFormData();'>");
+	$objResponse->addAssign('buttonLayer','innerHTML',"<input type='button' value='".$GLOBALS['lang_Common_Save']."' onClick='addFormData();'>");
 	$objResponse->addAssign('status','innerHTML','');
 
 return $objResponse->getXML();
@@ -93,7 +98,7 @@ function showEditEmpStatForm($estatCode) {
 	$objResponse->addScript("document.frmJobTitle.txtEmpStatDesc.selectAll();");
 	$objResponse->addScript("document.getElementById('layerEmpStat').style.visibility='visible';");
 
-	$objResponse->addAssign('buttonLayer','innerHTML',"<input type='button' value='Save' onClick='editFormData();'>");
+	$objResponse->addAssign('buttonLayer','innerHTML',"<input type='button' value='".$GLOBALS['lang_Common_Save']."' onClick='editFormData();'>");
 	$objResponse->addAssign('status','innerHTML','');
 
 return $objResponse->getXML();
@@ -114,6 +119,7 @@ function addExt($arrElements) {
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
+	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
 	$objResponse = $xajaxFiller->cmbFiller($objResponse,$unAssEmpStat,0,'frmJobTitle','cmbUnAssEmploymentStatus',0);
 	$objResponse->addScript("document.frmJobTitle.txtEmpStatDesc.value = '';");
 	$objResponse->addScript("document.frmJobTitle.txtEmpStatDesc.disabled = true;");
@@ -138,6 +144,7 @@ function editExt($arrElements) {
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
+	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
 	$objResponse = $xajaxFiller->cmbFiller($objResponse,$unAssEmpStat,0,'frmJobTitle','cmbUnAssEmploymentStatus',0);
 	$objResponse->addScript("document.frmJobTitle.txtEmpStatID.value = '';");
 	$objResponse->addScript("document.frmJobTitle.txtEmpStatDesc.value = '';");

@@ -20,6 +20,8 @@
 
 require_once ROOT_PATH . '/lib/controllers/TimeController.php';
 
+$GLOBALS['lang_Common_Select'] = $lang_Common_Select;
+
 function populateProjects($cutomerId, $row) {
 	ob_clean();
 
@@ -28,6 +30,7 @@ function populateProjects($cutomerId, $row) {
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
+	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
 	$element="cmbProject[$row]";
 
 	$objResponse = $xajaxFiller->cmbFillerById($objResponse,$projects,0,'frmTimesheet',$element);

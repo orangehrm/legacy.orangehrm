@@ -23,6 +23,8 @@ require_once($lan->getLangPath("full.php"));
 	$sysConst = new sysConf();
 	$locRights=$_SESSION['localRights'];
 
+	$GLOBALS['lang_Common_Select'] = $lang_Common_Select;
+
 function populateStates($value, $oldState) {
 
 	$view_controller = new ViewController();
@@ -30,35 +32,21 @@ function populateStates($value, $oldState) {
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
+	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
 	if ($provlist) {
-		$objResponse->addAssign('lrState','innerHTML','<select name="txtState" id="txtState"><option value="0">--- Select ---</option></select>');
+		$objResponse->addAssign('lrState','innerHTML','<select name="txtState" id="txtState"><option value="0">--- '.$GLOBALS['lang_Common_Select'].' ---</option></select>');
 		$objResponse = $xajaxFiller->cmbFillerById($objResponse,$provlist,1,'frmGenInfo.lrState','txtState');
 
 	} else {
 		$objResponse->addAssign('lrState','innerHTML','<input type="text" name="txtState" id="txtState" value="'. $oldState .'">');
 	}
+
 	$objResponse->addAssign('status','innerHTML','');
-
-return $objResponse->getXML();
-}
-
-
-function populateDistricts($value) {
-
-	$view_controller = new ViewController();
-	$dislist = $view_controller->xajaxObjCall($value,'LOC','district');
-
-	$objResponse = new xajaxResponse();
-	$xajaxFiller = new xajaxElementFiller();
-	$response = $xajaxFiller->cmbFiller($objResponse,$dislist,1,'frmGenInfo','cmbCity');
-	$response->addAssign('status','innerHTML','');
-
-return $response->getXML();
+	return $objResponse->getXML();
 }
 
 $objAjax = new xajax();
 $objAjax->registerFunction('populateStates');
-$objAjax->registerFunction('populateDistricts');
 $objAjax->processRequests();
 ?>
 
@@ -151,7 +139,7 @@ function edit()
 	}
 
 	function OnCountryChange(newValue) {
-		document.getElementById('status').innerHTML = 'Please Wait....';
+		document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait;?>....';
 
 		// keep the old value only if state is a text input
 		var oldVal = "";

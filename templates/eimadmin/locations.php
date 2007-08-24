@@ -22,6 +22,8 @@ require_once ROOT_PATH . '/lib/controllers/ViewController.php';
 require_once ROOT_PATH . '/lib/confs/sysConf.php';
 require_once($lan->getLangPath("full.php"));
 
+$GLOBALS['lang_Common_Select'] = $lang_Common_Select;
+
 function populateStates($value) {
 
 	$view_controller = new ViewController();
@@ -29,8 +31,9 @@ function populateStates($value) {
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
+	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
 	if ($provlist) {
-		$objResponse->addAssign('lrState','innerHTML','<select name="txtState" id="txtState"><option value="0">--- Select ---</option></select>');
+		$objResponse->addAssign('lrState','innerHTML','<select name="txtState" id="txtState"><option value="0">--- '.$GLOBALS['lang_Common_Select'].' ---</option></select>');
 		$objResponse = $xajaxFiller->cmbFillerById($objResponse,$provlist,1,'lrState','txtState');
 
 	} else {
@@ -44,22 +47,8 @@ function populateStates($value) {
 return $objResponse->getXML();
 }
 
-function populateDistrict($value) {
-
-	$view_controller = new ViewController();
-	$dislist = $view_controller->xajaxObjCall($value,'LOC','district');
-
-	$objResponse = new xajaxResponse();
-	$xajaxFiller = new xajaxElementFiller();
-	$response = $xajaxFiller->cmbFiller($objResponse,$dislist,1,'frmLocation','cmbDistrict');
-	$response->addAssign('status','innerHTML','');
-
-return $response->getXML();
-}
-
 $objAjax = new xajax();
 $objAjax->registerFunction('populateStates');
-$objAjax->registerFunction('populateDistrict');
 $objAjax->processRequests();
 
 
@@ -206,7 +195,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
 					    <td> <textarea name='txtLocDescription' rows="3" tabindex='3' cols="30"></textarea></td>
 					  <tr>
 						  <td><span class="error">*</span> <?php echo $lang_compstruct_country; ?></td>
-						  <td><select name="cmbCountry" onChange="document.getElementById('status').innerHTML = 'Please Wait....'; xajax_populateStates(this.value);">
+						  <td><select name="cmbCountry" onChange="document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait;?>....'; xajax_populateStates(this.value);">
 						  		<option value="0">--<?php echo $lang_districtinformation_selectcounlist; ?>--</option>
 					<?php
 								$cntlist = $this->popArr['cntlist'];
