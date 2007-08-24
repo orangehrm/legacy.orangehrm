@@ -440,6 +440,20 @@ class LeaveController {
 		$template->display();
 	}
 
+	public function gotoLeaveHomeSupervisor() {
+		$tmpObj = new LeaveRequests();
+
+		$tmpObj = $tmpObj->retriveLeaveRequestsSupervisor($this->getId());
+
+		if ($tmpObj == null) {
+			$this->displayLeaveTypeSummary();
+			return true;
+		}
+
+		$this->viewLeaves("suprevisor");
+		return true;
+	}
+
 	public function copyLeaveQuotaFromLastYear($currYear) {
 		if ($_SESSION['isAdmin'] !== 'Yes') {
 			trigger_error("Unauthorized access", E_USER_NOTICE);

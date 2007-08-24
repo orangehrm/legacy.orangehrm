@@ -20,6 +20,7 @@ New & Changed Features for OrangeHRM ver 2.2.0.3
 	1723581   [Usability] [CRB] Contact info should be at the top
 	1764110   All text should be in resource files
 	1779797   emppop.php
+	1753736   The default leave view for supervisor
 
 New & Changed Features for OrangeHRM ver 2.2.0.2
 

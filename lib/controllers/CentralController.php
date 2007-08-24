@@ -1130,6 +1130,9 @@ switch ($moduletype) {
 												$weekendsExtractor   	 = new EXTRACTOR_Weekends();
 
 												switch ($_GET['action']) {
+													case 'Leave_HomeSupervisor'		:	$leaveController->setId($_SESSION['empID']);
+																						$leaveController->gotoLeaveHomeSupervisor();
+																						break;
 													case 'Leave_FetchLeaveEmployee' : 	$leaveController->setId($_SESSION['empID']);
 																						$leaveController->viewLeaves();
 																						break;
