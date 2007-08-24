@@ -97,6 +97,11 @@ else
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <script>
+	function clear_form() {
+		document.standardView.loc_code.options[0].selected=true;
+		document.standardView.loc_name.value='';
+	}
+
 	function nextPage() {
 		var i=eval(document.standardView.pageNO.value);
 		document.standardView.pageNO.value=i+1;
@@ -166,11 +171,7 @@ else
 		};
 		document.standardView.captureState.value = 'SearchMode';
 
-<?php   if(isset($_GET['USR'])) { ?>
-		document.standardView.action="./emppop.php?reqcode=<?php echo $_GET['reqcode']?>&USR=USR"
-<?php   } else { ?>
-		document.standardView.action="./emppop.php?reqcode=<?php echo $_GET['reqcode']?>"
-<?php   } ?>
+		document.standardView.action="./emppop.php<?php echo $reqPath;?>"
 		document.standardView.pageNO.value=1;
 		document.standardView.submit();
 	}
