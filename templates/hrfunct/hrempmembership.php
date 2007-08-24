@@ -160,77 +160,6 @@ function viewMembership(mem,mtp) {
 <span id="parentPaneMemberships" >
 <?php  if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updatemode') { ?>
      <input type="hidden" name="membershipSTAT" value="" />
-     <div id="addPaneMemberships" class="<?php echo ($this->popArr['rsetMembership'] != null)?"addPane":""; ?>" >
-		<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
-                    <tr>
-                      <td><?php echo $lang_hrEmpMain_membershiptype?></td>
-    				  <td>
-					  <select onChange="xajax_getUnAssMemberships(this.value);" name="cmbMemTypeCode">
-					  <option value=0>-- <?php echo $lang_hrEmpMain_selmemtype?> --</option>
-
-<?php					  	$typlist= $this->popArr['typlist'];
-							for($c=0;$typlist && count($typlist)>$c;$c++)
-							if(isset($this->popArr['cmbMemTypeCode']) && $this->popArr['cmbMemTypeCode']==$typlist[$c][0])
-
-							   echo "<option selected value=" . $typlist[$c][0] . ">" . $typlist[$c][1] . "</option>";
-							else
-							   echo "<option value=" . $typlist[$c][0] . ">" . $typlist[$c][1] . "</option>";
-
-?>
-					  </select></td>
-					</tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_membership?></td>
-						<td align="left" valign="top"><select name='cmbMemCode'>
-						   		<option value=0>-- <?php echo $lang_hrEmpMain_selmemship?> --</option>
-<?php
-					if(isset($this->popArr['cmbMemTypeCode'])) {
-
-						$mship=$this->popArr['mship'];
-						for($c=0;$mship && count($mship)>$c;$c++)
-						    echo "<option value=" . $mship[$c][0] . ">" . $mship[$c][1] . "</option>";
-						}
-?>
-						</select></td>
-					  </tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_subownership?></td>
-						<td align="left" valign="top"><select name="cmbMemSubOwn">
-						   		<option value=0>-- <?php echo $lang_hrEmpMain_selownership?> --</option>
-<?php
-						for($c=0;count($subown)>$c;$c++)
-							    echo "<option value='" . $subown[$c] . "'>" . $subown[$c] . "</option>";
-
-?>
-						</select></td>
-					  </tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_subamount?></td>
-						<td align="left" valign="top"><input type="text" name="txtMemSubAmount" name="atxtMemSubAmount" >
-						</td>
-					  </tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_subcomdate?></td>
-						<td align="left" valign="top">
-							<input type="text" readonly name="txtMemCommDat" id="atxtMemCommDat" value="0000-00-00" size="12" />
-							<input class="button" type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtMemCommDat', 'cal1Container', 'yyyy-MM-dd'); return false;">
-						</td>
-					  </tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_subredate?></td>
-						<td align="left" valign="top">
-							<input type="text" readonly name="txtMemRenDat" id="atxtMemRenDat" value="0000-00-00" size="12" />
-							<input class="button" type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtMemRenDat', 'cal1Container', 'yyyy-MM-dd'); return false;">
-						</td>
-					  </tr>
-					  <tr>
-						<td valign="top"></td>
-						<td align="left" valign="top">
-        <img border="0" title="Save" onClick="addEXTMembership();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-						</td>
-					  </tr>
-                  </table>
-	</div>
 <?php
 if(isset($this->popArr['editMembershipArr'])) {
     $edit = $this->popArr['editMembershipArr'];
@@ -300,6 +229,78 @@ if(isset($this->popArr['editMembershipArr'])) {
 						</td>
 					  </tr>
        </table>
+	</div>
+<?php } else { ?>
+	<div id="addPaneMemberships" class="<?php echo ($this->popArr['rsetMembership'] != null)?"addPane":""; ?>" >
+		<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
+                    <tr>
+                      <td><?php echo $lang_hrEmpMain_membershiptype?></td>
+    				  <td>
+					  <select onChange="xajax_getUnAssMemberships(this.value);" name="cmbMemTypeCode">
+					  <option value=0>-- <?php echo $lang_hrEmpMain_selmemtype?> --</option>
+
+<?php					  	$typlist= $this->popArr['typlist'];
+							for($c=0;$typlist && count($typlist)>$c;$c++)
+							if(isset($this->popArr['cmbMemTypeCode']) && $this->popArr['cmbMemTypeCode']==$typlist[$c][0])
+
+							   echo "<option selected value=" . $typlist[$c][0] . ">" . $typlist[$c][1] . "</option>";
+							else
+							   echo "<option value=" . $typlist[$c][0] . ">" . $typlist[$c][1] . "</option>";
+
+?>
+					  </select></td>
+					</tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_membership?></td>
+						<td align="left" valign="top"><select name='cmbMemCode'>
+						   		<option value=0>-- <?php echo $lang_hrEmpMain_selmemship?> --</option>
+<?php
+					if(isset($this->popArr['cmbMemTypeCode'])) {
+
+						$mship=$this->popArr['mship'];
+						for($c=0;$mship && count($mship)>$c;$c++)
+						    echo "<option value=" . $mship[$c][0] . ">" . $mship[$c][1] . "</option>";
+						}
+?>
+						</select></td>
+					  </tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_subownership?></td>
+						<td align="left" valign="top"><select name="cmbMemSubOwn">
+						   		<option value=0>-- <?php echo $lang_hrEmpMain_selownership?> --</option>
+<?php
+						for($c=0;count($subown)>$c;$c++)
+							    echo "<option value='" . $subown[$c] . "'>" . $subown[$c] . "</option>";
+
+?>
+						</select></td>
+					  </tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_subamount?></td>
+						<td align="left" valign="top"><input type="text" name="txtMemSubAmount" name="atxtMemSubAmount" >
+						</td>
+					  </tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_subcomdate?></td>
+						<td align="left" valign="top">
+							<input type="text" readonly name="txtMemCommDat" id="atxtMemCommDat" value="0000-00-00" size="12" />
+							<input class="button" type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtMemCommDat', 'cal1Container', 'yyyy-MM-dd'); return false;">
+						</td>
+					  </tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_subredate?></td>
+						<td align="left" valign="top">
+							<input type="text" readonly name="txtMemRenDat" id="atxtMemRenDat" value="0000-00-00" size="12" />
+							<input class="button" type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtMemRenDat', 'cal1Container', 'yyyy-MM-dd'); return false;">
+						</td>
+					  </tr>
+					  <tr>
+						<td valign="top"></td>
+						<td align="left" valign="top">
+        <img border="0" title="Save" onClick="addEXTMembership();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+						</td>
+					  </tr>
+                  </table>
 	</div>
 <?php } ?>
 <?php

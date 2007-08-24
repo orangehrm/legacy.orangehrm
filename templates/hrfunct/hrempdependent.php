@@ -61,27 +61,7 @@ function editDependent() {
 	<h3><?php echo $lang_hremp_dependents; ?></h3>
     <input type="hidden" name="dependentSTAT">
 
-	<div id="addPaneDependents" class="<?php echo ($this->popArr['empDepAss'] != null)?"addPane":""; ?>" >
-		<table height="100" border="0" cellpadding="0" cellspacing="0">
-              <tr>
-                <td><?php echo $lang_hremp_name; ?>
-                	<input type="hidden" name="txtDSeqNo" value="<?php echo $this->popArr['newDepID']?>"></td>
-                <td><input name="txtDepName" <?php echo $locRights['add'] ? '':'disabled'?> type="text">
-                </tr>
-                <tr>
-                <td><?php echo $lang_hremp_relationship ; ?></td>
-                <td><input type="text" <?php echo $locRights['add'] ? '':'disabled'?> name="txtRelShip"></td>
-              </tr>
-
-				  <td>
-<?php	if($locRights['add']) { ?>
-        <img border="0" title="Save" onClick="addDependent();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-<?php	} ?>
-				  </td>
-				</tr>
-		</table>
-	</div>
-	<?php if(isset($this->getArr['depSEQ'])) {
+<?php if(isset($this->getArr['depSEQ'])) {
 		$edit = $this->popArr['editDepForm'];
 ?>
 	<div id="editPaneDependents" >
@@ -105,7 +85,28 @@ function editDependent() {
 				</tr>
 		</table>
 	</div>
-	<?php } ?>
+	<?php } else { ?>
+	<div id="addPaneDependents" class="<?php echo ($this->popArr['empDepAss'] != null)?"addPane":""; ?>" >
+		<table height="100" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><?php echo $lang_hremp_name; ?>
+                	<input type="hidden" name="txtDSeqNo" value="<?php echo $this->popArr['newDepID']?>"></td>
+                <td><input name="txtDepName" <?php echo $locRights['add'] ? '':'disabled'?> type="text">
+                </tr>
+                <tr>
+                <td><?php echo $lang_hremp_relationship ; ?></td>
+                <td><input type="text" <?php echo $locRights['add'] ? '':'disabled'?> name="txtRelShip"></td>
+              </tr>
+
+				  <td>
+<?php	if($locRights['add']) { ?>
+        <img border="0" title="Save" onClick="addDependent();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+<?php	} ?>
+				  </td>
+				</tr>
+		</table>
+	</div>
+<?php } ?>
 <?php
 //checking for the records if exsists show the dependents table and the delete btn else hide
 $rset = $this->popArr['empDepAss'];

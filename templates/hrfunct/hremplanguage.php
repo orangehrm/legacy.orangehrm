@@ -111,56 +111,6 @@ function delEXTLang() {
 <span id="parentPaneLanguages" >
 <?php  if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updatemode') { ?>
 <input type="hidden" name="langSTAT" value="">
-<div id="addPaneLanguages" class="<?php echo ($this->popArr['rsetLang'] != null)?"addPane":""; ?>" >
-	<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
-                    <tr>
-                      <td width="200"><?php echo $lang_hremp_Language?></td>
-    				  <td><select name="cmbLanCode">
-    				  		<option selected value="0">--<?php echo $lang_hremplan_SelectLanguage; ?>--</option>
-<?php
-						$lanlist= $this->popArr['lanlist'];
-						for($c=0;$lanlist && count($lanlist)>$c;$c++)
-							if(isset($this->popArr['cmbLanCode']) && $this->popArr['cmbLanCode']==$lanlist[$c][0])
-							   echo "<option  value=" . $lanlist[$c][0] . ">" . $lanlist[$c][1] . "</option>";
-							 else
-							   echo "<option value=" . $lanlist[$c][0] . ">" . $lanlist[$c][1] . "</option>";
-?>
-					  </select></td>
-					</tr>
-                    <tr>
-                      <td width="200"><?php echo $lang_hremplan_fluency?></td>
-    				  <td><select name="cmbLanType">
-    				  		<option value="0">---<?php echo $lang_hremplan_SelectFluency; ?>---</option>
-<?php
-						$index=array_values($lantype);
-						$value=array_keys($lantype);
-						for($c=0;$lantype && count($lantype)>$c;$c++)
-							   echo "<option value=" . $index[$c] . ">" . $value[$c] . "</option>";
-?>
-					  </select></td>
-					</tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_ratinggarde?></td>
-						<td align="left" valign="top"><select name='cmbRatGrd'>
-    				  		<option value="0">----<?php echo $lang_hremplan_SelectRating; ?>----</option>
-<?php
-				        $code=array_values($grdcodes);
-						$name=array_keys($grdcodes);
-						for($c=0;$grdcodes && count($grdcodes)>$c;$c++)
-							   echo "<option value=" . $code[$c] . ">" . $name[$c] . "</option>";
-?>
-
-					</select>
-						</td>
-					  </tr>
-					  <tr>
-						<td valign="top"></td>
-						<td align="left" valign="top">
-					        <img border="0" title="Save" onClick="addEXTLang();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-								</td>
-					  </tr>
-                  </table>
-</div>
 <?php
 if(isset($this->getArr['lanSEQ'])) {
     $edit = $this->popArr['editLanArr'];
@@ -212,6 +162,57 @@ if(isset($this->getArr['lanSEQ'])) {
 						<td align="left" valign="top">
 						        <img src="../../themes/beyondT/pictures/btn_edit.jpg" title="Edit" onmouseout="moutLang();" onmouseover="moverLang();" name="EditLang" onClick="editLang();">
 						</td>
+					  </tr>
+                  </table>
+</div>
+<?php } else { ?>
+<div id="addPaneLanguages" class="<?php echo ($this->popArr['rsetLang'] != null)?"addPane":""; ?>" >
+	<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
+                    <tr>
+                      <td width="200"><?php echo $lang_hremp_Language?></td>
+    				  <td><select name="cmbLanCode">
+    				  		<option selected value="0">--<?php echo $lang_hremplan_SelectLanguage; ?>--</option>
+<?php
+						$lanlist= $this->popArr['lanlist'];
+						for($c=0;$lanlist && count($lanlist)>$c;$c++)
+							if(isset($this->popArr['cmbLanCode']) && $this->popArr['cmbLanCode']==$lanlist[$c][0])
+							   echo "<option  value=" . $lanlist[$c][0] . ">" . $lanlist[$c][1] . "</option>";
+							 else
+							   echo "<option value=" . $lanlist[$c][0] . ">" . $lanlist[$c][1] . "</option>";
+?>
+					  </select></td>
+					</tr>
+                    <tr>
+                      <td width="200"><?php echo $lang_hremplan_fluency?></td>
+    				  <td><select name="cmbLanType">
+    				  		<option value="0">---<?php echo $lang_hremplan_SelectFluency; ?>---</option>
+<?php
+						$index=array_values($lantype);
+						$value=array_keys($lantype);
+						for($c=0;$lantype && count($lantype)>$c;$c++)
+							   echo "<option value=" . $index[$c] . ">" . $value[$c] . "</option>";
+?>
+					  </select></td>
+					</tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_ratinggarde?></td>
+						<td align="left" valign="top"><select name='cmbRatGrd'>
+    				  		<option value="0">----<?php echo $lang_hremplan_SelectRating; ?>----</option>
+<?php
+				        $code=array_values($grdcodes);
+						$name=array_keys($grdcodes);
+						for($c=0;$grdcodes && count($grdcodes)>$c;$c++)
+							   echo "<option value=" . $code[$c] . ">" . $name[$c] . "</option>";
+?>
+
+					</select>
+						</td>
+					  </tr>
+					  <tr>
+						<td valign="top"></td>
+						<td align="left" valign="top">
+					        <img border="0" title="Save" onClick="addEXTLang();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+								</td>
 					  </tr>
                   </table>
 </div>

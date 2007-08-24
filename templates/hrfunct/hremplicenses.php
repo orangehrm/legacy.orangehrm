@@ -119,42 +119,6 @@ function viewLicense(lic) {
 <span id="parentPaneLicenses" >
 <?php  if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updatemode') { ?>
     <input type="hidden" name="licenseSTAT" value="">
-	<div id="addPaneLicenses" class="<?php echo ($this->popArr['rsetLicense'] != null)?"addPane":""; ?>" >
-			<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
-					  <tr>
-                      <td width="200"><?php echo $lang_hremplicenses_licentype?></td>
-    				  <td><select name="cmbLicCode">
-    				  		<option selected value="0">--<?php echo $lang_hremplicenses_SelectLicenseType; ?>--</option>
-<?php						$unassLicenlist= $this->popArr['unassLicenlist'];
-
-						for($c=0;$unassLicenlist && count($unassLicenlist)>$c;$c++)
-							if(isset($this->popArr['cmbLicCode']) && $this->popArr['cmbLicCode']==$unassLicenlist[$c][0])
-							   echo "<option  value=" . $unassLicenlist[$c][0] . ">" . $unassLicenlist[$c][1] . "</option>";
-							 else
-							   echo "<option value=" . $unassLicenlist[$c][0] . ">" . $unassLicenlist[$c][1] . "</option>";
-?>
-					  </select></td>
-					</tr>
-                    <tr>
-                    <td><?php echo $lang_hrEmpMain_startdate?></td>
-						<td>
-							<input type="text" name="txtEmpLicDat" id="atxtEmpLicDat" readonly value="<?php echo isset($this->popArr['txtEmpLicDat']) ?$this->popArr['txtEmpLicDat'] :'0000-00-00'?>" size="12" />
-							<input type="button" name="btnEmpLicDat" class="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpLicDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
-    				  </tr>
-    				  <tr>
-                       <td><?php echo $lang_hrEmpMain_enddate?></td>
-						<td>
-							<input type="text" name="txtEmpreDat" id="atxtEmpreDat" readonly value="<?php echo isset($this->popArr['txtEmpreDat']) ?$this->popArr['txtEmpreDat'] :'0000-00-00'?>" size="12" />
-							<input type="button" name="btnEmpreDat" class="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpreDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
-					</tr>
-
-					  <tr>
-						<td valign="top"></td>
-						<td align="left" valign="top">
-        <img border="0" title="Save" onClick="addEXTLicense();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-					  </tr>
-                  </table>
-	</div>
 <?php
 if(isset($this->getArr['LIC'])) {
     $edit = $this->popArr['editLicenseArr'];
@@ -192,8 +156,44 @@ if(isset($this->getArr['LIC'])) {
 					  </tr>
 			</table>
 		</div>
-<?php } ?>
+<?php } else { ?>
+	<div id="addPaneLicenses" class="<?php echo ($this->popArr['rsetLicense'] != null)?"addPane":""; ?>" >
+			<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
+					  <tr>
+                      <td width="200"><?php echo $lang_hremplicenses_licentype?></td>
+    				  <td><select name="cmbLicCode">
+    				  		<option selected value="0">--<?php echo $lang_hremplicenses_SelectLicenseType; ?>--</option>
+<?php						$unassLicenlist= $this->popArr['unassLicenlist'];
 
+						for($c=0;$unassLicenlist && count($unassLicenlist)>$c;$c++)
+							if(isset($this->popArr['cmbLicCode']) && $this->popArr['cmbLicCode']==$unassLicenlist[$c][0])
+							   echo "<option  value=" . $unassLicenlist[$c][0] . ">" . $unassLicenlist[$c][1] . "</option>";
+							 else
+							   echo "<option value=" . $unassLicenlist[$c][0] . ">" . $unassLicenlist[$c][1] . "</option>";
+?>
+					  </select></td>
+					</tr>
+                    <tr>
+                    <td><?php echo $lang_hrEmpMain_startdate?></td>
+						<td>
+							<input type="text" name="txtEmpLicDat" id="atxtEmpLicDat" readonly value="<?php echo isset($this->popArr['txtEmpLicDat']) ?$this->popArr['txtEmpLicDat'] :'0000-00-00'?>" size="12" />
+							<input type="button" name="btnEmpLicDat" class="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpLicDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
+    				  </tr>
+    				  <tr>
+                       <td><?php echo $lang_hrEmpMain_enddate?></td>
+						<td>
+							<input type="text" name="txtEmpreDat" id="atxtEmpreDat" readonly value="<?php echo isset($this->popArr['txtEmpreDat']) ?$this->popArr['txtEmpreDat'] :'0000-00-00'?>" size="12" />
+							<input type="button" name="btnEmpreDat" class="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpreDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
+					</tr>
+
+					  <tr>
+						<td valign="top"></td>
+						<td align="left" valign="top">
+        <img border="0" title="Save" onClick="addEXTLicense();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+					  </tr>
+                  </table>
+	</div>
+<?php } ?>
 <?php
     $rset = $this->popArr['rsetLicense'];
 

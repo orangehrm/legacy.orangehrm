@@ -149,58 +149,6 @@ if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updat
 	}
 ?>
 	<input type="hidden" name="txtSalGrdId" value="<?php echo $this->popArr['salGrd']?>">
-	<div id="addPanePayments" class="<?php echo ($this->popArr['rsetPayment'] != null)?"addPane":""; ?>" >
-				<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
-                    <tr>
-                      <td><?php echo $lang_hrEmpMain_paygrade; ?></td>
-    				  <td><strong>
-    				 <?php $salgradelist = $this->popArr['salgradelist'];
-    				    for($c=0; $salgradelist && count($salgradelist) > $c; $c++)
-    				    	if($this->popArr['salGrd'] == $salgradelist[$c][0])
-    				    		echo $salgradelist[$c][1];
-    				 ?>
-    				  </strong></td>
-					</tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_currency; ?></td>
-						<td align="left" valign="top"><select <?php echo (!$supervisorEMPMode && ($locRights['add'] && $salGrd !== null))? '':'disabled'?> onChange="xajax_getMinMaxCurrency(this.value,'<?php echo $this->popArr['salGrd']?>')" name='cmbCurrCode'>
-                       						<option value="0">-- <?php echo $lang_hremp_SelectCurrency; ?> --</option>
-<?php
-						$curlist= $this->popArr['unAssCurrList'];
-						for($c=0;$curlist && count($curlist)>$c;$c++)
-								   echo "<option value=" . $curlist[$c][2] . ">" . $curlist[$c][0] . "</option>";
-?>
-							</select></td>
-					  </tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_minpoint?></td>
-						<td align="left" valign="top"><strong>
-							<input type='hidden' name='txtMinCurrency' id='txtMinCurrency'>
-							<div id='divMinCurrency'>-<?php echo $lang_Common_NotApplicable;?>-</div>
-						</strong></td>
-					  </tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_maxpoint?></td>
-						<td align="left" valign="top"><strong>
-							<input type='hidden' name='txtMaxCurrency' id='txtMaxCurrency'>
-							<div id='divMaxCurrency'>-<?php echo $lang_Common_NotApplicable;?>-</div>
-						</strong></td>
-					  </tr>
-					  <tr>
-						<td valign="top"><?php echo $lang_hrEmpMain_bassalary?></td>
-						<td align="left" valign="top"><input type="text" <?php echo (!$supervisorEMPMode && ($locRights['add'] && $salGrd !== null)) ? '':'disabled'?> name="txtBasSal">
-						</td>
-					  </tr>
-					  <tr>
-						<td valign="top"></td>
-						<td align="left" valign="top">
-					<?php	if(!$supervisorEMPMode && $locRights['add']) { ?>
-					        <img border="0" title="Save" onClick="<?php echo $salGrd !== null ? 'addEXTPayment()': ''?>;" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-					<?php	} ?>
-						</td>
-					  </tr>
-                   </table>
-	</div>
 <?php
 	if(isset($this->popArr['editPaymentArr'])) {
 	 	$edit = $this->popArr['editPaymentArr'];
@@ -268,6 +216,59 @@ if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updat
 					  </tr>
                   </table>
        </div>
+<?php } else { ?>
+	<div id="addPanePayments" class="<?php echo ($this->popArr['rsetPayment'] != null)?"addPane":""; ?>" >
+				<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
+                    <tr>
+                      <td><?php echo $lang_hrEmpMain_paygrade; ?></td>
+    				  <td><strong>
+    				 <?php $salgradelist = $this->popArr['salgradelist'];
+    				    for($c=0; $salgradelist && count($salgradelist) > $c; $c++)
+    				    	if($this->popArr['salGrd'] == $salgradelist[$c][0])
+    				    		echo $salgradelist[$c][1];
+    				 ?>
+    				  </strong></td>
+					</tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_currency; ?></td>
+						<td align="left" valign="top"><select <?php echo (!$supervisorEMPMode && ($locRights['add'] && $salGrd !== null))? '':'disabled'?> onChange="xajax_getMinMaxCurrency(this.value,'<?php echo $this->popArr['salGrd']?>')" name='cmbCurrCode'>
+                       						<option value="0">-- <?php echo $lang_hremp_SelectCurrency; ?> --</option>
+<?php
+						$curlist= $this->popArr['unAssCurrList'];
+						for($c=0;$curlist && count($curlist)>$c;$c++)
+								   echo "<option value=" . $curlist[$c][2] . ">" . $curlist[$c][0] . "</option>";
+?>
+							</select></td>
+					  </tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_minpoint?></td>
+						<td align="left" valign="top"><strong>
+							<input type='hidden' name='txtMinCurrency' id='txtMinCurrency'>
+							<div id='divMinCurrency'>-<?php echo $lang_Common_NotApplicable;?>-</div>
+						</strong></td>
+					  </tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_maxpoint?></td>
+						<td align="left" valign="top"><strong>
+							<input type='hidden' name='txtMaxCurrency' id='txtMaxCurrency'>
+							<div id='divMaxCurrency'>-<?php echo $lang_Common_NotApplicable;?>-</div>
+						</strong></td>
+					  </tr>
+					  <tr>
+						<td valign="top"><?php echo $lang_hrEmpMain_bassalary?></td>
+						<td align="left" valign="top"><input type="text" <?php echo (!$supervisorEMPMode && ($locRights['add'] && $salGrd !== null)) ? '':'disabled'?> name="txtBasSal">
+						</td>
+					  </tr>
+					  <tr>
+						<td valign="top"></td>
+						<td align="left" valign="top">
+					<?php	if(!$supervisorEMPMode && $locRights['add']) { ?>
+					        <img border="0" title="Save" onClick="<?php echo $salGrd !== null ? 'addEXTPayment()': ''?>;" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+					<?php	} ?>
+						</td>
+					  </tr>
+                   </table>
+	</div>
 <?php } ?>
 <?php
 $rset = $this->popArr['rsetPayment'];

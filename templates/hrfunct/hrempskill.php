@@ -141,40 +141,6 @@ function viewSkill(skill) {
 <span id="parentPaneSkills" >
 <?php if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updatemode') { ?>
     <input type="hidden" name="skillSTAT" value="">
-
-    <div id="addPaneSkills" class="<?php echo ($this->popArr['rsetSkill'] != null)?"addPane":""; ?>" >
-	<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
-                    <tr>
-                      <td width="200"><?php echo $lang_hrEmpMain_Skill?></td>
-    				  <td><select name="cmbSkilCode" <?php echo $locRights['add'] ? '':'disabled'?>>
-    				  		<option selected value="0">-----------<?php echo $lang_rep_SelectSkill;?>-------------</option>
-<?php
-						$skilllist= $this->popArr['uskilllist'];
-						for($c=0;$skilllist && count($skilllist)>$c;$c++)
-							   echo "<option value=" . $skilllist[$c][0] . ">" . $skilllist[$c][1] . "</option>";
-?>
-					  </select></td>
-					</tr>
-                    <tr>
-                      <td><?php echo $lang_hrEmpMain_yearofex?></td>
-    				  <td><input type="text" name="txtEmpYears" <?php echo $locRights['add'] ? '':'disabled'?> value="<?php echo isset($this->popArr['txtEmpYears']) ? $this->popArr['txtEmpYears'] :''?>"></td>
-    				  <td width="50">&nbsp;</td>
-					</tr>
-					 <tr>
-					<td><?php echo $lang_Leave_Common_Comments?></td>
-						<td> <textarea <?php echo $locRights['add'] ? '':'disabled'?> name="txtEmpComments"><?php echo isset($this->popArr['txtEmpComments']) ? $this->popArr['txtEmpComments'] :''?></textarea></td>
-    				  <td width="50">&nbsp;</td>
-						 </tr>
-					  <tr>
-						<td valign="top"></td>
-						<td align="left" valign="top">
-					<?php	if($locRights['add']) { ?>
-					        <img border="0" title="Save" onClick="addEXTSkill();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-					<?php	} ?>
-								</td>
-					  </tr>
-                  </table>
-	</div>
 <?php
 if(isset($this->popArr['editSkillArr'])) {
     $edit = $this->popArr['editSkillArr'];
@@ -215,6 +181,40 @@ if(isset($this->popArr['editSkillArr'])) {
 					  </tr>
                   </table>
 		</div>
+<?php } else { ?>
+<div id="addPaneSkills" class="<?php echo ($this->popArr['rsetSkill'] != null)?"addPane":""; ?>" >
+	<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
+                    <tr>
+                      <td width="200"><?php echo $lang_hrEmpMain_Skill?></td>
+    				  <td><select name="cmbSkilCode" <?php echo $locRights['add'] ? '':'disabled'?>>
+    				  		<option selected value="0">-----------<?php echo $lang_rep_SelectSkill;?>-------------</option>
+<?php
+						$skilllist= $this->popArr['uskilllist'];
+						for($c=0;$skilllist && count($skilllist)>$c;$c++)
+							   echo "<option value=" . $skilllist[$c][0] . ">" . $skilllist[$c][1] . "</option>";
+?>
+					  </select></td>
+					</tr>
+                    <tr>
+                      <td><?php echo $lang_hrEmpMain_yearofex?></td>
+    				  <td><input type="text" name="txtEmpYears" <?php echo $locRights['add'] ? '':'disabled'?> value="<?php echo isset($this->popArr['txtEmpYears']) ? $this->popArr['txtEmpYears'] :''?>"></td>
+    				  <td width="50">&nbsp;</td>
+					</tr>
+					 <tr>
+					<td><?php echo $lang_Leave_Common_Comments?></td>
+						<td> <textarea <?php echo $locRights['add'] ? '':'disabled'?> name="txtEmpComments"><?php echo isset($this->popArr['txtEmpComments']) ? $this->popArr['txtEmpComments'] :''?></textarea></td>
+    				  <td width="50">&nbsp;</td>
+						 </tr>
+					  <tr>
+						<td valign="top"></td>
+						<td align="left" valign="top">
+					<?php	if($locRights['add']) { ?>
+					        <img border="0" title="Save" onClick="addEXTSkill();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+					<?php	} ?>
+								</td>
+					  </tr>
+                  </table>
+</div>
 <?php } ?>
 <?php
 $rset = $this->popArr['rsetSkill'] ;

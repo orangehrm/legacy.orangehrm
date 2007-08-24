@@ -160,46 +160,6 @@ function viewWrkExp(wrkexp) {
 <?php if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updatemode') { ?>
 
     <input type="hidden" name="wrkexpSTAT" value="">
-
-    <div id="addPaneWorkExperience" class="<?php echo ($this->popArr['rsetWrkExp'] != null)?"addPane":""; ?>" >
-    	<input type="hidden" name="txtEmpExpID"  value="<?php echo $this->popArr['newWrkExpID']?>">
-		<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
-          <tr>
-            <td><?php echo $lang_hrEmpMain_employer?></td>
-            <td><input type="text" name="txtEmpExpEmployer" <?php echo $locRights['add'] ? '':'disabled'?> /></td>
-            <td width="50">&nbsp;</td>
-            <td nowrap><?php echo $lang_hrEmpMain_startdate?></td>
-            <td nowrap>
-            	<input type="text" name="txtEmpExpFromDate" id="atxtEmpExpFromDate" readonly value="0000-00-00" size="12" />
-           		<input name="button" type="button" class="button" onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpExpFromDate', 'cal1Container', 'yyyy-MM-dd'); return false;" value="..." <?php echo $locRights['add'] ? '':'disabled'?> /></td>
-          </tr>
-          <tr>
-            <td><?php echo $lang_empview_JobTitle?></td>
-            <td><input type="text" name="txtEmpExpJobTitle" <?php echo $locRights['add'] ? '':'disabled'?> /></td>
-            <td width="50">&nbsp;</td>
-            <td nowrap><?php echo $lang_hrEmpMain_enddate?></td>
-            <td nowrap>
-            	<input type="text" name="txtEmpExpToDate" id="atxtEmpExpToDate" readonly value="0000-00-00" size="12" />
-              	<input name="button" type="button" class="button" onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpExpToDate', 'cal1Container', 'yyyy-MM-dd'); return false;" value="..." <?php echo $locRights['add'] ? '':'disabled'?> /></td>
-            <td width="50">&nbsp;</td>
-          </tr>
-          <tr valign="top">
-            <td><?php echo $lang_Leave_Common_Comments; ?></td>
-            <td><textarea <?php echo $locRights['add'] ? '':'disabled'?> name="txtEmpExpComments"></textarea></td>
-            <td width="50">&nbsp;</td>
-			<td width="50"><?php echo $lang_hrEmpMain_internal?></td>
-			<td width="50"><input type="checkbox" name="chkEmpExpInternal" <?php echo $locRights['add'] ? '':'disabled'?> value="1"/></td>
-			<td width="50">&nbsp;</td>
-          </tr>
-          <tr>
-            <td valign="top"></td>
-            <td align="left" valign="top"><?php	if($locRights['add']) { ?>
-                <img border="0" title="Save" onclick="addEXTWrkExp();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg" />
-                <?php	} ?>
-            </td>
-          </tr>
-        </table>
-</div>
 <?php
 if(isset($this->popArr['editWrkExpArr'])) {
     $edit = $this->popArr['editWrkExpArr'];
@@ -242,6 +202,46 @@ if(isset($this->popArr['editWrkExpArr'])) {
 						</td>
 	    </tr>
 	</table>
+</div>
+<?php } else { ?>
+<div id="addPaneWorkExperience" class="<?php echo ($this->popArr['rsetWrkExp'] != null)?"addPane":""; ?>" >
+    	<input type="hidden" name="txtEmpExpID"  value="<?php echo $this->popArr['newWrkExpID']?>">
+		<table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
+          <tr>
+            <td><?php echo $lang_hrEmpMain_employer?></td>
+            <td><input type="text" name="txtEmpExpEmployer" <?php echo $locRights['add'] ? '':'disabled'?> /></td>
+            <td width="50">&nbsp;</td>
+            <td nowrap><?php echo $lang_hrEmpMain_startdate?></td>
+            <td nowrap>
+            	<input type="text" name="txtEmpExpFromDate" id="atxtEmpExpFromDate" readonly value="0000-00-00" size="12" />
+           		<input name="button" type="button" class="button" onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpExpFromDate', 'cal1Container', 'yyyy-MM-dd'); return false;" value="..." <?php echo $locRights['add'] ? '':'disabled'?> /></td>
+          </tr>
+          <tr>
+            <td><?php echo $lang_empview_JobTitle?></td>
+            <td><input type="text" name="txtEmpExpJobTitle" <?php echo $locRights['add'] ? '':'disabled'?> /></td>
+            <td width="50">&nbsp;</td>
+            <td nowrap><?php echo $lang_hrEmpMain_enddate?></td>
+            <td nowrap>
+            	<input type="text" name="txtEmpExpToDate" id="atxtEmpExpToDate" readonly value="0000-00-00" size="12" />
+              	<input name="button" type="button" class="button" onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpExpToDate', 'cal1Container', 'yyyy-MM-dd'); return false;" value="..." <?php echo $locRights['add'] ? '':'disabled'?> /></td>
+            <td width="50">&nbsp;</td>
+          </tr>
+          <tr valign="top">
+            <td><?php echo $lang_Leave_Common_Comments; ?></td>
+            <td><textarea <?php echo $locRights['add'] ? '':'disabled'?> name="txtEmpExpComments"></textarea></td>
+            <td width="50">&nbsp;</td>
+			<td width="50"><?php echo $lang_hrEmpMain_internal?></td>
+			<td width="50"><input type="checkbox" name="chkEmpExpInternal" <?php echo $locRights['add'] ? '':'disabled'?> value="1"/></td>
+			<td width="50">&nbsp;</td>
+          </tr>
+          <tr>
+            <td valign="top"></td>
+            <td align="left" valign="top"><?php	if($locRights['add']) { ?>
+                <img border="0" title="Save" onclick="addEXTWrkExp();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg" />
+                <?php	} ?>
+            </td>
+          </tr>
+        </table>
 </div>
 <?php } ?>
 <?php

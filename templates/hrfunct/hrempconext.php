@@ -83,34 +83,6 @@ function viewConExt(pSeq) {
 <?php if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updatemode') { ?>
 
 	<input type="hidden" name="conextSTAT" value="">
-
-	<div id="addPaneContracts" class="<?php echo ($this->popArr['rsetConExt'] != null)?"addPane":""; ?>" >
-		<h3><?php echo $lang_hremp_EmployeeContracts; ?></h3>
-	    <table height="80" border="0" cellpadding="0" cellspacing="0">
-	         <tr>
-	          <td width="200"><?php echo $lang_hremp_ContractExtensionStartDate; ?>
-	          	<input type="hidden" name="txtEmpConExtID"  value="<?php echo $this->popArr['newConExtID']?>">
-	          </td>
-			  <td>
-			  	<input type="text" readonly value="0000-00-00" name="txtEmpConExtStartDat" id="atxtEmpConExtStartDat" size="12" />
-			  	<input class="button" <?php echo $locRights['add'] ? '':'disabled'?> type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpConExtStartDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
-			</tr>
-	  	  <tr>
-			<td valign="top"><?php echo $lang_hremp_ContractExtensionEndDate; ?></td>
-			<td align="left" valign="top">
-				<input type="text" readonly value="0000-00-00" name="txtEmpConExtEndDat" id="atxtEmpConExtEndDat" size="12" />
-				<input class="button" <?php echo $locRights['add'] ? '':'disabled'?> type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpConExtEndDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
-		  </tr>
-		  <tr>
-			<td valign="top"></td>
-			<td align="left" valign="top">
-				<?php	if($locRights['add']) { ?>
-				        <img border="0" title="Save" onClick="addConExt();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-				<?php	} ?>
-			</td>
-		  </tr>
-		</table>
-	</div>
 <?php if(isset($this->popArr['editConExtArr'])) {
         $edit = $this -> popArr['editConExtArr'];
 ?>
@@ -141,6 +113,34 @@ function viewConExt(pSeq) {
 	  </tr>
 	 </table>
    </div>
+<?php } else { ?>
+	<div id="addPaneContracts" class="<?php echo ($this->popArr['rsetConExt'] != null)?"addPane":""; ?>" >
+		<h3><?php echo $lang_hremp_EmployeeContracts; ?></h3>
+	    <table height="80" border="0" cellpadding="0" cellspacing="0">
+	         <tr>
+	          <td width="200"><?php echo $lang_hremp_ContractExtensionStartDate; ?>
+	          	<input type="hidden" name="txtEmpConExtID"  value="<?php echo $this->popArr['newConExtID']?>">
+	          </td>
+			  <td>
+			  	<input type="text" readonly value="0000-00-00" name="txtEmpConExtStartDat" id="atxtEmpConExtStartDat" size="12" />
+			  	<input class="button" <?php echo $locRights['add'] ? '':'disabled'?> type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpConExtStartDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
+			</tr>
+	  	  <tr>
+			<td valign="top"><?php echo $lang_hremp_ContractExtensionEndDate; ?></td>
+			<td align="left" valign="top">
+				<input type="text" readonly value="0000-00-00" name="txtEmpConExtEndDat" id="atxtEmpConExtEndDat" size="12" />
+				<input class="button" <?php echo $locRights['add'] ? '':'disabled'?> type="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('atxtEmpConExtEndDat', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
+		  </tr>
+		  <tr>
+			<td valign="top"></td>
+			<td align="left" valign="top">
+				<?php	if($locRights['add']) { ?>
+				        <img border="0" title="Save" onClick="addConExt();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+				<?php	} ?>
+			</td>
+		  </tr>
+		</table>
+	</div>
 <?php } ?>
 
 <?php

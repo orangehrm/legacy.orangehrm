@@ -75,27 +75,7 @@ function editChildren() {
 	<h3><?php echo  $lang_hremp_children?></h3>
 
     <input type="hidden" name="childrenSTAT" value="">
-	<div id="addPaneChildren" class="<?php echo ($this->popArr['empChiAss'] != null)?"addPane":""; ?>">
-		<table height="100" border="0" cellpadding="0" cellspacing="0">
-              <tr>
-                <td><?php echo $lang_hremp_name; ?>
-                	<input type="hidden" name="txtCSeqNo" value="<?php echo $this->popArr['newCID']?>"></td>
-                <td><input name="txtChiName" <?php echo $locRights['add'] ? '':'disabled'?> type="text">
-                </tr>
-                <tr>
-                <td><?php echo $lang_hremp_dateofbirth; ?></td>
-				<td><input type="text" readonly value="0000-00-00" name="ChiDOB" id="aChiDOB" size="12">
-					<input type="button" <?php echo $locRights['add'] ? '':'disabled'?> class="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('aChiDOB', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
-            </tr>
-				  <td>
-<?php	if($locRights['add']) { ?>
-        <img border="0" title="Save" onClick="addChildren();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-<?php	} ?>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<?php if(isset($this->getArr['CHSEQ'])) {
+<?php if(isset($this->getArr['CHSEQ'])) {
 		$edit = $this->popArr['editChiForm'];
 ?>
 	<div id="editPaneChildren" >
@@ -119,8 +99,29 @@ function editChildren() {
 			</tr>
 		</table>
 	</div>
-	<?php } ?>
-	<?php
+<?php } else { ?>
+	<div id="addPaneChildren" class="<?php echo ($this->popArr['empChiAss'] != null)?"addPane":""; ?>">
+		<table height="100" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><?php echo $lang_hremp_name; ?>
+                	<input type="hidden" name="txtCSeqNo" value="<?php echo $this->popArr['newCID']?>"></td>
+                <td><input name="txtChiName" <?php echo $locRights['add'] ? '':'disabled'?> type="text">
+                </tr>
+                <tr>
+                <td><?php echo $lang_hremp_dateofbirth; ?></td>
+				<td><input type="text" readonly value="0000-00-00" name="ChiDOB" id="aChiDOB" size="12">
+					<input type="button" <?php echo $locRights['add'] ? '':'disabled'?> class="button" value="..." onclick="YAHOO.OrangeHRM.calendar.pop('aChiDOB', 'cal1Container', 'yyyy-MM-dd'); return false;"></td>
+            </tr>
+				  <td>
+<?php	if($locRights['add']) { ?>
+        <img border="0" title="Save" onClick="addChildren();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+<?php	} ?>
+				</td>
+			</tr>
+		</table>
+	</div>
+<?php } ?>
+<?php
 //checking for the records if exsists show the children table and the delete btn else hide
 	$rset = $this->popArr['empChiAss'];
 	if ($rset != null) {?>

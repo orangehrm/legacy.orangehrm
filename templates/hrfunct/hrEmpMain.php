@@ -511,6 +511,8 @@ function displayLayer(panelNo) {
           	case 16 : MM_showHideLayers('hidebg','','hide','personal','','hide','job','','hide','dependents','','hide','contacts','','hide','emgcontacts','','hide','attachments','','hide','cash-benefits','','hide','noncash-benefits','','hide','education','','hide','immigration','','hide','languages','','hide','licenses','','hide','memberships','','hide','payments','','hide','report-to','','hide','skills','','show','work-experiance','','hide'); break; //skills
           	case 17 : MM_showHideLayers('hidebg','','hide','personal','','hide','job','','hide','dependents','','hide','contacts','','hide','emgcontacts','','hide','attachments','','hide','cash-benefits','','hide','noncash-benefits','','hide','education','','hide','immigration','','hide','languages','','hide','licenses','','hide','memberships','','hide','payments','','hide','report-to','','hide','skills','','hide','work-experiance','','show'); break; //work-experiance
 	}
+
+	document.frmEmp.pane.value = panelNo;
 }
 
 function setUpdate(opt) {
@@ -531,9 +533,10 @@ function popPhotoHandler() {
 	popup.focus()
 }
 
-function resetAdd(panel) {
+function resetAdd(panel, add) {
 	document.frmEmp.action = document.frmEmp.action;
 	document.frmEmp.pane.value = panel;
+	document.frmEmp.showAddPane.value = add;
 	document.frmEmp.submit();
 }
 
@@ -546,6 +549,9 @@ function showAddPane(paneName) {
 
 	if (addPane && addPane.style) {
 		addPane.style.display = tableDisplayStyle;
+	} else {
+		resetAdd(document.frmEmp.pane.value, paneName);
+		return;
 	}
 
 	if (editPane && parentPane) {
@@ -600,6 +606,7 @@ tableDisplayStyle = "table";
 
 <input type="hidden" name="sqlState">
 <input type="hidden" name="pane" value="<?php echo (isset($this->postArr['pane']) && $this->postArr['pane']!='')?$this->postArr['pane']:''?>">
+<input type="hidden" name="showAddPane" >
 
 <input type="hidden" name="main" value="<?php echo isset($this->postArr['main'])? $this->postArr['main'] : '0'?>">
 <input type="hidden" name="personalFlag" value="<?php echo isset($this->postArr['personalFlag'])? $this->postArr['personalFlag'] : '0'?>">
@@ -1299,5 +1306,8 @@ tableDisplayStyle = "table";
 	</body>
 	<script language="JavaScript" type="text/javascript">
   		displayLayer(<?php echo $this->postArr['pane']; ?>);
+  		<?php if (isset($this->postArr['showAddPane']) && !empty($this->postArr['showAddPane'])) { ?>
+  		showAddPane('<?php echo $this->postArr['showAddPane']; ?>');
+  		<?php } ?>
 	</script>
 </html>

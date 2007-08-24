@@ -74,26 +74,6 @@ function editAttach() {
 </script>
 <span id="parentPaneAttachments" >
 <?php if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'updatemode') { ?>
-	<div id="addPaneAttachments" class="<?php echo ($this->popArr['empAttAss'] != null)?"addPane":""; ?>" >
-	  <table width="352" height="120" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-				<td valign="top"><?php echo $lang_hremp_path?></td>
-				<td><input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-					<input type="file" name="ufile"> <br>[<?php echo $lang_hremp_largefileignore?>]</td>
-              </tr>
-              <tr>
-              	<td><?php echo $lang_Commn_description?></td>
-              	<td><textarea name="txtAttDesc"></textarea></td>
-              </tr>
-			  <tr>
-				<td>&nbsp;</td>
-				<td>
-        <img border="0" title="<?php echo $lang_hremp_Save; ?>" onClick="addAttach();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
-				</td>
-			  </tr>
-	   </table>
-	 </div>
-
 <?php		if(isset($this->getArr['ATTACH'])) {
 				$edit = $this->popArr['editAttForm'];
 		 		$disabled = ($locRights['edit']) ? "" : "disabled";
@@ -125,6 +105,26 @@ function editAttach() {
 				</tr>
 		</table>
 	</div>
+<?php } else { ?>
+<div id="addPaneAttachments" class="<?php echo ($this->popArr['empAttAss'] != null)?"addPane":""; ?>" >
+	  <table width="352" height="120" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+				<td valign="top"><?php echo $lang_hremp_path?></td>
+				<td><input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+					<input type="file" name="ufile"> <br>[<?php echo $lang_hremp_largefileignore?>]</td>
+              </tr>
+              <tr>
+              	<td><?php echo $lang_Commn_description?></td>
+              	<td><textarea name="txtAttDesc"></textarea></td>
+              </tr>
+			  <tr>
+				<td>&nbsp;</td>
+				<td>
+        <img border="0" title="<?php echo $lang_hremp_Save; ?>" onClick="addAttach();" onmouseout="this.src='../../themes/beyondT/pictures/btn_save.jpg';" onmouseover="this.src='../../themes/beyondT/pictures/btn_save_02.jpg';" src="../../themes/beyondT/pictures/btn_save.jpg">
+				</td>
+			  </tr>
+	   </table>
+	 </div>
 <?php } ?>
 <?php
 	$rset = $this->popArr['empAttAss'] ;
