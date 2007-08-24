@@ -1,3 +1,8 @@
+New & Changed Features for OrangeHRM ver 2.2.0.4
+
+	BugId     Name
+	1779300   No Paging in User Management module
+
 New & Changed Features for OrangeHRM ver 2.2.0.3
 
 	BugId     Name
