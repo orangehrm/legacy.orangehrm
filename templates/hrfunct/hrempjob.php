@@ -67,11 +67,17 @@
 			  		<option value="0">-- <?php echo $lang_hremp_selempstat; ?> --</option>
 <?php				if(isset($this->postArr['cmbType'])) {
 						$arrEmpType = $this->popArr['empstatlist'];
+
+						if(count($arrEmpType) == 0 && $this->postArr['cmbType'] != '') {
+							echo "<option selected value='".$this->postArr['cmbType']."'>" ."Terminated". "</option>";
+						}
+						else
 						for($c=0;count($arrEmpType)>$c;$c++)
 							if($this->postArr['cmbType']==$arrEmpType[$c][0])
 								echo "<option selected value='".$arrEmpType[$c][0]."'>" .$arrEmpType[$c][1]. "</option>";
 							else
 								echo "<option value='".$arrEmpType[$c][0]."'>" .$arrEmpType[$c][1]. "</option>";
+
 					}
 ?>
 			  </select></td>
@@ -140,6 +146,12 @@
 										echo "<option selected value=".$arrEmpType[$c][0].">" .$arrEmpType[$c][1]. "</option>";
 									else
 										echo "<option value=".$arrEmpType[$c][0].">" .$arrEmpType[$c][1]. "</option>";
+
+							if(count($arrEmpType) == 0) {
+								$empStatDefault = new  EmploymentStatus();
+								$arrDisplayEmpStat = $empStatDefault->filterEmpStat(EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED);
+								echo "<option value='".$arrDisplayEmpStat[0][0]."'>".$arrDisplayEmpStat[0][1]."</option>";
+						}
 ?>
 			  </select></td>
               </tr>
