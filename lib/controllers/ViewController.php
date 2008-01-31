@@ -2757,6 +2757,7 @@ class ViewController {
 							$district = new DistrictInfo();
 
 							$tabArr = $geninfo->filterGenInfo();
+
 							$genInfoKeys = explode('|',$tabArr[0][0]);
 							$genInfoValues = explode('|',$tabArr[0][1]);
 
