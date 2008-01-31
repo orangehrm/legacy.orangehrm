@@ -42,6 +42,7 @@ require_once ROOT_PATH . '/lib/models/eimadmin/EmployStat.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/GenInfo.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/EmailConfiguration.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/EmailNotificationConfiguration.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/JobSpec.php';
 
 require_once ROOT_PATH . '/lib/models/eimadmin/Customer.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/Projects.php';
@@ -60,7 +61,6 @@ class ViewController {
 	var $indexCode;
 	var $message;
 	var $pageID;
-	var $headingInfo;
 
 
 	function ViewController() {
@@ -203,12 +203,6 @@ class ViewController {
 						$form_creator = new FormCreator($getArr,$postArr);
 						$form_creator ->formPath ='/view.php';
 
-						if ((isset($getArr['uniqcode'])) && ($getArr['uniqcode'] != '')) {
-
-							$form_creator ->popArr['headinginfo'] = $this ->getHeadingInfo(trim($getArr['uniqcode']));
-
-						}
-
 						$form_creator ->popArr['currentPage'] = $currentPage =(isset($postArr['pageNO'])) ? (int)$postArr['pageNO'] : 1;
 
 						if (isset($postArr['captureState'])&& ($postArr['captureState']=="SearchMode"))
@@ -254,6 +248,17 @@ class ViewController {
 
         		$this->jobtit = new JobTitle();
         		$res = $this->jobtit ->delJobTitles($arrList);
+        		break;
+
+        	case 'SPC' :
+
+				if (isset($arrList[0])) {
+					try {
+        				$res = JobSpec::delete($arrList[0]);
+					} catch (JobSpecException $e) {
+						$res = false;
+					}
+				}
         		break;
 
         	case 'CST' :
@@ -394,6 +399,9 @@ class ViewController {
 			$message = $this->jobtit->getListofJobTitles($pageNO,$schStr,$mode, $sortField, $sortOrder);
 			return $message;
 
+		case 'SPC' :
+			return JobSpec::getListForView($pageNO,$schStr,$mode, $sortField, $sortOrder);
+
 		case 'LOC' :
 
 			$this-> location = new Location();
@@ -511,249 +519,6 @@ class ViewController {
 		}
 	}
 
-	function getHeadingInfo($indexCode) {
-
-		$this->indexCode = $indexCode;
-
-		switch ($this->indexCode) {
-
-		case 'LOC' :
-
-			$this->headingInfo = array ('Location ID','Location Name',1,'Locations','Deletion might affect Company Hierarchy');
-			return $this->headingInfo;
-
-		case 'COS' :
-
-			$this->headingInfo = array ('Cost CenterID','Cost Center Name',1,'Cost Centers','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'CUR' :
-
-			$this->headingInfo = array ('Currency Type ID','Currency Name',1,'Currency Types','Deletion might affect Salary Currency Detail');
-			return $this->headingInfo;
-
-		case 'CHI' :
-
-			$this->headingInfo = array ('Company Hierarchy ID','Company Hierarchy Name',1,'Company Hierarchy','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'JDC' :
-
-			$this->headingInfo = array ('JDCatergory ID','JDCatergory Name',1,'JD Catergory','Deletion might affect JD Type,Designation Description, Job Specifiction');
-			return $this->headingInfo;
-
-		case 'JDT' :
-
-			$this->headingInfo = array ('JDType ID','JDType Name',1, 'JD Type','Deletion might affect JDCategory, Designation Description');
-			return $this->headingInfo;
-
-		case 'QLF' :
-
-			$this->headingInfo = array ('Qualification Type ID','Qualification Name',1,'Qualification Type','Deletion might affect Qualifications, Designation Qualification, Employee Qualification');
-			return $this->headingInfo;
-
-		case 'RTM' :
-
-			$this->headingInfo = array ('Rating Method ID','Rating Method Name',1,'Rating Method','Deletion might affect Qualification, Languages');
-			return $this->headingInfo;
-
-		case 'CTT' :
-
-			$this->headingInfo = array ('Corporate TitleID','Corporate Title Name',1,'Corporate Title','Deletion might affect Employee Information, Designations');
-			return $this->headingInfo;
-
-		case 'SKI' :
-
-			$this->headingInfo = array ('Skill ID','Skill Name',1,'Skills','Deletion might affect JDKRA');
-			return $this->headingInfo;
-
-		case 'ETH' :
-
-			$this->headingInfo = array ('Ethnic Race ID','Ethnic Race Name',1,'Ethnic Races','Deletion might affect Employee');
-			return $this->headingInfo;
-
-		case 'EXC' :
-
-			$this->headingInfo = array ('Extra Curricular Activity Category ID','Extra Curricular Activity Category Name',1,'Extra Curricular Activity Category','Deletion might affect Ex. Curr. Activities, Employee Ex. Curr. Activities');
-			return $this->headingInfo;
-
-		case 'MEM' :
-
-			$this->headingInfo = array ('Membership Type ID','Membership Type Name',1,'Membership Type','Deletion might affect Employee Memberships, Memberships');
-			return $this->headingInfo;
-
-		case 'UNI' :
-
-			$this->headingInfo = array ('Uniform Type ID','Unifrorm Type Name',1,'Uniform Type','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'SAT' :
-
-			$this->headingInfo = array ('Statutory ID','Statutory Name',1,'Statutory Status','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'EMC' :
-
-			$this->headingInfo = array ('Employee Category ID','Employee Category Name',1,'Employee Category','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'EMG' :
-
-			$this->headingInfo = array ('Employee Group ID','Employee Group Name',1,'Employee Group','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'RTE' :
-
-			$this->headingInfo = array ('Route ID','Route Name',1,'Routes','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'DWT' :
-
-			$this->headingInfo = array ('Dwelling TypeID','Dwelling Type Name',1,'Dwelling Types','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'NAT' :
-
-			$this->headingInfo = array ('Nationality ID','Nationality Name',1,'Nationality','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'RLG' :
-
-			$this->headingInfo = array ('Religion ID','Religion Name',1,'Religions','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'COU' :
-
-			$this->headingInfo = array ('Country ID','Country Name',1,'Country','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'DEF' :
-
-			$this->headingInfo = array ('Hierarchy Definitiion ID','Hierarchy Definition Name',1,'Hierarchy Definition','Deletion might affect Company Hierachy!');
-			return $this->headingInfo;
-
-		case 'TAX' :
-
-			$this->headingInfo = array ('Tax Info ID','Tax Name',1,'Tax','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'PRO' :
-
-			$this->headingInfo = array ('State ID','State Name',1, 'State','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'DIS' :
-
-			$this->headingInfo = array ('County ID','County Name',1,'County','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'ELE' :
-
-			$this->headingInfo = array ('Electorate ID','Electorate Name',1,'Electorate','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'BNK' :
-
-			$this->headingInfo = array ('Bank ID','Bank Name',1,'Banks','Deletion might affect Employee Banks, Branches');
-			return $this->headingInfo;
-
-		/*case 'LAN' :
-
-			$this->headingInfo = array ('Language ID','Language Name',1,'Languages','Deletion might affect Employee Language');
-			return $this->headingInfo;*/
-
-		case 'MME' :
-
-			$this->headingInfo = array ('Membership ID','Membership Name',1,'Membership','Deletion might affect Employee Membership');
-			return $this->headingInfo;
-
-		case 'SSK' :
-
-			$this->headingInfo = array ('Sub Skill ID','Sub Skill Name',1,'Sub Skill','');
-			return $this->headingInfo;
-
-		case 'EXA' :
-
-			$this->headingInfo = array ('Extra Curricular Activities ID','Extra Curricular Activities Name',1,'Extra Curricular Activities','Deletion might affect Employee Ex. Curr. Activities');
-			return $this->headingInfo;
-
-		case 'SGR' :
-
-			$this->headingInfo = array ('Salary Grade ID','Salary Grade Name',1,'Salary Grades','Deletion might affect Employee Information, Corporate Titles');
-			return $this->headingInfo;
-
-		case 'DSG' :
-
-			$this->headingInfo = array ('Designation ID','Designation Name',1,'Designations','Deletion might affect Employee Information, Corporate Titles');
-			return $this->headingInfo;
-
-		case 'DDI' :
-
-			$this->headingInfo = array ('Designation ID','Designation Name',2,'Designation Description','');
-			return $this->headingInfo;
-
-		case 'DQA' :
-
-			$this->headingInfo = array ('Designation ID','Designation Name',2,'Designation Qualification','');
-			return $this->headingInfo;
-
-		case 'JDK' :
-
-			$this->headingInfo = array ('JDKRA ID','JDKRA Description',1,'JD Key Result Area','Deletion might affect Designation Description');
-			return $this->headingInfo;
-
-		case 'EDU' :
-
-			$this->headingInfo = array ('Education ID','Education',1,'Education','Deletion might affect Education');
-			return $this->headingInfo;
-
-		case 'BCH' :
-
-			$this->headingInfo = array ('Branch ID','Branch Name',1,'Branches','Deletion might affect Employee Bank');
-			return $this->headingInfo;
-
-		case 'CCB' :
-
-			$this->headingInfo = array ('Cash Benefit ID','Cash Benefit Name',1,'Cash Benefits','Deletion might affect Employee Benefits, Benefits Assigned to Salary Grades');
-			return $this->headingInfo;
-
-		case 'NCB' :
-
-			$this->headingInfo = array ('Non Cash Benefit ID','Non Cash Benefit Name',1,'Non Cash Benefits','Deletion might affect Employee Benefits, Benefits Assigned to Salary Grades');
-			return $this->headingInfo;
-
-		case 'BBS' :
-
-			$this->headingInfo = array ('Salary Grade ID','Salary Grade Name',2,'Cash Benefits Assigned to Salary Grade','');
-			return $this->headingInfo;
-
-		case 'NBS' :
-
-			$this->headingInfo = array ('Salary Grade Non Cash BenefitID','Benefit Name',2,'Non Cash Benefits Assigned to Salary Grade','');
-			return $this->headingInfo;
-
-		case 'ETY' :
-
-			$this->headingInfo = array ('Employee TypeID','Employee Type Name',1,'Employee Types','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'SBJ' :
-
-			$this->headingInfo = array ('Subject ID','Subject Name',1,'Subjects','Deletion might affect Employee Qualification, Designation Qualification');
-			return $this->headingInfo;
-
-		case 'EEC' :
-
-			$this->headingInfo = array ('EEO Job Category ID','EEO Job Category Name',1,'EEO Job Category','Deletion might affect Employee Information');
-			return $this->headingInfo;
-
-		case 'LIC' :
-
-			$this->headingInfo = array ('Licenses ID','Licenses Description',1,'Licenses','Deletion might affect Employee Information');
-			return $this->headingInfo;
-        }
-	}
-
 	function getInfo($indexCode,$pageNO,$schStr='',$schField=-1, $sortField=0, $sortOrder='ASC', $esp = false) {
 
 		$this->indexCode = $indexCode;
@@ -779,6 +544,10 @@ class ViewController {
 			$this->jobtit = new JobTitle();
 			$message = $this->jobtit->countJobTitles($schStr,$mode);
 			return $message;
+
+		case 'SPC' :
+
+			return JobSpec::getCount($schStr,$mode);
 
 		case 'LOC' :
 
@@ -1136,6 +905,14 @@ class ViewController {
 									$jobtit = $object;
 									$res = $jobtit ->addJobTitles();
 									$id = $jobtit->getJobId();
+									break;
+
+				case 'SPC'  :		$jobSpec = $object;
+									try {
+										$res = $jobSpec->save();
+									} catch(JobSpecException $e) {
+										$res = false;
+									}
 									break;
 
 				case 'CST'  :
@@ -1534,6 +1311,14 @@ class ViewController {
 				case 'JOB'  :		$jobtit = new JobTitle();
 									$jobtit = $object;
 									$res = $jobtit -> updateJobTitles();
+									break;
+
+				case 'SPC'  :		$jobSpec = $object;
+									try {
+										$res = $jobSpec->save();
+									} catch(JobSpecException $e) {
+										$res = false;
+									}
 									break;
 
 				case 'CST'  :		$compstruct = new CompStruct();
@@ -2735,6 +2520,19 @@ class ViewController {
 								$form_creator ->popArr['editArr'] = $jobtitle->filterJobTitles($getArr['id']);
 								$form_creator ->popArr['assEmploymentStat'] = $jobtit_empstat->getAssEmpStat($getArr['id']);
 								$form_creator ->popArr['unAssEmploymentStat'] = $jobtit_empstat->getUnAssEmpStat($getArr['id']);
+							}
+
+							break;
+
+			case 'SPC' :	$form_creator->formPath = '/templates/eimadmin/jobSpec.php';
+
+							// Here we fetch all job specs for easier validation of duplicate names
+							// Assuming it's unlikely that very large number of job specs will be defined.
+							$form_creator->popArr['jobSpecList'] = JobSpec::getAll();
+							if($getArr['capturemode'] == 'updatemode') {
+								$form_creator->popArr['jobSpec'] = JobSpec::getJobSpec($getArr['id']);
+							} else {
+								$form_creator->popArr['jobSpec'] = new JobSpec();
 							}
 
 							break;

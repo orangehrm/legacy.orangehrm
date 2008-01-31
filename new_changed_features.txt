@@ -1,3 +1,6 @@
+New & Changed Features for OrangeHRM for ORS
+        1. Story: HR Admin assigns job specification and duties
+
 New & Changed Features for OrangeHRM ver 2.2.2.2
 
         1. "Leave List" menu item in Leave module renamed to "My Leave"

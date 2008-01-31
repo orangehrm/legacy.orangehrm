@@ -53,6 +53,12 @@ switch ($_GET['uniqcode']) {
 			$headingInfo = array($lang_jobtitle_jobtitid,$lang_jobtitle_jobtitname,1,$lang_jobtitle_heading,$lang_view_message1);
 			break;
 
+		case 'SPC' : // Job Spec
+			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID, $lang_Commn_name);
+			$headings= array($lang_jobspec_id, $lang_jobspec_name);
+			$headingInfo = array($lang_jobspec_id, $lang_jobspec_name,1,$lang_jobspec_heading,$lang_view_message3);
+			break;
+
 		case 'SKI' :
 			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name );
 			$headings= array($lang_view_SkillID,$lang_view_SkillName);
@@ -85,7 +91,7 @@ switch ($_GET['uniqcode']) {
 			break;
 
 		case 'MME' :
-			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name, $lang_view_Type );
+			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name, $lang_view_Type);
 			$headings= array("$lang_view_Membership $lang_view_ID",$lang_view_MembershipName, $lang_view_MembershipType);
 			$headingInfo = array ("$lang_view_Membership $lang_view_ID",$lang_view_MembershipName,1,"$lang_Menu_Admin_Memberships : $lang_Menu_Admin_Memberships",$lang_view_message22);
 			break;
