@@ -19,20 +19,18 @@
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'models_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'models_recruitment_AllTests::main');
 }
+set_include_path(get_include_path() . PATH_SEPARATOR . "../../../build");
  
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
  
-set_include_path(get_include_path() . PATH_SEPARATOR . "../../build");
+require_once 'JobVacancyTest.php';
 
-require_once 'time/AllTests.php';
-require_once 'leave/AllTests.php';
-require_once 'eimadmin/AllTests.php';
-require_once 'recruitment/AllTests.php';
+
  
-class models_AllTests
+class models_recruitment_AllTests
 {
     public static function main()
     {
@@ -41,18 +39,13 @@ class models_AllTests
  
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('OrangeHRM model unit tests');
- 
-        $suite->addTest(models_time_AllTests::suite());
-        $suite->addTest(models_leave_AllTests::suite());
-        $suite->addTest(models_eimadmin_AllTests::suite());
-        $suite->addTest(models_recruitment_AllTests::suite());
- 
+        $suite = new PHPUnit_Framework_TestSuite('OrangeHRM models_recruitment');
+	$suite->addTestSuite('JobVacancyTest');
         return $suite;
     }
 }
  
-if (PHPUnit_MAIN_METHOD == 'models_AllTests::main') {
-    models_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'models_recruitment_AllTests::main') {
+    models_recruitment_AllTests::main();
 }
 ?>

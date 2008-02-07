@@ -1,5 +1,6 @@
 New & Changed Features for OrangeHRM for ORS
         1. Story: HR Admin assigns job specification and duties
+        2. Story: HR Admin manages job vacancies
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 

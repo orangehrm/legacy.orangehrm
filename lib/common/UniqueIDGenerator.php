@@ -212,6 +212,7 @@ if(file_exists($confPHP)) {
 						new IDField("hs_hr_timesheet", "timesheet_id"),
 						new IDField("hs_hr_workshift", "workshift_id"),
 						new IDField("hs_hr_job_spec", "jobspec_id"),
+						new IDField("hs_hr_job_vacancy", "vacancy_id"),
 
 
 						/* Not used yet. Uncomment when we start using these

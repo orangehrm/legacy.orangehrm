@@ -687,6 +687,16 @@ create table `hs_hr_employee_workshift` (
   key `emp_number` (`emp_number`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_job_vacancy` (
+  `vacancy_id` int(11) not null,
+  `jobtit_code` varchar(13) default null,
+  `manager_id` int(7) default null,
+  `active` tinyint(1) not null default 0,
+  `description` text,
+  primary key  (`vacancy_id`),
+  key `jobtit_code` (`jobtit_code`),
+  key `manager_id` (`manager_id`)
+) engine=innodb default charset=utf8;
 
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
@@ -970,6 +980,10 @@ alter table `hs_hr_time_event`
 alter table `hs_hr_employee_workshift`
   add constraint foreign key (`workshift_id`) references `hs_hr_workshift` (`workshift_id`) on delete cascade,
   add constraint foreign key (`emp_number`) references `hs_hr_employee` (`emp_number`) on delete cascade;
+
+alter table `hs_hr_job_vacancy` 
+  add constraint foreign key (`manager_id`) references `hs_hr_employee` (`emp_number`) on delete set null,
+  add constraint foreign key (jobtit_code) references hs_hr_job_title(jobtit_code) on delete set null;
 
 INSERT INTO `hs_hr_country` VALUES ('AF', 'AFGHANISTAN', 'Afghanistan', 'AFG', 4);
 INSERT INTO `hs_hr_country` VALUES ('AL', 'ALBANIA', 'Albania', 'ALB', 8);
@@ -1465,13 +1479,15 @@ INSERT INTO `hs_hr_module` VALUES ('MOD001','Admin','Koshika','koshika@beyondm.n
 								  ('MOD002','PIM','Koshika','koshika@beyondm.net','VER001','HR Functions'),
 								  ('MOD004','Report','Koshika','koshika@beyondm.net','VER001','Reporting'),
 								  ('MOD005', 'Leave', 'Mohanjith', 'mohanjith@beyondm.net', 'VER001', 'Leave Tracking'),
-								  ('MOD006', 'Time', 'Mohanjith', 'mohanjith@orangehrm.com', 'VER001', 'Time Tracking');
+								  ('MOD006', 'Time', 'Mohanjith', 'mohanjith@orangehrm.com', 'VER001', 'Time Tracking'),
+								  ('MOD008', 'Recruitment', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Recruitment');
 INSERT INTO `hs_hr_rights` ( `userg_id` , `mod_id` , `addition` , `editing` , `deletion` , `viewing` )
 VALUES  ('USG001', 'MOD001', '1', '1', '1', '1'),
 		('USG001', 'MOD002', '1', '1', '1', '1'),
 		('USG001', 'MOD004', '1', '1', '1', '1'),
 		('USG001', 'MOD005', '1', '1', '1', '1'),
-		('USG001', 'MOD006', '1', '1', '1', '1');
+		('USG001', 'MOD006', '1', '1', '1', '1'),
+		('USG001', 'MOD008', '1', '1', '1', '1');
 INSERT INTO `hs_hr_compstructtree` VALUES ('', 'Parent Company', null , 1, 2, 1, 0);
 INSERT INTO `hs_hr_users` VALUES ('USR001','demo','fe01ce2a7fbac8fafaed7c982a04e229','Admin','',null,'','Yes','1','','0000-00-00 00:00:00','0000-00-00 00:00:00',null,null,'','','','','','','','','','Enabled','','','','','','',0,'','USG001');
 
@@ -1535,3 +1551,4 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_project_activity', 'activity_id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_workshift', 'workshift_id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_job_spec', 'jobspec_id');
+INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_job_vacancy', 'vacancy_id');

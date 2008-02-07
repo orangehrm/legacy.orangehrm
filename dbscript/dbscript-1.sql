@@ -687,6 +687,16 @@ create table `hs_hr_employee_workshift` (
   key `emp_number` (`emp_number`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_job_vacancy` (
+  `vacancy_id` int(11) not null,
+  `jobtit_code` varchar(13) default null,
+  `manager_id` int(7) default null,
+  `active` tinyint(1) not null default 0,
+  `description` text,
+  primary key  (`vacancy_id`),
+  key `jobtit_code` (`jobtit_code`),
+  key `manager_id` (`manager_id`)
+) engine=innodb default charset=utf8;
 
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
@@ -970,3 +980,7 @@ alter table `hs_hr_time_event`
 alter table `hs_hr_employee_workshift`
   add constraint foreign key (`workshift_id`) references `hs_hr_workshift` (`workshift_id`) on delete cascade,
   add constraint foreign key (`emp_number`) references `hs_hr_employee` (`emp_number`) on delete cascade;
+
+alter table `hs_hr_job_vacancy` 
+  add constraint foreign key (`manager_id`) references `hs_hr_employee` (`emp_number`) on delete set null,
+  add constraint foreign key (jobtit_code) references hs_hr_job_title(jobtit_code) on delete set null;

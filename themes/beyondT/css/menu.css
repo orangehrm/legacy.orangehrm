@@ -157,6 +157,22 @@
 	background: url(../icons/projects_o.gif)  no-repeat left top;
 }
 
+#menu #jobVacancies a{
+	background: url(../icons/vacancies.gif)  no-repeat left top;
+}
+
+#menu #jobVacancies a:hover {
+	background: url(../icons/vacancies_o.gif)  no-repeat left top;
+}
+
+#menu #jobApplicants a{
+	background: url(../icons/vacancies.gif)  no-repeat left top;
+}
+
+#menu #jobApplicants a:hover {
+	background: url(../icons/vacancies_o.gif)  no-repeat left top;
+}
+
 #menu #viewemprep a {
 	background: url(../pictures/viewemprep.gif)  no-repeat left top;
 }
