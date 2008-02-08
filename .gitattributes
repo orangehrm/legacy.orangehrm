@@ -291,6 +291,7 @@ lib/models/eimadmin/ProvinceInfo.php -text
 lib/models/eimadmin/SalCurDet.php -text
 lib/models/eimadmin/SalaryGrades.php -text
 lib/models/eimadmin/Skills.php -text
+lib/models/hrfunct/AllTests.php -text
 lib/models/hrfunct/EmpAttach.php -text
 lib/models/hrfunct/EmpBasSalary.php -text
 lib/models/hrfunct/EmpChildren.php -text
@@ -299,6 +300,7 @@ lib/models/hrfunct/EmpDependents.php -text
 lib/models/hrfunct/EmpEducation.php -text
 lib/models/hrfunct/EmpEmergencyCon.php -text
 lib/models/hrfunct/EmpInfo.php -text
+lib/models/hrfunct/EmpInfoTest.php -text
 lib/models/hrfunct/EmpJobSpec.php -text
 lib/models/hrfunct/EmpLang.php -text
 lib/models/hrfunct/EmpLicenses.php -text
