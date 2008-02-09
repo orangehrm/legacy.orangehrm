@@ -28,6 +28,7 @@ class Conf {
 
 	var $emailConfiguration;
 	var $logPath;
+	var $customVersion;
 
 	function Conf() {
 
@@ -40,6 +41,7 @@ class Conf {
 		$this->smtphost = 'localhost';
 
 		$this->version = '2.2.2.2';
+		$this->customVersion = 'ors-0.1-alpha.1';
 
 		$this->emailConfiguration = dirname(__FILE__).'mailConf.php';
 		$this->logPath =  realpath(dirname(__FILE__).'/../logs/').'/';
