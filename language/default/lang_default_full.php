@@ -558,6 +558,7 @@
 	$lang_hremp_SalaryShouldBeWithinMinAndMa= "Salary should be within min and max";
 
 	$lang_hremp_SelectCurrency				= "Select Currency";
+	$lang_hremp_SelectPayGrade				= "Select Pay Grade";
 
 	$lang_hremp_ContractExtensionId			= "Contract Extension ID";
 	$lang_hremp_ContractStartDate			= "Contract Start Date";
@@ -575,7 +576,7 @@
 	$lang_hremplan_SelectFluency			= "Select Fluency";
 	$lang_hremplan_SelectRating 			= "Select Rating";
 
-	$lang_hremp_PleaseSelectJobTitle= "Please Select a Job Title for this Employee {here}";
+	$lang_hremp_AddPayGrade= "Please add Pay grades";
 
 	$lang_hremp_ie_CurrentSupervisors 		= "i.e. Current Employee's Supervisors";
 	$lang_hremp_ie_CurrentSubordinates 		= "i.e. Current Employee's Subordinates";

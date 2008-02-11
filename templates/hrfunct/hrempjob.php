@@ -54,7 +54,7 @@
 	<table height="150" border="0" cellpadding="5" cellspacing="0">
 	<tr>
 			   <td><?php echo $lang_hremp_jobtitle; ?></td>
-			  <td><select name="cmbJobTitle" <?php echo $locRights['add'] ? '':'disabled'?> onchange="document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait; ?>....'; xajax_assEmpStat(this.value);">
+			  <td><select name="cmbJobTitle" <?php echo $locRights['add'] ? '':'disabled' ?> >
 			  		<option value="0">-- <?php echo $lang_hremp_SelectJobTitle; ?> --</option>
 			  		<?php $jobtit = $this->popArr['jobtit'];
 			  			for ($c=0; $jobtit && count($jobtit)>$c ; $c++) {

@@ -228,5 +228,36 @@ class JobTitEmpStat {
 	     	//Create Logs
 	     }
 	}
+
+	public function getAllEmpStats() {
+		$tableName = 'HS_HR_EMPSTAT';
+
+		$arrFieldList[0] = 'ESTAT_CODE';
+		$arrFieldList[1] = 'ESTAT_NAME';
+
+		$sqlQString = 'SELECT ' . $arrFieldList[0] . ', ' . $arrFieldList[1] . ' FROM ' . $tableName;
+
+		$dbConnection = new DMLFunctions();
+       	$message2 = $dbConnection -> executeQuery($sqlQString); //Calling the addData() function
+
+		$i=0;
+
+		while ($line = mysql_fetch_array($message2, MYSQL_NUM)) {
+
+	    	$arrayDispList[$i][0] = $line[0];
+	    	$arrayDispList[$i][1] = $line[1];
+
+	    	$i++;
+	     }
+
+	     if (isset($arrayDispList)) {
+
+	       	return $arrayDispList;
+
+	     } else {
+	     	//Handle Exceptions
+	     	//Create Logs
+	     }
+	}
 }
 ?>
