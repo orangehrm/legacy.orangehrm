@@ -503,6 +503,8 @@
 	$lang_hremp_eeocategory 				= "EEO Category";
 	$lang_hremp_seleeocat 					= "Select EEO Cat";
 	$lang_hremp_joindate 					= "Joined Date";
+	$lang_hremp_termination_date			= "Termination Date";
+	$lang_hremp_termination_reason			= "Termination Reason";
 	$lang_hremp_SelectJobTitle				= "Select Job Title";
 	$lang_hremp_EmpStatus					= "Employment Status";
 	$lang_hremp_Workstation					= "Workstation";
