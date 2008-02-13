@@ -303,6 +303,8 @@ create table `hs_hr_employee` (
   `sal_grd_code` varchar(13) default null,
   `joined_date` date default '0000-00-00',
   `emp_oth_email` varchar(50) default null,
+  `terminated_date` DATE null,
+  `termination_reason` varchar(256) default null,
   primary key  (`emp_number`),
   unique key `employee_id` (`employee_id`)
 ) engine=innodb default charset=utf8;
@@ -981,7 +983,7 @@ alter table `hs_hr_employee_workshift`
   add constraint foreign key (`workshift_id`) references `hs_hr_workshift` (`workshift_id`) on delete cascade,
   add constraint foreign key (`emp_number`) references `hs_hr_employee` (`emp_number`) on delete cascade;
 
-alter table `hs_hr_job_vacancy` 
+alter table `hs_hr_job_vacancy`
   add constraint foreign key (`manager_id`) references `hs_hr_employee` (`emp_number`) on delete set null,
   add constraint foreign key (jobtit_code) references hs_hr_job_title(jobtit_code) on delete set null;
 

@@ -303,6 +303,8 @@ create table `hs_hr_employee` (
   `sal_grd_code` varchar(13) default null,
   `joined_date` date default '0000-00-00',
   `emp_oth_email` varchar(50) default null,
+  `terminated_date` DATE null,
+  `termination_reason` varchar(256) default null,
   primary key  (`emp_number`),
   unique key `employee_id` (`employee_id`)
 ) engine=innodb default charset=utf8;
