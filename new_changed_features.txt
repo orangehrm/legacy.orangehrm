@@ -3,6 +3,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
         1. Story: HR Admin assigns job specification and duties
         2. Story: HR Admin manages job vacancies
         3. System displays number of employees
+	4. Applicant views and applies for Job vacancies (URL: /jobs.php)
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 

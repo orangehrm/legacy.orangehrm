@@ -701,6 +701,27 @@ create table `hs_hr_job_vacancy` (
   key `manager_id` (`manager_id`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_job_application` (
+  `application_id` int(11) not null,
+  `vacancy_id` int(11) not null,
+  `lastname` varchar(100) default '' not null,
+  `firstname` varchar(100) default '' not null,
+  `middlename` varchar(100) default '' not null,
+  `street1` varchar(100) default '',
+  `street2` varchar(100) default '',
+  `city` varchar(100) default '',
+  `country_code` varchar(100) default '',
+  `province` varchar(100) default '',
+  `zip` varchar(20) default null,
+  `phone` varchar(50) default null,
+  `mobile` varchar(50) default null,
+  `email` varchar(50) default null,
+  `qualifications` text default '',
+  primary key  (`application_id`),
+  key `vacancy_id` (`vacancy_id`)
+) engine=innodb default charset=utf8;
+
+
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
                              references hs_hr_location(loc_code) on delete restrict;
@@ -987,3 +1008,7 @@ alter table `hs_hr_employee_workshift`
 alter table `hs_hr_job_vacancy`
   add constraint foreign key (`manager_id`) references `hs_hr_employee` (`emp_number`) on delete set null,
   add constraint foreign key (jobtit_code) references hs_hr_job_title(jobtit_code) on delete set null;
+
+alter table `hs_hr_job_application`
+  add constraint foreign key (`vacancy_id`) references `hs_hr_job_vacancy` (`vacancy_id`) on delete cascade;
+

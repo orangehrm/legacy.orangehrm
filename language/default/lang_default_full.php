@@ -219,6 +219,7 @@
 	$lang_Common_Edit = "Edit";
 	$lang_Common_New = "New";
 	$lang_Common_Save = "Save";
+	$lang_Common_Back = "Back";
 
 	$lang_Common_Time = "Time";
 	$lang_Common_Note = "Note";
@@ -244,6 +245,7 @@
 	$lang_Common_ADD_FAILURE 				= "Failed to Add";
 	$lang_Common_UPDATE_FAILURE 			= "Failed to Update";
 	$lang_Common_DELETE_FAILURE 			= "Failed to Delete";
+	$lang_Common_UNKNOWN_FAILURE            = "Operation Failed";
 
 	$lang_Leave_Common_Weekend 				= "Weekend";
 
@@ -986,6 +988,7 @@
 	$lang_Admin_ENS_LeaveApprovals = "Leave Approvals";
 	$lang_Admin_ENS_LeaveCancellations = "Leave Cancellations";
 	$lang_Admin_ENS_LeaveRejections = "Leave Rejections";
+	$lang_Admin_ENS_JobApplications = "Job Applications";
 
 	//Users
 	$lang_Admin_Users_Errors_UsernameShouldBeAtleastFiveCharactersLong = "UserName should be atleast five characters long";
@@ -1261,7 +1264,37 @@
 	$lang_Recruit_JobVacancy_PleaseSpecifyJobTitle = 'Please specify Job Title';
 	$lang_Recruit_JobVacancy_PleaseSpecifyHiringManager = 'Please specify Hiring Manager';
 	$lang_Recruit_AllowedValuesAre = 'Allowed Values are: ';
+	$lang_Recruit_NoManagersNotice = 'No managers found. You need to create a job title named \'Manager\' and assign to employees who are managers.';
 
+	$lang_Recruit_ApplicantVacancyList_Heading = 'Job Vacancies';
+	$lang_Recruit_ApplicantVacancyList_Title = 'Job Vacancies';
+	$lang_Recruit_ApplicationForm_Heading = 'Application Form for a position with The ORS Group';
+	$lang_Recruit_ApplicationForm_Position = 'Position Applying for';
+	$lang_Recruit_Applicant_NoVacanciesFound = 'No Job Vacancies found. Please check back later.';
+
+	$lang_Recruit_ApplicationForm_FirstName = 'First Name';
+	$lang_Recruit_ApplicationForm_MiddleName = 'Middle Name';
+	$lang_Recruit_ApplicationForm_LastName = 'Last Name';
+	$lang_Recruit_ApplicationForm_Street1 = 'Street 1';
+	$lang_Recruit_ApplicationForm_Street2 = 'Street 2';
+	$lang_Recruit_ApplicationForm_City = 'City';
+	$lang_Recruit_ApplicationForm_StateProvince = 'State / Province';
+	$lang_Recruit_ApplicationForm_Country = 'Country';
+	$lang_Recruit_ApplicationForm_Zip = 'Zip Code';
+	$lang_Recruit_ApplicationForm_Phone = 'Phone';
+	$lang_Recruit_ApplicationForm_Mobile = 'Mobile';
+	$lang_Recruit_ApplicationForm_Email = 'Email';
+	$lang_Recruit_ApplicationForm_Qualifications = 'Qualifications and Experience';
+
+	$lang_Recruit_ApplicationForm_PleaseSpecify = 'Please Specify ';
+	$lang_Recruit_ApplicationForm_PleaseSpecifyValidEmail = 'Please Specify valid email address for ';
+	$lang_Recruit_ApplicationForm_PleaseSpecifyValidPhone = 'Please Specify valid phone number for ';
+	$lang_Recruit_ApplicationForm_PleaseSelect = 'Please Select ';
+
+	$lang_Recruit_ApplicationStatus_SuccessHeading = 'Job Application Received';
+	$lang_Recruit_ApplicationStatus_FailureHeading = 'Job Application Error';
+	$lang_Recruit_ApplySuccess = 'Your application for the position of #jobtitle# was received. An email confirmation was sent to the following email address: #email#';
+	$lang_Recruit_ApplyFailure = 'There was an error while processing your application. Please try again later.';
 
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";

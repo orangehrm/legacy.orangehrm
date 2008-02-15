@@ -86,7 +86,8 @@ array("hs_hr_time_event", array("employee_id"), "hs_hr_employee",   array("emp_n
 array("hs_hr_employee_workshift", array("workshift_id"), "hs_hr_workshift",   array("workshift_id"), "cascade"),
 array("hs_hr_employee_workshift", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
 array("hs_hr_job_vacancy", array("manager_id"), "hs_hr_employee",   array("emp_number"), "null"),
-array("hs_hr_job_vacancy", array("jobtit_code"), "hs_hr_job_title",   array("jobtit_code"), "null")
+array("hs_hr_job_vacancy", array("jobtit_code"), "hs_hr_job_title",   array("jobtit_code"), "null"),
+array("hs_hr_job_application", array("vacancy_id"), "hs_hr_job_vacancy",   array("vacancy_id"), "cascade")
 );
 
 ?>

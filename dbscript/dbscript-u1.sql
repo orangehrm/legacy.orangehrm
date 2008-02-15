@@ -701,6 +701,26 @@ create table `hs_hr_job_vacancy` (
   key `manager_id` (`manager_id`),
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_job_application` (
+  `application_id` int(11) not null,
+  `vacancy_id` int(11) not null,
+  `lastname` varchar(100) default '' not null,
+  `firstname` varchar(100) default '' not null,
+  `middlename` varchar(100) default '' not null,
+  `street1` varchar(100) default '',
+  `street2` varchar(100) default '',
+  `city` varchar(100) default '',
+  `country_code` varchar(100) default '',
+  `province` varchar(100) default '',
+  `zip` varchar(20) default null,
+  `phone` varchar(50) default null,
+  `mobile` varchar(50) default null,
+  `email` varchar(50) default null,
+  `qualifications` text default '',
+  primary key  (`application_id`),
+  key `vacancy_id` (`vacancy_id`)
+) engine=innodb default charset=utf8;
+
 INSERT INTO `hs_hr_customer`
   (`customer_id`, `name`, `description`)
   VALUES (0, 'Internal', "Internal time tracker")
