@@ -71,13 +71,12 @@ class authorizeTest extends PHPUnit_Framework_TestCase {
     	$this->connection = mysql_connect($conf->dbhost.":".$conf->dbport, $conf->dbuser, $conf->dbpass);
 
         mysql_select_db($conf->dbname);
+    	$this->_deleteTestData();
 
-		mysql_query("TRUNCATE TABLE `hs_hr_project`", $this->connection);
-        mysql_query("TRUNCATE TABLE `hs_hr_project_admin`", $this->connection);
-		mysql_query("TRUNCATE TABLE `hs_hr_customer`", $this->connection);
-
-    	mysql_query("INSERT INTO `hs_hr_employee` VALUES ('011', NULL, 'Arnold', 'Subasinghe', '', 'Arnold', 0, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, '', '', '', 'AF', '', '', '', '', '', '', NULL, '0000-00-00', '')");
-		mysql_query("INSERT INTO `hs_hr_employee` VALUES ('012', NULL, 'Mohanjith', 'Sudirikku', 'Hannadige', 'MOHA', 0, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, '', '', '', '', '0000-00-00', '', NULL, NULL, NULL, NULL, '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00', NULL)");
+    	$this->_runQuery("INSERT INTO `hs_hr_employee`(emp_number, employee_id, emp_lastname, emp_firstname, emp_nick_name, coun_code) " .
+				"VALUES (11, NULL, 'Arnold', 'Subasinghe', 'Arnold', 'AF')");
+		$this->_runQuery("INSERT INTO `hs_hr_employee`(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, emp_nick_name) " .
+				"VALUES (12, NULL, 'Mohanjith', 'Sudirikku', 'Hannadige', 'MOHA')");
 
 		mysql_query("INSERT INTO `hs_hr_emp_reportto` VALUES ('012', '011', 1);");
 
@@ -96,6 +95,13 @@ class authorizeTest extends PHPUnit_Framework_TestCase {
      * @access protected
      */
     protected function tearDown() {
+    	$this->_deleteTestData();
+    }
+
+	/**
+	 * Deletes test data created during test
+	 */
+	private function _deleteTestData() {
 		mysql_query("TRUNCATE TABLE `hs_hr_project`", $this->connection);
         mysql_query("TRUNCATE TABLE `hs_hr_project_admin`", $this->connection);
 		mysql_query("TRUNCATE TABLE `hs_hr_customer`", $this->connection);
@@ -104,7 +110,14 @@ class authorizeTest extends PHPUnit_Framework_TestCase {
     	mysql_query("DELETE FROM `hs_hr_employee` WHERE `emp_number` = '012'", $this->connection);
 
     	mysql_query("DELETE FROM `hs_hr_emp_reportto` WHERE `erep_sup_emp_number` = '012' AND `erep_sub_emp_number` = '011'", $this->connection);
-    }
+	}
+
+	/**
+	 * Run given sql query
+	 */
+	private function _runQuery($sql) {
+	    $this->assertTrue(mysql_query($sql), mysql_error());
+	}
 
     public function testIsAdmin() {
     	$authObj = new authorize($this->testSubject['employeeId'], 'No');
