@@ -8,6 +8,7 @@ create table `hs_hr_geninfo` (
 ) engine=innodb default charset=utf8;
 
 create table `hs_hr_compstructtree` (
+  `dept_id` varchar(32) null,
   `title` tinytext not null,
   `description` text not null,
   `loc_code` varchar(13) default NULL,

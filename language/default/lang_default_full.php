@@ -76,6 +76,7 @@
 	$lang_Error_SubDivisionNameCannotBeEmpty 			= "Sub-division Name cannot be empty";
 	$lang_Error_PleaseSelectATypeOrDefineACustomType 	= "Please select a Type or define a custom type";
 	$lang_Error_CompStruct_LocEmpty 					= "Please select a Location or define a new Location and select";
+	$lang_Error_CompStruct_Dept_Id_Invalid				= "Department ID is already exists. Please enter different id";
 
 	$lang_Error_LocationNameEmpty 						= "Location Name empty";
 	$lang_Error_CountryNotSelected 						= "Country not selected";
@@ -367,6 +368,7 @@
 	$lang_comphire_selecthie 						= "Select Hierarchy";
 	$lang_comphire_selectdef 						= "Select Def. Level";
 	$lang_compstruct_heading 						= "Company Info : Company Structure";
+	$lang_compstruct_Dept_Id						= "Department ID:";
 	$lang_compstruct_frmSub_divisionHeadingAdd 		= "Add a sub-division to";
 	$lang_compstruct_frmSub_divisionHeadingEdit 	= "Edit";
 	$lang_compstruct_Name 							= "Name";
