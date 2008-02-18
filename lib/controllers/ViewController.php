@@ -168,6 +168,12 @@ class ViewController {
 								return $empstat->filterEmpStat($value);
 							}
 
+							if($cntrl == 'allEmpStat') {
+
+								$jobtit_empstat = new JobTitEmpStat();
+								return $jobtit_empstat->getAllEmpStats();
+							}
+
 							break;
 		}
 	}

@@ -54,7 +54,7 @@
 	<table height="150" border="0" cellpadding="5" cellspacing="0">
 	<tr>
 			   <td><?php echo $lang_hremp_jobtitle; ?></td>
-			  <td><select name="cmbJobTitle" <?php echo $locRights['add'] ? '':'disabled'?> onchange="document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait; ?>....'; xajax_assEmpStat(this.value);">
+			  <td><select name="cmbJobTitle" <?php echo $locRights['add'] ? '':'disabled' ?> >
 			  		<option value="0">-- <?php echo $lang_hremp_SelectJobTitle; ?> --</option>
 			  		<?php $jobtit = $this->popArr['jobtit'];
 			  			for ($c=0; $jobtit && count($jobtit)>$c ; $c++) {
@@ -67,17 +67,11 @@
 			  		<option value="0">-- <?php echo $lang_hremp_selempstat; ?> --</option>
 <?php				if(isset($this->postArr['cmbType'])) {
 						$arrEmpType = $this->popArr['empstatlist'];
-
-						if(count($arrEmpType) == 0 && $this->postArr['cmbType'] != '') {
-							echo "<option selected value='".$this->postArr['cmbType']."'>" ."Terminated". "</option>";
-						}
-						else
 						for($c=0;count($arrEmpType)>$c;$c++)
 							if($this->postArr['cmbType']==$arrEmpType[$c][0])
 								echo "<option selected value='".$arrEmpType[$c][0]."'>" .$arrEmpType[$c][1]. "</option>";
 							else
 								echo "<option value='".$arrEmpType[$c][0]."'>" .$arrEmpType[$c][1]. "</option>";
-
 					}
 ?>
 			  </select></td>

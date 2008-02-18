@@ -264,6 +264,27 @@ class EmpBasSalary {
 
 	}
 
+	function getEmpSalGrade($empID) {
+		$tableName = 'HS_HR_EMP_BASICSALARY';
+		$arrFieldList[0] = 'SAL_GRD_CODE';
+		$selectCondition[0] = "`EMP_NUMBER` = '". $empID . "'";
+		$sql_builder = new SQLQBuilder();
+
+		$sqlQString = $sql_builder->simpleSelect($tableName, $arrFieldList, $selectCondition, $arrFieldList[0], 'ASC');
+
+		//echo $sqlQString;
+		$dbConnection = new DMLFunctions();
+		$message2 = $dbConnection -> executeQuery($sqlQString); //Calling the addData() function
+
+		if(isset($message2)){
+			while ($row = mysql_fetch_assoc($message2)) {
+				if(isset($row['SAL_GRD_CODE'])){
+					return $row['SAL_GRD_CODE'];
+				}
+			}
+		}
+	}
+
 	function getAssEmpBasSal($getID) {
 
 		$this->getID = $getID;

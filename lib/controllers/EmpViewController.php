@@ -1550,7 +1550,7 @@ class EmpViewController {
 									$form_creator->popArr['resdlist'] = $distric->getDistrictCodes($object->cmbPermProvince);
 
 									if(isset($postArr['cmbJobTitle']))
-										$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($postArr['cmbJobTitle'],'JOB','assigned');
+										$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($postArr['cmbJobTitle'],'JOB','allEmpStat');
 
 									$form_creator->popArr['ethRace'] = $ethnicrace->getEthnicRaceCodes($object->cmbEthnicRace);
 								}
@@ -1562,10 +1562,10 @@ class EmpViewController {
 								$form_creator ->popArr['editJobInfoArr'] = $empJobInfo = $empinfo->filterEmpJobInfo($getArr['id']);
 
 								$view_controller = new ViewController();
-								$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($empJobInfo[0][2],'JOB','assigned');
+								$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($empJobInfo[0][2],'JOB','allEmpStat');
 
 								if(isset($postArr['cmbJobTitle'])){
-									$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($postArr['cmbJobTitle'],'JOB','assigned');
+									$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($postArr['cmbJobTitle'],'JOB','allEmpStat');
 								}
 
 								$form_creator->popArr['editPermResArr'] = $edit = $editPermRes = $empinfo->filterEmpContact($getArr['id']);
@@ -1666,11 +1666,7 @@ class EmpViewController {
 					    	$form_creator->popArr['salgradelist'] = $salgradelist->getSalGrades();
 							$empdet = $empinfo->filterEmpJobInfo($getArr['id']);
 							$jt = $jobtit->filterJobTitles($empdet[0][2]);
-
-							if($jt == '')
-								$form_creator->popArr['salGrd'] = $salGrd = null;
-							else
-								$form_creator->popArr['salGrd'] = $salGrd = $jt[0][4];
+							$form_creator->popArr['salGrd'] = $salGrd = $empbassal->getEmpSalGrade($getArr['id']);
 
 							if(isset($getArr['PAY'])) {
    								$arr[0]=$getArr['id'];
@@ -1678,6 +1674,7 @@ class EmpViewController {
    								$arr[2]=$getArr['CUR'];
 
 		   					    $form_creator->popArr['editPaymentArr'] = $edit = $empbassal->filterEmpBasSal($arr);
+		   					    $form_creator->popArr['salGrd'] = $salGrd = $edit[0][1];
 		   					    $form_creator->popArr['currlist'] = $empbassal-> getCurrCodes($edit[0][1]);
 
 							}
