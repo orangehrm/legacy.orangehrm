@@ -163,6 +163,8 @@ class Timesheet {
 			}
 			$this->setStartDate(date('Y-m-d', time()+($diff*3600*24)));
 
+
+
 			$diff1=$timesheetSubmissionPeriods[0]->getEndDay()-$day;
 
 			if (6 >= ($diff1-$diff)) {
@@ -374,6 +376,7 @@ class Timesheet {
 	 */
 	public function fetchTimesheetsBulk($page, $employeeIds) {
 		$sql_builder = new SQLQBuilder();
+		//$this->_getNewDates();
 
 		$selectTable = self::TIMESHEET_DB_TABLE_TIMESHEET." a ";
 

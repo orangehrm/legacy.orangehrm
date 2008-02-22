@@ -177,6 +177,9 @@ $locRights['repDef'] = ($ugDet !== null && $ugDet[0][2] == '1') ? true : false;
 
 $_SESSION['localRights'] = $locRights;
 
+
+
+
 switch ($moduletype) {
 
 	case 'admin' 	:  // beg. admin module
@@ -801,12 +804,15 @@ switch ($moduletype) {
 										break;
 						case 'EMP'	:
 										if(isset($_POST['sqlState'])) {
+
 											$extractor = new EXTRACTOR_EmpInfo();
 										}
+
 										break;
 					}
 
 										if(isset($_POST['sqlState']) && $_POST['sqlState']=='NewRecord' && $locRights['add']) {
+
 												$parsedObject = $extractor->parseAddData($_POST);
 												$view_controller->addData($_POST,$_GET['reqcode'],$parsedObject);
 												break;
