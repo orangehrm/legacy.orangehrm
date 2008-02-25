@@ -1183,6 +1183,13 @@ function getCurrencyAssigned($salgrd) {
 		return $query;
 	}
 
+	function simpleDelete($deleteTable, $deleteConditions) {
+		$query = "DELETE FROM " . $deleteTable . " ";
+		$query .= $this->_buildWhere($deleteConditions);
+
+		return $query;
+	}
+
 	function _buildWhere($selectConditions) {
 
 		$query = "WHERE ".$this->_buildList($selectConditions, " AND ");

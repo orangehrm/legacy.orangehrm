@@ -784,11 +784,11 @@ switch ($moduletype) {
 						$extractorForm = new EXTRACTOR_EmpAttach();
 					}
 
-					if(isset($_POST['dependentSTAT']) && $_POST['dependentSTAT']!= '' && isset($_GET['reqcode']) && ($_GET['reqcode'] !== "ESS")) {
+					if(isset($_POST['dependentSTAT']) && $_POST['dependentSTAT']!= '') {
 						$extractorForm = new EXTRACTOR_EmpDependents();
 					}
 
-					if(isset($_POST['childrenSTAT']) && $_POST['childrenSTAT']!= '' && isset($_GET['reqcode']) && ($_GET['reqcode'] !== "ESS")) {
+					if(isset($_POST['childrenSTAT']) && $_POST['childrenSTAT']!= '') {
 						$extractorForm = new EXTRACTOR_EmpChildren();
 					}
 
@@ -912,17 +912,17 @@ switch ($moduletype) {
 												$view_controller->delEmpFormData($_GET,$_POST);
 										}
 
-										if(isset($_POST['dependentSTAT']) && (($_POST['dependentSTAT'] == 'ADD' && $locRights['add']) || ($_POST['dependentSTAT'] == 'EDIT' && $locRights['edit']))) {
+										if(isset($_POST['dependentSTAT']) && (($_POST['dependentSTAT'] == 'ADD') || ($_POST['dependentSTAT'] == 'EDIT'))) {
 												$parsedObject = $extractorForm->parseData($_POST);
 												$view_controller->assignEmpFormData($_POST,$parsedObject,$_POST['dependentSTAT']);
-										} elseif(isset($_POST['dependentSTAT']) && $_POST['dependentSTAT'] == 'DEL' && $locRights['delete']) {
+										} elseif(isset($_POST['dependentSTAT']) && $_POST['dependentSTAT'] == 'DEL') {
 												$view_controller->delEmpFormData($_GET,$_POST);
 										}
 
-										if(isset($_POST['childrenSTAT']) && (($_POST['childrenSTAT'] == 'ADD' && $locRights['add']) || ($_POST['childrenSTAT'] == 'EDIT' && $locRights['edit']))) {
+										if(isset($_POST['childrenSTAT']) && (($_POST['childrenSTAT'] == 'ADD') || ($_POST['childrenSTAT'] == 'EDIT'))) {
 												$parsedObject = $extractorForm->parseData($_POST);
 												$view_controller->assignEmpFormData($_POST,$parsedObject,$_POST['childrenSTAT']);
-										} elseif(isset($_POST['childrenSTAT']) && $_POST['childrenSTAT'] == 'DEL' && $locRights['delete']) {
+										} elseif(isset($_POST['childrenSTAT']) && $_POST['childrenSTAT'] == 'DEL') {
 												$view_controller->delEmpFormData($_GET,$_POST);
 										}
 
