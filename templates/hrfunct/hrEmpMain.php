@@ -129,8 +129,8 @@ function getUnAssignedCurrencyList($payGrade) {
 
 	$response = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
-	$xajaxFiller->setDefaultOptionName('select_currency');
-	$response = $xajaxFiller->cmbFiller2($response, $currlist, 0, 2, 'frmEmp', 'cmbCurrCode', 0);
+	$xajaxFiller->setDefaultOptionName('Select Currency');
+	$response = $xajaxFiller->cmbFiller2($response, $currlist, 0, 2, 'frmEmp', 'cmbCurrCode', 1);
 	$response->addAssign('status','innerHTML','');
 
 	return $response->getXML();
