@@ -159,7 +159,8 @@ class JobTitEmpStat {
 	function getUnAssEmpStat($jobtit) {
 
 		$sql_builder = new SQLQBuilder();
-		$tableName = 'HS_HR_EMPSTAT';
+
+		$tableName = 'hs_hr_empstat';
 		$arrFieldList[0] = 'ESTAT_CODE';
 		$arrFieldList[1] = 'ESTAT_NAME';
 
@@ -230,7 +231,7 @@ class JobTitEmpStat {
 	}
 
 	public function getAllEmpStats() {
-		$tableName = 'HS_HR_EMPSTAT';
+		$tableName = 'hs_hr_empstat';
 
 		$arrFieldList[0] = 'ESTAT_CODE';
 		$arrFieldList[1] = 'ESTAT_NAME';

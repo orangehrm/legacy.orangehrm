@@ -18,6 +18,7 @@
  *
  */
 
+
 require_once ROOT_PATH . '/lib/models/eimadmin/Customer.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/Projects.php';
 
@@ -58,7 +59,11 @@ switch ($status) {
 $startDate = strtotime($timesheet->getStartDate());
 $endDate = strtotime($timesheet->getEndDate());
 
+
 $duration = 7;
+
+
+
 
 
 ?>

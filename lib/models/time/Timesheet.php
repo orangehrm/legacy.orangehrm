@@ -376,7 +376,7 @@ class Timesheet {
 	 */
 	public function fetchTimesheetsBulk($page, $employeeIds) {
 		$sql_builder = new SQLQBuilder();
-		//$this->_getNewDates();
+
 
 		$selectTable = self::TIMESHEET_DB_TABLE_TIMESHEET." a ";
 
@@ -519,6 +519,7 @@ class Timesheet {
 		}
 
 		$query = $sql_builder->simpleSelect($selectTable, $selectFields, $selectConditions, $selectFields[0], 'ASC');
+
 
 		$dbConnection = new DMLFunctions();
 

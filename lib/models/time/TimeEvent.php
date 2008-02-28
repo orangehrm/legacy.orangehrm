@@ -472,7 +472,8 @@ class TimeEvent {
 
 		if (($this->getStartTime() != null) && ($this->getEndTime() != null)){
 
-			$selectConditions[]  =   "'"  .  $this->getStartTime()  .    "'" .  " <= " .self::TIME_EVENT_DB_FIELD_START_TIME  .  " AND " . "'" . $this->getEndTime() . "'" .  " >= " . self::TIME_EVENT_DB_FIELD_START_TIME  ;
+			$selectConditions[]  = "`" . self::TIME_EVENT_DB_FIELD_START_TIME . "`>= " . "'{$this->getStartTime()} 00:00:00'" . "  AND `" . self::TIME_EVENT_DB_FIELD_END_TIME . "`<= " . "'{$this->getEndTime()} 23:59:59'" ;
+
 
 		}
 

@@ -84,6 +84,8 @@ class TimeController {
 
 		$timesheetId = $timesheetObj->fetchTimesheetId(Timesheet::TIMESHEET_DIRECTION_NEXT);
 
+
+
 		if (!$redirect) {
 			return $timesheetId;
 		}
@@ -490,8 +492,7 @@ class TimeController {
 			for ($i=0; $i<count($employees); $i++) {
 				$timesheetObj->setEmployeeId($employees[$i][0]);
 				$newTimesheets=$timesheetObj->fetchTimesheets();
-				print_r($newTimesheets)   ;
-				echo "<hr/>" ;
+
 				$pendingTimesheets[$employees[$i][0]]=$newTimesheets;
 				if (isset($newTimesheets) && $newTimesheets) {
 					$pending=true;
@@ -820,6 +821,8 @@ class TimeController {
 
 		$timesheetObj = $this->objTime;
 
+
+
 		if ($timesheetObj->getTimesheetId() != null) {
 			$timesheetObj->setEmployeeId(null);
 		}
@@ -836,6 +839,8 @@ class TimeController {
 		}
 
 		$timesheet = $timesheets[0];
+
+
 
 		$roles = array(authorize::AUTHORIZE_ROLE_ADMIN);
 
@@ -874,6 +879,7 @@ class TimeController {
 
 		$next=$this->nextEmployeeTimesheet(false);
 		$prev=$this->previousEmployeeTimesheet(false);
+
 
 
 		$dataArr[0]=$durationArr;

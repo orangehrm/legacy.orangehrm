@@ -144,6 +144,8 @@ define('REP', 'MOD004');
 define('LEAVE', 'MOD005');
 define('TIMEMOD', 'MOD006');
 
+
+
 switch ($moduletype) {
 	case 'admin'	:	$locRights = $rights->getRights($_SESSION['userGroup'],Admin); break;
 	case 'hr'		:	$locRights = $rights->getRights($_SESSION['userGroup'],PIM); break;
@@ -695,14 +697,19 @@ switch ($moduletype) {
 						break;
 
 	case 'hr'		:
+
+
 					$view_controller = new EmpViewController();
 
 						if(isset($_POST['delState']) && $_POST['delState']=='DeleteMode' && $locRights['delete']) {
+
 							    $arrList[0]=$_POST['chkLocID'];
 							    $view_controller->delParser(trim($_GET['reqcode']),$arrList);
 						}
 
 						if(isset($_GET['VIEW']) && $_GET['VIEW'] == 'MAIN' && $locRights['view']) {
+
+
 							$view_controller ->viewList($_GET,$_POST);
 							break;
 						}
@@ -1019,7 +1026,7 @@ switch ($moduletype) {
 												$view_controller->updateData($_GET['mtcode'],$_GET['id'],$parsedObject);
 												break;
 										} else {
-												//echo $locRights['edit'];
+
 												$view_controller -> reDirect($_GET);
 												break;
 
@@ -1409,7 +1416,9 @@ switch ($moduletype) {
 						}
 						break;
 
-	case 'timeMod'	:	switch ($_GET['timecode']) {
+	case 'timeMod'	:
+
+							switch ($_GET['timecode']) {
 							case 'Time'	:	if (isset($_GET['action'])) {
 												$timeController = new TimeController();
 												$timesheetExtractor = new EXTRACTOR_Timesheet();
@@ -1424,10 +1433,14 @@ switch ($moduletype) {
 
 												switch ($_GET['action']) {
 													case 'View_Current_Timesheet':	$current=true;
+
+
 													case 'View_Timesheet' 		:	$obj = $timesheetExtractor->parseViewData($_POST);
 																					if (isset($_GET['id'])) {
 																						$obj->setTimesheetId($_GET['id']);
+
 																					}
+
 																					$timeController->setObjTime($obj);
 																					$timeController->viewTimesheet($current);
 																					break;
@@ -1492,11 +1505,13 @@ switch ($moduletype) {
 																					break;
 													case 'View_Select_Employee'	:	$timeController->viewSelectEmployee();
 																					break;
-													case 'Fetch_Next_Timesheet'	:	$obj = $timesheetExtractor->parseViewData($_POST);
+													case 'Fetch_Next_Timesheet'	:
+																					$obj = $timesheetExtractor->parseViewData($_POST);
 																					$timeController->setObjTime($obj);
 																					$timeController->nextEmployeeTimesheet();
 																					break;
-													case 'Fetch_Prev_Timesheet'	:	$obj = $timesheetExtractor->parseViewData($_POST);
+													case 'Fetch_Prev_Timesheet'	:
+																					$obj = $timesheetExtractor->parseViewData($_POST);
 																					$timeController->setObjTime($obj);
 																					$timeController->previousEmployeeTimesheet();
 																					break;
