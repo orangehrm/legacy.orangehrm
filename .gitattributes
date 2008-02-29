@@ -244,7 +244,9 @@ lib/extractor/maintenance/EXTRACTOR_UserGroups.php -text
 lib/extractor/maintenance/EXTRACTOR_Users.php -text
 lib/extractor/recruitment/AllTests.php -text
 lib/extractor/recruitment/EXTRACTOR_JobApplication.php -text
+lib/extractor/recruitment/EXTRACTOR_JobApplicationEvent.php -text
 lib/extractor/recruitment/EXTRACTOR_JobVacancy.php -text
+lib/extractor/recruitment/EXTRACTOR_ScheduleInterview.php -text
 lib/extractor/recruitment/EXTRACTOR_ViewList.php -text
 lib/extractor/recruitment/ExtractorJobApplicationTest.php -text
 lib/extractor/recruitment/ExtractorJobVacancyTest.php -text
@@ -340,6 +342,7 @@ lib/models/maintenance/bugs.php -text
 lib/models/maintenance/modules.php -text
 lib/models/recruitment/AllTests.php -text
 lib/models/recruitment/JobApplication.php -text
+lib/models/recruitment/JobApplicationEvent.php -text
 lib/models/recruitment/JobApplicationTest.php -text
 lib/models/recruitment/JobVacancy.php -text
 lib/models/recruitment/JobVacancyTest.php -text
@@ -504,13 +507,19 @@ templates/recruitment/applicant/header.php -text
 templates/recruitment/applicant/jobApplicationStatus.php -text
 templates/recruitment/applicant/viewJobApplication.php -text
 templates/recruitment/applicant/viewVacancies.php -text
+templates/recruitment/applicationList.php -text
 templates/recruitment/footer.php -text
 templates/recruitment/header.php -text
 templates/recruitment/jobVacancy.php -text
 templates/recruitment/mails/applicant-received-subject.txt -text
 templates/recruitment/mails/applicant-received.txt -text
+templates/recruitment/mails/applicant-rejected-subject.txt -text
+templates/recruitment/mails/applicant-rejected.txt -text
 templates/recruitment/mails/hiringmanager-received-subject.txt -text
 templates/recruitment/mails/hiringmanager-received.txt -text
+templates/recruitment/scheduleInterview.php -text
+templates/recruitment/viewApplicationDetails.php -text
+templates/recruitment/viewApplicationHistory.php -text
 templates/report/emprepinfo.php -text
 templates/report/report.php -text
 templates/report/repusg.php -text

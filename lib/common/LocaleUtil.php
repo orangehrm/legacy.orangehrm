@@ -26,6 +26,11 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
  */
  class LocaleUtil {
 
+    const STANDARD_DATE_FORMAT = 'Y-m-d';
+    const STANDARD_TIME_FORMAT = 'H:i';
+    const STANDARD_DATETIME_FORMAT = 'Y-m-d H:i';
+    const STANDARD_TIMESTAMP_FORMAT = 'Y-m-d H:i:s';
+
 	/** This singleton instance */
 	private static $instance;
 
@@ -198,7 +203,7 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 	 		return null;
 	 	}
 
-	 	$standardDate = date('Y-m-d', $timeStamp);
+	 	$standardDate = date(self::STANDARD_DATE_FORMAT, $timeStamp);
 
 	 	return $standardDate;
 	 }
@@ -224,7 +229,7 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 	 		return null;
 	 	}
 
-	 	$standardDate = date('H:i', $timeStamp);
+	 	$standardDate = date(self::STANDARD_TIME_FORMAT, $timeStamp);
 
 	 	return $standardDate;
 	 }
@@ -251,7 +256,7 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 	 		return null;
 	 	}
 
-	 	$standardDate = date('Y-m-d H:i', $timeStamp);
+	 	$standardDate = date(self::STANDARD_DATETIME_FORMAT, $timeStamp);
 
 	 	return $standardDate;
 	 }
