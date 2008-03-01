@@ -75,6 +75,7 @@ class RecruitmentMailNotifier {
 	const VARIABLE_APPLICANT_MOBILE = '#mobile#';
 	const VARIABLE_APPLICANT_EMAIL = '#email#';
 	const VARIABLE_APPLICANT_QUALIFICATIONS = '#qualifications#';
+    const VARIABLE_INTERVIEW_NOTES = '#interview-notes#';
 
     const VCALENDAR_DATETIME_FORMAT = 'Ymd\\THis\\Z';
 
@@ -293,7 +294,7 @@ class RecruitmentMailNotifier {
             self::VARIABLE_APPLICANT_PROVINCE, self::VARIABLE_APPLICANT_ZIP,
             self::VARIABLE_APPLICANT_COUNTRY, self::VARIABLE_APPLICANT_PHONE,
             self::VARIABLE_APPLICANT_MOBILE, self::VARIABLE_APPLICANT_EMAIL,
-            self::VARIABLE_APPLICANT_QUALIFICATIONS);
+            self::VARIABLE_APPLICANT_QUALIFICATIONS, self::VARIABLE_INTERVIEW_NOTES);
 
          $country = $this->_getCountryName($jobApplication->getCountry());
          $replace = array($vacancy->getJobTitleName(), $intManagerName['first'],
@@ -303,7 +304,7 @@ class RecruitmentMailNotifier {
          $jobApplication->getProvince(), $jobApplication->getZip(),
          $country, $jobApplication->getPhone(),
          $jobApplication->getMobile(), $jobApplication->getEmail(),
-         $jobApplication->getQualifications());
+         $jobApplication->getQualifications(), $jobApplication->getNotes());
 
          $summary = str_replace($search, $replace, $subject);
          $description = str_replace($search, $replace, $body);

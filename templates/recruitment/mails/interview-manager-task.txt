@@ -1,5 +1,7 @@
 You have been scheduled to interview #firstname# #lastname# for the position of #jobtitle#.
 
+#interview-notes#
+
 Application details are below:
 
 Position Applied for: #jobtitle#
