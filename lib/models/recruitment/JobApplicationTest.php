@@ -131,18 +131,18 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
         // Events for first job application
         $this->_createEvent(1, 1, $createdTime, 'USR111', 13, $eventTime,
             JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW, JobApplicationEvent::STATUS_INTERVIEW_FINISHED,
-            "Interview notes, here");
+            "1st Interview notes, here");
 
         $createdTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT, strtotime("-0.6 hours"));
         $eventTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT, strtotime("+6 days"));
         $this->_createEvent(2, 1, $createdTime, 'USR111', 14, $eventTime,
             JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW, JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED,
-            "Interview notes, here");
+            "2nd Interview notes, here");
 
         // Events for second job application
         $this->_createEvent(3, 2, $createdTime, 'USR111', 14, $eventTime,
             JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW, JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED,
-            "Interview notes, here");
+            "3rd Interview notes, here");
 
 		UniqueIDGenerator::getInstance()->resetIDs();
     }
@@ -367,6 +367,61 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
         $expected = array();
         $actions = $app->getPossibleActions();
         $this->assertEquals($expected, $actions);
+    }
+
+    /**
+     * Test the getEventOfType() function
+     */
+    public function testGetEventOfType() {
+
+        $jobApplication = JobApplication::GetJobApplication(1);
+        $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
+        $this->assertNotNull($event);
+        $this->assertEquals(1, $event->getId());
+        $this->assertEquals("1st Interview notes, here", $event->getNotes());
+
+        $jobApplication = JobApplication::GetJobApplication(1);
+        $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
+        $this->assertNotNull($event);
+        $this->assertEquals(2, $event->getId());
+        $this->assertEquals("2nd Interview notes, here", $event->getNotes());
+
+        // Unavailable event type
+        $jobApplication = JobApplication::GetJobApplication(1);
+        $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_REJECT);
+        $this->assertNull($event);
+
+        $jobApplication = JobApplication::GetJobApplication(2);
+        $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
+        $this->assertNotNull($event);
+        $this->assertEquals(3, $event->getId());
+        $this->assertEquals("3rd Interview notes, here", $event->getNotes());
+
+        $jobApplication = JobApplication::GetJobApplication(3);
+        $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
+        $this->assertNull($event);
+    }
+
+    /**
+     * Test the getLatestEvent() function
+     */
+    public function testGetLatestEvent() {
+
+        $jobApplication = JobApplication::GetJobApplication(1);
+        $event = $jobApplication->getLatestEvent();
+        $this->assertNotNull($event);
+        $this->assertEquals(2, $event->getId());
+        $this->assertEquals("2nd Interview notes, here", $event->getNotes());
+
+        $jobApplication = JobApplication::GetJobApplication(2);
+        $event = $jobApplication->getLatestEvent();
+        $this->assertNotNull($event);
+        $this->assertEquals(3, $event->getId());
+        $this->assertEquals("3rd Interview notes, here", $event->getNotes());
+
+        $jobApplication = JobApplication::GetJobApplication(3);
+        $event = $jobApplication->getLatestEvent();
+        $this->assertNull($event);
     }
 
 	/**

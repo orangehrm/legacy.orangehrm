@@ -379,9 +379,9 @@ class JobApplication {
     public function getLatestEvent() {
 
         $latestEvent = null;
-
-        if (!empty($this->events)) {
-            $latestEvent = $this->events[count($this->events) - 1];
+        $events = $this->getEvents();
+        if (!empty($events)) {
+            $latestEvent = $events[count($events) - 1];
         }
 
         return $latestEvent;
@@ -395,11 +395,12 @@ class JobApplication {
     public function getEventOfType($eventType) {
         $event = null;
 
-        if (!empty($this->events)) {
+        $events = $this->getEvents();
+        if (!empty($events)) {
 
-            for($i = count($this->events) - 1; $i >= 0; $i--) {
-                if ($this->events[$i]->getEventType() == $eventType) {
-                    $event = $this->events[$i];
+            for($i = count($events) - 1; $i >= 0; $i--) {
+                if ($events[$i]->getEventType() == $eventType) {
+                    $event = $events[$i];
                     break;
                 }
             }
