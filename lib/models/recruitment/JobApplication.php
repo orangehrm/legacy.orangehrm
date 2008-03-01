@@ -257,6 +257,13 @@ class JobApplication {
     }
 
     public function getEvents() {
+
+        if (!isset($this->events) && isset($this->id)) {
+
+            // Get application events
+            $events = JobApplicationEvent::getEvents($this->id);
+            $this->events = $events;
+        }
         return $this->events;
     }
 
@@ -459,12 +466,11 @@ class JobApplication {
      */
     public static function getList($managerEmpNum = null) {
 
-        $selectConditions = null;
-        if (CommonFunctions::isValidId($managerEmpNum)) {
-            $selectConditions[] = 'b.' . JobVacancy::DB_FIELD_MANAGER_ID . ' = ' . $managerEmpNum;
+        if (!empty($managerEmpNum) && !CommonFunctions::isValidId($managerEmpNum)) {
+            throw new JobApplicationException("Invalid id", JobApplicationException::INVALID_PARAMETER);
         }
 
-        return self::_getList($selectConditions);
+        return self::_getList(null, $managerEmpNum);
     }
 
 	/**
@@ -523,10 +529,11 @@ class JobApplication {
     /**
      * Get a list of jobs applications with the given conditions.
      *
-     * @param array   $selectCondition Array of select conditions to use.
-     * @return array  Array of JobApplication objects. Returns an empty (length zero) array if none found.
+     * @param array  $selectCondition Array of select conditions to use.
+     * @param String $filterForManagerId Filter by the given manager
+     * @return array Array of JobApplication objects. Returns an empty (length zero) array if none found.
      */
-    private static function _getList($selectCondition = null) {
+    private static function _getList($selectCondition = null, $filterForManagerId = null) {
 
         $fields[0] = 'a.' . self::DB_FIELD_ID;
         $fields[1] = 'a.' . self::DB_FIELD_VACANCY_ID;
@@ -552,14 +559,23 @@ class JobApplication {
         $tables[1] = JobVacancy::TABLE_NAME .' b';
         $tables[2] = 'hs_hr_job_title c';
         $tables[3] = 'hs_hr_employee d';
-        //$tables[4] = JobApplicationEvent::TABLE_NAME . ' e';
 
         $joinConditions[1] = 'a.' . self::DB_FIELD_VACANCY_ID . ' = b.' . JobVacancy::DB_FIELD_VACANCY_ID;
         $joinConditions[2] = 'b.jobtit_code = c.jobtit_code';
         $joinConditions[3] = 'b.' . JobVacancy::DB_FIELD_MANAGER_ID . ' = d.emp_number';
 
+        $groupBy = null;
+
+        if (!empty($filterForManagerId)) {
+            $tables[4] = JobApplicationEvent::TABLE_NAME . ' e';
+            $joinConditions[4] = 'a.' . self::DB_FIELD_ID . ' = e.' . JobApplicationEvent::DB_FIELD_APPLICATION_ID;
+            $selectCondition[] = '((b.' . JobVacancy::DB_FIELD_MANAGER_ID . ' = ' . $filterForManagerId . ') OR ' .
+                    '(e.' . JobApplicationEvent::DB_FIELD_OWNER . ' = '.$filterForManagerId.'))' ;
+            $groupBy = 'a.' . self::DB_FIELD_ID;
+        }
+
         $sqlBuilder = new SQLQBuilder();
-        $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
+        $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, null, null, null, $groupBy);
 
         $actList = array();
 
@@ -634,10 +650,6 @@ class JobApplication {
         if (isset($row[self::HIRING_MANAGER_NAME])) {
             $application->setHiringManagerName($row[self::HIRING_MANAGER_NAME]);
         }
-
-        // Get application events
-        $events = JobApplicationEvent::getEvents($application->getId());
-        $application->setEvents($events);
 
         return $application;
     }

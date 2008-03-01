@@ -82,6 +82,15 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
         			"VALUES(11, '0011', 'Rajasinghe', 'Saman', 'Marlon', 'JOB001')");
         $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
         			"VALUES(12, '0022', 'Jayasinghe', 'Aruna', 'Shantha', 'JOB001')");
+        $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
+                    "VALUES(13, '0042', 'Jayaweera', 'Nimal', 'T', 'JOB001')");
+        $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
+                    "VALUES(14, '0044', 'Karunarathne', 'Jaya', 'S', 'JOB001')");
+        $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
+                    "VALUES(15, '0054', 'Ranasinghe', 'Kamal', 'Z', 'JOB001')");
+
+        // Insert to hs_hr_users table
+        $this->_runQuery("INSERT INTO `hs_hr_users`(id, user_name, emp_number) VALUES ('USR111','demo', 11)");
 
 		// Insert Job Vacancies
 		$this->_runQuery("INSERT INTO hs_hr_job_vacancy(vacancy_id, jobtit_code, manager_id, active, description) " .
@@ -114,6 +123,27 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
         $this->jobApplications[3] = $application;
 
 		$this->_createJobApplications($this->jobApplications);
+
+        // Create job application events
+        $createdTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT, strtotime("-1 hours"));
+        $eventTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT, strtotime("+5 days"));
+
+        // Events for first job application
+        $this->_createEvent(1, 1, $createdTime, 'USR111', 13, $eventTime,
+            JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW, JobApplicationEvent::STATUS_INTERVIEW_FINISHED,
+            "Interview notes, here");
+
+        $createdTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT, strtotime("-0.6 hours"));
+        $eventTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT, strtotime("+6 days"));
+        $this->_createEvent(2, 1, $createdTime, 'USR111', 14, $eventTime,
+            JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW, JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED,
+            "Interview notes, here");
+
+        // Events for second job application
+        $this->_createEvent(3, 2, $createdTime, 'USR111', 14, $eventTime,
+            JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW, JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED,
+            "Interview notes, here");
+
 		UniqueIDGenerator::getInstance()->resetIDs();
     }
 
@@ -128,6 +158,7 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
     }
 
 	private function _deleteTables() {
+        $this->_runQuery("DELETE FROM `hs_hr_users` WHERE id = 'USR111'");
 		$this->_runQuery("TRUNCATE TABLE `hs_hr_job_application`");
 		$this->_runQuery("TRUNCATE TABLE `hs_hr_job_vacancy`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_job_title`");
@@ -227,14 +258,29 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
         $list = JobApplication::getList();
         $this->_compareApplications($this->jobApplications, $list);
 
-        // get list for a manager with related applications
+        // get list for hiring manager with 2 related applications
         $list = JobApplication::getList(11);
         $expected = array(1=>$this->jobApplications[1], 2=>$this->jobApplications[2]);
         $this->_compareApplications($expected, $list);
 
-        // get list for a manager without any applications
+        // get list for hiring manager with 1 related applications
         $list = JobApplication::getList(12);
         $expected = array(3=>$this->jobApplications[3]);
+        $this->_compareApplications($expected, $list);
+
+        // get list for hiring manager without any related applications
+        $list = JobApplication::getList(15);
+        $expected = array();
+        $this->_compareApplications($expected, $list);
+
+        // Get list for manager scheduled to interview applicant
+        $list = JobApplication::getList(13);
+        $expected = array(1=>$this->jobApplications[1]);
+        $this->_compareApplications($expected, $list);
+
+        // Get list for manager scheduled to interview applicant
+        $list = JobApplication::getList(14);
+        $expected = array(1=>$this->jobApplications[1], 2=>$this->jobApplications[2]);
         $this->_compareApplications($expected, $list);
 
     }
@@ -415,7 +461,6 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
 		$application->setQualifications($qualifications);
         $application->setStatus($status);
         $application->setAppliedDateTime(date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT));
-        $application->setEvents(array());
     	return $application;
     }
 
@@ -459,6 +504,31 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
             $this->assertTrue(mysql_query($sql), mysql_error());
 		}
 		UniqueIDGenerator::getInstance()->initTable();
+    }
+
+    /**
+     * Create job application event with the passed parameters
+     *
+     * @param int $id
+     * @param int $applicationId
+     * @param String $createdTime
+     * @param String $createdBy
+     * @param int $ownerId
+     * @param String $eventTime
+     * @param int $eventType
+     * @param int $eventStatus
+     * @param String $notes
+     */
+    private function _createEvent($id, $applicationId, $createdTime, $createdBy, $ownerId, $eventTime,
+        $eventType, $eventStatus, $notes) {
+
+        $sql = sprintf("INSERT INTO `hs_hr_job_application_events`(`id`,`application_id`,`created_time`," .
+                        "`created_by`, `owner`, `event_time`, `event_type`, `status`, `notes`) " .
+                        "VALUES (%d, %d, '%s', '%s', %d, '%s', %d, %d, '%s')",
+                        $id, $applicationId, $createdTime, $createdBy, $ownerId, $eventTime,
+                        $eventType, $eventStatus, $notes);
+        $this->assertTrue(mysql_query($sql), mysql_error());
+        UniqueIDGenerator::getInstance()->initTable();
     }
 
 	/**
