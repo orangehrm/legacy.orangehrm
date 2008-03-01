@@ -205,7 +205,6 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
         <!--
         	if (document.getElementById && document.createElement) {
    	 			initOctopus();
-   	 			$('txtFirstName').focus();
 			}
         -->
     </script>
