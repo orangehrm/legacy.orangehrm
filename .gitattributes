@@ -517,6 +517,8 @@ templates/recruitment/mails/applicant-rejected-subject.txt -text
 templates/recruitment/mails/applicant-rejected.txt -text
 templates/recruitment/mails/hiringmanager-received-subject.txt -text
 templates/recruitment/mails/hiringmanager-received.txt -text
+templates/recruitment/mails/interview-manager-task-subject.txt -text
+templates/recruitment/mails/interview-manager-task.txt -text
 templates/recruitment/scheduleInterview.php -text
 templates/recruitment/viewApplicationDetails.php -text
 templates/recruitment/viewApplicationHistory.php -text

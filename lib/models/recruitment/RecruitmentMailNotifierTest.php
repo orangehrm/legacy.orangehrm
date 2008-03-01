@@ -60,7 +60,10 @@ class RecruitmentMailNotifierTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code, emp_work_email) " .
         			"VALUES(11, '0011', 'Rajasinghe', 'Saman', 'Marlon', 'JOB001', 'aruna@company.com')");
         $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code, emp_work_email) " .
-        			"VALUES(12, '0022', 'Jayasinghe', 'Aruna', 'Shantha', 'JOB001', 'aruna@company.com')");
+        			"VALUES(12, '0022', 'Jayasinghe', 'Aruna', 'Shantha', 'JOB001', 'arnold@mydomain.com')");
+
+        // Insert to hs_hr_users table
+        $this->_runQuery("INSERT INTO `hs_hr_users`(id, user_name, emp_number) VALUES ('USR111','demo', 11)");
 
 		// Insert Job Vacancies
 		$this->_runQuery("INSERT INTO hs_hr_job_vacancy(vacancy_id, jobtit_code, manager_id, active, description) " .
@@ -75,6 +78,16 @@ class RecruitmentMailNotifierTest extends PHPUnit_Framework_TestCase {
 		$this->jobApplications[1] = $application;
 
 		$this->_createJobApplications($this->jobApplications);
+
+        // Create Job Application Event
+        $createdTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT);
+        $eventTime = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT, strtotime("+5 days"));
+
+        $this->_runQuery("INSERT INTO `hs_hr_job_application_events`(`id`,`application_id`,`created_time`," .
+             "`created_by`, `owner`, `event_time`, `event_type`, `status`, `notes`) VALUES (" .
+             "1, 1, '". $createdTime ."', 'USR111', 12, '".$eventTime."', " . JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW . "," .
+             JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED . "," . "'Interview notes are here')");
+
 		UniqueIDGenerator::getInstance()->resetIDs();
     }
 
@@ -89,7 +102,9 @@ class RecruitmentMailNotifierTest extends PHPUnit_Framework_TestCase {
     }
 
 	private function _deleteTables() {
+        $this->_runQuery("DELETE FROM `hs_hr_users` WHERE id = 'USR111'");
 		$this->_runQuery("TRUNCATE TABLE `hs_hr_job_application`");
+        $this->_runQuery("TRUNCATE TABLE `hs_hr_job_application_events`");
 		$this->_runQuery("TRUNCATE TABLE `hs_hr_job_vacancy`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_job_title`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_employee`");
@@ -213,6 +228,31 @@ class RecruitmentMailNotifierTest extends PHPUnit_Framework_TestCase {
     	$this->assertFalse($result);
     }
 
+
+    /**
+     * Test the sendInterviewTaskToManager function
+     */
+    public function testSendInterviewTaskToManager() {
+        $jobApplication = $this->jobApplications[1];
+        $jobApplication->setStatus(JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED);
+        $jobApplication->save();
+
+        $jobAppEvent = JobApplicationEvent::getJobApplicationEvent(1);
+
+        $notifier = new RecruitmentMailNotifier();
+        $mockMailer = new MockMailer();
+        $notifier->setMailer($mockMailer);
+        $notifier->sendInterviewTaskToManager($jobAppEvent);
+
+        $attachments = $mockMailer->getAttachments();
+
+        $this->assertEquals(1, count($attachments));
+
+        $taskData = $attachments[0]->data;
+        $this->assertNotNull($taskData);
+        $this->assertEquals(1, preg_match('/aruna@company.com/', $taskData));
+    }
+
     /**
      * Create a JobApplication object with the passed parameters
      */
@@ -278,6 +318,7 @@ class MockMailer {
 	private $cc;
 	private $to;
 	private $mailType;
+    private $attachments = array();
 
 	/* result of send method*/
 	private $result = true;
@@ -319,6 +360,14 @@ class MockMailer {
 	public function setResult($result) {
 	    $this->result = $result;
 	}
+
+    public function addAttachment($attachment) {
+        $this->attachments[] = $attachment;
+    }
+
+    public function getAttachments() {
+        return $this->attachments;
+    }
 
 	public function send($to, $mailType) {
 		$this->to = $to;

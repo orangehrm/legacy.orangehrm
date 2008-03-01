@@ -444,8 +444,12 @@ class RecruitmentController {
                 $event->setEventType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
                 $event->setStatus(JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED);
                 $event->setCreatedBy($_SESSION['user']);
-
                 $event->save();
+
+                // Send notification to Interviewer
+                $notifier = new RecruitmentMailNotifier();
+                $notifier->sendInterviewTaskToManager($event);
+
                 $message = 'UPDATE_SUCCESS';
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
@@ -472,6 +476,11 @@ class RecruitmentController {
                 $event->setCreatedBy($_SESSION['user']);
 
                 $event->save();
+
+                // Send notification to Interviewer
+                $notifier = new RecruitmentMailNotifier();
+                $notifier->sendInterviewTaskToManager($event);
+
                 $message = 'UPDATE_SUCCESS';
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
