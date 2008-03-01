@@ -184,7 +184,9 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
         </div><br/>
         <div class="txtName"><?php echo $lang_Recruit_JobApplicationDetails_Actions; ?></div><div class="txtValue">
             <?php
-                $actions = $application->getPossibleActions();
+                $authManager = new RecruitmentAuthManager();
+                $authorize = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
+                $actions = $authManager->getAllowedActions($authorize, $application);
                 $applicationId = $application->getId();
 
                 foreach ($actions as $action) {

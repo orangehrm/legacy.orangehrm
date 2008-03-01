@@ -48,6 +48,9 @@ class authorize {
 	const AUTHORIZE_ROLE_PROJECT_ADMIN = "ProjectAdmin";
     const AUTHORIZE_ROLE_MANAGER = 'Manager';
 
+    const YES = 'Yes';
+    const NO = 'No';
+
 	/**
 	 * class atributes
 	 *
@@ -104,7 +107,7 @@ class authorize {
 		$isAdmin = $this->getIsAdmin();
 		$empId = $this->getEmployeeId();
 
-		if ($isAdmin === "Yes") {
+		if ($isAdmin === authorize::YES) {
 			$roles[$this->roleAdmin] = true;
 		} else {
 			$roles[$this->roleAdmin] = false;

@@ -102,6 +102,9 @@ $statusList = array(
         </thead>
         <?php
             $odd = false;
+            $authManager = new RecruitmentAuthManager();
+            $authorize = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
+
             foreach ($applications as $app) {
                 $cssClass = ($odd) ? 'even' : 'odd';
                 $odd = !$odd;
@@ -136,7 +139,7 @@ $statusList = array(
             </td>
             <td class="<?php echo $cssClass?>">
             <?php
-                $actions = $app->getPossibleActions();
+                $actions = $authManager->getAllowedActions($authorize, $app);
 
                 foreach ($actions as $action) {
                     $resourceName = 'lang_Recruit_JobApplicationAction_' . $action;

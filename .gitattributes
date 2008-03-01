@@ -346,6 +346,8 @@ lib/models/recruitment/JobApplicationEvent.php -text
 lib/models/recruitment/JobApplicationTest.php -text
 lib/models/recruitment/JobVacancy.php -text
 lib/models/recruitment/JobVacancyTest.php -text
+lib/models/recruitment/RecruitmentAuthManager.php -text
+lib/models/recruitment/RecruitmentAuthManagerTest.php -text
 lib/models/recruitment/RecruitmentMailNotifier.php -text
 lib/models/recruitment/RecruitmentMailNotifierTest.php -text
 lib/models/report/EmpRepUserGroups.php -text

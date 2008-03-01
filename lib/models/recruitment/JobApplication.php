@@ -318,61 +318,6 @@ class JobApplication {
     }
 
     /**
-     * Get possible actions on this application
-     * @return Array Array of possible actions
-     */
-    public function getPossibleActions() {
-
-        $actions = array();
-
-        switch ($this->status) {
-
-            case self::STATUS_SUBMITTED:
-                $actions = array(self::ACTION_REJECT, self::ACTION_SCHEDULE_FIRST_INTERVIEW);
-                break;
-            case self::STATUS_FIRST_INTERVIEW_SCHEDULED:
-                $event = $this->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
-
-                if ($event && ($event->getStatus() == JobApplicationEvent::STATUS_INTERVIEW_FINISHED)) {
-                    $actions = array(self::ACTION_REJECT, self::ACTION_SCHEDULE_SECOND_INTERVIEW);
-                } else {
-                    $actions = array(self::ACTION_REJECT);
-                }
-                break;
-            case self::STATUS_SECOND_INTERVIEW_SCHEDULED:
-                $event = $this->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
-
-                if ($event && ($event->getStatus() == JobApplicationEvent::STATUS_INTERVIEW_FINISHED)) {
-                    $actions = array(self::ACTION_REJECT, self::ACTION_OFFER_JOB);
-                } else {
-                    $actions = array(self::ACTION_REJECT);
-                }
-
-                break;
-            case self::STATUS_JOB_OFFERED:
-                $actions = array(self::ACTION_MARK_OFFER_DECLINED, self::ACTION_SEEK_APPROVAL);
-                break;
-            case self::STATUS_OFFER_DECLINED:
-                $actions = array();
-                break;
-            case self::STATUS_PENDING_APPROVAL:
-                $actions = array(self::ACTION_REJECT, self::ACTION_APPROVE);
-                break;
-            case self::STATUS_HIRED:
-                $actions = array();
-                break;
-            case self::STATUS_REJECTED:
-                $actions = array();
-                break;
-            default:
-                throw new JobApplicationException("Invalid status", JobApplicationException::INVALID_STATUS);
-
-        }
-
-        return $actions;
-    }
-
-    /**
      * Returns the latest event
      * @return JobApplicationEvent The latest event, or null if no events
      */
