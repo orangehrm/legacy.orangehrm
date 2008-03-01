@@ -304,7 +304,7 @@ class RecruitmentMailNotifier {
          $jobApplication->getProvince(), $jobApplication->getZip(),
          $country, $jobApplication->getPhone(),
          $jobApplication->getMobile(), $jobApplication->getEmail(),
-         $jobApplication->getQualifications(), $jobApplication->getNotes());
+         $jobApplication->getQualifications(), $jobApplicationEvent->getNotes());
 
          $summary = str_replace($search, $replace, $subject);
          $description = str_replace($search, $replace, $body);
