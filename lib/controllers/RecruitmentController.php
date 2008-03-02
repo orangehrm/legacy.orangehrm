@@ -149,8 +149,13 @@ class RecruitmentController {
                     case 'MarkDeclined' :
                         $this->_markDeclined($id);
                         break;
+                    case 'ConfirmSeekApproval' :
+                        $this->_confirmSeekApproval($id);
+                        break;
                     case 'SeekApproval' :
-                        $this->_seekApproval($id);
+                        $eventExtractor = new EXTRACTOR_JobApplicationEvent();
+                        $event = $eventExtractor->parseSeekApprovalData($_POST);
+                        $this->_seekApproval($event);
                         break;
                     case 'ConfirmApprove' :
                         $this->_confirmAction($id, JobApplication::ACTION_APPROVE);
@@ -593,23 +598,51 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
-    private function _seekApproval($id) {
+
+    /**
+     * Show a screen allowing the manager to select a director
+     * to seek approval from. Also allows the manager to add notes
+     * related to the hiring.
+     *
+     * @param int $id Id of job application
+     */
+    private function _confirmSeekApproval($id) {
+        $path = '/templates/recruitment/seekApproval.php';
+
+        $empInfo = new EmpInfo();
+        $directors = $empInfo->getListofEmployee(0, JobTitle::DIRECTOR_JOB_TITLE_NAME, 6);
+        $objs['directors'] = is_array($directors) ? $directors : array();
+        $objs['application'] = JobApplication::getJobApplication($id);
+
+        $template = new TemplateMerger($objs, $path);
+        $template->display();
+    }
+
+    private function _seekApproval($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
-            $application = JobApplication::getJobApplication($id);
+            $application = JobApplication::getJobApplication($event->getApplicationId());
             $application->setStatus(JobApplication::STATUS_PENDING_APPROVAL);
 
             try {
                 $application->save();
-                $this->_addApplicationEvent($id, JobApplicationEvent::EVENT_SEEK_APPROVE);
+
+                $event->setEventType(JobApplicationEvent::EVENT_SEEK_APPROVAL);
+                $event->setCreatedBy($_SESSION['user']);
+                $event->save();
+
+                // Send notification to Interviewer
+                $notifier = new RecruitmentMailNotifier();
+                $mailResult = $notifier->sendSeekApprovalToDirector($application, $event);
+
                 $message = 'UPDATE_SUCCESS';
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
             }
 
             $this->redirect($message, '?recruitcode=Application&action=List');
-            //$this->_viewApplicationList();
+
         } else {
             $this->_notAuthorized();
         }

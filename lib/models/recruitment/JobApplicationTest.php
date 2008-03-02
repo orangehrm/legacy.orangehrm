@@ -103,14 +103,14 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
 		// Insert Job Applications
 		$application = $this->_getJobApplication(1, 1, 'Janaka', 'T', 'Kulathunga', '111 Main Street', 'Apt X2',
 				'Colombo', 'Western', '2222', 'Sri Lanka', '01121111121', '077282828282', 'janaka@example.com',
-				'aaa bbb', JobApplication::STATUS_SUBMITTED);
+				'aaa bbb', JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
         $application->setHiringManagerName('Saman Rajasinghe');
         $application->setJobTitleName('Manager');
 		$this->jobApplications[1] = $application;
 
         $application = $this->_getJobApplication(2, 2, 'Kamal', 'S', 'Manawarathne', '222 Sea Street', 'Suite B2',
                 'Kandy', 'Central', '111111', 'England', '33211121', '079982828282', 'kamal@etst.com',
-                'asdfasdf', JobApplication::STATUS_SUBMITTED);
+                'asdfasdf', JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED);
         $application->setHiringManagerName('Saman Rajasinghe');
         $application->setJobTitleName('Driver');
         $this->jobApplications[2] = $application;

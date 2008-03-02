@@ -989,6 +989,8 @@
 	$lang_Admin_ENS_LeaveCancellations = "Leave Cancellations";
 	$lang_Admin_ENS_LeaveRejections = "Leave Rejections";
 	$lang_Admin_ENS_JobApplications = "Job Applications";
+    $lang_Admin_ENS_SeekHireApproval = "New employee hire approval requests";
+    $lang_Admin_ENS_HiringTasks = "Tasks sent on hiring of employee";
 
 	//Users
 	$lang_Admin_Users_Errors_UsernameShouldBeAtleastFiveCharactersLong = "UserName should be atleast five characters long";
@@ -1333,6 +1335,14 @@
     $lang_Recruit_JobApplicationConfirm_ConfirmSeekApproval = 'Seek Approval';
     $lang_Recruit_JobApplicationConfirm_ConfirmApprove = 'Confirm Approval of above applicant';
     $lang_Recruit_JobApplicationConfirm_ConfirmApproveDesc = 'This will mark the applicant as hired and create an employee entry in the system for the applicant. No emails will be sent.';
+
+    $lang_Recruit_JobApplication_SeekApproval_Heading = 'Seek Approval to Hire ';
+    $lang_Recruit_JobApplication_SeekApproval_GetApprovedBy = 'Get approved by ';
+    $lang_Recruit_NoDirectorsNotice = 'No directors found. You need to create a job title named \'Director\' and assign to employees who are directors.';
+    $lang_Recruit_JobApplication_SeekApproval_Notes = 'Notes';
+    $lang_Recruit_JobApplication_SeekApproval_Desc = 'An email will be sent to the chosen director, asking for approval to hire.';
+    $lang_Recruit_JobApplication_PleaseSpecifyDirector = 'Please specify a director to get approved by';
+    $lang_Recruit_JobApplication_PleaseSpecifyNotes = 'Please provide some notes';
 
 	$lang_Recruit_ApplicantVacancyList_Heading = 'Job Vacancies';
 	$lang_Recruit_ApplicantVacancyList_Title = 'Job Vacancies';

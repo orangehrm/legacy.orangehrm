@@ -42,5 +42,26 @@
         return $event;
 	}
 
+    /**
+     * Parse data from seek approval request and return JobApplicationEvent
+     * object
+     * @param Array $postArr Array containing POST values
+     * @return JobApplicationEvent Job Application Event object
+     */
+    public function parseSeekApprovalData($postArr) {
+
+        $event = new JobApplicationEvent();
+
+        $id = $postArr['txtId'];
+        $event->setApplicationId($id);
+
+        $interviewer = $postArr['cmbDirector'];
+        $event->setOwner($interviewer);
+
+        $notes = $postArr['txtNotes'];
+        $event->setNotes($notes);
+
+        return $event;
+    }
 }
 ?>

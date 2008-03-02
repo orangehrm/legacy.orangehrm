@@ -47,6 +47,7 @@ class RecruitmentMailNotifier {
 	const TEMPLATE_RECEIVED_HIRING_MANAGER = 'hiringmanager-received.txt';
     const TEMPLATE_REJECTED_APPLICANT = 'applicant-rejected.txt';
     const TEMPLATE_INTERVIEW_MANAGER_TASK = 'interview-manager-task.txt';
+    const TEMPLATE_SEEK_APPROVAL_DIRECTOR = 'seek-approval-director.txt';
 
 	/**
 	 * Mail subject templates
@@ -55,6 +56,7 @@ class RecruitmentMailNotifier {
 	const SUBJECT_RECEIVED_HIRING_MANAGER = 'hiringmanager-received-subject.txt';
     const SUBJECT_REJECTED_APPLICANT = 'applicant-rejected-subject.txt';
     const SUBJECT_INTERVIEW_MANAGER_TASK = 'interview-manager-task-subject.txt';
+    const SUBJECT_SEEK_APPROVAL_DIRECTOR = 'seek-approval-director-subject.txt';
 
 	/**
 	 * Template variable constants
@@ -76,6 +78,8 @@ class RecruitmentMailNotifier {
 	const VARIABLE_APPLICANT_EMAIL = '#email#';
 	const VARIABLE_APPLICANT_QUALIFICATIONS = '#qualifications#';
     const VARIABLE_INTERVIEW_NOTES = '#interview-notes#';
+    const VARIABLE_SEEK_NOTES = '#seek-approval-notes#';
+    const VARIABLE_FROM = '#from#';
 
     const VCALENDAR_DATETIME_FORMAT = 'Ymd\\THis\\Z';
 
@@ -240,6 +244,60 @@ class RecruitmentMailNotifier {
 	 }
 
     /**
+     * Send an email to the director seeking for approval for hiring the applicant.
+     *
+     * @param JobApplication $jobApplication Job Application object
+     * @param JobApplicationEvent $jobApplicationEvent Job Application Event object
+     *
+     * @return boolean True if mail sent, false otherwise
+     */
+     public function sendSeekApprovalToDirector($jobApplication, $jobApplicationEvent) {
+
+         $vacancy = JobVacancy::getJobVacancy($jobApplication->getVacancyId());
+         $directorId = $jobApplicationEvent->getOwner();
+         $email = $this->_getEmpAddress($directorId);
+         $empName = $this->_getEmpName($directorId);
+
+         $creator = $jobApplicationEvent->getCreatedBy();
+
+         $creatorDetails = $this->_getUserNameAndEmail($creator);
+         $fromName = $creatorDetails['first'] . ' ' . $creatorDetails['last'];
+
+         $subject = $this->_getTemplate(self::SUBJECT_SEEK_APPROVAL_DIRECTOR);
+         $body = $this->_getTemplate(self::TEMPLATE_SEEK_APPROVAL_DIRECTOR);
+
+         // Replace placeholders in subject and body
+         $search = array(self::VARIABLE_JOB_TITLE, self::VARIABLE_TO,
+            self::VARIABLE_APPLICANT_FIRSTNAME, self::VARIABLE_APPLICANT_MIDDLENAME,
+            self::VARIABLE_APPLICANT_LASTNAME, self::VARIABLE_APPLICANT_STREET1,
+            self::VARIABLE_APPLICANT_STREET2, self::VARIABLE_APPLICANT_CITY,
+            self::VARIABLE_APPLICANT_PROVINCE, self::VARIABLE_APPLICANT_ZIP,
+            self::VARIABLE_APPLICANT_COUNTRY, self::VARIABLE_APPLICANT_PHONE,
+            self::VARIABLE_APPLICANT_MOBILE, self::VARIABLE_APPLICANT_EMAIL,
+            self::VARIABLE_APPLICANT_QUALIFICATIONS, self::VARIABLE_SEEK_NOTES,
+            self::VARIABLE_FROM);
+
+         $country = $this->_getCountryName($jobApplication->getCountry());
+
+         $replace = array($vacancy->getJobTitleName(), $empName['first'],
+         $jobApplication->getFirstName(), $jobApplication->getMiddleName(),
+         $jobApplication->getLastName(), $jobApplication->getStreet1(),
+         $jobApplication->getStreet2(), $jobApplication->getCity(),
+         $jobApplication->getProvince(), $jobApplication->getZip(),
+         $country, $jobApplication->getPhone(),
+         $jobApplication->getMobile(), $jobApplication->getEmail(),
+         $jobApplication->getQualifications(), $jobApplicationEvent->getNotes(),
+         $fromName);
+
+         $subject = str_replace($search, $replace, $subject);
+         $body = str_replace($search, $replace, $body);
+
+         $notificationType = EmailNotificationConfiguration::EMAILNOTIFICATIONCONFIGURATION_NOTIFICATION_TYPE_SEEK_HIRE_APPROVAL;
+
+         return $this->_sendMail($email, $subject, $body, $notificationType);
+     }
+
+    /**
      * Send a task to the interviewing manager, giving details of scheduled interview
      *
      * @param JobApplicationEvent $jobApplicationEvent Job Application Event object
@@ -266,21 +324,9 @@ class RecruitmentMailNotifier {
         $applicantEmail = $jobApplication->getEmail();
 
         $creatorId = $jobApplicationEvent->getCreatedBy();
-        $users = new Users();
-        $creator = $users->filterUsers($creatorId);
-
-        /* If creator associated with an employee */
-        $creatorName = '';
-        $creatorEmail = '';
-
-        if (!empty($creator)) {
-            if (!empty($creator[0][11])) {
-                $creatorName = $creator[0][10] . ' ' . $creator[0][12];
-                $creatorEmail = $creator[0][13];
-            } else {
-                $creatorName = $creator[0][1];
-            }
-        }
+        $creatorDetails = $this->_getUserNameAndEmail($creatorId);
+        $creatorName = $creatorDetails['first'] . ' ' . $creatorDetails['last'];
+        $creatorEmail = $creatorDetails['email'];
 
         $interviewTime = $jobApplicationEvent->getEventTime();
 
@@ -508,6 +554,42 @@ EOT;
 		return null;
 	}
 
+    /**
+     * Fetch the given user's email and name
+     *
+     * @param String $userId The orangehrm user id of the user
+     * @return Array Array with employee first, and last names and email.
+     *
+     */
+    private function _getUserNameAndEmail($userId) {
+
+        $firstNameName = '';
+        $lastName = '';
+        $email = '';
+
+        $users = new Users();
+        $userDetails = $users->filterUsers($userId);
+        if (!empty($userDetails)) {
+
+            /* If an employee id is found, this means the user is mapped to
+             * an employee. Therefore, get the employee details
+             */
+            if (!empty($userDetails[0][11])) {
+
+                $firstName = $userDetails[0][10];
+                $lastName =  $userDetails[0][12];
+                $email = $userDetails[0][13];
+            } else {
+
+                /*
+                 * Otherwise, just get the user name
+                 */
+                $firstName = $userDetails[0][1];
+            }
+        }
+
+        return array('first'=>$firstName, 'last'=>$lastName, 'email'=>$email);
+    }
 	/**
 	 * Get the mail template from given template file
 	 *
