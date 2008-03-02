@@ -522,7 +522,10 @@ templates/recruitment/mails/hiringmanager-received-subject.txt -text
 templates/recruitment/mails/hiringmanager-received.txt -text
 templates/recruitment/mails/interview-manager-task-subject.txt -text
 templates/recruitment/mails/interview-manager-task.txt -text
+templates/recruitment/mails/seek-approval-director-subject.txt -text
+templates/recruitment/mails/seek-approval-director.txt -text
 templates/recruitment/scheduleInterview.php -text
+templates/recruitment/seekApproval.php -text
 templates/recruitment/viewApplicationDetails.php -text
 templates/recruitment/viewApplicationHistory.php -text
 templates/report/emprepinfo.php -text
