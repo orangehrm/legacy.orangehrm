@@ -227,5 +227,69 @@ class RecruitmentAuthManager {
         $allowedActions = $this->getAllowedActions($authObj, $jobApplication);
         return (array_search($action, $allowedActions) !== false);
     }
+
+    /**
+     * Checks if the given user is allowed to edit the given event
+     *
+     * @param authorize $authObj authorize class representing logged in user
+     * @param JobApplicationEvent Job Application Event which needs to be edited
+     *
+     * @return bool True if action is allowed, false otherwise.
+     */
+    public function isAllowedToEditEvent($authObj, $jobApplicationEvent) {
+
+        $application = JobApplication::getJobApplication($jobApplicationEvent->getApplicationId());
+        $role = $this->getRoleForApplication($authObj, $application);
+
+        // Admin and hiring manager always allowed.
+        if (($role == self::ROLE_ADMIN) || ($role == self::ROLE_HIRING_MANAGER)) {
+            return true;
+        }
+
+        // Owner is also allowed to edit
+        $owner = $jobApplicationEvent->getOwner();
+        if ($owner == $authObj->getEmployeeId()) {
+            return true;
+        }
+
+        // Creator is also allowed to edit
+        $creator = $jobApplicationEvent->getCreatedBy();
+        $users = new Users();
+        $userInfo = $users->filterUsers($creator);
+        if (isset($userInfo[0][11]) && ($userInfo[0][11] == $authObj->getEmployeeId())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the given user is allowed to change the status of the given event
+     *
+     * @param authorize $authObj authorize class representing logged in user
+     * @param JobApplicationEvent Job Application Event which needs to be edited
+     *
+     * @return bool True if action is allowed, false otherwise.
+     */
+    public function isAllowedToChangeEventStatus($authObj, $jobApplicationEvent) {
+
+        if (!$this->isAllowedToEditEvent($authObj, $jobApplicationEvent)) {
+            return false;
+        }
+
+        $application = JobApplication::getJobApplication($jobApplicationEvent->getApplicationId());
+        $status = $application->getStatus();
+        $eventType = $jobApplicationEvent->getEventType();
+        switch ($eventType) {
+            case JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW:
+                return ($status == JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED);
+                break;
+            case JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW:
+                return ($status == JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
+                break;
+            default:
+                return false;
+        }
+    }
 }
 ?>

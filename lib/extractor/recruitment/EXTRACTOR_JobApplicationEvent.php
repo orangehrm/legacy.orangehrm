@@ -30,11 +30,15 @@
         $id = $postArr['txtId'];
 		$event = JobApplicationEvent::getJobApplicationEvent($id);
 
-        $status = $postArr['cmbStatus'];
-        $event->setStatus($status);
+        if (isset($postArr['cmbStatus'])) {
+            $status = $postArr['cmbStatus'];
+            $event->setStatus($status);
+        }
 
-        $notes = $postArr['txtNotes'];
-        $event->setNotes($notes);
+        if (isset($postArr['txtNotes'])) {
+            $notes = $postArr['txtNotes'];
+            $event->setNotes($notes);
+        }
         return $event;
 	}
 

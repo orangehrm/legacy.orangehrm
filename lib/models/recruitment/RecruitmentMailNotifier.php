@@ -270,12 +270,16 @@ class RecruitmentMailNotifier {
         $creator = $users->filterUsers($creatorId);
 
         /* If creator associated with an employee */
-        if (!empty($creator[0][11])) {
-            $creatorName = $creator[0][10] . ' ' . $creator[0][12];
-            $creatorEmail = $creator[0][13];
-        } else {
-            $creatorName = $creator[0][1];
-            $creatorEmail = '';
+        $creatorName = '';
+        $creatorEmail = '';
+
+        if (!empty($creator)) {
+            if (!empty($creator[0][11])) {
+                $creatorName = $creator[0][10] . ' ' . $creator[0][12];
+                $creatorEmail = $creator[0][13];
+            } else {
+                $creatorName = $creator[0][1];
+            }
         }
 
         $interviewTime = $jobApplicationEvent->getEventTime();

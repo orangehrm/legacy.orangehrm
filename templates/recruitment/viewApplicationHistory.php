@@ -216,27 +216,23 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
             <?php echo $statusList[$application->getStatus()]; ?></div> --><br/>
 
         <?php
+            $authManager = new RecruitmentAuthManager();
+            $auth = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
+            $role = $authManager->getRoleForApplication($auth, $application);
             $eventCount = 0;
             foreach ($events as $event) {
 
-                $allowStatusChange = false;
+                $allowEdit = $authManager->isAllowedToEditEvent($auth, $event);
+                $allowStatusChange = $authManager->isAllowedToChangeEventStatus($auth, $event);
 
                 if ($event->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW) {
                     $title = $lang_Recruit_JobApplicationHistory_FirstInterview;
-
-                    if ($application->getStatus() == JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED) {
-                        $allowStatusChange = true;
-                    }
                 } else if ($event->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW) {
                     $title = $lang_Recruit_JobApplicationHistory_SecondInterview;
-
-                    if ($application->getStatus() == JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED) {
-                        $allowStatusChange = true;
-                    }
-
                 } else {
                     continue;
                 }
+
                 $eventCount++;
 
                 $date = LocaleUtil::getInstance()->formatDate($event->getEventTime());
@@ -276,9 +272,11 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
             <br />
             <label for="txtNotes"><?php echo $lang_Recruit_JobApplicationHistory_Notes; ?></label>
             <textarea name="txtNotes" disabled="true"><?php echo $notes; ?></textarea>
+            <?php if ($allowEdit) { ?>
             <img onClick="edit(this, '<?php echo $formId; ?>');" name="editBtn"
                 onMouseOut="mout(this);" onMouseOver="mover(this);"
                 src="<?php echo $picDir;?>/btn_edit.gif">
+            <?php } ?>
             <br/><br/>
 
         </form>

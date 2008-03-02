@@ -791,6 +791,89 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * Test method isAllowedToEditEvent()
+     */
+    public function testIsAllowedToEditEvent() {
+        $authManager = new RecruitmentAuthManager();
+        $app = JobApplication::getJobApplication(1);
+
+        // Different users
+        $admin = new authorize(null, authorize::YES);
+        $hiring = new authorize('011', authorize::NO);
+        $first = new authorize(13, authorize::NO);
+        $second = new authorize(14, authorize::NO);
+        $manager = new authorize(15, authorize::NO);
+        $nonManager = new authorize(16, authorize::NO);
+
+        // Admin, Hiring Manager and interviewer(owner) allowed to edit event
+        $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
+        $this->assertTrue($authManager->isAllowedToEditEvent($admin, $event));
+        $this->assertTrue($authManager->isAllowedToEditEvent($hiring, $event));
+        $this->assertTrue($authManager->isAllowedToEditEvent($first, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($second, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($manager, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($nonManager, $event));
+
+        $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
+        $this->assertTrue($authManager->isAllowedToEditEvent($admin, $event));
+        $this->assertTrue($authManager->isAllowedToEditEvent($hiring, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($first, $event));
+        $this->assertTrue($authManager->isAllowedToEditEvent($second, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($manager, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($nonManager, $event));
+    }
+
+    /**
+     * Test method isAllowedToChangeEventStatus()
+     */
+    public function testIsAllowedToChangeEventStatus() {
+        $authManager = new RecruitmentAuthManager();
+        $app = JobApplication::getJobApplication(1);
+
+        // Different users
+        $admin = new authorize(null, authorize::YES);
+        $hiring = new authorize('011', authorize::NO);
+        $first = new authorize(13, authorize::NO);
+        $second = new authorize(14, authorize::NO);
+        $manager = new authorize(15, authorize::NO);
+        $nonManager = new authorize(16, authorize::NO);
+
+        // Admin, Hiring Manager and interviewer(owner) allowed to change status event when there are
+        // no newer events.
+        $app->setStatus(JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED);
+        $app->save();
+        $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
+        $this->assertTrue($authManager->isAllowedToChangeEventStatus($admin, $event));
+        $this->assertTrue($authManager->isAllowedToChangeEventStatus($hiring, $event));
+        $this->assertTrue($authManager->isAllowedToChangeEventStatus($first, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($second, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($manager, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($nonManager, $event));
+
+        //Not allowed to change status when not current event.
+        $app->setStatus(JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
+        $app->save();
+        $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($admin, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($hiring, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($first, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($second, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($manager, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($nonManager, $event));
+
+        //Not allowed to change status when not current event.
+        $app->setStatus(JobApplication::STATUS_REJECTED);
+        $app->save();
+        $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($admin, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($hiring, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($first, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($second, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($manager, $event));
+        $this->assertFalse($authManager->isAllowedToChangeEventStatus($nonManager, $event));
+    }
+
+    /**
      * Create a JobApplication object with the passed parameters
      */
     private function _getJobApplication($id, $vacancyId, $firstName, $middleName, $lastName, $street1, $street2,

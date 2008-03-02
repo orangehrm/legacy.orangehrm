@@ -76,14 +76,6 @@ class JobApplication {
     const ACTION_SEEK_APPROVAL = 'SeekApproval';
     const ACTION_APPROVE = 'Approve';
 
-    /**
-     * Manager roles
-     */
-    const ROLE_HR_ADMIN = 0;
-    const ROLE_HIRING_MANAGER = 1;
-    const ROLE_INTERVIEWING_MANAGER = 2;
-    const ROLE_DIRECTOR = 3;
-
     /** Fields retrieved from other tables */
     const JOB_TITLE_NAME = 'job_title_name';
     const HIRING_MANAGER_NAME = 'hiring_manager_name';
