@@ -1320,6 +1320,20 @@
     $lang_Recruit_JobApplication_PleaseSpecifyValidTime = 'Time should be in the format: ';
     $lang_Recruit_JobApplication_SecondInterviewShouldBeAfterFirst = 'Second interview date should be after the first interview date ';
 
+    $lang_Recruit_JobApplicationConfirm_Heading = 'Confirm Action: ';
+    $lang_Recruit_JobApplicationConfirm_ApplicantName = 'Applicant Name';
+    $lang_Recruit_JobApplicationConfirm_Position = 'Position Applying for';
+
+    $lang_Recruit_JobApplicationConfirm_ConfirmReject = 'Confirm Reject of above application';
+    $lang_Recruit_JobApplicationConfirm_ConfirmRejectDesc = 'This will send an email to the applicant informing of the rejection';
+    $lang_Recruit_JobApplicationConfirm_ConfirmOfferJob = 'Confirm Job Offer to above applicant.';
+    $lang_Recruit_JobApplicationConfirm_ConfirmOfferJobDesc = 'No emails will be sent by the system to the applicant. The applicant will have to be contacted and offered the job.';
+    $lang_Recruit_JobApplicationConfirm_ConfirmMarkDeclined = 'Mark Offer Declined';
+    $lang_Recruit_JobApplicationConfirm_ConfirmMarkDeclinedDesc = 'Indicates that the applicant has declined the Job Offer.';
+    $lang_Recruit_JobApplicationConfirm_ConfirmSeekApproval = 'Seek Approval';
+    $lang_Recruit_JobApplicationConfirm_ConfirmApprove = 'Confirm Approval of above applicant';
+    $lang_Recruit_JobApplicationConfirm_ConfirmApproveDesc = 'This will mark the applicant as hired and create an employee entry in the system for the applicant. No emails will be sent.';
+
 	$lang_Recruit_ApplicantVacancyList_Heading = 'Job Vacancies';
 	$lang_Recruit_ApplicantVacancyList_Title = 'Job Vacancies';
 	$lang_Recruit_ApplicationForm_Heading = 'Application Form for a position with The ORS Group';

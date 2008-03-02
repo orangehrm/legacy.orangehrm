@@ -17,13 +17,14 @@
  * Boston, MA  02110-1301, USA
  */
 
-$baseURL = "{$_SERVER['PHP_SELF']}?recruitcode={$_GET['recruitcode']}";
-$formAction = $baseURL . '&action=Save' . $_GET['action'];
-
 $managers = $records['managers'];
 $application = $records['application'];
 $num = $records['interview'];
 $locRights=$_SESSION['localRights'];
+
+$baseURL = "{$_SERVER['PHP_SELF']}?recruitcode={$_GET['recruitcode']}";
+$action = ($num == 1) ? JobApplication::ACTION_SCHEDULE_FIRST_INTERVIEW : JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW;
+$formAction = $baseURL . '&action=' . $action;
 
 $picDir = "../../themes/{$styleSheet}/pictures/";
 $iconDir = "../../themes/{$styleSheet}/icons/";

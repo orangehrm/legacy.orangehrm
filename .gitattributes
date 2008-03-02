@@ -510,6 +510,7 @@ templates/recruitment/applicant/jobApplicationStatus.php -text
 templates/recruitment/applicant/viewJobApplication.php -text
 templates/recruitment/applicant/viewVacancies.php -text
 templates/recruitment/applicationList.php -text
+templates/recruitment/confirmAction.php -text
 templates/recruitment/footer.php -text
 templates/recruitment/header.php -text
 templates/recruitment/jobVacancy.php -text

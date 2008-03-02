@@ -17,8 +17,17 @@
  * Boston, MA  02110-1301, USA
  */
 $application = $records['application'];
+$action = $records['action'];
+$resourceName = 'lang_Recruit_JobApplicationAction_' . $action;
+$actionName = isset($$resourceName) ? $$resourceName : $action;
+
+$confirmMsgRes = 'lang_Recruit_JobApplicationConfirm_Confirm' . $action;
+$confirmMsg = isset($$confirmMsgRes) ? $$confirmMsgRes : $confirmMsgRes;
+$confirmDescRes = 'lang_Recruit_JobApplicationConfirm_Confirm' . $action . 'Desc';
+$confirmDesc = isset($$confirmDescRes) ? $$confirmDescRes : $confirmDescRes;
+
 $baseURL = "{$_SERVER['PHP_SELF']}?recruitcode={$_GET['recruitcode']}";
-$historyURL = $baseURL . '&id=' . $application->getId() .  '&action=ViewHistory';
+$actionURL = $baseURL . '&id='. $_GET['id'].'&action=' . $action;
 
 $statusList = array(
     JobApplication::STATUS_SUBMITTED => $lang_Recruit_JobApplicationStatus_Submitted,
@@ -30,6 +39,7 @@ $statusList = array(
     JobApplication::STATUS_HIRED => $lang_Recruit_JobApplicationStatus_Hired,
     JobApplication::STATUS_REJECTED => $lang_Recruit_JobApplicationStatus_Rejected
     );
+
 
 $picDir = "../../themes/{$styleSheet}/pictures/";
 $iconDir = "../../themes/{$styleSheet}/icons/";
@@ -50,6 +60,10 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
         location.href = "<?php echo "{$baseURL}&action=List"; ?>";
     }
 
+    function applyAction() {
+        location.href = "<?php echo $actionURL; ?>";
+    }
+
 </script>
 
     <link href="../../themes/<?php echo $styleSheet;?>/css/style.css" rel="stylesheet" type="text/css">
@@ -61,24 +75,17 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
     .txtName,.txtValue,.txtBox {
         display: block;  /* block float the labels to left column, set a width */
         float: left;
-        margin: 8px 0px 2px 0px; /* set top margin same as form input - textarea etc. elements */
+        margin: 5px 0px 2px 0px; /* set top margin same as form input - textarea etc. elements */
     }
 
     .txtName {
         text-align: left;
         width: 150px;
         padding-left: 10px;
-        font-weight: bold;
     }
 
     .txtValue {
         width: 300px;
-    }
-
-    .txtName, .txtBox {
-        margin-left: 10x;
-        padding-left: 4px;
-        padding-right: 4px;
     }
 
     .txtBox {
@@ -117,11 +124,25 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
     .eventDate {
         font-style: italic;
     }
+    .confirmMsg {
+        padding-left: 15px;
+        padding-top: 10px;
+        font-weight: bold;
+    }
+    .confirmDesc {
+        padding-left: 15px;
+        font-style: italic;
+        padding-bottom: 20px;
+    }
+    .buttonSec {
+        padding-left: 15px;
+        padding-bottom: 15px;
+    }
     -->
 </style>
 </head>
 <body>
-	<p><h2 class="moduleTitle"><?php echo $lang_Recruit_JobApplicationDetails_Heading; ?></h2></p>
+	<p><h2 class="moduleTitle"><?php echo $lang_Recruit_JobApplicationConfirm_Heading . $actionName; ?></h2></p>
   	<div id="navigation" style="margin:0;">
   		<img title="<?php echo $lang_Common_Back;?>" onMouseOut="this.src='<?php echo $backImg; ?>';"
   			 onMouseOver="this.src='<?php echo $backImgPressed;?>';" src="<?php echo $backImg;?>"
@@ -139,23 +160,12 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 	</div>
 	<?php }	?>
   <div class="roundbox">
-        <div class="txtName"><?php echo $lang_Recruit_JobApplicationHistory_DateApplied; ?></div>
-        <div class="txtValue"><?php echo LocaleUtil::getInstance()->formatDate($application->getAppliedDateTime()); ?></div><br/>
-  		<div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Position; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getJobTitleName()); ?></div><br/>
-    	<div class="txtName"><?php echo $lang_Recruit_ApplicationForm_FirstName; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getFirstName()); ?></div><br />
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_MiddleName; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getMiddleName()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_LastName; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getLastName()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Street1; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getStreet1()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Street2; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getStreet2()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_City; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getCity()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Country; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getCountry()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_StateProvince; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getProvince()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Zip; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getZip()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Phone; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getPhone()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Mobile; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getMobile()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Email; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getEmail()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Qualifications; ?></div><div class="txtBox"><?php echo CommonFunctions::escapeHtml($application->getQualifications()); ?></div><br/>
-        <br />
+        <div class="txtName"><?php echo $lang_Recruit_JobApplicationConfirm_ApplicantName; ?></div>
+        <div class="txtValue">
+            <?php echo CommonFunctions::escapeHtml($application->getFirstName() . ' ' . $application->getLastName());?>
+        </div><br/>
+  		<div class="txtName"><?php echo $lang_Recruit_JobApplicationConfirm_Position; ?></div>
+        <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getJobTitleName()); ?></div><br/>
 
         <div class="txtName"><?php echo $lang_Recruit_JobApplicationDetails_Status; ?></div>
         <div class="txtValue" style="white-space:nowrap;">
@@ -181,27 +191,14 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
             ?>
             <span class="eventDate">(<?php echo $statusDate; ?>)</span>
             <?php } ?>
-        </div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_JobApplicationDetails_Actions; ?></div><div class="txtValue">
-            <?php
-                $authManager = new RecruitmentAuthManager();
-                $authorize = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
-                $actions = $authManager->getAllowedActions($authorize, $application);
-                $applicationId = $application->getId();
+        </div><br />
 
-                foreach ($actions as $action) {
-                    $resourceName = 'lang_Recruit_JobApplicationAction_' . $action;
-                    $actionName = isset($$resourceName) ? $$resourceName : $action;
-                    $actionURL = $baseURL . '&action=Confirm' . $action . '&id=' . $applicationId;
-            ?>
-                <a href="<?php echo $actionURL; ?>" style="white-space:nowrap;">
-                    <?php echo $actionName;?>
-                </a>&nbsp;&nbsp;
-            <?php
-                }
-            ?>
-            </div><br /><br />
-
+        <div class="confirmMsg"><?php echo $confirmMsg;?></div>
+        <div class="confirmDesc"><?php echo $confirmDesc;?></div>
+        <div class="buttonSec">
+            <button id="actionBtn" onClick="applyAction()"><?php echo $actionName;?></button>
+            <button id="cancelBtn" onClick="goBack();"><?php echo $lang_Leave_Common_Cancel;?></button>
+        </div>
     </div>
     <script type="text/javascript">
         <!--

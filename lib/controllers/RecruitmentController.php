@@ -115,23 +115,45 @@ class RecruitmentController {
                     case 'List' :
                         $this->_viewApplicationList();
                         break;
+                    case 'ConfirmReject' :
+                        $this->_confirmAction($id, JobApplication::ACTION_REJECT);
+                        break;
                     case 'Reject' :
                         $this->_rejectApplication($id);
                         break;
-                    case 'FirstInterview' :
+                    case 'ConfirmFirstInterview' :
                         $this->_scheduleFirstInterview($id);
                         break;
-                    case 'SecondInterview' :
+                    case 'FirstInterview' :
+                        $interviewExtractor = new EXTRACTOR_ScheduleInterview();
+                        $event = $interviewExtractor->parseAddData($_POST);
+                        $this->_saveFirstInterview($event);
+                        break;
+                    case 'ConfirmSecondInterview' :
                         $this->_scheduleSecondInterview($id);
+                        break;
+                    case 'SecondInterview' :
+                        $interviewExtractor = new EXTRACTOR_ScheduleInterview();
+                        $event = $interviewExtractor->parseAddData($_POST);
+                        $this->_saveSecondInterview($event);
+                        break;
+                    case 'ConfirmOfferJob' :
+                        $this->_confirmAction($id, JobApplication::ACTION_OFFER_JOB);
                         break;
                     case 'OfferJob' :
                         $this->_offerJob($id);
+                        break;
+                    case 'ConfirmMarkDeclined' :
+                        $this->_confirmAction($id, JobApplication::ACTION_MARK_OFFER_DECLINED);
                         break;
                     case 'MarkDeclined' :
                         $this->_markDeclined($id);
                         break;
                     case 'SeekApproval' :
                         $this->_seekApproval($id);
+                        break;
+                    case 'ConfirmApprove' :
+                        $this->_confirmAction($id, JobApplication::ACTION_APPROVE);
                         break;
                     case 'Approve' :
                         $this->_approve($id);
@@ -146,16 +168,6 @@ class RecruitmentController {
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $object = $eventExtractor->parseUpdateData($_POST);
                         $this->_editEvent($object);
-                        break;
-                    case 'SaveFirstInterview' :
-                        $interviewExtractor = new EXTRACTOR_ScheduleInterview();
-                        $event = $interviewExtractor->parseAddData($_POST);
-                        $this->_saveFirstInterview($event);
-                        break;
-                    case 'SaveSecondInterview' :
-                        $interviewExtractor = new EXTRACTOR_ScheduleInterview();
-                        $event = $interviewExtractor->parseAddData($_POST);
-                        $this->_saveSecondInterview($event);
                         break;
                 }
 
@@ -415,17 +427,16 @@ class RecruitmentController {
             $application->setStatus(JobApplication::STATUS_REJECTED);
             try {
                 $application->save();
+                $this->_addApplicationEvent($id, JobApplicationEvent::EVENT_REJECT);
 
                 // Send notification to Applicant
                 $notifier = new RecruitmentMailNotifier();
                 $notifier->sendApplicationRejectedEmailToApplicant($application);
 
-                $this->_addApplicationEvent($id, JobApplicationEvent::EVENT_REJECT);
                 $message = 'UPDATE_SUCCESS';
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
             }
-
             $this->redirect($message, '?recruitcode=Application&action=List');
             //$this->_viewApplicationList();
         } else {
@@ -492,6 +503,23 @@ class RecruitmentController {
         } else {
             $this->_notAuthorized();
         }
+    }
+
+
+    /**
+     * Confirm the given action by showing a confirmation page to the user
+     *
+     * @param int $id The Job Application ID
+     * @param int $action The action constant
+     */
+    private function _confirmAction($id, $action) {
+        $path = '/templates/recruitment/confirmAction.php';
+
+        $objs['application'] = JobApplication::getJobApplication($id);
+        $objs['action'] = $action;
+
+        $template = new TemplateMerger($objs, $path);
+        $template->display();
     }
 
     private function _scheduleFirstInterview($id) {
