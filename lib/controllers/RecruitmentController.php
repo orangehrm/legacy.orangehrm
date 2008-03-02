@@ -383,7 +383,7 @@ class RecruitmentController {
      */
     private function _viewApplicationList() {
 
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector()) {
             $managerId = $this->authorizeObj->isAdmin()? null : $this->authorizeObj->getEmployeeId();
             $applications = JobApplication::getList($managerId);
 
@@ -425,7 +425,7 @@ class RecruitmentController {
      * Reject the given application
      */
     private function _rejectApplication($id) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($id);
@@ -648,7 +648,7 @@ class RecruitmentController {
         }
     }
     private function _approve($id) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isDirector() ) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($id);

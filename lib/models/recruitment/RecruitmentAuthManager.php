@@ -27,6 +27,7 @@ class RecruitmentAuthManager {
     const ROLE_DIRECTOR = 5;
     const ROLE_OTHER_MANAGER = 6;
     const ROLE_OTHER = 7;
+    const ROLE_OTHER_DIRECTOR = 8;
 
     /**
      * Array that defines the various actions permitted to different users at different states
@@ -41,6 +42,7 @@ class RecruitmentAuthManager {
             self::ROLE_DIRECTOR => array(),
             self::ROLE_OTHER_MANAGER => array(),
             self::ROLE_OTHER => array(),
+            self::ROLE_OTHER_DIRECTOR => array(),
         ),
         JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED => array(
             JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED => array(
@@ -51,6 +53,7 @@ class RecruitmentAuthManager {
                 self::ROLE_DIRECTOR => array(),
                 self::ROLE_OTHER_MANAGER => array(),
                 self::ROLE_OTHER => array(),
+                self::ROLE_OTHER_DIRECTOR => array(),
             ),
             JobApplicationEvent::STATUS_INTERVIEW_FINISHED => array(
                 self::ROLE_ADMIN => array(JobApplication::ACTION_REJECT, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW),
@@ -60,6 +63,7 @@ class RecruitmentAuthManager {
                 self::ROLE_DIRECTOR => array(),
                 self::ROLE_OTHER_MANAGER => array(),
                 self::ROLE_OTHER => array(),
+                self::ROLE_OTHER_DIRECTOR => array(),
             )
         ),
         JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED => array(
@@ -71,6 +75,7 @@ class RecruitmentAuthManager {
                 self::ROLE_DIRECTOR => array(),
                 self::ROLE_OTHER_MANAGER => array(),
                 self::ROLE_OTHER => array(),
+                self::ROLE_OTHER_DIRECTOR => array(),
             ),
             JobApplicationEvent::STATUS_INTERVIEW_FINISHED => array(
                 self::ROLE_ADMIN => array(JobApplication::ACTION_REJECT, JobApplication::ACTION_OFFER_JOB),
@@ -80,6 +85,7 @@ class RecruitmentAuthManager {
                 self::ROLE_DIRECTOR => array(),
                 self::ROLE_OTHER_MANAGER => array(),
                 self::ROLE_OTHER => array(),
+                self::ROLE_OTHER_DIRECTOR => array(),
             ),
         ),
         JobApplication::STATUS_JOB_OFFERED => array(
@@ -90,6 +96,7 @@ class RecruitmentAuthManager {
             self::ROLE_DIRECTOR => array(),
             self::ROLE_OTHER_MANAGER => array(),
             self::ROLE_OTHER => array(),
+            self::ROLE_OTHER_DIRECTOR => array(),
         ),
         JobApplication::STATUS_OFFER_DECLINED => array(
             self::ROLE_ADMIN => array(),
@@ -99,6 +106,7 @@ class RecruitmentAuthManager {
             self::ROLE_DIRECTOR => array(),
             self::ROLE_OTHER_MANAGER => array(),
             self::ROLE_OTHER => array(),
+            self::ROLE_OTHER_DIRECTOR => array(),
         ),
         JobApplication::STATUS_PENDING_APPROVAL => array(
             self::ROLE_ADMIN => array(),
@@ -108,6 +116,7 @@ class RecruitmentAuthManager {
             self::ROLE_DIRECTOR => array(JobApplication::ACTION_REJECT, JobApplication::ACTION_APPROVE),
             self::ROLE_OTHER_MANAGER => array(),
             self::ROLE_OTHER => array(),
+            self::ROLE_OTHER_DIRECTOR => array(),
         ),
         JobApplication::STATUS_HIRED => array(
             self::ROLE_ADMIN => array(),
@@ -117,6 +126,7 @@ class RecruitmentAuthManager {
             self::ROLE_DIRECTOR => array(),
             self::ROLE_OTHER_MANAGER => array(),
             self::ROLE_OTHER => array(),
+            self::ROLE_OTHER_DIRECTOR => array(),
         ),
         JobApplication::STATUS_REJECTED => array(
             self::ROLE_ADMIN => array(),
@@ -126,6 +136,7 @@ class RecruitmentAuthManager {
             self::ROLE_DIRECTOR => array(),
             self::ROLE_OTHER_MANAGER => array(),
             self::ROLE_OTHER => array(),
+            self::ROLE_OTHER_DIRECTOR => array(),
         )
     );
 
@@ -143,29 +154,41 @@ class RecruitmentAuthManager {
             return self::ROLE_ADMIN;
         }
 
-        if (!$authObj->isManager()) {
-            return self::ROLE_OTHER;
+        if ($authObj->isManager()) {
+
+            // Check if hiring manager
+            $vacancy = JobVacancy::getJobVacancy($jobApplication->getVacancyId());
+            if ($authObj->getEmployeeId() == $vacancy->getManagerId()) {
+                return self::ROLE_HIRING_MANAGER;
+            }
+
+            // Check if interview 2 manager
+            $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
+            if (!empty($event) && $event->getOwner() == $authObj->getEmployeeId()) {
+                return self::ROLE_INTERVIEW2_MANAGER;
+            }
+
+            // Check if interview 1 manager
+            $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
+            if (!empty($event) && $event->getOwner() == $authObj->getEmployeeId()) {
+                return self::ROLE_INTERVIEW1_MANAGER;
+            }
+
+            return self::ROLE_OTHER_MANAGER;
         }
 
-        // Check if hiring manager
-        $vacancy = JobVacancy::getJobVacancy($jobApplication->getVacancyId());
-        if ($authObj->getEmployeeId() == $vacancy->getManagerId()) {
-            return self::ROLE_HIRING_MANAGER;
+        if ($authObj->isDirector()) {
+
+            // Check if director
+            $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SEEK_APPROVAL);
+            if (!empty($event) && $event->getOwner() == $authObj->getEmployeeId()) {
+                return self::ROLE_DIRECTOR;
+            }
+
+            return self::ROLE_OTHER_DIRECTOR;
         }
 
-        // Check if interview 2 manager
-        $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
-        if (!empty($event) && $event->getOwner() == $authObj->getEmployeeId()) {
-            return self::ROLE_INTERVIEW2_MANAGER;
-        }
-
-        // Check if interview 1 manager
-        $event = $jobApplication->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
-        if (!empty($event) && $event->getOwner() == $authObj->getEmployeeId()) {
-            return self::ROLE_INTERVIEW1_MANAGER;
-        }
-
-        return self::ROLE_OTHER_MANAGER;
+        return self::ROLE_OTHER;
     }
 
     /**
@@ -241,8 +264,8 @@ class RecruitmentAuthManager {
         $application = JobApplication::getJobApplication($jobApplicationEvent->getApplicationId());
         $role = $this->getRoleForApplication($authObj, $application);
 
-        // Admin and hiring manager always allowed.
-        if (($role == self::ROLE_ADMIN) || ($role == self::ROLE_HIRING_MANAGER)) {
+        // Admin always allowed.
+        if ($role == self::ROLE_ADMIN) {
             return true;
         }
 
@@ -252,7 +275,18 @@ class RecruitmentAuthManager {
             return true;
         }
 
-        // Creator is also allowed to edit
+        // Others not allowed to edit approve event by directors
+        $eventType = $jobApplicationEvent->getEventType();
+        if ($eventType == JobApplicationEvent::EVENT_APPROVE) {
+            return false;
+        }
+
+        // Hiring manager always allowed. (Except for director's approve action)
+        if ($role == self::ROLE_HIRING_MANAGER) {
+            return true;
+        }
+
+        // Creator is also allowed to edit (except for director's approve event)
         $creator = $jobApplicationEvent->getCreatedBy();
         $users = new Users();
         $userInfo = $users->filterUsers($creator);

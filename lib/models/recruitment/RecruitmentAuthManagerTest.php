@@ -76,6 +76,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
                 "VALUES('JOB003', 'Typist', 'Typist job title', 'no comments', null)");
         $this->_runQuery("INSERT INTO hs_hr_job_title(jobtit_code, jobtit_name, jobtit_desc, jobtit_comm, sal_grd_code) " .
                 "VALUES('JOB004', 'Programmer', 'Software Programmer', 'no comments', null)");
+        $this->_runQuery("INSERT INTO hs_hr_job_title(jobtit_code, jobtit_name, jobtit_desc, jobtit_comm, sal_grd_code) " .
+                "VALUES('JOB005', 'Director', 'Company Director', 'no comments', null)");
 
         // Insert employees (managers)
         $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
@@ -93,11 +95,18 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
                     "VALUES(16, '0055', 'Karunanayake', 'Kamal', 'S', 'JOB003')");
 
+        // Directors
+        $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
+                    "VALUES(17, '0056', 'Ramanayake', 'Dasun', 'K', 'JOB005')");
+        $this->_runQuery("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name, job_title_code) " .
+                    "VALUES(18, '0057', 'Suraweera', 'Nuwan', 'E', 'JOB005')");
+
         // Insert to hs_hr_users table
         $this->_runQuery("INSERT INTO `hs_hr_users`(id, user_name, emp_number, is_admin) VALUES ('USR111','demo', 15, 'Yes')");
         $this->_runQuery("INSERT INTO `hs_hr_users`(id, user_name, emp_number, is_admin) VALUES ('USR112','demo2', 11, 'Yes')");
         $this->_runQuery("INSERT INTO `hs_hr_users`(id, user_name, emp_number, is_admin) VALUES ('USR113','demo3', 13, 'Yes')");
         $this->_runQuery("INSERT INTO `hs_hr_users`(id, user_name, emp_number, is_admin) VALUES ('USR114','demo4', 14, 'Yes')");
+        $this->_runQuery("INSERT INTO `hs_hr_users`(id, user_name, emp_number, is_admin) VALUES ('USR117','demo5', 17, 'No')");
 
         // Insert Job Vacancies
         $this->_runQuery("INSERT INTO hs_hr_job_vacancy(vacancy_id, jobtit_code, manager_id, active, description) " .
@@ -135,6 +144,13 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $application->setHiringManagerName('Aruna Jayasinghe');
         $application->setJobTitleName('Typist');
         $this->jobApplications[4] = $application;
+
+        $application = $this->_getJobApplication(5, 2, 'Ruwan', 'S', 'Nawarathne', '393 Hill Street', '#2',
+                'Nuwaraeliya', 'Central', '2333', 'Sri Lanka', '05121111121', '072282828282', 'rywab@sfmple.com',
+                'aaa sdf bbb', JobApplication::STATUS_PENDING_APPROVAL);
+        $application->setHiringManagerName('Aruna Jayasinghe');
+        $application->setJobTitleName('Typist');
+        $this->jobApplications[5] = $application;
 
         $this->_createJobApplications($this->jobApplications);
 
@@ -176,6 +192,11 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
             JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW, JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED,
             "3rd Interview notes, here");
 
+        // Events for 5th job application
+        $this->_createEvent(8, 5, $createdTime, 'USR111', 17, $eventTime,
+            JobApplicationEvent::EVENT_SEEK_APPROVAL, null,
+            "Seeking approval to hire");
+
         UniqueIDGenerator::getInstance()->resetIDs();
     }
 
@@ -190,7 +211,7 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
     }
 
     private function _deleteTables() {
-        $this->_runQuery("DELETE FROM `hs_hr_users` WHERE id IN ('USR111', 'USR112', 'USR113', 'USR114')");
+        $this->_runQuery("DELETE FROM `hs_hr_users` WHERE id IN ('USR111', 'USR112', 'USR113', 'USR114', 'USR117')");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_job_application`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_job_vacancy`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_job_title`");
@@ -275,6 +296,18 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $role = $authManager->getRoleForApplication($auth, $app);
         $this->assertEquals(RecruitmentAuthManager::ROLE_OTHER, $role);
 
+        // Director
+        $auth = new authorize(17, authorize::NO);
+        $app = JobApplication::getJobApplication(5);
+        $role = $authManager->getRoleForApplication($auth, $app);
+        $this->assertEquals(RecruitmentAuthManager::ROLE_DIRECTOR, $role);
+
+        // Other Director
+        $auth = new authorize(18, authorize::NO);
+        $app = JobApplication::getJobApplication(5);
+        $role = $authManager->getRoleForApplication($auth, $app);
+        $this->assertEquals(RecruitmentAuthManager::ROLE_OTHER_DIRECTOR, $role);
+
     }
 
     /**
@@ -284,6 +317,7 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
 
         $authManager = new RecruitmentAuthManager();
         $app = JobApplication::getJobApplication(1);
+        $app5 = JobApplication::getJobApplication(5);
 
         // Different users
         $admin = new authorize(null, authorize::YES);
@@ -292,6 +326,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $second = new authorize(14, authorize::NO);
         $manager = new authorize(15, authorize::NO);
         $nonManager = new authorize(16, authorize::NO);
+        $director = new authorize(17, authorize::NO);
+        $otherDirector = new authorize(18, authorize::NO);
 
         /* SUBMITTED */
         $app->setStatus(JobApplication::STATUS_SUBMITTED);
@@ -318,6 +354,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
 
         $expected = array();
         $actions = $authManager->getAllowedActions($nonManager, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
         $this->assertEquals($expected, $actions);
 
         /* FIRST INTERVIEW SCHEDULED (scheduled) */
@@ -352,6 +396,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $actions = $authManager->getAllowedActions($nonManager, $app);
         $this->assertEquals($expected, $actions);
 
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
+        $this->assertEquals($expected, $actions);
+
         /* FIRST INTERVIEW SCHEDULED (finished) */
         $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
         $event->setStatus(JobApplicationEvent::STATUS_INTERVIEW_FINISHED);
@@ -380,6 +432,13 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $actions = $authManager->getAllowedActions($nonManager, $app);
         $this->assertEquals($expected, $actions);
 
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
+        $this->assertEquals($expected, $actions);
 
         /* SECOND INTERVIEW SCHEDULED (scheduled) */
         $app->setStatus(JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
@@ -412,6 +471,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $actions = $authManager->getAllowedActions($nonManager, $app);
         $this->assertEquals($expected, $actions);
 
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
+        $this->assertEquals($expected, $actions);
+
         /* SECOND INTERVIEW SCHEDULED (finished) */
         $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
         $event->setStatus(JobApplicationEvent::STATUS_INTERVIEW_FINISHED);
@@ -440,6 +507,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $actions = $authManager->getAllowedActions($nonManager, $app);
         $this->assertEquals($expected, $actions);
 
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
+        $this->assertEquals($expected, $actions);
+
         // Job Offered
         $app->setStatus(JobApplication::STATUS_JOB_OFFERED);
 
@@ -465,6 +540,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
 
         $expected = array();
         $actions = $authManager->getAllowedActions($nonManager, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
         $this->assertEquals($expected, $actions);
 
         // Offer Declined
@@ -495,34 +578,39 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $actions);
 
         // Pending approval
-        $app->setStatus(JobApplication::STATUS_PENDING_APPROVAL);
+        $app5->setStatus(JobApplication::STATUS_PENDING_APPROVAL);
 
         $expected = array();
-        $actions = $authManager->getAllowedActions($admin, $app);
+        $actions = $authManager->getAllowedActions($admin, $app5);
         $this->assertEquals($expected, $actions);
 
         $expected = array();
-        $actions = $authManager->getAllowedActions($hiring, $app);
+        $actions = $authManager->getAllowedActions($hiring, $app5);
         $this->assertEquals($expected, $actions);
 
         $expected = array();
-        $actions = $authManager->getAllowedActions($first, $app);
+        $actions = $authManager->getAllowedActions($first, $app5);
         $this->assertEquals($expected, $actions);
 
         $expected = array();
-        $actions = $authManager->getAllowedActions($second, $app);
+        $actions = $authManager->getAllowedActions($second, $app5);
         $this->assertEquals($expected, $actions);
 
         $expected = array();
-        $actions = $authManager->getAllowedActions($manager, $app);
+        $actions = $authManager->getAllowedActions($manager, $app5);
         $this->assertEquals($expected, $actions);
 
         $expected = array();
-        $actions = $authManager->getAllowedActions($nonManager, $app);
+        $actions = $authManager->getAllowedActions($nonManager, $app5);
         $this->assertEquals($expected, $actions);
 
-        // Director
-        //        $expected = array(JobApplication::ACTION_REJECT, JobApplication::ACTION_APPROVE);
+        $expected = array(JobApplication::ACTION_REJECT, JobApplication::ACTION_APPROVE);
+        $actions = $authManager->getAllowedActions($director, $app5);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app5);
+        $this->assertEquals($expected, $actions);
 
         // Hired
         $app->setStatus(JobApplication::STATUS_HIRED);
@@ -551,6 +639,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $actions = $authManager->getAllowedActions($nonManager, $app);
         $this->assertEquals($expected, $actions);
 
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
+        $this->assertEquals($expected, $actions);
+
         // Rejected
         $app->setStatus(JobApplication::STATUS_REJECTED);
 
@@ -577,6 +673,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $expected = array();
         $actions = $authManager->getAllowedActions($nonManager, $app);
         $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($director, $app);
+        $this->assertEquals($expected, $actions);
+
+        $expected = array();
+        $actions = $authManager->getAllowedActions($otherDirector, $app);
+        $this->assertEquals($expected, $actions);
     }
 
     /**
@@ -585,6 +689,7 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
     public function testIsActionAllowed() {
         $authManager = new RecruitmentAuthManager();
         $app = JobApplication::getJobApplication(1);
+        $app5 = JobApplication::getJobApplication(5);
 
         // Different users
         $admin = new authorize(null, authorize::YES);
@@ -593,6 +698,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $second = new authorize(14, authorize::NO);
         $manager = new authorize(15, authorize::NO);
         $nonManager = new authorize(16, authorize::NO);
+        $director = new authorize(17, authorize::NO);
+        $otherDirector = new authorize(18, authorize::NO);
 
         /* SUBMITTED */
         $app->setStatus(JobApplication::STATUS_SUBMITTED);
@@ -608,6 +715,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isActionAllowed($second, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($manager, $app, JobApplication::ACTION_SEEK_APPROVAL));
         $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         /* FIRST INTERVIEW SCHEDULED (scheduled) */
         $app->setStatus(JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED);
@@ -627,6 +736,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isActionAllowed($second, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($manager, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
         $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         /* FIRST INTERVIEW SCHEDULED (finished) */
         $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
@@ -647,6 +758,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isActionAllowed($second, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($manager, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
         $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         /* SECOND INTERVIEW SCHEDULED (scheduled) */
         $app->setStatus(JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
@@ -667,7 +780,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isActionAllowed($first, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($manager, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
         $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
-
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         /* SECOND INTERVIEW SCHEDULED (finished) */
         $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
@@ -689,13 +803,15 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isActionAllowed($first, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($manager, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
         $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         // Job Offered
         $app->setStatus(JobApplication::STATUS_JOB_OFFERED);
 
         $expected = array(JobApplication::ACTION_MARK_OFFER_DECLINED, JobApplication::ACTION_SEEK_APPROVAL);
-        //$this->assertFalse($director->isActionAllowed($admin, $app, JobApplication::ACTION_MARK_OFFER_DECLINED));
-        //$this->assertFalse($director->isActionAllowed($admin, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_MARK_OFFER_DECLINED));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_SEEK_APPROVAL));
 
         $this->assertTrue($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_MARK_OFFER_DECLINED));
         $this->assertTrue($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_SEEK_APPROVAL));
@@ -710,12 +826,14 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isActionAllowed($first, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($manager, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
         $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         // Offer Declined
         $app->setStatus(JobApplication::STATUS_OFFER_DECLINED);
 
-        //$this->assertFalse($director->isActionAllowed($admin, $app, JobApplication::ACTION_REJECT));
-        //$this->assertFalse($director->isActionAllowed($admin, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_OFFER_JOB));
@@ -733,28 +851,33 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
 
         // Pending approval
-        $app->setStatus(JobApplication::STATUS_PENDING_APPROVAL);
+        $app5->setStatus(JobApplication::STATUS_PENDING_APPROVAL);
 
-        //$this->assertTrue($director->isActionAllowed($admin, $app, JobApplication::ACTION_REJECT));
-        //$this->assertTrue($director->isActionAllowed($admin, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($otherDirector, $app5, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($otherDirector, $app5, JobApplication::ACTION_REJECT));
+        $this->assertTrue($authManager->isActionAllowed($director, $app5, JobApplication::ACTION_APPROVE));
+        $this->assertTrue($authManager->isActionAllowed($director, $app5, JobApplication::ACTION_REJECT));
 
-        $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_REJECT));
-        $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_OFFER_JOB));
-        $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
+        $this->assertFalse($authManager->isActionAllowed($admin, $app5, JobApplication::ACTION_REJECT));
+        $this->assertFalse($authManager->isActionAllowed($admin, $app5, JobApplication::ACTION_OFFER_JOB));
+        $this->assertFalse($authManager->isActionAllowed($admin, $app5, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
 
-        $this->assertFalse($authManager->isActionAllowed($hiring, $app, JobApplication::ACTION_REJECT));
-        $this->assertFalse($authManager->isActionAllowed($hiring, $app, JobApplication::ACTION_OFFER_JOB));
-        $this->assertFalse($authManager->isActionAllowed($hiring, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($hiring, $app5, JobApplication::ACTION_REJECT));
+        $this->assertFalse($authManager->isActionAllowed($hiring, $app5, JobApplication::ACTION_OFFER_JOB));
+        $this->assertFalse($authManager->isActionAllowed($hiring, $app5, JobApplication::ACTION_SEEK_APPROVAL));
 
-        $this->assertFalse($authManager->isActionAllowed($second, $app, JobApplication::ACTION_REJECT));
-        $this->assertFalse($authManager->isActionAllowed($second, $app, JobApplication::ACTION_OFFER_JOB));
-        $this->assertFalse($authManager->isActionAllowed($first, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
-        $this->assertFalse($authManager->isActionAllowed($first, $app, JobApplication::ACTION_REJECT));
-        $this->assertFalse($authManager->isActionAllowed($manager, $app, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
-        $this->assertFalse($authManager->isActionAllowed($nonManager, $app, JobApplication::ACTION_SEEK_APPROVAL));
+        $this->assertFalse($authManager->isActionAllowed($second, $app5, JobApplication::ACTION_REJECT));
+        $this->assertFalse($authManager->isActionAllowed($second, $app5, JobApplication::ACTION_OFFER_JOB));
+        $this->assertFalse($authManager->isActionAllowed($first, $app5, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
+        $this->assertFalse($authManager->isActionAllowed($first, $app5, JobApplication::ACTION_REJECT));
+        $this->assertFalse($authManager->isActionAllowed($manager, $app5, JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW));
+        $this->assertFalse($authManager->isActionAllowed($nonManager, $app5, JobApplication::ACTION_SEEK_APPROVAL));
 
         // Hired
         $app->setStatus(JobApplication::STATUS_HIRED);
+
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_OFFER_JOB));
@@ -773,6 +896,9 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
 
         // Rejected
         $app->setStatus(JobApplication::STATUS_REJECTED);
+
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_APPROVE));
+        $this->assertFalse($authManager->isActionAllowed($director, $app, JobApplication::ACTION_REJECT));
 
         $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_REJECT));
         $this->assertFalse($authManager->isActionAllowed($admin, $app, JobApplication::ACTION_OFFER_JOB));
@@ -796,6 +922,7 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
     public function testIsAllowedToEditEvent() {
         $authManager = new RecruitmentAuthManager();
         $app = JobApplication::getJobApplication(1);
+        $app5 = JobApplication::getJobApplication(5);
 
         // Different users
         $admin = new authorize(null, authorize::YES);
@@ -804,6 +931,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $second = new authorize(14, authorize::NO);
         $manager = new authorize(15, authorize::NO);
         $nonManager = new authorize(16, authorize::NO);
+        $director = new authorize(17, authorize::NO);
+        $otherDirector = new authorize(18, authorize::NO);
 
         // Admin, Hiring Manager and interviewer(owner) allowed to edit event
         $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW);
@@ -813,6 +942,8 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isAllowedToEditEvent($second, $event));
         $this->assertFalse($authManager->isAllowedToEditEvent($manager, $event));
         $this->assertFalse($authManager->isAllowedToEditEvent($nonManager, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($director, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($otherDirector, $event));
 
         $event = $app->getEventOfType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
         $this->assertTrue($authManager->isAllowedToEditEvent($admin, $event));
@@ -821,6 +952,20 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($authManager->isAllowedToEditEvent($second, $event));
         $this->assertFalse($authManager->isAllowedToEditEvent($manager, $event));
         $this->assertFalse($authManager->isAllowedToEditEvent($nonManager, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($director, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($otherDirector, $event));
+
+        $event = $app5->getEventOfType(JobApplicationEvent::EVENT_SEEK_APPROVAL);
+        $this->assertTrue($authManager->isAllowedToEditEvent($director, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($otherDirector, $event));
+
+        $this->assertTrue($authManager->isAllowedToEditEvent($admin, $event));
+        $this->assertTrue($authManager->isAllowedToEditEvent($hiring, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($first, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($second, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($manager, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($nonManager, $event));
+
     }
 
     /**
