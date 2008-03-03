@@ -5,6 +5,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
         3. System displays number of employees
 	    4. Applicant views and applies for Job vacancies (URL: /jobs.php)
 	    5. Story: Manager manages application processes
+        6. Story: Recruitment: Hiring of an employee
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 
