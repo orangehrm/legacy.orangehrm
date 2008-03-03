@@ -269,9 +269,19 @@ class RecruitmentAuthManager {
             return true;
         }
 
-        // Owner is also allowed to edit
+        // Owner is also allowed to edit (only for interviews)
         $owner = $jobApplicationEvent->getOwner();
-        if ($owner == $authObj->getEmployeeId()) {
+        if (($owner == $authObj->getEmployeeId()) &&
+                (($jobApplicationEvent->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW) ||
+                 ($jobApplicationEvent->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW))) {
+            return true;
+        }
+
+        // creator is also always allowed to edit
+        $creator = $jobApplicationEvent->getCreatedBy();
+        $users = new Users();
+        $userInfo = $users->filterUsers($creator);
+        if (isset($userInfo[0][11]) && ($userInfo[0][11] == $authObj->getEmployeeId())) {
             return true;
         }
 
@@ -283,14 +293,6 @@ class RecruitmentAuthManager {
 
         // Hiring manager always allowed. (Except for director's approve action)
         if ($role == self::ROLE_HIRING_MANAGER) {
-            return true;
-        }
-
-        // Creator is also allowed to edit (except for director's approve event)
-        $creator = $jobApplicationEvent->getCreatedBy();
-        $users = new Users();
-        $userInfo = $users->filterUsers($creator);
-        if (isset($userInfo[0][11]) && ($userInfo[0][11] == $authObj->getEmployeeId())) {
             return true;
         }
 

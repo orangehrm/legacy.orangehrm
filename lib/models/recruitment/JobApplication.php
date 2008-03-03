@@ -52,6 +52,7 @@ class JobApplication {
 	const DB_FIELD_QUALIFICATIONS = 'qualifications';
     const DB_FIELD_STATUS = 'status';
     const DB_FIELD_APPLIED_DATETIME = 'applied_datetime';
+    const DB_FIELD_EMP_NUMBER = 'emp_number';
 
     /**
      * Job application status
@@ -84,7 +85,7 @@ class JobApplication {
 		self::DB_FIELD_MIDDLENAME, self::DB_FIELD_LASTNAME,	self::DB_FIELD_STREET1,	self::DB_FIELD_STREET2,
 		self::DB_FIELD_CITY, self::DB_FIELD_COUNTRY_CODE, self::DB_FIELD_PROVINCE, self::DB_FIELD_ZIP,
 		self::DB_FIELD_PHONE, self::DB_FIELD_MOBILE, self::DB_FIELD_EMAIL, self::DB_FIELD_QUALIFICATIONS,
-        self::DB_FIELD_STATUS, self::DB_FIELD_APPLIED_DATETIME);
+        self::DB_FIELD_STATUS, self::DB_FIELD_APPLIED_DATETIME, self::DB_FIELD_EMP_NUMBER);
 
 	private $id;
 	private $vacancyId;
@@ -103,6 +104,8 @@ class JobApplication {
 	private $qualifications;
     private $status = self::STATUS_SUBMITTED;
     private $appliedDateTime;
+    private $empNumber;
+
     private $events;
 
     /**
@@ -310,6 +313,22 @@ class JobApplication {
     }
 
     /**
+     * Set the employee number of employee created after hiring
+     * @param int $empNumber The employee number
+     */
+    public function setEmpNumber($empNumber) {
+        $this->empNumber = $empNumber;
+    }
+
+    /**
+     * Get the employee number of employee created after hiring
+     * @return int The employee number of the employee created or null
+     */
+    public function getEmpNumber($empNumber) {
+        return $this->empNumber;
+    }
+
+    /**
      * Returns the latest event
      * @return JobApplicationEvent The latest event, or null if no events
      */
@@ -490,8 +509,9 @@ class JobApplication {
         $fields[14] = 'a.' . self::DB_FIELD_QUALIFICATIONS;
         $fields[15] = 'a.' . self::DB_FIELD_STATUS;
         $fields[16] = 'a.' . self::DB_FIELD_APPLIED_DATETIME;
-        $fields[17] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
-        $fields[18] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
+        $fields[17] = 'a.' . self::DB_FIELD_EMP_NUMBER;
+        $fields[18] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
+        $fields[19] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
 
         $tables[0] = self::TABLE_NAME . ' a';
         $tables[1] = JobVacancy::TABLE_NAME .' b';
@@ -551,6 +571,7 @@ class JobApplication {
 		$values[14] = $this->qualifications;
         $values[15] = is_null($this->status) ? self::STATUS_SUBMITTED : $this->status;
         $values[16] = is_null($this->appliedDateTime) ? 'null' : $this->appliedDateTime;
+        $values[17] = empty($this->empNumber) ? 'null' : $this->empNumber;
 
 		return $values;
 	}
@@ -580,6 +601,7 @@ class JobApplication {
         $application->setQualifications($row[self::DB_FIELD_QUALIFICATIONS]);
         $application->setStatus($row[self::DB_FIELD_STATUS]);
         $application->setAppliedDateTime($row[self::DB_FIELD_APPLIED_DATETIME]);
+        $application->setEmpNumber($row[self::DB_FIELD_EMP_NUMBER]);
 
         if (isset($row[self::JOB_TITLE_NAME])) {
             $application->setJobTitleName($row[self::JOB_TITLE_NAME]);

@@ -1302,7 +1302,15 @@
     $lang_Recruit_JobApplicationHistory_NoEvents = 'No Events available';
     $lang_Recruit_JobApplicationHistory_FirstInterview = '1st Interview';
     $lang_Recruit_JobApplicationHistory_SecondInterview = '2nd Interview';
-    $lang_Recruit_JobApplicationHistory_Date = 'Date';
+    $lang_Recruit_JobApplicationHistory_Rejected = 'Rejected';
+    $lang_Recruit_JobApplicationHistory_OfferedJob = 'Offered Job';
+    $lang_Recruit_JobApplicationHistory_OfferMarkedAsDeclined = 'Offer marked as declined';
+    $lang_Recruit_JobApplicationHistory_SeekApproval = 'Seek Approval';
+    $lang_Recruit_JobApplicationHistory_Approved = 'Approved';
+    $lang_Recruit_JobApplicationHistory_By = 'By';
+    $lang_Recruit_JobApplicationHistory_ScheduledBy = 'Scheduled By';
+    $lang_Recruit_JobApplicationHistory_At = 'At';
+    $lang_Recruit_JobApplicationHistory_InterviewTime = 'Interview Time';
     $lang_Recruit_JobApplicationHistory_Interviewer = 'Interviewer';
     $lang_Recruit_JobApplicationHistory_Status = 'Status';
     $lang_Recruit_JobApplicationHistory_Notes = 'Notes';

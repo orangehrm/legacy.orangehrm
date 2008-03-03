@@ -258,10 +258,7 @@ class RecruitmentMailNotifier {
          $email = $this->_getEmpAddress($directorId);
          $empName = $this->_getEmpName($directorId);
 
-         $creator = $jobApplicationEvent->getCreatedBy();
-
-         $creatorDetails = $this->_getUserNameAndEmail($creator);
-         $fromName = $creatorDetails['first'] . ' ' . $creatorDetails['last'];
+         $fromName = $jobApplicationEvent->getCreatorName();
 
          $subject = $this->_getTemplate(self::SUBJECT_SEEK_APPROVAL_DIRECTOR);
          $body = $this->_getTemplate(self::TEMPLATE_SEEK_APPROVAL_DIRECTOR);
@@ -323,10 +320,8 @@ class RecruitmentMailNotifier {
         $applicantName = $jobApplication->getFirstName() . ' ' . $jobApplication->getLastName();
         $applicantEmail = $jobApplication->getEmail();
 
-        $creatorId = $jobApplicationEvent->getCreatedBy();
-        $creatorDetails = $this->_getUserNameAndEmail($creatorId);
-        $creatorName = $creatorDetails['first'] . ' ' . $creatorDetails['last'];
-        $creatorEmail = $creatorDetails['email'];
+        $creatorName = $jobApplicationEvent->getCreatorName();
+        $creatorEmail = $jobApplicationEvent->getCreatorEmail();
 
         $interviewTime = $jobApplicationEvent->getEventTime();
 
@@ -554,42 +549,6 @@ EOT;
 		return null;
 	}
 
-    /**
-     * Fetch the given user's email and name
-     *
-     * @param String $userId The orangehrm user id of the user
-     * @return Array Array with employee first, and last names and email.
-     *
-     */
-    private function _getUserNameAndEmail($userId) {
-
-        $firstNameName = '';
-        $lastName = '';
-        $email = '';
-
-        $users = new Users();
-        $userDetails = $users->filterUsers($userId);
-        if (!empty($userDetails)) {
-
-            /* If an employee id is found, this means the user is mapped to
-             * an employee. Therefore, get the employee details
-             */
-            if (!empty($userDetails[0][11])) {
-
-                $firstName = $userDetails[0][10];
-                $lastName =  $userDetails[0][12];
-                $email = $userDetails[0][13];
-            } else {
-
-                /*
-                 * Otherwise, just get the user name
-                 */
-                $firstName = $userDetails[0][1];
-            }
-        }
-
-        return array('first'=>$firstName, 'last'=>$lastName, 'email'=>$email);
-    }
 	/**
 	 * Get the mail template from given template file
 	 *

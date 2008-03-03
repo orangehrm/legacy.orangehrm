@@ -956,7 +956,7 @@ class RecruitmentAuthManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($authManager->isAllowedToEditEvent($otherDirector, $event));
 
         $event = $app5->getEventOfType(JobApplicationEvent::EVENT_SEEK_APPROVAL);
-        $this->assertTrue($authManager->isAllowedToEditEvent($director, $event));
+        $this->assertFalse($authManager->isAllowedToEditEvent($director, $event));
         $this->assertFalse($authManager->isAllowedToEditEvent($otherDirector, $event));
 
         $this->assertTrue($authManager->isAllowedToEditEvent($admin, $event));

@@ -344,6 +344,7 @@ lib/models/maintenance/modules.php -text
 lib/models/recruitment/AllTests.php -text
 lib/models/recruitment/JobApplication.php -text
 lib/models/recruitment/JobApplicationEvent.php -text
+lib/models/recruitment/JobApplicationEventTest.php -text
 lib/models/recruitment/JobApplicationTest.php -text
 lib/models/recruitment/JobVacancy.php -text
 lib/models/recruitment/JobVacancyTest.php -text

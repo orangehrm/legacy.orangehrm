@@ -18,6 +18,8 @@
  */
 $application = $records['application'];
 $action = $records['action'];
+$applicationId = $application->getId();
+
 $resourceName = 'lang_Recruit_JobApplicationAction_' . $action;
 $actionName = isset($$resourceName) ? $$resourceName : $action;
 
@@ -27,7 +29,7 @@ $confirmDescRes = 'lang_Recruit_JobApplicationConfirm_Confirm' . $action . 'Desc
 $confirmDesc = isset($$confirmDescRes) ? $$confirmDescRes : $confirmDescRes;
 
 $baseURL = "{$_SERVER['PHP_SELF']}?recruitcode={$_GET['recruitcode']}";
-$actionURL = $baseURL . '&id='. $_GET['id'].'&action=' . $action;
+$actionURL = $baseURL . '&action=' . $action;
 
 $statusList = array(
     JobApplication::STATUS_SUBMITTED => $lang_Recruit_JobApplicationStatus_Submitted,
@@ -60,8 +62,21 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
         location.href = "<?php echo "{$baseURL}&action=List"; ?>";
     }
 
-    function applyAction() {
-        location.href = "<?php echo $actionURL; ?>";
+    function validate() {
+        err = false;
+        msg = '<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
+
+        errors = new Array();
+        if ($('txtNotes').value.trim() == '') {
+            err = true;
+            msg += "\t- <?php echo $lang_Recruit_JobApplication_PleaseSpecifyNotes; ?>\n";
+        }
+        if (err) {
+            alert(msg);
+            return false;
+        } else {
+            return true;
+        }
     }
 
 </script>
@@ -72,7 +87,7 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
     <style type="text/css">
     <!--
 
-    .txtName,.txtValue,.txtBox {
+    .txtName,.txtValue {
         display: block;  /* block float the labels to left column, set a width */
         float: left;
         margin: 5px 0px 2px 0px; /* set top margin same as form input - textarea etc. elements */
@@ -88,8 +103,17 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
         width: 300px;
     }
 
-    .txtBox {
-        width: 100px;
+    label {
+
+    }
+
+    textarea {
+        display: block;
+        float: left;
+        margin: 10px 0px 20px 0px;
+        padding: 0px 4px 0px 4px;
+        width: 300px;
+        height: 100px;
     }
 
     br {
@@ -160,6 +184,7 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 	</div>
 	<?php }	?>
   <div class="roundbox">
+    <form id="frmConfirm" name="frmConfirm" method="post" action="<?php echo $actionURL; ?>" onsubmit="return validate();" >
         <div class="txtName"><?php echo $lang_Recruit_JobApplicationConfirm_ApplicantName; ?></div>
         <div class="txtValue">
             <?php echo CommonFunctions::escapeHtml($application->getFirstName() . ' ' . $application->getLastName());?>
@@ -195,10 +220,16 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 
         <div class="confirmMsg"><?php echo $confirmMsg;?></div>
         <div class="confirmDesc"><?php echo $confirmDesc;?></div>
+        <input type="hidden" id="appId" name="appId" value="<?php echo $applicationId; ?>"/>
+
+        <label class="txtName" for="txtNotes"><span class="error">*</span><?php echo $lang_Recruit_JobApplication_Schedule_Notes; ?></label>
+        <textarea id="txtNotes" name="txtNotes" tabindex="1"></textarea><br/>
+
         <div class="buttonSec">
-            <button id="actionBtn" onClick="applyAction()"><?php echo $actionName;?></button>
+            <button id="actionBtn"><?php echo $actionName;?></button>
             <button id="cancelBtn" onClick="goBack();"><?php echo $lang_Leave_Common_Cancel;?></button>
         </div>
+       </form>
     </div>
     <script type="text/javascript">
         <!--
@@ -207,6 +238,6 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 			}
         -->
     </script>
-
+    <div id="notice"><?php echo preg_replace('/#star/', '<span class="error">*</span>', $lang_Commn_RequiredFieldMark); ?>.</div>
 </body>
 </html>

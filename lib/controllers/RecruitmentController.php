@@ -120,7 +120,9 @@ class RecruitmentController {
                         $this->_confirmAction($id, JobApplication::ACTION_REJECT);
                         break;
                     case 'Reject' :
-                        $this->_rejectApplication($id);
+                        $eventExtractor = new EXTRACTOR_JobApplicationEvent();
+                        $event = $eventExtractor->parseAddData($_POST);
+                        $this->_rejectApplication($event);
                         break;
                     case 'ConfirmFirstInterview' :
                         $this->_scheduleFirstInterview($id);
@@ -142,13 +144,17 @@ class RecruitmentController {
                         $this->_confirmAction($id, JobApplication::ACTION_OFFER_JOB);
                         break;
                     case 'OfferJob' :
-                        $this->_offerJob($id);
+                        $eventExtractor = new EXTRACTOR_JobApplicationEvent();
+                        $event = $eventExtractor->parseAddData($_POST);
+                        $this->_offerJob($event);
                         break;
                     case 'ConfirmMarkDeclined' :
                         $this->_confirmAction($id, JobApplication::ACTION_MARK_OFFER_DECLINED);
                         break;
                     case 'MarkDeclined' :
-                        $this->_markDeclined($id);
+                        $eventExtractor = new EXTRACTOR_JobApplicationEvent();
+                        $event = $eventExtractor->parseAddData($_POST);
+                        $this->_markDeclined($event);
                         break;
                     case 'ConfirmSeekApproval' :
                         $this->_confirmSeekApproval($id);
@@ -162,7 +168,9 @@ class RecruitmentController {
                         $this->_confirmAction($id, JobApplication::ACTION_APPROVE);
                         break;
                     case 'Approve' :
-                        $this->_approve($id);
+                        $eventExtractor = new EXTRACTOR_JobApplicationEvent();
+                        $event = $eventExtractor->parseAddData($_POST);
+                        $this->_approve($event);
                         break;
                     case 'ViewDetails' :
                         $this->_viewApplicationDetails($id);
@@ -424,16 +432,17 @@ class RecruitmentController {
 
     /**
      * Reject the given application
+     * @param JobApplicationEvent Job Application event with the details
      */
-    private function _rejectApplication($id) {
+    private function _rejectApplication($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
-            $application = JobApplication::getJobApplication($id);
+            $application = JobApplication::getJobApplication($event->getApplicationId());
             $application->setStatus(JobApplication::STATUS_REJECTED);
             try {
                 $application->save();
-                $this->_addApplicationEvent($id, JobApplicationEvent::EVENT_REJECT);
+                $this->_saveApplicationEvent($event, JobApplicationEvent::EVENT_REJECT);
 
                 // Send notification to Applicant
                 $notifier = new RecruitmentMailNotifier();
@@ -557,16 +566,16 @@ class RecruitmentController {
         $template->display();
     }
 
-    private function _offerJob($id) {
+    private function _offerJob($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
-            $application = JobApplication::getJobApplication($id);
+            $application = JobApplication::getJobApplication($event->getApplicationId());
             $application->setStatus(JobApplication::STATUS_JOB_OFFERED);
 
             try {
                 $application->save();
-                $this->_addApplicationEvent($id, JobApplicationEvent::EVENT_OFFER_JOB);
+                $this->_saveApplicationEvent($event, JobApplicationEvent::EVENT_OFFER_JOB);
                 $message = 'UPDATE_SUCCESS';
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
@@ -578,16 +587,16 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
-    private function _markDeclined($id) {
+    private function _markDeclined($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
-            $application = JobApplication::getJobApplication($id);
+            $application = JobApplication::getJobApplication($event->getApplicationId());
             $application->setStatus(JobApplication::STATUS_OFFER_DECLINED);
 
             try {
                 $application->save();
-                $this->_addApplicationEvent($id, JobApplicationEvent::EVENT_MARK_OFFER_DECLINED);
+                $this->_saveApplicationEvent($event, JobApplicationEvent::EVENT_MARK_OFFER_DECLINED);
                 $message = 'UPDATE_SUCCESS';
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
@@ -648,16 +657,24 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
-    private function _approve($id) {
+    private function _approve($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isDirector() ) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
-            $application = JobApplication::getJobApplication($id);
+            $application = JobApplication::getJobApplication($event->getApplicationId());
             $application->setStatus(JobApplication::STATUS_HIRED);
 
             try {
                 $application->save();
-                $this->_addApplicationEvent($id, JobApplicationEvent::EVENT_APPROVE);
+                $this->_saveApplicationEvent($event, JobApplicationEvent::EVENT_APPROVE);
+
+                // Create employee in PIM
+                $empId = $this->createEmployeeFromApplication($application);
+
+                // Save new employee number in application for reference.
+                $application->setEmpNumber($empId);
+                $application->save();
+
                 $message = 'UPDATE_SUCCESS';
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
@@ -673,19 +690,16 @@ class RecruitmentController {
 
     /**
      * Add given event to application
+     * @param JobApplicationEvent Job Application event with the details
+     * @param int Event type
      */
-    private function _addApplicationEvent($applicationId, $eventType, $owner = null, $eventTime = null, $notes = null, $status = null) {
-        $event = new JobApplicationEvent();
-        $event->setApplicationId($applicationId);
-        $event->setEventType($eventType);
+    private function _saveApplicationEvent($event, $eventType) {
 
+        $event->setEventType($eventType);
         $createdTime = date(LocaleUtil::STANDARD_DATETIME_FORMAT);
         $event->setCreatedTime($createdTime);
         $event->setCreatedBy($_SESSION['user']);
-        $event->setOwner($owner);
-        $event->setEventTime($eventTime);
-        $event->setStatus($status);
-        $event->setNotes($notes);
+        //$event->setStatus($status);
 
         $event->save();
     }
@@ -719,7 +733,7 @@ class RecruitmentController {
         $empInfo->setEmpLastName($jobApplication->getLastName());
         $empInfo->setEmpFirstName($jobApplication->getFirstName());
         $empInfo->setEmpMiddleName($jobApplication->getMiddleName());
-        $empInfo->addEmpMain();
+        $result = $empInfo->addEmpMain();
 
         // contact information
         $empInfo->setEmpStreet1($jobApplication->getStreet1());
@@ -731,14 +745,14 @@ class RecruitmentController {
         $empInfo->setEmpHomeTelephone($jobApplication->getPhone());
         $empInfo->setEmpMobile($jobApplication->getMobile());
         $empInfo->setEmpOtherEmail($jobApplication->getEmail());
-        $empInfo->updateEmpContact();
+        $result = $empInfo->updateEmpContact();
 
         // job information
         $vacancy = JobVacancy::getJobVacancy($jobApplication->getVacancyId());
         $empInfo->setEmpJobTitle($vacancy->getJobTitleCode());
         $empInfo->setEmpStatus(0);
         $empInfo->setEmpEEOCat(0);
-        $empInfo->updateEmpJobInfo();
+        $result = $empInfo->updateEmpJobInfo();
 
         return $empInfo->getEmpId();
     }

@@ -164,6 +164,7 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
                 $statusDate = '';
 
                 $latestEvent = $application->getLatestEvent();
+
                 if (!empty($latestEvent)) {
                     if (($latestEvent->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW) ||
                         ($latestEvent->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW)) {
