@@ -177,6 +177,7 @@ lib/controllers/LeaveController.php -text
 lib/controllers/MTViewController.php -text
 lib/controllers/PublicController.php -text
 lib/controllers/RecruitmentController.php -text
+lib/controllers/RecruitmentControllerTest.php -text
 lib/controllers/RepViewController.php -text
 lib/controllers/TimeController.php -text
 lib/controllers/TimeControllerTest.php -text

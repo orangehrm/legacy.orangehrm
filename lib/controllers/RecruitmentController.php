@@ -29,6 +29,7 @@ require_once ROOT_PATH . '/lib/models/maintenance/Rights.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/CountryInfo.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/ProvinceInfo.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/JobTitle.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobVacancy.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplication.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
@@ -700,6 +701,46 @@ class RecruitmentController {
             $message = 'UPDATE_FAILURE';
         }
         $this->redirect($message);
+    }
+
+    /**
+     * Create an employee based on a job application.
+     *
+     * @param JobApplication $jobApplication Job Application to create the employee from.
+     * @throws RecruitmentControllerException if there is an error when creating employee
+     */
+    public function createEmployeeFromApplication($jobApplication) {
+
+        $empInfo = new EmpInfo();
+
+        // main information
+        $employeeId = $empInfo->getLastId();
+        $empInfo->setEmployeeId($employeeId);
+        $empInfo->setEmpLastName($jobApplication->getLastName());
+        $empInfo->setEmpFirstName($jobApplication->getFirstName());
+        $empInfo->setEmpMiddleName($jobApplication->getMiddleName());
+        $empInfo->addEmpMain();
+
+        // contact information
+        $empInfo->setEmpStreet1($jobApplication->getStreet1());
+        $empInfo->setEmpStreet2($jobApplication->getStreet2());
+        $empInfo->setEmpCity($jobApplication->getCity());
+        $empInfo->setEmpProvince($jobApplication->getProvince());
+        $empInfo->setEmpCountry($jobApplication->getCountry());
+        $empInfo->setEmpZipCode($jobApplication->getZip());
+        $empInfo->setEmpHomeTelephone($jobApplication->getPhone());
+        $empInfo->setEmpMobile($jobApplication->getMobile());
+        $empInfo->setEmpOtherEmail($jobApplication->getEmail());
+        $empInfo->updateEmpContact();
+
+        // job information
+        $vacancy = JobVacancy::getJobVacancy($jobApplication->getVacancyId());
+        $empInfo->setEmpJobTitle($vacancy->getJobTitleCode());
+        $empInfo->setEmpStatus(0);
+        $empInfo->setEmpEEOCat(0);
+        $empInfo->updateEmpJobInfo();
+
+        return $empInfo->getEmpId();
     }
 
 	/**

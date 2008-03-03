@@ -159,6 +159,7 @@ class JobApplicationTest extends PHPUnit_Framework_TestCase {
 
 	private function _deleteTables() {
         $this->_runQuery("DELETE FROM `hs_hr_users` WHERE id = 'USR111'");
+        $this->_runQuery("TRUNCATE TABLE `hs_hr_job_application_events`");
 		$this->_runQuery("TRUNCATE TABLE `hs_hr_job_application`");
 		$this->_runQuery("TRUNCATE TABLE `hs_hr_job_vacancy`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_job_title`");
