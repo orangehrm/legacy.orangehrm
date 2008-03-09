@@ -152,6 +152,7 @@
 	$lang_Menu_Admin_ProjectInfo = "Project Info";
 	$lang_Menu_Admin_Customers = "Customers";
 	$lang_Menu_Admin_Projects = "Projects";
+    $lang_Menu_Admin_Benefits = "Benefits";
 
 	// Leave Module
 	$lang_Menu_Leave 									= "Leave";
@@ -712,6 +713,11 @@
 	$lang_jobspec_PleaseSpecifyJobSpecName  = "Please specify Job Specification name";
 	$lang_jobspec_NameInUse_Error           = "This name is in use";
 
+    $lang_benefits_heading                   = "Benefit Types";
+    $lang_benefits_id                        = "ID";
+    $lang_benefits_name                      = "Name";
+    $lang_benefits_PleaseSpecifyBenefitName  = "Please specify Benefit name";
+    $lang_benefits_NameInUse_Error           = "This name is in use";
 
  	$lang_languageinformation_heading 		= "Skills : Language";
 

@@ -43,6 +43,7 @@ require_once ROOT_PATH . '/lib/models/eimadmin/GenInfo.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/EmailConfiguration.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/EmailNotificationConfiguration.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/JobSpec.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/SimpleBenefit.php';
 
 require_once ROOT_PATH . '/lib/models/eimadmin/Customer.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/Projects.php';
@@ -261,6 +262,17 @@ class ViewController {
 				}
         		break;
 
+            case 'BEN' :
+
+                if (isset($arrList[0])) {
+                    try {
+                        $res = SimpleBenefit::delete($arrList[0]);
+                    } catch (SimpleBenefitException $e) {
+                        $res = false;
+                    }
+                }
+                break;
+
         	case 'CST' :
 
 	            $this->compstruct = new CompStruct();
@@ -401,6 +413,9 @@ class ViewController {
 
 		case 'SPC' :
 			return JobSpec::getListForView($pageNO,$schStr,$mode, $sortField, $sortOrder);
+
+        case 'BEN' :
+            return SimpleBenefit::getListForView($pageNO,$schStr,$mode, $sortField, $sortOrder);
 
 		case 'LOC' :
 
@@ -548,6 +563,10 @@ class ViewController {
 		case 'SPC' :
 
 			return JobSpec::getCount($schStr,$mode);
+
+        case 'BEN' :
+
+            return SimpleBenefit::getCount($schStr,$mode);
 
 		case 'LOC' :
 
@@ -914,6 +933,14 @@ class ViewController {
 										$res = false;
 									}
 									break;
+
+                case 'BEN'  :       $benefit = $object;
+                                    try {
+                                        $res = $benefit->save();
+                                    } catch(SimpleBenefitException $e) {
+                                        $res = false;
+                                    }
+                                    break;
 
 				case 'CST'  :
 									$compstruct = new CompStruct();
@@ -1320,6 +1347,14 @@ class ViewController {
 										$res = false;
 									}
 									break;
+
+                case 'BEN'  :       $benefit = $object;
+                                    try {
+                                        $res = $benefit->save();
+                                    } catch(SimpleBenefitException $e) {
+                                        $res = false;
+                                    }
+                                    break;
 
 				case 'CST'  :		$compstruct = new CompStruct();
 									$compstruct = $object;
@@ -2536,6 +2571,19 @@ class ViewController {
 							}
 
 							break;
+
+            case 'BEN' :    $form_creator->formPath = '/templates/eimadmin/simpleBenefit.php';
+
+                            // Here we fetch all benefits for easier validation of duplicate names
+                            // Assuming it's unlikely that very large number of benefits will be defined.
+                            $form_creator->popArr['benefitList'] = SimpleBenefit::getAll();
+                            if($getArr['capturemode'] == 'updatemode') {
+                                $form_creator->popArr['benefit'] = SimpleBenefit::getSimpleBenefit($getArr['id']);
+                            } else {
+                                $form_creator->popArr['benefit'] = new SimpleBenefit();
+                            }
+
+                            break;
 
 			case 'EST' :	$form_creator->formPath = '/templates/eimadmin/empstat.php';
 

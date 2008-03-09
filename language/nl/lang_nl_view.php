@@ -59,6 +59,12 @@ switch ($_GET['uniqcode']) {
 			$headingInfo = array($lang_jobspec_id, $lang_jobspec_name,1,$lang_jobspec_heading,$lang_view_message3);
 			break;
 
+        case 'BEN' : // Benefits
+            $srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID, $lang_Commn_name);
+            $headings= array($lang_benefits_id, $lang_benefits_name);
+            $headingInfo = array($lang_benefits_id, $lang_benefits_name,1,$lang_benefits_heading,$lang_view_message3);
+            break;
+
 		case 'SKI' :
 			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name );
 			$headings= array($lang_view_SkillID,$lang_view_SkillName);

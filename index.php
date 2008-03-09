@@ -163,16 +163,30 @@ if ($authorizeObj->isAdmin()) {
 $defaultAdminView = "GEN";
 $allowAdminView = false;
 
-if (($_SESSION['isAdmin']=='No') && $_SESSION['isProjectAdmin']) {
+if ($_SESSION['isAdmin']=='No') {
+    if($_SESSION['isProjectAdmin']) {
 
-	// Default page for project admins is the Project Activity page
-	$defaultAdminView = "PAC";
+    	// Default page for project admins is the Project Activity page
+    	$defaultAdminView = "PAC";
 
-	// Allow project admins to view PAC (Project Activity) page only (in the admin module)
-	// If uniqcode is not set, the default view is Project activity
-	if ((!isset($_GET['uniqcode'])) || ($_GET['uniqcode'] == 'PAC')) {
-		$allowAdminView = true;
-	}
+    	// Allow project admins to view PAC (Project Activity) page only (in the admin module)
+    	// If uniqcode is not set, the default view is Project activity
+    	if ((!isset($_GET['uniqcode'])) || ($_GET['uniqcode'] == 'PAC')) {
+    		$allowAdminView = true;
+    	}
+    }
+
+    if($_SESSION['isSupervisor']) {
+
+        // Default page for supervisors is the Benefits page
+        $defaultAdminView = "BEN";
+
+        // Allow project admins to view BEN (Benefits) page only (in the admin module)
+        // If uniqcode is not set, the default view is Benefits
+        if ((!isset($_GET['uniqcode'])) || ($_GET['uniqcode'] == 'BEN')) {
+            $allowAdminView = true;
+        }
+    }
 }
 
 require_once ROOT_PATH . '/lib/common/Language.php';
@@ -310,8 +324,8 @@ function preloadAllImages() {
                   </table></td>
                   <?php } ?>
                   <?php
-                  if (($_SESSION['isAdmin']=='Yes') || $_SESSION['isProjectAdmin']) {
-						if (isset($_GET['menu_no_top']) && ($_GET['menu_no_top']=="eim") && ($arrAllRights[Admin]['view'] || $_SESSION['isProjectAdmin'])) {
+                  if (($_SESSION['isAdmin']=='Yes') || $_SESSION['isProjectAdmin'] || $_SESSION['isSupervisor']) {
+						if (isset($_GET['menu_no_top']) && ($_GET['menu_no_top']=="eim") && ($arrAllRights[Admin]['view'] || $_SESSION['isProjectAdmin'] || $_SESSION['isSupervisor'])) {
 
 					?>
                   <td />
@@ -324,7 +338,7 @@ function preloadAllImages() {
                         <td class="tabSpace"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <?php } else if ($arrAllRights[Admin]['view'] || $_SESSION['isProjectAdmin']) { ?>
+                  <?php } else if ($arrAllRights[Admin]['view'] || $_SESSION['isProjectAdmin'] || $_SESSION['isSupervisor']) { ?>
                   <td><table cellspacing="0" cellpadding="0" border="0" class="tabContainer"">
                       <tr height="20">
                         <td class="otherTabLeft" ><img src="" width="8" height="1" border="0" alt="My Portal"></td>
@@ -538,6 +552,7 @@ function preloadAllImages() {
   						<li id="job"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu2');" onMouseOut="ypSlideOutMenu.hideMenu('menu2');"><?php echo $lang_Menu_Admin_Job; ?></a></li>
   						<li id="qualification"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu3');" onMouseOut="ypSlideOutMenu.hideMenu('menu3');"><?php echo $lang_Menu_Admin_Quali; ?></a></li>
   						<li id="skills"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu4');" onMouseOut="ypSlideOutMenu.hideMenu('menu4');"><?php echo $lang_Menu_Admin_Skills; ?></a></li>
+                        <li id="benefitsInfo"><a href="index.php?uniqcode=BEN&submenutop=EIMModule&menu_no_top=eim"><?php echo $lang_Menu_Admin_Benefits; ?></a></li>
   						<li id="memberships"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu5');" onMouseOut="ypSlideOutMenu.hideMenu('menu5');"><?php echo $lang_Menu_Admin_Memberships; ?></a></li>
   						<li id="natandrace"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu9');" onMouseOut="ypSlideOutMenu.hideMenu('menu9');"><?php echo $lang_Menu_Admin_NationalityNRace; ?></a></li>
 						<li id="users"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu12');" onMouseOut="ypSlideOutMenu.hideMenu('menu12');"><?php echo $lang_Menu_Admin_Users; ?></a></li>
@@ -551,6 +566,13 @@ function preloadAllImages() {
 							<a href="index.php?uniqcode=PAC&menu_no=2&submenutop=EIMModule&menu_no_top=eim">
 							<?php echo $lang_Admin_ProjectActivities; ?></a></li>
 					  </ul></TD>
+<?php               } else if ($_SESSION['isSupervisor']) { ?>
+                    <TD width=158>
+                      <ul id="menu">
+                        <li id="benefitsInfo">
+                            <a href="index.php?uniqcode=BEN&submenutop=EIMModule&menu_no_top=eim">
+                            <?php echo $lang_Menu_Admin_Benefits; ?></a></li>
+                      </ul></TD>
 <?php 				}
 				} else if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) { ?>
                     <TD width=158>

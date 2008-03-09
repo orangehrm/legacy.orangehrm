@@ -71,6 +71,7 @@ require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_Customer.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_Projects.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_ProjectAdmin.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_ProjectActivity.php';
+require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_SimpleBenefit.php';
 
 require_once ROOT_PATH . '/lib/extractor/maintenance/EXTRACTOR_Bugs.php';
 require_once ROOT_PATH . '/lib/extractor/maintenance/EXTRACTOR_Users.php';
@@ -176,6 +177,13 @@ if ($_SESSION['isProjectAdmin'] && ($moduletype == 'admin') && ($_GET['uniqcode'
 	$locRights = array('add'=> true , 'edit'=> true , 'delete'=> true, 'view'=> true);
 }
 
+/*
+ * Allow Supervisors to view/edit Benefits page.
+ */
+if ($_SESSION['isSupervisor'] && ($moduletype == 'admin') && ($_GET['uniqcode'] == 'BEN')) {
+    $locRights = array('add'=> true , 'edit'=> true , 'delete'=> true, 'view'=> true);
+}
+
 $ugroup = new UserGroups();
 $ugDet = $ugroup ->filterUserGroups($_SESSION['userGroup']);
 
@@ -230,6 +238,13 @@ switch ($moduletype) {
 										}
 
 										break;
+
+                        case 'BEN'  :
+                                        if(isset($_POST['sqlState'])) {
+                                            $extractor = new EXTRACTOR_SimpleBenefit();
+                                        }
+
+                                        break;
 
 						case 'BNK'	:
 										if(isset($_POST['sqlState'])) {

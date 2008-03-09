@@ -456,6 +456,7 @@ templates/eimadmin/project.php -text
 templates/eimadmin/projectActivity.php -text
 templates/eimadmin/qualifications.php -text
 templates/eimadmin/salarygrades.php -text
+templates/eimadmin/simpleBenefit.php -text
 templates/eimadmin/skills.php -text
 templates/hrfunct/download.php -text
 templates/hrfunct/emppop.php -text
