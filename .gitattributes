@@ -297,6 +297,8 @@ lib/models/eimadmin/ProjectsTest.php -text
 lib/models/eimadmin/ProvinceInfo.php -text
 lib/models/eimadmin/SalCurDet.php -text
 lib/models/eimadmin/SalaryGrades.php -text
+lib/models/eimadmin/SimpleBenefit.php -text
+lib/models/eimadmin/SimpleBenefitTest.php -text
 lib/models/eimadmin/Skills.php -text
 lib/models/hrfunct/AllTests.php -text
 lib/models/hrfunct/EmpAttach.php -text
