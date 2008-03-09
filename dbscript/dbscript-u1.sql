@@ -740,6 +740,24 @@ create table `hs_hr_job_application_events` (
   key `owner` (`owner`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_benefit_simple` (
+  `id` int(11) not null,
+  `name` varchar(100) not null,
+  primary key  (`id`),
+  unique key `name` (`name`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_emp_benefit_simple` (
+  `emp_number` int(7) not null,
+  `benefit_id` int(11) not null,
+  `description` text default null,
+  `amount` double default null,
+  `currency_id` varchar(6) default null,
+  primary key  (`emp_number`),
+  key `benefit_id` (`benefit_id`),
+  key `currency_id` (`currency_id`)
+) engine=innodb default charset=utf8;
+
 INSERT INTO `hs_hr_customer`
   (`customer_id`, `name`, `description`)
   VALUES (0, 'Internal', "Internal time tracker")

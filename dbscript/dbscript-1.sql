@@ -740,6 +740,24 @@ create table `hs_hr_job_application_events` (
   key `owner` (`owner`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_benefit_simple` (
+  `id` int(11) not null,
+  `name` varchar(100) not null,
+  primary key  (`id`),
+  unique key `name` (`name`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_emp_benefit_simple` (
+  `emp_number` int(7) not null,
+  `benefit_id` int(11) not null,
+  `description` text default null,
+  `amount` double default null,
+  `currency_id` varchar(6) default null,
+  primary key  (`emp_number`),
+  key `benefit_id` (`benefit_id`),
+  key `currency_id` (`currency_id`)
+) engine=innodb default charset=utf8;
+
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
                              references hs_hr_location(loc_code) on delete restrict;
@@ -1034,4 +1052,12 @@ alter table `hs_hr_job_application_events`
   add constraint foreign key (`application_id`) references `hs_hr_job_application` (`application_id`) on delete cascade,
   add constraint foreign key (`created_by`) references `hs_hr_users` (`id`) on delete set null,
   add constraint foreign key (`owner`) references `hs_hr_employee` (`emp_number`) on delete set null;
+
+alter table `hs_hr_emp_benefit_simple`
+    add constraint foreign key (`emp_number`)
+        references hs_hr_employee(`emp_number`) on delete cascade,
+    add constraint foreign key (`benefit_id`)
+        references hs_hr_benefit_simple(`id`) on delete cascade,
+    add constraint foreign key (`currency_id`)
+        references hs_hr_currency_type(`currency_id`) on delete set null;
 
