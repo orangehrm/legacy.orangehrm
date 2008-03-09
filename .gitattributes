@@ -211,6 +211,7 @@ lib/extractor/eimadmin/EXTRACTOR_QualificationType.php -text
 lib/extractor/eimadmin/EXTRACTOR_Qualifications.php -text
 lib/extractor/eimadmin/EXTRACTOR_SalCurDet.php -text
 lib/extractor/eimadmin/EXTRACTOR_SalaryGrades.php -text
+lib/extractor/eimadmin/EXTRACTOR_SimpleBenefit.php -text
 lib/extractor/eimadmin/EXTRACTOR_Skills.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpAttach.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpBasSalary.php -text

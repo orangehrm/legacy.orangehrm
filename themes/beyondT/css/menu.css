@@ -157,6 +157,14 @@
 	background: url(../icons/projects_o.gif)  no-repeat left top;
 }
 
+#menu #benefitsInfo a{
+	background: url(../icons/projects.gif)  no-repeat left top;
+}
+
+#menu #benefitsInfo a:hover {
+	background: url(../icons/projects_o.gif)  no-repeat left top;
+}
+
 #menu #jobVacancies a{
 	background: url(../icons/vacancies.gif)  no-repeat left top;
 }
