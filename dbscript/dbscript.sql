@@ -748,12 +748,14 @@ create table `hs_hr_benefit_simple` (
 ) engine=innodb default charset=utf8;
 
 create table `hs_hr_emp_benefit_simple` (
+  `id` int not null auto_increment COMMENT 'Not using UniqueIdGenerator',
   `emp_number` int(7) not null,
   `benefit_id` int(11) not null,
   `description` text default null,
-  `amount` double default null,
+  `amount` decimal(12,2) default null,
   `currency_id` varchar(6) default null,
-  primary key  (`emp_number`),
+  primary key  (`id`),
+  key `emp_number` (`emp_number`),
   key `benefit_id` (`benefit_id`),
   key `currency_id` (`currency_id`)
 ) engine=innodb default charset=utf8;

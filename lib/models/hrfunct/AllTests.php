@@ -29,6 +29,7 @@ require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'EmpInfoTest.php';
+require_once 'EmpSimpleBenefitTest.php';
 
 
 class models_eimadmin_AllTests
@@ -42,6 +43,7 @@ class models_eimadmin_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('OrangeHRM models_eimadmin');
 		$suite->addTestSuite('EmpInfoTest');
+		$suite->addTestSuite('EmpSimpleBenefitTest');
         return $suite;
     }
 }

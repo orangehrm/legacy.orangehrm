@@ -319,6 +319,8 @@ lib/models/hrfunct/EmpPassPort.php -text
 lib/models/hrfunct/EmpPhoto.php -text
 lib/models/hrfunct/EmpQual.php -text
 lib/models/hrfunct/EmpRepTo.php -text
+lib/models/hrfunct/EmpSimpleBenefit.php -text
+lib/models/hrfunct/EmpSimpleBenefitTest.php -text
 lib/models/hrfunct/EmpSkill.php -text
 lib/models/hrfunct/EmpWorkExp.php -text
 lib/models/leave/AllTests.php -text
