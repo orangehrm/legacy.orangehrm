@@ -33,7 +33,8 @@ require_once ROOT_PATH . '/lib/models/hrfunct/EmpSkill.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpLicenses.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpChildren.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpEmergencyCon.php';
-
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpSimpleBenefit.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/SimpleBenefit.php';
 
 require_once ROOT_PATH . '/lib/common/FormCreator.php';
 
@@ -804,6 +805,12 @@ class EmpViewController {
 		return;
 		}
 
+        if (isset($postArr['benefitSTAT']) && ($postArr['benefitSTAT'] == 'ADD' || $postArr['benefitSTAT'] == 'EDIT')) {
+            $empBenefit = $object;
+            $empBenefit->save();
+            return;
+        }
+
 		if(isset($postArr['reporttoSTAT']) && ($postArr['reporttoSTAT'] == 'ADD' || $postArr['reporttoSTAT'] == 'EDIT')) {
 			$emprepto = new EmpRepTo();
 			$emprepto = $object;
@@ -947,6 +954,10 @@ class EmpViewController {
 
 			$empskill->delEmpSkill($arr);
 		}
+
+        if (isset($postArr['benefitSTAT']) && $postArr['benefitSTAT'] == 'DEL') {
+            EmpSimpleBenefit::delete($postArr['chkBenefitDel']);
+        }
 
 		if(isset($postArr['educationSTAT']) && $postArr['educationSTAT'] == 'DEL') {
 
@@ -1721,6 +1732,13 @@ class EmpViewController {
 							}
 
 							$form_creator ->popArr['rsetSkill']    = $empskill ->getAssEmpSkill($getArr['id']);
+
+                            if(isset($getArr['benefit'])) {
+                                $empBenId = $getArr['benefit'];
+                                $form_creator->popArr['empBenefit'] = EmpSimpleBenefit::getEmpBenefit($empBenId);
+                            }
+                            $form_creator->popArr['empBenefitList'] = EmpSimpleBenefit::getBenefitsForEmployee($getArr['id']);
+                            $form_creator->popArr['benefitList'] = SimpleBenefit::getAll();
 
 							$form_creator->popArr['newWrkExpID'] = $empworkex ->getLastRecord($getArr['id']);
 

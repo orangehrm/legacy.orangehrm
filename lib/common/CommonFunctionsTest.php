@@ -214,6 +214,14 @@ class CommonFunctionsTest extends PHPUnit_Framework_TestCase {
 		$this -> assertEquals("100", CommonFunctions :: extractNumericId("SKI100"));
 		$this -> assertEquals("0", CommonFunctions :: extractNumericId("SKI0"));
 	}
+
+    public function testGetFirstNChars() {
+        $this->assertEquals('A des..', CommonFunctions::getFirstNChars("A description", 5, '..'));
+        $this->assertEquals('A des', CommonFunctions::getFirstNChars("A description", 5, ''));
+        $this->assertEquals('A des', CommonFunctions::getFirstNChars("A description", 5));
+        $this->assertEquals('A description', CommonFunctions::getFirstNChars("A description", 25));
+        $this->assertEquals('A description', CommonFunctions::getFirstNChars("A description", 25, '...'));
+    }
 }
 
 // Call CommonFunctionsTest::main() if this source file is executed directly.

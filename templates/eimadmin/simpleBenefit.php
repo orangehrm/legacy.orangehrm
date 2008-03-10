@@ -94,6 +94,8 @@ $picDir = "../../themes/{$styleSheet}/pictures/";
 
 	function reset() {
 		$('frmBenefit').reset();
+        oLink = $('messageCell');
+        oLink.innerHTML = "&nbsp;";
 	}
 
 
@@ -254,7 +256,7 @@ $picDir = "../../themes/{$styleSheet}/pictures/";
 			<input type="hidden" id="txtId" name="txtId" value="<?php echo $benefit->getId();?>"/>
 			<label for="txtFieldName"><span class="error">*</span><?php echo $lang_Commn_name; ?></label>
             <input type="text" id="txtFieldName" name="txtFieldName" tabindex="1"
-            	value="<?php echo $benefit->getName(); ?>" onkeyup="checkName();" <?php echo $disabled;?> />
+            	value="<?php echo CommonFunctions::escapeHtml($benefit->getName()); ?>" onblur="checkName()" onkeyup="checkName();" <?php echo $disabled;?> />
             <div id="messageCell" class="error" style="display:block; float: left; margin:10px;">&nbsp;</div>
             <br /><br />
             <div align="left">

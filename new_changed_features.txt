@@ -6,6 +6,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
 	    4. Applicant views and applies for Job vacancies (URL: /jobs.php)
 	    5. Story: Manager manages application processes
         6. Story: Recruitment: Hiring of an employee
+        7. Story: HR Admin and supervisor adds benefit information
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 

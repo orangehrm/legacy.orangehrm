@@ -215,6 +215,7 @@ lib/extractor/eimadmin/EXTRACTOR_SimpleBenefit.php -text
 lib/extractor/eimadmin/EXTRACTOR_Skills.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpAttach.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpBasSalary.php -text
+lib/extractor/hrfunct/EXTRACTOR_EmpBenefit.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpChildren.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpConExt.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpDependents.php -text
@@ -465,6 +466,7 @@ templates/hrfunct/download.php -text
 templates/hrfunct/emppop.php -text
 templates/hrfunct/hrEmpMain.php -text
 templates/hrfunct/hrempattachment.php -text
+templates/hrfunct/hrempbenefit.php -text
 templates/hrfunct/hrempchildren.php -text
 templates/hrfunct/hrempconext.php -text
 templates/hrfunct/hrempcontact.php -text
@@ -605,6 +607,7 @@ themes/beyondT/icons/arrow_right.gif -text
 themes/beyondT/icons/assign.gif -text
 themes/beyondT/icons/assign_o.gif -text
 themes/beyondT/icons/attachments.gif -text
+themes/beyondT/icons/benefits.gif -text
 themes/beyondT/icons/calendar.gif -text
 themes/beyondT/icons/cancel.gif -text
 themes/beyondT/icons/cancel_o.gif -text

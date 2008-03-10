@@ -667,6 +667,18 @@
 	$lang_hrEmpMain_Skill 					= "Skill";
 	$lang_hrEmpMain_EnterFromDateFirst      = "Enter From Date first";
 
+    $lang_hrEmpMain_BenefitType             = "Benefit Type";
+    $lang_hrEmpMain_BenefitDescription      = "Description";
+    $lang_hrEmpMain_BenefitAmount           = "Amount";
+    $lang_hrEmpMain_BenefitCurrency         = "Currency";
+    $lang_hrEmpMain_BenefitSelectBenefit    = "Select Benefit Type";
+    $lang_hrEmpMain_AssignedBenefits        = "Assigned Benefits";
+    $lang_hrEmpMain_Benefit                 = "Benefit";
+    $lang_hrEmpMain_PleaseSpecifyBenefit    = "Please specify Benefit Type";
+    $lang_hrEmpMain_PleaseSpecifyAmount    = "Please enter Amount";
+    $lang_hrEmpMain_PleaseSpecifyValidAmount    = "Please enter Valid Amount";
+    $lang_hrEmpMain_PleaseSpecifyCurrency    = "Please specify Currency";
+
 	$lang_hrEmpMain_subown_Company = 'Company';
 	$lang_hrEmpMain_subown_Individual = 'Individual';
 
@@ -902,6 +914,7 @@
 	$lang_pim_tabs_Languages = "Languages";
 	$lang_pim_tabs_License = "License";
 	$lang_pim_tabs_Membership = "Membership";
+    $lang_pim_tabs_Benefits = "Benefits";
 	$lang_pim_tabs_Attachments = "Attachments";
 
 	// Report module

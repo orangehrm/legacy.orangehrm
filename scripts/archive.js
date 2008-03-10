@@ -138,6 +138,23 @@
 	return notNum;
 	}
 
+	/**
+	 * Checks if given text is a valid decimal
+	 */
+	function isDecimal(txt) {
+
+		if (txt == '') {
+			return false;
+		}
+
+		regExp = /^[0-9]*(\.[0-9]+){0,1}$/;
+		if (regExp.test(txt)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	function clearAll() {
 		//need to work
 		document.forms[0].reset('');

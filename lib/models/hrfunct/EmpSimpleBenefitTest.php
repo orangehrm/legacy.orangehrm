@@ -288,6 +288,9 @@ class EmpSimpleBenefitTest extends PHPUnit_Framework_TestCase {
 		$benefit = EmpSimpleBenefit::getEmpBenefit($ids[1]);
 		$this->assertNotNull($benefit);
 		$this->assertTrue($this->empBenefits[1] == $benefit);
+
+        // check getName
+        $this->assertEquals('Health Insurance', $benefit->getBenefitName());
 	}
 
 

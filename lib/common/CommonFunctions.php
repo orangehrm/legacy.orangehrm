@@ -360,5 +360,29 @@ class CommonFunctions {
     public static function escapeHtml($value) {
         return htmlspecialchars($value, ENT_QUOTES);
     }
+
+    /**
+     * Get's the first N characters of the given string, optionally appending the given suffix.
+     *
+     * Eg: if $text = 'This is a test' and $n = 7 and $suffix = '...'
+     * gives: 'This is...'
+     *
+     * @param String $text to format
+     * @param int $n Number of characters
+     * @param String $suffix Optional suffix
+     *
+     * @return String formatted string
+     */
+    public static function getFirstNChars($text, $n, $suffix = '') {
+
+        if (strlen($text) > $n) {
+            $text = substr($text, 0, $n);
+            if (!empty($suffix)) {
+                $text .= $suffix;
+            }
+        }
+
+        return $text;
+    }
 }
 ?>

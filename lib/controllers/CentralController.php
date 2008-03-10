@@ -98,6 +98,7 @@ require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpLicenses.php';
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpDependents.php';
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpChildren.php';
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpEmergencyCon.php';
+require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpBenefit.php';
 
 require_once ROOT_PATH . '/lib/extractor/report/EXTRACTOR_EmpReport.php';
 require_once ROOT_PATH . '/lib/extractor/report/EXTRACTOR_EmpRepUserGroups.php';
@@ -797,6 +798,10 @@ switch ($moduletype) {
 						$extractorForm = new EXTRACTOR_EmpSkill();
 					}
 
+                    if(isset($_POST['benefitSTAT']) && $_POST['benefitSTAT']!= '' && isset($_GET['reqcode']) && ($_GET['reqcode'] !== "ESS")) {
+                        $extractorForm = new EXTRACTOR_EmpBenefit();
+                    }
+
 					if(isset($_POST['reporttoSTAT']) && $_POST['reporttoSTAT']!= '' && isset($_GET['reqcode']) && ($_GET['reqcode'] !== "ESS")) {
 						$extractorForm = new EXTRACTOR_EmpRepTo();
 					}
@@ -880,6 +885,13 @@ switch ($moduletype) {
 										} elseif(isset($_POST['skillSTAT']) && $_POST['skillSTAT'] == 'DEL' && $locRights['delete']) {
 												$view_controller->delEmpFormData($_GET,$_POST);
 										}
+
+                                        if(isset($_POST['benefitSTAT']) && (($_POST['benefitSTAT'] == 'ADD' && $locRights['add']) || ($_POST['benefitSTAT'] == 'EDIT' && $locRights['edit']))) {
+                                                $parsedObject = $extractorForm->parseData($_POST);
+                                                $view_controller->assignEmpFormData($_POST,$parsedObject,$_POST['benefitSTAT']);
+                                        } elseif(isset($_POST['benefitSTAT']) && $_POST['benefitSTAT'] == 'DEL' && $locRights['delete']) {
+                                                $view_controller->delEmpFormData($_GET,$_POST);
+                                        }
 
 										/* If supervisor mode, don't allow changes to payment details or report-to */
 										if(!$supervisor) {

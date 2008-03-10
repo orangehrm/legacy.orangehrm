@@ -42,6 +42,8 @@ class EmpSimpleBenefit {
     private $amount;
     private $currencyId;
 
+    private $benefitName;
+
 	/**
 	 * Constructor
 	 */
@@ -142,6 +144,19 @@ class EmpSimpleBenefit {
      */
     public function setCurrencyId($currencyId) {
         $this->currencyId = $currencyId;
+    }
+
+    /**
+     * Gets the benefit name
+     * @return String Benefit name
+     */
+    public function getBenefitName() {
+        if (is_null($this->benefitName) && !empty($this->benefitId)) {
+            $benefit = SimpleBenefit::getSimpleBenefit($this->benefitId);
+            $this->benefitName = $benefit->getName();
+        }
+
+        return $this->benefitName;
     }
 
 	/**
