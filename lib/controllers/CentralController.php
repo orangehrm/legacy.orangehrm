@@ -1240,37 +1240,47 @@ switch ($moduletype) {
 
 																						break;
 
-													case 'Leave_ChangeStatus' 		:  	$objs = $leaveExtractor->parseEditData($_POST);
-																						$mes = "Empty record";
+													case 'Leave_ChangeStatus' 		: 
+//changes made here to avoid sending mail notifications when clicked the save button without changing leave status 
+																						$objs = $leaveExtractor->parseEditData($_POST);
 																						$objx=false;
+																						$numChanged = 0;
 																						if (isset($objs)) {
 																							foreach ($objs as $obj) {
 																								$leaveController->setObjLeave($obj);
 																								$leaveController->setId($obj->getLeaveId());
 																								$mes=$leaveController->changeStatus("change");
-																								if ($mes) {
+																					if ($mes) {
+																									$numChanged++;
 																									$objx[] = $obj;
 																								}
 																							}
 																						}
-																						$leaveController->sendChangedLeaveNotification($objx);
-																						$leaveController->redirect("");
+																						if ($numChanged > 0) {
+																							$leaveController->sendChangedLeaveNotification($objx);
+																							$message = "CHANGE_STATUS_SUCCESS";
+																						} else {
+																							$message = "";
+																						}
+																						$leaveController->redirect($message);
 																						break;
 
-													case 'Leave_Request_ChangeStatus': 	$objs = $leaveRequestsExtractor->parseEditData($_POST);
-																						$mes = "Empty record";
-																						if (isset($objs))
-																						foreach ($objs as $obj) {
-																							$leaveController->setObjLeave($obj);
-																							$leaveController->setId($obj->getLeaveId());
-
-																							$mes=$leaveController->changeStatus("change");
-																							if ($mes) {
-																								$leaveController->sendChangedLeaveNotification($obj, true);
-																							}
-																						}
-
-																						$leaveController->redirect("CHANGE_STATUS_SUCCESS");
+													case 'Leave_Request_ChangeStatus': 
+																						$objs = $leaveRequestsExtractor->parseEditData($_POST);
+																						$numChanged = 0;
+																						if (isset($objs)){
+            																						foreach ($objs as $obj) {
+            																							$leaveController->setObjLeave($obj);
+            																							$leaveController->setId($obj->getLeaveId());
+            																							$res=$leaveController->changeStatus("change");
+             	                                                                                                                                                                                if ($res) {
+             	                                                                                                                                                                                $numChanged++;
+            																							$leaveController->sendChangedLeaveNotification($obj, true);
+            																							}
+        																						}
+        																					}
+																						$message = ($numChanged > 0) ? "CHANGE_STATUS_SUCCESS" : "";
+																						$leaveController->redirect($message);
 																						break;
 
 													case 'Leave_Apply'				: 	$obj = $leaveRequestsExtractor->parseAddData($_POST);
