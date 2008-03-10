@@ -315,6 +315,8 @@ lib/models/hrfunct/EmpInfoTest.php -text
 lib/models/hrfunct/EmpJobSpec.php -text
 lib/models/hrfunct/EmpLang.php -text
 lib/models/hrfunct/EmpLicenses.php -text
+lib/models/hrfunct/EmpLocation.php -text
+lib/models/hrfunct/EmpLocationTest.php -text
 lib/models/hrfunct/EmpMembership.php -text
 lib/models/hrfunct/EmpPassPort.php -text
 lib/models/hrfunct/EmpPhoto.php -text

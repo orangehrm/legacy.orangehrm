@@ -353,7 +353,7 @@ class SQLQBuilder {
 
 	}
 
-	function addNewRecordFeature2($quoteCorrect = true, $duplicateInsert = false) {
+	function addNewRecordFeature2($quoteCorrect = true, $duplicateInsert = false, $insertIgnore = false) {
 
 		if ($this->flg_insert == 'true') { // check whether the flg_insert is 'True'
 
@@ -364,7 +364,12 @@ class SQLQBuilder {
 			if($quoteCorrect)
 				$arrayRecordList = $this->quoteCorrect($arrayRecordList);
 
-			$SQL1 = 'INSERT INTO ' . strtolower($this->table_name) . ' ( ';
+            if ($insertIgnore) {
+                $SQL1 = 'INSERT IGNORE INTO ';
+            } else {
+                $SQL1 = 'INSERT INTO ';
+            }
+			$SQL1 = $SQL1 . strtolower($this->table_name) . ' ( ';
 
 			for ($i=0;$i<count($arrayRecordList); $i++) {
 				if ($i == ($countArrSize - 1))  { //String Manipulation

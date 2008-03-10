@@ -514,6 +514,7 @@
 	$lang_hremp_EmpStatus					= "Employment Status";
 	$lang_hremp_Workstation					= "Workstation";
 	$lang_hremp_Subdivision					= "Sub-division";
+    $lang_hremp_Locations                   = "Locations";
 
  	$lang_hremp_dependents 					= "Dependents";
 	$lang_hremp_children 					= "Children";
@@ -568,6 +569,9 @@
 
 	$lang_hremp_ShowEmployeeContracts 			= "Show employee contracts";
 	$lang_hremp_HideEmployeeContracts 			= "Hide employee contracts";
+
+    $lang_hremp_AddLocation                 = "Add Location";
+    $lang_hremp_SelectLocation              = "Select Location";
 
 	$lang_hremp_SalaryShouldBeWithinMinAndMa= "Salary should be within min and max";
 

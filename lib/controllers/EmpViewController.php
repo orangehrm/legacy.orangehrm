@@ -34,6 +34,7 @@ require_once ROOT_PATH . '/lib/models/hrfunct/EmpLicenses.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpChildren.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpEmergencyCon.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpSimpleBenefit.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpLocation.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/SimpleBenefit.php';
 
 require_once ROOT_PATH . '/lib/common/FormCreator.php';
@@ -1566,7 +1567,6 @@ class EmpViewController {
 									$form_creator->popArr['ethRace'] = $ethnicrace->getEthnicRaceCodes($object->cmbEthnicRace);
 								}
 
-
 							} elseif($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editMainArr'] = $empinfo ->filterEmpMain($getArr['id']);
 								$form_creator ->popArr['editPersArr'] = $empinfo->filterEmpPers($getArr['id']);
@@ -1578,6 +1578,9 @@ class EmpViewController {
 								if(isset($postArr['cmbJobTitle'])){
 									$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($postArr['cmbJobTitle'],'JOB','assigned');
 								}
+
+                                $form_creator ->popArr['assignedlocationList'] = EmpLocation::getEmpLocations($getArr['id']);
+                                $form_creator ->popArr['availablelocationList'] = EmpLocation::getUnassignedLocations($getArr['id']);
 
 								$form_creator->popArr['editPermResArr'] = $edit = $editPermRes = $empinfo->filterEmpContact($getArr['id']);
 								$form_creator->popArr['provlist'] = $porinfo ->getProvinceCodes($edit[0][4]);

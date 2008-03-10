@@ -299,6 +299,39 @@ function editEmpMain() {
 
 		<?php } ?>
 	}
+
+        <?php
+
+          $allowLocationDelete = false;
+          $allowLocationEdit = false;
+          if ($supervisorEMPMode) {
+              $allowLocationDelete = true;
+              $allowLocationEdit = true;
+          } else if (isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 'Yes')) {
+              $allowLocationDelete = $locRights['delete'];
+              $allowLocationEdit = $locRights['edit'];
+          }
+
+          // display location modifying link
+          if ($allowLocationEdit) {
+         ?>
+            var locAddLink = document.getElementById("toggleAddLocationLayer");
+            if (locAddLink) {
+                locAddLink.style.display = 'block';
+            }
+        <?php } ?>
+        <?php
+          // Show deletion check boxes
+          if ($allowLocationDelete) {
+         ?>
+            var elms = YAHOO.util.Dom.getElementsByClassName('layerDeleteChkBox');
+            // loop over all the elements
+            for(var i=0,j=elms.length;i<j;i++){
+                elms[i].style.display = 'block';
+            }
+
+        <?php } ?>
+
 		<?php
 		/* form elements disabled only for supervisor mode */
 		if ($supervisorEMPMode) { ?>

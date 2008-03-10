@@ -18,6 +18,22 @@
  *
  */
 ?>
+<?php
+if ($locRights['edit']) {
+    $addLocBtnAction  = "displayLocAddLayer()";
+    $saveLocBtnAction= "saveLocation()";
+    $delLocBtnAction  = "deleteLocations()";
+    $cancelLocBtnAction = "cancelLocEdit()";
+} else {
+    $addLocBtnAction  = "showAccessDeniedMsg()";
+    $saveLocBtnAction="showAccessDeniedMsg()";
+    $delLocBtnAction  = "showAccessDeniedMsg()";
+    $cancelLocBtnAction = "showAccessDeniedMsg()";
+}
+$picDir = '../../themes/'.$styleSheet.'/pictures/';
+$iconDir = '../../themes/'.$styleSheet.'/icons/';
+
+?>
 <script language="javascript">
 	function returnLocDet(){
 		var popup=window.open('CentralController.php?uniqcode=CST&VIEW=MAIN&esp=1','Locations','height=450,width=400,resizable=1');
@@ -77,6 +93,37 @@
 
 		}
 	}
+
+    /**
+     * Show acccess denied message.
+     */
+    function showAccessDeniedMsg() {
+        alert("<?php echo $lang_Error_AccessDenied; ?>")
+    }
+
+    /**
+     * Run when the "add" button is clicked.
+     * Shows the employee select fields
+     */
+    function toggleLocAddLayer() {
+        var layer = document.getElementById("addLocationLayer");
+
+        if (layer.style.display == 'block') {
+            layer.style.display = 'none';
+        } else {
+            layer.style.display = 'block';
+        }
+    }
+
+    /**
+     * Run when the cancel button is pressed
+     */
+    function cancelLocEdit() {
+        document.getElementById("addLocationLayer").style.display = 'none';
+        //document.frmActivity.activityName.value = "";
+        //document.frmActivity.activityId.value = "";
+        addMode = true;
+    }
 </script>
 <?php if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'addmode') { ?>
 
@@ -213,13 +260,64 @@
 
 			  </tr>
 			  <tr>
-			  <td nowrap></td>
-			  <td nowrap></td>
+			  <td nowrap><?php echo $lang_hremp_Locations; ?></td>
+			  <td nowrap>
+<!-- start of list of assigned locations -->
+              <table>
+<?php
+    $assignedList = $this->popArr['assignedlocationList'];
+    $availableList = $this->popArr['availablelocationList'];
+    foreach($assignedList as $empLoc) {
+?>
+    <tr>
+        <td><?php echo $empLoc->getLocationName(); ?></td>
+<?php if ($locRights['delete']) { ?>
+        <td class="layerDeleteChkBox" style="padding-left:10px;display:none;">
+            <a href="javascript:deleteLocation('<?php echo $empLoc->getLocation();?>')" title="<?php echo $lang_Admin_Users_delete;?>">X</a></td>
+<?php } ?>
+    </tr>
+<?php
+    }
+?>
+              </table>
+<!-- end of list of assigned locations -->
+<?php
+if ($locRights['add']) {
+?>
+<div id="toggleAddLocationLayer" style="display:none;" >
+<a href="javascript:toggleLocAddLayer();" id="toggleLocAddLayerLink"><?php echo $lang_hremp_AddLocation; ?></a>
+</div>
+<?php
+}
+?>
+              </td>
 			  <td width="50">&nbsp;</td>
 			  <td  <?php echo($edit1[0][1]=='EST000'?'':'style=visibility:hidden') ?> name='tdTermReasonDisc' id='tdTermReasonDisc'><?php echo $lang_hremp_termination_reason; ?> </td>
 			  <td  <?php echo($edit1[0][1]=='EST000'?'':'style=visibility:hidden') ?> name='tdTermReasonValue' id='tdTermReasonValue'><textarea <?php echo (isset($this->postArr['EditMode']) && $this->postArr['EditMode']=='1') ? '' : 'disabled'?>  name="txtTermReason" id="txtTermReason" ><?php echo (isset($this->postArr['txtTermReason'])?$this->postArr['txtTermReason']:$edit1[0][8]);?></textarea></td>
 			  </tr>
 			  </table>
 <?php } ?>
+<div id ="addLocationLayer" style="display:none;height:50px;">
+    <select name="cmbNewLocationId">
+        <?php
+         echo "<option value='0'> -- {$lang_hremp_SelectLocation} -- </option>";
+         foreach ($availableList as $loc) {
+              echo "<option value=\"{$loc[0]}\">{$loc[1]}</option>";
+         }
+        ?>
+    </select>
+
+        <img onClick="<?php echo $saveLocBtnAction; ?>;"
+            style="margin-top:10px;"
+            onMouseOut="this.src='<?php echo $iconDir;?>assign.gif';"
+            onMouseOver="this.src='<?php echo $iconDir;?>assign_o.gif';"
+            src="<?php echo $iconDir;?>assign.gif">
+        <img onClick="<?php echo $cancelLocBtnAction; ?>;"
+            style="margin-top:10px;"
+            onMouseOut="this.src='<?php echo $iconDir;?>cancel.gif';"
+            onMouseOver="this.src='<?php echo $iconDir;?>cancel_o.gif';"
+            src="<?php echo $iconDir;?>cancel.gif">
+</div>
+
 <hr/>
 <a href="javascript:toggleEmployeeContracts();" id="toogleContractLayerLink"><?php echo $lang_hremp_ShowEmployeeContracts; ?></a>

@@ -184,11 +184,24 @@ class CommonFunctions {
 	 *
 	 * NOTE: Considers negative numbers as invalid id's. Valid Id's
 	 * should be positive integers.
-	 *
+     *
+     * With the optional prefix parameter, id's like LOC001 can also be
+     * tested.
+     *
 	 * @param mixed id
+     * @param String $prefix (Optional prefix)
 	 * @return bool true if a valid id, false otherwise
 	 */
-	public static function isValidId($id) {
+	public static function isValidId($id, $prefix = null) {
+
+        /* Check for prefix and remove it */
+        if (!empty($prefix)) {
+            if (strpos($id, $prefix) === 0) {
+                $id = substr($id, strlen($prefix));
+            } else {
+                return false;
+            }
+        }
 
 		if (is_int($id) && (intVal($id) >= 0)) {
 			return true;
