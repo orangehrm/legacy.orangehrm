@@ -317,6 +317,24 @@
 		}
 	}
 
+    /**
+     * Remove given option from select object.
+     */
+    function removeOption(selectObj, optionValue) {
+        var selLength = selectObj.length;
+		var option = null;
+
+        for (i = 0; i < selLength; i++) {
+            if (selectObj.options[i].value == optionValue) {
+            	option = selectObj.options[i];
+                selectObj.options[i] = null;
+                break;
+            }
+        }
+
+        return option;
+    }
+
 	function printPage(page) {
 		if (page.print) {
 			page.print() ;

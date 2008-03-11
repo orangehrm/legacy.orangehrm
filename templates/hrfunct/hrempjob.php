@@ -20,21 +20,30 @@
 ?>
 <?php
 if ($locRights['edit']) {
-    $addLocBtnAction  = "displayLocAddLayer()";
-    $saveLocBtnAction= "saveLocation()";
-    $delLocBtnAction  = "deleteLocations()";
-    $cancelLocBtnAction = "cancelLocEdit()";
+    $saveLocBtnAction= "assignLocation()";
 } else {
-    $addLocBtnAction  = "showAccessDeniedMsg()";
     $saveLocBtnAction="showAccessDeniedMsg()";
-    $delLocBtnAction  = "showAccessDeniedMsg()";
-    $cancelLocBtnAction = "showAccessDeniedMsg()";
 }
 $picDir = '../../themes/'.$styleSheet.'/pictures/';
 $iconDir = '../../themes/'.$styleSheet.'/icons/';
 
 ?>
 <script language="javascript">
+
+   var locationNames = new Array();
+<?php
+    $assignedList = $this->popArr['assignedlocationList'];
+    foreach($assignedList as $empLoc) {
+        print "\tlocationNames['{$empLoc->getLocation()}'] = '{$empLoc->getLocationName()}';\n";
+    }
+
+    $availableList = $this->popArr['availablelocationList'];
+    foreach($availableList as $loc) {
+        print "\tlocationNames['{$loc[0]}'] = '{$loc[1]}';\n";
+    }
+
+?>
+
 	function returnLocDet(){
 		var popup=window.open('CentralController.php?uniqcode=CST&VIEW=MAIN&esp=1','Locations','height=450,width=400,resizable=1');
         if(!popup.opener) popup.opener=self;
@@ -124,6 +133,153 @@ $iconDir = '../../themes/'.$styleSheet.'/icons/';
         //document.frmActivity.activityId.value = "";
         addMode = true;
     }
+
+    /**
+     * Assign the location to the employee
+     */
+    function assignLocation() {
+        var cmbLocation = $('cmbNewLocationId');
+
+        if (cmbLocation.selectedIndex <= 0) {
+            alert('<?php echo $lang_hremp_PleaseSelectALocationFirst;?>')
+        } else {
+            var location = cmbLocation.options[cmbLocation.selectedIndex].value;
+            xajax_assignLocation(location);
+            disableLocationLinks();
+        }
+    }
+
+    /**
+     * Assign the location to the employee
+     */
+    function deleteLocation(link, location) {
+        xajax_removeLocation(location);
+        disableLocationLinks();
+    }
+
+    /**
+     * Run when a location has been assigned successfully
+     * Removes location from select box and adds to assigned location list
+     */
+    function onLocationAssign(location) {
+        var cmbLocation = $('cmbNewLocationId');
+
+        // Remove location from select box
+        var option = removeOption(cmbLocation, location);
+
+        // add location to list
+        var tbl = $('assignedLocationsTable');
+        var lastRow = tbl.rows.length;
+        var row = tbl.insertRow(lastRow);
+        var leftCell = row.insertCell(0);
+        var rightCell = row.insertCell(1);
+        row.id = "locRow" + location;
+
+        // Create location name
+        var locationName = locationNames[location];
+        var textNode = document.createTextNode(locationName);
+        leftCell.appendChild(textNode);
+
+        // creat location delete link
+        var link = document.createElement('a');
+        link.id = "locDelLink" + location;
+        link.href = "javascript:deleteLocation(this, '" + location + "')";
+        link.title = "<?php echo $lang_Admin_Users_delete;?>";
+        var linkText = document.createTextNode('X');
+        link.appendChild(linkText);
+
+        rightCell.appendChild(link);
+        rightCell.className = "locationDeleteChkBox";
+    }
+
+   /**
+     * Run when a location has been removed successfully
+     * Removes location from assigned list and adds to select box
+     */
+    function onLocationRemove(location) {
+
+        // Remove location row
+        var rowId = "locRow" + location;
+        var row = $(rowId);
+
+        var tbl = $('assignedLocationsTable');
+        tbl.deleteRow(row.rowIndex);
+
+        // Add location to select box
+        var cmbLocation = $('cmbNewLocationId');
+
+        var locationName = locationNames[location];
+        var option = document.createElement('option');
+        option.text = locationName;
+        option.value = location;
+        cmbLocation.options[cmbLocation.length] = option;
+    }
+
+    /**
+     * Enable all location modify links
+     */
+    function enableLocationLinks() {
+        enableLocationDeleteLinks();
+        enableAssignLocationBtn();
+    }
+
+    /**
+     * Disable all location modify links
+     */
+    function disableLocationLinks() {
+        disableLocationDeleteLinks();
+        disableAssignLocationBtn();
+    }
+
+    /**
+     * Disable delete links
+     */
+    function disableLocationDeleteLinks() {
+        var links = YAHOO.util.Dom.getElementsByClassName('locationDeleteLink');
+        var numLinks = links.length;
+
+        for(var i=0; i<numLinks;i++){
+            links[i].href = "";
+        }
+    }
+
+    /**
+     * Enable delete links
+     */
+    function enableLocationDeleteLinks() {
+        var links = YAHOO.util.Dom.getElementsByClassName('locationDeleteLink');
+        var numLinks = links.length;
+
+        for(var i=0; i<numLinks;i++) {
+            var link = links[i];
+            var location = link.id.replace("locDelLink", "");
+            link.href = "javascript:deleteLocation(this, '" + location + "')";
+        }
+    }
+
+
+    /**
+     * Disable the assign location button
+     */
+    function disableAssignLocationBtn() {
+        var btn = $('assignLocationButton');
+        btn.attributes["onClick"].value  = "";
+        btn.attributes["onMouseOut"].value ="";
+        btn.attributes["onMouseOver"].value ="";
+        btn.attributes["src"].value = "<?php echo $iconDir;?>assign.gif";
+    }
+
+    /**
+     * Enable the assign location button
+     */
+    function enableAssignLocationBtn() {
+        var btn = $('assignLocationButton');
+        btn.attributes["onClick"].value  = "<?php echo $saveLocBtnAction; ?>;";
+        btn.attributes["onMouseOut"].value ="this.src='<?php echo $iconDir;?>assign.gif';";
+        btn.attributes["onMouseOver"].value ="this.src='<?php echo $iconDir;?>assign_o.gif';";
+        btn.attributes["src"].value = "<?php echo $iconDir;?>assign.gif";
+    }
+
 </script>
 <?php if(isset($this->getArr['capturemode']) && $this->getArr['capturemode'] == 'addmode') { ?>
 
@@ -263,17 +419,20 @@ $iconDir = '../../themes/'.$styleSheet.'/icons/';
 			  <td nowrap><?php echo $lang_hremp_Locations; ?></td>
 			  <td nowrap>
 <!-- start of list of assigned locations -->
-              <table>
+              <table id="assignedLocationsTable">
 <?php
     $assignedList = $this->popArr['assignedlocationList'];
     $availableList = $this->popArr['availablelocationList'];
     foreach($assignedList as $empLoc) {
+        $locId = $empLoc->getLocation();
 ?>
-    <tr>
-        <td><?php echo $empLoc->getLocationName(); ?></td>
+    <tr id="locRow<?php echo $locId;?>" >
+        <td style="padding-right:10px;"><?php echo $empLoc->getLocationName(); ?></td>
 <?php if ($locRights['delete']) { ?>
-        <td class="layerDeleteChkBox" style="padding-left:10px;display:none;">
-            <a href="javascript:deleteLocation('<?php echo $empLoc->getLocation();?>')" title="<?php echo $lang_Admin_Users_delete;?>">X</a></td>
+        <td class="locationDeleteChkBox" style="display:none;">
+            <a class="locationDeleteLink" id="locDelLink<?php echo $locId;?>"
+                href="javascript:deleteLocation(this, '<?php echo $locId;?>')"
+                title="<?php echo $lang_Admin_Users_delete;?>">X</a></td>
 <?php } ?>
     </tr>
 <?php
@@ -298,7 +457,7 @@ if ($locRights['add']) {
 			  </table>
 <?php } ?>
 <div id ="addLocationLayer" style="display:none;height:50px;">
-    <select name="cmbNewLocationId">
+    <select name="cmbNewLocationId" id="cmbNewLocationId" style="margin-top:10px;">
         <?php
          echo "<option value='0'> -- {$lang_hremp_SelectLocation} -- </option>";
          foreach ($availableList as $loc) {
@@ -307,16 +466,12 @@ if ($locRights['add']) {
         ?>
     </select>
 
-        <img onClick="<?php echo $saveLocBtnAction; ?>;"
-            style="margin-top:10px;"
-            onMouseOut="this.src='<?php echo $iconDir;?>assign.gif';"
-            onMouseOver="this.src='<?php echo $iconDir;?>assign_o.gif';"
-            src="<?php echo $iconDir;?>assign.gif">
-        <img onClick="<?php echo $cancelLocBtnAction; ?>;"
-            style="margin-top:10px;"
-            onMouseOut="this.src='<?php echo $iconDir;?>cancel.gif';"
-            onMouseOver="this.src='<?php echo $iconDir;?>cancel_o.gif';"
-            src="<?php echo $iconDir;?>cancel.gif">
+    <img onClick="<?php echo $saveLocBtnAction; ?>;"
+        id="assignLocationButton"
+        style="margin-top:10px;"
+        onMouseOut="this.src='<?php echo $iconDir;?>assign.gif';"
+        onMouseOver="this.src='<?php echo $iconDir;?>assign_o.gif';"
+        src="<?php echo $iconDir;?>assign.gif" />
 </div>
 
 <hr/>

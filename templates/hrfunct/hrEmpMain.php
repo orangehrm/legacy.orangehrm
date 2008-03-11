@@ -119,12 +119,63 @@ function getMinMaxCurrency($value, $salGrd) {
 return $response->getXML();
 }
 
+$GLOBALS['lang_Common_Select'] = $lang_Common_Select;
+$GLOBALS['lang_hremp_ErrorAssigningLocation'] = $lang_hremp_ErrorAssigningLocation;
+
+/**
+ * Assign location to employee
+ * @param string $locCode Location code
+ */
+function assignLocation($locCode) {
+
+    $empViewController = new EmpViewController();
+    $result = $empViewController->assignLocation($_GET['id'], $locCode);
+
+    $response = new xajaxResponse();
+    if ($result) {
+        $response->addScript('onLocationAssign("' . $locCode. '");');
+    } else {
+        $response->addScript('alert("' . $GLOBALS['lang_hremp_ErrorAssigningLocation'] .'");');
+    }
+
+    $xajaxFiller = new xajaxElementFiller();
+    $response->addAssign('status','style','display:none;');
+    $response->addScript('enableLocationLinks();');
+
+    return $response->getXML();
+}
+
+/**
+ * Remove location from employee
+ * @param string $locCode Location code
+ */
+function removeLocation($locCode) {
+
+    $empViewController = new EmpViewController();
+    $result = $empViewController->removeLocation($_GET['id'], $locCode);
+
+    $response = new xajaxResponse();
+    if ($result) {
+       $response->addScript('onLocationRemove("' . $locCode. '");');
+    } else {
+        $response->addScript('alert("' . $GLOBALS['lang_hremp_ErrorAssigningLocation'] .'");');
+    }
+
+    $xajaxFiller = new xajaxElementFiller();
+    $response->addAssign('status','style','display:none;');
+    $response->addScript('enableLocationLinks();');
+
+    return $response->getXML();
+}
+
 $objAjax = new xajax();
 $objAjax->registerFunction('populateStates');
 $objAjax->registerFunction('populateDistrict');
 $objAjax->registerFunction('assEmpStat');
 $objAjax->registerFunction('getUnAssMemberships');
 $objAjax->registerFunction('getMinMaxCurrency');
+$objAjax->registerFunction('assignLocation');
+$objAjax->registerFunction('removeLocation');
 
 $objAjax->processRequests();
 ?>
@@ -315,16 +366,16 @@ function editEmpMain() {
           // display location modifying link
           if ($allowLocationEdit) {
          ?>
-            var locAddLink = document.getElementById("toggleAddLocationLayer");
-            if (locAddLink) {
-                locAddLink.style.display = 'block';
+            var addLocationLayer = document.getElementById("addLocationLayer");
+            if (addLocationLayer) {
+                addLocationLayer.style.display = 'block';
             }
         <?php } ?>
         <?php
           // Show deletion check boxes
           if ($allowLocationDelete) {
          ?>
-            var elms = YAHOO.util.Dom.getElementsByClassName('layerDeleteChkBox');
+            var elms = YAHOO.util.Dom.getElementsByClassName('locationDeleteChkBox');
             // loop over all the elements
             for(var i=0,j=elms.length;i<j;i++){
                 elms[i].style.display = 'block';
@@ -632,7 +683,20 @@ tableDisplayStyle = "table";
 <link href="../../themes/<?php echo $styleSheet;?>/css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">@import url("../../themes/<?php echo $styleSheet;?>/css/hrEmpMain.css"); </style>
 <style type="text/css">@import url("../../themes/<?php echo $styleSheet;?>/css/essMenu.css"); </style>
+<style type="text/css">
+    <!--
 
+    .locationDeleteChkBox {
+        padding:2px 4px 2px 4px;
+        border-style: solid;
+        border-width: thin;
+        display:block;
+    }
+
+    -->
+</style>
+
+</head>
 <body onLoad="hideLoad();">
 <script type="text/javascript">
   YAHOO.OrangeHRM.container.init();

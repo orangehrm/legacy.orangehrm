@@ -572,6 +572,9 @@
 
     $lang_hremp_AddLocation                 = "Add Location";
     $lang_hremp_SelectLocation              = "Select Location";
+    $lang_hremp_PleaseSelectALocationFirst  = "Please select a location first";
+    $lang_hremp_ErrorAssigningLocation      = "Error assigning location";
+    $lang_hremp_ErrorRemovingLocation      = "Error removing location";
 
 	$lang_hremp_SalaryShouldBeWithinMinAndMa= "Salary should be within min and max";
 
