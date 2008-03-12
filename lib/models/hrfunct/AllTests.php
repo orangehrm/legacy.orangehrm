@@ -35,7 +35,7 @@ require_once 'JobTitleHistoryTest.php';
 require_once 'SubDivisionHistoryTest.php';
 
 
-class models_eimadmin_AllTests
+class models_hrfunct_AllTests
 {
     public static function main()
     {
