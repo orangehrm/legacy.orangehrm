@@ -32,6 +32,7 @@ require_once 'EmpInfoTest.php';
 require_once 'EmpSimpleBenefitTest.php';
 require_once 'EmpLocationTest.php';
 require_once 'JobTitleHistoryTest.php';
+require_once 'SubDivisionHistoryTest.php';
 
 
 class models_eimadmin_AllTests
@@ -48,6 +49,7 @@ class models_eimadmin_AllTests
 		$suite->addTestSuite('EmpSimpleBenefitTest');
 	    $suite->addTestSuite('EmpLocationTest');
 	    $suite->addTestSuite('JobTitleHistoryTest');
+	    $suite->addTestSuite('SubDivisionHistoryTest');
         return $suite;
     }
 }
