@@ -24,6 +24,8 @@ $jobTitleHistory = $this->popArr['jobTitleHistory'];
 $subDivisionHistory = $this->popArr['subDivisionHistory'];
 $locationHistory = $this->popArr['locationHistory'];
 
+$allItems = count($jobTitleHistory) + count($subDivisionHistory) + count($locationHistory);
+
 $picDir = '../../themes/'.$styleSheet.'/pictures/';
 $iconDir = '../../themes/'.$styleSheet.'/icons/';
 
@@ -268,8 +270,10 @@ function moverHistoryEditBtn() {
                 <option value="0">-- <?php echo $lang_hremp_SelectJobTitle; ?> --</option>
             <?php
                 $jobtit = $this->popArr['jobtit'];
-                foreach ($jobtit as $jobtitle) {
-                    echo "<option value='" . $jobtitle[0] . "'>" .$jobtitle[1]. "</option>";
+                if (!empty($jobtit)) {
+                    foreach ($jobtit as $jobtitle) {
+                        echo "<option value='" . $jobtitle[0] . "'>" .$jobtitle[1]. "</option>";
+                    }
                 }
             ?>
             </select>
@@ -327,6 +331,7 @@ function moverHistoryEditBtn() {
             onMouseOver="this.src='<?php echo $picDir;?>btn_add_02.gif';"
             src="<?php echo $picDir;?>btn_add.gif" />
 <?php } ?>
+<?php if ($allItems > 0) { ?>
 <?php   if($locRights['delete']) { ?>
         <img title="<?php echo $lang_Common_Delete;?>" onclick="deleteJobHistory();"
             onmouseout="this.src='<?php echo $picDir;?>btn_delete.gif';"
@@ -341,7 +346,7 @@ function moverHistoryEditBtn() {
             onmouseover="moverHistoryEditBtn();"
             src="<?php echo $picDir;?>btn_edit.gif">
 <?php   } ?>
-
+<?php } ?>
 <!-------------- Start previous job titles ---------------------->
 <table id="jobTitleHistoryTable" width="100%" class="historyTable">
 <thead>
