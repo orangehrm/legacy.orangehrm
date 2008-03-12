@@ -143,6 +143,7 @@
           <batchtest>
               <fileset dir="${project.dir}/lib">
                   <include name="**/*Test.php"/>
+                  <exclude name="**/CompPropertyTest.php"/>
               </fileset>
           </batchtest>
       </phpunit2>

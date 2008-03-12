@@ -56,5 +56,93 @@ class EXTRACTOR_EmpJobHistory {
 
 		return $history;
 	}
+
+    public function parseEditData($postArr) {
+
+        $historyItems = array();
+
+        $empNum = trim($postArr['txtEmpID']);
+
+        // Get job title history
+        if (isset($postArr['jobTitleHisId'])) {
+            $jobTitleIds = $postArr['jobTitleHisId'];
+            $jobTitleCodes = $postArr['jobTitleHisCode'];
+            $jobTitleFromDates = $postArr['jobTitleHisFromDate'];
+            $jobTitleToDates = $postArr['jobTitleHisToDate'];
+
+            for ($i=0; $i<count($jobTitleIds); $i++) {
+                $history = new JobTitleHistory();
+
+                $id = $jobTitleIds[$i];
+                $code = $jobTitleCodes[$i];
+                $startDate = LocaleUtil::getInstance()->convertToStandardDateFormat($jobTitleFromDates[$i]);
+                $endDate = LocaleUtil::getInstance()->convertToStandardDateFormat($jobTitleToDates[$i]);
+
+                $history->setId($id);
+                $history->setCode($code);
+                $history->setEmpNumber($empNum);
+                $history->setStartDate($startDate);
+                $history->setEndDate($endDate);
+
+                $historyItems[] = $history;
+            }
+        }
+
+        // Get sub division history
+        if (isset($postArr['subDivHisId'])) {
+            $subDivIds = $postArr['subDivHisId'];
+            $subDivCodes = $postArr['subDivHisCode'];
+            $subDivFromDates = $postArr['subDivHisFromDate'];
+            $subDivToDates = $postArr['subDivHisToDate'];
+
+            for ($i=0; $i<count($subDivIds); $i++) {
+                $history = new SubDivisionHistory();
+
+                $id = $subDivIds[$i];
+                $code = $subDivCodes[$i];
+                $startDate = LocaleUtil::getInstance()->convertToStandardDateFormat($subDivFromDates[$i]);
+                $endDate = LocaleUtil::getInstance()->convertToStandardDateFormat($subDivToDates[$i]);
+
+                $history->setId($id);
+                $history->setCode($code);
+                $history->setEmpNumber($empNum);
+                $history->setStartDate($startDate);
+                $history->setEndDate($endDate);
+
+                $historyItems[] = $history;
+            }
+
+        }
+
+        // Get location history
+        if (isset($postArr['locHisId'])) {
+
+            $locIds = $postArr['locHisId'];
+            $locCodes = $postArr['locHisCode'];
+            $locFromDates = $postArr['locHisFromDate'];
+            $locToDates = $postArr['locHisToDate'];
+
+            for ($i=0; $i<count($locIds); $i++) {
+                $history = new LocationHistory();
+
+                $id = $locIds[$i];
+                $startDate = LocaleUtil::getInstance()->convertToStandardDateFormat($locFromDates[$i]);
+                $endDate = LocaleUtil::getInstance()->convertToStandardDateFormat($locToDates[$i]);
+
+                $history->setId($id);
+                $code = $locCodes[$i];
+                $history->setCode($code);
+                $history->setEmpNumber($empNum);
+                $history->setStartDate($startDate);
+                $history->setEndDate($endDate);
+
+                $historyItems[] = $history;
+            }
+
+        }
+
+        return $historyItems;
+    }
+
 }
 ?>

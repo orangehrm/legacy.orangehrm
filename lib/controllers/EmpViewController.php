@@ -857,8 +857,10 @@ class EmpViewController {
         if (isset($postArr['empjobHistorySTAT'])) {
             if ($action == 'ADD') {
                 $object->save();
-            } else if ($action == 'EDIT') {
-
+            } else if (($action == 'EDIT') && is_array($object)) {
+                foreach ($object as $historyItem) {
+                    $historyItem->save();
+                }
             }
             return;
         }

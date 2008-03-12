@@ -594,6 +594,10 @@
     $lang_hremp_EmployeeHistory_PleaseSpecifyStartDate = "Please specify valid start date";
     $lang_hremp_EmployeeHistory_PleaseSpecifyEndDate = "Please specify valid end date";
 
+    $lang_hremp_EmployeeHistory_DatesWrong = "Please enter valid dates. From date should not be after To date";
+    $lang_hremp_EmployeeHistory_ExpectedDateFormat = "Expected date format: ";
+    $lang_hremp_EmployeeHistory_DatesWithErrorsHighlighted = "Dates with errors are highlighted in red ";
+
     $lang_hremp_AddLocation                 = "Add Location";
     $lang_hremp_SelectLocation              = "Select Location";
     $lang_hremp_PleaseSelectALocationFirst  = "Please select a location first";

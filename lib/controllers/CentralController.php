@@ -983,7 +983,7 @@ switch ($moduletype) {
                                                 $parsedObject = $extractorForm->parseAddData($_POST);
                                                 $view_controller->assignEmpFormData($_POST,$parsedObject,$_POST['empjobHistorySTAT']);
                                             } elseif(($_POST['empjobHistorySTAT'] == 'EDIT') && $locRights['edit']) {
-                                                $parsedObject = $extractorForm->parseData($_POST);
+                                                $parsedObject = $extractorForm->parseEditData($_POST);
                                                 $view_controller->assignEmpFormData($_POST,$parsedObject,$_POST['empjobHistorySTAT']);
                                             } elseif($_POST['empjobHistorySTAT'] == 'DEL' && $locRights['delete']) {
                                                 $view_controller->delEmpFormData($_GET,$_POST);

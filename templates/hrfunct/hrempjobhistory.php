@@ -124,6 +124,130 @@ function selectHistSubDiv() {
     if(!popup.opener) popup.opener=self;
 }
 
+function validateDateArrays(fromArray, toArray) {
+    var err = false;
+
+    var fromLen = fromArray.length;
+    for (xx=0; xx<fromLen; xx++) {
+
+        var from = fromArray[xx];
+        var to = toArray[xx];
+        var startDate = strToDate(from.value, YAHOO.OrangeHRM.calendar.format);
+        var endDate = strToDate(to.value, YAHOO.OrangeHRM.calendar.format);
+
+        var startBad = false;
+        var endBad = false;
+
+        if (!startDate) {
+            err = true;
+            startBad = true;
+        }
+
+        if (!endDate) {
+            err = true;
+            endBad = true;
+        }
+
+        if (startDate && endDate && (startDate > endDate)) {
+            err = true;
+            startBad = true;
+            endBad = true;
+        }
+
+        if (startBad) {
+            from.style.backgroundColor = 'red';
+        } else {
+            from.style.backgroundColor = 'white';
+        }
+
+        if (endBad) {
+            to.style.backgroundColor = 'red';
+        } else {
+            to.style.backgroundColor = 'white';
+        }
+    }
+
+    return err;
+}
+
+function validateEditAndSubmit() {
+
+    var fromArray = YAHOO.util.Dom.getElementsByClassName('jobTitleHisFromDate');
+    var toArray = YAHOO.util.Dom.getElementsByClassName('jobTitleHisToDate');
+
+    var err = validateDateArrays(fromArray, toArray);
+
+    var fromArray = YAHOO.util.Dom.getElementsByClassName('subDivHisFromDate');
+    var toArray = YAHOO.util.Dom.getElementsByClassName('subDivHisToDate');
+
+    result = validateDateArrays(fromArray, toArray);
+
+    err = err || result;
+
+    var fromArray = YAHOO.util.Dom.getElementsByClassName('locHisFromDate');
+    var toArray = YAHOO.util.Dom.getElementsByClassName('locHisToDate');
+
+    result = validateDateArrays(fromArray, toArray);
+    err = err || result;
+
+    if (!err) {
+        document.frmEmp.empjobHistorySTAT.value="EDIT";
+        qCombo(2);
+    } else {
+        var msg = "<?php echo $lang_hremp_EmployeeHistory_DatesWrong;?>\n";
+        msg += "<?php echo $lang_hremp_EmployeeHistory_ExpectedDateFormat;?> : " + YAHOO.OrangeHRM.calendar.format + "\n";
+        msg += "<?php echo $lang_hremp_EmployeeHistory_DatesWithErrorsHighlighted; ?>";
+        alert(msg);
+    }
+}
+
+function editJobHistory() {
+
+    var btn = $('editSaveHistoryBtn');
+    if(btn.title=='<?php echo $lang_Common_Save;?>') {
+        validateEditAndSubmit();
+        return;
+    }
+
+    // Show all date edit buttons
+    /*var elms = YAHOO.util.Dom.getElementsByClassName('jobHistDateBtn');
+    for(var i=0,j=elms.length;i<j;i++){
+        elms[i].style.display = 'block';
+    }*/
+
+    // Enable all date entry input boxes
+    var elms = YAHOO.util.Dom.getElementsByClassName('jobHistEditBox');
+    for(var i=0,j=elms.length;i<j;i++){
+        elms[i].style.disabled = false;
+    }
+
+    var frm=document.frmEmp;
+    for (var i=0; i < frm.elements.length; i++)
+        frm.elements[i].disabled = false;
+
+    btn.src = "<?php echo $picDir;?>btn_save.gif";
+    btn.title = '<?php echo $lang_Common_Save;?>';
+}
+
+
+function moutHistoryEditBtn() {
+    var btn = $('editSaveHistoryBtn');
+    if(btn.title=='<?php echo $lang_Common_Save;?>') {
+        btn.src='<?php echo $picDir;?>btn_save.gif';
+    } else {
+        btn.src='<?php echo $picDir;?>btn_edit.gif';
+    }
+}
+
+function moverHistoryEditBtn() {
+    var btn = $('editSaveHistoryBtn');
+    if(btn.title=='<?php echo $lang_Common_Save;?>') {
+        btn.src='<?php echo $picDir;?>btn_save_02.gif';
+    } else {
+        btn.src='<?php echo $picDir;?>btn_edit_02.gif';
+    }
+}
+
 </script>
 <div id="employeeJobHistoryLayer" style="display:none;">
 
@@ -210,6 +334,14 @@ function selectHistSubDiv() {
             src="<?php echo $picDir;?>btn_delete.gif">
 <?php   } ?>
 
+<?php   if($locRights['edit']) { ?>
+        <img id="editSaveHistoryBtn" name="editSaveHistoryBtn"
+            title="<?php echo $lang_Common_Edit;?>" onclick="editJobHistory();"
+            onmouseout="moutHistoryEditBtn();"
+            onmouseover="moverHistoryEditBtn();"
+            src="<?php echo $picDir;?>btn_edit.gif">
+<?php   } ?>
+
 <!-------------- Start previous job titles ---------------------->
 <table id="jobTitleHistoryTable" width="100%" class="historyTable">
 <thead>
@@ -228,6 +360,7 @@ function selectHistSubDiv() {
 <?php
     foreach ($jobTitleHistory as $jobTitleItem) {
         $id = $jobTitleItem->getId();
+        $code = $jobTitleItem->getCode();
         $name = CommonFunctions::escapeHtml($jobTitleItem->getName());
         $from = LocaleUtil::getInstance()->formatDate($jobTitleItem->getStartDate());
         $to = LocaleUtil::getInstance()->formatDate($jobTitleItem->getEndDate());
@@ -235,9 +368,17 @@ function selectHistSubDiv() {
     <tr id="jobTitleHistoryRow<?php echo $id;?>">
     <td width="10"><input type='checkbox' class='checkbox' name='chkjobtitHistory[]' value="<?php echo $id;?>">
     </td>
-    <td><?php echo $name;?></td>
-    <td><?php echo $from;?></td>
-    <td><?php echo $to;?></td>
+    <td><?php echo $name;?>
+        <input type='hidden' name='jobTitleHisId[]' value="<?php echo $id;?>"/>
+        <input type='hidden' name='jobTitleHisCode[]' value="<?php echo $code;?>"/></td>
+    <td nowrap>
+        <input disabled type="text" value="<?php echo $from;?>" name="jobTitleHisFromDate[]"
+            class="jobHistEditBox noDefaultEdit jobTitleHisFromDate" size="12"/>
+        <?php //<input type="button" value="   " class="calendarBtn jobHistDateBtn" style="display:none;" />?></td>
+    <td nowrap>
+        <input disabled type="text" value="<?php echo $to;?>" name="jobTitleHisToDate[]"
+            class="jobHistEditBox noDefaultEdit jobTitleHisToDate" size="12"/>
+        <?php //<input type="button" value="   " class="calendarBtn jobHistDateBtn" style="display:none;" />?></td>
     </tr>
 <?php
     }
@@ -263,15 +404,25 @@ function selectHistSubDiv() {
     foreach ($subDivisionHistory as $subItem) {
         $id = $subItem->getId();
         $name = CommonFunctions::escapeHtml($subItem->getName());
+        $code = $subItem->getCode();
         $from = LocaleUtil::getInstance()->formatDate($subItem->getStartDate());
         $to = LocaleUtil::getInstance()->formatDate($subItem->getEndDate());
 ?>
     <tr id="subDivisionHistoryRow<?php echo $id;?>">
     <td width="10"><input type='checkbox' class='checkbox' name='chksubdivisionHistory[]' value="<?php echo $id;?>">
     </td>
-    <td><?php echo $name;?></td>
-    <td><?php echo $from;?></td>
-    <td><?php echo $to;?></td>
+    <td><?php echo $name;?>
+        <input type='hidden' name='subDivHisId[]' value="<?php echo $id;?>"/>
+        <input type='hidden' name='subDivHisCode[]' value="<?php echo $code;?>"/></td>
+    <td nowrap>
+        <input disabled type="text" value="<?php echo $from;?>" name="subDivHisFromDate[]"
+            class="jobHistEditBox noDefaultEdit subDivHisFromDate" size="12"/>
+        <?php //<input type="button" value="   " class="calendarBtn jobHistDateBtn" style="display:none;"/>?></td>
+    <td nowrap>
+        <input disabled type="text" value="<?php echo $to;?>" name="subDivHisToDate[]"
+            class="jobHistEditBox noDefaultEdit subDivHisToDate" size="12"/>
+        <?php //<input type="button" value="   " class="calendarBtn jobHistDateBtn" style="display:none;"/>?></td>
+    </td>
     </tr>
 <?php
     }
@@ -297,6 +448,7 @@ function selectHistSubDiv() {
 <?php
     foreach ($locationHistory as $locItem) {
         $id = $locItem->getId();
+        $code = $locItem->getCode();
         $name = CommonFunctions::escapeHtml($locItem->getName());
         $from = LocaleUtil::getInstance()->formatDate($locItem->getStartDate());
         $to = LocaleUtil::getInstance()->formatDate($locItem->getEndDate());
@@ -304,9 +456,17 @@ function selectHistSubDiv() {
     <tr id="locationHistoryRow<?php echo $id;?>">
     <td width="10"><input type='checkbox' class='checkbox' name='chklocationHistory[]' value="<?php echo $id;?>">
     </td>
-    <td><?php echo $name;?></td>
-    <td><?php echo $from;?></td>
-    <td><?php echo $to;?></td>
+    <td><?php echo $name;?>
+        <input type='hidden' name='locHisId[]' value="<?php echo $id;?>"/>
+        <input type='hidden' name='locHisCode[]' value="<?php echo $code;?>"/></td>
+    <td nowrap>
+        <input disabled type="text" value="<?php echo $from;?>" name="locHisFromDate[]"
+            class="jobHistEditBox noDefaultEdit locHisFromDate" size="12"/>
+        <?php //<input type="button" value="   " class="calendarBtn jobHistDateBtn" style="display:none;"/>?></td>
+    <td nowrap>
+        <input disabled type="text" value="<?php echo $to;?>" name="locHisToDate[]"
+            class="jobHistEditBox noDefaultEdit locHisToDate" size="12"/>
+        <?php //<input type="button" value="   " class="calendarBtn jobHistDateBtn" style="display:none;"/>?></td>
     </tr>
 <?php
     }

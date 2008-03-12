@@ -346,7 +346,9 @@ function editEmpMain() {
 		      /* If admin or supervisor in EMP page */
 			  if ((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 'Yes')) || $supervisorEMPMode ) { ?>
 
-		frm.elements[i].disabled=false;
+        if (frm.elements[i].className.indexOf('noDefaultEdit') == -1) {
+		  frm.elements[i].disabled=false;
+        }
 
 		<?php } ?>
 	}
