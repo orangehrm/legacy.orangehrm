@@ -187,6 +187,7 @@ lib/dao/MySQLClass.php -text
 lib/dao/SQLQBuilder.php -text
 lib/exception/ExceptionHandler.php -text
 lib/extractor/AllTests.php -text
+lib/extractor/eimadmin/EXTRACTOR_CompProperty.php -text
 lib/extractor/eimadmin/EXTRACTOR_CompStruct.php -text
 lib/extractor/eimadmin/EXTRACTOR_Customer.php -text
 lib/extractor/eimadmin/EXTRACTOR_EEOJobCat.php -text
@@ -263,6 +264,8 @@ lib/extractor/time/EXTRACTOR_Workshift.php -text
 lib/logs/LogFileWriter.php -text
 lib/models/AllTests.php -text
 lib/models/eimadmin/AllTests.php -text
+lib/models/eimadmin/CompProperty.php -text
+lib/models/eimadmin/CompPropertyTest.php -text
 lib/models/eimadmin/CompStruct.php -text
 lib/models/eimadmin/CountryInfo.php -text
 lib/models/eimadmin/CurrencyTypes.php -text
@@ -442,6 +445,7 @@ scripts/yui/yahoo/yahoo-debug.js -text
 scripts/yui/yahoo/yahoo-min.js -text
 scripts/yui/yahoo/yahoo.js -text
 /sysinfo.php -text
+templates/eimadmin/companyProperty.php -text
 templates/eimadmin/compstruct.php -text
 templates/eimadmin/customer.php -text
 templates/eimadmin/eeojobcat.php -text

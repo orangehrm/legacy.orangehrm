@@ -24,6 +24,7 @@ require_once ROOT_PATH . '/lib/models/eimadmin/SalaryGrades.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/CurrencyTypes.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/SalCurDet.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/CompStruct.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/CompProperty.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/Education.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/Skills.php';;
 require_once ROOT_PATH . '/lib/models/eimadmin/MembershipType.php';
@@ -188,6 +189,7 @@ class ViewController {
 		switch ($getArr['uniqcode']) {
 
 			case 'CST' :
+            case 'TCP' :
 			case 'GEN' :
 						$this->reDirect($getArr);
 						break;
@@ -1023,6 +1025,11 @@ class ViewController {
 									$res = $loc -> addLocation();
 									break;
 
+                case 'TCP'  :       $tcp = new CompProperty();
+                                    $tcp = $object;
+                                    $res = $tcp -> addProperty();
+                                    break;
+
 				case 'MEM'  :		$memtype = new MembershipType();
 									$memtype = $object;
 									$res = $memtype -> addMembershipType();
@@ -1265,6 +1272,9 @@ class ViewController {
 					case 'LOC' :
 								if($noRedirect)
 									break;
+                    case 'TCP' :
+                                if($noRedirect)
+                                    break;
 					case 'CUR' :
 								if($noRedirect)
 									break;
@@ -1587,6 +1597,16 @@ class ViewController {
 									$res = $projects->updateProject();
 									break;
 
+                case 'TCP'  :       $property = new CompProperty();
+                                    $property = $object;
+
+                                    if($property->getEditPropFlag()==false)
+                                        $res = $property->editPropertyList();
+                                    else
+                                        $res = $property->editProperty($id);
+
+                                    break;
+
 				case 'PAC'  :		$projectActivity = $object;
 									$authorizeObj = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
 									$projectId = $projectActivity->getProjectId();
@@ -1763,6 +1783,11 @@ class ViewController {
 						$compstruct = $object;
 						$res = $compstruct -> deleteCompStruct();
 						break;
+
+            case 'TCP': $compProperty = new CompProperty();
+                        $compProperty = $object;
+                        $res = $compProperty->deleteProperties();
+
 		}
 	}
 
@@ -2542,6 +2567,19 @@ class ViewController {
 							$form_creator->popArr['countries'] = $countries->getCountryCodes ();
 
 							break;
+
+            case 'TCP' :    $form_creator->formPath = '/templates/eimadmin/companyProperty.php';
+
+                            if(!isset($_GET['action']))
+                            {
+                                $empInfo=new EmpInfo();
+                                $form_creator->popArr['emplist'] = $empInfo->getListofEmployee();
+                            }
+
+                            $compProp = new CompProperty();
+                            $form_creator->popArr['properties'] = $compProp->getPropertyList();
+
+                            break;
 
 			case 'JOB' :	$form_creator->formPath = '/templates/eimadmin/jobtitle.php';
 
