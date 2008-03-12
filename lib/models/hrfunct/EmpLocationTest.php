@@ -137,6 +137,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         $empLoc = new EmpLocation('a1', 'LOC001');
         try {
             $empLoc->save();
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::INVALID_PARAMETER, $e->getCode());
         }
@@ -145,6 +146,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         $empLoc = new EmpLocation(11, 'LOCX001');
         try {
             $empLoc->save();
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::INVALID_PARAMETER, $e->getCode());
         }
@@ -155,6 +157,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         $empLoc = new EmpLocation(112, 'LOC011');
         try {
             $empLoc->save();
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::DB_ERROR, $e->getCode());
         }
@@ -168,6 +171,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         $empLoc = new EmpLocation(11, 'LOC011');
         try {
             $empLoc->save();
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::DB_ERROR, $e->getCode());
         }
@@ -200,6 +204,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         $empLoc = new EmpLocation('a1', 'LOC001');
         try {
             $empLoc->delete();
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::INVALID_PARAMETER, $e->getCode());
         }
@@ -208,6 +213,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         $empLoc = new EmpLocation(11, 'LOCX001');
         try {
             $empLoc->delete();
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::INVALID_PARAMETER, $e->getCode());
         }
@@ -241,6 +247,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         // Invalid emp number
         try {
             $list = EmpLocation::getEmpLocations('a1');
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::INVALID_PARAMETER, $e->getCode());
         }
@@ -276,6 +283,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
         // Invalid emp number
         try {
             $list = EmpLocation::getUnassignedLocations('a1');
+            $this->fail("Exception expected");
         } catch (EmpLocationException $e) {
             $this->assertEquals(EmpLocationException::INVALID_PARAMETER, $e->getCode());
         }
