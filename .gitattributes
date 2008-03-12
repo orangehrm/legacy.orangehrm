@@ -332,6 +332,8 @@ lib/models/hrfunct/EmpSkill.php -text
 lib/models/hrfunct/EmpWorkExp.php -text
 lib/models/hrfunct/JobTitleHistory.php -text
 lib/models/hrfunct/JobTitleHistoryTest.php -text
+lib/models/hrfunct/LocationHistory.php -text
+lib/models/hrfunct/LocationHistoryTest.php -text
 lib/models/hrfunct/SubDivisionHistory.php -text
 lib/models/hrfunct/SubDivisionHistoryTest.php -text
 lib/models/leave/AllTests.php -text
