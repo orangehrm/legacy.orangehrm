@@ -9,6 +9,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
         7. Story: HR Admin and supervisor adds benefit information
         8. Story: Employee works in multiple locations
         9. Story: Previous Positions, Divisions, and Locations
+        10. Story: Track company property 
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 

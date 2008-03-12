@@ -228,7 +228,7 @@ class Conf {
 		\$this->dbuser	= '$dbOHRMUser';
 		\$this->dbpass	= '$dbOHRMPassword';
 		\$this->version = '2.2.2.2';
-                \$this->customVersion = 'ors-0.1-alpha.3';
+                \$this->customVersion = 'ors-0.1-alpha.4';
 
 		\$this->emailConfiguration = dirname(__FILE__).'/mailConf.php';
 		\$this->errorLog =  realpath(dirname(__FILE__).'/../logs/').'/';
