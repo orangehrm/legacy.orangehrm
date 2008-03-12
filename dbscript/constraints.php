@@ -95,7 +95,10 @@ array("hs_hr_emp_benefit_simple", array("emp_number"), "hs_hr_employee",   array
 array("hs_hr_emp_benefit_simple", array("benefit_id"), "hs_hr_benefit_simple",   array("id"), "cascade"),
 array("hs_hr_emp_benefit_simple", array("currency_id"), "hs_hr_currency_type",   array("currency_id"), "null"),
 array("hs_hr_emp_locations", array("loc_code"), "hs_hr_location",   array("loc_code"), "cascade"),
-array("hs_hr_emp_locations", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade")
+array("hs_hr_emp_locations", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_emp_jobtitle_history", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_emp_location_history", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_emp_subdivision_history", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade")
 );
 
 ?>

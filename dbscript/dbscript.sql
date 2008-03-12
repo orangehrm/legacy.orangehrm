@@ -766,6 +766,39 @@ create table `hs_hr_emp_locations` (
   primary key  (`emp_number`, `loc_code`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_emp_jobtitle_history` (
+  `id` int(11) not null auto_increment,
+  `emp_number` int(7) not null,
+  `code` varchar(15) not null,
+  `name` varchar(250) default null,
+  `start_date` datetime default null,
+  `end_date` datetime default null,
+  primary key  (`id`),
+  key  `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_emp_subdivision_history` (
+  `id` int(11) not null auto_increment,
+  `emp_number` int(7) not null,
+  `code` varchar(15) not null,
+  `name` varchar(250) default null,
+  `start_date` datetime default null,
+  `end_date` datetime default null,
+  primary key  (`id`),
+  key  `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_emp_location_history` (
+  `id` int(11) not null auto_increment,
+  `emp_number` int(7) not null,
+  `code` varchar(15) not null,
+  `name` varchar(250) default null,
+  `start_date` datetime default null,
+  `end_date` datetime default null,
+  primary key  (`id`),
+  key  `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
                              references hs_hr_location(loc_code) on delete restrict;
@@ -1072,6 +1105,18 @@ alter table `hs_hr_emp_benefit_simple`
 alter table `hs_hr_emp_locations`
     add constraint foreign key (`loc_code`)
         references hs_hr_location(`loc_code`) on delete cascade,
+    add constraint foreign key (`emp_number`)
+        references hs_hr_employee(`emp_number`) on delete cascade;
+
+alter table `hs_hr_emp_jobtitle_history`
+    add constraint foreign key (`emp_number`)
+        references hs_hr_employee(`emp_number`) on delete cascade;
+
+alter table `hs_hr_emp_subdivision_history`
+    add constraint foreign key (`emp_number`)
+        references hs_hr_employee(`emp_number`) on delete cascade;
+
+alter table `hs_hr_emp_location_history`
     add constraint foreign key (`emp_number`)
         references hs_hr_employee(`emp_number`) on delete cascade;
 

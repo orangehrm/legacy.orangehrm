@@ -305,6 +305,7 @@ lib/models/eimadmin/SalaryGrades.php -text
 lib/models/eimadmin/SimpleBenefit.php -text
 lib/models/eimadmin/SimpleBenefitTest.php -text
 lib/models/eimadmin/Skills.php -text
+lib/models/hrfunct/AbstractEmpHistory.php -text
 lib/models/hrfunct/AllTests.php -text
 lib/models/hrfunct/EmpAttach.php -text
 lib/models/hrfunct/EmpBasSalary.php -text
@@ -329,6 +330,8 @@ lib/models/hrfunct/EmpSimpleBenefit.php -text
 lib/models/hrfunct/EmpSimpleBenefitTest.php -text
 lib/models/hrfunct/EmpSkill.php -text
 lib/models/hrfunct/EmpWorkExp.php -text
+lib/models/hrfunct/JobTitleHistory.php -text
+lib/models/hrfunct/JobTitleHistoryTest.php -text
 lib/models/leave/AllTests.php -text
 lib/models/leave/Holidays.php -text
 lib/models/leave/HolidaysTest.php -text

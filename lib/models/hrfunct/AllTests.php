@@ -31,6 +31,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'EmpInfoTest.php';
 require_once 'EmpSimpleBenefitTest.php';
 require_once 'EmpLocationTest.php';
+require_once 'JobTitleHistoryTest.php';
 
 
 class models_eimadmin_AllTests
@@ -46,6 +47,7 @@ class models_eimadmin_AllTests
 		$suite->addTestSuite('EmpInfoTest');
 		$suite->addTestSuite('EmpSimpleBenefitTest');
 	    $suite->addTestSuite('EmpLocationTest');
+	    $suite->addTestSuite('JobTitleHistoryTest');
         return $suite;
     }
 }
