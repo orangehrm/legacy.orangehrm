@@ -35,6 +35,9 @@ require_once ROOT_PATH . '/lib/models/hrfunct/EmpChildren.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpEmergencyCon.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpSimpleBenefit.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpLocation.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/LocationHistory.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/JobTitleHistory.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/SubDivisionHistory.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/SimpleBenefit.php';
 
 require_once ROOT_PATH . '/lib/common/FormCreator.php';
@@ -851,6 +854,15 @@ class EmpViewController {
 		return;
 		}
 
+        if (isset($postArr['empjobHistorySTAT'])) {
+            if ($action == 'ADD') {
+                $object->save();
+            } else if ($action == 'EDIT') {
+
+            }
+            return;
+        }
+
 		if(isset($postArr['childrenSTAT']) && ($postArr['childrenSTAT'] == 'ADD' || $postArr['childrenSTAT'] == 'EDIT')) {
 			$empchi = new EmpChildren();
 			$empchi = $object;
@@ -1085,6 +1097,27 @@ class EmpViewController {
 
 			$conext -> delConExt($arr);
 		}
+
+         if (isset ($postArr['empjobHistorySTAT']) && $postArr['empjobHistorySTAT'] == 'DEL') {
+
+             // Job title history
+             if (isset($postArr['chkjobtitHistory'])) {
+                $jobTitleHistory = new JobTitleHistory();
+                $jobTitleHistory->delete($postArr['chkjobtitHistory']);
+             }
+
+             // Sub division history
+             if (isset($postArr['chksubdivisionHistory'])) {
+                $empDivisionHistory = new SubDivisionHistory();
+                $empDivisionHistory->delete($postArr['chksubdivisionHistory']);
+             }
+
+             // Location history
+             if (isset($postArr['chklocationHistory'])) {
+                $locationHistory = new LocationHistory();
+                $locationHistory->delete($postArr['chklocationHistory']);
+             }
+         }
 
 		if(isset($postArr['childrenSTAT']) && $postArr['childrenSTAT'] =='DEL') {
 
@@ -1581,6 +1614,14 @@ class EmpViewController {
 
                                 $form_creator ->popArr['assignedlocationList'] = EmpLocation::getEmpLocations($getArr['id']);
                                 $form_creator ->popArr['availablelocationList'] = EmpLocation::getUnassignedLocations($getArr['id']);
+                                $jobTitleHistory = new JobTitleHistory();
+                                $form_creator->popArr['jobTitleHistory'] = $jobTitleHistory->getHistory($getArr['id']);
+
+                                $empDivisionHistory = new SubDivisionHistory();
+                                $form_creator->popArr['subDivisionHistory'] = $empDivisionHistory->getHistory($getArr['id']);
+
+                                $locationHistory = new LocationHistory();
+                                $form_creator->popArr['locationHistory'] = $locationHistory->getHistory($getArr['id']);
 
 								$form_creator->popArr['editPermResArr'] = $edit = $editPermRes = $empinfo->filterEmpContact($getArr['id']);
 								$form_creator->popArr['provlist'] = $porinfo ->getProvinceCodes($edit[0][4]);
@@ -2383,6 +2424,8 @@ class EmpViewController {
                 try {
                     $empLocation->save();
                     $result = true;
+                    $history = new LocationHistory();
+                    $history->updateHistory($empNumber, $locationCode);
                 } catch (EmpLocationException $e) {
 
                 }
@@ -2411,6 +2454,8 @@ class EmpViewController {
                 try {
                     $empLocation->delete();
                     $result = true;
+                    $history = new LocationHistory();
+                    $history->updateHistory($empNumber, $locationCode, true);
                 } catch (EmpLocationException $e) {
 
                 }

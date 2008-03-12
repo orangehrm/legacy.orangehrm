@@ -169,7 +169,7 @@ abstract class AbstractEmpHistory {
      *
      * @return boolean true if history updated, false if not
      */
-    public function updateHistory($empNum, $code) {
+    public function updateHistory($empNum, $code, $remove = false) {
 
         if (!CommonFunctions::isValidId($empNum)) {
             throw new EmpHistoryException("Invalid emp number", EmpHistoryException::INVALID_PARAMETER);
@@ -192,9 +192,11 @@ abstract class AbstractEmpHistory {
         }
 
         $found = false;
+        $foundItem = null;
         foreach($currentItems as $item) {
             if ($item->getCode() == $code) {
                 $found = true;
+                $foundItem = $item;
                 break;
             }
         }
@@ -219,6 +221,10 @@ abstract class AbstractEmpHistory {
                 $currentItems[0]->setEndDate($now);
                 $currentItems[0]->save();
             }
+        } else if ($remove) {
+            $now = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT);
+            $foundItem->setEndDate($now);
+            $foundItem->save();
         }
 
         return $added;

@@ -222,6 +222,8 @@
 	$lang_Common_New = "New";
 	$lang_Common_Save = "Save";
 	$lang_Common_Back = "Back";
+    $lang_Common_Add = "Add";
+    $lang_Common_Delete = "Delete";
 
 	$lang_Common_Time = "Time";
 	$lang_Common_Note = "Note";
@@ -570,6 +572,27 @@
 
 	$lang_hremp_ShowEmployeeContracts 			= "Show employee contracts";
 	$lang_hremp_HideEmployeeContracts 			= "Hide employee contracts";
+
+    $lang_hremp_ShowEmployeeJobHistory      = "Show employee history";
+    $lang_hremp_HideEmployeeJobHistory      = "Hide employee history";
+
+    $lang_hremp_EmployeeJobHistory          = "Employee History";
+    $lang_hremp_EmployeePreviousPositions   = "Previous Positions";
+    $lang_hremp_EmployeePreviousSubUnits    = "Previous Sub-units";
+    $lang_hremp_EmployeePreviousLocations   = "Previous Locations";
+    $lang_hremp_EmployeeHistoryFrom         = "From";
+    $lang_hremp_EmployeeHistoryTo           = "To";
+    $lang_hremp_EmployeeHistoryNoItemsFound = "No items found";
+    $lang_hremp_EmployeeAddHistoryItem      = "Add Employee History Item";
+    $lang_hremp_EmployeeJobTitleOption      = "Job Title";
+    $lang_hremp_EmployeeSubDivisionOption      = "Sub Division";
+    $lang_hremp_EmployeeLocationOption      = "Location";
+    $lang_hremp_EmployeeHistory_PleaseSelectJobTitle = "Please select a Job Title";
+    $lang_hremp_EmployeeHistory_PleaseSelectSubDivision = "Please select a sub division";
+    $lang_hremp_EmployeeHistory_PleaseSelectLocation = "Please select a location";
+    $lang_hremp_EmployeeHistory_StartShouldBeforeEnd = "Start date should be before end date";
+    $lang_hremp_EmployeeHistory_PleaseSpecifyStartDate = "Please specify valid start date";
+    $lang_hremp_EmployeeHistory_PleaseSpecifyEndDate = "Please specify valid end date";
 
     $lang_hremp_AddLocation                 = "Add Location";
     $lang_hremp_SelectLocation              = "Select Location";

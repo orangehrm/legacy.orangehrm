@@ -99,6 +99,11 @@ class SubDivisionHistoryTest extends PHPUnit_Framework_TestCase {
      */
     protected function tearDown() {
         $this->_deleteTables();
+
+        // Insert default geninfo, and compstructtree values
+        $this->_runQuery("INSERT INTO `hs_hr_geninfo` VALUES ('001','','')");
+        $this->_runQuery("INSERT INTO `hs_hr_compstructtree`(`title`, `description`, `loc_code`, `lft`, `rgt`, `id`, `parnt`, `dept_id`) VALUES ('', 'Parent Company', null , 1, 2, 1, 0, null)");
+
         UniqueIDGenerator::getInstance()->resetIDs();
     }
 
@@ -107,6 +112,7 @@ class SubDivisionHistoryTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery("TRUNCATE TABLE `hs_hr_compstructtree`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_employee`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_location`");
+        $this->_runQuery("DELETE FROM hs_hr_geninfo");
     }
 
     /**

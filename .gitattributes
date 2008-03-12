@@ -223,6 +223,7 @@ lib/extractor/hrfunct/EXTRACTOR_EmpDependents.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpEducation.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpEmergencyCon.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpInfo.php -text
+lib/extractor/hrfunct/EXTRACTOR_EmpJobHistory.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpLanguage.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpLicenses.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpMembership.php -text
@@ -488,6 +489,7 @@ templates/hrfunct/hrempeducation.php -text
 templates/hrfunct/hrempemgcontact.php -text
 templates/hrfunct/hrempimmigration.php -text
 templates/hrfunct/hrempjob.php -text
+templates/hrfunct/hrempjobhistory.php -text
 templates/hrfunct/hremplanguage.php -text
 templates/hrfunct/hremplicenses.php -text
 templates/hrfunct/hrempmembership.php -text
