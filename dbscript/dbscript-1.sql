@@ -799,6 +799,14 @@ create table `hs_hr_emp_location_history` (
   key  `emp_number` (`emp_number`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_comp_property` (
+  `prop_id` int(11) not null auto_increment,
+  `prop_name` varchar(250) not null,
+  `emp_id` int(7) not null,
+  primary key  (`prop_id`),
+  key  `emp_id` (`emp_id`)
+) engine=innodb default charset=utf8;
+
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
                              references hs_hr_location(loc_code) on delete restrict;
