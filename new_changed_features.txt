@@ -14,6 +14,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
 	BugId     Name
     1910952   Click on the “Reject” button ,nothing happens
     1910944   “Position applying for: Sales manager” only the bottom half
+    1910947   Zip Code needs an asterisk
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 
