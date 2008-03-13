@@ -322,7 +322,26 @@ class LeaveController {
 		}
 
 		if (!empty($cancelledObj)) {
-			$this->_sendChangedLeaveNotification($cancelledObj, $request, MailNotifications::MAILNOTIFICATIONS_ACTION_CANCEL);
+
+			// check and see if supervisor is doing the cancellation.
+			$authorize = $this->authorize;
+			if ($request) {
+				$empId = $cancelledObj->getEmployeeId();
+			} else if (is_array($cancelledObj) && count($cancelledObj) > 0) {
+				$empId = $cancelledObj[0]->getEmployeeId();
+			}
+
+			$loggedInEmpId = $authorize->getEmployeeId();
+
+			if ($authorize->isAdmin() || (!empty($empId) && !empty($loggedInEmpId) && ($empId != $authorize->getEmployeeId()) &&
+					$authorize->isSupervisor())) {
+
+				$action = MailNotifications::MAILNOTIFICATIONS_ACTION_SUPERVISOR_CANCEL;
+			} else {
+				$action = MailNotifications::MAILNOTIFICATIONS_ACTION_CANCEL;
+			}
+
+			$this->_sendChangedLeaveNotification($cancelledObj, $request, $action);
 		}
 
 		return true;
