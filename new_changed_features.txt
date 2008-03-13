@@ -11,6 +11,9 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
         9. Story: Previous Positions, Divisions, and Locations
         10. Story: Track company property 
 
+	BugId     Name
+    1910952   Click on the “Reject” button ,nothing happens
+
 New & Changed Features for OrangeHRM ver 2.2.2.2
 
         1. "Leave List" menu item in Leave module renamed to "My Leave"
