@@ -289,6 +289,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 	.positionApplyingFor {
         padding-left: 17px;
+        padding-top: 10px;
 	}
     -->
 </style>
