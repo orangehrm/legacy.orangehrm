@@ -65,6 +65,7 @@
             <exclude name="lib/logs/notification_mails.log"/>
             <exclude name="upgrade.php"/>
             <exclude name="upgrader/**"/>
+            <exclude name="**/test.bat"/>
         </fileset>
     </copy>
   </target>
