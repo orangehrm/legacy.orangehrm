@@ -16,6 +16,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
     1910944   “Position applying for: Sales manager” only the bottom half
     1910947   Zip Code needs an asterisk
     1910904   Company structure cannot be entered in IE
+    1919770   Clicking Reject Submits form even if validation fails
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 
