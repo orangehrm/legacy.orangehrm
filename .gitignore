@@ -4,6 +4,8 @@ build/dist
 build/myconf.php
 build/report
 build/reports
+confs/Conf.php
+confs/mailConf.php
 lib/confs/Conf.php
 lib/confs/mailConf.php
 lib/logs/logDB.txt
