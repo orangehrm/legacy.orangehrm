@@ -448,6 +448,12 @@ class RecruitmentMailNotifier {
         // convert newlines to \n in description
         $description = $this->_escapeNewLines($description);
 
+        // Only request RSVP for organizer if he has an email adress.
+        $organizerLine = "";
+        if (!empty($organizerEmail)) {
+            $organizerLine .= "\nORGANIZER;CN=\"$organizerName\";RSVP=TRUE;ROLE=NON-PARTICIPANT:mailto:$organizerEmail";
+        }
+
         $message = <<<EOT
 BEGIN:VCALENDAR
 PRODID:-//OrangeHRM/Recruitment//EN
@@ -459,8 +465,7 @@ DTSTAMP:$sentTime
 DTSTART:$startTime
 DUE:$startTime
 SUMMARY:$summary
-DESCRIPTION:$description
-ORGANIZER;CN="$organizerName";RSVP=TRUE;ROLE=NON-PARTICIPANT:mailto:$organizerEmail
+DESCRIPTION:$description$organizerLine
 ATTENDEE;CN="$attendeeName";ROLE=REQ-PARTICIPANT:mailto:$attendeeEmail
 CLASS:CONFIDENTIAL
 CATEGORIES:INTERVIEW

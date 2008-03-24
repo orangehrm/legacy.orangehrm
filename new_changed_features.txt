@@ -18,6 +18,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
     1910904   Company structure cannot be entered in IE
     1919770   Clicking Reject Submits form even if validation fails
     1919215   Entering benefits and press "Enter key" moves to notice page
+    1924151   Interview event doesn't open when user has no email
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 
