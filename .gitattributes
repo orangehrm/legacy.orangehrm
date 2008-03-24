@@ -11,10 +11,6 @@ build/report-styles/phpunit2-noframes.xsl -text
 build/report-styles/str.replace.function.xsl -text
 build/testConf.php -text
 build/verify-constraints.sh -text
-confs/Conf-auto.php -text
-confs/Conf.php-distribution -text
-confs/mailConf.php-distribution -text
-confs/sysConf.php -text
 dbscript/constraints.php -text
 dbscript/dbscript-1.sql -text
 dbscript/dbscript-2.sql -text
