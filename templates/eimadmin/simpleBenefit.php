@@ -20,10 +20,8 @@
 $formAction="{$_SERVER['PHP_SELF']}?uniqcode={$this->getArr['uniqcode']}";
 $new = true;
 $disabled = '';
-$btnAction="addSave()";
 if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'updatemode')) {
 	$formAction="{$formAction}&id={$this->getArr['id']}&capturemode=updatemode";
-	$btnAction="addUpdate()";
 	$new = false;
 	$disabled = "disabled='true'";
 }
@@ -82,16 +80,6 @@ $picDir = "../../themes/{$styleSheet}/pictures/";
 		}
 	}
 
-    function save() {
-
-		if (validate()) {
-        	$('frmBenefit').sqlState.value = "<?php echo $new ? 'NewRecord' : 'UpdateRecord'; ?>";
-        	$('frmBenefit').submit();
-		} else {
-			return false;
-		}
-    }
-
 	function reset() {
 		$('frmBenefit').reset();
         oLink = $('messageCell');
@@ -140,7 +128,9 @@ $picDir = "../../themes/{$styleSheet}/pictures/";
 
 <?php if($locRights['edit']) { ?>
 		if (editMode) {
-			save();
+            if (validate()) {
+        	    $('frmBenefit').submit();
+            }
 			return;
 		}
 		editMode = true;
@@ -247,8 +237,8 @@ $picDir = "../../themes/{$styleSheet}/pictures/";
 	</div>
 	<?php }	?>
   <div class="roundbox">
-  <form name="frmBenefit" id="frmBenefit" method="post" action="<?php echo $formAction;?>">
-        <input type="hidden" name="sqlState" value="">
+  <form name="frmBenefit" id="frmBenefit" method="post" onsubmit="return validate();" action="<?php echo $formAction;?>">
+        <input type="hidden" name="sqlState" value="<?php echo $new ? 'NewRecord' : 'UpdateRecord'; ?>">
         <?php if (!$new) { ?>
             <label for="txtId">&nbsp;<?php echo $lang_benefits_id; ?></label>
             <span class="value"><?php echo $benefit->getId(); ?></span><br />

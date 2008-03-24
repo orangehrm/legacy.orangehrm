@@ -17,6 +17,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
     1910947   Zip Code needs an asterisk
     1910904   Company structure cannot be entered in IE
     1919770   Clicking Reject Submits form even if validation fails
+    1919215   Entering benefits and press "Enter key" moves to notice page
 
 New & Changed Features for OrangeHRM ver 2.2.2.2
 
