@@ -2576,16 +2576,8 @@ class ViewController {
                                 $form_creator->popArr['emplist'] = $empInfo->getListofEmployee();
                             }
 
-
                             $compProp = new CompProperty();
-
-                            if(!isset($_GET['sortField']))
-                            {
-                                $_GET['sortField']=0;
-                                $_GET['sortOrder0']='ASC';
-                            }
-
-                            $form_creator->popArr['properties'] = $compProp->getPropertyList($_GET['sortField'],$_GET['sortOrder0']);
+                            $form_creator->popArr['properties'] = $compProp->getPropertyList();
 
                             break;
 
