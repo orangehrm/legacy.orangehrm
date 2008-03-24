@@ -10,6 +10,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
         8. Story: Employee works in multiple locations
         9. Story: Previous Positions, Divisions, and Locations
         10. Story: Track company property 
+        11. Sending of tasks (as calendar events) on hire of an employee
 
 	BugId     Name
     1910952   Click on the “Reject” button ,nothing happens
