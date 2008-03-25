@@ -62,12 +62,24 @@ function assEmpStat($value) {
 
 	$view_controller = new ViewController();
 	$empstatlist = $view_controller->xajaxObjCall($value,'JOB','assigned');
-
+    
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
 	$response = $xajaxFiller->cmbFiller($objResponse,$empstatlist,0,'frmEmp','cmbType',3);
-	$response->addAssign('status','innerHTML','');
 
+    $jobSpec = $view_controller->getJobSpecForJob($value);    
+    if (empty($jobSpec)) {
+        $jobSpecName = '';
+        $jobSpecDuties = '';
+    } else {
+        $jobSpecName = CommonFunctions::escapeHtml($jobSpec->getName());
+        $jobSpecDuties = nl2br(CommonFunctions::escapeHtml($jobSpec->getDuties()));
+    }
+
+    $response->addAssign('jobSpecName','innerHTML', $jobSpecName);
+    $response->addAssign('jobSpecDuties','innerHTML', $jobSpecDuties);
+
+    $response->addAssign('status','innerHTML','');
 return $response->getXML();
 }
 

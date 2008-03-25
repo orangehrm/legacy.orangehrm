@@ -31,10 +31,9 @@ require_once 'ProjectActivityTest.php';
 require_once 'ProjectAdminGatewayTest.php';
 require_once 'ProjectAdminTest.php';
 require_once 'JobSpecTest.php';
-
 require_once 'CompPropertyTest.php';
-
 require_once 'SimpleBenefitTest.php';
+require_once 'JobTitleTest.php';
 
 
 class models_eimadmin_AllTests
@@ -54,10 +53,9 @@ class models_eimadmin_AllTests
 	$suite->addTestSuite('ProjectAdminTest');
 	$suite->addTestSuite('ProjectAdminGatewayTest');
 	$suite->addTestSuite('JobSpecTest');
-
     $suite->addTestSuite('CompPropertyTest');
-
 	$suite->addTestSuite('SimpleBenefitTest');
+	$suite->addTestSuite('JobTitleTest');
 
         return $suite;
     }

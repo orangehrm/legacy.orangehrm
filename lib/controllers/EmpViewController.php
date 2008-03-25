@@ -1610,9 +1610,18 @@ class EmpViewController {
 								$view_controller = new ViewController();
 								$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($empJobInfo[0][2],'JOB','assigned');
 
-								if(isset($postArr['cmbJobTitle'])){
+                                $empJobTitle = $empJobInfo[0][2];
+								if (isset($postArr['cmbJobTitle'])) {
 									$form_creator ->popArr['empstatlist'] = $view_controller->xajaxObjCall($postArr['cmbJobTitle'],'JOB','assigned');
+                                    $empJobTitle = $postArr['cmbJobTitle'];                                     
 								}
+
+                                if (CommonFunctions::isValidId($empJobTitle, 'JOB')) {
+                                    $empJobSpec = $view_controller->getJobSpecForJob($empJobTitle);                                     
+                                } else {
+                                    $empJobSpec = null;
+                                }
+                                $form_creator ->popArr['jobSpec'] = $empJobSpec;
 
                                 $form_creator ->popArr['assignedlocationList'] = EmpLocation::getEmpLocations($getArr['id']);
                                 $form_creator ->popArr['availablelocationList'] = EmpLocation::getUnassignedLocations($getArr['id']);

@@ -508,6 +508,8 @@
 	$lang_hremp_ethnicrace 					= "Ethnic Race ";
 	$lang_hremp_jobtitle 					= "Job Title";
 	$lang_hremp_selempstat 					= "Select Empl. Status";
+    $lang_hremp_jobspec                     = "Job Specification";
+    $lang_hremp_jobspecduties               = "Job Duties";
 	$lang_hremp_eeocategory 				= "EEO Category";
 	$lang_hremp_seleeocat 					= "Select EEO Cat";
 	$lang_hremp_joindate 					= "Joined Date";
@@ -738,6 +740,7 @@
 	$lang_jobtitle_jobtitname 				= "Job Title Name";
 	$lang_jobtitle_jobtitdesc 				= "Job Description";
 	$lang_jobtitle_jobtitcomments 			= "Job Title Comments";
+    $lang_jobtitle_jobspec                  = "Job Specification";
 	$lang_jobtitle_addpaygrade 				= "Add Pay Grade";
 	$lang_jobtitle_emstatExpl 				= "Define the Employment Status allowed for the Job Title";
 	$lang_jobtitle_editpaygrade 			= "Edit Pay Grade";

@@ -333,6 +333,13 @@ $iconDir = '../../themes/'.$styleSheet.'/icons/';
 ?>
 			  </select></td>
               </tr>
+              <tr>
+                <td><?php echo $lang_hremp_jobspec; ?></td>
+                <td id='jobSpecName'></td>              
+                <td width="50">&nbsp;</td>
+                <td><?php echo $lang_hremp_jobspecduties; ?></td>
+                <td id='jobSpecDuties'></td>
+              </tr>
 			  <tr>
 			  <td><?php echo $lang_hremp_eeocategory; ?> </td>
 			  <td><select <?php echo $locRights['add'] ? '':'disabled'?> name="cmbEEOCat">
@@ -362,7 +369,15 @@ $iconDir = '../../themes/'.$styleSheet.'/icons/';
 
 
 <?php
-		  $edit1 = $this->popArr['editJobInfoArr'];
+    $edit1 = $this->popArr['editJobInfoArr'];
+    $jobSpec = $this->popArr['jobSpec'];    
+    if (empty($jobSpec)) {
+        $jobSpecName = '';
+        $jobSpecDuties = '';
+    } else {
+        $jobSpecName = CommonFunctions::escapeHtml($jobSpec->getName());
+        $jobSpecDuties = nl2br(CommonFunctions::escapeHtml($jobSpec->getDuties()));
+    }                  
 ?>
 <tr>
 			   <td><?php echo $lang_hremp_jobtitle; ?></td>
@@ -399,6 +414,13 @@ $iconDir = '../../themes/'.$styleSheet.'/icons/';
 										echo "<option value=".$arrEmpType[$c][0].">" .$arrEmpType[$c][1]. "</option>";
 ?>
 			  </select></td>
+              </tr>
+              <tr>
+                <td><?php echo $lang_hremp_jobspec; ?></td>
+                <td id='jobSpecName'><?php echo $jobSpecName;?></td>              
+                <td width="50">&nbsp;</td>
+                <td><?php echo $lang_hremp_jobspecduties; ?></td>
+                <td id='jobSpecDuties'><?php echo $jobSpecDuties;?></td>
               </tr>
 			  <tr>
 			  <td><?php echo $lang_hremp_eeocategory; ?></td>

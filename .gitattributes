@@ -182,11 +182,13 @@ lib/controllers/RepViewController.php -text
 lib/controllers/TimeController.php -text
 lib/controllers/TimeControllerTest.php -text
 lib/controllers/ViewController.php -text
+lib/controllers/ViewControllerTest.php -text
 lib/dao/DMLFunctions.php -text
 lib/dao/MySQLClass.php -text
 lib/dao/SQLQBuilder.php -text
 lib/exception/ExceptionHandler.php -text
 lib/extractor/AllTests.php -text
+lib/extractor/eimadmin/AllTests.php -text
 lib/extractor/eimadmin/EXTRACTOR_CompProperty.php -text
 lib/extractor/eimadmin/EXTRACTOR_CompStruct.php -text
 lib/extractor/eimadmin/EXTRACTOR_Customer.php -text
@@ -214,6 +216,7 @@ lib/extractor/eimadmin/EXTRACTOR_SalCurDet.php -text
 lib/extractor/eimadmin/EXTRACTOR_SalaryGrades.php -text
 lib/extractor/eimadmin/EXTRACTOR_SimpleBenefit.php -text
 lib/extractor/eimadmin/EXTRACTOR_Skills.php -text
+lib/extractor/eimadmin/ExtractorJobTitleTest.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpAttach.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpBasSalary.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpBenefit.php -text
@@ -285,6 +288,7 @@ lib/models/eimadmin/JobSpec.php -text
 lib/models/eimadmin/JobSpecTest.php -text
 lib/models/eimadmin/JobTitEmpStat.php -text
 lib/models/eimadmin/JobTitle.php -text
+lib/models/eimadmin/JobTitleTest.php -text
 lib/models/eimadmin/LanguageInfo.php -text
 lib/models/eimadmin/Licenses.php -text
 lib/models/eimadmin/Location.php -text
