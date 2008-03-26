@@ -157,6 +157,9 @@ lib/common/htmlMimeMail5/RFC822.php -text
 lib/common/htmlMimeMail5/htmlMimeMail5.php -text
 lib/common/htmlMimeMail5/mimePart.php -text
 lib/common/htmlMimeMail5/smtp.php -text
+lib/common/search/AbstractSearch.php -text
+lib/common/search/SearchField.php -text
+lib/common/search/SearchFilter.php -text
 lib/common/test.bat -text
 lib/common/xajax/xajax.inc.php -text
 lib/common/xajax/xajaxCompress.php -text
@@ -175,6 +178,7 @@ lib/controllers/EmpViewController.php -text
 lib/controllers/GenViewController.php -text
 lib/controllers/LeaveController.php -text
 lib/controllers/MTViewController.php -text
+lib/controllers/PerformanceController.php -text
 lib/controllers/PublicController.php -text
 lib/controllers/RecruitmentController.php -text
 lib/controllers/RecruitmentControllerTest.php -text
@@ -457,6 +461,7 @@ scripts/yui/yahoo/yahoo-debug.js -text
 scripts/yui/yahoo/yahoo-min.js -text
 scripts/yui/yahoo/yahoo.js -text
 /sysinfo.php -text
+templates/common/search.php -text
 templates/eimadmin/companyProperty.php -text
 templates/eimadmin/compstruct.php -text
 templates/eimadmin/customer.php -text

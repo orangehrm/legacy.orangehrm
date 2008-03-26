@@ -196,6 +196,10 @@
 	$lang_Menu_Recruit = "Recruitment";
 	$lang_Menu_Recruit_JobVacancies = "Job Vacancies";
 	$lang_Menu_Recruit_JobApplicants = "Applicants";
+    
+    // Performance module
+    $lang_Menu_Performance = "Performance";
+    $lang_Menu_Performance_ReviewPeriod = "Review Period";
 
 	/**
 	 * Common
