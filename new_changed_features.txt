@@ -2,6 +2,10 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.2
 
         1. Story: HR Admin assigns job specification and duties
 
+	BugId     Name
+    1930793   Error adding employee with non-default ID with Photo
+    1930775   Employees Uploaded image is corrupted
+
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
 
         1. Story: HR Admin assigns job specification and duties
