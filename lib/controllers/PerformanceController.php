@@ -27,7 +27,9 @@ require_once ROOT_PATH . '/lib/models/maintenance/UserGroups.php';
 require_once ROOT_PATH . '/lib/models/maintenance/Users.php';
 require_once ROOT_PATH . '/lib/models/maintenance/Rights.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/JobTitle.php';
-require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmployeeSearch.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/Employee.php';
+require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_Search.php';
 
 /**
  * Controller for performance module
@@ -63,7 +65,9 @@ class PerformanceController {
 	            switch ($_GET['action']) {
 
 	                case 'List' :
-	                    $this->_viewEmployees();
+                        $extractor = new EXTRACTOR_Search();
+                        $searchObj = $extractor->parseSearch($_POST, new EmployeeSearch());
+	                    $this->_viewEmployees($searchObj);
 	                    break;
 	            }
                 break;
@@ -71,17 +75,20 @@ class PerformanceController {
     }
 
     /**
-     * Display list of job applications to HR admin or manager
+     * Display list Employees
+     * @param Object $searchObj Search Object extended from AbstractSearch class
+     * 
      */
-    private function _viewEmployees() {
+    private function _viewEmployees($searchObj) {
 
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
             $managerId = $this->authorizeObj->isAdmin()? null : $this->authorizeObj->getEmployeeId();
-            $applications = null;
-            //$applications = JobApplication::getList($managerId);
-
+                       
+            $searchObj->search();
+            
             $path = '/templates/common/search.php';
-            $objs['searchObj'] = $applications;
+            $objs['titleVar'] = ''; 
+            $objs['searchObj'] = $searchObj;
             $template = new TemplateMerger($objs, $path, null, null);
             $template->display();
         } else {

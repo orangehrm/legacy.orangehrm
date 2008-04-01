@@ -19,34 +19,225 @@
  */
 
 abstract class AbstractSearch {
+
+    /** Match */
+    const MATCH_ALL = 'matchAll';
+    const MATCH_ANY = 'matchAny';
     
+    /** Sort Type */
+    const SORT_ASCENDING = 'ASC';
+    const SORT_DESCENDING = 'DESC';
+        
     /** Search fields */
-    private $searchFields;
+    protected $searchFields;
     
     /** Fields to display */
-    private $displayFields;
+    protected $displayFields;
     
     /** Sort field */
-    private $sortField;
+    protected $sortField;
     
     /** Sort order */
-    private $sortOrder;
+    protected $sortOrder;
     
     /** ID field */
-    private $idField;    
+    protected $idField;    
     
     /** Already set search filters */
-    private $searchFilters;
+    protected $searchFilters;
     
     /** Search results */
-    private $searchResults;
+    protected $searchResults;
 
     /** Current page number */
-    private $pageNo;
+    protected $pageNo;
     
     /** Page count */
-    private $pageCount;
+    protected $pageCount;
+    
+    /** Match all or any */
+    protected $matchType = self::MATCH_ALL;
+
+    /**
+     * Retrieves the value of searchFields.
+     * @return searchFields
+     */
+    public function getSearchFields() {
+        return $this->searchFields;
+    }
+
+    /**
+     * Sets the value of searchFields.
+     * @param searchFields
+     */
+    public function setSearchFields($searchFields) {
+        $this->searchFields = $searchFields;
+    }
+
+    /**
+     * Retrieves the value of displayFields.
+     * @return displayFields
+     */
+    public function getDisplayFields() {
+        return $this->displayFields;
+    }
+
+    /**
+     * Sets the value of displayFields.
+     * @param displayFields
+     */
+    public function setDisplayFields($displayFields) {
+        $this->displayFields = $displayFields;
+    }
+
+    /**
+     * Retrieves the value of sortField.
+     * @return sortField
+     */
+    public function getSortField() {
+        return $this->sortField;
+    }
+
+    /**
+     * Sets the value of sortField.
+     * @param sortField
+     */
+    public function setSortField($sortField) {
+        $this->sortField = $sortField;
+    }
+
+    /**
+     * Retrieves the value of sortOrder.
+     * @return sortOrder
+     */
+    public function getSortOrder() {
+        return $this->sortOrder;
+    }
+
+    /**
+     * Sets the value of sortOrder.
+     * @param sortOrder
+     */
+    public function setSortOrder($sortOrder) {
+        $this->sortOrder = $sortOrder;
+    }
+
+    /**
+     * Retrieves the value of idField.
+     * @return idField
+     */
+    public function getIdField() {
+        return $this->idField;
+    }
+
+    /**
+     * Sets the value of idField.
+     * @param idField
+     */
+    public function setIdField($idField) {
+        $this->idField = $idField;
+    }
+
+    /**
+     * Retrieves the value of searchFilters.
+     * @return searchFilters
+     */
+    public function getSearchFilters() {
+        return $this->searchFilters;
+    }
+
+    /**
+     * Sets the value of searchFilters.
+     * @param searchFilters
+     */
+    public function setSearchFilters($searchFilters) {
+        $this->searchFilters = $searchFilters;
+    }
+
+    /**
+     * Retrieves the value of searchResults.
+     * @return searchResults
+     */
+    public function getSearchResults() {
+        return $this->searchResults;
+    }
+
+    /**
+     * Sets the value of searchResults.
+     * @param searchResults
+     */
+    public function setSearchResults($searchResults) {
+        $this->searchResults = $searchResults;
+    }
+
+    /**
+     * Retrieves the value of pageNo.
+     * @return pageNo
+     */
+    public function getPageNo() {
+        return $this->pageNo;
+    }
+
+    /**
+     * Sets the value of pageNo.
+     * @param pageNo
+     */
+    public function setPageNo($pageNo) {
+        $this->pageNo = $pageNo;
+    }
+
+    /**
+     * Retrieves the value of pageCount.
+     * @return pageCount
+     */
+    public function getPageCount() {
+        return $this->pageCount;
+    }
+
+    /**
+     * Sets the value of pageCount.
+     * @param pageCount
+     */
+    public function setPageCount($pageCount) {
+        $this->pageCount = $pageCount;
+    }
         
+    /**
+     * Get the match type
+     * @return String match type
+     */
+    public function getMatchType() {
+        return $this->matchType;
+    }
+    
+    /**
+     * Set the match type
+     * @param String $matchType Match type (one of MATCH_ALL or MATCH_ANY)
+     */
+    public function setMatchType($matchType) {
+        $this->matchType = $matchType;
+    }
+    
+    /**
+     * Get SearchField with given field name from the fields associated with this search object.
+     * 
+     * @param String $fieldName Field Name
+     * @return SearchField Search field object if found, or null
+     */
+    public function getFieldWithName($fieldName) {
+        
+        if (!empty($this->searchFields)) {
+            foreach ($this->searchFields as $field) {
+                
+                if ($field->getFieldName() == $fieldName) {
+                    return $field;
+                }
+            }    
+        }
+        
+        return null;
+    }
+    
     /**
      * Perform search according to parameters set
      * and update the search results and count parameters
@@ -55,8 +246,6 @@ abstract class AbstractSearch {
      * 
      * @return none
      */
-    public abstract function search() {
-        
-    }     
+    public abstract function search();  
 }
 ?>

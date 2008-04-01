@@ -229,6 +229,44 @@ class CommonFunctionsTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('A description', CommonFunctions::getFirstNChars("A description", 25));
         $this->assertEquals('A description', CommonFunctions::getFirstNChars("A description", 25, '...'));
     }
+        
+    public function testGetObjectProperty() {       
+        $testObj = new commonFunctionsTest_Class('John', 'Male', 24);
+        
+        // property that is available
+        $this->assertEquals('Male', CommonFunctions::getObjectProperty($testObj, 'gender'));
+        
+        // property that is not available in object
+        
+        // property available, but no getter
+        
+        // property available, but getter is private    
+    }
+}
+
+/**
+ * Class used in unit test
+ */
+class commonFunctionsTest_Class {
+    
+    private $name;
+    private $gender;
+    private $age;
+    
+    public function __construct($name, $gender, $age) {
+        $this->name = $name;
+        $this->gender = $gender;
+        $this->age = $age;
+    }
+    
+    private function getName() {
+        return $this->name;
+    }
+    
+    public function getGender() {
+        return $this->gender;    
+    }
+                
 }
 
 // Call CommonFunctionsTest::main() if this source file is executed directly.

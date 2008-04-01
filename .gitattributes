@@ -158,8 +158,14 @@ lib/common/htmlMimeMail5/htmlMimeMail5.php -text
 lib/common/htmlMimeMail5/mimePart.php -text
 lib/common/htmlMimeMail5/smtp.php -text
 lib/common/search/AbstractSearch.php -text
+lib/common/search/AllTests.php -text
+lib/common/search/DisplayField.php -text
 lib/common/search/SearchField.php -text
+lib/common/search/SearchFieldTest.php -text
 lib/common/search/SearchFilter.php -text
+lib/common/search/SearchSqlHelper.php -text
+lib/common/search/SearchSqlHelperTest.php -text
+lib/common/search/SelectOption.php -text
 lib/common/test.bat -text
 lib/common/xajax/xajax.inc.php -text
 lib/common/xajax/xajaxCompress.php -text
@@ -192,6 +198,7 @@ lib/dao/MySQLClass.php -text
 lib/dao/SQLQBuilder.php -text
 lib/exception/ExceptionHandler.php -text
 lib/extractor/AllTests.php -text
+lib/extractor/common/EXTRACTOR_Search.php -text
 lib/extractor/eimadmin/AllTests.php -text
 lib/extractor/eimadmin/EXTRACTOR_CompProperty.php -text
 lib/extractor/eimadmin/EXTRACTOR_CompStruct.php -text
@@ -339,6 +346,8 @@ lib/models/hrfunct/EmpSimpleBenefit.php -text
 lib/models/hrfunct/EmpSimpleBenefitTest.php -text
 lib/models/hrfunct/EmpSkill.php -text
 lib/models/hrfunct/EmpWorkExp.php -text
+lib/models/hrfunct/Employee.php -text
+lib/models/hrfunct/EmployeeSearch.php -text
 lib/models/hrfunct/JobTitleHistory.php -text
 lib/models/hrfunct/JobTitleHistoryTest.php -text
 lib/models/hrfunct/LocationHistory.php -text
@@ -597,6 +606,7 @@ themes/beyondT/css/hrEmpMain.css -text
 themes/beyondT/css/leave.css -text
 themes/beyondT/css/menu.css -text
 themes/beyondT/css/octopus.css -text
+themes/beyondT/css/search.css -text
 themes/beyondT/css/style.css -text
 themes/beyondT/css/style1.css -text
 themes/beyondT/css/time.css -text

@@ -228,6 +228,8 @@
 	$lang_Common_Back = "Back";
     $lang_Common_Add = "Add";
     $lang_Common_Delete = "Delete";
+    $lang_Common_Search = "Search";
+    $lang_Common_Clear = "Clear";
 
 	$lang_Common_Time = "Time";
 	$lang_Common_Note = "Note";
@@ -1508,4 +1510,20 @@
 	$lang_Time_Errors_INVALID_ID_FAILURE = "Invalid id";
 
 	$lang_Menu_Time_WorkShifts = "Work shifts";
+    
+    /* Search */
+    $lang_Search_Match_All = 'Match all of the following';
+    $lang_Search_Match_Any = 'Match any of the following';
+    $lang_Search_Select_Field = '-- Select Field --';
+    
+    /* Search operators */
+    $lang_Search_Operator_lt = 'Less Than';
+    $lang_Search_Operator_gt = 'Greater Than';
+    $lang_Search_Operator_eq = 'Is';
+    $lang_Search_Operator_neq = "Is not";
+    $lang_Search_Operator_starts = 'Starts With';
+    $lang_Search_Operator_ends = 'Ends With';
+    $lang_Search_Operator_contains = 'Contains';
+    $lang_Search_Operator_not_contains = "Does not contain";    
+    
 ?>

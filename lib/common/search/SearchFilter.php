@@ -26,15 +26,21 @@ class SearchFilter {
     /** Search field */
     private $searchField;
     
-    /** Comparison */
-    private $comparison;
+    /** Operator */
+    private $operator;
     
     /** Qualifier */
     private $qualifier;
     
     /** Search value */
     private $searchValue;
-    
+
+    public function __construct($field, $operator, $searchValue) {
+        $this->searchField = $field;
+        $this->operator = $operator;
+        $this->searchValue = $searchValue;        
+    }
+
     /**
      * Retrieves the value of searchField.
      * @return searchField
@@ -52,19 +58,19 @@ class SearchFilter {
     }
 
     /**
-     * Retrieves the value of comparison.
-     * @return comparison
+     * Retrieves the value of operator.
+     * @return operator
      */
-    public function getComparison() {
-        return $this->comparison;
+    public function getOperator() {
+        return $this->operator;
     }
 
     /**
-     * Sets the value of comparison.
-     * @param comparison
+     * Sets the value of operator.
+     * @param operator
      */
-    public function setComparison($comparison) {
-        $this->comparison = $comparison;
+    public function setOperator($operator) {
+        $this->operator = $operator;
     }
 
     /**

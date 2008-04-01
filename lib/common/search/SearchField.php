@@ -26,13 +26,15 @@ class SearchField {
     const FIELD_TYPE_SELECT = 'select';
     const FIELD_TYPE_DATE = 'date';
     
-    /** Comparison type constants */
-    const COMPARISON_TYPE_LESSTHAN = 'lt';
-    const COMPARISON_TYPE_GREATERTHAN = 'gt';
-    const COMPARISON_TYPE_EQUAL = 'eq';
-    const COMPARISON_TYPE_STARTSWITH = 'starts';
-    const COMPARISON_TYPE_ENDSWITH = 'ends';
-    const COMPARISON_TYPE_CONTAINS = 'contains';
+    /** Operator type constants */
+    const OPERATOR_LESSTHAN = 'lt';
+    const OPERATOR_GREATERTHAN = 'gt';
+    const OPERATOR_EQUAL = 'eq';
+    const OPERATOR_NOT_EQUAL = 'neq';    
+    const OPERATOR_STARTSWITH = 'starts';
+    const OPERATOR_ENDSWITH = 'ends';
+    const OPERATOR_CONTAINS = 'contains';
+    const OPERATOR_NOT_CONTAINS = 'not_contains';    
     
     /** Search qualifiers */
     const QUALIFIER_CASE_SENSITIVE = 'cs';
@@ -53,9 +55,77 @@ class SearchField {
     /** Array of select options. Only used for FIELD_TYPE_SELECT */
     private $selectOptions;
     
-    /** Array of possible comparisons that can be used */
-    private $comparisons;
+    /** Array of possible operators that can be used */
+    private $operators;
 
+    /**
+     * Constructor
+     * 
+     * @param String $fieldName
+     * @param String $displayNameVar
+     * @param String $fieldType Field type
+     * @param Array $operators Array of operators supported by this field. If not given, default options
+     *                           for this fieldType will be used
+     * @param Array $selectOptions Array of select options
+     */
+    public function __construct($fieldName, $displayNameVar, $fieldType, $operators = null, $selectOptions = null) {
+        $this->fieldName = $fieldName;
+        $this->displayNameVar = $displayNameVar;
+        $this->fieldType = $fieldType;
+        
+        if (empty($operators)) {
+            $this->operators = $this->_getDefaultOperators($fieldType);    
+        } else {
+            $this->operators = $operators;
+        }
+        
+        $this->selectOptions = $selectOptions;        
+    }
+    
+    /**
+     * Get default operators for the given field type
+     * 
+     * @param String $fieldType Field type constant
+     * @return Array Array of operator constants
+     */
+    private function _getDefaultOperators($fieldType) {
+    
+        $operators = array();
+        
+        switch ($fieldType) {
+            case self::FIELD_TYPE_STRING:
+                $operators = array(self::OPERATOR_EQUAL,
+                                     self::OPERATOR_NOT_EQUAL,
+                                     self::OPERATOR_STARTSWITH,
+                                     self::OPERATOR_ENDSWITH,
+                                     self::OPERATOR_CONTAINS,
+                                     self::OPERATOR_NOT_CONTAINS);                
+                break;
+            case self::FIELD_TYPE_INT:
+                $operators = array(self::OPERATOR_LESSTHAN, 
+                                     self::OPERATOR_GREATERTHAN,
+                                     self::OPERATOR_EQUAL,
+                                     self::OPERATOR_NOT_EQUAL);
+                break;
+            case self::FIELD_TYPE_DATE:
+                $operators = array(self::OPERATOR_LESSTHAN, 
+                                     self::OPERATOR_GREATERTHAN,
+                                     self::OPERATOR_EQUAL,
+                                     self::OPERATOR_NOT_EQUAL);
+                break;
+            case self::FIELD_TYPE_SELECT:
+                $operators = array(self::OPERATOR_LESSTHAN, 
+                                     self::OPERATOR_GREATERTHAN,
+                                     self::OPERATOR_EQUAL,
+                                     self::OPERATOR_NOT_EQUAL);
+                break;
+            default:
+                break;
+        }
+        
+        return $operators;
+    }
+    
     /**
      * Retrieves the value of fieldName.
      * @return fieldName
@@ -121,19 +191,19 @@ class SearchField {
     }
 
     /**
-     * Retrieves the value of comparisons.
-     * @return comparisons
+     * Retrieves the value of operators.
+     * @return operators
      */
-    public function getComparisons() {
-        return $this->comparisons;
+    public function getOperators() {
+        return $this->operators;
     }
 
     /**
-     * Sets the value of comparisons.
-     * @param comparisons
+     * Sets the value of operators.
+     * @param operators
      */
-    public function setComparisons($comparisons) {
-        $this->comparisons = $comparisons;
+    public function setOperators($operators) {
+        $this->operators = $operators;
     }
 }
 

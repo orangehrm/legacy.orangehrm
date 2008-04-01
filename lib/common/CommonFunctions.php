@@ -397,5 +397,25 @@ class CommonFunctions {
 
         return $text;
     }
+    
+    /**
+     * Get given property of given object (using getter method)
+     * 
+     * @param Object $object any object
+     * @param String $property Property Name Any property name
+     * 
+     * @return Value of given property
+     */
+    public static function getObjectProperty($object, $property) {
+        
+        $value = '';
+        if (is_object($object)) {
+            $getter = 'get' . ucfirst($property);
+            if (method_exists($object, $getter)) {
+                $value = $object->$getter();
+            }
+        }
+        return $value;
+    }
 }
 ?>

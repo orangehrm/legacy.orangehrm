@@ -19,25 +19,17 @@
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'models_eimadmin_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'common_search_AllTests::main');
 }
 set_include_path(get_include_path() . PATH_SEPARATOR . "../../../build");
-
-require_once "testConf.php";
 
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'EmpInfoTest.php';
-require_once 'EmpSimpleBenefitTest.php';
-require_once 'EmpLocationTest.php';
-require_once 'JobTitleHistoryTest.php';
-require_once 'SubDivisionHistoryTest.php';
-require_once 'LocationHistoryTest.php';
-require_once 'EmployeeSearchTest.php';
+require_once 'SearchFieldTest.php';
+require_once 'SearchSqlHelperTest.php';
 
-
-class models_hrfunct_AllTests
+class common_search_AllTests
 {
     public static function main()
     {
@@ -46,19 +38,14 @@ class models_hrfunct_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('OrangeHRM models_eimadmin');
-		$suite->addTestSuite('EmpInfoTest');
-		$suite->addTestSuite('EmpSimpleBenefitTest');
-	    $suite->addTestSuite('EmpLocationTest');
-	    $suite->addTestSuite('JobTitleHistoryTest');
-	    $suite->addTestSuite('SubDivisionHistoryTest');
-	    $suite->addTestSuite('LocationHistoryTest');
-	    $suite->addTestSuite('EmployeeSearchTest');
+        $suite = new PHPUnit_Framework_TestSuite('OrangeHRM common_search');
+        $suite->addTestSuite('SearchFieldTest');
+        $suite->addTestSuite('SearchSqlHelperTest');
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'models_eimadmin_AllTests::main') {
-    models_eimadmin_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'common_search_AllTests::main') {
+    common_search_AllTests::main();
 }
 ?>

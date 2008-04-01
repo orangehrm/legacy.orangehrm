@@ -30,6 +30,7 @@ require_once 'authorizeTest.php';
 require_once 'CommonFunctionsTest.php';
 require_once 'LocaleUtilTest.php';
 require_once 'UniqueIDGeneratorTest.php';
+require_once 'search/AllTests.php';
 
 class common_AllTests
 {
@@ -43,6 +44,7 @@ class common_AllTests
         $suite = new PHPUnit_Framework_TestSuite('OrangeHRM common');
         $suite->addTestSuite('authorizeTest');
         $suite->addTestSuite('CommonFunctionsTest');
+        $suite->addTestSuite(common_search_AllTests::suite());
 	$suite->addTestSuite('UniqueIDGeneratorTest');
         return $suite;
     }
