@@ -348,6 +348,7 @@ lib/models/hrfunct/EmpSkill.php -text
 lib/models/hrfunct/EmpWorkExp.php -text
 lib/models/hrfunct/Employee.php -text
 lib/models/hrfunct/EmployeeSearch.php -text
+lib/models/hrfunct/EmployeeSearchTest.php -text
 lib/models/hrfunct/JobTitleHistory.php -text
 lib/models/hrfunct/JobTitleHistoryTest.php -text
 lib/models/hrfunct/LocationHistory.php -text
