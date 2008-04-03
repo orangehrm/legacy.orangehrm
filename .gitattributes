@@ -163,6 +163,8 @@ lib/common/search/DisplayField.php -text
 lib/common/search/SearchField.php -text
 lib/common/search/SearchFieldTest.php -text
 lib/common/search/SearchFilter.php -text
+lib/common/search/SearchOperator.php -text
+lib/common/search/SearchOperatorTest.php -text
 lib/common/search/SearchSqlHelper.php -text
 lib/common/search/SearchSqlHelperTest.php -text
 lib/common/search/SelectOption.php -text

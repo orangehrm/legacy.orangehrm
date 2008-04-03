@@ -17,6 +17,14 @@
  * Boston, MA  02110-1301, USA
  * Ruchira
  */
+
+require_once ROOT_PATH . '/lib/common/search/AbstractSearch.php';
+require_once ROOT_PATH . '/lib/common/search/SearchSqlHelper.php';
+require_once ROOT_PATH . '/lib/common/search/SearchField.php';
+require_once ROOT_PATH . '/lib/common/search/SelectOption.php';
+require_once ROOT_PATH . '/lib/common/search/SearchOperator.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/EmployStat.php';   
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpLocation.php';
  
 /**
  * Class representing an employee
@@ -88,7 +96,8 @@ class Employee {
     const DB_FIELD_FIRSTNAME = 'emp_firstname';
     const DB_FIELD_MIDDLENAME = 'emp_middle_name';
     const DB_FIELD_NICKNAME = 'emp_nick_name';    
-               
+    const DB_FIELD_NAME = "CONCAT(emp_firstname, ' ', emp_lastname)";
+                   
     const DB_FIELD_SSN_NO  = 'emp_ssn_num';
     const DB_FIELD_SIN_NO = 'emp_sin_num';
     const DB_FIELD_OTHER_ID = 'emp_other_id';
@@ -123,7 +132,10 @@ class Employee {
     const DB_FIELD_TERMINATED_DATE = 'terminated_date';
     const DB_FIELD_TERMINATED_REASON = 'terminated_reason';
     
-    private $fieldMap = array (
+    /* This is a field in hs_hr_emp_location */
+    const DB_FIELD_LOCATION = 'loc_code';
+
+    private static $fieldMap = array (
     
      self::FIELD_EMP_NUMBER => self::DB_FIELD_EMP_NUMBER,
      self::FIELD_EMP_ID => self::DB_FIELD_EMP_ID,
@@ -131,7 +143,7 @@ class Employee {
      self::FIELD_MIDDLENAME => self::DB_FIELD_MIDDLENAME,
      self::FIELD_LASTNAME => self::DB_FIELD_LASTNAME,
      self::FIELD_NICKNAME => self::DB_FIELD_NICKNAME,
-
+     self::FIELD_NAME => self::DB_FIELD_NAME,
      self::FIELD_SSN_NO => self::DB_FIELD_SSN_NO,
      self::FIELD_SIN_NO => self::DB_FIELD_SIN_NO,
      self::FIELD_OTHER_ID => self::DB_FIELD_OTHER_ID,
@@ -151,7 +163,7 @@ class Employee {
      self::FIELD_EEO_CATEGORY => self::DB_FIELD_EEO_CATEGORY,
      self::FIELD_SUB_DIVISION => self::DB_FIELD_SUB_DIVISION,
      //self::FIELD_JOINED_DATE => self::DB_FIELD_JOINED_DATE,
-     //self::FIELD_LOCATIONS => self::DB_FIELD_LOCATIONS,
+     self::FIELD_LOCATIONS => self::DB_FIELD_LOCATION,
      self::FIELD_TERMINATED_DATE => self::DB_FIELD_TERMINATED_DATE,
      self::FIELD_TERMINATED_REASON => self::DB_FIELD_TERMINATED_REASON,
 
@@ -167,7 +179,7 @@ class Employee {
      self::FIELD_PROVINCE => self::DB_FIELD_PROVINCE,
      self::FIELD_MOBILE => self::DB_FIELD_MOBILE,
      self::FIELD_OTHER_EMAIL => self::DB_FIELD_OTHER_EMAIL,    
-    );
+    );   
     
     // Main employee information
     private $empNumber;
@@ -806,27 +818,194 @@ class Employee {
      * @param String $sortField Field to sort on
      * @param String $sortOrder Sort order. One of AbstractSearch::SORT_ASCENDING or AbstractSearch::SORT_DESCENDING
      * @param int $pageNo The page number to fetch
+     * @param int $itemsPerPage The number of items per page
      * @return Array Array of Employee objects
      */
-    public static function search($filters, $matchType, $sortField, $sortOrder, $pageNo) {
+    public static function search($filters, $matchType, $sortField, $sortOrder, $pageNo, $itemsPerPage) {
+                
+        $fields[0] = self::DB_FIELD_EMP_NUMBER;
+        $fields[1] = self::DB_FIELD_EMP_ID;
+        $fields[2] = self::DB_FIELD_FIRSTNAME;
+        $fields[3] = self::DB_FIELD_MIDDLENAME;
+        $fields[4] = self::DB_FIELD_LASTNAME;
+        $fields[5] = self::DB_FIELD_NICKNAME;
+
+        $sql_builder = new SQLQBuilder();
+
+        $tables[0] = "hs_hr_employee a";
+        $tables[1] = "hs_hr_compstructtree b";
+                
+        //$tables[1] = "hs_hr_job_title b";
+        //$tables[3] = "hs_hr_location d";
+        /*$tables[3] = "`hs_hr_empstat` e";
+        $tables[4] = "`hs_hr_emp_reportto` f";
+        $tables[5] = "`hs_hr_employee` g"; */
+
+        //$joinConditions[1] = "a.`job_title_code` = b.`jobtit_code`";
+        $joinConditions[1] = "a.`work_station` = b.`id`";
+        //$joinConditions[3] = 'a.' . self::DB_FIELD_LOCATION . ' = b.loc_code';        
+        /*$joinConditions[3] = "a.`emp_status` = e.`estat_code`";
+        $joinConditions[4] = "a.`emp_number` = f.`erep_sub_emp_number`";
+        $joinConditions[5] = "f.`erep_sup_emp_number` = g.`emp_number`";*/
+
+        // HIDE terminated employees by default? OR ??
         
-        $results = array();
+        $selectConditions = self::_getSelectConditions($filters, $matchType);
+        //var_dump($selectConditions);die;
+        /* Select Conditions */
+        
+        /* Result order */
+        if (isset(self::$fieldMap[$sortField])) {
+            $sortDbField = self::$fieldMap[$sortField];
+            $sortDbOrder = $sortOrder;
+        } else {
+            $sortDbField = null;
+            $sortDbOrder = null;
+        }
+                
+        /* Calculate row limit */
+        $limit = null;
+        if ($pageNo > 0) {                
+            $offset = ($pageNo - 1) * $itemsPerPage;
+            $limit = "{$offset}, {$itemsPerPage}";
+        }
+
+        $sql = $sql_builder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectConditions, null, $sortDbField, $sortDbOrder, $limit, null);        
+
+        $conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+
+        $empList = array();
+        $inverseFieldMap = array_flip(self::$fieldMap);
+        while ($result && ($row = mysql_fetch_assoc($result))) {
+            $empList[] = self::_createFromRow($row, $inverseFieldMap);
+        }
+
+        return $empList;        
+    }
+    
+
+    /**
+     * Get matching employee count based on the passed parameters 
+     * 
+     * @param Array $filters Array of SearchFilter objects
+     * @param String $matchType One of AbstractSearch::MATCH_ALL or AbstractSearch::MATCH_ANY
+     * @return Int number of matching employees
+     */
+    public static function countResults($filters, $matchType) {
+
+        $fields[0] = 'COUNT(' . self::DB_FIELD_EMP_NUMBER . ') AS COUNT';
+
+        $sql_builder = new SQLQBuilder();
+
+        $tables[0] = "`hs_hr_employee` a";
+        $tables[1] = "hs_hr_compstructtree b";
+                
+        $joinConditions[1] = "a.`work_station` = b.`id`";
+        
+        $selectConditions = self::_getSelectConditions($filters, $matchType);
+        
+        $sql = $sql_builder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectConditions);        
+
+        $conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+
+        $count = 0;
+        if ($result && ($row = mysql_fetch_array($result))) {
+            $count = $row[0];
+        }
+
+        return $count;        
+    }
+    
+
+    /**
+     * Return SQL select conditions based on passed filter array
+     * 
+     * @param Array $filters Array of SearchFilter objects
+     * @param String $matchType Match Type (AbstractSearch::MATCH_ALL or AbstractSearch::MATCH_ANY)
+     * @return Array Array containing SQL Select conditions.
+     */
+    private function _getSelectConditions($filters, $matchType) {
+        
+        $includeTerminated = false;
+                        
+        if (!empty($filters)) {
+        
+            $conditions = array();
+            foreach ($filters as $filter) {
+    
+                $searchField = $filter->getSearchField();                        
+                if (isset(self::$fieldMap[$searchField->getFieldName()])) {
+                    
+                    $dbField = self::$fieldMap[$searchField->getFieldName()];
+                    $value = $filter->getSearchValue();
+                    
+                    if (get_magic_quotes_gpc()) {
+                        $value = stripslashes($value);
+                    }
+                    $value = mysql_real_escape_string($value);
+                    
+                    if ($dbField == self::DB_FIELD_LOCATION) {
+                        
+                        $operatorType = $filter->getOperator()->getType(); 
+                        if ($operatorType == SearchOperator::OPERATOR_NOT_EMPTY) {
+                            $conditions[] = "(EXISTS (SELECT * FROM " . EmpLocation::TABLE_NAME . " el WHERE " . 
+                                "el." . EmpLocation::DB_FIELD_EMP_NUMBER . " = a." . self::DB_FIELD_EMP_NUMBER . "))";                            
+                        } else if ($operatorType == SearchOperator::OPERATOR_EMPTY) {
+                            $conditions[] = "(NOT EXISTS (SELECT * FROM " . EmpLocation::TABLE_NAME . " el WHERE " . 
+                                "el." . EmpLocation::DB_FIELD_EMP_NUMBER . " = a." . self::DB_FIELD_EMP_NUMBER . "))";                            
+                        } else {
+                            $conditions[] = "(EXISTS (SELECT * FROM " . EmpLocation::TABLE_NAME . " el WHERE " . 
+                                "el." . EmpLocation::DB_FIELD_LOC_CODE . " = '{$value}' AND " .
+                                "el." . EmpLocation::DB_FIELD_EMP_NUMBER . " = a." . self::DB_FIELD_EMP_NUMBER . "))";
+                        }                                                        
+                    } else {
+                    
+                        $conditions[] = SearchSqlHelper::getSqlCondition($dbField, $filter->getOperator(), $value, 
+                            $searchField->getFieldType());
+                    }
+                        
+                    if (($searchField->getFieldName() == self::FIELD_EMP_STATUS) && 
+                            (($value == EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED) ||
+                            ($filter->getOperator()->getType() == SearchOperator::OPERATOR_EMPTY) ||
+                            ($filter->getOperator()->getType() == SearchOperator::OPERATOR_NOT_EMPTY) )) {
+                                
+                        $includeTerminated = true;
+                    }                     
+                }            
+            }
+            
+            if (!empty($conditions)) {
+                $joinWith = ($matchType == AbstractSearch::MATCH_ANY) ? ' OR ' : ' AND ';
+                $selectConditions[] = implode($joinWith, $conditions);
+            }                    
+        }
+        
+        /* If not specifically searching for terminated employees, exclude them */
+        if (!$includeTerminated) { 
+            $selectConditions[] = "(" . self::DB_FIELD_EMP_STATUS . " <> '". EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED. "' OR " .self::DB_FIELD_EMP_STATUS. " IS NULL) ";
+        }      
+        return $selectConditions;
+    }
+    
+    /**
+     * Create an Employee from from database row 
+     * 
+     * @return Array Array of Employee objects
+     */    
+    private static function _createFromRow($row, $map) {
         
         $employee = new Employee();
-        $employee->setEmpNumber(1);
-        $employee->setEmpId('001');
-        $employee->setFirstName('Ruchira');
-        $employee->setLastName('Ranaweera');
-        $results[] = $employee; 
         
-        $employee = new Employee();
-        $employee->setEmpNumber(2);
-        $employee->setEmpId('002');
-        $employee->setFirstName('John');
-        $employee->setLastName('Karunarathne');
-        $results[] = $employee;
+        foreach($row as $key=>$value) {
+            if (isset($map[$key])) {
+                $field = $map[$key];
+                $employee->$field = $value;
+            }    
+        }
         
-        return  $results;        
-    }   
+        return $employee;
+    }
 }
 ?>

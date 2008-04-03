@@ -87,7 +87,7 @@ class PerformanceController {
             $searchObj->search();
             
             $path = '/templates/common/search.php';
-            $objs['titleVar'] = ''; 
+            $objs['titleVar'] = 'lang_Performance_Assign_Review_Period'; 
             $objs['searchObj'] = $searchObj;
             $template = new TemplateMerger($objs, $path, null, null);
             $template->display();

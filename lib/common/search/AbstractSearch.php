@@ -18,6 +18,8 @@
  * Ruchira
  */
 
+require_once ROOT_PATH . '/lib/confs/sysConf.php';
+
 abstract class AbstractSearch {
 
     /** Match */
@@ -49,15 +51,29 @@ abstract class AbstractSearch {
     /** Search results */
     protected $searchResults;
 
+    /** Number of results */
+    protected $numResults = 0;
+    
     /** Current page number */
-    protected $pageNo;
+    protected $pageNo = 1;
+    
+    /** Items per page */
+    protected $itemsPerPage;
     
     /** Page count */
-    protected $pageCount;
+    protected $pageCount = 0;    
     
     /** Match all or any */
     protected $matchType = self::MATCH_ALL;
 
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $sysConf = new sysConf();        
+        $this->itemsPerPage = $sysConf->itemsPerPage;        
+    }
+    
     /**
      * Retrieves the value of searchFields.
      * @return searchFields
@@ -171,6 +187,22 @@ abstract class AbstractSearch {
     }
 
     /**
+     * Get the number of results
+     * @return int number of results
+     */
+    public function getNumResults() {
+        return $this->numResults;
+    }
+    
+    /**
+     * Set the number of results
+     * @param int $numResults The number of results matching the search
+     */
+    public function setNumResults($numResults) {
+        $this->numResults = $numResults;
+    }    
+
+    /**
      * Retrieves the value of pageNo.
      * @return pageNo
      */
@@ -201,7 +233,23 @@ abstract class AbstractSearch {
     public function setPageCount($pageCount) {
         $this->pageCount = $pageCount;
     }
-        
+    
+    /**
+     * Retrieves the value of items per page
+     * @return int Items per page
+     */
+    public function getItemsPerPage() {
+        return $this->itemsPerPage;
+    }
+
+    /**
+     * Sets the items per page
+     * @param int $itemsPerPage Items per page
+     */
+    public function setItemsPerPage($itemsPerPage) {
+        $this->itemsPerPage = $itemsPerPage;
+    }
+                
     /**
      * Get the match type
      * @return String match type

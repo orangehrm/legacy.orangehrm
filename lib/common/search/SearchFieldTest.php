@@ -59,24 +59,24 @@ class SearchFieldTest extends PHPUnit_Framework_TestCase {
         
         // verify default operators for string were set.
         $operators = $searchField->getOperators();
-        $expected = array(SearchField::OPERATOR_EQUAL,
-                          SearchField::OPERATOR_NOT_EQUAL,
-                          SearchField::OPERATOR_STARTSWITH,
-                          SearchField::OPERATOR_ENDSWITH,
-                          SearchField::OPERATOR_CONTAINS,
-                          SearchField::OPERATOR_NOT_CONTAINS);
+        $expected = array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_STARTSWITH),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_ENDSWITH),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_CONTAINS),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_CONTAINS));
                             
         $this->assertEquals($expected, $operators);
         
         // pass operators to constructor
-        $searchField = new SearchField('testField2', 'lang_test_field_name2', 'int', array(SearchField::OPERATOR_EQUAL));
+        $searchField = new SearchField('testField2', 'lang_test_field_name2', 'int', array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL)));
         $this->assertEquals('testField2', $searchField->getFieldName());
         $this->assertEquals('lang_test_field_name2', $searchField->getDisplayNameVar());
         $this->assertEquals('int', $searchField->getFieldType());
         $this->assertNull($searchField->getSelectOptions());
         
         $operators = $searchField->getOperators();
-        $expected = array(SearchField::OPERATOR_EQUAL);
+        $expected = array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL));
                             
         $this->assertEquals($expected, $operators);
         
@@ -91,10 +91,10 @@ class SearchFieldTest extends PHPUnit_Framework_TestCase {
         
         // verify default operators for select were set.
         $operators = $searchField->getOperators();
-        $expected = array(SearchField::OPERATOR_LESSTHAN, 
-                          SearchField::OPERATOR_GREATERTHAN,
-                          SearchField::OPERATOR_EQUAL,
-                          SearchField::OPERATOR_NOT_EQUAL);                            
+        $expected = array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_EMPTY),
+                          SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EMPTY));                            
         $this->assertEquals($expected, $operators);
                                            
     }

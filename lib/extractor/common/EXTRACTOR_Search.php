@@ -50,7 +50,7 @@ require_once ROOT_PATH . '/lib/common/search/SearchFilter.php';
                 $searchObj->setMatchType($match);
             }
         }
-        
+
         /* Parse search filters */
         $searchFilters = array();
         if (isset($postArr['searchField']) && isset($postArr['operator']) && isset($postArr['searchValue'])) {           
@@ -61,14 +61,30 @@ require_once ROOT_PATH . '/lib/common/search/SearchFilter.php';
                         
             $numFields = count($fields);
             for ($i = 0; $i < $numFields; $i++) {
-                $fieldName = $fields[$i];
-                $operator = $operators[$i];
-                $value = $values[$i];
-                
-                if (($fieldName != '-1') && !empty($operator)) {
-                    $searchField = $searchObj->getFieldWithName($fieldName);
-                    if (!empty($searchField)) {
-                        $searchFilters[] = new SearchFilter($searchField, $operator, $value);                         
+
+                /* Check that operator and value are available as well */                
+                if (isset($operators[$i])) { //}&& ($operators[$i]) isset($values[$i])) {
+                    $fieldName = $fields[$i];
+                    $operator = $operators[$i];
+                    $searchOperator = SearchOperator::getOperator($operator);
+                    
+                    if (!$searchOperator->isBinary()) {
+                        
+                        /* No value needed for unary operators */
+                        $value = null;
+                    } else if (isset($values[$i])) {
+                        $value = $values[$i];
+                    } else {
+                        
+                        /* No value found. Skip this row */
+                        continue;
+                    }
+                    
+                    if (($fieldName != '-1') && !empty($operator)) {
+                        $searchField = $searchObj->getFieldWithName($fieldName);
+                        if (!empty($searchField)) {
+                            $searchFilters[] = new SearchFilter($searchField, $searchOperator, $value);                         
+                        }
                     }
                 }
             }

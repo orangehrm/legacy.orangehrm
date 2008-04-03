@@ -17,6 +17,8 @@
  * Boston, MA  02110-1301, USA
  * Ruchira
  */
+
+require_once ROOT_PATH . '/lib/common/search/SearchOperator.php';
  
 /**
  * Class containing helpful utility functions for searching.
@@ -25,24 +27,26 @@ class SearchSqlHelper {
 
     /* Maps search operators to SQL operators */
     private static $operatorMap = array(
-        SearchField::OPERATOR_LESSTHAN => '<',
-        SearchField::OPERATOR_GREATERTHAN => '>',
-        SearchField::OPERATOR_EQUAL => '=',
-        SearchField::OPERATOR_NOT_EQUAL => '<>',    
-        SearchField::OPERATOR_STARTSWITH => 'LIKE',
-        SearchField::OPERATOR_ENDSWITH => 'LIKE',
-        SearchField::OPERATOR_CONTAINS => 'LIKE',
-        SearchField::OPERATOR_NOT_CONTAINS => 'NOT LIKE');    
+        SearchOperator::OPERATOR_LESSTHAN => '<',
+        SearchOperator::OPERATOR_GREATERTHAN => '>',
+        SearchOperator::OPERATOR_EQUAL => '=',
+        SearchOperator::OPERATOR_NOT_EQUAL => '<>',    
+        SearchOperator::OPERATOR_STARTSWITH => 'LIKE',
+        SearchOperator::OPERATOR_ENDSWITH => 'LIKE',
+        SearchOperator::OPERATOR_CONTAINS => 'LIKE',
+        SearchOperator::OPERATOR_NOT_CONTAINS => 'NOT LIKE',
+        SearchOperator::OPERATOR_EMPTY => 'IS NULL',
+        SearchOperator::OPERATOR_NOT_EMPTY => 'IS NOT NULL');    
 
     /**
-     * Get SQL Operator for given operator constant from SearchField class
+     * Get SQL Operator for given SearchOperator object
      * 
-     * @param String $operator Operator constant from SearchField
+     * @param String $operator SearchOperator object
      * @return String SQL operator
      */
     public static function getSqlOperator($operator) {
-        if (isset(self::$operatorMap[$operator])) {
-            return self::$operatorMap[$operator];
+        if (($operator instanceof SearchOperator) && isset(self::$operatorMap[$operator->getType()])) {
+            return self::$operatorMap[$operator->getType()];
         } else {
             throw new SearchSqlHelperException("Invalid operator", SearchSqlHelperException::INVALID_OPERATOR);   
         }
@@ -55,7 +59,7 @@ class SearchSqlHelper {
      *       passing to this method. 
      * 
      * @param String $dbField The database field name
-     * @param String $operator Operator constant from SearchField class
+     * @param String $operator SearchOperator object
      * @param String $value Search Value
      * @param String $fieldType Field type constant from SearchField class
      * @param boolean $addBrackets Should sql condition be surrounded by brackets
@@ -64,32 +68,52 @@ class SearchSqlHelper {
      */
     public static function getSqlCondition($dbField, $operator, $value, $fieldType, $addBrackets = true) {
         
+        $operatorType = $operator->getType();        
         $sqlOperator = self::getSqlOperator($operator);
         
-        /* LIKE is allowed in numeric fields in MySQL */        
-        switch ($operator) {
-            case SearchField::OPERATOR_STARTSWITH:
-                $value = "'" . $value . "%'";
-                break;
-            case SearchField::OPERATOR_ENDSWITH:
-                $value =  "'%" . $value . "'";
-                break;
-            case SearchField::OPERATOR_CONTAINS: /* Fall through */
-            case SearchField::OPERATOR_NOT_CONTAINS:            
-                $value =  "'%" . $value . "%'";
-                break;                
-            default:
-                /* Quote all fields except int */
-                if ($fieldType != SearchField::FIELD_TYPE_INT) {
-                    
-                    // Note: value should be escaped with mysql_real_escape before passing to method.
-                    $value = "'" . $value . "'"; 
-                }
-                break;            
+        if (($operatorType == SearchOperator::OPERATOR_EMPTY) ||
+                ($operatorType == SearchOperator::OPERATOR_NOT_EMPTY)) {
+            
+            /* Here $sqlOperator is "IS NULL" or "IS NOT NULL" */
+            $sql = "{$dbField} {$sqlOperator}";            
+        } else {
+            
+            /* LIKE is allowed in numeric fields in MySQL */        
+            switch ($operatorType) {
+                case SearchOperator::OPERATOR_STARTSWITH:
+                    $value = "'" . $value . "%'";
+                    break;
+                case SearchOperator::OPERATOR_ENDSWITH:
+                    $value =  "'%" . $value . "'";
+                    break;
+                case SearchOperator::OPERATOR_CONTAINS: /* Fall through */
+                case SearchOperator::OPERATOR_NOT_CONTAINS:            
+                    $value =  "'%" . $value . "%'";
+                    break;                
+                default:
+                    /* Quote all fields except int */
+                    if ($fieldType != SearchField::FIELD_TYPE_INT) {
+                        
+                        // Note: value should be escaped with mysql_real_escape before passing to method.
+                        $value = "'" . $value . "'"; 
+                    }
+                    break;            
+            }
+        
+            $sql = $dbField . ' ' . $sqlOperator . ' ' . $value;
         }
         
-        
-        $sql = $dbField . ' ' . $sqlOperator . ' ' . $value;
+        /* 
+         * Should null fields be matched.
+         * For <> and NOT LIKE comparisons we need to specifically match NULL fields by
+         * adding a IS NULL in front, otherwise NULL fields are not matched. 
+         */
+        if (($operatorType == SearchOperator::OPERATOR_NOT_EQUAL) || 
+                ($operatorType == SearchOperator::OPERATOR_NOT_CONTAINS)) {
+                    
+            $sql = "({$dbField} IS NULL) OR ({$sql})";                                
+        }
+
         if ($addBrackets) {
             $sql = '(' . $sql . ')';
         }

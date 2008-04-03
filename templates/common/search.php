@@ -24,6 +24,9 @@ $displayFields = $searchObj->getDisplayFields();
 $sortBy = $searchObj->getSortField();
 $sortOrder = $searchObj->getSortOrder();
 $matchType = $searchObj->getMatchType();
+$pageNo = $searchObj->getPageNo();
+$itemsPerPage = $searchObj->getItemsPerPage();
+$numResults = $searchObj->getNumResults();
 
 if ($sortOrder == AbstractSearch::SORT_ASCENDING) {
     $nextSort = 'DESC';
@@ -66,17 +69,17 @@ function printFilterRow($searchObj, $searchFilter = null) {
         echo '<option value="' . $searchFieldName . '"' . $selected . '>' . $$displayTextVar . '</option>' . "\n";               
     }
     echo "</select>\n";
-    echo "</td>\n";
+
     echo "<td>\n";
-    echo '<select class="filterOperator" name="operator[]">' . "\n";
+    echo '<select onChange="onOperatorChange(this);" class="filterOperator" name="operator[]">' . "\n";
     if (!empty($searchFilter)) {
         $operators = $searchFilter->getSearchField()->getOperators();
         $selectedOperator = $searchFilter->getOperator();
 
         foreach ($operators as $operator) {
-            $operatorLabel = 'lang_Search_Operator_' . $operator;
+            $operatorLabel = 'lang_Search_Operator_' . $operator->getType();
             $selected = ($operator == $selectedOperator) ? 'selected' : '';
-            echo '<option value="' . $operator . '" ' . $selected . ' >' . $$operatorLabel . '</option>' . "\n";
+            echo '<option value="' . $operator->getType() . '" ' . $selected . ' >' . $$operatorLabel . '</option>' . "\n";
         }
     }
     echo "</select>\n";
@@ -85,10 +88,12 @@ function printFilterRow($searchObj, $searchFilter = null) {
     
     $searchValue = empty($searchFilter) ? '' : $searchFilter->getSearchValue();
     
-    if (!empty($selectedField) && $selectedField->getFieldType() == SearchField::FIELD_TYPE_SELECT) {
+    /* Hide value field if operator is unary */
+    if (!empty($selectedField) && ($selectedField->getFieldType() == SearchField::FIELD_TYPE_SELECT) 
+            && ($selectedOperator->isBinary())) {
         echo '<select class="filterValue" name="searchValue[]" >' . "\n";
         
-        $selectOptions = $searchField->getSelectOptions();
+        $selectOptions = $selectedField->getSelectOptions();
         foreach ($selectOptions as $option) {
             $value = $option->getValue();
             $name = $option->getName();
@@ -98,7 +103,13 @@ function printFilterRow($searchObj, $searchFilter = null) {
 
         echo "</select>\n";
     } else {
-        echo '<input type="text" class="filterValue" name="searchValue[]" value="' . $searchValue . '"/>' . "\n";        
+        
+        if (empty($selectedOperator) || $selectedOperator->isBinary()) {
+            $hide = '';        
+        } else {
+            $hide = 'style="display:none;"'; 
+        }             
+        echo '<input ' . $hide . ' type="text" class="filterValue" name="searchValue[]" value="' . $searchValue . '"/>' . "\n";        
     }
     echo "</td>\n";
     echo '<td><input class="button" type="button" onclick="addRow(this);" name="addRowBtn[]" value="+" />' . "\n";
@@ -147,9 +158,9 @@ foreach ($searchObj->getSearchFields() as $searchField) {
 <?php
    
     foreach ($operators as $operator) {
-        $operatorLabel = 'lang_Search_Operator_' . $operator;
+        $operatorLabel = 'lang_Search_Operator_' . $operator->getType();
 ?>
-        optionArray.push(new Option('<?php echo $$operatorLabel;?>', '<?php echo $operator;?>')) 
+        optionArray.push(new Option('<?php echo $$operatorLabel;?>', '<?php echo $operator->getType();?>')) 
 <?php        
     }
 ?>
@@ -197,10 +208,26 @@ foreach ($searchObj->getSearchFields() as $searchField) {
     }
 ?>      
         fieldSelect.name = "searchField[]";
-        fieldSelect.onclick = function() {onFilterFieldChange(this)};
+        fieldSelect.onchange = function() {onFilterFieldChange(this)};
+        fieldSelect.className = 'filterField';
         return fieldSelect;                  
     }
            
+    function isUnaryOperator(Operator) {
+<?php 
+    foreach(SearchOperator::getAll() as $operator) {
+        if (!$operator->isBinary()) {
+?>
+        if (Operator == '<?php echo $operator->getType();?>') {
+            return true;
+        }
+<?php            
+        }
+    }
+?>        
+        return false;
+    }
+               
     function addRow(obj) {
         var row = YAHOO.util.Dom.getAncestorByTagName(obj, "tr");
         var tbl = YAHOO.util.Dom.getAncestorByTagName(row, "table");
@@ -215,6 +242,7 @@ foreach ($searchObj->getSearchFields() as $searchField) {
         var operatorSelect = document.createElement('select');
         operatorSelect.className = "filterOperator";
         operatorSelect.name = "operator[]";
+        operatorSelect.onchange = function() {onOperatorChange(this)};
         
         var valueInput = document.createElement('input');
         valueInput.type = 'text';
@@ -273,7 +301,6 @@ foreach ($searchObj->getSearchFields() as $searchField) {
      * Will update the operator drop down with options supported by this field.
      */
     function onFilterFieldChange(obj) {
-        
         var parentRow = YAHOO.util.Dom.getAncestorByTagName(obj, "tr");
         var children = YAHOO.util.Dom.getElementsByClassName("filterOperator", 'select', parentRow);
         var selectObj = children[0]; 
@@ -299,11 +326,42 @@ foreach ($searchObj->getSearchFields() as $searchField) {
                 selectObj.options[i] = new Option(optionArray[i].text, optionArray[i].value);
             }
         }
+        
+        onOperatorChange(selectObj); 
+    }
+    
+    /**
+     * Function run when the selected operation changes.
+     */
+    function onOperatorChange(selectObj) {
+        
+        // Get current value field
+        var parentRow = YAHOO.util.Dom.getAncestorByTagName(selectObj, "tr");        
+        var children = YAHOO.util.Dom.getElementsByClassName("filterField", 'select', parentRow);
 
-        if (fieldType == '<?php echo SearchField::FIELD_TYPE_SELECT;?>') {
+        var filterSelect = children[0];
+                         
+        var valueFields = YAHOO.util.Dom.getElementsByClassName("filterValue", undefined, parentRow);        
+        var valueField = valueFields[0];        
+
+        // Get field type
+        var fieldType = 'string';        
+        var selectedIndex = filterSelect.selectedIndex;                
+        if (selectedIndex > 0) {
+            var selectedField = filterSelect.options[selectedIndex].value;
+            fieldType = fieldTypes[selectedField];
+        }
+
+        selectedOperator = selectObj.options[selectObj.selectedIndex];
+        if (isUnaryOperator(selectedOperator.value)) {
+            
+            // No need for value field. hide it
+            valueField.style.display = 'none';            
+        } else if (fieldType == '<?php echo SearchField::FIELD_TYPE_SELECT;?>') {
             
             // need to create a select box
             if (valueField.type == 'select') {
+                valueField.style.display = 'inline';
                 newValue = valueField;
             } else {
                 var newValue = document.createElement('select');
@@ -331,10 +389,12 @@ foreach ($searchObj->getSearchFields() as $searchField) {
                 newValue.name = "searchValue[]";
                 var res = valueField.parentNode.insertBefore(newValue, valueField);
                 valueField.parentNode.removeChild(valueField);                                
+            } else {
+                valueField.style.display = 'inline';
             }
         }
     }
-    
+        
     function doHandleAll() {
         var allCheck = $('allCheck');
         var resultsTable = $('resultsTable');
@@ -379,6 +439,19 @@ foreach ($searchObj->getSearchFields() as $searchField) {
         form.submit();        
     }
     
+    function chgPage(pageNo) {
+        $('searchForm').pageNo.value = pageNo;
+        $('searchForm').submit();
+    }
+    
+    function nextPage() {
+        chgPage(<?php echo ($pageNo + 1);?>);
+    }
+    
+    function prevPage() {
+        chgPage(<?php echo ($pageNo - 1);?>);
+    }
+    
     YAHOO.OrangeHRM.container.init();    
 </script>
 <style type="text/css">
@@ -411,9 +484,24 @@ foreach ($searchObj->getSearchFields() as $searchField) {
         width: 90%;
         text-align: right;
         padding-right: 10px;
-        margin-top: 5px;    
+        margin-top: 0px;
+        font-size: 11px;    
     }
-    
+
+    #pagingBar {
+        width: 90%;
+        text-align: right;
+        font-size: 11px;                
+    }
+
+    #searchSummary {
+        padding-right: 50px;    
+    }
+
+    #pagingLinks {
+
+    }
+       
     input, select {
         padding: 0px 0px 0px 0px;
         margin: 3px 5px 3px 5px;
@@ -443,16 +531,30 @@ foreach ($searchObj->getSearchFields() as $searchField) {
         margin-right: 2px;
     }
     
+    .readOnly {
+        border:none;
+    }
+    
     -->    
 </style>
 </head>
 
 
 <body>
+<h2 class="moduleTitle" style="padding-top:10px; padding-bottom:3px;">
+<?php if (isset($records['titleVar']) && (!empty($records['titleVar']))) {
+    $titleVar = $records['titleVar'];
+    if (isset($$titleVar)) {
+        echo $$titleVar;            
+    }        
+}
+?>
+</h2>
 <form id="searchForm" method="post" action="">
 
 <input type="hidden" name="sortBy" id="sortBy" value="<?php echo $sortBy;?>"/>
 <input type="hidden" name="sortOrder" id="sortOrder" value="<?php echo $sortOrder;?>"/>
+<input type="hidden" name="pageNo" id="pageNo" value="<?php echo $pageNo;?>"/>
 
 <div id="filterOptions">
     <input class="radioBtn" type="radio" name="match" value="matchAll" id="matchAll" 
@@ -494,6 +596,26 @@ foreach ($searchObj->getSearchFields() as $searchField) {
         onMouseOver="this.src='<?php echo $picDir;?>btn_clear_02.gif';" 
         src="<?php echo $picDir;?>btn_clear.gif">            
 </div>
+<?php 
+    if ($searchObj->getPageCount() > 1) {
+?>        
+<div id="pagingBar">
+<?php    
+    $startNum = (($pageNo - 1) * $itemsPerPage) + 1;
+    $endNum = $startNum + $itemsPerPage - 1;
+    $endNum = ($endNum > $numResults) ? $numResults : $endNum;
+    
+    $summaryStr = preg_replace(array('/#start/', '/#end/', '/#all/'), array($startNum, $endNum, $numResults), 
+        $lang_Search_Results_n_to_m_of_All);    
+                  
+    $commonFunc = new CommonFunctions();
+    $pageStr = $commonFunc->printPageLinks($numResults, $pageNo);
+    $pageStr = preg_replace(array('/#first/', '/#previous/', '/#next/', '/#last/'), array($lang_empview_first, $lang_empview_previous, $lang_empview_next, $lang_empview_last), $pageStr);
+?>
+<span id="searchSummary" ><?php echo $summaryStr;?></span>
+<span id="pagingLinks"><?php echo $pageStr;?></span>
+</div>
+<?php } ?>
 <div class="roundbox">
     <table class="results" id="resultsTable">
         <thead>

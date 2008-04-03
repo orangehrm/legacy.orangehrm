@@ -17,25 +17,17 @@
  * Boston, MA  02110-1301, USA
  * Ruchira
  */
+
+require_once ROOT_PATH . '/lib/common/search/SearchOperator.php';
  
 class SearchField {
-
+    
     /** Field type constants */
     const FIELD_TYPE_STRING = 'string';
     const FIELD_TYPE_INT = 'int';
     const FIELD_TYPE_SELECT = 'select';
     const FIELD_TYPE_DATE = 'date';
-    
-    /** Operator type constants */
-    const OPERATOR_LESSTHAN = 'lt';
-    const OPERATOR_GREATERTHAN = 'gt';
-    const OPERATOR_EQUAL = 'eq';
-    const OPERATOR_NOT_EQUAL = 'neq';    
-    const OPERATOR_STARTSWITH = 'starts';
-    const OPERATOR_ENDSWITH = 'ends';
-    const OPERATOR_CONTAINS = 'contains';
-    const OPERATOR_NOT_CONTAINS = 'not_contains';    
-    
+        
     /** Search qualifiers */
     const QUALIFIER_CASE_SENSITIVE = 'cs';
     const QUALIFIER_CASE_INSENSITIVE = 'ci';
@@ -86,7 +78,7 @@ class SearchField {
      * Get default operators for the given field type
      * 
      * @param String $fieldType Field type constant
-     * @return Array Array of operator constants
+     * @return Array Array of SearchOperator objects
      */
     private function _getDefaultOperators($fieldType) {
     
@@ -94,30 +86,30 @@ class SearchField {
         
         switch ($fieldType) {
             case self::FIELD_TYPE_STRING:
-                $operators = array(self::OPERATOR_EQUAL,
-                                     self::OPERATOR_NOT_EQUAL,
-                                     self::OPERATOR_STARTSWITH,
-                                     self::OPERATOR_ENDSWITH,
-                                     self::OPERATOR_CONTAINS,
-                                     self::OPERATOR_NOT_CONTAINS);                
+                $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_STARTSWITH),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_ENDSWITH),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_CONTAINS),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_CONTAINS));                
                 break;
             case self::FIELD_TYPE_INT:
-                $operators = array(self::OPERATOR_LESSTHAN, 
-                                     self::OPERATOR_GREATERTHAN,
-                                     self::OPERATOR_EQUAL,
-                                     self::OPERATOR_NOT_EQUAL);
+                $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_LESSTHAN), 
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_GREATERTHAN),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL));
                 break;
             case self::FIELD_TYPE_DATE:
-                $operators = array(self::OPERATOR_LESSTHAN, 
-                                     self::OPERATOR_GREATERTHAN,
-                                     self::OPERATOR_EQUAL,
-                                     self::OPERATOR_NOT_EQUAL);
+                $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_LESSTHAN), 
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_GREATERTHAN),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
+                                     SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL));
                 break;
             case self::FIELD_TYPE_SELECT:
-                $operators = array(self::OPERATOR_LESSTHAN, 
-                                     self::OPERATOR_GREATERTHAN,
-                                     self::OPERATOR_EQUAL,
-                                     self::OPERATOR_NOT_EQUAL);
+                $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
+                                   SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL),
+                                   SearchOperator::getOperator(SearchOperator::OPERATOR_EMPTY),
+                                   SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EMPTY));
                 break;
             default:
                 break;

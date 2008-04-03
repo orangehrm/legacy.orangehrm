@@ -1514,8 +1514,9 @@
     /* Search */
     $lang_Search_Match_All = 'Match all of the following';
     $lang_Search_Match_Any = 'Match any of the following';
-    $lang_Search_Select_Field = '-- Select Field --';
-    
+    $lang_Search_Select_Field = '-- Select Field --';    
+    $lang_Search_ValueNotSet = "- NULL -";
+        
     /* Search operators */
     $lang_Search_Operator_lt = 'Less Than';
     $lang_Search_Operator_gt = 'Greater Than';
@@ -1525,5 +1526,13 @@
     $lang_Search_Operator_ends = 'Ends With';
     $lang_Search_Operator_contains = 'Contains';
     $lang_Search_Operator_not_contains = "Does not contain";    
+    $lang_Search_Operator_empty = "Is Empty";
+    $lang_Search_Operator_not_empty = "Is not Empty";
+            
+    // Don't change #start, #end, #all
+    $lang_Search_Results_n_to_m_of_All = 'Results #start - #end of #all';
+    
+    // Performance    
+    $lang_Performance_Assign_Review_Period = 'Assign Review Period';
     
 ?>

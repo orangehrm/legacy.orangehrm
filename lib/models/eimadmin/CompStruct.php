@@ -72,6 +72,14 @@ class CompStruct {
 		$this->deptId =$val;
 	}
 
+    /**
+     * Get value of hierachy array
+     * @return Array
+     */
+    public function getHierachyArr() {
+        return $this->hierachyArr;
+    }
+    
 	function addCompStruct () {
 
 		/*
@@ -297,7 +305,7 @@ class CompStruct {
 
 		$this->hierachyArr = $resArr;
 	}
-
+    
 	public function fetchHierarchString($id) {
 		if (isset($this->hierachyStrings[$id]) && !empty($this->hierachyStrings[$id])) {
 			return $this->hierachyStrings[$id];
@@ -307,6 +315,29 @@ class CompStruct {
 
 		return $this->hierachyStrings[$id];
 	}
+    
+    /**
+     * Get the level in the company hierachy of the given item.
+     * Eg: Company --> Sub1 --> Sub2
+     * 
+     * Company is at level 0, Sub1 is at level 1, Sub2 is at level 2
+     * 
+     * @return int Company hierachy level
+     */
+    public function getHierachyLevel($id) {
+        
+        $level = null;
+        if (isset($this->hierachyArr[$id])) {
+            
+            $level = 0;
+            while (isset($this->hierachyArr[$id]['parnt']) && ($this->hierachyArr[$id]['parnt'] != 0)) {
+                $id = $this->hierachyArr[$id]['parnt'];
+                $level++;
+            }
+        }
+        return $level;        
+        
+    }
 
 	private function _buildHierarchString($id) {
 		$str = $this->hierachyArr[$id]['title'];
