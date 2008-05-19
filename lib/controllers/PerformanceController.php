@@ -30,6 +30,11 @@ require_once ROOT_PATH . '/lib/models/eimadmin/JobTitle.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmployeeSearch.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/Employee.php';
 require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_Search.php';
+require_once ROOT_PATH . '/lib/models/performance/PerformanceMeasure.php';
+require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
+//TODO: Move EXTRACTOR_ViewList.php to common location
+require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
+require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
 
 /**
  * Controller for performance module
@@ -58,6 +63,8 @@ class PerformanceController {
 			return;
 		}
 
+		$viewListExtractor = new EXTRACTOR_ViewList();
+		
 		switch ($code) {
 
 			case 'ReviewPeriod' :
@@ -71,8 +78,196 @@ class PerformanceController {
 	                    break;
 	            }
                 break;
+                
+			case 'PerfMeasure' :
+			
+				$perfMeasureExtractor = new EXTRACTOR_PerfMeasure();
+
+	            switch ($_GET['action']) {
+
+	                case 'List' :
+	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
+	                    $this->_viewMeasures($searchObject);	                    	                
+	                    break;
+	                    
+	                case 'View' :
+	                	$id = isset($_GET['id'])? $_GET['id'] : null;
+	                	$this->_viewMeasure($id);
+						break;
+							                    
+	                case 'ViewAdd' :
+	                	$this->_viewAddMeasure();
+	                	break;
+	                	
+	                case 'Update' :
+	                	$perfMeasure = $perfMeasureExtractor->parseUpdateData($_POST);
+	                	$this->_saveMeasure($perfMeasure);
+	                	break;	                    
+	               	case 'Delete' :
+	                    $ids = $_POST['chkID'];
+	                    $this->_deleteMeasures($ids);	               		
+	               		break;
+	                		                    
+	            }
+                break;
+
+			case 'PerfReviews' :
+
+	            switch ($_GET['action']) {
+
+	                case 'List' :
+	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
+	                    $this->_viewReviews($searchObject);	                    	                
+	                    break;
+	            }
+                break;                                                                
 	    }
     }
+    
+    /**
+     * Save Performance measure in the database
+     * @param PerformanceMeasure $measure Performance Measure to save
+     */
+    private function _saveMeasure($measure) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+				$measure->save();
+	        	$message = 'UPDATE_SUCCESS';
+	        	$this->redirect($message, '?perfcode=PerfMeasure&action=List');
+			} catch (PerformanceMeasureException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}
+		} else {
+            $this->_notAuthorized();
+		}
+    }    
+    
+	/**
+	 * View list of performance measures
+	 * @param SearchObject Object with search parameters
+	 */
+    private function _viewMeasures($searchObject) {
+
+		if ($this->authorizeObj->isAdmin()) {
+        	$list = PerformanceMeasure::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
+        	$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());
+        	$this->_viewList($searchObject->getPageNumber(), $count, $list, false);
+		} else {
+            $this->_notAuthorized();
+		}
+    }    
+
+	/**
+	 * View add Performance Measure page
+	 */
+	private function _viewAddMeasure() {
+		if ($this->authorizeObj->isAdmin()) {
+	    	$this->_viewMeasure();
+	    } else {
+            $this->_notAuthorized();
+		}
+	}
+
+    /**
+     * View Performance Measure
+     * @param int $id Id of Performance Measure. If empty, A new Performance Measure is shown
+     */
+    private function _viewMeasure($id = null) {
+
+		$path = '/templates/performance/measure.php';
+
+		try {
+			if (empty($id)) {
+				$perfMeasure = new PerformanceMeasure();
+			} else {
+				$perfMeasure = PerformanceMeasure::getPerformanceMeasure($id);
+			}
+
+			$jobTitle = new JobTitle();
+			$jobTitles = $jobTitle->getJobTit();
+			$assignedJobTitles = $perfMeasure->getJobTitles();
+			
+			// Find available job titles
+			
+			if (empty($assignedJobTitles)) {
+				$availableJobTitles = $jobTitles;
+			} else {
+				$availableJobTitles = array();				
+
+				foreach ($jobTitles as $title) {
+					$jobTitleCode = $title[0];
+					if (!array_key_exists($jobTitleCode, $assignedJobTitles)) {
+						$availableJobTitles[] = $title;
+					}
+				}	
+			}		
+
+			$objs['perfMeasureList'] = PerformanceMeasure::getAll();
+			$objs['perfMeasure'] = $perfMeasure;
+			$objs['AvailableJobTitles'] = $availableJobTitles;
+			$objs['AssignedJobTitles'] = $assignedJobTitles;
+
+			$template = new TemplateMerger($objs, $path);
+			$template->display();
+		} catch (PerformanceMeasureException $e) {
+			$message = 'UNKNOWN_FAILURE';
+            $this->redirect($message);
+		}
+    }
+
+	/**
+	 * Delete Performance Measures with given IDs
+	 * @param Array $ids Array with Performance Measure ID's to delete
+	 */
+    private function _deleteMeasures($ids) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+        		$count = PerformanceMeasure::delete($ids);
+        		$message = 'DELETE_SUCCESS';
+			} catch (JobVacancyException $e) {
+				$message = 'DELETE_FAILURE';
+			}
+            $this->redirect($message, '?perfcode=PerfMeasure&action=List');
+		} else {
+            $this->_notAuthorized();
+		}
+    }
+    
+	/**
+	 * View list of performance reviews
+	 * @param SearchObject Object with search parameters
+	 */
+    private function _viewReviews($searchObject) {
+
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+        	//$list = PerformanceMeasure::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
+        	//$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());
+        	$list = array();
+        	$count = 0;
+        	$this->_viewList($searchObject->getPageNumber(), $count, $list, false);
+		} else {
+            $this->_notAuthorized();
+		}
+    }    
+    
+    
+	/**
+	 * Generic method to display a list
+	 * @param int $pageNumber Page Number
+	 * @param int $count Total number of results
+	 * @param Array $list results (in current page)
+	 */
+	private function _viewList($pageNumber, $count, $list, $showSearch = true) {
+
+        $formCreator = new FormCreator($_GET, $_POST);
+        $formCreator->formPath = '/performanceview.php';
+        $formCreator->popArr['currentPage'] = $pageNumber;
+        $formCreator->popArr['list'] = $list;
+        $formCreator->popArr['count'] = $count;
+        $formCreator->popArr['showSearch'] = $showSearch;
+        $formCreator->display();
+	}    
 
     /**
      * Display list Employees

@@ -200,6 +200,8 @@
     // Performance module
     $lang_Menu_Performance = "Performance";
     $lang_Menu_Performance_ReviewPeriod = "Review Period";
+    $lang_Menu_Performance_Measures = "Performance Measures";
+    $lang_Menu_Performance_Reviews = "Performance Reviews";
 
 	/**
 	 * Common
@@ -1456,7 +1458,31 @@
 	$lang_Recruit_ApplicationStatus_FailureHeading = 'Job Application Error';
 	$lang_Recruit_ApplySuccess = 'Your application for the position of #jobtitle# was received. An email confirmation was sent to the following email address: #email#';
 	$lang_Recruit_ApplyFailure = 'There was an error while processing your application. Please try again later.';
-
+	
+	// Performance review module
+	$lang_Performance_Measure_ID = 'ID';
+	$lang_Performance_Measure_Name = 'Name';
+	$lang__Performance_Measure_DeletionMessage = 'Deletion may affect Performance reviews';
+	$lang_Performance_Measure_ListHeading = 'Performance Measures';
+	$lang_Performance_Measure_EditTitle = 'Edit Performance Measure';
+	$lang_Performance_Measure_Error_NoJobTitleSelected = 'No Job title selected!';
+	$lang_Performance_Measure_Error_SpecifyPerfMeasureName = 'Please specify performance measure name';	
+	$lang_Performance_Measure_AvailableJobTitles = 'Available Job Titles';
+	$lang_Performance_Measure_AssignedJobTitles = 'Assigned Job Titles'; 
+	$lang_Performance_Measure_NameInUse_Error   = 'This name is in use';
+	$lang_Performance_Measure_JobTitlesForWhichThisApplies = 'Job titles for which this performance measure applies';
+		
+	$lang_Performance_review_ID = 'Review ID';
+	$lang_Performance_review_EmployeeName = 'Employee Name';
+	$lang_Performance_review_ReviewDate = 'Review Date';
+	$lang_Performance_review_ReviewStatus = 'Review Status';			
+	
+	$lang_Performance_Review_ListHeading = 'Performance Reviews';
+	$lang_Performance_Review_DeletionMessage = 'Deletion will affect Performance review scores';
+	$lang_Performance_Review_Scheduled = 'Scheduled';
+	$lang_Performance_Review_Completed = 'Completed';
+	$lang_Performance_Review_Approved = 'Approved';	
+			
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";
 	$lang_login_UserNameNotGiven = "User Name not given!";

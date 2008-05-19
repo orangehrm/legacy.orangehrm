@@ -164,7 +164,7 @@ if ($authorizeObj->isAdmin()) {
     $recruitHomePage = 'lib/controllers/CentralController.php?recruitcode=Application&action=List';
 }
 
-$perfHomePage = 'lib/controllers/CentralController.php?perfcode=ReviewPeriod&action=List';
+$perfHomePage = 'lib/controllers/CentralController.php?perfcode=PerfReviews&action=List';
 
 // Default page in admin module is the Company general info page.
 $defaultAdminView = "GEN";
@@ -720,7 +720,20 @@ function preloadAllImages() {
                         <a href="lib/controllers/CentralController.php?perfcode=ReviewPeriod&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Performance_ReviewPeriod; ?>
                         </a>
+                    </li>                    
+                    <li id="jobVacancies">
+                        <a href="lib/controllers/CentralController.php?perfcode=PerfMeasure&action=List" target="rightMenu">
+                            <?php echo $lang_Menu_Performance_Measures; ?>
+                        </a>
                     </li>
+                    <?php }                         
+                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor()) { 
+                    ?>                                      
+                    <li id="jobVacancies">
+                        <a href="lib/controllers/CentralController.php?perfcode=PerfReviews&action=List" target="rightMenu">
+                            <?php echo $lang_Menu_Performance_Reviews; ?>
+                        </a>
+                    </li>                                        
                     <?php } ?>
                 </ul>
             </TD>

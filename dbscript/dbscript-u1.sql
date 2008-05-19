@@ -810,6 +810,40 @@ create table `hs_hr_comp_property` (
   key  `emp_id` (`emp_id`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_perf_measure` (
+  `id` int(11) not null,
+  `name` varchar(100) default '' not null,
+  primary key (`id`),
+  unique key name (`name`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_perf_measure_jobtitle` (
+  `perf_measure_id` int(11) not null,
+  `jobtit_code` varchar(13) default null,
+  primary key  (`perf_measure_id`, `jobtit_code`),
+  key `perf_measure_id` (`perf_measure_id`),
+  key `jobtit_code` (`jobtit_code`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_perf_review` (
+  `id` int(11) not null,
+  `emp_number` int(7) not null default 0,
+  `review_date` date default '0000-00-00',
+  `status` smallint(2) default 0,
+  `review_notes` text,
+  primary key  (`id`),
+  key `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_perf_review_measure` (
+  `review_id` int(11) not null,
+  `perf_measure_id` int(11) not null default 0,
+  `score` double default null,
+  primary key  (`review_id`, `perf_measure_id`),
+  key `review_id` (`review_id`),
+  key `perf_measure_id` (`perf_measure_id`)
+) engine=innodb default charset=utf8;
+
 INSERT INTO `hs_hr_customer`
   (`customer_id`, `name`, `description`)
   VALUES (0, 'Internal', "Internal time tracker")

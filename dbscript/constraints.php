@@ -99,7 +99,12 @@ array("hs_hr_emp_locations", array("loc_code"), "hs_hr_location",   array("loc_c
 array("hs_hr_emp_locations", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
 array("hs_hr_emp_jobtitle_history", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
 array("hs_hr_emp_location_history", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
-array("hs_hr_emp_subdivision_history", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade")
+array("hs_hr_emp_subdivision_history", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_perf_measure_jobtitle", array("perf_measure_id"), "hs_hr_perf_measure",   array("id"), "cascade"),
+array("hs_hr_perf_measure_jobtitle", array("jobtit_code"), "hs_hr_job_title",   array("jobtit_code"), "cascade"),
+array("hs_hr_perf_review", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_perf_review_measure", array("perf_measure_id"), "hs_hr_perf_measure",   array("id"), "cascade"),
+array("hs_hr_perf_review_measure", array("review_id"), "hs_hr_perf_review",   array("id"), "cascade")
 );
 
 ?>
