@@ -176,13 +176,11 @@ foreach ($searchObj->getSearchFields() as $searchField) {
 <?php
         if (!empty($selectOptions)) {
             foreach ($selectOptions as $option) {
-            	var_dump($option);
                 $value = $option->getValue();
                 $name = $option->getName();
                 if (empty($name)) {
-                	var_dump($name);
                     $nameVar = $option->getNameVar();
-                    //$name = $$nameVar;
+                    $name = $$nameVar;
                 }
 ?>
             selectOptionArray.push(new Option('<?php echo $name;?>', '<?php echo $value;?>'))

@@ -85,9 +85,11 @@ class EmployeeSearch extends AbstractSearch {
         $subdivisionList = $compStruct->getHierachyArr();
         if (!empty($subdivisionList)) {
             foreach ($subdivisionList as $div) {
-                $hierLevel = $compStruct->getHierachyLevel($div['id']); 
-                $title = $indentStr = str_repeat("- ", $hierLevel) .  $div['title'];
-                $subDivisionOptions[] = new SelectOption($div['id'], $title);
+            	if (!empty($div['title'])) {
+	                $hierLevel = $compStruct->getHierachyLevel($div['id']); 
+	                $title = $indentStr = str_repeat("- ", $hierLevel) .  $div['title'];
+	                $subDivisionOptions[] = new SelectOption($div['id'], $title);
+            	}
             }
         }
         

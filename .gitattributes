@@ -159,7 +159,9 @@ lib/common/htmlMimeMail5/mimePart.php -text
 lib/common/htmlMimeMail5/smtp.php -text
 lib/common/search/AbstractSearch.php -text
 lib/common/search/AllTests.php -text
+lib/common/search/DataField.php -text
 lib/common/search/DisplayField.php -text
+lib/common/search/EditableField.php -text
 lib/common/search/SearchField.php -text
 lib/common/search/SearchFieldTest.php -text
 lib/common/search/SearchFilter.php -text
@@ -168,6 +170,7 @@ lib/common/search/SearchOperatorTest.php -text
 lib/common/search/SearchSqlHelper.php -text
 lib/common/search/SearchSqlHelperTest.php -text
 lib/common/search/SelectOption.php -text
+lib/common/search/UpdatableField.php -text
 lib/common/test.bat -text
 lib/common/xajax/xajax.inc.php -text
 lib/common/xajax/xajaxCompress.php -text
@@ -351,6 +354,7 @@ lib/models/hrfunct/EmpWorkExp.php -text
 lib/models/hrfunct/Employee.php -text
 lib/models/hrfunct/EmployeeSearch.php -text
 lib/models/hrfunct/EmployeeSearchTest.php -text
+lib/models/hrfunct/EmployeeTest.php -text
 lib/models/hrfunct/JobTitleHistory.php -text
 lib/models/hrfunct/JobTitleHistoryTest.php -text
 lib/models/hrfunct/LocationHistory.php -text
