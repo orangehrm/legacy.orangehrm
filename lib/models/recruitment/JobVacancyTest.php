@@ -530,7 +530,8 @@ class JobVacancyTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($vacancy->getId(), $result[$i][0]);
 			$this->assertEquals($vacancy->getJobTitleName(), $result[$i][1]);
 			$this->assertEquals($vacancy->getManagerName(), $result[$i][2]);
-			$this->assertEquals($vacancy->isActive(), $result[$i][3]);
+			//$this->assertEquals($vacancy->isActive(), $result[$i][3]);
+			$this->assertEquals(($vacancy->isActive() ? 1 : 0), $result[$i][3]);
 			$this->assertEquals($vacancy->getDescription(), $result[$i][4]);
 			$i++;
 		}

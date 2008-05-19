@@ -17,48 +17,28 @@
  * Boston, MA  02110-1301, USA
  * Ruchira
  */
+
+require_once ROOT_PATH . '/lib/common/search/DataField.php';
  
-class DisplayField {
-   
-    /** The name of the field */
-    private $fieldName;
-    
+class DisplayField extends DataField {
+         
     /**
      *  The language variable containing the field's display name
      * eg: lang_employee_name 
      */
-    private $displayNameVar;
+    protected $displayNameVar;
     
-    /** Field type, one of the FIELD_TYPE constants */
-    private $fieldType;
-
     /**
      * Constructor
      * 
      * @param String $fieldName
      * @param String $displayNameVar
      */
-    public function __construct($fieldName, $displayNameVar) {
-        $this->fieldName = $fieldName;
+    public function __construct($fieldName, $displayNameVar, $fieldType) {
+        parent::__construct($fieldName, $fieldType);
         $this->displayNameVar = $displayNameVar;
     }
     
-    /**
-     * Retrieves the value of fieldName.
-     * @return fieldName
-     */
-    public function getFieldName() {
-        return $this->fieldName;
-    }
-
-    /**
-     * Sets the value of fieldName.
-     * @param fieldName
-     */
-    public function setFieldName($fieldName) {
-        $this->fieldName = $fieldName;
-    }
-
     /**
      * Retrieves the value of displayNameVar.
      * @return displayNameVar
@@ -73,7 +53,7 @@ class DisplayField {
      */
     public function setDisplayNameVar($displayNameVar) {
         $this->displayNameVar = $displayNameVar;
-    }
+    }    
 }
 
 ?>

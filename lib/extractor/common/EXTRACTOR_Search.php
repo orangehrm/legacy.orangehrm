@@ -81,7 +81,7 @@ require_once ROOT_PATH . '/lib/common/search/SearchFilter.php';
                     }
                     
                     if (($fieldName != '-1') && !empty($operator)) {
-                        $searchField = $searchObj->getFieldWithName($fieldName);
+                        $searchField = $searchObj->getSearchFieldWithName($fieldName);
                         if (!empty($searchField)) {
                             $searchFilters[] = new SearchFilter($searchField, $searchOperator, $value);                         
                         }
@@ -97,7 +97,39 @@ require_once ROOT_PATH . '/lib/common/search/SearchFilter.php';
             $pageNo = $postArr['pageNo'];
         }
         $searchObj->setPageNo($pageNo);
+        
+        /* Updates - inline */
+        if (isset($postArr['updateMode']) && ($postArr['updateMode'] == 'inline') && isset($postArr['id'])) {
+            $ids = $postArr['id'];
+            $numIds = count($ids);
+            
+            $updates = array();
+            
+            foreach ($searchObj->getEditableFields() as $editableField) {
+                $fieldName = $editableField->getFieldName();
+                $postVarName = 'in_' . $fieldName;
+                if (isset($postArr[$postVarName]) && !empty($postArr[$postVarName])) {
+                    
+                    $newValues = $postArr[$postVarName];
+                    if ($numIds == count($newValues)) {
+                        for ($i = 0; $i < $numIds; $i++) {
+                            $value = $newValues[$i];
+                            $id = $ids[$i];
+                            
+                            $updates[$i][] = new UpdatableField($fieldName, $editableField->getFieldType(), $value);                
+                        }
+                    }                    
+                }
+            }
+            
+            $searchObj->setUpdates($updates);                        
+        }
                 
+        /* Updates - Bulk */
+        if (isset($postArr['updateMode']) && ($postArr['updateMode'] == 'bulk') && isset($postArr['id'])) {
+        
+        }
+                        
         return $searchObj;
 	}
 

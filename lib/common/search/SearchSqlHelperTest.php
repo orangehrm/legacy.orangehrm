@@ -75,50 +75,50 @@ class SearchSqlHelperTest extends PHPUnit_Framework_TestCase {
         $dbField = 'db_test_field';
         
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_LESSTHAN), '5', 
-            SearchField::FIELD_TYPE_INT);
+            DataField::FIELD_TYPE_INT);
         $this->assertEquals($sql, '(db_test_field < 5)');
 
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_LESSTHAN), '5', 
-            SearchField::FIELD_TYPE_INT, false);
+            DataField::FIELD_TYPE_INT, false);
         $this->assertEquals($sql, 'db_test_field < 5');
 
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL), 'how are you', 
-            SearchField::FIELD_TYPE_STRING, true);
+            DataField::FIELD_TYPE_STRING, true);
         $this->assertEquals($sql, "(db_test_field = 'how are you')");
 
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL), 'how are you', 
-            SearchField::FIELD_TYPE_STRING, true);
+            DataField::FIELD_TYPE_STRING, true);
         $this->assertEquals($sql, "((db_test_field IS NULL) OR (db_test_field <> 'how are you'))");
         
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_STARTSWITH), 'Jo', 
-            SearchField::FIELD_TYPE_STRING, true);
+            DataField::FIELD_TYPE_STRING, true);
         $this->assertEquals($sql, "(db_test_field LIKE 'Jo%')");
 
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_ENDSWITH), 'hn', 
-            SearchField::FIELD_TYPE_STRING, true);
+            DataField::FIELD_TYPE_STRING, true);
         $this->assertEquals($sql, "(db_test_field LIKE '%hn')");
 
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_CONTAINS), 'oh', 
-            SearchField::FIELD_TYPE_STRING, true);
+            DataField::FIELD_TYPE_STRING, true);
         $this->assertEquals($sql, "(db_test_field LIKE '%oh%')");
 
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_CONTAINS), 'oh', 
-            SearchField::FIELD_TYPE_STRING, true);
+            DataField::FIELD_TYPE_STRING, true);
         $this->assertEquals($sql, "((db_test_field IS NULL) OR (db_test_field NOT LIKE '%oh%'))");
         
         /* LIKE on a numeric field (This is allowed in MySQL) */
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_STARTSWITH), '10', 
-            SearchField::FIELD_TYPE_INT, true);
+            DataField::FIELD_TYPE_INT, true);
         $this->assertEquals($sql, "(db_test_field LIKE '10%')");
         
         // Check EMPTY for int
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_EMPTY), null, 
-            SearchField::FIELD_TYPE_SELECT, true);
+            DataField::FIELD_TYPE_SELECT, true);
         $this->assertEquals($sql, "(db_test_field IS NULL)");
         
         // Check NOT EMPTY for int
         $sql = SearchSqlHelper::getSqlCondition($dbField, SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EMPTY), null, 
-            SearchField::FIELD_TYPE_SELECT, true);
+            DataField::FIELD_TYPE_SELECT, true);
         $this->assertEquals($sql, "(db_test_field IS NOT NULL)");                
     }
 }

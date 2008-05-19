@@ -36,6 +36,8 @@ if ($sortOrder == AbstractSearch::SORT_ASCENDING) {
 
 $themeDir = '../../themes/' . $styleSheet;
 $picDir = $themeDir . '/pictures/';
+$iconDir = $themeDir . '/icons/';
+$locRights=$_SESSION['localRights'];
 
 /**
  * Print a field select box based on passed search filter object.
@@ -89,7 +91,7 @@ function printFilterRow($searchObj, $searchFilter = null) {
     $searchValue = empty($searchFilter) ? '' : $searchFilter->getSearchValue();
     
     /* Hide value field if operator is unary */
-    if (!empty($selectedField) && ($selectedField->getFieldType() == SearchField::FIELD_TYPE_SELECT) 
+    if (!empty($selectedField) && ($selectedField->getFieldType() == DataField::FIELD_TYPE_SELECT) 
             && ($selectedOperator->isBinary())) {
         echo '<select class="filterValue" name="searchValue[]" >' . "\n";
         
@@ -167,19 +169,21 @@ foreach ($searchObj->getSearchFields() as $searchField) {
     searchFields['<?php echo $searchFieldName;?>'] = optionArray;
     fieldTypes['<?php echo $searchFieldName;?>'] = '<?php echo $fieldType; ?>';
 <?php    
-    if ($fieldType == SearchField::FIELD_TYPE_SELECT) {
+    if ($fieldType == DataField::FIELD_TYPE_SELECT) {
         $selectOptions = $searchField->getSelectOptions();
 ?>
         var selectOptionArray = new Array();
 <?php
         if (!empty($selectOptions)) {
             foreach ($selectOptions as $option) {
+            	var_dump($option);
                 $value = $option->getValue();
                 $name = $option->getName();
                 if (empty($name)) {
+                	var_dump($name);
                     $nameVar = $option->getNameVar();
-                    $name = $$nameVar;
-                } 
+                    //$name = $$nameVar;
+                }
 ?>
             selectOptionArray.push(new Option('<?php echo $name;?>', '<?php echo $value;?>'))
 <?php                
@@ -357,7 +361,7 @@ foreach ($searchObj->getSearchFields() as $searchField) {
             
             // No need for value field. hide it
             valueField.style.display = 'none';            
-        } else if (fieldType == '<?php echo SearchField::FIELD_TYPE_SELECT;?>') {
+        } else if (fieldType == '<?php echo DataField::FIELD_TYPE_SELECT;?>') {
             
             // need to create a select box
             if (valueField.type == 'select') {
@@ -451,7 +455,75 @@ foreach ($searchObj->getSearchFields() as $searchField) {
     function prevPage() {
         chgPage(<?php echo ($pageNo - 1);?>);
     }
+  
+<?php
+    if ($searchObj->isInlineEditAllowed() && ($numResults > 0) && $locRights['edit']) {
+?>  
+    var inlineEditMode = false;
     
+    function moutInlineEdit() {
+        if(inlineEditMode) {
+            $('inlineEditBtn').src='<?php echo $picDir;?>btn_save.gif';
+        } else {
+            $('inlineEditBtn').src='<?php echo $picDir;?>btn_edit.gif';
+        }
+    }
+
+    function moverInlineEdit() {
+        if(inlineEditMode) {
+            $('inlineEditBtn').src='<?php echo $picDir;?>btn_save_02.gif';
+        } else {
+            $('inlineEditBtn').src='<?php echo $picDir;?>btn_edit_02.gif';
+        }
+    }
+    
+    function validateInlineEdit() {
+        return true;    
+    }
+    
+    function resetInline() {
+    
+<?php    
+    foreach ($searchObj->getEditableFields() as $editableField) {
+        $fieldName = $editableField->getFieldName();
+?>
+        var editItems = document.getElementsByName('in_<?php echo $fieldName;?>[]');
+        var hiddenItems = document.getElementsByName('orig_<?php echo $fieldName;?>[]');
+        var numElements = editItems.length;
+        
+        for (var i=0; i < numElements; i++) {
+            editItems[i].value = hiddenItems[i].value;
+        }
+
+<?php                           
+    }     
+?>
+    }
+    
+    function editInline() {
+
+        if (inlineEditMode) {
+            if (validateInlineEdit()) {
+                $('searchForm').updateMode.value = 'inline';
+                $('searchForm').submit();
+            }
+            return;
+        }
+        inlineEditMode = true;
+
+        var resultsTable = $('resultsTable');
+        var editItems = YAHOO.util.Dom.getElementsByClassName('inlineEdit', undefined, resultsTable);
+        var numElements = editItems.length;
+        for (var i=0; i < numElements; i++) {
+            editItems[i].readOnly = false;
+        }
+        
+        $('inlineEditBtn').src="<?php echo $picDir;?>btn_save.gif";
+        $('inlineEditBtn').title="<?php echo $lang_Common_Save; ?>";
+    }
+<?php 
+    }
+?>        
     YAHOO.OrangeHRM.container.init();    
 </script>
 <style type="text/css">
@@ -535,6 +607,10 @@ foreach ($searchObj->getSearchFields() as $searchField) {
         border:none;
     }
     
+    #inlineEditRow {
+        padding-top: 3px;
+        border-top: 1px solid #cccccc;        
+    }
     -->    
 </style>
 </head>
@@ -555,6 +631,7 @@ foreach ($searchObj->getSearchFields() as $searchField) {
 <input type="hidden" name="sortBy" id="sortBy" value="<?php echo $sortBy;?>"/>
 <input type="hidden" name="sortOrder" id="sortOrder" value="<?php echo $sortOrder;?>"/>
 <input type="hidden" name="pageNo" id="pageNo" value="<?php echo $pageNo;?>"/>
+<input type="hidden" name="updateMode" id="updateMode" value=""/>
 
 <div id="filterOptions">
     <input class="radioBtn" type="radio" name="match" value="matchAll" id="matchAll" 
@@ -596,6 +673,15 @@ foreach ($searchObj->getSearchFields() as $searchField) {
         onMouseOver="this.src='<?php echo $picDir;?>btn_clear_02.gif';" 
         src="<?php echo $picDir;?>btn_clear.gif">            
 </div>
+<?php
+    if ($searchObj->isBulkEditAllowed() && $numResults > 0) {
+?>
+<div id="bulkEditDiv">
+hello Bulk edit
+</div>
+<?php        
+    }
+?>
 <?php 
     if ($searchObj->getPageCount() > 1) {
 ?>        
@@ -641,27 +727,63 @@ foreach ($searchObj->getSearchFields() as $searchField) {
 <?php
     $rowClass = 'odd';
     foreach ($searchResults as $searchResult) {
+        $idField = $searchObj->getIdField();
+        $id = CommonFunctions::getObjectProperty($searchResult, $fieldName); 
 ?>
         <tr class="<?php echo $rowClass;?>">
-            <td><input type='checkbox' class='checkbox' name='chkID[]' value=''/></td>
+            <td><input type='checkbox' class='checkbox' name='chkID[]' value='<?php echo $id;?>'/>
+<?php
+        if ($searchObj->isInlineEditAllowed() && ($locRights['edit'])) {
+?>
+                <input type="hidden" name="id" value="<?php echo $id;?>"/>
+<?            
+        }
+?>            
+            </td>
 <?php
         
         foreach ($displayFields as $displayField) {                        
             $fieldName = $displayField->getFieldName();
-
+            $fieldValue = CommonFunctions::getObjectProperty($searchResult, $fieldName);
+            
+            if ($searchObj->isInlineEditAllowed() && ($displayField instanceof EditableField) && ($locRights['edit'])) {   
+?>   
+                <td>
+                    <input readonly="true" type="text" class="inlineEdit" 
+                        name="in_<?php echo $fieldName;?>[]" value="<?php echo $fieldValue;?>"/>
+                    <input type="hidden" class="inlineHidden" name="orig_<?php echo $fieldName;?>[]" 
+                        value="<?php echo $fieldValue;?>"/>
+                </td>
+<?php
+            } else {
 ?>
-            <td><?php echo CommonFunctions::getObjectProperty($searchResult, $fieldName);?></td>
-<?php            
+                <td><?php echo $fieldValue;?></td>
+<?php                
+            }
         }
-?>            
-                        
+?>                        
         </tr>
 <?php
         $rowClass = ($rowClass == 'odd') ? 'even' : 'odd';        
     }
 ?>        
+<?php
+    if ($searchObj->isInlineEditAllowed() && ($numResults > 0) && $locRights['edit']) {
+?>
+<tr id="inlineEditRow">
+  <td colspan="<?php echo (count($searchObj->getDisplayFields()) + 1);?>">
+    <img onClick="editInline();" id="inlineEditBtn"
+        onMouseOut="moutInlineEdit();" onMouseOver="moverInlineEdit();"
+        src="<?php echo $picDir . 'btn_edit.gif';?>">
+    <img id="inlineClearBtn" src="<?php echo $iconDir;?>reset.gif"
+    onMouseOut="this.src='<?php echo $iconDir;?>reset.gif';"
+    onMouseOver="this.src='<?php echo $iconDir;?>reset_o.gif';" onClick="resetInline();" >
+</tr>
+<?php        
+    }
+?>
         </tbody>
-    </table>
+    </table>    
 </div>
 </form>
 

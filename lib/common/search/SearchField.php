@@ -18,32 +18,11 @@
  * Ruchira
  */
 
+require_once ROOT_PATH . '/lib/common/search/DisplayField.php';
 require_once ROOT_PATH . '/lib/common/search/SearchOperator.php';
  
-class SearchField {
-    
-    /** Field type constants */
-    const FIELD_TYPE_STRING = 'string';
-    const FIELD_TYPE_INT = 'int';
-    const FIELD_TYPE_SELECT = 'select';
-    const FIELD_TYPE_DATE = 'date';
-        
-    /** Search qualifiers */
-    const QUALIFIER_CASE_SENSITIVE = 'cs';
-    const QUALIFIER_CASE_INSENSITIVE = 'ci';
-    
-    /** The name of the field */
-    private $fieldName;
-    
-    /**
-     *  The language variable containing the field's display name
-     * eg: lang_employee_name 
-     */
-    private $displayNameVar;
-    
-    /** Field type, one of the FIELD_TYPE constants */
-    private $fieldType;
-    
+class SearchField extends DisplayField {
+                
     /** Array of select options. Only used for FIELD_TYPE_SELECT */
     private $selectOptions;
     
@@ -61,9 +40,8 @@ class SearchField {
      * @param Array $selectOptions Array of select options
      */
     public function __construct($fieldName, $displayNameVar, $fieldType, $operators = null, $selectOptions = null) {
-        $this->fieldName = $fieldName;
-        $this->displayNameVar = $displayNameVar;
-        $this->fieldType = $fieldType;
+        
+        parent::__construct($fieldName, $displayNameVar, $fieldType);
         
         if (empty($operators)) {
             $this->operators = $this->_getDefaultOperators($fieldType);    
@@ -85,7 +63,7 @@ class SearchField {
         $operators = array();
         
         switch ($fieldType) {
-            case self::FIELD_TYPE_STRING:
+            case DataField::FIELD_TYPE_STRING:
                 $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL),
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_STARTSWITH),
@@ -93,19 +71,19 @@ class SearchField {
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_CONTAINS),
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_CONTAINS));                
                 break;
-            case self::FIELD_TYPE_INT:
+            case DataField::FIELD_TYPE_INT:
                 $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_LESSTHAN), 
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_GREATERTHAN),
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL));
                 break;
-            case self::FIELD_TYPE_DATE:
+            case DataField::FIELD_TYPE_DATE:
                 $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_LESSTHAN), 
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_GREATERTHAN),
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
                                      SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL));
                 break;
-            case self::FIELD_TYPE_SELECT:
+            case DataField::FIELD_TYPE_SELECT:
                 $operators = array(SearchOperator::getOperator(SearchOperator::OPERATOR_EQUAL),
                                    SearchOperator::getOperator(SearchOperator::OPERATOR_NOT_EQUAL),
                                    SearchOperator::getOperator(SearchOperator::OPERATOR_EMPTY),
@@ -118,54 +96,6 @@ class SearchField {
         return $operators;
     }
     
-    /**
-     * Retrieves the value of fieldName.
-     * @return fieldName
-     */
-    public function getFieldName() {
-        return $this->fieldName;
-    }
-
-    /**
-     * Sets the value of fieldName.
-     * @param fieldName
-     */
-    public function setFieldName($fieldName) {
-        $this->fieldName = $fieldName;
-    }
-
-    /**
-     * Retrieves the value of displayNameVar.
-     * @return displayNameVar
-     */
-    public function getDisplayNameVar() {
-        return $this->displayNameVar;
-    }
-
-    /**
-     * Sets the value of displayNameVar.
-     * @param displayNameVar
-     */
-    public function setDisplayNameVar($displayNameVar) {
-        $this->displayNameVar = $displayNameVar;
-    }
-
-    /**
-     * Retrieves the value of fieldType.
-     * @return fieldType
-     */
-    public function getFieldType() {
-        return $this->fieldType;
-    }
-
-    /**
-     * Sets the value of fieldType.
-     * @param fieldType
-     */
-    public function setFieldType($fieldType) {
-        $this->fieldType = $fieldType;
-    }
-
     /**
      * Retrieves the value of selectOptions.
      * @return selectOptions

@@ -92,7 +92,7 @@ class SearchSqlHelper {
                     break;                
                 default:
                     /* Quote all fields except int */
-                    if ($fieldType != SearchField::FIELD_TYPE_INT) {
+                    if ($fieldType != DataField::FIELD_TYPE_INT) {
                         
                         // Note: value should be escaped with mysql_real_escape before passing to method.
                         $value = "'" . $value . "'"; 

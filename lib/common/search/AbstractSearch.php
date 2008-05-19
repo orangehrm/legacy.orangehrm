@@ -20,6 +20,12 @@
 
 require_once ROOT_PATH . '/lib/confs/sysConf.php';
 
+require_once ROOT_PATH . '/lib/common/search/DisplayField.php';
+require_once ROOT_PATH . '/lib/common/search/EditableField.php';
+require_once ROOT_PATH . '/lib/common/search/SearchField.php';
+require_once ROOT_PATH . '/lib/common/search/SearchFilter.php';
+require_once ROOT_PATH . '/lib/common/search/SelectOption.php';
+
 abstract class AbstractSearch {
 
     /** Match */
@@ -65,7 +71,16 @@ abstract class AbstractSearch {
     
     /** Match all or any */
     protected $matchType = self::MATCH_ALL;
-
+    
+    /** Bulk editing of results */
+    protected $bulkEditAllowed = false;
+    
+    /** Inline editing of results */
+    protected $inlineEditAllowed = false;
+    
+    /** Updates */
+    protected $updates;
+    
     /**
      * Constructor
      */
@@ -265,6 +280,38 @@ abstract class AbstractSearch {
     public function setMatchType($matchType) {
         $this->matchType = $matchType;
     }
+
+    /**
+     * Whether to allow result editing bulk
+     * @return boolean True if allowed, false if not
+     */
+    public function isBulkEditAllowed() {
+        return $this->bulkEditAllowed;    
+    }
+    
+    /**
+     * Set bulk edit allowed parameter
+     * @param boolean $allow 
+     */
+    public function setBulkEditAllowed($allow) {
+        return $this->bulkEditAllowed = $allow;
+    }
+
+    /**
+     * Whether to allow result editing inline
+     * @return boolean True if allowed, false if not
+     */
+    public function isInlineEditAllowed() {
+        return $this->inlineEditAllowed;    
+    }
+    
+    /**
+     * Set inline edit allowed parameter
+     * @param boolean $allow 
+     */
+    public function setInlineEditAllowed($allow) {
+        return $this->inlineEditAllowed = $allow;
+    }
     
     /**
      * Get SearchField with given field name from the fields associated with this search object.
@@ -272,11 +319,30 @@ abstract class AbstractSearch {
      * @param String $fieldName Field Name
      * @return SearchField Search field object if found, or null
      */
-    public function getFieldWithName($fieldName) {
+    public function getSearchFieldWithName($fieldName) {        
+        return $this->_getFieldWithName($this->searchFields);    
+    }
+    
+    /**
+     * Get DisplayField with given field name from the display fields associated with this search object.
+     * 
+     * @param String $fieldName Field Name
+     * @return DisplayField Display field object if found, or null
+     */
+    public function getDisplayFieldWithName($fieldName) {        
+        return $this->_getFieldWithName($this->displayFields);
+    }
+    
+    /**
+     * Get DisplayField with given field name from the display fields associated with this search object.
+     * 
+     * @param String $fieldName Field Name
+     * @return DisplayField Display field object if found, or null
+     */
+    private function _getFieldWithName($fieldList, $fieldName) {
         
-        if (!empty($this->searchFields)) {
-            foreach ($this->searchFields as $field) {
-                
+        if (!empty($fieldList)) {
+            foreach ($fieldList as $field) {                
                 if ($field->getFieldName() == $fieldName) {
                     return $field;
                 }
@@ -285,7 +351,54 @@ abstract class AbstractSearch {
         
         return null;
     }
+
+    /**
+     * Retrieves the Editable fields only from the displayFields.
+     * @return displayFields
+     */
+    public function getEditableFields() {
+        
+        $editableFields = null;
+        
+        if (!empty($this->displayFields)) {
+            foreach ($this->displayFields as $field) {                
+                if ($field instanceof EditableField) {
+                    $editableFields[] = $field;
+                }
+            }    
+        }
+        
+        return $editableFields;
+    }
     
+    /**
+     * Set updates 
+     * @param Array of UpdatableFields indexed by ID
+     */
+    public function setUpdate($updates) {
+        $this->updates = $updates;
+    }
+    
+    /**
+     * Get list updates
+     * @return Array Array UpdatableField objects
+     */
+    public function getUpdates() {
+        return $this->updates;
+    }
+    
+    /**
+     * Set bulk update
+     * @param
+     */
+    public function setBulkUpdate($type, $fields, $values, $ids = null) {
+
+    }
+    
+    public function getBulkUpdate() {
+        
+    }
+        
     /**
      * Perform search according to parameters set
      * and update the search results and count parameters
@@ -294,6 +407,16 @@ abstract class AbstractSearch {
      * 
      * @return none
      */
-    public abstract function search();  
+    public abstract function search();
+    
+    /**
+     * Perform any updates needed.
+     * 
+     * Should be implemented in implementing class
+     * 
+     * @return none
+     */
+     public abstract function updateData();
+     
 }
 ?>

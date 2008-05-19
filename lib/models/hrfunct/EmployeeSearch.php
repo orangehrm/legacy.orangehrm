@@ -19,10 +19,6 @@
  */
  
 require_once ROOT_PATH . '/lib/common/search/AbstractSearch.php';
-require_once ROOT_PATH . '/lib/common/search/DisplayField.php';
-require_once ROOT_PATH . '/lib/common/search/SearchField.php';
-require_once ROOT_PATH . '/lib/common/search/SearchFilter.php';
-require_once ROOT_PATH . '/lib/common/search/SelectOption.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/JobTitle.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/Location.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/Employee.php';
@@ -38,9 +34,9 @@ class EmployeeSearch extends AbstractSearch {
                          
         parent::__construct();
                                  
-        $this->searchFields[] = new SearchField(Employee::FIELD_EMP_ID, 'lang_empview_employeeid', SearchField::FIELD_TYPE_STRING);
-        $this->searchFields[] = new SearchField(Employee::FIELD_FIRSTNAME, 'lang_hremp_EmpFirstName', SearchField::FIELD_TYPE_STRING);
-        $this->searchFields[] = new SearchField(Employee::FIELD_LASTNAME, 'lang_hremp_EmpLastName', SearchField::FIELD_TYPE_STRING);
+        $this->searchFields[] = new SearchField(Employee::FIELD_EMP_ID, 'lang_empview_employeeid', DataField::FIELD_TYPE_STRING);
+        $this->searchFields[] = new SearchField(Employee::FIELD_FIRSTNAME, 'lang_hremp_EmpFirstName', DataField::FIELD_TYPE_STRING);
+        $this->searchFields[] = new SearchField(Employee::FIELD_LASTNAME, 'lang_hremp_EmpLastName', DataField::FIELD_TYPE_STRING);
         
         /* Add search by location */
         $locationOptions = array();
@@ -54,7 +50,7 @@ class EmployeeSearch extends AbstractSearch {
         }
         
         $this->searchFields[] = new SearchField(Employee::FIELD_LOCATIONS, 'lang_hremp_EmployeeLocationOption', 
-            SearchField::FIELD_TYPE_SELECT, null, $locationOptions);
+            DataField::FIELD_TYPE_SELECT, null, $locationOptions);
 
         /* Add search by job title */
         $jobTitleOptions = array();
@@ -67,7 +63,7 @@ class EmployeeSearch extends AbstractSearch {
         }
             
         $this->searchFields[] = new SearchField(Employee::FIELD_JOB_TITLE, 'lang_hremp_jobtitle',  
-            SearchField::FIELD_TYPE_SELECT, null, $jobTitleOptions);
+            DataField::FIELD_TYPE_SELECT, null, $jobTitleOptions);
             
         /* Add search by employee status */
         $empStatusOptions = array();
@@ -80,7 +76,7 @@ class EmployeeSearch extends AbstractSearch {
         }
             
         $this->searchFields[] = new SearchField(Employee::FIELD_EMP_STATUS, 'lang_hremp_EmpStatus',  
-            SearchField::FIELD_TYPE_SELECT, null, $empStatusOptions);
+            DataField::FIELD_TYPE_SELECT, null, $empStatusOptions);
 
         /* Search by employee sub division (work station) */
         $subDivisionOptions = array();
@@ -96,13 +92,15 @@ class EmployeeSearch extends AbstractSearch {
         }
         
         $this->searchFields[] = new SearchField(Employee::FIELD_SUB_DIVISION, 'lang_hremp_EmployeeSubDivisionOption',  
-            SearchField::FIELD_TYPE_SELECT, null, $subDivisionOptions);
+            DataField::FIELD_TYPE_SELECT, null, $subDivisionOptions);
                     
-        $this->displayFields[] = new DisplayField(Employee::FIELD_EMP_ID, 'lang_empview_employeeid');
-        $this->displayFields[] = new DisplayField(Employee::FIELD_NAME, 'lang_empview_employeename');
+        $this->displayFields[] = new EditableField(Employee::FIELD_EMP_ID, 'lang_empview_employeeid', DataField::FIELD_TYPE_STRING);
+        $this->displayFields[] = new DisplayField(Employee::FIELD_NAME, 'lang_empview_employeename', DataField::FIELD_TYPE_STRING);
         $this->sortField = Employee::FIELD_EMP_ID;
         $this->sortOrder = AbstractSearch::SORT_ASCENDING;
         $this->idField = Employee::FIELD_EMP_NUMBER;
+        $this->inlineEditAllowed = true;
+        $this->bulkEditAllowed = true;
         $this->searchFilters = null;
         $this->searchResults = null;
         $this->pageNo = 1;
@@ -122,6 +120,15 @@ class EmployeeSearch extends AbstractSearch {
         if ($this->numResults % $this->itemsPerPage) {
            $this->pageCount++;
         }                           
+    }
+    
+    /**
+     * Perform any needed data updates
+     */
+    public function updateData() {
+        if (!empty($this->updates)) {
+            Employee::update($this->updates);
+        }
     }
 }
 ?>

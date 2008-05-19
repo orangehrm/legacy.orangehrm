@@ -810,6 +810,20 @@ class Employee {
         $this->otherEmail = $otherEmail;
     }
     
+    public static function bulkUpdateMatchingRecords($fields, $values, $filters, $matchType) {
+    }
+    
+    public static function bulkUpdate($updates) {
+                
+        foreach ($updates as $id=>$fields) {
+            foreach ($fields as $field) {
+                $dbfield[] = self::$fieldMap[$field->getFieldName()];
+                $values[] = $field->getValue();
+            }
+            
+        }
+    }
+    
     /**
      * Search employees based on the passed parameters 
      * 
