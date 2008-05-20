@@ -831,6 +831,7 @@ create table `hs_hr_perf_review` (
   `review_date` date default '0000-00-00',
   `status` smallint(2) default 0,
   `review_notes` text,
+  `notification_sent` tinyint(1) not null default 0,
   primary key  (`id`),
   key `emp_number` (`emp_number`)
 ) engine=innodb default charset=utf8;
