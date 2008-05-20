@@ -567,7 +567,7 @@ templates/maintenance/usergroups.php -text
 templates/maintenance/users.php -text
 templates/performance/footer.php -text
 templates/performance/header.php -text
-templates/performance/measure.php -text
+templates/performance/viewPerformanceMeasure.php -text
 templates/recruitment/applicant/footer.php -text
 templates/recruitment/applicant/header.php -text
 templates/recruitment/applicant/jobApplicationStatus.php -text

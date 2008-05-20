@@ -175,7 +175,7 @@ class PerformanceController {
      */
     private function _viewMeasure($id = null) {
 
-		$path = '/templates/performance/measure.php';
+		$path = '/templates/performance/viewPerformanceMeasure.php';
 
 		try {
 			if (empty($id)) {
@@ -186,6 +186,7 @@ class PerformanceController {
 
 			$jobTitle = new JobTitle();
 			$jobTitles = $jobTitle->getJobTit();
+			$jobTitles = is_null($jobTitles) ? array() : $jobTitles;
 			$assignedJobTitles = $perfMeasure->getJobTitles();
 			
 			// Find available job titles
