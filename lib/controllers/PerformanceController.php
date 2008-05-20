@@ -32,10 +32,14 @@ require_once ROOT_PATH . '/lib/models/hrfunct/Employee.php';
 require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_Search.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceMeasure.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
-//TODO: Move EXTRACTOR_ViewList.php to common location
+
+//TODO: Move JobTitleConfig.php and EXTRACTOR_ViewList.php to common location
+require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
+
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfReview.php';
+require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_JobTitleConfig.php';
 
 /**
  * Controller for performance module
@@ -147,6 +151,23 @@ class PerformanceController {
 	                    
 	            }
                 break;                                                                
+
+			case 'JobTitleConfig' :
+			
+	            switch ($_GET['action']) {
+
+	                case 'View' :
+	                    $this->_viewJobTitleConfigPage();	                    	                
+	                    break;
+	                    
+	                case 'Update' :
+						$jobTitleConfigExtractor = new EXTRACTOR_JobTitleConfig();
+						$config = $jobTitleConfigExtractor->parseUpdateData($_POST);
+						$this->_saveJobTitleConfig($config);
+						break;	                    
+	            }
+                break;                                                                
+
 	    }
     }
     
@@ -456,6 +477,69 @@ class PerformanceController {
             $this->_notAuthorized();
         }
     }
+        
+    /**
+     * View Job title configuration page
+     */
+    private function _viewJobTitleConfigPage() {
+
+		$path = '/templates/performance/jobTitleConfiguration.php';
+
+		try {
+
+			$jobTitle = new JobTitle();
+			$jobTitles = $jobTitle->getJobTit();
+			$jobTitles = is_null($jobTitles) ? array() : $jobTitles;
+			$jobTitleConfig = JobTitleConfig::getJobTitleConfig(JobTitleConfig::ROLE_REVIEW_APPROVER);
+			$assignedJobTitles = $jobTitleConfig->getJobTitles();
+			
+			// Find available job titles
+			
+			if (empty($assignedJobTitles)) {
+				$availableJobTitles = $jobTitles;
+			} else {
+				$availableJobTitles = array();				
+
+				foreach ($jobTitles as $title) {
+					$jobTitleCode = $title[0];
+					if (!array_key_exists($jobTitleCode, $assignedJobTitles)) {
+						$availableJobTitles[] = $title;
+					}
+				}	
+			}		
+
+			$objs['jobTitleConfig'] = $jobTitleConfig;
+			$objs['roleList'] = JobTitleConfig::getAllRoles();
+			$objs['AvailableJobTitles'] = $availableJobTitles;
+			$objs['AssignedJobTitles'] = $assignedJobTitles;
+
+			$template = new TemplateMerger($objs, $path);
+			$template->display();
+		} catch (JobTitleConfigException $e) {
+			$message = 'UNKNOWN_FAILURE';
+            $this->redirect($message);
+		}
+    }
+
+    /**
+     * Save Job title configuration to the database
+     * @param JobTitleConfig $config Job Title Config to save
+     */
+    private function _saveJobTitleConfig($config) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+				$config->save();
+	        	$message = 'UPDATE_SUCCESS';
+	        	$this->redirect($message);
+			} catch (PerformanceMeasureException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}
+		} else {
+            $this->_notAuthorized();
+		}
+    }    
+
 
 	/**
 	 * Redirect to given url or current page while displaying optional message

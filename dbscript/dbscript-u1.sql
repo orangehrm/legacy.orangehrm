@@ -845,6 +845,14 @@ create table `hs_hr_perf_review_measure` (
   key `perf_measure_id` (`perf_measure_id`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_job_title_config` (
+  `role` int(11) not null,
+  `jobtit_code` varchar(13) not null,
+  primary key  (`role`, `jobtit_code`),
+  key `role` (`role`),
+  key `jobtit_code` (`jobtit_code`)
+) engine=innodb default charset=utf8;
+
 INSERT INTO `hs_hr_customer`
   (`customer_id`, `name`, `description`)
   VALUES (0, 'Internal', "Internal time tracker")

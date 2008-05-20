@@ -845,6 +845,14 @@ create table `hs_hr_perf_review_measure` (
   key `perf_measure_id` (`perf_measure_id`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_job_title_config` (
+  `role` int(11) not null,
+  `jobtit_code` varchar(13) not null,
+  primary key  (`role`, `jobtit_code`),
+  key `role` (`role`),
+  key `jobtit_code` (`jobtit_code`)
+) engine=innodb default charset=utf8;
+
 
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
@@ -1186,4 +1194,8 @@ alter table `hs_hr_perf_review_measure`
         references hs_hr_perf_measure(`id`) on delete cascade,
     add constraint foreign key (`review_id`)
         references hs_hr_perf_review(`id`) on delete cascade;
+
+alter table `hs_hr_job_title_config`
+    add constraint foreign key (`jobtit_code`)
+        references hs_hr_job_title(`jobtit_code`) on delete cascade;
 

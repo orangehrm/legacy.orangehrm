@@ -723,11 +723,11 @@ function preloadAllImages() {
             <TD width=158>
                 <ul id="menu">
                     <?php if ($_SESSION['isAdmin']=='Yes') { ?>
-                    <li id="jobVacancies">
+                    <!-- <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=ReviewPeriod&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Performance_ReviewPeriod; ?>
                         </a>
-                    </li>                    
+                    </li> -->                    
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=PerfMeasure&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Performance_Measures; ?>
@@ -742,6 +742,15 @@ function preloadAllImages() {
                         </a>
                     </li>                                        
                     <?php } ?>
+                    <?php 
+                          if ($_SESSION['isAdmin']=='Yes') { 
+                    ?>                                      
+                    <li id="jobVacancies">
+                        <a href="lib/controllers/CentralController.php?perfcode=JobTitleConfig&action=View" target="rightMenu">
+                            <?php echo $lang_Menu_Performance_ConfigureJobTitles; ?>
+                        </a>
+                    </li>                                        
+                    <?php } ?>                    
                 </ul>
             </TD>
 

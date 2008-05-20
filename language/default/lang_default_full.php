@@ -202,6 +202,7 @@
     $lang_Menu_Performance_ReviewPeriod = "Review Period";
     $lang_Menu_Performance_Measures = "Performance Measures";
     $lang_Menu_Performance_Reviews = "Performance Reviews";
+    $lang_Menu_Performance_ConfigureJobTitles = "Configure Job Titles";
 
 	/**
 	 * Common
@@ -1504,6 +1505,10 @@
 	$lang_Performance_Review_PerformanceMeasure = 'Performance Measure';
 	$lang_Performance_Review_Score = 'Score';
 	$lang_Performance_Review_Error_ScoreShouldBeDecimal = 'Score should be a valid number';
+	
+	$lang_Performance_Review_JobTitleConfigTitle = 'Configure Job Titles';	
+	$lang_Performance_Review_JobTitleApprovePerformanceReview = 'Approve Performance Reviews';
+	$lang_Performance_JobTitleRoleLabel = 'Job titles allowed to:';
 			
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";
