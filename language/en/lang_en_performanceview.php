@@ -54,11 +54,12 @@ switch ($_GET['perfcode']) {
 
 		case 'PerfReviews' :
 
-			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_Performance_review_ID , $lang_Performance_review_EmployeeName, $lang_Performance_review_ReviewDate, $lang_Performance_review_ReviewStatus);
+			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_Performance_review_EmployeeName, $lang_Performance_review_ReviewYear);
 			$headings = array($lang_Performance_review_ID , $lang_Performance_review_EmployeeName, $lang_Performance_review_ReviewDate, $lang_Performance_review_ReviewStatus);
 			$valueMap = array(null, null, null, 
 				array(PerformanceReview::STATUS_SCHEDULED => $lang_Performance_Review_Scheduled,
 					  PerformanceReview::STATUS_COMPLETED => $lang_Performance_Review_Completed,
+					  PerformanceReview::STATUS_SUBMITTED_FOR_APPROVAL => $lang_Performance_Review_SubmittedForApproval,					  
 					  PerformanceReview::STATUS_APPROVED => $lang_Performance_Review_Approved));				
 			$title = $lang_Performance_Review_ListHeading;
 			$deletePrompt = $lang_Performance_Review_DeletionMessage;

@@ -176,16 +176,18 @@ for ($i = 0; $i < count($valueMap); $i++) {
 		        $('loc_name').value = map[searchVal];
 		    } else {
 		        var len = map.length;
-		        var allowed = '';
-		        for ( var i in map) {
-		        	if (allowed == ''){
-		            	allowed = i;
-		        	} else {
-		            	allowed = allowed + ', ' + i;
-		            }
-		        }
-		        alert("<?php echo $lang_Recruit_AllowedValuesAre;?> " + allowed);
+		        if (len > 0) {
+			        var allowed = '';
+			        for ( var i in map) {
+			        	if (allowed == ''){
+			            	allowed = i;
+			        	} else {
+			            	allowed = allowed + ', ' + i;
+			            }
+			        }
+			        alert("<?php echo $lang_Recruit_AllowedValuesAre;?> " + allowed);
 		        return;
+		        }
 		    }
 		}
 

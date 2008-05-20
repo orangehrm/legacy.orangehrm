@@ -87,6 +87,13 @@ if($_SESSION['isAdmin']=='Yes') {
     if ($_SESSION['isManager'] || $_SESSION['isDirector']) {
             $arrAllRights[Recruit]=array('add'=> false , 'edit'=> true , 'delete'=> false, 'view'=> true);
     }
+
+    /*
+     * Assign supervisors access to the performance module
+     */
+    if ($_SESSION['isSupervisor']) {
+		$arrAllRights[Perf]=array('add'=> false, 'edit'=> true , 'delete'=> false, 'view'=> true);
+    }
 }
 
 if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="eim"))

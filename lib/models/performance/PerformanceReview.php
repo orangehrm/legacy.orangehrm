@@ -23,49 +23,45 @@ require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
 require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 require_once ROOT_PATH . '/lib/common/SearchObject.php';
+require_once ROOT_PATH . '/lib/models/performance/PerformanceScore.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
 
 class PerformanceReview {
-
-/*create table `hs_hr_perf_measure` (
-  `id` int(11) not null,
-  `name` varchar(100) default '' not null,
-  primary key (`id`),
-  unique key name (`name`)
-) engine=innodb default charset=utf8;
-
-create table `hs_hr_perf_measure_jobtitle` (
-  `perf_measure_id` int(11) not null,
-  `jobtit_code` varchar(13) default null,
-  primary key  (`perf_measure_id`, `jobtit_code`),
-  key `perf_measure_id` (`perf_measure_id`),
-  key `jobtit_code` (`jobtit_code`)
-) engine=innodb default charset=utf8;
-*/
-	const TABLE_NAME = 'hs_hr_perf_measure';
-	const MEASURE_JOBTITLE_TABLE_NAME = 'hs_hr_perf_measure_jobtitle';
+	
+	const TABLE_NAME = 'hs_hr_perf_review';
+	const REVIEW_MEASURE_TABLE_NAME = 'hs_hr_perf_review_measure';
 
 	/** Database fields */
 	const DB_FIELD_ID = 'id';
-	const DB_FIELD_NAME = 'name';
-	const DB_FIELD_PERF_MEASURE_ID = 'perf_measure_id';
-	const DB_FIELD_JOB_TITLE_CODE = 'jobtit_code';
+	const DB_FIELD_EMP_NUMBER = 'emp_number';
+	const DB_FIELD_REVIEW_DATE = 'review_date';
+	const DB_FIELD_STATUS = 'status';
+	const DB_FIELD_REVIEW_NOTES = 'review_notes';
 
-	const FIELD_JOB_TITLE_NAME = 'job_title_name';
+	const DB_FIELD_REVIEW_ID = 'review_id';
+	const DB_FIELD_PERF_MEASURE_ID = 'perf_measure_id';
+	const DB_FIELD_SCORE = 'score';
+	
+	const FIELD_EMPLOYEE_NAME = 'emp_name';
 
 	/** Field order */
 	const SORT_FIELD_NONE = -1;
-	const SORT_FIELD_ID = 0;
-	const SORT_FIELD_NAME = 1;
+	const SORT_FIELD_EMPLOYEE_NAME = 0;
+	const SORT_FIELD_REVIEW_YEAR = 1;
 
 	/** Status */
 	const STATUS_SCHEDULED = 0;
 	const STATUS_COMPLETED = 1;
-	const STATUS_APPROVED = 2;
-	
+	const STATUS_SUBMITTED_FOR_APPROVAL = 2;
+	const STATUS_APPROVED = 3;	
 		
 	private $id;
-	private $name;
-	private $jobTitles;
+	private $empNumber;
+	private $reviewDate;
+	private $status = self::STATUS_SCHEDULED;
+	private $reviewNotes;
+	private $performanceMeasures;
+	private $employeeName;
 
 	/**
 	 * Constructor
@@ -74,34 +70,67 @@ create table `hs_hr_perf_measure_jobtitle` (
 	 */
 	public function __construct($id = null) {
 		$this->id = $id;
+		$this->performanceMeasures = array();
 	}
 
 	public function setId($id) {
 		$this->id = $id;
 	}
 
-	public function setName($name) {
-	    $this->name = $name;
+	public function setEmpNumber($empNumber) {
+	    $this->empNumber = $empNumber;
 	}
 
-	public function setJobTitles($jobTitles) {
-		return $this->jobTitles = $jobTitles;
+	public function setReviewDate($reviewDate) {
+		$this->reviewDate = $reviewDate;
+	}
+
+	public function setStatus($status) {
+		$this->status = $status;
+	}
+
+	public function setReviewNotes($reviewNotes) {
+		$this->reviewNotes = $reviewNotes;
+	}
+	
+	public function setPerformanceMeasures($performanceMeasures) {
+		$this->performanceMeasures = $performanceMeasures;
+	}
+
+	public function setEmployeeName($employeeName) {
+		$this->employeeName = $employeeName;
 	}
 
 	public function getId() {
 		return $this->id;
 	}
 
-	public function getName() {
-	    return $this->name;
+	public function getEmpNumber() {
+	    return $this->empNumber;
 	}
 	
-	public function getJobTitles() {
-		return $this->jobTitles;
+	public function getReviewDate() {
+		return $this->reviewDate;
+	}
+
+	public function getStatus() {
+		return $this->status;
+	}
+
+	public function getReviewNotes() {
+		return $this->reviewNotes;
+	}
+
+	public function getEmployeeName() {
+		return $this->employeeName;
+	}
+
+	public function getPerformanceMeasures() {
+		return $this->performanceMeasures;
 	}
 
 	/**
-	 * Save Performance Measure object to database
+	 * Save Performance Review object to database
 	 * @return int Returns the ID of the object
 	 */
     public function save() {
@@ -113,8 +142,8 @@ create table `hs_hr_perf_measure_jobtitle` (
     }
 
 	/**
-	 * Delete given performance measures
-	 * @param array $ids Array of Performance Measure ID's to delete
+	 * Delete given performance reviews
+	 * @param array $ids Array of Performance Review ID's to delete
 	 */
 	public static function delete($ids) {
 
@@ -145,35 +174,35 @@ create table `hs_hr_perf_measure_jobtitle` (
 
 
 	/**
-	 * Get all performance measures available in the system
+	 * Get all performance reviews available in the system
 	 *
-	 * @return array Array of Performance Measure objects
+	 * @return array Array of Performance Review objects
 	 */
 	public static function getAll() {
 		return self::_getList();
 	}
 
 	/**
-	 * Get Performance Measure with given ID
-	 * @param int $id The Performance Measure ID
-	 * @return PerformanceMeasure Performance Measure object with given id or null if not found
+	 * Get Performance Review with given ID
+	 * @param int $id The Performance Review ID
+	 * @return PerformanceReview Performance Review object with given id or null if not found
 	 */
-	public static function getPerformanceMeasure($id) {
+	public static function getPerformanceReview($id) {
 
 		if (!CommonFunctions::isValidId($id)) {
-			throw new PerformanceReviewException("Invalid parameters to getPerformanceMeasure(): id = $id", PerformanceReviewException::INVALID_PARAMETER);
+			throw new PerformanceReviewException("Invalid parameters to getPerformanceReview(): id = $id", PerformanceReviewException::INVALID_PARAMETER);
 		}
 
 		$selectCondition[] = self::DB_FIELD_ID . " = $id";
 		$list = self::_getList($selectCondition);
 		
-		$measure = null;
+		$review = null;
 		if (count($list) > 0) {
-			$measure = $list[0];
-			$measure->setJobTitles($this->_fetchJobTitles($id));
+			$review = $list[0];
+			$review->setPerformanceMeasures(self::_fetchPerformanceMeasures($id));
 		}
 		
-		return $measure;
+		return $review;
 	}
 	
 	/**
@@ -185,17 +214,48 @@ create table `hs_hr_perf_measure_jobtitle` (
 	 * @param int $searchfieldNo which field to search on
 	 * @param int $sortField The field to sort by
 	 * @param string $sortOrder Sort Order (one of ASC or DESC)
+	 * @param string $supervisorEmpNum Supervisors employee number (or null if not a supervisor);
 	 */
-	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE, $sortField = self::SORT_FIELD_VACANCY_ID, $sortOrder = 'ASC') {
+	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE, $sortField = self::SORT_FIELD_VACANCY_ID, $sortOrder = 'ASC', $supervisorEmpNum = null) {
 
-		$list = self::_getList();
+		$selectCondition = null;
+		$dbConnection = new DMLFunctions();
+		$escapedVal = mysql_real_escape_string($searchStr);
+		
+		switch ($searchFieldNo) {
+			case self::SORT_FIELD_REVIEW_YEAR:
+				$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
+				break;
+			case self::SORT_FIELD_EMPLOYEE_NAME:
+				$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
+										"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
+										"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
+				break;				
+		}
+
+		if (!empty($supervisorEmpNum)) {
+			$repObj = new EmpRepTo();
+			$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
+			$subordinateIds = array();
+			foreach ($subordinates as $subordinate) {
+				$subordinateIds[] = $subordinate[0];
+			}
+			
+			if (!empty($subordinateIds)) {
+				$selectCondition[] = "a.emp_number IN (" . implode(',', $subordinateIds). ")";
+			}
+		}	
+			
+		$list = self::_getList($selectCondition);
 		
 		$i = 0;
 		$arrayDispList = null;
 		
-		foreach($list as $measure) {
-			$arrayDispList[$i][0] = $measure->getId();
-	    	$arrayDispList[$i][1] = $measure->getName();
+		foreach($list as $review) {
+			$arrayDispList[$i][0] = $review->getId();
+	    	$arrayDispList[$i][1] = $review->getEmployeeName();
+	    	$arrayDispList[$i][2] = $review->getReviewDate();
+	    	$arrayDispList[$i][3] = $review->getStatus();
 	    	$i++;
 	     }
 
@@ -203,20 +263,54 @@ create table `hs_hr_perf_measure_jobtitle` (
 	}
 
 	/**
-	 * Count performance measures with given search conditions
+	 * Count performance reviews with given search conditions
 	 * 
 	 * TODO: To be implemented
 	 * 
 	 * @param string $searchStr Search string
 	 * @param string $searchFieldNo Integer giving which field to search on
 	 */
-	public static function getCount($searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE) {
+	public static function getCount($searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE, $supervisorEmpNum = null) {
+
+		$selectCondition = null;
+		$dbConnection = new DMLFunctions();
+		$escapedVal = mysql_real_escape_string($searchStr);
+				
+		switch ($searchFieldNo) {
+			case self::SORT_FIELD_REVIEW_YEAR:
+				$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
+				break;
+			case self::SORT_FIELD_EMPLOYEE_NAME:
+				$selectCondition[] = "b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
+								     "b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
+									 "b.`emp_middle_name` LIKE '{$escapedVal}%' "; 			
+				break;				
+		}
+
+		if (!empty($supervisorEmpNum)) {
+			$repObj = new EmpRepTo();
+			$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
+			$subordinateIds = array();
+			foreach ($subordinates as $subordinate) {
+				$subordinateIds[] = $subordinate[0];
+			}
+			
+			if (!empty($subordinateIds)) {
+				$selectCondition[] = "a.emp_number IN (" . implode(',', $subordinateIds). ")";
+			}
+		}	
 
 		$count = 0;		
-		$sql = sprintf('SELECT count(*) FROM %s', self::TABLE_NAME);
+		$sql = sprintf('SELECT count(*) FROM %s a, %s b WHERE a.emp_number = b.emp_number', self::TABLE_NAME, 'hs_hr_employee');
 
+		if (!empty($selectCondition)) {
+			$where = "";
+			foreach ($selectCondition as $condition) {
+				$where .= ' AND ( ' . $condition . ' )'; 
+			}
+			$sql .= $where;
+		}
 		$sqlBuilder = new SQLQBuilder();
-		$dbConnection = new DMLFunctions();
 		$result = $dbConnection->executeQuery($sql);
 
 		if ($result) {
@@ -228,95 +322,152 @@ create table `hs_hr_perf_measure_jobtitle` (
 	}
 		
 	/**
-	 * Get list of job titles assigned to this performance measure
+	 * Get list of performance measures assigned to this performance review
 	 */
-	private static function _fetchJobTitles($performanceMeasureId) {
+	private static function _fetchPerformanceMeasures($performanceReviewId) {
 
-		$fields[0] = "a. " . self::DB_FIELD_JOB_TITLE_CODE;
-		$fields[2] = "b.jobtit_name AS " . self::FIELD_JOB_TITLE_NAME;
+		$fields[0] = "a." . self::DB_FIELD_PERF_MEASURE_ID;
+		$fields[1] = "a." . self::DB_FIELD_SCORE;
+		$fields[2] = "b." . PerformanceMeasure::DB_FIELD_NAME;
 
-		$tables[0] = self::MEASURE_JOBTITLE_TABLE_NAME . ' a';
-		$tables[1] = 'hs_hr_job_title b';
+		$tables[0] = self::REVIEW_MEASURE_TABLE_NAME . ' a';
+		$tables[1] = PerformanceMeasure::TABLE_NAME . ' b';
 
-		$joinConditions[1] = 'a.jobtit_code = b.jobtit_code';
+		$joinConditions[1] = 'a.' . self::DB_FIELD_PERF_MEASURE_ID . ' = b.' . PerformanceMeasure::DB_FIELD_ID;
 
-		$selectCondition[] = "a." . self::DB_FIELD_PERF_MEASURE_ID . " = " . $performanceMeasureId;
+		$selectCondition[] = "a." . self::DB_FIELD_REVIEW_ID . " = " . $performanceReviewId;
 		
 		$sqlBuilder = new SQLQBuilder();
 		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
 
-		$jobTitles = array();
+		$measures = array();
 
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
 
 		while ($result && ($row = mysql_fetch_assoc($result))) {
-			$jobTitles[] = $row;
+			$perfScore = new PerformanceScore();
+			$perfScore->setId($row[self::DB_FIELD_PERF_MEASURE_ID]);
+			$perfScore->setName($row[PerformanceMeasure::DB_FIELD_NAME]);
+			$score = $row[self::DB_FIELD_SCORE];
+			
+			if (!is_null($score)) {
+				$perfScore->setScore($score);
+			}
+			
+			$measures[$perfScore->getId()] = $perfScore;
 		}
 
-		return $jobTitles;	
+		return $measures;	
 	}
 	
 	/**
-	 * Save job titles assigned to this performance measure
+	 * Save performance measures assigned to this performance review
 	 */
-	private function _saveJobTitles() {
+	private function _savePerformanceMeasures() {
 		
+				
 		// Delete existing job title assignments		
-		$sql = sprintf("DELETE FROM %s WHERE %s = %s", self::MEASURE_JOBTITLE_TABLE_NAME,
-		                self::DB_FIELD_PERF_MEASURE_ID, $this->id);
+		$sql = sprintf("DELETE FROM %s WHERE %s = %s", self::REVIEW_MEASURE_TABLE_NAME,
+		                self::DB_FIELD_REVIEW_ID, $this->id);
+		  
+		// Extra condition              
+		if (!empty($this->performanceMeasures) && count($this->performanceMeasures) > 0) {
+			
+			$assignedMeasureIds = array();
+			foreach ($this->performanceMeasures as $measure) {
+				$assignedMeasureIds[] = $measure->getId();
+			}
+			
+			$idStr = implode(',', $assignedMeasureIds); 
+			$extraCondition = sprintf(" AND %s not in (%s)", self::DB_FIELD_PERF_MEASURE_ID, $idStr);
+			$sql .= $extraCondition;
+		}
+				                
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
 				
-		// Assign new job titles
-		if (!empty($this->jobTitles)) {
-			$sql = sprintf("INSERT INTO %s (%s, %s) VALUES " , self::MEASURE_JOBTITLE_TABLE_NAME, 
-				self::DB_FIELD_PERF_MEASURE_ID, self::DB_FIELD_JOB_TITLE_CODE);
+		// Assign new performance reviews
+		if (!empty($this->performanceMeasures)) {
+			
+			$scoresAvailable = $this->performanceMeasures[0] instanceof PerformanceScore;
+			
+			if ($scoresAvailable) {
+				$sql = sprintf("INSERT INTO %s (%s, %s, %s) VALUES " , self::REVIEW_MEASURE_TABLE_NAME, 
+					self::DB_FIELD_REVIEW_ID, self::DB_FIELD_PERF_MEASURE_ID, self::DB_FIELD_SCORE);
+
+			} else {
+				$sql = sprintf("INSERT IGNORE INTO %s (%s, %s) VALUES " , self::REVIEW_MEASURE_TABLE_NAME, 
+					self::DB_FIELD_REVIEW_ID, self::DB_FIELD_PERF_MEASURE_ID);
+			}
+			
 			
 			$valueSql = "";
-			foreach ($this->jobTitles as $jobTitle) {
-				$jobTitleCode = $jobTitle['jobtit_code'];
+			foreach ($this->performanceMeasures as $measure) {
 				
 				if (!empty($valueSql)) {
 					$valueSql .= ', ';
 				}
-				$valueSql .= sprintf("(%d, %s)", $this->id, $jobTitleCode);				
+
+				if ($scoresAvailable) {				
+					$score = $measure->getScore(); 
+					if (is_null($score)) {
+						$scoreStr = 'null';
+					} else {
+						$scoreStr = sprintf('%f', $score);
+					}					
+					$valueSql .= sprintf("(%d, %d, %s)", $this->id, $measure->getId(), $scoreStr);
+				} else {
+					$valueSql .= sprintf("(%d, %d)", $this->id, $measure->getId());
+				}				
 			}
 			
 			$sql .= $valueSql;
+			if ($scoresAvailable) {
+				$sql .= sprintf(' ON DUPLICATE KEY UPDATE %s = VALUES(%s)', self::DB_FIELD_SCORE, self::DB_FIELD_SCORE);
+			}
+			
 			$result = $conn->executeQuery($sql);
 			if (!$result) {
-				throw new PerformanceReviewException("Save job titles failed. SQL=$sql", PerformanceReviewException::DB_ERROR);
+				throw new PerformanceReviewException("Save Performance measures failed. SQL=$sql", PerformanceReviewException::DB_ERROR);
 			}			
 		}		
 	}
 
 
 	/**
-	 * Get a list of performance measures with the given conditions.
+	 * Get a list of performance reviews with the given conditions.
 	 *
-	 * @param array   $selectCondition Array of select conditions to use.				const  = 'hs_hr_perf_measure_jobtitle';
-	 * @return array  Array of Performance Measure objects. Returns an empty (length zero) array if none found.
+	 * @param array   $selectCondition Array of select conditions to use.
+	 * @return array  Array of Performance Review objects. Returns an empty (length zero) array if none found.
 	 */
 	private static function _getList($selectCondition = null) {
 
-		$fields[0] = self::DB_FIELD_ID;
-		$fields[1] = self::DB_FIELD_NAME;
+		$fields[0] = "a. " . self::DB_FIELD_ID;
+		$fields[1] = "a. " . self::DB_FIELD_EMP_NUMBER;
+		$fields[2] = "a. " . self::DB_FIELD_REVIEW_DATE;
+		$fields[3] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::FIELD_EMPLOYEE_NAME;
+		$fields[4] = "a. " . self::DB_FIELD_STATUS;
+		$fields[5] = "a. " . self::DB_FIELD_REVIEW_NOTES;
 
-		$arrTable = self::TABLE_NAME;
+		$tables[0] = self::TABLE_NAME . ' a';
+		$tables[1] = 'hs_hr_employee b';
+
+		$joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
+
 		$sqlBuilder = new SQLQBuilder();
-		$sql = $sqlBuilder->simpleSelect($arrTable, $fields, $selectCondition, $fields[0], 'ASC');
-
-		$list = array();
+		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
+//
+		$actList = array();
 
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
 
 		while ($result && ($row = mysql_fetch_assoc($result))) {
-			$list[] = self::_createFromRow($row);
+			$actList[] = self::_createFromRow($row);
 		}
 
-		return $list;
+		return $actList;	
 	}
 
 	/**
@@ -325,11 +476,18 @@ create table `hs_hr_perf_measure_jobtitle` (
 	private function _insert() {
 
 		$this->id = UniqueIDGenerator::getInstance()->getNextID(self::TABLE_NAME, self::DB_FIELD_ID);
+		
 		$fields[0] = self::DB_FIELD_ID;
-		$fields[1] = self::DB_FIELD_NAME;
+		$fields[1] = self::DB_FIELD_EMP_NUMBER;
+		$fields[2] = self::DB_FIELD_REVIEW_DATE;
+		$fields[3] = self::DB_FIELD_STATUS;
+		$fields[4] = self::DB_FIELD_REVIEW_NOTES;
 
 		$values[0] = $this->id;
-		$values[1] = "'{$this->name}'";
+		$values[1] = $this->empNumber;
+		$values[2] = "'{$this->reviewDate}'";
+		$values[3] = $this->status;
+		$values[4] = "'{$this->reviewNotes}'";
 
 		$sqlBuilder = new SQLQBuilder();
 		$sqlBuilder->table_name = self::TABLE_NAME;
@@ -346,7 +504,7 @@ create table `hs_hr_perf_measure_jobtitle` (
 			throw new PerformanceReviewException("Insert failed. ", PerformanceReviewException::DB_ERROR);
 		}
 
-		$this->_saveJobTitles();
+		$this->_savePerformanceMeasures();
 		return $this->id;
 	}
 
@@ -356,10 +514,16 @@ create table `hs_hr_perf_measure_jobtitle` (
 	private function _update() {
 
 		$fields[0] = self::DB_FIELD_ID;
-		$fields[1] = self::DB_FIELD_NAME;
+		$fields[1] = self::DB_FIELD_EMP_NUMBER;
+		$fields[2] = self::DB_FIELD_REVIEW_DATE;
+		$fields[3] = self::DB_FIELD_STATUS;
+		$fields[4] = self::DB_FIELD_REVIEW_NOTES;
 
 		$values[0] = $this->id;
-		$values[1] = "'{$this->name}'";
+		$values[1] = $this->empNumber;
+		$values[2] = "'{$this->reviewDate}'";
+		$values[3] = $this->status;
+		$values[4] = "'{$this->reviewNotes}'";
 
 		$sqlBuilder = new SQLQBuilder();
 		$sqlBuilder->table_name = self::TABLE_NAME;
@@ -377,21 +541,34 @@ create table `hs_hr_perf_measure_jobtitle` (
 		if (!$result) {
 			throw new PerformanceReviewException("Update failed. SQL=$sql", PerformanceReviewException::DB_ERROR);
 		}
-		$this->_saveJobTitles();		
+		$this->_savePerformanceMeasures();		
 		return $this->id;
 	}
 
     /**
-     * Creates a Performance Measure object from a resultset row
+     * Creates a Performance Review object from a resultset row
      *
      * @param array $row Resultset row from the database.
-     * @return PerformanceMeasure PerformanceMeasure object.
+     * @return PerformanceReview PerformanceReview object.
      */
     private static function _createFromRow($row) {
 
-    	$measure = new PerformanceMeasure($row[self::DB_FIELD_ID]);
-		$measure->setName($row[self::DB_FIELD_NAME]);
-	    return $measure;
+		$fields[0] = "a. " . self::DB_FIELD_ID;
+		$fields[1] = "a. " . self::DB_FIELD_EMP_NUMBER;
+		$fields[2] = "a. " . self::DB_FIELD_REVIEW_DATE;
+		$fields[3] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::FIELD_EMPLOYEE_NAME;
+		$fields[4] = "a. " . self::DB_FIELD_STATUS;
+		$fields[5] = "a. " . self::DB_FIELD_REVIEW_NOTES;
+		
+    	$review = new PerformanceReview($row[self::DB_FIELD_ID]);
+    	
+		$review->setId($row[self::DB_FIELD_ID]);
+		$review->setEmpNumber($row[self::DB_FIELD_EMP_NUMBER]);
+		$review->setReviewDate($row[self::DB_FIELD_REVIEW_DATE]);
+		$review->setStatus($row[self::DB_FIELD_STATUS]);
+		$review->setReviewNotes($row[self::DB_FIELD_REVIEW_NOTES]);
+		$review->setEmployeeName($row[self::FIELD_EMPLOYEE_NAME]);
+	    return $review;
     }
 
 }

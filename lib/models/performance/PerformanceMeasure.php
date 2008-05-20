@@ -26,21 +26,6 @@ require_once ROOT_PATH . '/lib/common/SearchObject.php';
 
 class PerformanceMeasure {
 
-/*create table `hs_hr_perf_measure` (
-  `id` int(11) not null,
-  `name` varchar(100) default '' not null,
-  primary key (`id`),
-  unique key name (`name`)
-) engine=innodb default charset=utf8;
-
-create table `hs_hr_perf_measure_jobtitle` (
-  `perf_measure_id` int(11) not null,
-  `jobtit_code` varchar(13) default null,
-  primary key  (`perf_measure_id`, `jobtit_code`),
-  key `perf_measure_id` (`perf_measure_id`),
-  key `jobtit_code` (`jobtit_code`)
-) engine=innodb default charset=utf8;
-*/
 	const TABLE_NAME = 'hs_hr_perf_measure';
 	const MEASURE_JOBTITLE_TABLE_NAME = 'hs_hr_perf_measure_jobtitle';
 
@@ -80,7 +65,7 @@ create table `hs_hr_perf_measure_jobtitle` (
 	}
 
 	public function setJobTitles($jobTitles) {
-		return $this->jobTitles = $jobTitles;
+		$this->jobTitles = $jobTitles;
 	}
 
 	public function getId() {
@@ -228,7 +213,7 @@ create table `hs_hr_perf_measure_jobtitle` (
 	private static function _fetchJobTitles($performanceMeasureId) {
 
 		$fields[0] = "a. " . self::DB_FIELD_JOB_TITLE_CODE;
-		$fields[2] = "b.jobtit_name AS " . self::FIELD_JOB_TITLE_NAME;
+		$fields[1] = "b.jobtit_name AS " . self::FIELD_JOB_TITLE_NAME;
 
 		$tables[0] = self::MEASURE_JOBTITLE_TABLE_NAME . ' a';
 		$tables[1] = 'hs_hr_job_title b';

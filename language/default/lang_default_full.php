@@ -1475,13 +1475,35 @@
 	$lang_Performance_review_ID = 'Review ID';
 	$lang_Performance_review_EmployeeName = 'Employee Name';
 	$lang_Performance_review_ReviewDate = 'Review Date';
-	$lang_Performance_review_ReviewStatus = 'Review Status';			
+	$lang_Performance_review_ReviewStatus = 'Review Status';
+	$lang_Performance_review_ReviewYear = 'Review Year';			
 	
 	$lang_Performance_Review_ListHeading = 'Performance Reviews';
 	$lang_Performance_Review_DeletionMessage = 'Deletion will affect Performance review scores';
 	$lang_Performance_Review_Scheduled = 'Scheduled';
 	$lang_Performance_Review_Completed = 'Completed';
-	$lang_Performance_Review_Approved = 'Approved';	
+	$lang_Performance_Review_SubmittedForApproval = 'Submitted for Approval';
+	$lang_Performance_Review_Approved = 'Approved';
+	
+	$lang_Performance_Review_EditTitle = 'Edit Performance Review';	
+	$lang_Performance_Review_ScheduleTitle = 'Schedule Performance Review';
+	$lang_Performance_Review_Error_NoPerformanceMeasureSelected = 'No Performance Measure selected';
+	$lang_Performance_Review_AssignPerformanceMeasures = 'Assign Performance Measures';
+	$lang_Performance_Review_AvailablePerformanceMeasures = 'Available Performance Measures';
+	$lang_Performance_Review_AssignedPerformanceMeasures = 'Assigned Performance Measures';
+	$lang_Performance_Review_EmpNumber = 'Employee Name';
+	$lang_Performance_Review_Notes = 'Review Notes';
+	$lang_Performance_Review_Status = 'Review State';
+	$lang_Performance_Review_Date = 'Review Date';
+	$lang_Performance_Review_Error_PleaseSpecifyEmployee = 'Please specify an employee.';
+	$lang_Performance_Review_Error_ReviewDateShouldNotBeSaturdayOrSunday = 'Review date should not fall on a Saturday or Sunday';
+	$lang_Performance_Review_Error_PleaseSpecifyValidDate = 'Please specify a valid review date';
+	$lang_Performance_Review_Results = 'Performance Review Results';
+	$lang_Performance_Review_Results_Title = 'Performance Review Results';
+	$lang_Performance_Review_MeasureScores = 'Performance Measure Scores';
+	$lang_Performance_Review_PerformanceMeasure = 'Performance Measure';
+	$lang_Performance_Review_Score = 'Score';
+	$lang_Performance_Review_Error_ScoreShouldBeDecimal = 'Score should be a valid number';
 			
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";

@@ -35,6 +35,7 @@ require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
 //TODO: Move EXTRACTOR_ViewList.php to common location
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
+require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfReview.php';
 
 /**
  * Controller for performance module
@@ -113,12 +114,37 @@ class PerformanceController {
 
 			case 'PerfReviews' :
 
+				$perfReviewExtractor = new EXTRACTOR_PerfReview();
+				
 	            switch ($_GET['action']) {
 
 	                case 'List' :
 	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
 	                    $this->_viewReviews($searchObject);	                    	                
 	                    break;
+	                    
+	                case 'View' :
+	                	$id = isset($_GET['id'])? $_GET['id'] : null;
+	                	$this->_viewReview($id);
+						break;
+							                    
+	                case 'ViewAdd' :
+	                	$this->_viewAddReview();
+	                	break;
+
+	                case 'ViewResults' :
+	                	$this->_viewReviewResults($_GET['id']);
+	                	break;
+	                	
+	                case 'Update' :
+	                	$perfReview = $perfReviewExtractor->parseUpdateData($_POST);
+	                	$this->_saveReview($perfReview);
+	                	break;	                    
+	               	case 'Delete' :
+	                    $ids = $_POST['chkID'];
+	                    $this->_deleteReviews($ids);	               		
+	               		break;
+	                    
 	            }
                 break;                                                                
 	    }
@@ -143,7 +169,25 @@ class PerformanceController {
 		}
     }    
     
-	/**
+	/**			<?php if ($role == authorize::AUTHORIZE_ROLE_ADMIN) { ?>
+				<td ><input type="text" name="cmbRepEmpID" id="cmbRepEmpID" disabled />
+					<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" />
+					<input type="button" value="..." onclick="returnEmpDetail();" />
+				</td>
+			<?php } else if ($role == authorize::AUTHORIZE_ROLE_SUPERVISOR) { ?>
+				<td >
+					<select name="txtRepEmpID" id="txtRepEmpID">
+						<option value="-1">-<?php echo $lang_Leave_Common_Select;?>-</option>
+						<?php if (is_array($employees)) {
+			   					foreach ($employees as $employee) {
+			  			?>
+			 		  	<option value="<?php echo $employee[0] ?>"><?php echo $employee[1]; ?></option>
+			  			<?php 	}
+			   				} ?>
+					</select>
+				</td>
+			<?php } ?>
+
 	 * View list of performance measures
 	 * @param SearchObject Object with search parameters
 	 */
@@ -151,7 +195,7 @@ class PerformanceController {
 
 		if ($this->authorizeObj->isAdmin()) {
         	$list = PerformanceMeasure::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
-        	$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());
+        	$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());        	
         	$this->_viewList($searchObject->getPageNumber(), $count, $list, false);
 		} else {
             $this->_notAuthorized();
@@ -226,7 +270,7 @@ class PerformanceController {
 			try {
         		$count = PerformanceMeasure::delete($ids);
         		$message = 'DELETE_SUCCESS';
-			} catch (JobVacancyException $e) {
+			} catch (PerformanceMeasureException $e) {
 				$message = 'DELETE_FAILURE';
 			}
             $this->redirect($message, '?perfcode=PerfMeasure&action=List');
@@ -242,16 +286,137 @@ class PerformanceController {
     private function _viewReviews($searchObject) {
 
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
-        	//$list = PerformanceMeasure::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
-        	//$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());
-        	$list = array();
-        	$count = 0;
-        	$this->_viewList($searchObject->getPageNumber(), $count, $list, false);
+			
+			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
+        	$list = PerformanceReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
+        	$count = PerformanceReview::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);
+        	$this->_viewList($searchObject->getPageNumber(), $count, $list, true);
 		} else {
             $this->_notAuthorized();
 		}
     }    
     
+    /**
+     * Save Performance review in the database
+     * @param PerformanceReview $review Performance Review to save
+     */
+    private function _saveReview($review) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+				$review->save();
+	        	$message = 'UPDATE_SUCCESS';
+	        	$this->redirect($message, '?perfcode=PerfReviews&action=List');
+			} catch (PerformanceReviewException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}
+		} else {
+            $this->_notAuthorized();
+		}
+    } 
+        
+	/**
+	 * View add Performance Review page
+	 */
+	private function _viewAddReview() {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+	    	$this->_viewReview();
+	    } else {
+            $this->_notAuthorized();
+		}
+	}
+
+	/**
+	 * View add Performance Review Results page
+	 */
+	private function _viewReviewResults($id) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+			$path = '/templates/performance/viewReviewResults.php';
+	
+			try {
+				$perfReview = PerformanceReview::getPerformanceReview($id);
+				$assignedMeasures = $perfReview->getPerformanceMeasures();
+				
+				$objs['perfReview'] = $perfReview;
+				$objs['AssignedPerfMeasures'] = $assignedMeasures;
+				$objs['authorizeObj'] = $this->authorizeObj;
+	
+				$template = new TemplateMerger($objs, $path);
+				$template->display();
+			} catch (PerformanceReviewException $e) {
+				$message = 'UNKNOWN_FAILURE';
+	            $this->redirect($message);
+			}			
+	    } else {
+            $this->_notAuthorized();
+		}
+	}
+
+    /**
+     * View Performance Reviews
+     * @param int $id Id of Performance Review. If empty, A new Performance Review is shown
+     */
+    private function _viewReview($id = null) {
+
+		$path = '/templates/performance/viewPerformanceReview.php';
+
+		try {
+			if (empty($id)) {
+				$perfReview = new PerformanceReview();
+			} else {
+				$perfReview = PerformanceReview::getPerformanceReview($id);
+			}
+
+			$perfMeasures = PerformanceMeasure::getAll();
+			$assignedMeasures = $perfReview->getPerformanceMeasures();
+			
+			// Find available performance measures
+			
+			if (empty($assignedMeasures)) {
+				$availableMeasures = $perfMeasures;
+			} else {
+				$availableMeasures = array();				
+
+				foreach ($perfMeasures as $measure) {
+					$perfMeasureId = $measure->getId();
+					if (!array_key_exists($perfMeasureId, $assignedMeasures)) {
+						$availableMeasures[] = $measure;
+					}
+				}	
+			}		
+
+			$objs['perfReview'] = $perfReview;
+			$objs['AvailablePerfMeasures'] = $availableMeasures;
+			$objs['AssignedPerfMeasures'] = $assignedMeasures;
+			$objs['employees'] = $assignedMeasures;
+			$objs['authorizeObj'] = $this->authorizeObj;
+
+			$template = new TemplateMerger($objs, $path);
+			$template->display();
+		} catch (PerformanceReviewException $e) {
+			$message = 'UNKNOWN_FAILURE';
+            $this->redirect($message);
+		}
+    }
+
+	/**
+	 * Delete Performance Reviews with given IDs
+	 * @param Array $ids Array with Performance Review ID's to delete
+	 */
+    private function _deleteReviews($ids) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+        		$count = PerformanceReview::delete($ids);
+        		$message = 'DELETE_SUCCESS';
+			} catch (PerformanceReviewException $e) {
+				$message = 'DELETE_FAILURE';
+			}
+            $this->redirect($message, '?perfcode=PerfReviews&action=List');
+		} else {
+            $this->_notAuthorized();
+		}
+    }
+
     
 	/**
 	 * Generic method to display a list
