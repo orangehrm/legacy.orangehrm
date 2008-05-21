@@ -229,7 +229,7 @@ class PerformanceReview {
 	}
 	
 	/**
-	 * Get list of job vacancies in a format suitable for view.php
+	 * Get list of Performance Reviews in a format suitable for view.php
 	 * TODO: To be implemented
 	 *
 	 * @param int $pageNo The page number. 0 to fetch all

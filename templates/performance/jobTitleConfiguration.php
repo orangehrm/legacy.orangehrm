@@ -24,7 +24,8 @@ $assignedJobTitles = $records['AssignedJobTitles'];
 $availableJobTitles = $records['AvailableJobTitles'];
 $roleList = $records['roleList'];
 
-$allowedRoles = array(JobTitleConfig::ROLE_REVIEW_APPROVER => $lang_Performance_Review_JobTitleApprovePerformanceReview);
+$allowedRoles = array(JobTitleConfig::ROLE_REVIEW_APPROVER => $lang_Performance_Review_JobTitleApprovePerformanceReview,
+						JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER => $lang_Performance_Review_JobTitleApproveSalaryReview);
 
 ?>
 <link href="../../themes/<?php echo $styleSheet;?>/css/style.css" rel="stylesheet" type="text/css">
@@ -60,6 +61,12 @@ label {
 
 <script type="text/javascript">
 var baseUrl = '?perfcode=JobTitleConfig&action=';
+
+function changeRole() {
+	var selectedIndex = $('cmbRole').selectedIndex;
+	var role = $('cmbRole').options[selectedIndex].value;
+	location.href = baseUrl + 'View&role=' + role;  
+}
 
 function update() {
 	selectAllOptions($('cmbAssignedJobTitles'));
@@ -98,7 +105,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 	<form name="frmJobTitleConfig" id="frmJobTitleConfig" method="post" action="?perfcode=PerfMeasure&action=">
 		<div class="roundbox">
 			<label for="cmbRole" style="width:auto;"><span class="error">*</span> <?php echo $lang_Performance_JobTitleRoleLabel; ?></label>
-			<select style="width:auto;" name="cmbRole" id="cmbRole" >
+			<select style="width:auto;" name="cmbRole" id="cmbRole" onchange="javascript:changeRole();" >
 		  		<?php 
 		  			foreach ($allowedRoles as $role=>$roleDesc) {
 		  				$selected = ($role == $jobTitleConfig->getRole()) ? 'selected' : ''; 

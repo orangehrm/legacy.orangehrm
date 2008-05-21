@@ -853,6 +853,20 @@ create table `hs_hr_job_title_config` (
   key `jobtit_code` (`jobtit_code`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_salary_review` (
+  `id` int(11) not null,
+  `emp_number` int(7) not null default 0,
+  `increase` decimal(12,2) not null default 0,
+  `status` smallint(2) default 0,
+  `created_by` varchar(36) default null,
+  `approved_by` varchar(36) default null,
+  `created_time` datetime default '0000-00-00 00:00:00',
+  `approved_time` datetime default '0000-00-00 00:00:00',
+  `description` text,
+  primary key  (`id`),
+  key `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
 INSERT INTO `hs_hr_customer`
   (`customer_id`, `name`, `description`)
   VALUES (0, 'Internal', "Internal time tracker")

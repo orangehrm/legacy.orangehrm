@@ -46,12 +46,14 @@ class PerformanceMailNotifier {
 	 */
 	const TEMPLATE_SUBMITTED_FOR_APPROVAL = 'approval.txt';
 	const TEMPLATE_REVIEW_NOTIFICATION = 'review-notification.txt';
-
+	const TEMPLATE_SALARY_REVIEW_APPROVAL = 'salary-review-approval.txt';
+	
 	/**
 	 * Mail subject templates
 	 */
 	const SUBJECT_SUBMITTED_FOR_APPROVAL = 'approval-subject.txt';
 	const SUBJECT_REVIEW_NOTIFICATION = 'review-notification-subject.txt';
+	const SUBJECT_SALARY_REVIEW_APPROVAL = 'salary-review-approval-subject.txt';
 
 	/**
 	 * Template variable constants
@@ -212,7 +214,47 @@ class PerformanceMailNotifier {
 		$result = $this->_sendMail($receipients, $subject, $body, $notificationType);
 	 }
 
+	/**
+	 * Send approve review email 
+	 *
+	 * @param PerformanceReview $review
+	 *
+	 * @return boolean True if mail sent, false otherwise
+	 */
+	 public function sendSalaryReviewNoticeEmails($receipients, $review) {
 
+		$empNum = $review->getEmpNumber();
+		$empName = $this->_getEmpName($empNum);
+		$reviewTime = LocaleUtil::getInstance()->formatDateTime($review->getCreatedTime());
+		
+		$emails = null;
+		
+		foreach($receipients as $receipient) {
+			$to = $receipient[1];
+			$toEmpNum = $receipient[2];
+			$email = $this->_getEmpAddress($toEmpNum);
+			if (!empty($email)) {
+				$emails[] = $email;
+			}
+		}
+
+		if (empty($emails)) {
+			return true;
+		}
+
+		$subject = $this->_getTemplate(self::SUBJECT_SALARY_REVIEW_APPROVAL);
+		$body = $this->_getTemplate(self::TEMPLATE_SALARY_REVIEW_APPROVAL);
+		
+		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE);
+		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewTime);
+		
+		$subject = str_replace($search, $replace, $subject);
+		$body = str_replace($search, $replace, $body);
+		
+		$notificationType = null;
+		$result = $this->_sendMail($emails, $subject, $body, $notificationType);
+	 }
+	 
 	/**
 	 * Send email with given parameters
 	 *

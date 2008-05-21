@@ -853,6 +853,20 @@ create table `hs_hr_job_title_config` (
   key `jobtit_code` (`jobtit_code`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_salary_review` (
+  `id` int(11) not null,
+  `emp_number` int(7) not null default 0,
+  `increase` decimal(12,2) not null default 0,
+  `status` smallint(2) default 0,
+  `created_by` varchar(36) default null,
+  `approved_by` varchar(36) default null,
+  `created_time` datetime default '0000-00-00 00:00:00',
+  `approved_time` datetime default '0000-00-00 00:00:00',
+  `description` text,
+  primary key  (`id`),
+  key `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
 alter table hs_hr_compstructtree
        add constraint foreign key (loc_code)
                              references hs_hr_location(loc_code) on delete restrict;
@@ -1197,6 +1211,14 @@ alter table `hs_hr_perf_review_measure`
 alter table `hs_hr_job_title_config`
     add constraint foreign key (`jobtit_code`)
         references hs_hr_job_title(`jobtit_code`) on delete cascade;
+
+alter table `hs_hr_salary_review`
+    add constraint foreign key (`emp_number`)
+        references hs_hr_employee(`emp_number`) on delete cascade,
+    add constraint foreign key (created_by)
+	references hs_hr_users (id) on delete set null,
+    add constraint foreign key (approved_by)
+	references hs_hr_users (id) on delete set null;
 
 INSERT INTO `hs_hr_country` VALUES ('AF', 'AFGHANISTAN', 'Afghanistan', 'AFG', 4);
 INSERT INTO `hs_hr_country` VALUES ('AL', 'ALBANIA', 'Albania', 'ALB', 8);
@@ -1772,3 +1794,4 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_benefit_simple', 'id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_perf_measure', 'id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_perf_review', 'id');
+INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_salary_review', 'id');

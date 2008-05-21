@@ -21,6 +21,7 @@
 
 require_once ROOT_PATH . '/lib/common/Language.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
+require_once ROOT_PATH . '/lib/models/performance/SalaryReview.php';
 
 $lan = new Language();
 
@@ -59,10 +60,24 @@ switch ($_GET['perfcode']) {
 			$valueMap = array(null, null, null, 
 				array(PerformanceReview::STATUS_SCHEDULED => $lang_Performance_Review_Scheduled,
 					  PerformanceReview::STATUS_COMPLETED => $lang_Performance_Review_Completed,
-					  PerformanceReview::STATUS_SUBMITTED_FOR_APPROVAL => $lang_Performance_Review_SubmittedForApproval,
+					  PerformanceReview::STATUS_SUBMITTED_FOR_APPROVAL => $lang_Performance_Review_SubmittedForApproval,					  
 					  PerformanceReview::STATUS_APPROVED => $lang_Performance_Review_Approved));				
 			$title = $lang_Performance_Review_ListHeading;
 			$deletePrompt = $lang_Performance_Review_DeletionMessage;
+			break;
+
+		case 'SalaryReview' :
+
+			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_Performance_SalaryReview_EmployeeName, 
+				$lang_Performance_SalaryReview_ReviewDate);
+			$headings = array($lang_Performance_SalaryReview_ID , $lang_Performance_SalaryReview_EmployeeName, 
+				$lang_Performance_SalaryReview_ReviewDate, $lang_Performance_SalaryReview_ReviewStatus);
+			$valueMap = array(null, null, null, 
+				array(SalaryReview::STATUS_PENDING_APPROVAL => $lang_Performance_SalaryReview_PendingApproval,
+					  SalaryReview::STATUS_APPROVED => $lang_Performance_SalaryReview_Approved,
+					  SalaryReview::STATUS_REJECTED => $lang_Performance_SalaryReview_Rejected));				
+			$title = $lang_Performance_SalaryReview_ListHeading;
+			$deletePrompt = $lang_Performance_SalaryReview_DeletionMessage;
 			break;
 	
 }

@@ -36,12 +36,15 @@ require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
 //TODO: Move JobTitleConfig.php and EXTRACTOR_ViewList.php to common location
 require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceMailNotifier.php';
+require_once ROOT_PATH . '/lib/models/performance/SalaryReview.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
 
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfReview.php';
+require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_SalaryReview.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_JobTitleConfig.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpBasSalary.php';
 
 /**
  * Controller for performance module
@@ -171,6 +174,45 @@ class PerformanceController {
 						break;	                    
 	            }
                 break;                                                                
+
+			case 'SalaryReview' :
+
+				$salaryReviewExtractor = new EXTRACTOR_SalaryReview();
+				
+	            switch ($_GET['action']) {
+
+	                case 'List' :
+	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
+	                    $this->_viewSalaryReviews($searchObject);	                    	                
+	                    break;
+	                    
+	                case 'View' :
+	                	$id = isset($_GET['id'])? $_GET['id'] : null;
+	                	$this->_viewSalaryReview($id);
+						break;
+							                    
+	                case 'ViewAdd' :
+	                	$this->_viewAddSalaryReview();
+	                	break;
+
+	                case 'Update' :
+	                	$salaryReview = $salaryReviewExtractor->parseUpdateData($_POST);
+	                	$this->_saveSalaryReview($salaryReview);
+	                	break;	                    
+	               	case 'Delete' :
+	                    $ids = $_POST['chkID'];
+	                    $this->_deleteSalaryReviews($ids);	               		
+	               		break;
+	                case 'Approve' :
+	                	$salaryReview = $salaryReviewExtractor->parseUpdateData($_POST);
+	                	$this->_approveSalaryReview($salaryReview);
+	                	break;	                    	               		
+	                case 'Reject' :
+	                	$salaryReview = $salaryReviewExtractor->parseUpdateData($_POST);
+	                	$this->_rejectSalaryReview($salaryReview);
+	                	break;	                    	               			                    
+	            }
+                break;
 
 	    }
     }
@@ -480,6 +522,262 @@ class PerformanceController {
 		}
     }
 
+	/**
+	 * View list of performance reviews
+	 * @param SearchObject Object with search parameters
+	 */
+    private function _viewSalaryReviews($searchObject) {
+
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
+			
+			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
+        	$list = SalaryReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
+        	$count = SalaryReview::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);
+        	
+        	/** Override module settings and allow supervisors to add salary reviews */
+        	if ($this->authorizeObj->isSupervisor()) {
+        		$locRights = $_SESSION['localRights'];
+				$locRights['add'] = true;
+				$locRights['delete'] = true;    		
+        		$_SESSION['localRights'] = $locRights;        			
+        	}        	
+        	
+        	$this->_viewList($searchObject->getPageNumber(), $count, $list, true);
+		} else {
+            $this->_notAuthorized();
+		}
+    }    
+    
+    
+    /**
+     * Approve Salary review
+     * @param SalaryReview $review Salary Review to approve
+     */
+    private function _approveSalaryReview($review) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
+			$review->setStatus(SalaryReview::STATUS_APPROVED);
+
+			try {
+				$review->save();
+				
+				// Update salary
+				$result = $this->_changeEmployeeSalary($review->getEmpNumber(), $review->getIncrease());
+				if (!$result) {
+					$message = 'SALARY_CHANGE_FAILURE';
+	        		$this->redirect($message);					
+				} else {				
+		        	$message = 'UPDATE_SUCCESS';
+		        	$this->redirect($message, '?perfcode=SalaryReview&action=List');
+				}				
+			} catch (SalaryReviewException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}			
+									
+		} else {
+            $this->_notAuthorized();
+		}
+    } 
+
+    /**
+     * Reject Salary review
+     * @param SalaryReview $review Salary Review to reject
+     */
+    private function _rejectSalaryReview($review) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
+			$review->setStatus(SalaryReview::STATUS_REJECTED);
+			
+			try {
+				
+				// Get current review status
+				$currentReview = SalaryReview::getSalaryReview($review->getId());
+
+				$review->save();
+				
+				// Update salary by undoing salary change only if rejecting currently approved review.
+				if ($currentReview->getStatus() == SalaryReview::STATUS_APPROVED) {
+				
+					$salaryChange = -1 * $review->getIncrease();
+					$result = $this->_changeEmployeeSalary($review->getEmpNumber(), $salaryChange);
+					if (!$result) {
+						$message = 'SALARY_CHANGE_FAILURE';
+		        		$this->redirect($message);
+		        		return;					
+					}
+				}
+				
+	        	$message = 'UPDATE_SUCCESS';
+	        	$this->redirect($message, '?perfcode=SalaryReview&action=List');				
+			} catch (SalaryReviewException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}
+				
+		} else {
+            $this->_notAuthorized();
+		}
+    } 
+    
+	/**
+	 * Change given employees salary by given amount
+	 * Amount can be positive or negative
+	 * 
+	 * @return True if successfully changed, false otherwise
+	 */    
+    private function _changeEmployeeSalary($empNum, $amount) {
+    	
+    	$empBasicSalary = new EmpBasSalary();
+    	    	
+    	$salaryInfo = $empBasicSalary->getAssEmpBasSal($empNum);
+    	
+    	/* No salary information available */
+    	if (empty($salaryInfo)) {
+    		return false;
+    	}
+    	
+    	if (isset($salaryInfo[0][3]) && !empty($salaryInfo[0][3])) {
+    		$currentBasicSalary = $salaryInfo[0][3];
+	    	$newBasicSalary = $currentBasicSalary + $amount;
+	    	
+	    	$empBasicSalary->setEmpId($empNum);
+	    	$empBasicSalary->setEmpSalGrdCode($salaryInfo[0][1]);
+	    	$empBasicSalary->setEmpCurrCode($salaryInfo[0][2]);
+	    	$empBasicSalary->setEmpBasSal($newBasicSalary);
+	    	return $empBasicSalary->updateEmpBasSal();
+    	} else {
+    		return false;
+    	}
+    	
+    }
+
+    /**
+     * Save Salary review in the database
+     * @param SalaryReview $review Salary Review to save
+     */
+    private function _saveSalaryReview($review) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+			try {			
+				$id = $review->getId();
+				$addNew = (empty($id));
+				
+				/* Check if employee has salary defined */
+				if ($addNew) {
+					$currentSalary = self::_getBaseSalary($review->getEmpNumber());
+					if (empty($currentSalary)) {
+						$message = 'NO_SALARY_DEFINED_FAILURE';
+			        	$this->redirect($message);
+						return;						
+					}
+				}
+				
+				$review->save();
+				
+				if ($addNew) {
+					$this->_sendSalaryReviewNotice($review);
+				}
+				
+	        	$message = 'UPDATE_SUCCESS';
+	        	$this->redirect($message, '?perfcode=SalaryReview&action=List');
+			} catch (SalaryReviewException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}
+		} else {
+            $this->_notAuthorized();
+		}
+    } 
+    
+    private function _sendSalaryReviewNotice($review) {
+    	
+    	$receipients = JobTitleConfig::getEmployeesWithRole(JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);
+
+		if (!empty($receipients)) {
+    		$mailNotifier = new PerformanceMailNotifier();
+    		$mailNotifier->sendSalaryReviewNoticeEmails($receipients, $review);    		
+		}    	
+    }    
+	/**
+	 * Delete Salary Reviews with given IDs
+	 * @param Array $ids Array with Salary Review ID's to delete
+	 */
+    private function _deleteSalaryReviews($ids) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+			try {
+        		$count = SalaryReview::delete($ids);
+        		$message = 'DELETE_SUCCESS';
+			} catch (SalaryReviewException $e) {
+				$message = 'DELETE_FAILURE';
+			}
+            $this->redirect($message, '?perfcode=SalaryReview&action=List');
+		} else {
+            $this->_notAuthorized();
+		}
+    }    
+    
+	/**
+	 * View add Salary Review page
+	 */
+	private function _viewAddSalaryReview() {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+	    	$this->_viewSalaryReview();
+	    } else {
+            $this->_notAuthorized();
+		}
+	}
+    
+    /**
+     * View Salary Reviews
+     * @param int $id Id of Salary Review. If empty, A new Salary Review is shown
+     */
+    private function _viewSalaryReview($id = null) {
+
+		$path = '/templates/performance/viewSalaryReview.php';
+
+		try {
+			
+			$currentSalary = '';
+			
+			if (empty($id)) {
+				$salaryReview = new SalaryReview();
+			} else {
+				$salaryReview = SalaryReview::getSalaryReview($id);
+				$currentSalary = self::_getBaseSalary($salaryReview->getEmpNumber());
+			}
+
+			$objs['salaryReview'] = $salaryReview;
+			$objs['authorizeObj'] = $this->authorizeObj;
+			$objs['currentSalary'] = $currentSalary;
+
+			$template = new TemplateMerger($objs, $path);
+			$template->display();
+		} catch (SalaryReviewException $e) {
+			$message = 'UNKNOWN_FAILURE';
+            $this->redirect($message);
+		}
+    }
+    
+	/**
+	 * Get the base salary for the given employee
+	 * 
+	 * @param int $empNum Employee number
+	 * 
+	 * @return Base salary amount (with currency) or null if not defined. Eg: "120 USD"
+	 */    
+    public static function _getBaseSalary($empNum) {
+    	
+    	$salary = null;
+    	
+    	$empBasicSalary = new EmpBasSalary();    	    	
+    	$salaryInfo = $empBasicSalary->getAssEmpBasSal($empNum);
+    	
+    	if (!empty($salaryInfo) && isset($salaryInfo[0][3]) && !empty($salaryInfo[0][3])) {
+    		$currentSalary = $salaryInfo[0][3];
+    		$currency = $salaryInfo[0][2];
+    		$salary = $currentSalary . ' ' . $currency;
+    	}
+    	
+    	return $salary;    	
+    }
     
 	/**
 	 * Generic method to display a list
@@ -529,14 +827,15 @@ class PerformanceController {
 
 		try {
 
+			$role = isset($_GET['role'])? $_GET['role'] : JobTitleConfig::ROLE_REVIEW_APPROVER;
+			
 			$jobTitle = new JobTitle();
 			$jobTitles = $jobTitle->getJobTit();
 			$jobTitles = is_null($jobTitles) ? array() : $jobTitles;
-			$jobTitleConfig = JobTitleConfig::getJobTitleConfig(JobTitleConfig::ROLE_REVIEW_APPROVER);
+			$jobTitleConfig = JobTitleConfig::getJobTitleConfig($role);
 			$assignedJobTitles = $jobTitleConfig->getJobTitles();
 			
 			// Find available job titles
-			
 			if (empty($assignedJobTitles)) {
 				$availableJobTitles = $jobTitles;
 			} else {
@@ -558,6 +857,7 @@ class PerformanceController {
 			$template = new TemplateMerger($objs, $path);
 			$template->display();
 		} catch (JobTitleConfigException $e) {
+
 			$message = 'UNKNOWN_FAILURE';
             $this->redirect($message);
 		}

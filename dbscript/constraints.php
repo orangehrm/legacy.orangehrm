@@ -105,7 +105,10 @@ array("hs_hr_perf_measure_jobtitle", array("jobtit_code"), "hs_hr_job_title",   
 array("hs_hr_perf_review", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
 array("hs_hr_perf_review_measure", array("perf_measure_id"), "hs_hr_perf_measure",   array("id"), "cascade"),
 array("hs_hr_perf_review_measure", array("review_id"), "hs_hr_perf_review",   array("id"), "cascade"),
-array("hs_hr_job_title_config", array("jobtit_code"), "hs_hr_job_title",   array("jobtit_code"), "cascade")
+array("hs_hr_job_title_config", array("jobtit_code"), "hs_hr_job_title",   array("jobtit_code"), "cascade"),
+array("hs_hr_salary_review", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_salary_review", array("created_by"), "hs_hr_users",   array("id"), "null"),
+array("hs_hr_salary_review", array("approved_by"), "hs_hr_users",   array("id"), "null")
 );
 
 ?>

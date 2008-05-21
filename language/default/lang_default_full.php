@@ -259,7 +259,7 @@
 	$lang_Common_UPDATE_FAILURE 			= "Failed to Update";
 	$lang_Common_DELETE_FAILURE 			= "Failed to Delete";
 	$lang_Common_UNKNOWN_FAILURE            = "Operation Failed";
-
+	
 	$lang_Leave_Common_Weekend 				= "Weekend";
 
 	// admin module
@@ -1508,8 +1508,41 @@
 	
 	$lang_Performance_Review_JobTitleConfigTitle = 'Configure Job Titles';	
 	$lang_Performance_Review_JobTitleApprovePerformanceReview = 'Approve Performance Reviews';
+	$lang_Performance_Review_JobTitleApproveSalaryReview = 'Approve Salary Reviews';
 	$lang_Performance_JobTitleRoleLabel = 'Job titles allowed to:';
+	
+	$lang_Menu_Performance_SalaryReviews = 'Salary Reviews';
+    $lang_Performance_SalaryReview_ID = 'Review ID';
+    $lang_Performance_SalaryReview_EmployeeName = 'Employee Name';
+    $lang_Performance_SalaryReview_ReviewDate = 'Review Date';
+    $lang_Performance_SalaryReview_ReviewStatus = 'Review Status';
+    $lang_Performance_SalaryReview_PendingApproval = 'Pending Approval';
+    $lang_Performance_SalaryReview_Approved = 'Approved';
+    $lang_Performance_SalaryReview_Rejected = 'Rejected';
+    $lang_Performance_SalaryReview_ListHeading = 'Salary Reviews';
+    $lang_Performance_SalaryReview_DeletionMessage = 'Deletion will affect Salary reivew information';
 			
+	$lang_Performance_SalaryReview_Error_PleaseSpecifyEmployee = 'Please specify an employee.';
+	$lang_Performance_SalaryReview_EditTitle = 'Edit Salary Review';	
+	$lang_Performance_SalaryReview_AddTitle = 'Add Salary Review';
+	$lang_Performance_SalaryReview_EmployeeName = 'Employee Name';
+	$lang_Performance_SalaryReview_SalaryIncrease = 'Salary Increase';
+	$lang_Performance_SalaryReview_CurrentSalary = 'Current Salary';
+	$lang_Performance_SalaryReview_ReviewNotes = 'Notes';	
+	$lang_Performance_SalaryReview_Error_IncreaseShouldBeDecimal = 'Salary Increase should be a valid amount';		
+	$lang_Performance_SalaryReview_Error_NotesShouldBeSpecified = 'Notes field should be filled';		
+	$lang_Performance_SalaryReview_SalaryNotFound = 'Salary not found';
+	$lang_Performance_SalaryReview_FetchCurrentSalaryForSelectedEmployee = 'Retrieve the current salary for selected employee';
+	$lang_Performance_SalaryReview_NoSalaryDefinedForEmployee = 'No Salary defined for selected employee';
+
+	$lang_Performance_Errors_UPDATE_SUCCESS = "Successfully updated";
+	$lang_Performance_Errors_UPDATE_FAILURE = "Failed to update";
+	$lang_Performance_Errors_SALARY_CHANGE_FAILURE       = "Salary change failed";
+	$lang_Performance_Errors_NO_SALARY_DEFINED_FAILURE  = "No salary defined for employee";
+	$lang_Performance_Errors_UNKNOWN_FAILURE = 'Unknown Failure';
+	$lang_Performance_Errors_DELETE_FAILURE = 'Failed to Delete';
+	$lang_Performance_Errors_DELETE_SUCCESS = 'Successfully Deleted';	
+				
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";
 	$lang_login_UserNameNotGiven = "User Name not given!";

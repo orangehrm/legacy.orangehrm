@@ -399,6 +399,7 @@ lib/models/performance/PerformanceMailNotifier.php -text
 lib/models/performance/PerformanceMeasure.php -text
 lib/models/performance/PerformanceReview.php -text
 lib/models/performance/PerformanceScore.php -text
+lib/models/performance/SalaryReview.php -text
 lib/models/recruitment/AllTests.php -text
 lib/models/recruitment/JobApplication.php -text
 lib/models/recruitment/JobApplicationEvent.php -text
@@ -577,9 +578,12 @@ templates/performance/mails/approval-subject.txt -text
 templates/performance/mails/approval.txt -text
 templates/performance/mails/review-notification-subject.txt -text
 templates/performance/mails/review-notification.txt -text
+templates/performance/mails/salary-review-approval-subject.txt -text
+templates/performance/mails/salary-review-approval.txt -text
 templates/performance/viewPerformanceMeasure.php -text
 templates/performance/viewPerformanceReview.php -text
 templates/performance/viewReviewResults.php -text
+templates/performance/viewSalaryReview.php -text
 templates/recruitment/applicant/footer.php -text
 templates/recruitment/applicant/header.php -text
 templates/recruitment/applicant/jobApplicationStatus.php -text

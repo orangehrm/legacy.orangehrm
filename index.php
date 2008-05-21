@@ -143,11 +143,17 @@ if (!empty($_SESSION['empID'])) {
 	$isApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_REVIEW_APPROVER);
 	$_SESSION['isApprover'] =  $isApprover;
 	
-	if ($isApprover && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor())) {
+	$isSalaryApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);	
+	$_SESSION['isSalaryApprover'] =  $isSalaryApprover;
+	
+	
+	if (($isSalaryApprover || $isApprover) && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor())) {
 		$arrAllRights[Perf]=array('add'=> false, 'edit'=> true , 'delete'=> false, 'view'=> true);
-    }	
+    }
+    	
 } else {
 	$_SESSION['isApprover'] =  false;
+	$_SESSION['isSalaryApprover'] =  false;
 }
 
 // Default leave home page
@@ -184,7 +190,11 @@ if ($authorizeObj->isAdmin()) {
     $recruitHomePage = 'lib/controllers/CentralController.php?recruitcode=Application&action=List';
 }
 
-$perfHomePage = 'lib/controllers/CentralController.php?perfcode=PerfReviews&action=List';
+if ($_SESSION['isSalaryApprover']) {
+	$perfHomePage = 'lib/controllers/CentralController.php?perfcode=SalaryReview&action=List';
+} else {
+	$perfHomePage = 'lib/controllers/CentralController.php?perfcode=PerfReviews&action=List';
+}
 
 // Default page in admin module is the Company general info page.
 $defaultAdminView = "GEN";
@@ -763,7 +773,16 @@ function preloadAllImages() {
                             <?php echo $lang_Menu_Performance_ConfigureJobTitles; ?>
                         </a>
                     </li>                                        
-                    <?php } ?>                    
+                    <?php }
+                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) { 
+                    ?>                                      
+                    <li id="jobVacancies">
+                        <a href="lib/controllers/CentralController.php?perfcode=SalaryReview&action=List" target="rightMenu">
+                            <?php echo $lang_Menu_Performance_SalaryReviews; ?>
+                        </a>
+                    </li>                                        
+                    <?php } ?>
+                                        
                 </ul>
             </TD>
 
