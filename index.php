@@ -94,6 +94,7 @@ if($_SESSION['isAdmin']=='Yes') {
     if ($_SESSION['isSupervisor']) {
 		$arrAllRights[Perf]=array('add'=> false, 'edit'=> true , 'delete'=> false, 'view'=> true);
     }
+
 }
 
 if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="eim"))
@@ -136,6 +137,18 @@ if(isset($_GET['ACT']) && $_GET['ACT']=='logout') {
 require_once ROOT_PATH . '/lib/common/authorize.php';
 
 $authorizeObj = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
+
+require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
+if (!empty($_SESSION['empID'])) {
+	$isApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_REVIEW_APPROVER);
+	$_SESSION['isApprover'] =  $isApprover;
+	
+	if ($isApprover && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor())) {
+		$arrAllRights[Perf]=array('add'=> false, 'edit'=> true , 'delete'=> false, 'view'=> true);
+    }	
+} else {
+	$_SESSION['isApprover'] =  false;
+}
 
 // Default leave home page
 if ($authorizeObj->isSupervisor()) {
@@ -734,7 +747,7 @@ function preloadAllImages() {
                         </a>
                     </li>
                     <?php }                         
-                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor()) { 
+                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor() || $_SESSION['isApprover']) { 
                     ?>                                      
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=PerfReviews&action=List" target="rightMenu">

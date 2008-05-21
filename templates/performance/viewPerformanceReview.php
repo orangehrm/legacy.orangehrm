@@ -26,6 +26,7 @@ $authorizeObj = $records['authorizeObj'];
 
 $perfReviewId = $perfReview->getId();
 $addMode = empty($perfReviewId);
+$approverMode = ($_SESSION['isApprover'] && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor()));
 
 $reviewStatusList = array(PerformanceReview::STATUS_SCHEDULED => $lang_Performance_Review_Scheduled,
 	PerformanceReview::STATUS_COMPLETED => $lang_Performance_Review_Completed,
@@ -216,14 +217,17 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 	        <?php } ?>
 			<br/>
 	        <label for="txtReviewDate"><span class="error">*</span> <?php echo $lang_Performance_Review_Date; ?></label>
-	        <input type="text" id="txtReviewDate" name="txtReviewDate" 
+	        <input type="text" id="txtReviewDate" name="txtReviewDate" <?php echo ($approverMode) ? 'disabled' : '';?>
 	        	value="<?php echo LocaleUtil::getInstance()->formatDate($perfReview->getReviewDate());?>" size="10" tabindex="1" />
+	        
+	        <?php if (!$approverMode) { ?>
 	        <input type="button" id="btnReviewDate" name="btnReviewDate" value="  " class="calendarBtn"/>
 	        
 			<input type="button" id="btn3months" name="btn3months" class="dateBtn" value="3m" onclick="setReviewDate(3)" />
 			<input type="button" id="btn6months" name="btn6months" class="dateBtn" value="6m" onclick="setReviewDate(6)" />
-			<input type="button" id="btn6months" name="btn6months" class="dateBtn" value="12m" onclick="setReviewDate(12)" /><br/>
-			
+			<input type="button" id="btn6months" name="btn6months" class="dateBtn" value="12m" onclick="setReviewDate(12)" />
+			<?php } ?>
+			<br/>
 	        <?php if (false) {?>
 	        	<label for="cmbStatus"><?php echo $lang_Performance_Review_Status; ?></label>	        	
 				<select name="cmbStatus" id="cmbStatus" >
@@ -251,11 +255,13 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 	        <label for="none">&nbsp;</label>
 	        <input type="hidden" id="txtReviewId" name="txtReviewId" value="<?php echo $perfReview->getId(); ?>"/>
 	   	</div><br />
+		<?php if (!$approverMode) { ?>	   	
         <img onClick="update();"
              onMouseOut="this.src='../../themes/beyondT/pictures/btn_save.gif';"
              onMouseOver="this.src='../../themes/beyondT/pictures/btn_save_02.gif';"
              src="../../themes/beyondT/pictures/btn_save.gif"
         >
+        <?php } ?>
 		<?php if (!$addMode) { ?>        
         <a href="javascript:viewReviewResults();"><?php echo $lang_Performance_Review_Results; ?></a>
 		<?php } ?>        
@@ -284,8 +290,10 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 				?>
 			</select></td>
 			<td align="center" width="100">
+			<?php if (!$approverMode) { ?>
 				<input type="button" name="btnassignJobTitle" id="btnassignJobTitle" onClick="assignJobTitle();" value=" <?php echo $lang_compstruct_add; ?> >" style="width:80%"><br><br>
 				<input type="button" name="btnremoveJobTitle" id="btnremoveJobTitle" onClick="removeJobTitle();" value="< <?php echo $lang_Leave_Common_Remove; ?>" style="width:80%">
+			<?php } ?>				
 			</td>
 			<td>
 			<select size="10" name="cmbAssignedPerfMeasures[]" id="cmbAssignedPerfMeasures" style="width:125px;"

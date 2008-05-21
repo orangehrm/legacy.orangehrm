@@ -145,7 +145,7 @@ class PerformanceMailNotifier {
 		
 		foreach($receipients as $receipient) {
 			$to = $receipient[1];
-			$toEmpNum = $receipient[0];
+			$toEmpNum = $receipient[2];
 			$email = $this->_getEmpAddress($toEmpNum);
 			if (!empty($email)) {
 				$emails[] = $email;
@@ -153,7 +153,7 @@ class PerformanceMailNotifier {
 		}
 
 		if (empty($emails)) {
-			continue;
+			return true;
 		}
 
 		$subject = $this->_getTemplate(self::SUBJECT_SUBMITTED_FOR_APPROVAL);

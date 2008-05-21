@@ -106,6 +106,17 @@ class JobTitleConfig {
 		return array(self::ROLE_REVIEW_APPROVER);
 	}
 	
+	public static function isEmployeeInRole($empNum, $role) {
+		$employees = self::getEmployeesWithRole($role);
+		
+		foreach ($employees as $employee) {
+			if ($employee[2] == $empNum) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static function getEmployeesWithRole($role) {
 		if (!JobTitleConfig::_isValidRole($role)) {
 			throw new JobTitleConfigException("Invalid parameters to getEmployeesWithRole(): role = $role", JobTitleConfigException::INVALID_PARAMETER);
@@ -122,7 +133,6 @@ class JobTitleConfig {
 				$allEmployees = array_merge($allEmployees, $employees);
 			}
 		}		
-		
 		return $allEmployees;
 	}
 	

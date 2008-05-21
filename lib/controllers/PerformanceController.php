@@ -291,7 +291,7 @@ class PerformanceController {
 	 */
     private function _viewReviews($searchObject) {
 
-		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || ($_SESSION['isApprover'])) {
 			
 			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
         	$list = PerformanceReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
@@ -307,7 +307,7 @@ class PerformanceController {
      * @param PerformanceReview $review Performance Review to save
      */
     private function _saveReview($review) {
-		if ($this->authorizeObj->isAdmin()) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || ($_SESSION['isApprover'])) {
 			try {
 				
 				$id = $review->getId();
@@ -379,7 +379,7 @@ class PerformanceController {
 	 * View add Performance Review Results page
 	 */
 	private function _viewReviewResults($id) {
-		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || ($_SESSION['isApprover'])) {
 			$path = '/templates/performance/viewReviewResults.php';
 	
 			try {

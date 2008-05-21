@@ -21,6 +21,7 @@
 $perfReview = $records['perfReview'];
 $assignedPerfMeasures = $records['AssignedPerfMeasures'];
 $authorizeObj = $records['authorizeObj'];
+$approverMode = ($_SESSION['isApprover'] && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor()));
 
 $perfReviewId = $perfReview->getId();
 
@@ -101,15 +102,16 @@ function update() {
 	errors = new Array();
 
 	var perfScores = document.frmPerfResults.elements["perfScores[]"];
-
-	for (var i = 0; i < perfScores.length; i++) {
-		score = trim(perfScores[i].value);
-		if (score != '') {
-			if (!isDecimal(score)) {
-				err = true;
-				msg = '<?php echo $lang_Performance_Review_Error_ScoreShouldBeDecimal; ?>';
-				perfScores[i].focus();
-				break;
+	if (perfScores) {
+		for (var i = 0; i < perfScores.length; i++) {
+			score = trim(perfScores[i].value);
+			if (score != '') {
+				if (!isDecimal(score)) {
+					err = true;
+					msg = '<?php echo $lang_Performance_Review_Error_ScoreShouldBeDecimal; ?>';
+					perfScores[i].focus();
+					break;
+				}
 			}
 		}
 	}
@@ -211,7 +213,8 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 					value="<?php echo $perfMeasure->getId();?>"/><?php echo $perfMeasure->getName();?></td>
 				<td class="<?php echo $cssClass;?>"></td>
 				<td class="<?php echo $cssClass;?>">
-					<input class="scoreInput" type="text" name="perfScores[]" value="<?php echo $perfMeasure->getScore();?>"/>
+					<input class="scoreInput" type="text" name="perfScores[]" value="<?php echo $perfMeasure->getScore();?>"					
+						<?php echo ($approverMode) ? 'readonly' : '' ?> />
 				</td>
 			</tr>
 			<?php } ?>
