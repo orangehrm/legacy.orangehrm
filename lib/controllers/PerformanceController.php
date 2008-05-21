@@ -41,6 +41,7 @@ require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfReview.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_JobTitleConfig.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
 
 /**
  * Controller for performance module
@@ -410,13 +411,26 @@ class PerformanceController {
 		$path = '/templates/performance/viewPerformanceReview.php';
 
 		try {
+			$perfMeasures = null;
+						
 			if (empty($id)) {
 				$perfReview = new PerformanceReview();
 			} else {
 				$perfReview = PerformanceReview::getPerformanceReview($id);
+				
+				$empNum = $perfReview->getEmpNumber();			
+				$empInfo = new EmpInfo;						
+				$empJobInfo = $empInfo->filterEmpJobInfo($empNum);
+				
+				if (isset($empJobInfo[0])) {
+					$jobTitleCode = $empJobInfo[0][2];
+					if (!empty($jobTitleCode)) {
+						$perfMeasures = PerformanceMeasure::getAllForJobTitle($jobTitleCode);
+					}				
+				}				
 			}
 
-			$perfMeasures = PerformanceMeasure::getAll();
+			$perfMeasures = is_null($perfMeasures) ? PerformanceMeasure::getAll() : $perfMeasures;
 			$assignedMeasures = $perfReview->getPerformanceMeasures();
 			
 			// Find available performance measures

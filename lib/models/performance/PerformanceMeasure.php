@@ -132,6 +132,24 @@ class PerformanceMeasure {
 	public static function getAll() {
 		return self::_getList();
 	}
+	
+	public static function getAllForJobTitle($jobTitleCode) {
+		
+		// TODO: Improve by directly querying database
+		$measuresForJob = array();
+		
+		$list = self::_getList();
+		foreach ($list as $measure) {
+			$jobTitles = self::_fetchJobTitles($measure->getId());
+			foreach ($jobTitles as $code=>$jobTitle) {
+				if ($jobTitleCode == $code) {
+					$measuresForJob[] = $measure;			
+				}
+			}
+		}
+		
+		return $measuresForJob;
+	}
 
 	/**
 	 * Get Performance Measure with given ID
