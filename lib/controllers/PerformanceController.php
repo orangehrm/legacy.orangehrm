@@ -35,6 +35,7 @@ require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
 
 //TODO: Move JobTitleConfig.php and EXTRACTOR_ViewList.php to common location
 require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
+require_once ROOT_PATH . '/lib/models/performance/PerformanceMailNotifier.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
 
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
@@ -55,6 +56,8 @@ class PerformanceController {
         if (isset($_SESSION) && isset($_SESSION['fname']) ) {
 			$this->authorizeObj = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
         }
+        
+        $this->sendReviewReminderEmails();
     }
 
     /**
@@ -190,25 +193,7 @@ class PerformanceController {
 		}
     }    
     
-	/**			<?php if ($role == authorize::AUTHORIZE_ROLE_ADMIN) { ?>
-				<td ><input type="text" name="cmbRepEmpID" id="cmbRepEmpID" disabled />
-					<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" />
-					<input type="button" value="..." onclick="returnEmpDetail();" />
-				</td>
-			<?php } else if ($role == authorize::AUTHORIZE_ROLE_SUPERVISOR) { ?>
-				<td >
-					<select name="txtRepEmpID" id="txtRepEmpID">
-						<option value="-1">-<?php echo $lang_Leave_Common_Select;?>-</option>
-						<?php if (is_array($employees)) {
-			   					foreach ($employees as $employee) {
-			  			?>
-			 		  	<option value="<?php echo $employee[0] ?>"><?php echo $employee[1]; ?></option>
-			  			<?php 	}
-			   				} ?>
-					</select>
-				</td>
-			<?php } ?>
-
+	/**	
 	 * View list of performance measures
 	 * @param SearchObject Object with search parameters
 	 */
@@ -324,7 +309,23 @@ class PerformanceController {
     private function _saveReview($review) {
 		if ($this->authorizeObj->isAdmin()) {
 			try {
+				
+				$id = $review->getId();
+				if (!empty($id)) {
+					$addNew = false;
+					$oldReview = PerformanceReview::getPerformanceReview($id);
+					$oldStatus = $oldReview->getStatus();
+				} else {
+					$addNew = true;
+				}
+				
 				$review->save();
+				
+				if (!$addNew && ($review->getStatus() != $oldStatus) && 
+						($review->getStatus() == PerformanceReview::STATUS_SUBMITTED_FOR_APPROVAL)) {
+					$this->_sendApproveReviewEmail($review);
+				}
+				
 	        	$message = 'UPDATE_SUCCESS';
 	        	$this->redirect($message, '?perfcode=PerfReviews&action=List');
 			} catch (PerformanceReviewException $e) {
@@ -335,6 +336,33 @@ class PerformanceController {
             $this->_notAuthorized();
 		}
     } 
+    
+    private function _sendApproveReviewEmail($review) {
+    	$receipients = JobTitleConfig::getEmployeesWithRole(JobTitleConfig::ROLE_REVIEW_APPROVER);
+
+		if (!empty($receipients)) {
+    		$mailNotifier = new PerformanceMailNotifier();
+    		$mailNotifier->sendApproveReviewEmails($receipients, $review);    		
+		}    	
+    }
+    
+    private function sendReviewReminderEmails() {
+    	$reviews = PerformanceReview::getReviewsPendingNotification();
+
+		if (!empty($reviews)) {
+    		$mailNotifier = new PerformanceMailNotifier();    		
+			    	
+	    	foreach($reviews as $review) {
+    			$mailNotifier->sendPerformanceReviewReminder($review);	 
+    			$review->setNotificationSent();
+				try {
+    				$review->save();
+				} catch (PerformanceReviewException $e) {
+					continue;
+				}
+	    	}
+		}    	
+    }
         
 	/**
 	 * View add Performance Review page

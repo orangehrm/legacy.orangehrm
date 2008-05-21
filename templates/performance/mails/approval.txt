@@ -1,0 +1,4 @@
+You have been requested to approve the performance review of #employee# done on #reviewdate#.
+Please login to OrangeHRM and review the results of this performance review.
+
+OrangeHRM

@@ -21,6 +21,7 @@ require_once ROOT_PATH . '/lib/confs/Conf.php';
 require_once ROOT_PATH . '/lib/dao/DMLFunctions.php';
 require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
 
 class JobTitleConfig {
 
@@ -103,6 +104,26 @@ class JobTitleConfig {
 
 	public static function getAllRoles() {
 		return array(self::ROLE_REVIEW_APPROVER);
+	}
+	
+	public static function getEmployeesWithRole($role) {
+		if (!JobTitleConfig::_isValidRole($role)) {
+			throw new JobTitleConfigException("Invalid parameters to getEmployeesWithRole(): role = $role", JobTitleConfigException::INVALID_PARAMETER);
+		}
+		
+		$jobTitleConfig = self::getJobTitleConfig($role);
+		$jobTitles = $jobTitleConfig->getJobTitles();
+		
+		$allEmployees = array();
+		foreach ($jobTitles as $jobTitle) {
+			$empInfo = new EmpInfo;			
+			$employees = $empInfo->getListofEmployee(0, $jobTitle['jobtit_name'], 6);
+			if (is_array($employees)) {
+				$allEmployees = array_merge($allEmployees, $employees);
+			}
+		}		
+		
+		return $allEmployees;
 	}
 	
 	/**

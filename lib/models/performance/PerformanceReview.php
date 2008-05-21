@@ -37,6 +37,7 @@ class PerformanceReview {
 	const DB_FIELD_REVIEW_DATE = 'review_date';
 	const DB_FIELD_STATUS = 'status';
 	const DB_FIELD_REVIEW_NOTES = 'review_notes';
+	const DB_FIELD_NOTIFICATION_SENT = 'notification_sent';
 
 	const DB_FIELD_REVIEW_ID = 'review_id';
 	const DB_FIELD_PERF_MEASURE_ID = 'perf_measure_id';
@@ -55,6 +56,9 @@ class PerformanceReview {
 	const STATUS_SUBMITTED_FOR_APPROVAL = 2;
 	const STATUS_APPROVED = 3;	
 		
+	const NOTIFICATION_NOT_SENT = 0;
+	const NOTIFICATION_SENT = 1;
+	
 	private $id;
 	private $empNumber;
 	private $reviewDate;
@@ -62,6 +66,7 @@ class PerformanceReview {
 	private $reviewNotes;
 	private $performanceMeasures;
 	private $employeeName;
+	private $notificationSent;
 
 	/**
 	 * Constructor
@@ -71,6 +76,7 @@ class PerformanceReview {
 	public function __construct($id = null) {
 		$this->id = $id;
 		$this->performanceMeasures = array();
+		$this->notificationSent = self::NOTIFICATION_NOT_SENT;
 	}
 
 	public function setId($id) {
@@ -129,6 +135,14 @@ class PerformanceReview {
 		return $this->performanceMeasures;
 	}
 
+	public function isNotificationSent() {
+		return $this->notificationSent;
+	}
+	
+	public function setNotificationSent() {
+		$this->notificationSent = self::NOTIFICATION_SENT;
+	}
+	
 	/**
 	 * Save Performance Review object to database
 	 * @return int Returns the ID of the object
@@ -171,7 +185,16 @@ class PerformanceReview {
 		}
 		return $count;
 	}
+	
+	public static function getReviewsPendingNotification() {
+		
+		$selectCondition[] = self::DB_FIELD_NOTIFICATION_SENT . " = " . self::NOTIFICATION_NOT_SENT;
+		$selectCondition[] = self::DB_FIELD_STATUS . " = " . self::STATUS_SCHEDULED;
+		$selectCondition[] = "(DATEDIFF(". self::DB_FIELD_REVIEW_DATE . ", CURDATE()) BETWEEN 0 AND 7)";
 
+		$list = self::_getList($selectCondition);
+		return $list;		
+	}
 
 	/**
 	 * Get all performance reviews available in the system
@@ -449,6 +472,7 @@ class PerformanceReview {
 		$fields[3] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::FIELD_EMPLOYEE_NAME;
 		$fields[4] = "a. " . self::DB_FIELD_STATUS;
 		$fields[5] = "a. " . self::DB_FIELD_REVIEW_NOTES;
+		$fields[6] = "a. " . self::DB_FIELD_NOTIFICATION_SENT;
 
 		$tables[0] = self::TABLE_NAME . ' a';
 		$tables[1] = 'hs_hr_employee b';
@@ -482,13 +506,15 @@ class PerformanceReview {
 		$fields[2] = self::DB_FIELD_REVIEW_DATE;
 		$fields[3] = self::DB_FIELD_STATUS;
 		$fields[4] = self::DB_FIELD_REVIEW_NOTES;
+		$fields[5] = self::DB_FIELD_NOTIFICATION_SENT;
 
 		$values[0] = $this->id;
 		$values[1] = $this->empNumber;
 		$values[2] = "'{$this->reviewDate}'";
 		$values[3] = $this->status;
 		$values[4] = "'{$this->reviewNotes}'";
-
+		$values[5] = $this->notificationSent;
+		
 		$sqlBuilder = new SQLQBuilder();
 		$sqlBuilder->table_name = self::TABLE_NAME;
 		$sqlBuilder->flg_insert = 'true';
@@ -518,12 +544,14 @@ class PerformanceReview {
 		$fields[2] = self::DB_FIELD_REVIEW_DATE;
 		$fields[3] = self::DB_FIELD_STATUS;
 		$fields[4] = self::DB_FIELD_REVIEW_NOTES;
+		$fields[5] = self::DB_FIELD_NOTIFICATION_SENT;
 
 		$values[0] = $this->id;
 		$values[1] = $this->empNumber;
 		$values[2] = "'{$this->reviewDate}'";
 		$values[3] = $this->status;
 		$values[4] = "'{$this->reviewNotes}'";
+		$values[5] = $this->notificationSent;
 
 		$sqlBuilder = new SQLQBuilder();
 		$sqlBuilder->table_name = self::TABLE_NAME;
@@ -568,6 +596,7 @@ class PerformanceReview {
 		$review->setStatus($row[self::DB_FIELD_STATUS]);
 		$review->setReviewNotes($row[self::DB_FIELD_REVIEW_NOTES]);
 		$review->setEmployeeName($row[self::FIELD_EMPLOYEE_NAME]);
+		$review->setNotificationSent($row[self::DB_FIELD_NOTIFICATION_SENT]);
 	    return $review;
     }
 
