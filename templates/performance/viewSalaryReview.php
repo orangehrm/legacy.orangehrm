@@ -52,6 +52,7 @@ $iconDir = "../../themes/{$styleSheet}/icons/";
 $salaryReview = $records['salaryReview'];
 $authorizeObj = $records['authorizeObj'];
 $currentSalary = $records['currentSalary'];
+$subordinates = $records['subordinates'];
 
 $salaryReviewId = $salaryReview->getId();
 $addMode = empty($salaryReviewId);
@@ -241,11 +242,30 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 		<div class="roundbox">
 			<label for="cmbRepEmpID"><span class="error">*</span> <?php echo $lang_Performance_SalaryReview_EmployeeName; ?></label>									        	
 	        
-			<?php if ($addMode) { ?>
+			<?php if ($addMode) {
+				      if ($authorizeObj->isAdmin()) { 
+			?>
+					
 				<input type="text" name="cmbRepEmpID" id="cmbRepEmpID" readonly />
 				<input class="button" type="button" value="..." onclick="returnEmpDetail();" />				
 				<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" tabindex="1"/>
-			<?php } else { ?>
+			<?php     } else if ($authorizeObj->isSupervisor()) { ?>
+				<select name="txtRepEmpID" id="txtRepEmpID">
+					<option value="-1">-<?php echo $lang_Leave_Common_Select;?>-</option>
+					<?php
+			   			if (is_array($subordinates)) {
+			   				sort($subordinates);
+			   				foreach ($subordinates as $employee) {
+			        ?>
+			 		<option value="<?php echo $employee[0] ?>"><?php echo $employee[1] ?></option>
+			  <?php 		}
+			   			}
+	          ?>		
+	          	</select><br />		
+            <?php     
+                      } 
+				 } else { 
+            ?>
 				<input type="text" name="cmbRepEmpID" id="cmbRepEmpID" value="<?php echo  CommonFunctions::escapeHtml($salaryReview->getEmployeeName());?>" readonly />
 				<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" value="<?php echo $salaryReview->getEmpNumber();?>" />
 	        <?php } ?>

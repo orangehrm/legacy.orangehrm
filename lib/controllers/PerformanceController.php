@@ -45,6 +45,7 @@ require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_SalaryReview.php'
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_JobTitleConfig.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpBasSalary.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
 
 /**
  * Controller for performance module
@@ -764,9 +765,15 @@ class PerformanceController {
 		try {
 			
 			$currentSalary = '';
+			$subordinates = '';
 			
 			if (empty($id)) {
 				$salaryReview = new SalaryReview();
+
+				if ($this->authorizeObj->isSupervisor()) {				
+					$repObj = new EmpRepTo();
+					$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
+				}				
 			} else {
 				$salaryReview = SalaryReview::getSalaryReview($id);
 				$currentSalary = self::_getBaseSalary($salaryReview->getEmpNumber());
@@ -775,6 +782,7 @@ class PerformanceController {
 			$objs['salaryReview'] = $salaryReview;
 			$objs['authorizeObj'] = $this->authorizeObj;
 			$objs['currentSalary'] = $currentSalary;
+			$objs['subordinates'] = $subordinates;
 
 			$template = new TemplateMerger($objs, $path);
 			$template->display();
