@@ -31,6 +31,8 @@ class PerformanceReview {
 	const TABLE_NAME = 'hs_hr_perf_review';
 	const REVIEW_MEASURE_TABLE_NAME = 'hs_hr_perf_review_measure';
 
+	const DEFAULT_REVIEW_PERIOD = 3;
+	
 	/** Database fields */
 	const DB_FIELD_ID = 'id';
 	const DB_FIELD_EMP_NUMBER = 'emp_number';
@@ -522,7 +524,6 @@ class PerformanceReview {
 		$sqlBuilder->arr_insertfield = $fields;
 
 		$sql = $sqlBuilder->addNewRecordFeature2();
-
 		$conn = new DMLFunctions();
 
 		$result = $conn->executeQuery($sql);

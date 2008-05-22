@@ -675,6 +675,13 @@ class RecruitmentController {
                 $application->setEmpNumber($empId);
                 $application->save();
 
+				// Create initial performance review
+				$performanceController = new PerformanceController();
+				
+				// TODO: Move to language files
+				$reviewNote = 'Review created at hire time';
+				$performanceController->createReview($empId, $reviewNote);
+				
                 // Send email informing approval to hiring manager
                 $notifier = new RecruitmentMailNotifier();
                 $mailResult = $notifier->sendApprovalToHiringManager($application, $event);

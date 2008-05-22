@@ -346,6 +346,34 @@ class PerformanceController {
     }    
     
     /**
+     * Create a performance review. Used when automatically creating performance reviews.
+     * 
+     * @param int $empNum Employee number
+     * @param String $reviewDate Review Date (optional). If not given, will create review with default period.
+     * @param String $notes Notes to be added to the review. Optional
+     * 
+     * @return boolean True if successful, false otherwise
+     */
+    public function createReview($empNum, $notes = '', $reviewDate = null) {
+    	
+    	if (empty($reviewDate)) {    	
+    		$reviewTimeStamp = time() + PerformanceReview::DEFAULT_REVIEW_PERIOD * 30 * 24 * 60 * 60;
+    		$reviewDate = date(LocaleUtil::STANDARD_DATE_FORMAT, $reviewTimeStamp);	
+    	}
+    	
+    	$review = new PerformanceReview();
+    	$review->setEmpNumber($empNum);
+    	$review->setReviewNotes($notes);
+    	$review->setReviewDate($reviewDate);
+    	try {
+	    	$review->save();
+	    	return true;
+		} catch (PerformanceReviewException $e) {
+			return false;
+		}
+    }
+    
+    /**
      * Save Performance review in the database
      * @param PerformanceReview $review Performance Review to save
      */
