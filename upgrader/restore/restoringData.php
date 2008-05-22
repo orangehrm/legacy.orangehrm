@@ -414,7 +414,7 @@ class Conf {
 	\$this->dbuser	= '$dbOHRMUser';
 	\$this->dbpass	= '$dbOHRMPassword';
 	\$this->version	= '2.2.2.2';
-        \$this->customVersion = 'ors-0.1-alpha.7';
+        \$this->customVersion = 'ors-0.1-alpha.8';
 	\$this->upgrade	= true;
 
 	\$this->emailConfiguration = dirname(__FILE__).'/mailConf.php';
