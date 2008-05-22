@@ -39,6 +39,7 @@ require_once ROOT_PATH . '/lib/models/hrfunct/LocationHistory.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/JobTitleHistory.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/SubDivisionHistory.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/SimpleBenefit.php';
+require_once ROOT_PATH . '/lib/controllers/PerformanceController.php';
 
 require_once ROOT_PATH . '/lib/common/FormCreator.php';
 require_once ROOT_PATH . '/lib/common/authorize.php';
@@ -2005,6 +2006,30 @@ class EmpViewController {
 
 									if(isset($object['EmpJobInfo'])) {
 										$empinfo = $object['EmpJobInfo'];
+										
+										/* Check if Division has changed and if so create a performance review 
+										 * (Performance review not created for initial department assignment - when no existing division) 
+										 */
+										$empNum = $empinfo->getEmpId();
+										$newDivision = $empinfo->getEmpLocation();
+										
+										$empInfoObj = new EmpInfo();										
+										$jobInfo = $empInfoObj->filterEmpJobInfo($empNum);
+										
+										if (isset($jobInfo[0][6])) {
+											
+											$oldDivision = $jobInfo[0][6];
+											if (!empty($oldDivision) && ($oldDivision != $newDivision)) {
+												
+												// Create initial performance review
+												$performanceController = new PerformanceController();
+												
+												// TODO: Move to language files
+												$reviewNote = 'Review created at when division changed';
+												$performanceController->createReview($empNum, $reviewNote);																			
+											}
+										}
+										
 										$empinfo -> updateEmpJobInfo();
 									}
 

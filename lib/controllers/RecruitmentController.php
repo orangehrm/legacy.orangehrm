@@ -40,6 +40,7 @@ require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobVacancy.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobApplication.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ScheduleInterview.php';
+require_once ROOT_PATH . '/lib/controllers/PerformanceController.php';
 
 /**
  * Controller for recruitment module
