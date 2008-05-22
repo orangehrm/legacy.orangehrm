@@ -276,6 +276,7 @@ lib/extractor/maintenance/EXTRACTOR_Users.php -text
 lib/extractor/performance/EXTRACTOR_JobTitleConfig.php -text
 lib/extractor/performance/EXTRACTOR_PerfMeasure.php -text
 lib/extractor/performance/EXTRACTOR_PerfReview.php -text
+lib/extractor/performance/EXTRACTOR_SalaryReview.php -text
 lib/extractor/recruitment/AllTests.php -text
 lib/extractor/recruitment/EXTRACTOR_JobApplication.php -text
 lib/extractor/recruitment/EXTRACTOR_JobApplicationEvent.php -text
