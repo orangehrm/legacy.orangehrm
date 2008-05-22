@@ -23,12 +23,17 @@ $assignedPerfMeasures = $records['AssignedPerfMeasures'];
 $authorizeObj = $records['authorizeObj'];
 $approverMode = ($_SESSION['isApprover'] && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor()));
 
+$readOnlyView = (!$_SESSION['isApprover'] && ($perfReview->getStatus() == PerformanceReview::STATUS_APPROVED));
+
 $perfReviewId = $perfReview->getId();
 
 $reviewStatusList = array(PerformanceReview::STATUS_SCHEDULED => $lang_Performance_Review_Scheduled,
 	PerformanceReview::STATUS_COMPLETED => $lang_Performance_Review_Completed,
-	PerformanceReview::STATUS_SUBMITTED_FOR_APPROVAL => $lang_Performance_Review_SubmittedForApproval,
-	PerformanceReview::STATUS_APPROVED => $lang_Performance_Review_Approved	);
+	PerformanceReview::STATUS_SUBMITTED_FOR_APPROVAL => $lang_Performance_Review_SubmittedForApproval);
+
+if ($_SESSION['isApprover']) {
+	$reviewStatusList[PerformanceReview::STATUS_APPROVED] = $lang_Performance_Review_Approved;
+}
 ?>
 <link href="../../themes/<?php echo $styleSheet;?>/css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">@import url("../../themes/<?php echo $styleSheet;?>/css/style.css"); </style>
@@ -159,18 +164,24 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 	        <input type="text" id="txtReviewDate" name="txtReviewDate" readonly  
 	        	value="<?php echo LocaleUtil::getInstance()->formatDate($perfReview->getReviewDate());?>" size="10" /><br />
 
+			<?php // TODO: Fix - remove unused branch of if statement ?>
 	        <?php if (true) {?>
-	        	<label for="cmbStatus"><?php echo $lang_Performance_Review_Status; ?></label>	        	
+	        	<label for="cmbStatus"><?php echo $lang_Performance_Review_Status; ?></label>
+	        <?php if ($readOnlyView) {?>
+					<input type="text" disabled id="cmbStatus" name="cmbStatus" value="<?php echo $lang_Performance_Review_Approved;?>" />	        	
+			<?php } else { ?>
+
 				<select name="cmbStatus" id="cmbStatus" >
 			  		<?php 
 			  			foreach ($reviewStatusList as $statusCode=>$statusDesc) {
 			  				$selected = ($statusCode == $perfReview->getStatus()) ? 'selected' : ''; 
 			  				echo "<option value='" . $statusCode . "' $selected >" .$statusDesc. "</option>";
 			  			} ?>
-				</select>			  	        	
+				</select>	
+			<?php } ?>		  	        	
 	        	<br />
 	        	<label for="txtNotes"><?php echo $lang_Performance_Review_Notes; ?></label>	        	
-	        	<textarea id="txtNotes" name="txtNotes" > <?php echo CommonFunctions::escapeHtml($perfReview->getReviewNotes()); ?></textarea>	        	
+	        	<textarea id="txtNotes" name="txtNotes" <?php echo ($readOnlyView) ? 'readonly' : ''; ?> > <?php echo CommonFunctions::escapeHtml($perfReview->getReviewNotes()); ?></textarea>	        	
 			<?php } else { ?>
 					<label for="none"><?php echo $lang_Performance_Review_Status;?></label>
 					<input type="text" disabled id="cmbStatusText" name="cmbStatusText"
@@ -184,11 +195,13 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 	        <label for="none">&nbsp;</label>
 	        <input type="hidden" id="txtReviewId" name="txtReviewId" value="<?php echo $perfReview->getId(); ?>"/>
 	   	</div><br />
-        <img onClick="update();"
-             onMouseOut="this.src='../../themes/beyondT/pictures/btn_save.gif';"
-             onMouseOver="this.src='../../themes/beyondT/pictures/btn_save_02.gif';"
-             src="../../themes/beyondT/pictures/btn_save.gif"
-        >
+	   	<?php if (!$readOnlyView) { ?>
+	        <img onClick="update();"
+	             onMouseOut="this.src='../../themes/beyondT/pictures/btn_save.gif';"
+	             onMouseOver="this.src='../../themes/beyondT/pictures/btn_save_02.gif';"
+	             src="../../themes/beyondT/pictures/btn_save.gif"
+	        >
+        <?php } ?>
 		<script type="text/javascript">
 		<!--
 		    if (document.getElementById && document.createElement) {
@@ -214,7 +227,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 				<td class="<?php echo $cssClass;?>"></td>
 				<td class="<?php echo $cssClass;?>">
 					<input class="scoreInput" type="text" name="perfScores[]" value="<?php echo $perfMeasure->getScore();?>"					
-						<?php echo ($approverMode) ? 'readonly' : '' ?> />
+						<?php echo ($approverMode || $readOnlyView) ? 'readonly' : '' ?> />
 				</td>
 			</tr>
 			<?php } ?>
