@@ -1,4 +1,18 @@
-New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.2
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.8
+
+    Stories
+
+    1. Supervisor reviews employee salary & director approves
+    2. Performance Approval
+    3. HR Admin/Supervisor view details of performance reviews
+    4. HR Admin/Supervisor update performance review results
+    5. HR Admin / Supervisor view list of performance reviews
+    6. HR Admin adds performance measures
+    7. HR Admin adds (schedules) performance review for each employee
+    8. HR Admin assigns job specification and duties
+    9. Job number  4.0
+
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha 6
 
         1. Story: HR Admin assigns job specification and duties
 
