@@ -244,30 +244,36 @@ class PerformanceReview {
 	 * @param string $sortOrder Sort Order (one of ASC or DESC)
 	 * @param string $supervisorEmpNum Supervisors employee number (or null if not a supervisor);
 	 */
-	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE, $sortField = self::SORT_FIELD_VACANCY_ID, $sortOrder = 'ASC', $supervisorEmpNum = null) {
+	public static function getListForView($pageNO = 0, $searchStr = array(), $searchFieldNo = self::SORT_FIELD_NONE, $sortField = self::SORT_FIELD_VACANCY_ID, $sortOrder = 'ASC', $supervisorEmpNum = null) {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
-		$escapedVal = mysql_real_escape_string($searchStr);
-
-		switch ($searchFieldNo) {
-			case self::SORT_FIELD_ID:
-				$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";
-				break;
-			case self::SORT_FIELD_REVIEW_STATUS:
-				$selectCondition[] = self::DB_FIELD_STATUS . " = {$escapedVal} ";
-				break;				
+		
+		for ($i = 0; $i < count($searchStr); $i++) {
 			
-			case self::SORT_FIELD_REVIEW_YEAR:
-				$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
-				break;
-			case self::SORT_FIELD_EMPLOYEE_NAME:
-				$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
-										"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
-										"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
-				break;				
+			if (!empty($searchStr[$i])) {
+				$escapedVal = mysql_real_escape_string($searchStr[$i]);
+		
+				switch ($searchFieldNo[$i]) {
+					case self::SORT_FIELD_ID:
+						$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";
+						break;
+					case self::SORT_FIELD_REVIEW_STATUS:
+						$selectCondition[] = self::DB_FIELD_STATUS . " = {$escapedVal} ";
+						break;				
+					
+					case self::SORT_FIELD_REVIEW_YEAR:
+						$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
+						break;
+					case self::SORT_FIELD_EMPLOYEE_NAME:
+						$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
+												"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
+												"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
+						break;				
+				}
+			}
 		}
-
+		
 		if (!empty($supervisorEmpNum)) {
 			$repObj = new EmpRepTo();
 			$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
@@ -334,17 +340,30 @@ class PerformanceReview {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
-		$escapedVal = mysql_real_escape_string($searchStr);
-				
-		switch ($searchFieldNo) {
-			case self::SORT_FIELD_REVIEW_YEAR:
-				$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
-				break;
-			case self::SORT_FIELD_EMPLOYEE_NAME:
-				$selectCondition[] = "b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
-								     "b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
-									 "b.`emp_middle_name` LIKE '{$escapedVal}%' "; 			
-				break;				
+		
+		for ($i = 0; $i < count($searchStr); $i++) {
+			
+			if (!empty($searchStr[$i])) {
+				$escapedVal = mysql_real_escape_string($searchStr[$i]);
+		
+				switch ($searchFieldNo[$i]) {
+					case self::SORT_FIELD_ID:
+						$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";
+						break;
+					case self::SORT_FIELD_REVIEW_STATUS:
+						$selectCondition[] = self::DB_FIELD_STATUS . " = {$escapedVal} ";
+						break;				
+					
+					case self::SORT_FIELD_REVIEW_YEAR:
+						$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
+						break;
+					case self::SORT_FIELD_EMPLOYEE_NAME:
+						$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
+												"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
+												"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
+						break;				
+				}
+			}
 		}
 
 		if (!empty($supervisorEmpNum)) {

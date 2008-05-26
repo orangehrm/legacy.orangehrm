@@ -24,6 +24,7 @@ $maxDispLen = $sysConst->viewDescLen;
 $locRights = $_SESSION['localRights'];
 
 $currentPage = $this->popArr['currentPage'];
+$searchFieldCount = $this->popArr['searchFieldCount']; 
 
 $list = $this->popArr['list'];
 $baseURL = './CentralController.php?perfcode='. $this->getArr['perfcode'];
@@ -72,12 +73,24 @@ function getDisplayValue($value, $map, $maxLen) {
 	return $value;
 }
 
-$searchStr = isset($this->postArr['loc_name'])? stripslashes($this->postArr['loc_name']) : '';
-if (isset($this->postArr['loc_code'])) {
-	$code = $this->postArr['loc_code'];
-	if (isset($valueMap[$code])){
-		$searchStr = getDisplayValue($searchStr, $valueMap[$code], $maxDispLen);
+if ($searchFieldCount == 1) {
+	$searchStr = isset($this->postArr['loc_name'])? stripslashes($this->postArr['loc_name']) : '';
+	if (isset($this->postArr['loc_code'])) {
+		$code = $this->postArr['loc_code'];
+		if (isset($valueMap[$code])){
+			$searchStr = getDisplayValue($searchStr, $valueMap[$code], $maxDispLen);
+		}
 	}
+} else {
+	for ($i=0; $i<$searchFieldCount; $i++) {
+		$searchStr[$i] = isset($this->postArr['loc_name'][$i])? stripslashes($this->postArr['loc_name'][$i]) : '';
+		if (isset($this->postArr['loc_code'][$i])) {
+			$code = $this->postArr['loc_code'][$i];
+			if (isset($valueMap[$code])){
+				$searchStr[$i] = getDisplayValue($searchStr[$i], $valueMap[$code], $maxDispLen);
+			}
+		}
+	}		
 }
 
 $themeDir = '../../themes/' . $styleSheet;
@@ -161,6 +174,77 @@ for ($i = 0; $i < count($valueMap); $i++) {
 	}
 
 	function returnSearch() {
+	
+<?php if ($searchFieldCount == 1) { ?> 	
+		return returnSearchSingle();
+
+<?php } else { ?>
+		return returnSearchMultiple();
+<?php } ?>			
+	}
+
+<?php if ($searchFieldCount > 0) { ?>
+	function returnSearchMultiple() {
+	
+		var err = false;
+		var msg = '';
+		
+		var selectedOptions = 0;
+<?php 
+		 for ($i=0; $i<$searchFieldCount; $i++) { 
+?>
+		
+		var field = $('loc_code<?php echo $i;?>');
+		var value = $('loc_name<?php echo $i;?>');
+		
+		if (field.value != -1) {
+			selectedOptions = selectedOptions + 1;
+
+			var searchNdx = field.value;
+			var searchVal = value.value;
+		
+			if (searchNdx in maps) {
+			    map = maps[searchNdx];
+			    if (searchVal in map) {
+			        value.value = map[searchVal];
+			    } else {
+			        var len = map.length;
+			        if (len > 0) {
+				        var allowed = '';
+				        for ( var i in map) {
+				        	if (allowed == ''){
+				            	allowed = i;
+				        	} else {
+				            	allowed = allowed + ', ' + i;
+				            }
+				        }
+				        msg += "<?php echo $lang_Recruit_AllowedValuesAre;?> " + allowed;
+				        err = true;
+			        }
+			    }
+			}			
+		}
+		
+		if (selectedOptions == 0) {
+			err = true;
+			msg += "<?php echo $lang_Common_SelectField; ?>";
+		}
+		
+		if (err) {
+			alert(msg);
+			return;
+		}
+				
+<?php   } ?>
+
+
+		document.standardView.captureState.value = 'SearchMode';
+		document.standardView.pageNO.value=1;
+		document.standardView.submit();
+	}
+<?php } ?>			
+	
+	function returnSearchSingle() {
 
 		if ($('loc_code').value == -1) {
 			alert("<?php echo $lang_Common_SelectField; ?>");
@@ -228,8 +312,21 @@ for ($i = 0; $i < count($valueMap); $i++) {
 	}
 
 	function clear_form() {
+<?php if ($searchFieldCount == 1) { ?> 	
 		document.standardView.loc_code.options[0].selected=true;
 		document.standardView.loc_name.value='';
+<?php } else {
+		 for ($i=0; $i<$searchFieldCount; $i++) { 
+?>
+		
+		var field = $('loc_code<?php echo $i;?>');
+		var value = $('loc_name<?php echo $i;?>');
+		field.options[0].selected = true;
+		value.value = '';
+				
+<?php   }
+	} 
+?>		
 	}
 </script>
 <body>
@@ -300,9 +397,11 @@ if($allowDelete) {
         </tr>
         <tr>
           <td background="<?php echo $themeDir;?>/pictures/table_r2_c1.gif"><img name="table_r2_c1" src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
-          <td><table  border="0" cellpadding="5" cellspacing="0" class="">
+          <td>
+          <table  border="0" cellpadding="5" cellspacing="0" class="">          
+<?php if ($searchFieldCount == 1) { ?>         
             <tr>
-              <td width="200" class="dataLabel"><slot><?php echo $SearchBy?></slot>&nbsp;&nbsp;<slot>
+              <td width="200" class="dataLabel"><?php echo $SearchBy?>&nbsp;&nbsp;
                 <select style="z-index: 99;" name="loc_code" id="loc_code">
 <?php               for($c=-1;count($srchlist)-1>$c;$c++) {
 					    if(isset($this->postArr['loc_code']) && $this->postArr['loc_code']==$c) {
@@ -313,13 +412,44 @@ if($allowDelete) {
                     }
 ?>
                 </select>
-              </slot></td>
-              <td width="300" class="dataLabel" noWrap><slot><?php echo $description?></slot>&nbsp;&nbsp;<slot>
+              </td>
+              <td width="300" class="dataLabel" noWrap><?php echo $description?>&nbsp;&nbsp;
                 <input type=text size="20" name="loc_name" id="loc_name" class=dataField  value="<?php echo $searchStr;?>">
-             </slot></td>
+             </td>
             <td align="right" width="180" class="dataLabel"><img tabindex=3 title="Search" onClick="returnSearch();" onMouseOut="this.src='<?php echo $themeDir;?>/pictures/btn_search.gif';" onMouseOver="this.src='<?php echo $themeDir;?>/pictures/btn_search_02.gif';" src="<?php echo $themeDir;?>/pictures/btn_search.gif">&nbsp;&nbsp;<img title="Clear" onClick="clear_form();" onMouseOut="this.src='<?php echo $themeDir;?>/pictures/btn_clear.gif';" onMouseOver="this.src='<?php echo $themeDir;?>/pictures/btn_clear_02.gif';" src="<?php echo $themeDir;?>/pictures/btn_clear.gif"></td>
+		   </tr>
+<?php } else {?>
+<?php     for ($i=0; $i<$searchFieldCount; $i++) { ?>
+            <tr>
+              <td width="80" class="dataLabel"><?php echo ($i == 0) ? $SearchBy : ''; ?></td>
+				<td width="120" class="dataLabel">
+                <select style="z-index: 99;" name="loc_code[]" id="loc_code<?php echo $i;?>">
+<?php               for($c=-1;count($srchlist)-1>$c;$c++) {
+					    if(isset($this->postArr['loc_code'][$i]) && $this->postArr['loc_code'][$i]==$c) {
+						   echo "<option selected value='" . $c ."'>".$srchlist[$c+1] ."</option>";
+					    } else {
+						   echo "<option value='" . $c ."'>".$srchlist[$c+1] ."</option>";
+					    }
+                    }
+?>
+                </select>
+              </td>
+              <td width="70" class="dataLabel" noWrap><?php echo ($i == 0) ? $description : ''; ?></td>              
+              <td width="230" class="dataLabel" noWrap>
+                <input type=text size="20" name="loc_name[]" id="loc_name<?php echo $i;?>" class=dataField  value="<?php echo $searchStr[$i];?>">
+             </td>
+            <td align="right" width="180" class="dataLabel">
+<?php if ($i == 0) { ?>                        
+            	<img tabindex=3 title="Search" onClick="returnSearch();" onMouseOut="this.src='<?php echo $themeDir;?>/pictures/btn_search.gif';" onMouseOver="this.src='<?php echo $themeDir;?>/pictures/btn_search_02.gif';" src="<?php echo $themeDir;?>/pictures/btn_search.gif">&nbsp;&nbsp;<img title="Clear" onClick="clear_form();" onMouseOut="this.src='<?php echo $themeDir;?>/pictures/btn_clear.gif';" onMouseOver="this.src='<?php echo $themeDir;?>/pictures/btn_clear_02.gif';" src="<?php echo $themeDir;?>/pictures/btn_clear.gif">
+<?php } ?>            	
+           	</td>
+		   </tr>	
+<?php     } ?>	
+<?php } ?>
 
-          </table></td>
+          </table>
+          
+          </td>
           <td background="<?php echo $themeDir;?>/pictures/table_r2_c3.gif"><img name="table_r2_c3" src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
           <td><img src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
         </tr>

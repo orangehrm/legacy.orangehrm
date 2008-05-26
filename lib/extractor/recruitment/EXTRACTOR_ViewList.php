@@ -37,11 +37,21 @@
 
         if (isset ($postArr['captureState']) && ($postArr['captureState'] == 'SearchMode')) {
 
-            $searchField = $postArr['loc_code'];
-            $searchString = trim($postArr['loc_name']);
-
-            $searchObject->setSearchField($searchField);
-            $searchObject->setSearchString($searchString);
+			if (isset($postArr['loc_code']) && isset($postArr['loc_name'])) {
+	            $searchField = $postArr['loc_code'];
+	            $searchString = $postArr['loc_name'];
+	            
+	            if (is_array($searchField)) {
+					for ($i = 0; $i < count($searchField); $i++) {
+						$searchString[$i] = trim($searchString[$i]);
+					}	            	
+	            } else {
+		            $searchString = trim($searchString);	            	
+	            }
+	
+	            $searchObject->setSearchField($searchField);
+	            $searchObject->setSearchString($searchString);
+			}
         }
 
         if (!isset ($getArr['sortField'])) {

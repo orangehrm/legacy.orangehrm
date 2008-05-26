@@ -340,7 +340,7 @@ class PerformanceController {
 			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
         	$list = PerformanceReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
         	$count = PerformanceReview::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);
-        	$this->_viewList($searchObject->getPageNumber(), $count, $list, true);
+        	$this->_viewList($searchObject->getPageNumber(), $count, $list, true, 2);
 		} else {
             $this->_notAuthorized();
 		}
@@ -821,7 +821,7 @@ class PerformanceController {
 	 * @param int $count Total number of results
 	 * @param Array $list results (in current page)
 	 */
-	private function _viewList($pageNumber, $count, $list, $showSearch = true) {
+	private function _viewList($pageNumber, $count, $list, $showSearch = true, $searchFieldCount = 1) {
 
         $formCreator = new FormCreator($_GET, $_POST);
         $formCreator->formPath = '/performanceview.php';
@@ -829,6 +829,7 @@ class PerformanceController {
         $formCreator->popArr['list'] = $list;
         $formCreator->popArr['count'] = $count;
         $formCreator->popArr['showSearch'] = $showSearch;
+        $formCreator->popArr['searchFieldCount'] = $searchFieldCount;
         $formCreator->display();
 	}    
 
