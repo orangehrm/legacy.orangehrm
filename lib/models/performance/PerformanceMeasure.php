@@ -194,7 +194,7 @@ class PerformanceMeasure {
 		switch ($searchFieldNo) {
 		
 			case self::SORT_FIELD_ID:
-				$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";			
+				$selectCondition[] = self::DB_FIELD_ID . " = '{$escapedVal}' ";			
 				break;
 			case self::SORT_FIELD_NAME:
 				$selectCondition[] = self::DB_FIELD_NAME . " LIKE '{$escapedVal}%' ";			
@@ -250,7 +250,7 @@ class PerformanceMeasure {
 		switch ($searchFieldNo) {
 		
 			case self::SORT_FIELD_ID:
-				$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";			
+				$selectCondition[] = self::DB_FIELD_ID . " = '{$escapedVal}' ";			
 				break;
 			case self::SORT_FIELD_NAME:
 				$selectCondition[] = self::DB_FIELD_NAME . " LIKE '{$escapedVal}%' ";			

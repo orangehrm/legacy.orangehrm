@@ -256,10 +256,10 @@ class PerformanceReview {
 		
 				switch ($searchFieldNo[$i]) {
 					case self::SORT_FIELD_ID:
-						$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";
+						$selectCondition[] = self::DB_FIELD_ID . " = '{$escapedVal}' ";
 						break;
 					case self::SORT_FIELD_REVIEW_STATUS:
-						$selectCondition[] = self::DB_FIELD_STATUS . " = {$escapedVal} ";
+						$selectCondition[] = self::DB_FIELD_STATUS . " = '{$escapedVal}' ";
 						break;				
 					
 					case self::SORT_FIELD_REVIEW_YEAR:
@@ -348,10 +348,10 @@ class PerformanceReview {
 		
 				switch ($searchFieldNo[$i]) {
 					case self::SORT_FIELD_ID:
-						$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";
+						$selectCondition[] = self::DB_FIELD_ID . " = '{$escapedVal}' ";
 						break;
 					case self::SORT_FIELD_REVIEW_STATUS:
-						$selectCondition[] = self::DB_FIELD_STATUS . " = {$escapedVal} ";
+						$selectCondition[] = self::DB_FIELD_STATUS . " = '{$escapedVal}' ";
 						break;				
 					
 					case self::SORT_FIELD_REVIEW_YEAR:
