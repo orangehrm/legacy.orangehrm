@@ -559,7 +559,7 @@ class PerformanceController {
 
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
 			
-			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
+			$supervisorEmpNum = ($this->authorizeObj->isSupervisor() && !$_SESSION['isSalaryApprover']) ? $this->authorizeObj->getEmployeeId(): null;
         	$list = SalaryReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
         	$count = SalaryReview::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);
         	

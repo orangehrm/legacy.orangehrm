@@ -1,3 +1,8 @@
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
+
+	BugId     Name
+    1969490   Salary increase does not accept negative values
+
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.8
 
     Stories

@@ -147,7 +147,7 @@
 			return false;
 		}
 
-		regExp = /^[0-9]*(\.[0-9]+){0,1}$/;
+		regExp = /^[\-\+]{0,1}[0-9]*(\.[0-9]+){0,1}$/;
 		if (regExp.test(txt)) {
 			return true;
 		}
