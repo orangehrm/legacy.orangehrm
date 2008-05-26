@@ -246,7 +246,7 @@ class PerformanceController {
 		if ($this->authorizeObj->isAdmin()) {
         	$list = PerformanceMeasure::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
         	$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());        	
-        	$this->_viewList($searchObject->getPageNumber(), $count, $list, false);
+        	$this->_viewList($searchObject->getPageNumber(), $count, $list, true);
 		} else {
             $this->_notAuthorized();
 		}

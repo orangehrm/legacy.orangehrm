@@ -25,6 +25,7 @@ require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 require_once ROOT_PATH . '/lib/common/SearchObject.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceScore.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
+require_once ROOT_PATH . '/lib/confs/sysConf.php';
 
 class PerformanceReview {
 	
@@ -49,8 +50,10 @@ class PerformanceReview {
 
 	/** Field order */
 	const SORT_FIELD_NONE = -1;
-	const SORT_FIELD_EMPLOYEE_NAME = 0;
-	const SORT_FIELD_REVIEW_YEAR = 1;
+	const SORT_FIELD_ID = 0;
+	const SORT_FIELD_EMPLOYEE_NAME = 1;	
+	const SORT_FIELD_REVIEW_YEAR = 2;
+	const SORT_FIELD_REVIEW_STATUS = 3;
 
 	/** Status */
 	const STATUS_SCHEDULED = 0;
@@ -246,8 +249,15 @@ class PerformanceReview {
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
 		$escapedVal = mysql_real_escape_string($searchStr);
-		
+
 		switch ($searchFieldNo) {
+			case self::SORT_FIELD_ID:
+				$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";
+				break;
+			case self::SORT_FIELD_REVIEW_STATUS:
+				$selectCondition[] = self::DB_FIELD_STATUS . " = {$escapedVal} ";
+				break;				
+			
 			case self::SORT_FIELD_REVIEW_YEAR:
 				$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
 				break;
@@ -271,7 +281,32 @@ class PerformanceReview {
 			}
 		}	
 			
-		$list = self::_getList($selectCondition);
+		$sysConst = new sysConf();
+		$limit = null;
+		if ($pageNO > 0) {
+			$pageNO--;
+			$pageNO *= $sysConst->itemsPerPage;
+			$limit = "{$pageNO}, {$sysConst->itemsPerPage}";
+		}
+
+		$sortBy = null;
+
+		switch ($sortField) {
+			case self::SORT_FIELD_ID:
+				$sortBy = self::DB_FIELD_ID;
+				break;
+			case self::SORT_FIELD_EMPLOYEE_NAME:
+				$sortBy = self::FIELD_EMPLOYEE_NAME;
+				break;	
+			case self::SORT_FIELD_REVIEW_YEAR:
+				$sortBy =  self::DB_FIELD_REVIEW_DATE;
+				break;
+			case self::SORT_FIELD_REVIEW_STATUS:
+				$sortBy =  self::DB_FIELD_STATUS;
+				break;	
+		}
+				
+		$list = self::_getList($selectCondition, $sortBy, $sortOrder, $limit);
 		
 		$i = 0;
 		$arrayDispList = null;
@@ -466,7 +501,7 @@ class PerformanceReview {
 	 * @param array   $selectCondition Array of select conditions to use.
 	 * @return array  Array of Performance Review objects. Returns an empty (length zero) array if none found.
 	 */
-	private static function _getList($selectCondition = null) {
+	private static function _getList($selectCondition = null, $sortBy = null, $sortOrder = null, $limit = null) {
 
 		$fields[0] = "a. " . self::DB_FIELD_ID;
 		$fields[1] = "a. " . self::DB_FIELD_EMP_NUMBER;
@@ -482,8 +517,8 @@ class PerformanceReview {
 		$joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
 
 		$sqlBuilder = new SQLQBuilder();
-		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
-//
+		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, $sortBy, $sortOrder, $limit);
+
 		$actList = array();
 
 		$conn = new DMLFunctions();

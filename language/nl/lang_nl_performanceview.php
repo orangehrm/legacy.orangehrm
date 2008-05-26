@@ -55,7 +55,7 @@ switch ($_GET['perfcode']) {
 
 		case 'PerfReviews' :
 
-			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_Performance_review_EmployeeName, $lang_Performance_review_ReviewYear);
+			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_Performance_review_ID, $lang_Performance_review_EmployeeName, $lang_Performance_review_ReviewYear, $lang_Performance_review_ReviewStatus);
 			$headings = array($lang_Performance_review_ID , $lang_Performance_review_EmployeeName, $lang_Performance_review_ReviewDate, $lang_Performance_review_ReviewStatus);
 			$valueMap = array(null, null, null, 
 				array(PerformanceReview::STATUS_SCHEDULED => $lang_Performance_Review_Scheduled,

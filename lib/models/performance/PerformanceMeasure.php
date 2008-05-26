@@ -23,6 +23,7 @@ require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
 require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 require_once ROOT_PATH . '/lib/common/SearchObject.php';
+require_once ROOT_PATH . '/lib/confs/sysConf.php';
 
 class PerformanceMeasure {
 
@@ -186,7 +187,39 @@ class PerformanceMeasure {
 	 */
 	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE, $sortField = self::SORT_FIELD_VACANCY_ID, $sortOrder = 'ASC') {
 
-		$list = self::_getList();
+		$selectCondition = null;
+		$dbConnection = new DMLFunctions();
+		$escapedVal = mysql_real_escape_string($searchStr);
+		
+		switch ($searchFieldNo) {
+		
+			case self::SORT_FIELD_ID:
+				$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";			
+				break;
+			case self::SORT_FIELD_NAME:
+				$selectCondition[] = self::DB_FIELD_NAME . " LIKE '{$escapedVal}%' ";			
+				break;	
+		}
+		
+		$sysConst = new sysConf();
+		$limit = null;
+		if ($pageNO > 0) {
+			$pageNO--;
+			$pageNO *= $sysConst->itemsPerPage;
+			$limit = "{$pageNO}, {$sysConst->itemsPerPage}";
+		}
+
+		$sortBy = null;
+		switch ($sortField) {
+			case self::SORT_FIELD_ID:
+				$sortBy = self::DB_FIELD_ID;			
+				break;
+			case self::SORT_FIELD_NAME:
+				$sortBy = self::DB_FIELD_NAME;			
+				break;				
+		}
+				
+		$list = self::_getList($selectCondition, $sortBy, $sortOrder, $limit);
 		
 		$i = 0;
 		$arrayDispList = null;
@@ -210,8 +243,33 @@ class PerformanceMeasure {
 	 */
 	public static function getCount($searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE) {
 
+		$selectCondition = null;
+		$dbConnection = new DMLFunctions();
+		$escapedVal = mysql_real_escape_string($searchStr);
+		
+		switch ($searchFieldNo) {
+		
+			case self::SORT_FIELD_ID:
+				$selectCondition[] = self::DB_FIELD_ID . " = {$escapedVal} ";			
+				break;
+			case self::SORT_FIELD_NAME:
+				$selectCondition[] = self::DB_FIELD_NAME . " LIKE '{$escapedVal}%' ";			
+				break;	
+		}
+		
 		$count = 0;		
 		$sql = sprintf('SELECT count(*) FROM %s', self::TABLE_NAME);
+		
+		if (!empty($selectCondition)) {
+			$whereClause = '';
+			foreach ($selectCondition as $condition) {
+				if (!empty($whereClause)) {
+					$whereClause .= ' AND ';
+				}
+				$whereClause .= ' ( ' .  $condition . ')';
+			}
+			$sql .= ' WHERE ' . $whereClause;
+		}
 
 		$sqlBuilder = new SQLQBuilder();
 		$dbConnection = new DMLFunctions();
@@ -296,14 +354,14 @@ class PerformanceMeasure {
 	 * @param array   $selectCondition Array of select conditions to use.				const  = 'hs_hr_perf_measure_jobtitle';
 	 * @return array  Array of Performance Measure objects. Returns an empty (length zero) array if none found.
 	 */
-	private static function _getList($selectCondition = null) {
+	private static function _getList($selectCondition = null, $sortBy = null, $sortOrder = null, $limit = null) {
 
 		$fields[0] = self::DB_FIELD_ID;
 		$fields[1] = self::DB_FIELD_NAME;
 
 		$arrTable = self::TABLE_NAME;
 		$sqlBuilder = new SQLQBuilder();
-		$sql = $sqlBuilder->simpleSelect($arrTable, $fields, $selectCondition, $fields[0], 'ASC');
+		$sql = $sqlBuilder->simpleSelect($arrTable, $fields, $selectCondition, $sortBy, $sortOrder, $limit);
 
 		$list = array();
 
