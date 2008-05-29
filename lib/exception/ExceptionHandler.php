@@ -50,84 +50,96 @@ function notifyUser($errlevel, $errstr, $errfile='', $errline='', $errcontext=''
 							  $errType = "error";
 	}
 
+
 	if (isset($type)) {
-	if (!isset($_SESSION)) {
-		session_start();
-	}
 
-	ob_get_clean();
-
-	$message = "<?xml version='1.0' encoding='iso-8859-1'?>\n";
-	$message .= "<?xml-stylesheet href='".$_SESSION['WPATH']."/error.xsl' type='text/xsl'?>\n";
-	$message .= "<report>\n";
-	$message .= "	<heading>$type</heading>\n";
-	$message .= "	<type>$errType</type>\n";
-
-	$errstr = strip_tags($errstr);
-
-	$message .= "	<message><![CDATA[$errstr]]></message>\n";
-
-	$confObj = new Conf();
-
-	if (isset($confObj->logPath) && !empty($confObj->logPath)) {
-		$logPath = $confObj->logPath;
-	} else {
-		$logPath = ROOT_PATH.'/lib/logs/';
-	}
-
-
-	$message .= "	<root>".ROOT_PATH."</root>\n";
-	$message .= "	<Wroot>".$_SESSION['WPATH']."</Wroot>\n";
-	$message .= "   <stylesheet>" . CommonFunctions::getTheme() .  "</stylesheet>\n";
-	$message .= "	<logPath><![CDATA[".$logPath."]]></logPath>\n";
-
-	$errfileEsc = str_replace("\\", "/", $errfile);
-
-	if (isset($sysErr)) {
-
-		$message .= "	<cause>\n";
-		$message .= "		<message><![CDATA[Encountered the problem in ".$errfile."]]></message>\n";
-		$message .= "	</cause>\n";
-		$message .= "	<cause>\n";
-		$message .= "		<message><![CDATA[Line ".$errline."]]></message>\n";
-		$message .= "	</cause>\n";
-
-		error_log(date('r').' : '.strip_tags($errMsg), 3, $logPath.'logDB.txt');
-
-		$errMsgEsc = str_replace("'", "\'",strip_tags($type." :".'\n'.$errstr.'\n'."in ".$errfileEsc.'\n'."on line ".$errline));
-
-	} else {
-
-		$message .= "	<cause>\n";
-		$message .= "		<message><![CDATA[".mysql_error()."]]></message>\n";
-		$message .= "	</cause>\n";
-
-		$message .= "	<cause>\n";
-		$message .= "		<message><![CDATA[MySQL Error # :".mysql_errno()."]]></message>\n";
-		$message .= "	</cause>\n";
-
-		$errMsgEsc = str_replace("'", "\'",strip_tags($type." :".'\n'.$errstr.'\n'."Tech Info".'\n'."------------".'\n'.mysql_error()));
-		error_log(date('r').' : '.strip_tags($errMsgEsc), 3, $logPath.'logDB.txt');
-	}
-
-	$confObj = new Conf();
-
-	$message .= "	<environment>\n";
-	$message .= "		<version type='ohrm' description='OrangeHRM' ><![CDATA[". $confObj->version."]]></version>\n";
-	$message .= "		<version type='php' description='PHP' ><![CDATA[".constant('PHP_VERSION')."]]></version>\n";
-	$message .= "		<version type='mysql' description='MySQL Client' ><![CDATA[".mysql_get_client_info()."]]></version>\n";
-	$message .= "		<info type='memory_limit' description='Memory limit' ><![CDATA[".ini_get('memory_limit')."]]></info>\n";
-	$message .= "		<info type='session.gc_maxlifetime' description='Maximum session lifetime' ><![CDATA[".ini_get('session.gc_maxlifetime')."]]></info>\n";
-	$message .= "	</environment>\n";
-
-	$message .= "	<cmd n='js'><![CDATA[alert('$errMsgEsc');]]></cmd>\n";
-	$message .= "</report>\n";
-
-	header("Content-type: application/xml; charset=UTF-8");
-
-	echo $message;
-
-	exit;
+		$confObj = new Conf();
+	
+		if (isset($confObj->logPath) && !empty($confObj->logPath)) {
+			$logPath = $confObj->logPath;
+		} else {
+			$logPath = ROOT_PATH.'/lib/logs/';
+		}
+		
+		/* If error reporting is not set, simply log error and return */
+		if (error_reporting() == 0) {
+			if (isset($sysErr)) {
+				error_log(date('r').' : '.strip_tags($errMsg), 3, $logPath.'logDB.txt');				
+			} else {
+				$errMsgEsc = str_replace("'", "\'",strip_tags($type." :".'\n'.$errstr.'\n'."Tech Info".'\n'."------------".'\n'.mysql_error()));
+				error_log(date('r').' : '.strip_tags($errMsgEsc), 3, $logPath.'logDB.txt');				
+			}			
+			return;
+		}
+		
+		if (!isset($_SESSION)) {
+			session_start();
+		}
+	
+		ob_get_clean();
+	
+		$message = "<?xml version='1.0' encoding='iso-8859-1'?>\n";
+		$message .= "<?xml-stylesheet href='".$_SESSION['WPATH']."/error.xsl' type='text/xsl'?>\n";
+		$message .= "<report>\n";
+		$message .= "	<heading>$type</heading>\n";
+		$message .= "	<type>$errType</type>\n";
+	
+		$errstr = strip_tags($errstr);
+	
+		$message .= "	<message><![CDATA[$errstr]]></message>\n";
+	
+		$message .= "	<root>".ROOT_PATH."</root>\n";
+		$message .= "	<Wroot>".$_SESSION['WPATH']."</Wroot>\n";
+		$message .= "   <stylesheet>" . CommonFunctions::getTheme() .  "</stylesheet>\n";
+		$message .= "	<logPath><![CDATA[".$logPath."]]></logPath>\n";
+	
+		$errfileEsc = str_replace("\\", "/", $errfile);
+	
+		if (isset($sysErr)) {
+	
+			$message .= "	<cause>\n";
+			$message .= "		<message><![CDATA[Encountered the problem in ".$errfile."]]></message>\n";
+			$message .= "	</cause>\n";
+			$message .= "	<cause>\n";
+			$message .= "		<message><![CDATA[Line ".$errline."]]></message>\n";
+			$message .= "	</cause>\n";
+	
+			error_log(date('r').' : '.strip_tags($errMsg), 3, $logPath.'logDB.txt');
+	
+			$errMsgEsc = str_replace("'", "\'",strip_tags($type." :".'\n'.$errstr.'\n'."in ".$errfileEsc.'\n'."on line ".$errline));
+	
+		} else {
+	
+			$message .= "	<cause>\n";
+			$message .= "		<message><![CDATA[".mysql_error()."]]></message>\n";
+			$message .= "	</cause>\n";
+	
+			$message .= "	<cause>\n";
+			$message .= "		<message><![CDATA[MySQL Error # :".mysql_errno()."]]></message>\n";
+			$message .= "	</cause>\n";
+	
+			$errMsgEsc = str_replace("'", "\'",strip_tags($type." :".'\n'.$errstr.'\n'."Tech Info".'\n'."------------".'\n'.mysql_error()));
+			error_log(date('r').' : '.strip_tags($errMsgEsc), 3, $logPath.'logDB.txt');
+		}
+	
+		$confObj = new Conf();
+	
+		$message .= "	<environment>\n";
+		$message .= "		<version type='ohrm' description='OrangeHRM' ><![CDATA[". $confObj->version."]]></version>\n";
+		$message .= "		<version type='php' description='PHP' ><![CDATA[".constant('PHP_VERSION')."]]></version>\n";
+		$message .= "		<version type='mysql' description='MySQL Client' ><![CDATA[".mysql_get_client_info()."]]></version>\n";
+		$message .= "		<info type='memory_limit' description='Memory limit' ><![CDATA[".ini_get('memory_limit')."]]></info>\n";
+		$message .= "		<info type='session.gc_maxlifetime' description='Maximum session lifetime' ><![CDATA[".ini_get('session.gc_maxlifetime')."]]></info>\n";
+		$message .= "	</environment>\n";
+	
+		$message .= "	<cmd n='js'><![CDATA[alert('$errMsgEsc');]]></cmd>\n";
+		$message .= "</report>\n";
+	
+		header("Content-type: application/xml; charset=UTF-8");
+	
+		echo $message;
+	
+		exit;
 	}
 }
 
