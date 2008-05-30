@@ -4,6 +4,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1925868   When someone apply,if mail not config. in app warning given
     1941291   When you apply for a job vacancies top title bar should have
     1919420   Editing locations for nested divisions/depts. error message
+    1979629   Error in creating database tables by the installer
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 
