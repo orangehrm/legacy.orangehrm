@@ -7,6 +7,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1979629   Error in creating database tables by the installer
     1969515   Performance: some tabs not clearly visible to user
     1969516   Display Unexpected Error page in Job Specification
+    1910903   Selecting a user as terminated , termination date not appea
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 

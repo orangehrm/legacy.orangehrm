@@ -124,6 +124,13 @@ $iconDir = '../../themes/'.$styleSheet.'/icons/';
 			obj.style['visibility']='visible';
 			obj = document.getElementById("tdTermDateValue");
 			obj.style['visibility']='visible';
+			
+			// Set terminated date to today (if empty)
+			var termDate = document.getElementById("txtTermDate");
+			if (termDate.value == YAHOO.OrangeHRM.calendar.formatHint.format) {
+				today = new Date(); 				
+				termDate.value = formatDate(today, YAHOO.OrangeHRM.calendar.format);				
+			}
 
 		}
 	}
