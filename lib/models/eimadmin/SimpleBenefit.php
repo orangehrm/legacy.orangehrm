@@ -22,12 +22,18 @@ require_once ROOT_PATH . '/lib/dao/DMLFunctions.php';
 require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
 require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpSimpleBenefit.php';
 
 class SimpleBenefit {
 
 	const TABLE_NAME = 'hs_hr_benefit_simple';
 	const DB_FIELD_ID = 'id';
 	const DB_FIELD_NAME = 'name';
+
+	/** Field order */
+	const SORT_FIELD_NONE = -1;
+	const SORT_FIELD_ID = 0;
+	const SORT_FIELD_NAME = 1;
 
 	private $id;
 	private $name;
@@ -76,19 +82,42 @@ class SimpleBenefit {
 	/**
 	 * Get list of benefits in a format suitable for view.php
 	 */
-	public static function getListForView($pageNO = 0, $schStr = '', $mode = -1, $sortField = 0, $sortOrder = 'ASC') {
-
-		$arrFieldList[0] = self::DB_FIELD_ID;
-		$arrFieldList[1] = self::DB_FIELD_NAME;
-
-		$sqlBuilder = new SQLQBuilder();
-
-		$sqlBuilder->table_name = self::TABLE_NAME;
-		$sqlBuilder->flg_select = 'true';
-		$sqlBuilder->arr_select = $arrFieldList;
-		$sqlQString = $sqlBuilder->passResultSetMessage($pageNO, $schStr, $mode, $sortField, $sortOrder);
+	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE, $sortField = self::SORT_FIELD_ID, $sortOrder = 'ASC') {
 
 		$dbConnection = new DMLFunctions();
+		
+		$fields[0] = 'a.' . self::DB_FIELD_ID;
+		$fields[1] = 'a.' . self::DB_FIELD_NAME;
+		$fields[2] = 'COUNT(b.' . EmpSimpleBenefit::DB_FIELD_EMP_NUMBER . ') as NUMINUSE';
+
+		$tables[0] = self::TABLE_NAME . ' a';
+		$tables[1] = EmpSimpleBenefit::TABLE_NAME . ' b';
+
+		$joinConditions[1] = 'a.' . self::DB_FIELD_ID . ' = b.' . EmpSimpleBenefit::DB_FIELD_BENEFIT_ID;
+		
+		$sysConst = new sysConf();
+		$limit = null;
+		if ($pageNO > 0) {
+			$pageNO--;
+			$pageNO *= $sysConst->itemsPerPage;
+			$limit = "{$pageNO}, {$sysConst->itemsPerPage}";
+		}
+
+		$sortBy = null;
+		if (($sortField >= 0) && ($sortField < count($fields))) {
+			$sortBy = $fields[$sortField];
+		}
+
+		$selectConditions = null;
+        if (($searchFieldNo >= 0) && ($searchFieldNo < count($fields)) && (trim($searchStr) != '')) {
+	    	$filteredSearch = mysql_real_escape_string($searchStr);
+	    	$selectConditions[] = "{$fields[$searchFieldNo]} LIKE '%" . $filteredSearch . "%'";
+        }
+
+		$groupBy =  'a.' . self::DB_FIELD_ID . ', ' . 'a.' . self::DB_FIELD_NAME;
+		$sqlBuilder = new SQLQBuilder();
+		$sqlQString = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectConditions, null, $sortBy, $sortOrder, $limit, $groupBy);
+		
 		$result = $dbConnection->executeQuery($sqlQString);
 
 		$i = 0;
@@ -96,6 +125,7 @@ class SimpleBenefit {
 		while ($line = mysql_fetch_assoc($result)) {
 			$arrayDispList[$i][0] = $line[self::DB_FIELD_ID];
 	    	$arrayDispList[$i][1] = $line[self::DB_FIELD_NAME];
+	    	$arrayDispList[$i]['inuse'] = ($line['NUMINUSE'] > 0) ? true : false;
 	    	$i++;
 	     }
 

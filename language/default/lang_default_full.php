@@ -777,6 +777,8 @@
     $lang_benefits_name                      = "Name";
     $lang_benefits_PleaseSpecifyBenefitName  = "Please specify Benefit name";
     $lang_benefits_NameInUse_Error           = "This name is in use";
+    $lang_benefits_DeleteInUse_Warning       = 'Some of the benefit types you are attempting to delete have been assigned to employees. \n' .
+    		'Deleting these will affect employee data';
 
  	$lang_languageinformation_heading 		= "Skills : Language";
 

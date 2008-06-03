@@ -101,22 +101,49 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 ?>
 	}
 
+	/**
+	 * Check if items being deleted are in use
+	 * @param Array delArray Array of items to be checked
+	 * @return true if at least one item is in use or false otherwise  
+	 */
+	function checkIfInUse(delArray) {
+		var numToDelete = delArray.length;
+		 
+		for (i = 0; i < numToDelete; i++) {
+			var id = delArray[i];
+			var inUseId = "inuse_" + id;
+			var inUse = document.getElementById(inUseId);
+			if (inUse.value == 'true') {
+				return true;
+			}	
+		}
+		return false;
+	}
+	
 	function returnDelete() {
+		
+		var idsToDelete = new Array();
+		 
 		$check = 0;
 		with (document.standardView) {
 			for (var i=0; i < elements.length; i++) {
 				if ((elements[i].type == 'checkbox') && (elements[i].checked == true) && (elements[i].name == 'chkLocID[]')){
 					$check = 1;
+					idsToDelete.push(elements[i].value);
 				}
 			}
 		}
 
 		if ($check == 1){
 
-			var res = confirm("<?php echo "{$headingInfo[4]}. {$lang_Common_ConfirmDelete}"; ?>");
-
-			if(!res) return;
-
+			// Check if in use
+			var inUse = checkIfInUse(idsToDelete);
+			
+			if (inUse) {
+				var res = confirm("<?php echo "{$headingInfo[4]}. {$lang_Common_ConfirmDelete}"; ?>");
+				if(!res) return;
+			}
+			
 			document.standardView.delState.value = 'DeleteMode';
 			document.standardView.pageNO.value=1;
 			document.standardView.submit();
@@ -351,7 +378,17 @@ echo $pageStr;
 		 		?>
        		<td class="<?php echo $cssClass?>" width="50">
        				<?php if (CommonFunctions::extractNumericId($message[$j][0]) > 0) { ?>
-       					<input type='checkbox' class='checkbox' name='chkLocID[]' value='<?php echo $message[$j][0]?>' /></td>
+       					<input type='checkbox' class='checkbox' name='chkLocID[]' value='<?php echo $message[$j][0]?>' />
+<?php
+					  // Default to in use if not specified.
+					  $inuse = true;
+					  if (isset($message[$j]['inuse'])) {
+					      $inuse = ($message[$j]['inuse']) ? true : false;
+					  } 					  					
+?>       					
+       					<input type='hidden' name='inuse_<?php echo $message[$j][0]?>' id='inuse_<?php echo $message[$j][0]?>'
+       						   value='<?php echo $inuse ? 'true' : 'false'; ?>' />
+       					</td>
        				<?php } ?>
 		 		<?php 	} else { ?>
        		<td class="<?php echo $cssClass?>" width="50"></td>
