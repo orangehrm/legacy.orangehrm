@@ -186,9 +186,9 @@ if ($_SESSION['isProjectAdmin'] && ($moduletype == 'admin') && ($_GET['uniqcode'
 }
 
 /*
- * Allow Supervisors to view/edit Benefits page.
+ * Allow Supervisors to view/edit Benefits page and company property page
  */
-if ($_SESSION['isSupervisor'] && ($moduletype == 'admin') && ($_GET['uniqcode'] == 'BEN')) {
+if ($_SESSION['isSupervisor'] && ($moduletype == 'admin') && (($_GET['uniqcode'] == 'BEN') || ($_GET['uniqcode'] == 'TCP')) ) {
     $locRights = array('add'=> true , 'edit'=> true , 'delete'=> true, 'view'=> true);
 }
 

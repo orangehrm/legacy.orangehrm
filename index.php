@@ -218,9 +218,9 @@ if ($_SESSION['isAdmin']=='No') {
         // Default page for supervisors is the Benefits page
         $defaultAdminView = "BEN";
 
-        // Allow project admins to view BEN (Benefits) page only (in the admin module)
+        // Allow supervisors to view BEN (Benefits) page and TCP (Company property) page only (in the admin module)
         // If uniqcode is not set, the default view is Benefits
-        if ((!isset($_GET['uniqcode'])) || ($_GET['uniqcode'] == 'BEN')) {
+        if ((!isset($_GET['uniqcode'])) || ($_GET['uniqcode'] == 'BEN') || ($_GET['uniqcode'] == 'TCP')) {
             $allowAdminView = true;
         }
     }
@@ -618,21 +618,26 @@ function preloadAllImages() {
 						<li id="notifications"><a href="#" onMouseOver="ypSlideOutMenu.showMenu('menu15');" onMouseOut="ypSlideOutMenu.hideMenu('menu15');"><?php echo $lang_Menu_Admin_EmailNotifications; ?></a></li>
 						<li id="projectInfo"><a href="#"  onMouseOver="ypSlideOutMenu.showMenu('menu17');" onMouseOut="ypSlideOutMenu.hideMenu('menu17');"><?php echo $lang_Menu_Admin_ProjectInfo; ?></a></li>
 					  </ul></TD>
-<?php				} else if ($_SESSION['isProjectAdmin']) { ?>
+<?php				} else if (($_SESSION['isProjectAdmin']) || ($_SESSION['isSupervisor'])) { ?>
                     <TD width=158>
-                      <ul id="menu">
+                      <ul id="menu">                      
+	 
+<?php				if ($_SESSION['isProjectAdmin']) { ?>
 						<li id="projectInfo">
 							<a href="index.php?uniqcode=PAC&menu_no=2&submenutop=EIMModule&menu_no_top=eim">
 							<?php echo $lang_Admin_ProjectActivities; ?></a></li>
-					  </ul></TD>
-<?php               } else if ($_SESSION['isSupervisor']) { ?>
-                    <TD width=158>
-                      <ul id="menu">
+<?php               }
+					if ($_SESSION['isSupervisor']) { ?>
+						<li id="compinfo">						
+							<a href="index.php?uniqcode=TCP&menu_no=1&submenutop=EIMModule&menu_no_top=eim">
+							<?php echo $lang_Menu_Admin_Company_Property; ?></a></li>                      
                         <li id="benefitsInfo">
                             <a href="index.php?uniqcode=BEN&submenutop=EIMModule&menu_no_top=eim">
                             <?php echo $lang_Menu_Admin_Benefits; ?></a></li>
+
+<?php 				} ?>
                       </ul></TD>
-<?php 				}
+<?php				}
 				} else if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep")) { ?>
                     <TD width=158>
                     <ul id="menu">
@@ -743,7 +748,7 @@ function preloadAllImages() {
 			</TD>
 <?php           }
                 if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="perf" )) { ?>
-            <TD width=158>
+            <TD width=158> 
                 <ul id="menu">
                     <?php if ($_SESSION['isAdmin']=='Yes') { ?>
                     <!-- <li id="jobVacancies">
