@@ -15,6 +15,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1970071   No Search bar for Performance Measures
     1970076   No Proper paging for Performance Measures
     1925824   System accept job specs of same name differed by casesensiti
+    1922115   After you Subscribe to E-mail Notifications does not say whether the data was saved
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 
