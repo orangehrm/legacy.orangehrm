@@ -20,6 +20,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1922115   After you Subscribe to E-mail Notifications does not say whether the data was saved
     1926772   Whentrying to Attach a file under PIM moves to error page
     1910901   Terminated users can log as ESS users
+    1981731   Time Module : Cannot select Employee in Print Time sheet
 
     Merged bug fixes:
     BugId     Name
