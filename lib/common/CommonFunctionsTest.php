@@ -242,6 +242,15 @@ class CommonFunctionsTest extends PHPUnit_Framework_TestCase {
         
         // property available, but getter is private    
     }
+    
+    public function testEscapeForJavascript() {
+    	
+    	$this->assertEquals("John\\'s bride", CommonFunctions::escapeForJavascript("John's bride"));
+    	$this->assertEquals('John said \"Hello\"', CommonFunctions::escapeForJavascript('John said "Hello"'));
+    	$this->assertEquals('Xyz \\\\a', CommonFunctions::escapeForJavascript('Xyz \a'));
+    	
+    	$this->assertEquals("John\'s friend said \\\"Hello\\\", \\\\", CommonFunctions::escapeForJavascript("John's friend said \"Hello\", \\"));
+    }
 }
 
 /**

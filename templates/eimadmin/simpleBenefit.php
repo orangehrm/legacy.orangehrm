@@ -48,7 +48,8 @@ $picDir = "../../themes/{$styleSheet}/pictures/";
 	foreach($benefits as $ben) {
 		$name = $ben->getName();
 		if ($name != $nameOfThisBen) {
-	   		print "\tnames.push(\"{$name}\");\n";
+			$escapedName = CommonFunctions::escapeForJavascript($name);
+	   		print "\tnames.push(\"{$escapedName}\");\n";
 		}
 	}
 ?>
