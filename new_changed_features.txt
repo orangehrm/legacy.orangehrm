@@ -22,6 +22,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1910901   Terminated users can log as ESS users
     1981731   Time Module : Cannot select Employee in Print Time sheet
     1969405   Alignment error in Add and Remove buttons of Performace Revi
+    1969386   It2: Current salary not retrieved properly 
 
     Merged bug fixes:
     BugId     Name

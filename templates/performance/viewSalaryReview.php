@@ -202,13 +202,13 @@ function checkSalary() {
 }
 	
 function hideLoading() {
-	status = $('status');
-	status.style.display = 'none';
+	var statusVar = $('status');
+	statusVar.style.display = 'none';
 }
 
 function showLoading() {
-	status = $('status');
-	status.style.display = 'block';
+	var statusVar = $('status');
+	statusVar.style.display = 'block';
 }
 		
 </script>
