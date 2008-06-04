@@ -1,5 +1,7 @@
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
 
+    Fixed bugs:
+
 	BugId     Name
     1925868   When someone apply,if mail not config. in app warning given
     1941291   When you apply for a job vacancies top title bar should have
@@ -16,6 +18,10 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1970076   No Proper paging for Performance Measures
     1925824   System accept job specs of same name differed by casesensiti
     1922115   After you Subscribe to E-mail Notifications does not say whether the data was saved
+
+    Merged bug fixes:
+    BugId     Name
+    1956040   Additional text box in Job Vacancies    
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 
