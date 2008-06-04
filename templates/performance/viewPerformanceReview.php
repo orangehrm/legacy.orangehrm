@@ -276,11 +276,11 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 		<br /><br />
 		<table border="0">
 		<tr>
-		   	<th width="100" style="align:center;"><?php echo $lang_Performance_Review_AvailablePerformanceMeasures; ?></th>
+		   	<th width="130" style="align:center;"><?php echo $lang_Performance_Review_AvailablePerformanceMeasures; ?></th>
 			<th width="100"/>
-		   	<th width="125" style="align:center;"><?php echo $lang_Performance_Review_AssignedPerformanceMeasures; ?></th>
+		   	<th width="130" style="align:center;"><?php echo $lang_Performance_Review_AssignedPerformanceMeasures; ?></th>
 		</tr>
-		<tr><td width="100" >
+		<tr><td width="130" >
 			<select size="10" id="cmbAvailablePerfMeasures" name="cmbAvailablePerfMeasures[]" style="width:125px;"
 					multiple="multiple">
        			<?php
@@ -295,7 +295,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 				<input type="button" name="btnremoveJobTitle" id="btnremoveJobTitle" onClick="removeJobTitle();" value="< <?php echo $lang_Leave_Common_Remove; ?>" style="width:80%">
 			<?php } ?>				
 			</td>
-			<td>
+			<td width="130">
 			<select size="10" name="cmbAssignedPerfMeasures[]" id="cmbAssignedPerfMeasures" style="width:125px;"
 			        multiple="multiple">
        			<?php
