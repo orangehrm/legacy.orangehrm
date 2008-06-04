@@ -28,6 +28,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     Merged bug fixes:
     BugId     Name
     1956040   Additional text box in Job Vacancies    
+    1824976 - Approved leave should not show cancelled leave
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 
