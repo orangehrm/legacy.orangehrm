@@ -118,6 +118,8 @@ class LeaveSummary extends LeaveQuota {
 		if ( $searchBy == "leaveType" && !empty($leaveTypeId) && ($leaveTypeId != self::LEAVESUMMARY_CRITERIA_ALL)) {
 			$selectConditions[] = "b.`leave_type_id` = '{$leaveTypeId}'";
 		}
+		
+		$selectConditions[]  = "a.`emp_status` IS  NULL" ;
 
 		if ($sortField == null) {
 			$sortField = 0;
