@@ -19,6 +19,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1925824   System accept job specs of same name differed by casesensiti
     1922115   After you Subscribe to E-mail Notifications does not say whether the data was saved
     1926772   Whentrying to Attach a file under PIM moves to error page
+    1910901   Terminated users can log as ESS users
 
     Merged bug fixes:
     BugId     Name

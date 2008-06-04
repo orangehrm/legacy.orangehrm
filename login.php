@@ -20,6 +20,7 @@
 
 define('ROOT_PATH', dirname(__FILE__));
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/EmployStat.php';
 
 require_once ROOT_PATH . '/lib/common/Language.php';
 $lan = new Language();
@@ -46,7 +47,9 @@ if ((isset($_POST['actionID'])) && $_POST['actionID'] == 'chkAuthentication') {
 	$rset=$login->filterUser(trim($_POST['txtUserName']));
 
 	if (md5($_POST['txtPassword']) == $rset[0][1]) {
-		if ($rset[0][5]=='Enabled') {
+		if ($rset[0][8] == EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED) {
+			$InvalidLogin=4;
+		} else if ($rset[0][5]=='Enabled') {
 			if (($rset[0][7] == "Yes") || (($rset[0][7] == "No") && !empty($rset[0][6]))) {
 				$_SESSION['user']=$rset[0][3];
 				$_SESSION['userGroup']=$rset[0][4];
@@ -219,6 +222,8 @@ body {
 			   		case 2 : 	$InvalidLoginMes = $lang_login_UserDisabled;
 			   					break;
 			   		case 3 : 	$InvalidLoginMes = $lang_login_NoEmployeeAssigned;
+			   					break;
+			   		case 4 : 	$InvalidLoginMes = $lang_login_EmployeeTerminated;
 			   					break;
 			   }
 			} else {
