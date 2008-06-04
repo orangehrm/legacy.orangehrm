@@ -176,6 +176,7 @@ class MailNotifications {
 			}
 			return $this->_sendMail();
 		} else if (isset($this->leaveObjs)) {
+			$this->_refreshLeaves();
 			return $this->_sendMail();
 		}
 		return false;
@@ -567,9 +568,21 @@ class MailNotifications {
 
 		$leaveObjs = $leaveObj->retrieveLeave($leaveRequestObj->getLeaveRequestId());
 
-		$leaveObjs = $leaveObjs;
-
 		$this->setLeaveObjs($leaveObjs);
+	}
+
+	/**
+	 * Refresh leave objects from the database, since leave objects extracted from request are
+	 * missing some information like dates and leave lengths.
+	 */
+	private function _refreshLeaves() {
+
+		$leaveObjs = array();
+		foreach ($this->leaveObjs as $leaveObj) {
+			$leave = $leaveObj->retrieveIndividualLeave($leaveObj->getLeaveId());
+			$leaveObjs[] = $leave[0];
+		}
+		$this->leaveObjs = $leaveObjs;
 	}
 
 	/**

@@ -1296,36 +1296,46 @@ switch ($moduletype) {
 																						break;
 
 													case 'Leave_ChangeStatus' 		:  	$objs = $leaveExtractor->parseEditData($_POST);
-																						$mes = "Empty record";
 																						$objx=false;
+																						$numChanged = 0;
 																						if (isset($objs)) {
 																							foreach ($objs as $obj) {
 																								$leaveController->setObjLeave($obj);
 																								$leaveController->setId($obj->getLeaveId());
 																								$mes=$leaveController->changeStatus("change");
 																								if ($mes) {
+																									$numChanged++;
 																									$objx[] = $obj;
 																								}
 																							}
 																						}
-																						$leaveController->sendChangedLeaveNotification($objx);
-																						$leaveController->redirect("");
+                                                                                        if ($numChanged > 0) {
+                                                                                        	$leaveController->sendChangedLeaveNotification($objx);
+                                                                                            $message = "CHANGE_STATUS_SUCCESS";
+                                                                                        } else {
+                                                                                            $message = "";
+	                                                                                    }
+	                                                                                    
+	                                                                                    $leaveController->redirect($message);																						
 																						break;
 
 													case 'Leave_Request_ChangeStatus': 	$objs = $leaveRequestsExtractor->parseEditData($_POST);
-																						$mes = "Empty record";
-																						if (isset($objs))
-																						foreach ($objs as $obj) {
-																							$leaveController->setObjLeave($obj);
-																							$leaveController->setId($obj->getLeaveId());
-
-																							$mes=$leaveController->changeStatus("change");
-																							if ($mes) {
-																								$leaveController->sendChangedLeaveNotification($obj, true);
+																						$numChanged = 0;
+																						if (isset($objs)) {
+																							foreach ($objs as $obj) {
+																								$leaveController->setObjLeave($obj);
+																								$leaveController->setId($obj->getLeaveId());
+	
+																			                    $res=$leaveController->changeStatus("change");
+	 	                                                                                        if ($res) {
+	 	                                                                                            $numChanged++;																							
+																									$leaveController->sendChangedLeaveNotification($obj, true);
+																								}
 																							}
 																						}
 
-																						$leaveController->redirect("CHANGE_STATUS_SUCCESS");
+																						$message = ($numChanged > 0) ? "CHANGE_STATUS_SUCCESS" : "";
+							                                                            $leaveController->redirect($message);																						
 																						break;
 
 													case 'Leave_Apply'				: 	$obj = $leaveRequestsExtractor->parseAddData($_POST);

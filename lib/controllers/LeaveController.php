@@ -282,6 +282,7 @@ class LeaveController {
 
 		$approveObj = null;
 		$rejectedObj = null;
+		$cancelledObj = null;
 
 		if ($request) {
 			switch ($objs->getLeaveStatus()) {
@@ -289,6 +290,9 @@ class LeaveController {
 														  break;
 				case Leave::LEAVE_STATUS_LEAVE_REJECTED : $rejectedObj = $objs;
 														  break;
+				case Leave::LEAVE_STATUS_LEAVE_CANCELLED : $cancelledObj = $objs;
+														  break;
+
 			}
 		} else {
 			if (!is_array($objs)) {
@@ -301,13 +305,25 @@ class LeaveController {
 																  break;
 						case Leave::LEAVE_STATUS_LEAVE_REJECTED : $rejectedObj[] = $obj;
 																  break;
+						case Leave::LEAVE_STATUS_LEAVE_CANCELLED : $cancelledObj[] = $obj;
+																  break;
+
 					}
 				}
 			}
 		}
 
-		$this->_sendChangedLeaveNotification($approveObj, $request, MailNotifications::MAILNOTIFICATIONS_ACTION_APPROVE);
-		$this->_sendChangedLeaveNotification($rejectedObj, $request, MailNotifications::MAILNOTIFICATIONS_ACTION_REJECT);
+		if (!empty($approveObj)) {
+			$this->_sendChangedLeaveNotification($approveObj, $request, MailNotifications::MAILNOTIFICATIONS_ACTION_APPROVE);
+		}
+
+		if (!empty($rejectedObj)) {
+			$this->_sendChangedLeaveNotification($rejectedObj, $request, MailNotifications::MAILNOTIFICATIONS_ACTION_REJECT);
+		}
+
+		if (!empty($cancelledObj)) {
+			$this->_sendChangedLeaveNotification($cancelledObj, $request, MailNotifications::MAILNOTIFICATIONS_ACTION_CANCEL);
+		}
 
 		return true;
 	}

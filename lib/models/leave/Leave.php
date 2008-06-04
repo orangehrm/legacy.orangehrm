@@ -350,14 +350,18 @@ class Leave {
 		$arrFields[6] = '`start_time`';
 		$arrFields[7] = '`end_time`';
 		$arrFields[8] = '`leave_request_id`';
-		$arrFields[9] = '`leave_type_id`';
+		$arrFields[9] = 'a.`leave_type_id`';
 		$arrFields[10] = '`employee_id`';
+		$arrFields[11] = '`leave_type_name`';
 
-		$arrTable = "`hs_hr_leave`";
+		$arrTables[0] = "`hs_hr_leave` a";
+		$arrTables[1] = "`hs_hr_leavetype` b";
+
+		$joinConditions[1] = "a.`leave_type_id` = b.`leave_type_id`";
 
 		$selectConditions[1] = "`leave_id` = '".$leaveId."'";
 
-		$query = $sqlBuilder->simpleSelect($arrTable, $arrFields, $selectConditions, $arrFields[5], 'ASC');
+		$query = $sqlBuilder->selectFromMultipleTable($arrFields, $arrTables, $joinConditions, $selectConditions);
 
 		$dbConnection = new DMLFunctions();
 
@@ -446,7 +450,7 @@ class Leave {
 
 		/** Check if no change */
 		if ($newStatus == $leave->getLeaveStatus()) {
-			return true;
+			return false;
 		}
 
 		$taken = ($leave->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_TAKEN);
