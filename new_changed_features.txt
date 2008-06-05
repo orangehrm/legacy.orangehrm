@@ -38,6 +38,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1901201   Terminated employees' names are shown in leave summary.
     1937400   HSP: Admin -> Email configuration ->Save
     1927308   leave summary for single employee returns complete summary
+    1927227   HSP Leave Summary -> leave Type not filtered 
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 

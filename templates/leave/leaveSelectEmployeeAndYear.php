@@ -63,8 +63,23 @@
 		}
 	}
 
-	function view(type) {
-		document.frmSelectEmployee.searchBy.value = type;
+	function view() {
+
+		with (document.frmSelectEmployee) {
+		    if (cmbId.selectedIndex > 0) {
+			searchMode = 'employee';
+		    }
+		    if (leaveTypeId.selectedIndex > 0) {
+			searchMode = 'leaveType';
+		    }
+		    if (cmbId.selectedIndex > 0 && leaveTypeId.selectedIndex > 0) {
+			searchMode = 'both';
+		    }
+
+		    searchBy.value = searchMode;
+		}
+
+
 	}
 
 	function changeEmployeeSelection() {
