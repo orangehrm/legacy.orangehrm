@@ -490,7 +490,6 @@ class LeaveController {
 		if (isset($cust)) {
 			$url[0].=$cust;
 		}
-
 		header("Location: {$url[0]}{$message}{$id}");
 	}
 
@@ -703,7 +702,7 @@ class LeaveController {
                         $this->redirect(null, array("?leavecode=Leave&action=Leave_Summary&year=$currYear&id=0&message=LEAVE_QUOTA_COPY_SUCCESS"));
 
 		} else {
-			$this->redirect("LEAVE_QUOTA_COPY_FAILURE", null, null, "&year=$currYear&id=0");
+			$this->redirect(null, array("?leavecode=Leave&action=Leave_Summary&year=$currYear&id=0&message=LEAVE_QUOTA_COPY_FAILURE"));			
 		}
 	}
 
