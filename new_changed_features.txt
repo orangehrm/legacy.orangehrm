@@ -24,6 +24,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1969405   Alignment error in Add and Remove buttons of Performace Revi
     1969386   It2: Current salary not retrieved properly 
     1924025   Entering \ for benefit name: Unable to edit other benefits
+    1936127   Copyright should be 2008
 
     Merged bug fixes:
     BugId     Name
