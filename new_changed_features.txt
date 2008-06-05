@@ -41,6 +41,10 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1927227   HSP Leave Summary -> leave Type not filtered 
     1927003   Assign leave for past year moves to a warning page
     1927022   Supervisor approve leave and apply leave, in same screen
+    1843262   Leave Module : Admin ssign leave Unnecessary alert
+    1927015   Mails are sent before leave assigning confirmed
+    1879964   Give proper warning when installtion fails
+
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 
