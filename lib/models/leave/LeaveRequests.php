@@ -257,11 +257,15 @@ class LeaveRequests extends Leave {
 		$tmpLeaveArr = $tmpLeave->retrieveLeave($this->getLeaveRequestId());
 
 		$ok = true;
-		foreach ($tmpLeaveArr as $leave) {
-			$leave->setLeaveStatus($newStatus);
-			$res = $leave->changeLeaveStatus();
-			if (!$res) {
-				$ok = false;
+
+
+		if(! is_null($tmpLeaveArr)){
+			foreach ($tmpLeaveArr as $leave) {
+				$leave->setLeaveStatus($newStatus);
+				$res = $leave->changeLeaveStatus();
+				if (!$res) {
+					$ok = false;
+				}
 			}
 		}
 		return $ok;
