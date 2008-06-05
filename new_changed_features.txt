@@ -40,6 +40,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1927308   leave summary for single employee returns complete summary
     1927227   HSP Leave Summary -> leave Type not filtered 
     1927003   Assign leave for past year moves to a warning page
+    1927022   Supervisor approve leave and apply leave, in same screen
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
 
