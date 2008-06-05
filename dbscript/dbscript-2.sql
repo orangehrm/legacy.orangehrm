@@ -493,7 +493,7 @@ INSERT INTO `hs_hr_module` VALUES ('MOD001','Admin','Koshika','koshika@beyondm.n
 								  ('MOD005', 'Leave', 'Mohanjith', 'mohanjith@beyondm.net', 'VER001', 'Leave Tracking'),
 								  ('MOD006', 'Time', 'Mohanjith', 'mohanjith@orangehrm.com', 'VER001', 'Time Tracking'),
 								  ('MOD008', 'Recruitment', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Recruitment'),
-								  ('MOD009', 'Recruitment', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Recruitment');
+								  ('MOD009', 'Performance', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Performance');
 INSERT INTO `hs_hr_rights` ( `userg_id` , `mod_id` , `addition` , `editing` , `deletion` , `viewing` )
 VALUES  ('USG001', 'MOD001', '1', '1', '1', '1'),
 		('USG001', 'MOD002', '1', '1', '1', '1'),

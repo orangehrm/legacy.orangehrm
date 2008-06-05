@@ -25,6 +25,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1969386   It2: Current salary not retrieved properly 
     1924025   Entering \ for benefit name: Unable to edit other benefits
     1936127   Copyright should be 2008
+    1985780   Admin rights: Two modules named 'Recruitement'
 
     Merged bug fixes:
     BugId     Name
