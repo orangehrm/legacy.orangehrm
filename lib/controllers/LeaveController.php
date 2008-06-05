@@ -774,6 +774,9 @@ class LeaveController {
 		$empInfoObj = new EmpInfo();
 
 		$tmpObj = $this->getObjLeave();
+
+                $esp = ($esp == null) ? 'employee' : $esp;
+
 		$tmpObjX[] = $tmpObj->fetchAllEmployeeLeaveSummary($this->getId(), $year, $this->getLeaveTypeId(), $esp, $sortField, $sortOrder);
 
 		$tmpObjX[] = $empInfoObj->filterEmpMain($this->getId());
