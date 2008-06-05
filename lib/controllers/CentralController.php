@@ -1321,11 +1321,10 @@ switch ($moduletype) {
 
 													case 'Leave_Request_ChangeStatus': 	$objs = $leaveRequestsExtractor->parseEditData($_POST);
 																						$numChanged = 0;
-																						if (isset($objs)) {
+																						if (isset($objs)){
 																							foreach ($objs as $obj) {
 																								$leaveController->setObjLeave($obj);
 																								$leaveController->setId($obj->getLeaveId());
-	
 																			                    $res=$leaveController->changeStatus("change");
 	 	                                                                                        if ($res) {
 	 	                                                                                            $numChanged++;																							
@@ -1333,7 +1332,6 @@ switch ($moduletype) {
 																								}
 																							}
 																						}
-
 																						$message = ($numChanged > 0) ? "CHANGE_STATUS_SUCCESS" : "";
 							                                                            $leaveController->redirect($message);																						
 																						break;
@@ -1481,7 +1479,9 @@ switch ($moduletype) {
 						}
 						break;
 
-	case 'timeMod'	:	switch ($_GET['timecode']) {
+	case 'timeMod'	:
+
+							switch ($_GET['timecode']) {
 							case 'Time'	:	if (isset($_GET['action'])) {
 												$timeController = new TimeController();
 												$timesheetExtractor = new EXTRACTOR_Timesheet();
@@ -1496,6 +1496,8 @@ switch ($moduletype) {
 
 												switch ($_GET['action']) {
 													case 'View_Current_Timesheet':	$current=true;
+
+
 													case 'View_Timesheet' 		:	$obj = $timesheetExtractor->parseViewData($_POST);
 																					if (isset($_GET['id'])) {
 																						$obj->setTimesheetId($_GET['id']);
@@ -1564,11 +1566,13 @@ switch ($moduletype) {
 																					break;
 													case 'View_Select_Employee'	:	$timeController->viewSelectEmployee();
 																					break;
-													case 'Fetch_Next_Timesheet'	:	$obj = $timesheetExtractor->parseViewData($_POST);
+													case 'Fetch_Next_Timesheet'	:
+																					$obj = $timesheetExtractor->parseViewData($_POST);
 																					$timeController->setObjTime($obj);
 																					$timeController->nextEmployeeTimesheet();
 																					break;
-													case 'Fetch_Prev_Timesheet'	:	$obj = $timesheetExtractor->parseViewData($_POST);
+													case 'Fetch_Prev_Timesheet'	:
+																					$obj = $timesheetExtractor->parseViewData($_POST);
 																					$timeController->setObjTime($obj);
 																					$timeController->previousEmployeeTimesheet();
 																					break;

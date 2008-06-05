@@ -155,21 +155,31 @@ class Timesheet {
 		$timesheetSubmissionPeriods = $timesheetSubmissionPeriodObj->fetchTimesheetSubmissionPeriods();
 
 		if ($this->getStartDate() == null) {
-			$day=date('w');
+
+			/**
+			 * Here days should be in following values
+			 * Mo=1, Tu=2, We=3, Th=4, Fr=5, Sa=6, Su=7
+			 */
+			if (date('w') == 0) { // If it is Sunday
+				$day = 7;
+			} else {
+				$day = date('w');
+			}
 
 			$diff=$timesheetSubmissionPeriods[0]->getStartDay()-$day;
 			if ($diff > 0) {
 				$diff-=7;
 			}
+
 			$this->setStartDate(date('Y-m-d', time()+($diff*3600*24)));
 
 			$diff1=$timesheetSubmissionPeriods[0]->getEndDay()-$day;
 
-			if (6 >= ($diff1-$diff)) {
+			if (($diff1-$diff) <= 6) {
 				$diff1+=6-($diff1-$diff);
 			}
 
-			$this->setEndDate(date('Y-m-d', time()+($diff1*3600*24)));
+			$this->setEndDate(date('Y-m-d', time()+($diff1*3600*24))." 23:59:59");
 
 			$this->setTimesheetPeriodId($timesheetSubmissionPeriods[0]->getTimesheetPeriodId());
 		}
@@ -334,11 +344,14 @@ class Timesheet {
 
 		$selectConditions[] = "a.`".self::TIMESHEET_DB_FIELD_EMPLOYEE_ID."` = {$this->getEmployeeId()}";
 
+        $order = "ASC" ;
 		switch ($direction) {
 			case self::TIMESHEET_DIRECTION_NEXT :
+                                                    $order = "DESC" ;
 													$selectConditions[] = "a.`".self::TIMESHEET_DB_FIELD_START_DATE."` > '{$this->getEndDate()}'";
 													break;
 			case self::TIMESHEET_DIRECTION_PREV :
+                                                    $order = "ASC" ;
 													$selectConditions[] = "a.`".self::TIMESHEET_DB_FIELD_START_DATE."` < '{$this->getStartDate()}'";
 													break;
 		}
@@ -349,7 +362,7 @@ class Timesheet {
 			$selectConditions[] = "a.`".self::TIMESHEET_DB_FIELD_STATUS."` = '{$this->getStatus()}'";
 		}
 
-		$query = $sql_builder->simpleSelect($selectTable, $selectFields, $selectConditions, $selectFields[0], 'ASC', 1);
+		$query = $sql_builder->simpleSelect($selectTable, $selectFields, $selectConditions, $selectFields[0],  $order , 1);
 
 		$dbConnection = new DMLFunctions();
 
@@ -374,6 +387,7 @@ class Timesheet {
 	 */
 	public function fetchTimesheetsBulk($page, $employeeIds) {
 		$sql_builder = new SQLQBuilder();
+
 
 		$selectTable = self::TIMESHEET_DB_TABLE_TIMESHEET." a ";
 
@@ -524,6 +538,32 @@ class Timesheet {
 		$objArr = $this->_buildObjArr($result);
 
 		return $objArr;
+	}
+
+	/**
+	 * This function checks whether the given timesheet is in
+	 * given status
+	 */
+
+	public static function checkTimesheetStatus($timesheetId, $status) {
+
+		$selectTable = "`".self::TIMESHEET_DB_TABLE_TIMESHEET."`";
+		$selectFields[0] = "`".self::TIMESHEET_DB_FIELD_TIMESHEET_ID."`";
+		$selectConditions[0] = "`".self::TIMESHEET_DB_FIELD_TIMESHEET_ID."` = '".$timesheetId."'";
+		$selectConditions[1] = "`".self::TIMESHEET_DB_FIELD_STATUS."` = '".$status."'";
+
+		$sqlBuilder = new SQLQBuilder();
+		$query = $sqlBuilder->simpleSelect($selectTable, $selectFields, $selectConditions);
+
+		$dbConnection = new DMLFunctions();
+		$result = $dbConnection->executeQuery($query);
+
+		if ($dbConnection->dbObject->numberOfRows($result) == 1) {
+		    return true;
+		} else {
+		    return false;
+		}
+
 	}
 
 	/**

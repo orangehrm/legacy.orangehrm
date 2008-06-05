@@ -162,7 +162,7 @@
 	$lang_Menu_Leave_LeaveList 							= "Leave List";
 	$lang_Menu_Leave_MyLeave 							= "My Leave";
 	$lang_Menu_Leave_DefineDaysOff 						= "Define Days Off";
-	$lang_Menu_Leave_DefineDaysOff_Weekends 			= "Weekends";
+	$lang_Menu_Leave_DefineDaysOff_Weekends 			= "Days Off";
 	$lang_Menu_Leave_DefineDaysOff_SpecificHolidays 	= "Specific Holidays";
 
  	$lang_Leave_Title_Apply_Leave = "Apply Leave";
@@ -847,7 +847,7 @@
 	$lang_pim_tabs_Dependents = "Dependents";
 	$lang_pim_tabs_Immigration = "Immigration";
 	$lang_pim_tabs_Job = "Job";
-	$lang_pim_tabs_Payments = "Payments";
+	$lang_pim_tabs_Payments = "Salary";
 	$lang_pim_tabs_ReportTo = "Report-to";
 	$lang_pim_tabs_WorkExperience = "Work experience";
 	$lang_pim_tabs_Education = "Education";

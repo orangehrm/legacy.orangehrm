@@ -229,14 +229,19 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 	  * @param String customFormat(Optional)
 	  * @return String standardDate
 	  */
-	 public function convertToStandardTimeFormat($time, $customFormat=null) {
+	 public function convertToStandardTimeFormat($time, $customFormat=null, $punchInOut=false) {
 	 	if ($customFormat == null) {
 	 		$format = LocaleUtil::convertToXpDateFormat($this->sysConf->getTimeFormat());
 	 	} else {
 	 		$format = LocaleUtil::convertToXpDateFormat($customFormat);
 	 	}
 
+		if ($punchInOut) {
+		    $timeStamp=$this->_customFormatStringToTimeStamp($time, $format, $punchInOut);
+		} else {
 	 	$timeStamp=$this->_customFormatStringToTimeStamp($time, $format);
+		}
+
 	 	if (!$timeStamp) {
 	 		return null;
 	 	}
@@ -280,7 +285,7 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 	  * @param String format
 	  * @return Integer timestamp
 	  */
-	 private function _customFormatStringToTimeStamp($time, $format) {
+	 private function _customFormatStringToTimeStamp($time, $format, $punchInOut=false) {
 		$yearVal = '';
 		$monthVal = '';
 		$dateVal = '';
@@ -353,7 +358,11 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 			$minuteVal="00";
 		}
 
+		if ($punchInOut) {
+		    $timeStamp = mktime((int)$hourVal , (int)$minuteVal , 0 , (int)$monthVal , (int)$dateVal , (int)$yearVal);
+		} else {
 		$timeStamp = strtotime("$yearVal-$monthVal-$dateVal $hourVal:$minuteVal");
+		}
 
 		return $timeStamp;
 	 }

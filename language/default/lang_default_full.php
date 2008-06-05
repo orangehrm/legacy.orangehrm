@@ -171,7 +171,7 @@
 	$lang_Menu_Leave_LeaveList 							= "Leave List";
 	$lang_Menu_Leave_MyLeave 							= "My Leave";
 	$lang_Menu_Leave_DefineDaysOff 						= "Define Days Off";
-	$lang_Menu_Leave_DefineDaysOff_Weekends 			= "Weekends";
+	$lang_Menu_Leave_DefineDaysOff_Weekends 			= "Days Off";
 	$lang_Menu_Leave_DefineDaysOff_SpecificHolidays 	= "Specific Holidays";
 
  	$lang_Leave_Title_Apply_Leave = "Apply Leave";
@@ -261,6 +261,7 @@
 	$lang_Common_ADD_FAILURE 				= "Failed to Add";
 	$lang_Common_UPDATE_FAILURE 			= "Failed to Update";
 	$lang_Common_DELETE_FAILURE 			= "Failed to Delete";
+	$lang_Common_DUPLICATE_NAME_FAILURE     = "Name is already in use";
 	$lang_Common_UNKNOWN_FAILURE            = "Operation Failed";
 	
 	$lang_Leave_Common_Weekend 				= "Weekend";
@@ -351,6 +352,7 @@
 	$lang_Leave_NoOfDays = "No of Days";
 	$lang_Leave_NoOfHours = "No of Hours";
 	$lang_Leave_Period = "Leave Period";
+	$lang_Leave_Closed = "Closed";
 
 	$lang_Leave_Define_IsDeletedName  	= "Deleted Leave Type exists with the same name.";
 	$lang_Leave_Define_UndeleteLeaveType    = "To re-use deleted leave type instead of creating a new leave type, click:";
@@ -838,6 +840,7 @@
 
  	$lang_view_EmploymentStatusID 			= "Employment Status ID";
 	$lang_view_EmploymentStatusName 		= "Employment Status Name";
+	$lang_view_deletePrompt                 = "Deletion cannot be undone";
 	$lang_view_message 						= "Deletion may affect Job Titles";
 	$lang_view_message1 					= "Deletion may affect Pay Grade of Employees in PIM";
 	$lang_view_SkillName 					= "Skill Name";
@@ -1188,6 +1191,8 @@
 	$lang_Time_Errors_DELETE_SUCCESS = "Successfully deleted";
 	$lang_Time_Errors_DELETE_FAILURE = "Failed to delete";
 	$lang_Time_Errors_UNAUTHORIZED_FAILURE = "Unauthorized action";
+	$lang_Time_Errors_APPROVED_TIMESHEET_FAILURE = "Time event can not be added to an approved timesheet";
+	$lang_Time_Errors_REJECTED_TIMESHEET_FAILURE = "Time event can not be added to a rejected timesheet";
 
 	$lang_Time_Errors_NO_TIMESHEET_FAILURE = "No timesheet found";
 	$lang_Time_Errors_INVALID_TIME_FAILURE = "Invalid time specified";
@@ -1195,6 +1200,7 @@
 	$lang_Time_Errors_INVALID_TIMESHEET_PERIOD_ERROR = "Invalid timesheet period.";
 
 	$lang_Time_Errors_EncounteredTheFollowingProblems = "Encountered the following problems. Rows with errors are highlighted.";
+    $lang_Time_Errors_EncounteredFollowingProblems = "Encountered following problems";
 	$lang_Time_Errors_ReportedDateNotSpecified_ERROR = "Reported date not specified";
 	$lang_Time_Errors_ProjectNotSpecified_ERROR = "Project not specified";
 	$lang_Time_Errors_CustomerNotSpecified_ERROR = "Customer not specified";
@@ -1297,6 +1303,7 @@
 	$lang_Time_Print = "Print";
 
 	$lang_Common_Loading = "Loading";
+	$lang_Common_Select = "Select";
 
 	$lang_Menu_Time_PrintTimesheets = "Print Timesheets";
 
@@ -1627,5 +1634,5 @@
     
     // Performance    
     $lang_Performance_Assign_Review_Period = 'Assign Review Period';
-    
+	$lang_Common_To = "to";
 ?>

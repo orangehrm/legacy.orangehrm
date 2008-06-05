@@ -78,6 +78,7 @@
 
 
     //check to see whether a valid phone number
+    // Space character, plus sign and dash are allowed in phone numbers
     function checkPhone(txt)
     {
         var flag=true;
@@ -86,7 +87,7 @@
 
             code=txt.value.charCodeAt(i);
 
-            if ( ( (code>=48) && (code<=57) ) || (code == 45) || (code == 43))
+            if ( ( (code>=48) && (code<=57) ) || (code == 45) || (code == 43) || (code == 32) )
                 flag=true
             else
             {
@@ -136,6 +137,11 @@
         	}
     	}
 	return notNum;
+	}
+
+	function decimalCurrency(txt) {
+		regExp = /^[0-9]+(\.[0-9]+)*$/;
+		return regExp.test(txt.value);
 	}
 
 	/**
@@ -308,12 +314,74 @@
 	}
 
 	/**
+	 * Move up the currently selected options in the given select list, if possible
+	 *
+	 * @param selectObj The select object
+	 * @errorWhenNotSelected The error message to show if no option selected
+	 */
+	function moveSelectionsUp(selectObj, errorWhenNotSelected) {
+		if (selectObj.selectedIndex == -1) {
+			if (errorWhenNotSelected != "") {
+				alert(errorWhenNotSelected);
+			}
+			return;
+		}
+
+		// start from 1 since we can't move the 0'th element up
+		for (i = 1; i<selectObj.length; i++) {
+			if (selectObj.options[i].selected) {
+
+				opt = selectObj.options[i];
+				selectObj.removeChild(opt);
+				selectObj.insertBefore(opt, selectObj.options[i-1]);
+			}
+		}
+	}
+
+	/**
+	 * Move down the currently selected options in the given select list, if possible
+	 *
+	 * @param selectObj The select object
+	 * @errorWhenNotSelected The error message to show if no option selected
+	 */
+	function moveSelectionsDown(selectObj, errorWhenNotSelected) {
+		if (selectObj.selectedIndex == -1) {
+			if (errorWhenNotSelected != "") {
+				alert(errorWhenNotSelected);
+			}
+			return;
+		}
+
+		// start from one before last since we can't move the 0'th element up
+		for (i = selectObj.length - 2; i >= 0; i--) {
+			if (selectObj.options[i].selected) {
+
+				nextOpt = selectObj.options[i+1];
+				selectObj.removeChild(nextOpt);
+				selectObj.insertBefore(nextOpt, selectObj.options[i]);
+			}
+		}
+
+	}
+
+	/**
 	 * Select all options of the given select object.
 	 */
 	function selectAllOptions(selectObj) {
 		var selLength = selectObj.length;
 		for (i = 0 ; i < selLength; i++) {
 			selectObj.options[i].selected = true;
+		}
+	}
+
+	/**
+	 * Remove all options of the given select object.
+	 */
+	function removeAllOptions(selectObj) {
+		var selLength = selectObj.length;
+
+		for (i = selLength - 1 ; i >= 0; i--) {
+			selectObj.remove(i);
 		}
 	}
 
