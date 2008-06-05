@@ -44,6 +44,8 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1843262   Leave Module : Admin ssign leave Unnecessary alert
     1927015   Mails are sent before leave assigning confirmed
     1879964   Give proper warning when installtion fails
+    1852876   Admin can assign leave without setting leave quota
+    1858828   Apply leave 2007 -2008 : Summary inaccurate
 
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.9
