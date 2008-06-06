@@ -1146,7 +1146,7 @@ function preloadAllImages() {
 <?php } ?>
 <table width="100%">
 <tr>
-<td align="center"><a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 2.2.2.2 (ors 0.1-alpha.9) &copy; OrangeHRM Inc. 2005 - 2008 All rights reserved.</td>
+<td align="center"><a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 2.2.2.2 (ors 0.1-alpha.10) &copy; OrangeHRM Inc. 2005 - 2008 All rights reserved.</td>
 </tr>
 </table>
 <script language="javascript">
@@ -1177,4 +1177,4 @@ window.onresize = exploitSpace;
 </script>
 </body>
 </html>
-<?php ob_end_flush(); ?>
+<?php ob_end_flush(); ?
