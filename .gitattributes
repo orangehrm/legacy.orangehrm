@@ -558,6 +558,8 @@ templates/leave/mails/subordinate/approval-subject.txt -text
 templates/leave/mails/subordinate/approval.txt -text
 templates/leave/mails/subordinate/assign-subject.txt -text
 templates/leave/mails/subordinate/assign.txt -text
+templates/leave/mails/subordinate/cancelled-subject.txt -text
+templates/leave/mails/subordinate/cancelled.txt -text
 templates/leave/mails/subordinate/rejected-subject.txt -text
 templates/leave/mails/subordinate/rejected.txt -text
 templates/leave/mails/supervisor/applied-subject.txt -text

@@ -322,7 +322,26 @@ class LeaveController {
 		}
 
 		if (!empty($cancelledObj)) {
-			$this->_sendChangedLeaveNotification($cancelledObj, $request, MailNotifications::MAILNOTIFICATIONS_ACTION_CANCEL);
+
+			// check and see if supervisor is doing the cancellation.
+			$authorize = $this->authorize;
+			if ($request) {
+				$empId = $cancelledObj->getEmployeeId();
+			} else if (is_array($cancelledObj) && count($cancelledObj) > 0) {
+				$empId = $cancelledObj[0]->getEmployeeId();
+			}
+
+			$loggedInEmpId = $authorize->getEmployeeId();
+
+			if ($authorize->isAdmin() || (!empty($empId) && !empty($loggedInEmpId) && ($empId != $authorize->getEmployeeId()) &&
+					$authorize->isSupervisor())) {
+
+				$action = MailNotifications::MAILNOTIFICATIONS_ACTION_SUPERVISOR_CANCEL;
+			} else {
+				$action = MailNotifications::MAILNOTIFICATIONS_ACTION_CANCEL;
+			}
+
+			$this->_sendChangedLeaveNotification($cancelledObj, $request, $action);
 		}
 
 		return true;
@@ -490,6 +509,7 @@ class LeaveController {
 		if (isset($cust)) {
 			$url[0].=$cust;
 		}
+
 		header("Location: {$url[0]}{$message}{$id}");
 	}
 
@@ -700,9 +720,8 @@ class LeaveController {
                          *
                          */
                         $this->redirect(null, array("?leavecode=Leave&action=Leave_Summary&year=$currYear&id=0&message=LEAVE_QUOTA_COPY_SUCCESS"));
-
 		} else {
-			$this->redirect(null, array("?leavecode=Leave&action=Leave_Summary&year=$currYear&id=0&message=LEAVE_QUOTA_COPY_FAILURE"));			
+			$this->redirect("LEAVE_QUOTA_COPY_FAILURE", null, null, "&year=$currYear&id=0");
 		}
 	}
 
@@ -784,7 +803,7 @@ class LeaveController {
 
 		$tmpObj = $this->getObjLeave();
 
-                $esp = ($esp == null) ? 'employee' : $esp;
+                $eps = ($esp == null) ? 'employee' : $esp;
 
 		$tmpObjX[] = $tmpObj->fetchAllEmployeeLeaveSummary($this->getId(), $year, $this->getLeaveTypeId(), $esp, $sortField, $sortOrder);
 
@@ -1084,7 +1103,11 @@ class LeaveController {
 	public function addHoliday() {
 		$this->_authenticateViewHoliday();
 
-		$this->getObjLeave()->add();
+		$objLeave = $this->getObjLeave();
+
+		$objLeave->add();
+
+		Leave::deleteLeavesForDate($objLeave->getDate());
 	}
 
 	/**
@@ -1096,7 +1119,9 @@ class LeaveController {
 		$this->_authenticateViewHoliday();
 
 		switch ($modifier) {
-			case "specific" : $this->getObjLeave()->edit();
+			case "specific" : $objLeave = $this->getObjLeave();
+							  $this->getObjLeave()->edit();
+							  Leave::deleteLeavesForDate($objLeave->getDate());
 							  break;
 			case "weekend" 	: $this->getObjLeave()->editDay();
 							  break;

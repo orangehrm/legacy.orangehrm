@@ -916,6 +916,28 @@ class Leave {
 
 		return false;
 	}
+
+	/**
+	 * This function will delete leave records for the given date. This will only for leave status other than 'taken'
+	 * @param $date - string date for delete records
+	 */
+	public static function deleteLeavesForDate($date) {
+
+		$sql_builder = new SQLQBuilder();
+
+		$deleteTable = "`hs_hr_leave`";
+
+		$deleteConditions[] = "`leave_date` = '" . $date . "'";
+		$deleteConditions[] = "`leave_status` <> '" . self::LEAVE_STATUS_LEAVE_TAKEN . "'";
+
+		$query = $sql_builder->simpleDelete($deleteTable, $deleteConditions);
+
+		//echo $query."\n";
+
+		$dbConnection = new DMLFunctions();
+
+		$result = $dbConnection->executeQuery($query);
+	}
 }
 
 ?>

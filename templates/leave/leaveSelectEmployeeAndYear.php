@@ -158,7 +158,7 @@
 		 ?>
   	    		</select>
 		</th>
-    	<th width="100px" class="odd"><input type="image" name="btnView" onclick="view('employee');" src="../../themes/beyondT/icons/view.gif" onmouseover="this.src='../../themes/beyondT/icons/view_o.gif';" onmouseout="this.src='../../themes/beyondT/icons/view.gif';" /></th>
+    	<th width="100px" class="odd"><input type="image" name="btnView" onclick="view();" src="../../themes/beyondT/icons/view.gif" onmouseover="this.src='../../themes/beyondT/icons/view_o.gif';" onmouseout="this.src='../../themes/beyondT/icons/view.gif';" /></th>
 		<th class="tableMiddleRight"></th>
 	</tr>
 	<?php if ($role == authorize::AUTHORIZE_ROLE_ADMIN) { ?>
@@ -168,7 +168,7 @@
     	<th>&nbsp;</th>
     	<th>&nbsp;</th>
 		<th>
-			<input type="text" name="cmbEmpID" id="cmbEmpID" disabled />
+			<input type="text" name="cmbEmpID" id="cmbEmpID" value="" disabled />
 			<input type="hidden" name="id" id="id" value="0" />
 			<input type="button" value="..." onclick="returnEmpDetail();" />
 		</th>
@@ -197,7 +197,7 @@
 		 ?>
   	    		</select>
 		</th>
-    	<th width="100px" class="odd"><input type="image" name="btnView" onclick="view('leaveType');" src="../../themes/beyondT/icons/view.gif" onmouseover="this.src='../../themes/beyondT/icons/view_o.gif';" onmouseout="this.src='../../themes/beyondT/icons/view.gif';" /></th>
+    	<th width="100px" class="odd"></th>
 		<th class="tableMiddleRight"></th>
 	</tr>
 	<?php } ?>
