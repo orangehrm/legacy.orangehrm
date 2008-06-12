@@ -82,6 +82,19 @@ class EmpInfoTest extends PHPUnit_Framework_TestCase
         			"VALUES(2, '0022', 'Jayasinghe', 'Aruna', 'Shantha')");
         mysql_query("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name) " .
         			"VALUES(3, '0034', 'Ranasinghe', 'Nimal', 'Bandara')");
+        mysql_query("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name) " .
+        			"VALUES(4, '004', 'Anuradhae', 'Saman', 'Bandara')");
+        mysql_query("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name) " .
+        			"VALUES(5, '005', 'Surendra', 'Tharindu', 'Bandara')");
+        mysql_query("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name) " .
+        			"VALUES(6, '006', 'Nayeem', 'Fazly', 'Bandara')");
+        mysql_query("INSERT INTO hs_hr_employee(emp_number, employee_id, emp_lastname, emp_firstname, emp_middle_name) " .
+        			"VALUES(7, '007', 'Mahesan', 'Sanjeewan', 'Bandara')");
+
+		mysql_query("INSERT INTO `hs_hr_emp_reportto` VALUES ('2', '4', '1')");
+		mysql_query("INSERT INTO `hs_hr_emp_reportto` VALUES ('3', '5', '1')");
+		mysql_query("INSERT INTO `hs_hr_emp_reportto` VALUES ('3', '6', '1')");
+		mysql_query("INSERT INTO `hs_hr_emp_reportto` VALUES ('3', '7', '1')");
 
     }
 
@@ -97,6 +110,7 @@ class EmpInfoTest extends PHPUnit_Framework_TestCase
         mysql_query("TRUNCATE TABLE `hs_hr_project_admin`", $this->connection);
 		mysql_query("TRUNCATE TABLE `hs_hr_customer`", $this->connection);
         mysql_query("TRUNCATE TABLE `hs_hr_employee`", $this->connection);
+        mysql_query("TRUNCATE TABLE `hs_hr_emp_reportto`", $this->connection);
 
         mysql_close($this->connection);
     }
@@ -105,13 +119,26 @@ class EmpInfoTest extends PHPUnit_Framework_TestCase
     public function testCountEmployee()
     {
     	$empinfo = new EmpInfo();
-        $this->assertEquals($empinfo->countEmployee(),3, 'Couting employees is wrong...');
+        $this->assertEquals($empinfo->countEmployee(),7, 'Couting employees is wrong...');
 
 		mysql_query("UPDATE `hs_hr_employee` SET `emp_status` = 'EST000' WHERE `employee_id`='0011'", $this->connection);
 
-        $this->assertEquals($empinfo->countEmployee(),2, 'Couting employees is wrong...');
+        $this->assertEquals($empinfo->countEmployee(),6, 'Couting employees is wrong...');
     }
 
+    public function testCountSubordinates() {
+
+		$empInfo = new EmpInfo();
+
+		$result[] = $empInfo->countSubordinates(1);
+		$result[] = $empInfo->countSubordinates(2);
+		$result[] = $empInfo->countSubordinates(3);
+
+		$this->assertEquals(0, $result[0]);
+		$this->assertEquals(1, $result[1]);
+		$this->assertEquals(3, $result[2]);
+
+    }
 
 }
 
