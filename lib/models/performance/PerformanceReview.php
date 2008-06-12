@@ -25,6 +25,7 @@ require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 require_once ROOT_PATH . '/lib/common/SearchObject.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceScore.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/EmployStat.php';
 require_once ROOT_PATH . '/lib/confs/sysConf.php';
 
 class PerformanceReview {
@@ -197,7 +198,7 @@ class PerformanceReview {
 		$selectCondition[] = self::DB_FIELD_STATUS . " = " . self::STATUS_SCHEDULED;
 		$selectCondition[] = "(DATEDIFF(". self::DB_FIELD_REVIEW_DATE . ", CURDATE()) BETWEEN 0 AND 7)";
 
-		$list = self::_getList($selectCondition);
+		$list = self::_getList($selectCondition, null, null, null, false);
 		return $list;		
 	}
 
@@ -248,7 +249,8 @@ class PerformanceReview {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
-		
+		$includeTerminatedEmployees = false;
+				
 		for ($i = 0; $i < count($searchStr); $i++) {
 			
 			if (!empty($searchStr[$i])) {
@@ -256,6 +258,7 @@ class PerformanceReview {
 		
 				switch ($searchFieldNo[$i]) {
 					case self::SORT_FIELD_ID:
+						$includeTerminatedEmployees = true;
 						$selectCondition[] = self::DB_FIELD_ID . " = '{$escapedVal}' ";
 						break;
 					case self::SORT_FIELD_REVIEW_STATUS:
@@ -266,6 +269,7 @@ class PerformanceReview {
 						$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
 						break;
 					case self::SORT_FIELD_EMPLOYEE_NAME:
+						$includeTerminatedEmployees = true;					
 						$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
 												"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
 												"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
@@ -273,7 +277,7 @@ class PerformanceReview {
 				}
 			}
 		}
-		
+
 		if (!empty($supervisorEmpNum)) {
 			$repObj = new EmpRepTo();
 			$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
@@ -312,7 +316,7 @@ class PerformanceReview {
 				break;	
 		}
 				
-		$list = self::_getList($selectCondition, $sortBy, $sortOrder, $limit);
+		$list = self::_getList($selectCondition, $sortBy, $sortOrder, $limit, $includeTerminatedEmployees);
 		
 		$i = 0;
 		$arrayDispList = null;
@@ -340,6 +344,7 @@ class PerformanceReview {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
+		$includeTerminatedEmployees = false;
 		
 		for ($i = 0; $i < count($searchStr); $i++) {
 			
@@ -349,6 +354,7 @@ class PerformanceReview {
 				switch ($searchFieldNo[$i]) {
 					case self::SORT_FIELD_ID:
 						$selectCondition[] = self::DB_FIELD_ID . " = '{$escapedVal}' ";
+						$includeTerminatedEmployees = true;
 						break;
 					case self::SORT_FIELD_REVIEW_STATUS:
 						$selectCondition[] = self::DB_FIELD_STATUS . " = '{$escapedVal}' ";
@@ -358,6 +364,7 @@ class PerformanceReview {
 						$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
 						break;
 					case self::SORT_FIELD_EMPLOYEE_NAME:
+						$includeTerminatedEmployees = true;
 						$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
 												"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
 												"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
@@ -365,7 +372,7 @@ class PerformanceReview {
 				}
 			}
 		}
-
+		
 		if (!empty($supervisorEmpNum)) {
 			$repObj = new EmpRepTo();
 			$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
@@ -377,7 +384,11 @@ class PerformanceReview {
 			if (!empty($subordinateIds)) {
 				$selectCondition[] = "a.emp_number IN (" . implode(',', $subordinateIds). ")";
 			}
-		}	
+		}
+			
+		if (!$includeTerminatedEmployees) {
+			$selectCondition[] = "(b.`emp_status` != '" . EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED . "' OR b.`emp_status` IS NULL)";
+		}		
 
 		$count = 0;		
 		$sql = sprintf('SELECT count(*) FROM %s a, %s b WHERE a.emp_number = b.emp_number', self::TABLE_NAME, 'hs_hr_employee');
@@ -520,7 +531,7 @@ class PerformanceReview {
 	 * @param array   $selectCondition Array of select conditions to use.
 	 * @return array  Array of Performance Review objects. Returns an empty (length zero) array if none found.
 	 */
-	private static function _getList($selectCondition = null, $sortBy = null, $sortOrder = null, $limit = null) {
+	private static function _getList($selectCondition = null, $sortBy = null, $sortOrder = null, $limit = null, $includeTerminatedEmployees = true) {
 
 		$fields[0] = "a. " . self::DB_FIELD_ID;
 		$fields[1] = "a. " . self::DB_FIELD_EMP_NUMBER;
@@ -534,7 +545,11 @@ class PerformanceReview {
 		$tables[1] = 'hs_hr_employee b';
 
 		$joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
-
+		
+		if (!$includeTerminatedEmployees) {
+			$selectCondition[] = "(b.`emp_status` != '" . EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED . "' OR b.`emp_status` IS NULL)";
+		}
+		
 		$sqlBuilder = new SQLQBuilder();
 		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, $sortBy, $sortOrder, $limit);
 

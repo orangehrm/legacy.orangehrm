@@ -1,4 +1,11 @@
-Bug fixes merged from trunk
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.11
+
+    Fixed bugs:
+
+	BugId     Name
+    1990699   ORS: Terminated employee names shown in Performance Review
+
+    Bug fixes merged from trunk
 
 	1898569 - Timesheets created with overlapping time periods
 	1949399 - Restrict week starting day feature
