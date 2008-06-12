@@ -1,9 +1,21 @@
+Bug fixes merged from trunk
+
+	1898569 - Timesheets created with overlapping time periods
+	1949399 - Restrict week starting day feature
+	1950563 - Status is wrong in Leave List
+	1957848 - After ading 1000users,Supervisor can see links to many pages
+	1953962 - Admin add pay grades, and press enter moves to notice page
+	1953965 - Admin add skills, and press enter moves to notice page
+	1953987 - Admin add AdminUserGroup, & press enter moves to notice page
+	1953990 - Admin add customer, and press enter moves to notice page
+	1953999 - Admin add project, and press enter moves to notice page
+
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
 
     Fixed bugs:
 
 	BugId     Name
-    1925868   When someone apply,if mail not config. in app warning given
+    1925868	  When someone apply,if mail not config. in app warning given
     1941291   When you apply for a job vacancies top title bar should have
     1919420   Editing locations for nested divisions/depts. error message
     1979629   Error in creating database tables by the installer
@@ -22,14 +34,14 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1910901   Terminated users can log as ESS users
     1981731   Time Module : Cannot select Employee in Print Time sheet
     1969405   Alignment error in Add and Remove buttons of Performace Revi
-    1969386   It2: Current salary not retrieved properly 
+    1969386   It2: Current salary not retrieved properly
     1924025   Entering \ for benefit name: Unable to edit other benefits
     1936127   Copyright should be 2008
     1985780   Admin rights: Two modules named 'Recruitement'
 
     Merged bug fixes:
     BugId     Name
-    1956040   Additional text box in Job Vacancies    
+    1956040   Additional text box in Job Vacancies
     1824976   Approved leave should not show cancelled leave
     1856039   Specific holiday shown for previous year
     1874111   Leave approve/deny emails do not have information
@@ -39,7 +51,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.10
     1901201   Terminated employees' names are shown in leave summary.
     1937400   HSP: Admin -> Email configuration ->Save
     1927308   leave summary for single employee returns complete summary
-    1927227   HSP Leave Summary -> leave Type not filtered 
+    1927227   HSP Leave Summary -> leave Type not filtered
     1927003   Assign leave for past year moves to a warning page
     1927022   Supervisor approve leave and apply leave, in same screen
     1843262   Leave Module : Admin ssign leave Unnecessary alert
@@ -87,7 +99,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1
         7. Story: HR Admin and supervisor adds benefit information
         8. Story: Employee works in multiple locations
         9. Story: Previous Positions, Divisions, and Locations
-        10. Story: Track company property 
+        10. Story: Track company property
         11. Sending of tasks (as calendar events) on hire of an employee
 
 	BugId     Name
@@ -108,7 +120,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2
            allows you to view/cancel taken leaves.
 	4. Now leave requests that overlap previous leave requests are not
            allowed.
-	
+
 	BugId     Name
 	1843217   Leave Module: Taken leave incorrect calculation
         1841792   Incorrect number of leave hours when shift changes
