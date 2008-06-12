@@ -29,6 +29,7 @@ require_once ROOT_PATH . '/lib/models/eimadmin/ProjectAdminGateway.php';
 
 require_once ROOT_PATH . '/lib/common/TemplateMerger.php';
 require_once ROOT_PATH . '/lib/common/authorize.php';
+require_once ROOT_PATH . '/lib/common/Config.php';
 
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
@@ -664,6 +665,7 @@ class TimeController {
 
     	if ($res) {
     		$_GET['message'] = 'UPDATE_SUCCESS';
+    		Config::setTimePeriodSet('Yes');
     	} else {
     		$_GET['message'] = 'UPDATE_FAILURE';
     	}

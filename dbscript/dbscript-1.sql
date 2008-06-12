@@ -7,6 +7,12 @@ create table `hs_hr_geninfo` (
 	primary key (`code`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_config` (
+	`key` varchar(100) not null default '',
+	`value` varchar(100) not null default '',
+	primary key (`key`)
+) engine=innodb default charset=utf8;
+
 create table `hs_hr_compstructtree` (
   `title` tinytext not null,
   `description` text not null,

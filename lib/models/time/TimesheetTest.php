@@ -95,6 +95,9 @@ class TimesheetTest extends PHPUnit_Framework_TestCase {
     				"VALUES (11, 10, 10, 10, 10, '".date('Y-m-d H:i:00', time()+3600*2)."', '".date('Y-m-d H:i:00', time()+3600*3)."', '".date('Y-m-d')."', 60, 'Testing2')"));
 		$this->assertTrue(mysql_query("INSERT INTO `hs_hr_time_event` (`time_event_id`, `project_id`, `activity_id`, `employee_id`, `timesheet_id`, `start_time`, `end_time`, `reported_date`, `duration`, `description`) ".
     				"VALUES (12, 10, 10, 10, 11, '".date('Y-m-d H:i:00', time()+3600*24*7)."', '".date('Y-m-d H:i:00', time()+3600*24*7+3600)."', '".date('Y-m-d', time()+3600*24*7)."', 60, 'Testing3')"));
+
+		mysql_query("UPDATE `hs_hr_timesheet_submission_period` SET `start_day` = 1, `end_day` = 7 WHERE `timesheet_period_id` = 1");
+
 		UniqueIDGenerator::getInstance()->resetIDs();
     }
 
@@ -106,6 +109,7 @@ class TimesheetTest extends PHPUnit_Framework_TestCase {
      */
     protected function tearDown() {
     	$this->_deleteTestData();
+		mysql_query("UPDATE `hs_hr_timesheet_submission_period` SET `start_day` = 0, `end_day` = 6 WHERE `timesheet_period_id` = 1");
 		UniqueIDGenerator::getInstance()->resetIDs();
     }
 

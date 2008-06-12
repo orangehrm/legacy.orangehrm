@@ -51,12 +51,21 @@ $arrAllRights=array(Admin => $arrRights,
 					TimeM => $arrRights,
 					Recruit => $arrRights,
                     Perf => $arrRights);
-                    
+
 require_once ROOT_PATH . '/lib/models/maintenance/Rights.php';
 require_once ROOT_PATH . '/lib/models/maintenance/UserGroups.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
+require_once ROOT_PATH . '/lib/common/Config.php';
 
 $_SESSION['path'] = ROOT_PATH;
+
+/* For checking TimesheetPeriodStartDaySet status : Begins */
+if (Config::getTimePeriodSet()) {
+	$_SESSION['timePeriodSet'] = 'Yes';
+} else {
+    $_SESSION['timePeriodSet'] = 'No';
+}
+/* For checking TimesheetPeriodStartDaySet status : Ends */
 
 if($_SESSION['isAdmin']=='Yes') {
 	$rights = new Rights();
@@ -142,15 +151,15 @@ require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
 if (!empty($_SESSION['empID'])) {
 	$isApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_REVIEW_APPROVER);
 	$_SESSION['isApprover'] =  $isApprover;
-	
-	$isSalaryApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);	
+
+	$isSalaryApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);
 	$_SESSION['isSalaryApprover'] =  $isSalaryApprover;
-	
-	
+
+
 	if (($isSalaryApprover || $isApprover) && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor())) {
 		$arrAllRights[Perf]=array('add'=> false, 'edit'=> true , 'delete'=> false, 'view'=> true);
     }
-    	
+
 } else {
 	$_SESSION['isApprover'] =  false;
 	$_SESSION['isSalaryApprover'] =  false;
@@ -172,16 +181,29 @@ if ($authorizeObj->isSupervisor()) {
 // Time module default pages
 if (!$authorizeObj->isAdmin() && $authorizeObj->isESS()) {
 
-	$timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=View_Current_Timesheet';
+	if ($_SESSION['timePeriodSet'] == 'Yes') {
+	    $timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=View_Current_Timesheet';
+	} else {
+		$timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=Work_Week_Edit_View';
+	}
+
 	$timesheetPage = 'lib/controllers/CentralController.php?timecode=Time&action=View_Current_Timesheet';
 } else {
-	$timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=View_Select_Employee';
+	if ($_SESSION['timePeriodSet'] == 'Yes') {
+	    $timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=View_Select_Employee';
+	} else {
+		$timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=Work_Week_Edit_View';
+	}
 
 	$timesheetPage = 'lib/controllers/CentralController.php?timecode=Time&action=View_Select_Employee';
 }
 
 if ($authorizeObj->isESS()) {
-	$timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=Show_Punch_Time';
+	if ($_SESSION['timePeriodSet'] == 'Yes') {
+	    $timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=Show_Punch_Time';
+	} else {
+		$timeHomePage = 'lib/controllers/CentralController.php?timecode=Time&action=Work_Week_Edit_View';
+	}
 }
 
 if ($authorizeObj->isAdmin()) {
@@ -501,7 +523,7 @@ function preloadAllImages() {
                         <td class="tabSpace"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <?php }                                    
+                  <?php }
                   if($_SESSION['isAdmin']=='Yes') {
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep") && $arrAllRights[Report]['view']) {
 					?>
@@ -620,17 +642,17 @@ function preloadAllImages() {
 					  </ul></TD>
 <?php				} else if (($_SESSION['isProjectAdmin']) || ($_SESSION['isSupervisor'])) { ?>
                     <TD width=158>
-                      <ul id="menu">                      
-	 
+                      <ul id="menu">
+
 <?php				if ($_SESSION['isProjectAdmin']) { ?>
 						<li id="projectInfo">
 							<a href="index.php?uniqcode=PAC&menu_no=2&submenutop=EIMModule&menu_no_top=eim">
 							<?php echo $lang_Admin_ProjectActivities; ?></a></li>
 <?php               }
 					if ($_SESSION['isSupervisor']) { ?>
-						<li id="compinfo">						
+						<li id="compinfo">
 							<a href="index.php?uniqcode=TCP&menu_no=1&submenutop=EIMModule&menu_no_top=eim">
-							<?php echo $lang_Menu_Admin_Company_Property; ?></a></li>                      
+							<?php echo $lang_Menu_Admin_Company_Property; ?></a></li>
                         <li id="benefitsInfo">
                             <a href="index.php?uniqcode=BEN&submenutop=EIMModule&menu_no_top=eim">
                             <?php echo $lang_Menu_Admin_Benefits; ?></a></li>
@@ -696,6 +718,7 @@ function preloadAllImages() {
 <?php			}
 
 				if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="time" )) { ?>
+			<?php if ($_SESSION['timePeriodSet'] == "Yes") { // For checking Time period setting: Begins ?>
            	<TD width=158>
 	            <ul id="menu">
 	            	<li id="timesheets"><a href="<?php echo $timesheetPage; ?>" target="rightMenu" onMouseOver="ypSlideOutMenu.showMenu('menu16');" onMouseOut="ypSlideOutMenu.hideMenu('menu16');"><?php echo $lang_Menu_Time_Timesheets; ?></a></li>
@@ -725,6 +748,7 @@ function preloadAllImages() {
 	            	<?php } ?>
   				</ul>
 			</TD>
+			<?php } // For checking Time period setting: Ends ?>
 <?php			}
 				if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="recruit" )) { ?>
            	<TD width=158>
@@ -748,46 +772,46 @@ function preloadAllImages() {
 			</TD>
 <?php           }
                 if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="perf" )) { ?>
-            <TD width=158> 
+            <TD width=158>
                 <ul id="menu">
                     <?php if ($_SESSION['isAdmin']=='Yes') { ?>
                     <!-- <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=ReviewPeriod&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Performance_ReviewPeriod; ?>
                         </a>
-                    </li>-->                     
+                    </li>-->
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=PerfMeasure&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Performance_Measures; ?>
                         </a>
                     </li>
-                    <?php }                         
-                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor() || $_SESSION['isApprover']) { 
-                    ?>                                      
+                    <?php }
+                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor() || $_SESSION['isApprover']) {
+                    ?>
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=PerfReviews&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Performance_Reviews; ?>
                         </a>
-                    </li>                                        
+                    </li>
                     <?php } ?>
-                    <?php 
-                          if ($_SESSION['isAdmin']=='Yes') { 
-                    ?>                                      
+                    <?php
+                          if ($_SESSION['isAdmin']=='Yes') {
+                    ?>
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=JobTitleConfig&action=View" target="rightMenu">
                             <?php echo $lang_Menu_Performance_ConfigureJobTitles; ?>
                         </a>
-                    </li>                                        
+                    </li>
                     <?php }
-                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) { 
-                    ?>                                      
+                          if (($_SESSION['isAdmin']=='Yes') || $authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
+                    ?>
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?perfcode=SalaryReview&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Performance_SalaryReviews; ?>
                         </a>
-                    </li>                                        
+                    </li>
                     <?php } ?>
-                                        
+
                 </ul>
             </TD>
 
@@ -1035,15 +1059,6 @@ function preloadAllImages() {
                         </TD>
 					 </TR>
 					<?php
-                    	}
-                    	if ($authorizeObj->isAdmin()) {
-                    ?>
-                     <TR>
-                        <TD onMouseOver="ypSlideOutMenu.showMenu('menu16')" onMouseOut="ypSlideOutMenu.hideMenu('menu16')" onClick="ypSlideOutMenu.hideMenu('menu16')" vAlign=center align=left width=142 height=17>
-                        	<A class=rollmenu href="lib/controllers/CentralController.php?timecode=Time&action=Work_Week_Edit_View" target="rightMenu"><?php echo $lang_Menu_Time_DefineTimesheetPeriod; ?></A>
-                        </TD>
-					 </TR>
-                    <?php
                     	}
                     	if ($authorizeObj->isAdmin() || $authorizeObj->isSupervisor()) {
                     ?>

@@ -148,6 +148,8 @@ lib/AllTests.php -text
 lib/common/AllTests.php -text
 lib/common/CommonFunctions.php -text
 lib/common/CommonFunctionsTest.php -text
+lib/common/Config.php -text
+lib/common/ConfigTest.php -text
 lib/common/FormCreator.php -text
 lib/common/Language.php -text
 lib/common/LocaleUtil.php -text

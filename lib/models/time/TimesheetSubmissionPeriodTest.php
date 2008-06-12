@@ -64,6 +64,7 @@ class TimesheetSubmissionPeriodTest extends PHPUnit_Framework_TestCase {
 		$conf = new Conf();
     	$this->connection = mysql_connect($conf->dbhost.":".$conf->dbport, $conf->dbuser, $conf->dbpass);
     	mysql_select_db($conf->dbname);
+    	mysql_query("UPDATE `hs_hr_timesheet_submission_period` SET `start_day` = 0, `end_day` = 6 WHERE `timesheet_period_id` = 1");
     }
 
     /**
@@ -73,7 +74,7 @@ class TimesheetSubmissionPeriodTest extends PHPUnit_Framework_TestCase {
      * @access protected
      */
     protected function tearDown() {
-    	mysql_query("UPDATE `hs_hr_timesheet_submission_period` SET `start_day` = 1, `end_day` = 7 WHERE `timesheet_period_id` = 1");
+    	mysql_query("UPDATE `hs_hr_timesheet_submission_period` SET `start_day` = 0, `end_day` = 6 WHERE `timesheet_period_id` = 1");
     }
 
     public function testSaveTimesheetSubmissionPeriod() {
@@ -97,18 +98,6 @@ class TimesheetSubmissionPeriodTest extends PHPUnit_Framework_TestCase {
     	$this->fail('An expected Exception has not been raised.');
     }
 
-    public function testSaveTimesheetSubmissionPeriod2() {
-    	$expected[0] = array(1, 'week', 7, 1, 1, 7, 'Weekly');
-
-    	$this->classTimesheetSubmissionPeriod->setTimesheetPeriodId(1);
-    	$this->classTimesheetSubmissionPeriod->setStartDay($expected[0][4]);
-    	$this->classTimesheetSubmissionPeriod->setFrequency($expected[0][2]);
-
-    	$res = $this->classTimesheetSubmissionPeriod->saveTimesheetSubmissionPeriod();
-
-    	$this->assertFalse($res, "Saved a record which had no changes");
-    }
-
     public function testSaveTimesheetSubmissionPeriod3() {
     	$expected[0] = array(1, 'week', 7, 1, 2, 1, 'Weekly');
 
@@ -125,7 +114,7 @@ class TimesheetSubmissionPeriodTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotNull($res, "Returned nothing");
 
 		$this->assertEquals(count($res), 1, "Didn't return the expected number of records");
-
+				
 		for ($i=0; $i<count($res); $i++) {
 			$this->assertEquals($expected[$i][0], $res[$i]->getTimesheetPeriodId(), "Invalid timesheet period id");
 			$this->assertEquals($expected[$i][1], $res[$i]->getName(), "Invalid timesheet period name");
@@ -142,7 +131,7 @@ class TimesheetSubmissionPeriodTest extends PHPUnit_Framework_TestCase {
 
 		$res = $this->classTimesheetSubmissionPeriod->fetchTimesheetSubmissionPeriods();
 
-		$expected[0] = array(1, 'week', 7, 1, 1, 7, 'Weekly');
+		$expected[0] = array(1, 'week', 7, 1, 0, 6, 'Weekly');
 
 		$this->assertNotNull($res, "Returned nothing");
 
