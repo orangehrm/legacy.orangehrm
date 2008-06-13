@@ -23,6 +23,7 @@ require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
 require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 require_once ROOT_PATH . '/lib/common/SearchObject.php';
+require_once ROOT_PATH . '/lib/common/LocaleUtil.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
 
 class SalaryReview {
@@ -344,6 +345,21 @@ class SalaryReview {
 	}
 	
 	/**
+	 * Get condition to compare date with date salary review was created.
+	 */
+	private static function _getDateComparisionCondition($value) {
+
+		// Check for search by full date or or just year
+		if (CommonFunctions::isInt($value)) {
+			$condition = " YEAR(a." . self::DB_FIELD_CREATED_TIME . ") = '{$value}' ";
+		} else {
+			$date = LocaleUtil::getInstance()->convertToStandardDateFormat($value);				
+			$condition = " DATE(a." . self::DB_FIELD_CREATED_TIME . ") = '{$date}' ";
+		}
+		return $condition;		
+	}
+	
+	/**
 	 * Get list of Salary Reviews in a format suitable for view.php
 	 * TODO: To be implemented
 	 *
@@ -362,7 +378,8 @@ class SalaryReview {
 		
 		switch ($searchFieldNo) {
 			case self::SORT_FIELD_REVIEW_DATE:
-				$selectCondition[] = "a." . self::DB_FIELD_REVIEW_DATE . " = '{$escapedVal}' ";
+	
+				$selectCondition[] = self::_getDateComparisionCondition($escapedVal);		
 				break;
 			case self::SORT_FIELD_EMPLOYEE_NAME:
 				// TODO: Fix. This doesn't match when searching for full name. Eg: "John Adams"'
@@ -417,7 +434,7 @@ class SalaryReview {
 				
 		switch ($searchFieldNo) {
 			case self::SORT_FIELD_REVIEW_DATE:
-				$selectCondition[] = "a." . self::DB_FIELD_REVIEW_DATE . " = '{$escapedVal}' ";
+				$selectCondition[] = self::_getDateComparisionCondition($escapedVal);			
 				break;
 			case self::SORT_FIELD_EMPLOYEE_NAME:
 				$selectCondition[] = "b.`emp_firstname` LIKE '{$escapedVal}%' OR " .

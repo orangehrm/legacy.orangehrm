@@ -20,6 +20,7 @@
 
 require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceScore.php';
+require_once ROOT_PATH . '/lib/common/LocaleUtil.php';
 
 class EXTRACTOR_PerfReview {
 

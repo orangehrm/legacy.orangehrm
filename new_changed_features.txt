@@ -4,6 +4,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.11
 
 	BugId     Name
     1990699   ORS: Terminated employee names shown in Performance Review
+    1990751   ORS: Salary review can’t search by Review date 
 
     Bug fixes merged from trunk
 
