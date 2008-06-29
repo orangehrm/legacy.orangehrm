@@ -867,6 +867,43 @@ create table `hs_hr_salary_review` (
   key `emp_number` (`emp_number`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_risk_assessments` (
+  `id` int(11) not null,
+  `subdivision_id` int(6) not null,
+  `start_date` date default null,
+  `end_date` date default null,
+  `description` text,
+  -- status: 0=Unresolved, 1=Resolved
+  `status` smallint(2) default 0,
+  primary key  (`id`),
+  key `subdivision_id` (`subdivision_id`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_emp_injury` (
+  `id` int(11) not null,
+  `emp_number` int(7) not null default 0,
+  `injury` varchar(250),
+  `description` text,
+  `incident_date` date default null,
+  `reported_date` date default null,
+  `time_off_work` varchar(50),
+  `result` varchar(100),
+  primary key  (`id`),
+  key `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_emp_ergonomic_assessments` (
+  `id` int(11) not null,
+  `emp_number` int(7) not null default 0,
+  `start_date` date default null,
+  `end_date` date default null,
+  -- status: 0=Incomplete, 1=Complete
+  `status` smallint(2) default 0,
+  `notes` text,
+  primary key  (`id`),
+  key `emp_number` (`emp_number`)
+) engine=innodb default charset=utf8;
+
 INSERT INTO `hs_hr_customer`
   (`customer_id`, `name`, `description`)
   VALUES (0, 'Internal', "Internal time tracker")

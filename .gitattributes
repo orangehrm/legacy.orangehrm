@@ -339,6 +339,13 @@ lib/models/eimadmin/SalaryGrades.php -text
 lib/models/eimadmin/SimpleBenefit.php -text
 lib/models/eimadmin/SimpleBenefitTest.php -text
 lib/models/eimadmin/Skills.php -text
+lib/models/healthAndSafety/AllTests.php -text
+lib/models/healthAndSafety/EmpInjury.php -text
+lib/models/healthAndSafety/EmpInjuryTest.php -text
+lib/models/healthAndSafety/ErgonomicAssessment.php -text
+lib/models/healthAndSafety/ErgonomicAssessmentTest.php -text
+lib/models/healthAndSafety/RiskAssessment.php -text
+lib/models/healthAndSafety/RiskAssessmentTest.php -text
 lib/models/hrfunct/AbstractEmpHistory.php -text
 lib/models/hrfunct/AllTests.php -text
 lib/models/hrfunct/EmpAttach.php -text
