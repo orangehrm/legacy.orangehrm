@@ -629,16 +629,6 @@ class EmpInjury {
 	 */
 	private static function _createFromRow($row) {
 
-		$fields[0] = 'a.' . self :: DB_FIELD_ID;
-		$fields[1] = 'a.' . self :: DB_FIELD_EMP_NUMBER;
-		$fields[2] = 'a.' . self :: DB_FIELD_INJURY;
-		$fields[3] = 'a.' . self :: DB_FIELD_DESCRIPTION;
-		$fields[4] = 'a.' . self :: DB_FIELD_INCIDENT_DATE;
-		$fields[5] = 'a.' . self :: DB_FIELD_REPORTED_DATE;
-		$fields[6] = 'a.' . self :: DB_FIELD_TIME_OFF_WORK;
-		$fields[7] = 'a.' . self :: DB_FIELD_RESULT;
-
-
 		$injury = new EmpInjury($row[self :: DB_FIELD_ID]);
 		$injury->setEmpNumber($row[self :: DB_FIELD_EMP_NUMBER]);
 		$injury->setInjury($row[self :: DB_FIELD_INJURY]);
