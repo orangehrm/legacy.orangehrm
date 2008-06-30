@@ -437,6 +437,9 @@ lib/models/time/TimesheetSubmissionPeriodTest.php -text
 lib/models/time/TimesheetTest.php -text
 lib/models/time/Workshift.php -text
 lib/models/time/WorkshiftTest.php -text
+lib/models/training/AllTests.php -text
+lib/models/training/Training.php -text
+lib/models/training/TrainingTest.php -text
 lib/test.bat -text
 lib/utils/AllTests.php -text
 lib/utils/ConstraintHandler.php -text

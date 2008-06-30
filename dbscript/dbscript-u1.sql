@@ -904,6 +904,26 @@ create table `hs_hr_emp_ergonomic_assessments` (
   key `emp_number` (`emp_number`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_training` (
+  `id` int(11) not null,
+  `user_defined_id` varchar(50) default null,
+  `description` text,
+  -- state: 0=Requested, 1=Training Arranged, 2=Training Completed
+  `state` smallint(2) default 0,
+  `training_course` varchar(250),
+  `cost` decimal(12,2),
+  `company` varchar(250),
+  `notes` text,
+  primary key  (`id`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_training_employee` (
+  `training_id` int(11) not null,
+  `emp_number` int(7) not null,
+  primary key  (`training_id`, `emp_number`)
+) engine=innodb default charset=utf8;
+
+
 INSERT INTO `hs_hr_customer`
   (`customer_id`, `name`, `description`)
   VALUES (0, 'Internal', "Internal time tracker")

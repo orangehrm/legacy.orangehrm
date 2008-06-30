@@ -111,7 +111,9 @@ array("hs_hr_salary_review", array("created_by"), "hs_hr_users",   array("id"), 
 array("hs_hr_salary_review", array("approved_by"), "hs_hr_users",   array("id"), "null"),
 array("hs_hr_risk_assessments", array("subdivision_id"), "hs_hr_compstructtree",   array("id"), "cascade"),
 array("hs_hr_emp_injury", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
-array("hs_hr_emp_ergonomic_assessments", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade")
+array("hs_hr_emp_ergonomic_assessments", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_training_employee", array("emp_number"), "hs_hr_employee",   array("emp_number"), "cascade"),
+array("hs_hr_training_employee", array("training_id"), "hs_hr_training",   array("id"), "cascade")
 );
 
 ?>

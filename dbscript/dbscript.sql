@@ -910,6 +910,33 @@ create table `hs_hr_emp_ergonomic_assessments` (
   key `emp_number` (`emp_number`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_training` (
+  `id` int(11) not null,
+  `user_defined_id` varchar(50) default null,
+  `description` text,
+  -- state: 0=Requested, 1=Training Arranged, 2=Training Completed
+  `state` smallint(2) default 0,
+  `training_course` varchar(250),
+  `cost` decimal(12,2),
+  `company` varchar(250),
+  `notes` text,
+  primary key  (`id`)
+) engine=innodb default charset=utf8;
+
+create table `hs_hr_training_employee` (
+  `training_id` int(11) not null,
+  `emp_number` int(7) not null,
+  primary key  (`training_id`, `emp_number`)
+) engine=innodb default charset=utf8;
+
+alter table hs_hr_training_employee
+    add constraint foreign key (emp_number)
+        references hs_hr_employee(emp_number) on delete cascade;
+
+alter table hs_hr_training_employee
+    add constraint foreign key (training_id)
+        references hs_hr_training(id) on delete cascade;
+
 alter table hs_hr_risk_assessments
     add constraint foreign key (subdivision_id)
         references hs_hr_compstructtree(id) on delete cascade;
@@ -1853,3 +1880,4 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_risk_assessments', 'id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_emp_injury', 'id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_emp_ergonomic_assessments', 'id');
+INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_training', 'id');
