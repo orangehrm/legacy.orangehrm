@@ -206,6 +206,12 @@
     $lang_Menu_Performance_Measures = "Performance Measures";
     $lang_Menu_Performance_Reviews = "Performance Reviews";
     $lang_Menu_Performance_ConfigureJobTitles = "Configure Job Titles";
+    
+    // Health and Safety module
+    $lang_Menu_HealthAndSafety = "Health & Safety";
+    $lang_Menu_HealthAndSafety_ErgonomicAssessments = "Ergonomic Assessments";    
+    $lang_Menu_HealthAndSafety_RiskAssessments = "Risk Assessments";    
+    $lang_Menu_HealthAndSafety_Injuries = "Injuries";
 
 	/**
 	 * Common
@@ -1562,6 +1568,80 @@
 	$lang_Performance_Errors_DELETE_FAILURE = 'Failed to Delete';
 	$lang_Performance_Errors_DELETE_SUCCESS = 'Successfully Deleted';	
 				
+	// Health & Safety Module
+	// Ergonomic Assessment
+	$lang_Health_ErgonomicAssessment_ID = 'ID';
+	$lang_Health_ErgonomicAssessment_EmpName = 'Employee';
+	$lang_Health_ErgonomicAssessment_Subdivision = 'Subdivision';
+	$lang_Health_ErgonomicAssessment_Locations = 'Locations';
+	$lang_Health_ErgonomicAssessment_StartDate = 'Start Date';
+	$lang_Health_ErgonomicAssessment_EndDate = 'End Date';
+	$lang_Health_ErgonomicAssessment_Status = 'Status';
+	
+	$lang_Health_ErgonomicAssessment_Incomplete = 'Incomplete';
+	$lang_Health_ErgonomicAssessment_Complete = 'Complete';
+	$lang_Health_ErgonomicAssessment_ListHeading = 'Ergonomic Assessments';
+	$lang_Health_ErgonomicAssessment_DeleteMessage = 'Deletion of ergonomic assessments cannot be undone.';
+	
+	$lang_Health_ErgonomicAssessment_Error_PleaseSpecifyEmployee = 'Please specify an employee';
+	$lang_Health_ErgonomicAssessment_Error_PleaseSpecifyValidStartDate = 'Please specify valid start date';
+	$lang_Health_ErgonomicAssessment_Error_PleaseSpecifyValidEndDate = 'Please specify valid end date';
+	$lang_Health_ErgonomicAssessment_Error_StartDateShouldBeBeforeEndDate = 'Start date should be before end date';
+	
+	$lang_Health_ErgonomicAssessment_AddTitle = 'Add Ergonomic Assessment';
+	$lang_Health_ErgonomicAssessment_EditTitle = 'Edit Ergonomic Assessment';
+	$lang_Health_ErgonomicAssessment_Notes = 'Notes';
+
+	// Injury
+	$lang_Health_Injury_ID = 'ID';
+	$lang_Health_Injury_EmpName = 'Employee';
+	$lang_Health_Injury_Subdivision = 'Subdivision';
+	$lang_Health_Injury_Locations = 'Locations';
+	$lang_Health_Injury_DateOfIncident = 'Incident Date';
+	$lang_Health_Injury_DateReported = 'Reported';
+	$lang_Health_Injury_Injury = 'Injury';
+	$lang_Health_Injury_TimeOffWork = 'Time Off';
+	$lang_Health_Injury_Result = 'Result';
+			
+	$lang_Health_Injury_ListHeading = 'Employee Injury reports';
+	$lang_Health_Injury_DeleteMessage = 'Deletion of Injury Reports cannot be undone.';
+	
+	$lang_Health_Injury_Error_PleaseSpecifyEmployee = 'Please specify an employee';
+	$lang_Health_Injury_Error_PleaseSpecifyValidIncidentDate = 'Please specify valid incident date';
+	$lang_Health_Injury_Error_PleaseSpecifyValidReportedDate = 'Please specify valid reported date';
+	$lang_Health_Injury_Error_IncidentDateShouldBeBeforeReportedDate = 'Incident date should be before reported date';	
+	$lang_Health_Injury_Error_PleaseSpecifyInjury = 'Please specify injury';
+	$lang_Health_Injury_Error_TimeOffWorkShouldBeDecimal = 'Time off Work should be a valid number';
+
+	$lang_Health_Injury_AddTitle = 'Add Employee Injury Report';
+	$lang_Health_Injury_EditTitle = 'Edit Employee Injury Report';
+	$lang_Health_Injury_Description = 'Description';
+	$lang_Health_Injury_Number_of_days = 'number of days';
+
+	// Risk Assessments
+	$lang_Health_RiskAssessment_ID = 'ID';
+	$lang_Health_RiskAssessment_Subdivision = 'Subdivision';
+	$lang_Health_RiskAssessment_StartDate = 'Start Date';
+	$lang_Health_RiskAssessment_EndDate = 'End Date';
+	$lang_Health_RiskAssessment_Description = 'Description';
+	$lang_Health_RiskAssessment_Status = 'Status';
+			
+	$lang_Health_RiskAssessment_Unresolved = 'Unresolved';
+	$lang_Health_RiskAssessment_Resolved = 'Resolved';
+	$lang_Health_RiskAssessment_ListHeading = 'Risk Assessments';
+	$lang_Health_RiskAssessment_DeleteMessage = 'Deletion of Risk Assessments cannot be undone.';
+	
+	$lang_Health_RiskAssessment_Error_PleaseSpecifySubDivision = 'Please specify sub division';
+	$lang_Health_RiskAssessment_Error_PleaseSpecifyValidStartDate = 'Please specify valid start date';
+	$lang_Health_RiskAssessment_Error_PleaseSpecifyValidEndDate = 'Please specify valid end date';
+	$lang_Health_RiskAssessment_Error_StartDateShouldBeBeforeEndDate = 'Start date should be before end date';
+	
+	$lang_Health_RiskAssessment_AddTitle = 'Add Risk Assessment';
+	$lang_Health_RiskAssessment_EditTitle = 'Edit Risk Assessment';
+	
+	$lang_Health_RiskAssessment_SubDivision = 'Sub Division';
+	
+	
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";
 	$lang_login_UserNameNotGiven = "User Name not given!";

@@ -69,6 +69,7 @@ devTools/rpm/SPECS/OrangeHRM-2.2.spec -text
 /faq.html -text
 /favicon.ico -text
 /genpop.php -text
+/healthview.php -text
 /home.php -text
 /index.php -text
 /install.php -text
@@ -105,6 +106,7 @@ installer/welcome.php -text
 language/da/lang_da_full.php -text
 language/default/lang_default_empview.php -text
 language/default/lang_default_full.php -text
+language/default/lang_default_healthview.php -text
 language/default/lang_default_performanceview.php -text
 language/default/lang_default_recruitmentview.php -text
 language/default/lang_default_repview.php -text
@@ -166,6 +168,7 @@ lib/controllers/AllTests.php -text
 lib/controllers/CentralController.php -text
 lib/controllers/EmpViewController.php -text
 lib/controllers/GenViewController.php -text
+lib/controllers/HealthAndSafetyController.php -text
 lib/controllers/LeaveController.php -text
 lib/controllers/MTViewController.php -text
 lib/controllers/PerformanceController.php -text
@@ -215,6 +218,9 @@ lib/extractor/eimadmin/EXTRACTOR_SalaryGrades.php -text
 lib/extractor/eimadmin/EXTRACTOR_SimpleBenefit.php -text
 lib/extractor/eimadmin/EXTRACTOR_Skills.php -text
 lib/extractor/eimadmin/ExtractorJobTitleTest.php -text
+lib/extractor/healthAndSafety/EXTRACTOR_ErgonomicAssessment.php -text
+lib/extractor/healthAndSafety/EXTRACTOR_Injury.php -text
+lib/extractor/healthAndSafety/EXTRACTOR_RiskAssessment.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpAttach.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpBasSalary.php -text
 lib/extractor/hrfunct/EXTRACTOR_EmpBenefit.php -text
@@ -505,6 +511,11 @@ templates/eimadmin/qualifications.php -text
 templates/eimadmin/salarygrades.php -text
 templates/eimadmin/simpleBenefit.php -text
 templates/eimadmin/skills.php -text
+templates/healthAndSafety/footer.php -text
+templates/healthAndSafety/header.php -text
+templates/healthAndSafety/viewErgonomicAssessment.php -text
+templates/healthAndSafety/viewInjury.php -text
+templates/healthAndSafety/viewRiskAssessment.php -text
 templates/hrfunct/download.php -text
 templates/hrfunct/emppop.php -text
 templates/hrfunct/hrEmpMain.php -text

@@ -47,6 +47,7 @@ require_once ROOT_PATH . '/lib/controllers/LeaveController.php';
 require_once ROOT_PATH . '/lib/controllers/TimeController.php';
 require_once ROOT_PATH . '/lib/controllers/RecruitmentController.php';
 require_once ROOT_PATH . '/lib/controllers/PerformanceController.php';
+require_once ROOT_PATH . '/lib/controllers/HealthAndSafetyController.php';
 
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_JobTitle.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_JobSpec.php';
@@ -138,6 +139,8 @@ if(isset($_GET['uniqcode'])) {
 	$moduletype = 'recruitMod';
 } elseif (isset($_GET['perfcode'])) {
     $moduletype = 'perfMod';
+} elseif (isset($_GET['healthcode'])) {
+    $moduletype = 'healthMod';
 }
 
 //authentication
@@ -156,6 +159,7 @@ define('LEAVE', 'MOD005');
 define('TIMEMOD', 'MOD006');
 define('RECRUITMOD', 'MOD008');
 define('PERFMOD', 'MOD009');
+define('HEALTHMOD', 'MOD010');
 
 switch ($moduletype) {
 	case 'admin'	:	$locRights = $rights->getRights($_SESSION['userGroup'],Admin); break;
@@ -165,6 +169,7 @@ switch ($moduletype) {
 	case 'timeMod'	:	$locRights = $rights->getRights($_SESSION['userGroup'],TIMEMOD); break;
 	case 'recruitMod' :	$locRights = $rights->getRights($_SESSION['userGroup'],RECRUITMOD); break;
     case 'perfMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],PERFMOD); break;    
+    case 'healthMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],HEALTHMOD); break;    
 }
 
 if(!is_array($locRights) && $locRights == false)
@@ -1667,6 +1672,11 @@ switch ($moduletype) {
     case 'perfMod'   :
                         $performanceController = new PerformanceController();
                         $performanceController->handleRequest($_GET['perfcode']);
+                        break;
+
+    case 'healthMod'   :
+                        $healthController = new HealthAndSafetyController();
+                        $healthController->handleRequest($_GET['healthcode']);
                         break;
 }
 

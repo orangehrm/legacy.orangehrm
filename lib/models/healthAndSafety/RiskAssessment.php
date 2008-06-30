@@ -307,7 +307,7 @@ class RiskAssessment {
 				$sortBy = 'a.' . self :: DB_FIELD_DESCRIPTION;
 				break;
 
-			case self :: SORT_FIELD_REVIEW_STATUS :
+			case self :: SORT_FIELD_STATUS :
 				$sortBy = 'a.' . self :: DB_FIELD_STATUS;
 				break;
 		}
@@ -496,7 +496,6 @@ class RiskAssessment {
 		$values[3] = is_null($this->endDate) ? 'null' : $this->endDate;
 		$values[4] = $this->description;
 		$values[5] = is_null($this->status) ? self :: STATUS_UNRESOLVED : $this->status;
-
 		return $values;
 	}
 

@@ -687,7 +687,7 @@ class EmpInjury {
 						break;
 						
 					case self :: SORT_FIELD_INJURY :
-						$selectCondition = "a." . self :: DB_FIELD_INJURY . " = '{$escapedVal}' ";
+						$selectCondition = "a." . self :: DB_FIELD_INJURY . " LIKE '%{$escapedVal}%' ";
 						break;
 						
 					case self :: SORT_FIELD_TIME_OFF_WORK :
@@ -695,7 +695,7 @@ class EmpInjury {
 						break;
 						
 					case self :: SORT_FIELD_RESULT :
-						$selectCondition = "a." . self :: DB_FIELD_RESULT . " = '{$escapedVal}' ";
+						$selectCondition = "a." . self :: DB_FIELD_RESULT . " LIKE '%{$escapedVal}%' ";
 						break;
 			}
 			return $selectCondition;
