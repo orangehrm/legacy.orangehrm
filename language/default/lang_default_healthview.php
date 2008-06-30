@@ -20,8 +20,8 @@
 
 
 require_once ROOT_PATH . '/lib/common/Language.php';
-require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
-require_once ROOT_PATH . '/lib/models/performance/SalaryReview.php';
+require_once ROOT_PATH . '/lib/models/healthAndSafety/ErgonomicAssessment.php';
+require_once ROOT_PATH . '/lib/models/healthAndSafety/RiskAssessment.php';
 
 $lan = new Language();
 
