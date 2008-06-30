@@ -182,7 +182,10 @@ lib/dao/MySQLClass.php -text
 lib/dao/SQLQBuilder.php -text
 lib/exception/ExceptionHandler.php -text
 lib/extractor/AllTests.php -text
+lib/extractor/common/AllTests.php -text
 lib/extractor/common/EXTRACTOR_Search.php -text
+lib/extractor/common/EXTRACTOR_ViewList.php -text
+lib/extractor/common/ExtractorViewListTest.php -text
 lib/extractor/eimadmin/AllTests.php -text
 lib/extractor/eimadmin/EXTRACTOR_CompProperty.php -text
 lib/extractor/eimadmin/EXTRACTOR_CompStruct.php -text
@@ -254,10 +257,8 @@ lib/extractor/recruitment/EXTRACTOR_JobApplication.php -text
 lib/extractor/recruitment/EXTRACTOR_JobApplicationEvent.php -text
 lib/extractor/recruitment/EXTRACTOR_JobVacancy.php -text
 lib/extractor/recruitment/EXTRACTOR_ScheduleInterview.php -text
-lib/extractor/recruitment/EXTRACTOR_ViewList.php -text
 lib/extractor/recruitment/ExtractorJobApplicationTest.php -text
 lib/extractor/recruitment/ExtractorJobVacancyTest.php -text
-lib/extractor/recruitment/ExtractorViewListTest.php -text
 lib/extractor/report/EXTRACTOR_EmpRepUserGroups.php -text
 lib/extractor/report/EXTRACTOR_EmpReport.php -text
 lib/extractor/time/EXTRACTOR_TimeEvent.php -text

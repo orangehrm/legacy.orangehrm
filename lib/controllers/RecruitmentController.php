@@ -36,7 +36,7 @@ require_once ROOT_PATH . '/lib/models/recruitment/JobApplication.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/models/recruitment/RecruitmentMailNotifier.php';
 require_once ROOT_PATH . '/lib/models/recruitment/RecruitmentAuthManager.php';
-require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
+require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_ViewList.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobVacancy.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobApplication.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobApplicationEvent.php';

@@ -30,7 +30,7 @@ require_once "testConf.php";
 require_once ROOT_PATH."/lib/confs/Conf.php";
 require_once ROOT_PATH."/lib/confs/sysConf.php";
 require_once ROOT_PATH."/lib/common/SearchObject.php";
-require_once ROOT_PATH."/lib/extractor/recruitment/EXTRACTOR_ViewList.php";
+require_once ROOT_PATH."/lib/extractor/common/EXTRACTOR_ViewList.php";
 
 /**
  * Test class for EXTRACTOR_ViewList.php

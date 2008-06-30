@@ -33,11 +33,11 @@ require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_Search.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceMeasure.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
 
-//TODO: Move JobTitleConfig.php and EXTRACTOR_ViewList.php to common location
+//TODO: Move JobTitleConfig.php to common location
 require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceMailNotifier.php';
 require_once ROOT_PATH . '/lib/models/performance/SalaryReview.php';
-require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ViewList.php';
+require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_ViewList.php';
 
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfReview.php';
