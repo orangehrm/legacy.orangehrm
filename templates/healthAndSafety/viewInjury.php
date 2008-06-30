@@ -170,7 +170,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 <?php }	?>
 </div>
 <div id="editPanel">
-	<form name="frmEmp" id="frmInjury" method="post" action="?healthcode=ErgonomicAssessment&action=">
+	<form name="frmEmp" id="frmInjury" method="post" action="?healthcode=Injuries&action=">
 		<div class="roundbox">
 			<label for="cmbRepEmpID"><span class="error">*</span> <?php echo $lang_Health_Injury_EmpName; ?></label>									        		        
 			<input type="text" name="cmbRepEmpID" id="cmbRepEmpID" disabled 
