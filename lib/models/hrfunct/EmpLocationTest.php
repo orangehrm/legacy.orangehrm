@@ -123,6 +123,7 @@ class EmpLocationTest extends PHPUnit_Framework_TestCase {
      * Delete data created during test
      */
     private function _deleteTables() {
+    	$this->_runQuery("TRUNCATE TABLE `hs_hr_compstructtree`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_emp_locations`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_location`");
         $this->_runQuery("TRUNCATE TABLE `hs_hr_employee`");
