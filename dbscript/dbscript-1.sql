@@ -929,6 +929,19 @@ create table `hs_hr_training_employee` (
   primary key  (`training_id`, `emp_number`)
 ) engine=innodb default charset=utf8;
 
+create table `hs_hr_budgets` (
+  `id` int(11) not null,
+  `budget_type` smallint(2) default null,
+  `budget_unit` varchar(50),
+  `budget_value` decimal(12,2),
+  `start_date` date default null,
+  `end_date` date default null,
+  -- status: 0=Not Approved, 1=Approved
+  `status` smallint(2) default 0,
+  `notes` text,
+  primary key  (`id`)
+) engine=innodb default charset=utf8;
+
 alter table hs_hr_training_employee
     add constraint foreign key (emp_number)
         references hs_hr_employee(emp_number) on delete cascade;

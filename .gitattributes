@@ -296,6 +296,9 @@ lib/extractor/time/EXTRACTOR_TimesheetSubmissionPeriod.php -text
 lib/extractor/time/EXTRACTOR_Workshift.php -text
 lib/logs/LogFileWriter.php -text
 lib/models/AllTests.php -text
+lib/models/budget/AllTests.php -text
+lib/models/budget/Budget.php -text
+lib/models/budget/BudgetTest.php -text
 lib/models/eimadmin/AllTests.php -text
 lib/models/eimadmin/CompProperty.php -text
 lib/models/eimadmin/CompPropertyTest.php -text

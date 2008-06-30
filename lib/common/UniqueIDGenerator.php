@@ -223,7 +223,8 @@ if(file_exists($confPHP)) {
                         new IDField("hs_hr_emp_injury", "id"),
                         new IDField("hs_hr_emp_ergonomic_assessments", "id"),                                                                        
 						new IDField("hs_hr_training", "id"),
-						
+						new IDField("hs_hr_budgets", "id"),
+												
 						/* Not used yet. Uncomment when we start using these
 						new IDField("hs_hr_employee_timesheet_period", "timesheet_period_id"),
 						new IDField("hs_hr_timesheet_submission_period", "timesheet_period_id"),
