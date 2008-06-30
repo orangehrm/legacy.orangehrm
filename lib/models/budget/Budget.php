@@ -581,7 +581,7 @@ class Budget {
 					break;
 
 				case self :: SORT_FIELD_STATUS :
-					$selectCondition = self :: DB_FIELD_STATUS . " = {$escapedVal} ";
+					$selectCondition = self :: DB_FIELD_STATUS . " = '{$escapedVal}' ";
 					break;
 			}
 			return $selectCondition;
