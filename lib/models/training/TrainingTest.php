@@ -122,6 +122,51 @@ class TrainingTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
+	 * Test the getAssignedEmployees() function
+	 */
+	public function testGetAssignedEmployees() {
+
+		// Create training with employees assigned.		
+		$employees = array(array('emp_number'=>11, 'emp_name'=>'Saman Rajasinghe'), array('emp_number'=>14, 'emp_name'=>'Pushpa Silva'));
+		$training = $this->_getTraining(200, "test 2", "desc 2", Training::STATE_REQUESTED, "abc", "12.00", "def", "ghi", $employees);
+		$this->_createTrainings(array($training));
+		
+		$result = Training::getAssignedEmployees(200);
+		$this->assertEquals($employees, $result);
+		
+		// Training with no employees assigned		
+		$result = Training::getAssignedEmployees(2);
+		$this->assertEquals(array(), $result);				
+	}
+	
+	/**
+	 * Test the getUnAssignedEmployees() function
+	 */
+	public function testGetUnAssignedEmployees() {
+		
+		// Create training with employees assigned.		
+		$employees = array(array('emp_number'=>11, 'emp_name'=>'Saman Rajasinghe'), array('emp_number'=>14, 'emp_name'=>'Pushpa Silva'));
+		$training = $this->_getTraining(200, "test 2", "desc 2", Training::STATE_REQUESTED, "abc", "12.00", "def", "ghi", $employees);
+		$this->_createTrainings(array($training));
+		
+		$expected = array(array('emp_number'=>12, 'emp_name'=> 'Aruna Jayasinghe'),
+        				array('emp_number'=>13, 'emp_name'=> 'John Karunarathne'), 
+						array('emp_number'=>15, 'emp_name'=> 'Janith Perera'));
+		$result = Training::getUnAssignedEmployees(200);
+		$this->assertEquals($expected, $result);
+		
+		// Training with no employees assigned		
+		$expected = array(array('emp_number'=>11, 'emp_name'=> 'Saman Rajasinghe'),
+        				array('emp_number'=>12, 'emp_name'=> 'Aruna Jayasinghe'),
+        				array('emp_number'=>13, 'emp_name'=> 'John Karunarathne'), 
+        				array('emp_number'=>14, 'emp_name'=> 'Pushpa Silva'),
+        				array('emp_number'=>15, 'emp_name'=> 'Janith Perera'));
+        										
+		$result = Training::getUnAssignedEmployees(2);
+		$this->assertEquals($expected, $result);						
+	}
+	
+	/**
 	 * Test the save function
 	 */
 	public function testSave() {

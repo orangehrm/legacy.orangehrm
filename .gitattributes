@@ -110,6 +110,7 @@ language/default/lang_default_healthview.php -text
 language/default/lang_default_performanceview.php -text
 language/default/lang_default_recruitmentview.php -text
 language/default/lang_default_repview.php -text
+language/default/lang_default_trainingview.php -text
 language/default/lang_default_view.php -text
 language/en/lang_en_full.php -text
 language/es/lang_es_full.php -text
@@ -178,6 +179,7 @@ lib/controllers/RecruitmentControllerTest.php -text
 lib/controllers/RepViewController.php -text
 lib/controllers/TimeController.php -text
 lib/controllers/TimeControllerTest.php -text
+lib/controllers/TrainingController.php -text
 lib/controllers/ViewController.php -text
 lib/controllers/ViewControllerTest.php -text
 lib/dao/DMLFunctions.php -text
@@ -271,6 +273,7 @@ lib/extractor/time/EXTRACTOR_TimeEvent.php -text
 lib/extractor/time/EXTRACTOR_Timesheet.php -text
 lib/extractor/time/EXTRACTOR_TimesheetSubmissionPeriod.php -text
 lib/extractor/time/EXTRACTOR_Workshift.php -text
+lib/extractor/training/EXTRACTOR_Training.php -text
 lib/logs/LogFileWriter.php -text
 lib/models/AllTests.php -text
 lib/models/budget/AllTests.php -text
@@ -636,6 +639,9 @@ templates/time/timesheetEdit.php -text
 templates/time/timesheetPrintPreview.php -text
 templates/time/timesheetView.php -text
 templates/time/workShifts.php -text
+templates/training/footer.php -text
+templates/training/header.php -text
+templates/training/viewTraining.php -text
 themes/beyondT/css/compstruct.css -text
 themes/beyondT/css/error.css -text
 themes/beyondT/css/essMenu.css -text
@@ -910,6 +916,7 @@ themes/beyondT/pictures/users.gif -text
 themes/beyondT/pictures/users_o.gif -text
 themes/beyondT/pictures/viewemprep.gif -text
 themes/beyondT/pictures/viewemprep_o.gif -text
+/trainingview.php -text
 /upgrade.php -text
 upgrader/DISCLAIMER.TXT -text
 upgrader/backup/Backup.php -text

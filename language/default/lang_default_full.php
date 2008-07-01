@@ -213,6 +213,11 @@
     $lang_Menu_HealthAndSafety_RiskAssessments = "Risk Assessments";    
     $lang_Menu_HealthAndSafety_Injuries = "Injuries";
 
+	// Training module
+    $lang_Menu_Training = "Training";
+    $lang_Menu_Training_List = "Training List";
+    $lang_Menu_Training_Request = "Training Request";
+    	
 	/**
 	 * Common
 	 */
@@ -1641,6 +1646,28 @@
 	
 	$lang_Health_RiskAssessment_SubDivision = 'Sub Division';
 	
+	// Training
+	$lang_Training_Id = 'ID';
+	$lang_Training_Description = 'Description';
+	$lang_Training_State = 'State';
+	$lang_Training_Requested = 'Requested';
+	$lang_Training_Arranged = 'Arranged';
+	$lang_Training_Completed = 'Completed';
+	$lang_Training_ListHeading = 'Trainings';
+	$lang_Training_DeleteMessage = 'Deletion of Trainings cannot be undone.';
+	$lang_Training_AddTitle = 'Add Training Request';
+	$lang_Training_EditTitle = 'Edit Training';
+	$lang_Training_TrainingCourse = 'Training Course';
+	$lang_Training_Cost = 'Cost';
+	$lang_Training_Company = 'Company';	
+	$lang_Training_Notes = 'Notes';
+	$lang_Training_Error_PleaseSpecifyId = 'Please specify an ID';
+	$lang_Training_Error_PleaseSpecifyDescription = 'Please specify description';
+	$lang_Training_IdInUse_Error = 'This id is in use';
+	$lang_Training_AssignEmployees = 'Assign Employees';
+	$lang_Training_AvailableEmployees = 'Available Employees';
+	$lang_Training_AssignedEmployees = 'Assigned Employees';
+	$lang_Training_Error_NoEmployeeSelected = 'No Employee selected!';
 	
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";

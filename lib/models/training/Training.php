@@ -26,6 +26,8 @@ require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
 require_once ROOT_PATH . '/lib/common/LocaleUtil.php';
 require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpLocation.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
+require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
 
 /**
  * Class representing a Training Request
@@ -276,7 +278,7 @@ class Training {
 		$training = (count($list) == 1) ? $list[0] : null;
 
 		if (!empty ($training)) {
-			$training->setEmployees(self :: _getEmployees($id));
+			$training->setEmployees(self :: getAssignedEmployees($id));
 		}
 
 		return $training;
@@ -299,7 +301,7 @@ class Training {
 	 * @param int $sortField The field to sort by
 	 * @param string $sortOrder Sort Order (one of ASC or DESC)
 	 */
-	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE, $sortField = self :: SORT_FIELD_USER_DEFINED_ID, $sortOrder = 'ASC') {
+	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE, $sortField = self :: SORT_FIELD_USER_DEFINED_ID, $sortOrder = 'ASC', $supervisorEmpNum = null) {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
@@ -333,22 +335,38 @@ class Training {
 
 		}
 
-		$list = self :: _getList($selectCondition, $sortBy, $sortOrder, $limit);
+		$list = self :: _getList($selectCondition, $sortBy, $sortOrder, $limit, $supervisorEmpNum);
 
 		$i = 0;
 		$arrayDispList = null;
 
-		foreach ($list as $training) {		
+		foreach ($list as $training) {					
 			$arrayDispList[$i][0] = $training->getId();
 			$arrayDispList[$i][1] = $training->getUserDefinedId();
 			$arrayDispList[$i][2] = $training->getDescription();
 			$arrayDispList[$i][3] = $training->getState();
-			$i++;
+			$i++;			
 		}
 
 		return $arrayDispList;
 	}
-
+	
+	/**
+	 * Get suggested id
+	 */
+	public static function getSuggestedId() {
+		$suggestedId = UniqueIDGenerator :: getInstance()->getLastID(self :: TABLE_NAME, self :: DB_FIELD_ID) + 1;
+		
+		// Double check if this id is in use.
+		$count = Training::getCount($suggestedId, self::SORT_FIELD_USER_DEFINED_ID);
+		while ($count > 0) {
+			$suggestedId++;
+			$count = Training::getCount($suggestedId, self::SORT_FIELD_USER_DEFINED_ID);
+		}
+		
+		return $suggestedId;
+	}
+	
 	/**
 	 * Count Training Requests with given search conditions
 	 * 
@@ -356,7 +374,7 @@ class Training {
 	 * @param string $searchStr Search string
 	 * @param string $searchFieldNo Integer giving which field to search on
 	 */
-	public static function getCount($searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE) {
+	public static function getCount($searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE, $supervisorEmpNum = null) {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
@@ -366,10 +384,30 @@ class Training {
 			$selectCondition[] = $condition;
 		}
 
+		$subordinateIds = array();
+		if (!empty($supervisorEmpNum)) {
+			$repObj = new EmpRepTo();
+			$subordinates = $repObj->getEmpSubDetails($supervisorEmpNum);
+
+			foreach ($subordinates as $subordinate) {
+				$subordinateIds[] = $subordinate[0];
+			}
+		}
+		
 		$count = 0;
 		$sql = sprintf('SELECT count(*) FROM '. self :: TABLE_NAME);
+			
+		if (!empty($supervisorEmpNum)) {
+			
+			$empIdList =  implode(',', $subordinateIds);			
+			$filterEmp = sprintf(', %s WHERE %s = %s AND %s IN (%s) ', 
+				self::TRAINING_EMP_TABLE_NAME, self::DB_FIELD_TRAINING_ID, self::DB_FIELD_ID, self::DB_FIELD_EMP_NUMBER, $empIdList);
+			$sql .= $filterEmp;
+						
+		}
 
 		if (!empty ($selectCondition)) {
+
 			$where = '';
 			foreach ($selectCondition as $condition) {
 				if (!empty($where)) {
@@ -507,8 +545,8 @@ class Training {
 	 * @param array  $selectCondition Array of select conditions to use.
 	 * @return array Array of Training objects. Returns an empty (length zero) array if none found.
 	 */
-	private static function _getList($selectCondition = null, $sortBy = null, $sortOrder = null, $limit = null) {
-
+	private static function _getList($selectCondition = null, $sortBy = null, $sortOrder = null, $limit = null, $supervisorEmpNum = null) {
+		
 		$fields[0] = self :: DB_FIELD_ID;
 		$fields[1] = self :: DB_FIELD_USER_DEFINED_ID;
 		$fields[2] = self :: DB_FIELD_DESCRIPTION;
@@ -518,10 +556,34 @@ class Training {
 		$fields[6] = self :: DB_FIELD_COMPANY;
 		$fields[7] = self :: DB_FIELD_NOTES;
 
-		$table = self :: TABLE_NAME;
 		$sqlBuilder = new SQLQBuilder();
-		$sql = $sqlBuilder->simpleSelect($table, $fields, $selectCondition, $sortBy, $sortOrder, $limit);
+		
+		if (empty($supervisorEmpNum)) {
+			$sql = $sqlBuilder->simpleSelect(self :: TABLE_NAME, $fields, $selectCondition, $sortBy, $sortOrder, $limit);
+		} else {
+			
+			$subordinateIds = array();
+			if (!empty($supervisorEmpNum)) {
+				$repObj = new EmpRepTo();
+				$subordinates = $repObj->getEmpSubDetails($supervisorEmpNum);
+	
+				foreach ($subordinates as $subordinate) {
+					$subordinateIds[] = $subordinate[0];
+				}
+			}
+					
+			$tables[0] = self :: TABLE_NAME . ' a';
+			$tables[1] = self::TRAINING_EMP_TABLE_NAME . ' b';
+										
+			$joinConditions[1] = 'a.' . self :: DB_FIELD_ID . ' = b.' . self :: DB_FIELD_TRAINING_ID;
 
+			$selectCondition[] = ' b.' . self::DB_FIELD_EMP_NUMBER . ' IN (' . implode(',', $subordinateIds) . ') ';
+						
+			$groupBy = 'a.' . self :: DB_FIELD_ID;	
+					
+			$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, $sortBy, $sortOrder, $limit, $groupBy);																
+		}	
+		
 		$trainingList = array ();
 
 		$conn = new DMLFunctions();
@@ -537,7 +599,7 @@ class Training {
 	/**
 	 * Get list of employees assigned to this Training
 	 */
-	private static function _getEmployees($trainingId) {
+	public static function getAssignedEmployees($trainingId) {
 
 		$fields[0] = "a." . self :: DB_FIELD_TRAINING_ID;
 		$fields[1] = "a." . self :: DB_FIELD_EMP_NUMBER;
@@ -553,11 +615,70 @@ class Training {
 		$sqlBuilder = new SQLQBuilder();
 		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
 
-		$employees = array ();
-
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
 
+		return self::_getEmployeesFromResults($result);
+	}
+
+	/**
+	 * Return list of employees who are not assigned to this training
+	 * @return array Array of employees
+	 */
+	public static function getUnAssignedEmployees($trainingId = null, $supervisorEmpNum = null) {
+
+		$fields[0] = self :: DB_FIELD_EMP_NUMBER;
+		$fields[1] = "CONCAT(`emp_firstname`, ' ', `emp_lastname`) AS " . self :: FIELD_EMP_NAME;
+
+		$sqlBuilder = new SQLQBuilder();
+
+		if (!empty($trainingId)) {
+			$sqlBuilder->table_name = EmpInfo::EMPLOYEE_TABLE_NAME;
+			$sqlBuilder->flg_select = 'true';
+			$sqlBuilder->arr_select = $fields;
+			$sqlBuilder->field = EmpInfo::EMPLOYEE_FIELD_EMP_NUMBER;
+			$sqlBuilder->field2 = self::DB_FIELD_EMP_NUMBER;
+			$sqlBuilder->table2_name = self::TRAINING_EMP_TABLE_NAME;
+	
+			$joinConditions[] = array(self::DB_FIELD_TRAINING_ID, $trainingId);
+	
+			$sql = $sqlBuilder->selectFilter($joinConditions);
+		} else {
+			$selectConditions[] = "(emp_status != 'EST000' OR emp_status IS NULL)";  
+			$sql = $sqlBuilder->simpleSelect(EmpInfo::EMPLOYEE_TABLE_NAME, $fields, $selectConditions);						
+		}
+		
+		if (!empty($supervisorEmpNum)) {
+			$repObj = new EmpRepTo();
+			$subordinates = $repObj->getEmpSubDetails($supervisorEmpNum);
+
+			foreach ($subordinates as $subordinate) {
+				$subordinateIds[] = $subordinate[0];
+			}
+			
+			if (!empty($subordinateIds)) {
+				$outerQuery = " emp_number IN (" . implode(',', $subordinateIds). ") ";
+				
+				$sql = "SELECT * FROM ({$sql}) sub WHERE {$outerQuery}";
+			}			
+		}			
+
+		$connection = new DMLFunctions();
+		$result = $connection->executeQuery($sql);
+		if ($result === false) {
+			throw new WorkshiftException("Error in db query:" . $sql, WorkshiftException::ERROR_IN_DB_QUERY);
+		}
+
+		return self::_getEmployeesFromResults($result);
+
+	}
+	
+	/**
+	 * Get employees from result
+	 */
+	private static function _getEmployeesFromResults($result) {
+		$employees = array ();
+				
 		while ($result && ($row = mysql_fetch_assoc($result))) {
 			$employees[] = array (
 				'emp_number' => $row[self :: DB_FIELD_EMP_NUMBER],
@@ -565,9 +686,9 @@ class Training {
 			);
 		}
 
-		return $employees;
+		return $employees;		
 	}
-
+	
 	/**
 	 * Returns the db field values as an array
 	 *
@@ -625,7 +746,7 @@ class Training {
 					break;
 
 				case self :: SORT_FIELD_STATE :
-					$selectCondition = self :: DB_FIELD_STATE . " = {$escapedVal} ";
+					$selectCondition = self :: DB_FIELD_STATE . " = '{$escapedVal}' ";
 					break;
 			}
 			return $selectCondition;
