@@ -20,6 +20,7 @@
 
 
 require_once ROOT_PATH . '/lib/common/Language.php';
+require_once ROOT_PATH . '/lib/models/training/Training.php';
 
 $lan = new Language();
 
