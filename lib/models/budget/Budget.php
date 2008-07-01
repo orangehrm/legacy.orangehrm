@@ -282,7 +282,7 @@ class Budget {
 	 * @param int $sortField The field to sort by
 	 * @param string $sortOrder Sort Order (one of ASC or DESC)
 	 */
-	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE, $sortField = self :: SORT_FIELD_ID, $sortOrder = 'ASC', $approverMode) {
+	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE, $sortField = self :: SORT_FIELD_ID, $sortOrder = 'ASC', $approverMode = null) {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
@@ -363,7 +363,7 @@ class Budget {
 	 * @param string $searchStr Search string
 	 * @param string $searchFieldNo Integer giving which field to search on
 	 */
-	public static function getCount($searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE) {
+	public static function getCount($searchStr = '', $searchFieldNo = self :: SORT_FIELD_NONE, $approverMode = null) {
 
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
@@ -371,6 +371,9 @@ class Budget {
 		$condition = self::_getSelectCondition($searchFieldNo, $searchStr);
 		if (!empty ($condition)) {
 			$selectCondition[] = $condition;
+		}
+		if ($approverMode) {
+			$selectCondition[] = self :: DB_FIELD_STATUS . " = " . self::STATUS_SUBMITTED_FOR_APPROVAL . " ";			
 		}
 
 		$count = 0;
