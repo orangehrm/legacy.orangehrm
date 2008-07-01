@@ -32,11 +32,23 @@ $statusList = array(Budget::STATUS_CREATED => $lang_Budget_Created,
 								  Budget::STATUS_SUBMITTED_FOR_APPROVAL => $lang_Budget_SubmittedForApproval,
 								  Budget::STATUS_NOT_APPROVED => $lang_Budget_NotApproved,
 								  Budget::STATUS_APPROVED => $lang_Budget_Approved);		
+
+if ($_SESSION['isBudgetApprover']) {					
+	$allowedStatusList = array_keys($statusList);
+} else {
+	$allowedStatusList = array(Budget::STATUS_CREATED, Budget::STATUS_SUBMITTED_FOR_APPROVAL);	
+}
 					
 $typeList = array(Budget::BUDGET_TYPE_SALARY => $lang_Budget_Salary,
 	 			 Budget::BUDGET_TYPE_TRAINING => $lang_Budget_Training,
 	 			 Budget::BUDGET_TYPE_EMPLOYEE => $lang_Budget_Employee,
-	 			 Budget::BUDGET_TYPE_COMPANY => $lang_Budget_Company);									    				  
+	 			 Budget::BUDGET_TYPE_COMPANY => $lang_Budget_Company);			
+	 			 
+if (($budget->getStatus() == Budget::STATUS_APPROVED) || ($budget->getStatus() == Budget::STATUS_NOT_APPROVED)) {
+	$disabled = 'disabled';
+} else {
+	$disabled = '';
+} 	 			 						    				  
 ?>
 <link href="<?php echo $cssDir;?>/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">@import url("<?php echo $cssDir;?>/style.css"); </style>
@@ -164,7 +176,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 		<div class="roundbox">
 
         	<label for="cmbBudgetType"><span class="error">*</span> <?php echo $lang_Budget_Type; ?></label>	  	        	
-			<select name="cmbBudgetType" id="cmbBudgetType" >
+			<select name="cmbBudgetType" id="cmbBudgetType" <?php echo $disabled; ?>>
 		  		<?php 
 		  			foreach ($typeList as $typeCode=>$typeDesc) {
 		  				$selected = ($typeCode == $budget->getBudgetType()) ? 'selected' : ''; 
@@ -174,51 +186,56 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
         	<br />        	
         	
         	<label for="txtBudgetUnit"><span class="error">*</span> <?php echo $lang_Budget_Unit; ?></label>
-        	<input type="text" name="txtBudgetUnit" id="txtBudgetUnit"
+        	<input type="text" name="txtBudgetUnit" id="txtBudgetUnit" <?php echo $disabled; ?>
         		value="<?php echo CommonFunctions::escapeHtml($budget->getBudgetUnit()); ?>"/>
         	<br />
 
         	<label for="txtBudgetValue"><span class="error">*</span> <?php echo $lang_Budget_Value; ?></label>
-        	<input type="text" name="txtBudgetValue" id="txtBudgetValue"
+        	<input type="text" name="txtBudgetValue" id="txtBudgetValue" <?php echo $disabled; ?>
         		value="<?php echo CommonFunctions::escapeHtml($budget->getBudgetValue()); ?>"/>
         	<br />
 			
 	        <label for="txtStartDate"><span class="error">*</span> <?php echo $lang_Budget_StartDate; ?></label>
-	        <input type="text" id="txtStartDate" name="txtStartDate" 
+	        <input type="text" id="txtStartDate" name="txtStartDate" <?php echo $disabled; ?>
 	        	value="<?php echo LocaleUtil::getInstance()->formatDate($budget->getStartDate());?>" size="10" tabindex="1" />
-	        <input type="button" id="btnStartDate" name="btnStartDate" value="  " class="calendarBtn"/>
+	        <input type="button" id="btnStartDate" name="btnStartDate" value="  " class="calendarBtn" <?php echo $disabled; ?>/>
 	       	<br />
 	        <label for="txtEndDate"><span class="error">*</span> <?php echo $lang_Budget_EndDate; ?></label>
-	        <input type="text" id="txtEndDate" name="txtEndDate" 
+	        <input type="text" id="txtEndDate" name="txtEndDate" <?php echo $disabled; ?>
 	        	value="<?php echo LocaleUtil::getInstance()->formatDate($budget->getEndDate());?>" size="10" tabindex="1" />
-	        <input type="button" id="btnEndDate" name="btnEndDate" value="  " class="calendarBtn"/>
+	        <input type="button" id="btnEndDate" name="btnEndDate" value="  " class="calendarBtn" <?php echo $disabled; ?>/>
 			
 			<br/>
 			
         	<label for="cmbStatus"><?php echo $lang_Budget_Status; ?></label>	        	
-			<select name="cmbStatus" id="cmbStatus" >
+			<select name="cmbStatus" id="cmbStatus" <?php echo $disabled; ?>
 		  		<?php 
 		  			foreach ($statusList as $statusCode=>$statusDesc) {
 		  				$selected = ($statusCode == $budget->getStatus()) ? 'selected' : ''; 
-		  				echo "<option value='" . $statusCode . "' $selected >" .$statusDesc. "</option>";
+		  				
+		  				/* Skip not allowed options, except when that option is set */
+		  				if (in_array($statusCode, $allowedStatusList) || !empty($selected)) {		  				
+		  					echo "<option value='" . $statusCode . "' $selected >" .$statusDesc. "</option>";
+		  				}
 		  			} ?>
 			</select>			  	        	
         	<br />
 
         	<label for="txtNotes"><?php echo $lang_Budget_Notes; ?></label>	        	
-        	<textarea id="txtNotes" name="txtNotes" > <?php echo CommonFunctions::escapeHtml($budget->getNotes()); ?></textarea>	        	
+        	<textarea id="txtNotes" name="txtNotes" <?php echo $disabled; ?>> <?php echo CommonFunctions::escapeHtml($budget->getNotes()); ?></textarea>	        	
 			<br />
 						
 	        <label for="none">&nbsp;</label>
 	        <input type="hidden" id="txtId" name="txtId" value="<?php echo $budget->getId(); ?>"/>
 	   	</div><br />
 	   	
-        <img onClick="update();"
+	   	<?php if (!$disabled) { ?>
+        <img onClick="update();" 
              onMouseOut="this.src='<?php echo $picDir; ?>/btn_save.gif';"
              onMouseOver="this.src='<?php echo $picDir; ?>/btn_save_02.gif';"
              src="<?php echo $picDir; ?>/btn_save.gif"
         >
-
+		<?php } ?>
 		<script type="text/javascript">
 		<!--
 		    if (document.getElementById && document.createElement) {

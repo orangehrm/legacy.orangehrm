@@ -159,7 +159,6 @@ if (isset($_GET['menu_no_top']) && ($_GET['menu_no_top']=="budget")) {
 
 $_SESSION['localRights']=$arrRights;
 
-
 $styleSheet = CommonFunctions::getTheme();
 
 if(isset($_GET['ACT']) && $_GET['ACT']=='logout') {
@@ -180,14 +179,22 @@ if (!empty($_SESSION['empID'])) {
 	$isSalaryApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);
 	$_SESSION['isSalaryApprover'] =  $isSalaryApprover;
 
+	$isBudgetApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_BUDGET_APPROVER);
+	$_SESSION['isBudgetApprover'] =  $isBudgetApprover;
 
 	if (($isSalaryApprover || $isApprover) && ($_SESSION['isAdmin']=='No') && (!$authorizeObj->isSupervisor())) {
 		$arrAllRights[Perf]=array('add'=> false, 'edit'=> true , 'delete'=> false, 'view'=> true);
     }
 
+	if ($isBudgetApprover && ($_SESSION['isAdmin']=='No'))  {
+		$arrAllRights[Budget]=array('add'=> false, 'edit'=> true , 'delete'=> false, 'view'=> true);
+    }
+
+
 } else {
 	$_SESSION['isApprover'] =  false;
 	$_SESSION['isSalaryApprover'] =  false;
+	$_SESSION['isBudgetApprover'] =  false;
 }
 
 // Default leave home page
@@ -958,12 +965,20 @@ function preloadAllImages() {
                 if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="budget" )) { ?>
             <TD width=158>
                 <ul id="menu">
-                    <?php if (($_SESSION['isAdmin']=='Yes') && ($arrRights['view'])) { ?>
+                    <?php if ( (($_SESSION['isAdmin']=='Yes') || $_SESSION['isBudgetApprover']) && ($arrAllRights[Budget]['view']) ) { ?>
+                    	
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?budgetcode=Budgets&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Budget_BudgetList; ?>
                         </a>
                     </li>
+<?php                 } ?>                    
+                    <?php if ( ($_SESSION['isAdmin']=='Yes') && ($arrAllRights[Budget]['view']) ) { ?>
+                    <li id="jobVacancies">
+                        <a href="lib/controllers/CentralController.php?budgetcode=JobTitleConfig&action=View" target="rightMenu">
+                            <?php echo $lang_Menu_Performance_ConfigureJobTitles; ?>
+                        </a>
+                    </li>                    
 <?php                 } ?>
                 </ul>
             </TD>

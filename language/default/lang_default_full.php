@@ -1697,6 +1697,8 @@
 	$lang_Budget_AddTitle = 'Add Budget';
 	$lang_Budget_EditTitle = 'Edit Budget';
 	
+	$lang_Budget_JobTitleApproveBudget = 'Approve Budget';
+	
 	$lang_Budget_Error_PleaseSpecifyBudgetType = 'Please specify budget type';
 	$lang_Budget_Error_PleaseSpecifyBudgetUnit = 'Please specify budget unit';
 	$lang_Budget_Error_PleaseSpecifyBudgetValue = 'Please specify budget value';

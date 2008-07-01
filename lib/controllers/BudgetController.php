@@ -30,6 +30,7 @@ require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_Search.php';
 require_once ROOT_PATH . '/lib/models/budget/Budget.php';
 require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_ViewList.php';
 require_once ROOT_PATH . '/lib/extractor/budget/EXTRACTOR_Budget.php';
+require_once ROOT_PATH . '/lib/common/JobTitleConfig.php';
 
 /**
  * Controller for budget module
@@ -93,6 +94,22 @@ class BudgetController {
 	                		                    
 	            }
                 break;
+                
+			case 'JobTitleConfig' :
+			
+	            switch ($_GET['action']) {
+
+	                case 'View' :
+	                    $this->_viewJobTitleConfigPage();	                    	                
+	                    break;
+	                    
+	                case 'Update' :
+						$jobTitleConfigExtractor = new EXTRACTOR_JobTitleConfig();
+						$config = $jobTitleConfigExtractor->parseUpdateData($_POST);
+						$this->_saveJobTitleConfig($config);
+						break;	                    
+	            }
+                break;                    
 	    }
     }
     
@@ -101,7 +118,7 @@ class BudgetController {
      * @param Budget $budget budget to save
      */
     private function _saveBudget($budget) {
-		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+		if ($this->authorizeObj->isAdmin() || $_SESSION['isBudgetApprover']) {
 			try {
 				$budget->save();
 	        	$message = 'UPDATE_SUCCESS';
@@ -121,10 +138,10 @@ class BudgetController {
 	 */
     private function _viewBudgets($searchObject) {
 
-		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
-			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
-        	$list = Budget::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
-        	$count = Budget::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);        	
+		if ($this->authorizeObj->isAdmin() || $_SESSION['isBudgetApprover']) {
+			$approverView = $_SESSION['isBudgetApprover'];
+        	$list = Budget::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $approverView);
+        	$count = Budget::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $approverView);        	
         	$this->_viewList($searchObject->getPageNumber(), $count, $list, true, 1);
 		} else {
             $this->_notAuthorized();
@@ -135,7 +152,7 @@ class BudgetController {
 	 * View add budget page
 	 */
 	private function _viewAddBudget() {
-		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
+		if ($this->authorizeObj->isAdmin()) {
 	    	$this->_viewBudget();
 	    } else {
             $this->_notAuthorized();
@@ -205,6 +222,70 @@ class BudgetController {
         $formCreator->popArr['columnsToSkip'] = $columnsToSkip;
         $formCreator->display();
 	}    
+
+    /**
+     * View Job title configuration page
+     */
+    private function _viewJobTitleConfigPage() {
+
+		$path = '/templates/common/jobTitleConfiguration.php';
+
+		try {
+
+			$role = isset($_GET['role'])? $_GET['role'] : JobTitleConfig::ROLE_BUDGET_APPROVER;
+			
+			$jobTitle = new JobTitle();
+			$jobTitles = $jobTitle->getJobTit();
+			$jobTitles = is_null($jobTitles) ? array() : $jobTitles;
+			$jobTitleConfig = JobTitleConfig::getJobTitleConfig($role);
+			$assignedJobTitles = $jobTitleConfig->getJobTitles();
+			
+			// Find available job titles
+			if (empty($assignedJobTitles)) {
+				$availableJobTitles = $jobTitles;
+			} else {
+				$availableJobTitles = array();				
+
+				foreach ($jobTitles as $title) {
+					$jobTitleCode = $title[0];
+					if (!array_key_exists($jobTitleCode, $assignedJobTitles)) {
+						$availableJobTitles[] = $title;
+					}
+				}	
+			}		
+
+			$objs['jobTitleConfig'] = $jobTitleConfig;
+			$objs['roleList'] = array(JobTitleConfig::ROLE_BUDGET_APPROVER);
+			$objs['AvailableJobTitles'] = $availableJobTitles;
+			$objs['AssignedJobTitles'] = $assignedJobTitles;
+
+			$template = new TemplateMerger($objs, $path);
+			$template->display();
+		} catch (JobTitleConfigException $e) {
+
+			$message = 'UNKNOWN_FAILURE';
+            $this->redirect($message);
+		}
+    }
+
+    /**
+     * Save Job title configuration to the database
+     * @param JobTitleConfig $config Job Title Config to save
+     */
+    private function _saveJobTitleConfig($config) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+				$config->save();
+	        	$message = 'UPDATE_SUCCESS';
+	        	$this->redirect($message);
+			} catch (JobTitleConfigException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}
+		} else {
+            $this->_notAuthorized();
+		}
+    }    
 
 	/**
 	 * Redirect to given url or current page while displaying optional message

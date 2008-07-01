@@ -37,6 +37,8 @@ class JobTitleConfig {
 	
 	const ROLE_SALARY_REVIEW_APPROVER = 2;	
 
+	const ROLE_BUDGET_APPROVER = 3;
+		
 	private $role;
 	private $jobTitles;
 
@@ -105,7 +107,7 @@ class JobTitleConfig {
     } 
 
 	public static function getAllRoles() {
-		return array(self::ROLE_REVIEW_APPROVER, self::ROLE_SALARY_REVIEW_APPROVER);
+		return array(self::ROLE_REVIEW_APPROVER, self::ROLE_SALARY_REVIEW_APPROVER, self::ROLE_BUDGET_APPROVER);
 	}
 	
 	public static function isEmployeeInRole($empNum, $role) {

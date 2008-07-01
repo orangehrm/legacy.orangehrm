@@ -25,6 +25,7 @@ $availableJobTitles = $records['AvailableJobTitles'];
 $roleList = $records['roleList'];
 
 $allowedRoles = array(JobTitleConfig::ROLE_REVIEW_APPROVER => $lang_Performance_Review_JobTitleApprovePerformanceReview,
+						JobTitleConfig::ROLE_BUDGET_APPROVER => $lang_Budget_JobTitleApproveBudget,
 						JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER => $lang_Performance_Review_JobTitleApproveSalaryReview);
 
 ?>
@@ -107,7 +108,8 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 			<label for="cmbRole" style="width:auto;"><span class="error">*</span> <?php echo $lang_Performance_JobTitleRoleLabel; ?></label>
 			<select style="width:auto;" name="cmbRole" id="cmbRole" onchange="javascript:changeRole();" >
 		  		<?php 
-		  			foreach ($allowedRoles as $role=>$roleDesc) {
+		  			foreach ($roleList as $role) {
+		  				$roleDesc = $allowedRoles[$role];		  		
 		  				$selected = ($role == $jobTitleConfig->getRole()) ? 'selected' : ''; 
 		  				echo "<option value='" . $role . "' $selected >" .$roleDesc. "</option>";
 		  			} ?>
