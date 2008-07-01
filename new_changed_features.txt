@@ -1,3 +1,24 @@
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
+
+    New features
+
+    Occupational Health and Safety - Risk Assessment
+    Occupational Health and Safety - Incident Reported
+    Occupational Health and Safety - Ergonomic Assessments
+    Supervisor submits a training request
+    HR Admin add/delete trainings
+    HR Admin/Supervisors view list of trainings
+    HR Admin adds training details
+    HR Admin/Supervisors view training details
+    Budgets
+
+    Bug Fixes (merged)
+    1810654 - In IE, "Define Leave Types" is shown as 2 Lines
+    1874105 - Rename holidays to closed when applying leave
+    1785387 - Please give a better error msg when dup recoreds are found
+    1880034 - Timesheet details has incorrect heading
+    1995721 - Admin Module: Company Structure get corrupted
+
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.11
 
     Fixed bugs:
