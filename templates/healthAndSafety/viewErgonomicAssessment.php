@@ -155,7 +155,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 			<input type="text" name="cmbRepEmpID" id="cmbRepEmpID" disabled 
 				value="<?php echo $ergonomicAssessment->getEmpName(); ?>"/>
 			<input class="button" type="button" value="..." onclick="returnEmpDetail();" />				
-			<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" />
+			<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" value="<?php echo $ergonomicAssessment->getEmpNumber();?>"/>
 			<br/>
 			
 	        <label for="txtStartDate"><span class="error">*</span> <?php echo $lang_Health_ErgonomicAssessment_StartDate; ?></label>
