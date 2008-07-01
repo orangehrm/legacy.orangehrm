@@ -49,6 +49,7 @@ require_once ROOT_PATH . '/lib/controllers/RecruitmentController.php';
 require_once ROOT_PATH . '/lib/controllers/PerformanceController.php';
 require_once ROOT_PATH . '/lib/controllers/HealthAndSafetyController.php';
 require_once ROOT_PATH . '/lib/controllers/TrainingController.php';
+require_once ROOT_PATH . '/lib/controllers/BudgetController.php';
 
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_JobTitle.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_JobSpec.php';
@@ -144,6 +145,8 @@ if(isset($_GET['uniqcode'])) {
     $moduletype = 'healthMod';
 } elseif (isset($_GET['trainingcode'])) {
     $moduletype = 'trainingMod';
+} elseif (isset($_GET['budgetcode'])) {
+    $moduletype = 'budgetMod';
 }
 
 //authentication
@@ -164,6 +167,7 @@ define('RECRUITMOD', 'MOD008');
 define('PERFMOD', 'MOD009');
 define('HEALTHMOD', 'MOD010');
 define('TRAININGMOD', 'MOD011');
+define('BUDGETMOD', 'MOD012');
 
 switch ($moduletype) {
 	case 'admin'	:	$locRights = $rights->getRights($_SESSION['userGroup'],Admin); break;
@@ -175,6 +179,7 @@ switch ($moduletype) {
     case 'perfMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],PERFMOD); break;    
     case 'healthMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],HEALTHMOD); break;    
 	case 'trainingMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],TRAININGMOD); break;    
+	case 'budgetMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],BUDGETMOD); break;	
 }
 
 if(!is_array($locRights) && $locRights == false)
@@ -1687,6 +1692,11 @@ switch ($moduletype) {
     case 'trainingMod'   :
                         $trainingController = new TrainingController();
                         $trainingController->handleRequest($_GET['trainingcode']);
+                        break;
+
+    case 'budgetMod'   :
+                        $budgetController = new BudgetController();
+                        $budgetController->handleRequest($_GET['budgetcode']);
                         break;
 
 }

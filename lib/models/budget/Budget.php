@@ -45,8 +45,10 @@ class Budget {
 	/**
 	 * Budget Status
 	 */
-	const STATUS_NOT_APPROVED = 0;
-	const STATUS_APPROVED = 1;
+	const STATUS_CREATED = 0;
+	const STATUS_SUBMITTED_FOR_APPROVAL = 1;
+	const STATUS_NOT_APPROVED = 2;
+	const STATUS_APPROVED = 3;
 	
 	/**
 	 * Budget Type
@@ -326,11 +328,7 @@ class Budget {
 				$sortBy = self :: DB_FIELD_END_DATE;
 				break;
 
-			case self :: SORT_FIELD_DESCRIPTION :
-				$sortBy = self :: DB_FIELD_DESCRIPTION;
-				break;
-
-			case self :: SORT_FIELD_REVIEW_STATUS :
+			case self :: SORT_FIELD_STATUS :
 				$sortBy = self :: DB_FIELD_STATUS;
 				break;
 		}
@@ -520,7 +518,7 @@ class Budget {
 		$values[3] = is_null($this->budgetValue) ? 'null' : $this->budgetValue;				
 		$values[4] = is_null($this->startDate) ? 'null' : $this->startDate;
 		$values[5] = is_null($this->endDate) ? 'null' : $this->endDate;
-		$values[6] = is_null($this->status) ? self :: STATUS_UNRESOLVED : $this->status;
+		$values[6] = is_null($this->status) ? self :: STATUS_CREATED : $this->status;
 		$values[7] = is_null($this->notes) ? 'null' : $this->notes;
 
 		return $values;

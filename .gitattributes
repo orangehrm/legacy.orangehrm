@@ -2,6 +2,7 @@
 /CHANGELOG.TXT -text
 /INSTALL.html -text
 /README.TXT -text
+/budgetview.php -text
 build/build.xml -text
 build/fix-ids.php -text
 build/report-styles/coverage-frames.xsl -text
@@ -104,6 +105,7 @@ installer/style.css -text
 installer/welcome.php -text
 /jobs.php -text
 language/da/lang_da_full.php -text
+language/default/lang_default_budgetview.php -text
 language/default/lang_default_empview.php -text
 language/default/lang_default_full.php -text
 language/default/lang_default_healthview.php -text
@@ -166,6 +168,7 @@ lib/confs/Conf.php-distribution -text
 lib/confs/mailConf.php-distribution -text
 lib/confs/sysConf.php -text
 lib/controllers/AllTests.php -text
+lib/controllers/BudgetController.php -text
 lib/controllers/CentralController.php -text
 lib/controllers/EmpViewController.php -text
 lib/controllers/GenViewController.php -text
@@ -187,6 +190,7 @@ lib/dao/MySQLClass.php -text
 lib/dao/SQLQBuilder.php -text
 lib/exception/ExceptionHandler.php -text
 lib/extractor/AllTests.php -text
+lib/extractor/budget/EXTRACTOR_Budget.php -text
 lib/extractor/common/AllTests.php -text
 lib/extractor/common/EXTRACTOR_Search.php -text
 lib/extractor/common/EXTRACTOR_ViewList.php -text
@@ -490,6 +494,9 @@ scripts/yui/yahoo/yahoo-debug.js -text
 scripts/yui/yahoo/yahoo-min.js -text
 scripts/yui/yahoo/yahoo.js -text
 /sysinfo.php -text
+templates/budget/footer.php -text
+templates/budget/header.php -text
+templates/budget/viewBudget.php -text
 templates/common/search.php -text
 templates/eimadmin/companyProperty.php -text
 templates/eimadmin/compstruct.php -text

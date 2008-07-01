@@ -43,6 +43,7 @@ define('Recruit', 'MOD008');
 define('Perf', 'MOD009');
 define('Health', 'MOD010');
 define('Training', 'MOD011');
+define('Budget', 'MOD012');
 
 $arrRights=array('add'=> false , 'edit'=> false , 'delete'=> false, 'view'=> false);
 $arrAllRights=array(Admin => $arrRights,
@@ -54,7 +55,8 @@ $arrAllRights=array(Admin => $arrRights,
 					Recruit => $arrRights,
                     Perf => $arrRights,
                     Health => $arrRights,
-                    Training => $arrRights);
+                    Training => $arrRights,
+                    Budget => $arrRights);
 
 require_once ROOT_PATH . '/lib/models/maintenance/Rights.php';
 require_once ROOT_PATH . '/lib/models/maintenance/UserGroups.php';
@@ -151,6 +153,10 @@ if (isset($_GET['menu_no_top']) && ($_GET['menu_no_top']=="training")) {
     $arrRights=$arrAllRights[Training];
 }
 
+if (isset($_GET['menu_no_top']) && ($_GET['menu_no_top']=="budget")) {
+    $arrRights=$arrAllRights[Budget];
+}
+
 $_SESSION['localRights']=$arrRights;
 
 
@@ -240,6 +246,8 @@ if ($_SESSION['isSalaryApprover']) {
 $healthAndSafetyHomePage = 'lib/controllers/CentralController.php?healthcode=RiskAssessments&action=List';
 
 $trainingHomePage = 'lib/controllers/CentralController.php?trainingcode=Training&action=List';
+
+$budgetHomePage = 'lib/controllers/CentralController.php?budgetcode=Budgets&action=List';
 
 // Default page in admin module is the Company general info page.
 $defaultAdminView = "GEN";
@@ -591,6 +599,28 @@ function preloadAllImages() {
                       </tr>
                   </table></td>
                   <?php }
+                  if (isset($_GET['menu_no_top']) && ($_GET['menu_no_top']=="budget") && $arrAllRights[Budget]['view']) {
+                    ?>
+                  <td />
+                  <td class="tabSeparator"></td>
+                  <td><table cellspacing="0" cellpadding="0" border="0" class="tabContainer"">
+                      <tr height="20">
+                        <td class="currentTabLeft" ></td>
+                        <td  class="currentTab" nowrap><a class="currentTab"  href="./index.php?module=Home&menu_no=1&menu_no_top=budget" ><?php echo $lang_Menu_Budget; ?></a></td>
+                        <td class="currentTabRight"><img src="" width="8" height="1" border="0" alt=""></td>
+                        <td class="tabSpace"><img src="" width="1" height="1" border="0" alt=""></td>
+                      </tr>
+                  </table></td>
+                  <?php } else if ($arrAllRights[Budget]['view']) { ?>
+                  <td><table cellspacing="0" cellpadding="0" border="0" class="tabContainer"">
+                      <tr height="20">
+                        <td class="otherTabLeft" ><img src="" width="8" height="1" border="0" alt=""></td>
+                        <td class="otherTab" nowrap><a   class="otherTab"  href="index.php?module=Home&menu_no=3&menu_no_top=budget"><?php echo $lang_Menu_Budget; ?></a></td>
+                        <td class="otherTabRight"><img src="" width="8" height="1" border="0" alt=""></td>
+                        <td class="tabSpace"><img src="" width="1" height="1" border="0" alt=""></td>
+                      </tr>
+                  </table></td>
+                  <?php }                  
                   if($_SESSION['isAdmin']=='Yes') {
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep") && $arrAllRights[Report]['view']) {
 					?>
@@ -924,7 +954,19 @@ function preloadAllImages() {
 <?php                 } ?>
                 </ul>
             </TD>
-
+<?php			}
+                if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="budget" )) { ?>
+            <TD width=158>
+                <ul id="menu">
+                    <?php if (($_SESSION['isAdmin']=='Yes') && ($arrRights['view'])) { ?>
+                    <li id="jobVacancies">
+                        <a href="lib/controllers/CentralController.php?budgetcode=Budgets&action=List" target="rightMenu">
+                            <?php echo $lang_Menu_Budget_BudgetList; ?>
+                        </a>
+                    </li>
+<?php                 } ?>
+                </ul>
+            </TD>
 <?php			}
 
 				if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="home")) {  ?>
@@ -1264,6 +1306,8 @@ function preloadAllImages() {
               <iframe src="<?php echo $healthAndSafetyHomePage; ?>" id="rightMenu" name="rightMenu" width="100%" height="400" frameborder="0"> </iframe>
 <?php       } elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="training")) {  ?>
               <iframe src="<?php echo $trainingHomePage; ?>" id="rightMenu" name="rightMenu" width="100%" height="400" frameborder="0"> </iframe>
+<?php       } elseif ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="budget")) {  ?>
+              <iframe src="<?php echo $budgetHomePage; ?>" id="rightMenu" name="rightMenu" width="100%" height="400" frameborder="0"> </iframe>
 <?php       } ?>
 
             </td>

@@ -218,6 +218,10 @@
     $lang_Menu_Training_List = "Training List";
     $lang_Menu_Training_Request = "Training Request";
     	
+   	// Budget module
+	$lang_Menu_Budget = 'Budgets';
+	$lang_Menu_Budget_BudgetList = 'Budget List';
+   	
 	/**
 	 * Common
 	 */
@@ -1669,6 +1673,38 @@
 	$lang_Training_AssignedEmployees = 'Assigned Employees';
 	$lang_Training_Error_NoEmployeeSelected = 'No Employee selected!';
 	
+	// Budget
+	$lang_Budget_Created = 'Created';
+	$lang_Budget_Submitted = 'Submitted';
+	$lang_Budget_SubmittedForApproval = 'Submitted For Approval';	
+	$lang_Budget_NotApproved = 'Not Approved'; 
+	$lang_Budget_Approved = 'Approved';
+	$lang_Budget_Id = 'ID';
+	$lang_Budget_Type = 'Budget Type';
+	$lang_Budget_Unit = 'Budget Unit';
+	$lang_Budget_Value = 'Budget Value'; 
+	$lang_Budget_StartDate = 'Start Date';
+	$lang_Budget_EndDate = 'End Date';
+	$lang_Budget_Status = 'Status';
+	$lang_Budget_ListHeading = 'Budgets';
+	$lang_Budget_DeleteMessage = 'Deletion of Budgets cannot be undone';	
+ 	$lang_Budget_Salary = 'Salary';
+	$lang_Budget_Training = 'Training';
+	$lang_Budget_Employee = 'Employee';
+	$lang_Budget_Company = 'Company';
+	$lang_Budget_Notes = 'Notes';
+
+	$lang_Budget_AddTitle = 'Add Budget';
+	$lang_Budget_EditTitle = 'Edit Budget';
+	
+	$lang_Budget_Error_PleaseSpecifyBudgetType = 'Please specify budget type';
+	$lang_Budget_Error_PleaseSpecifyBudgetUnit = 'Please specify budget unit';
+	$lang_Budget_Error_PleaseSpecifyBudgetValue = 'Please specify budget value';
+	$lang_Budget_Error_PleaseSpecifyValidStartDate = 'Please specify valid start date';
+	$lang_Budget_Error_PleaseSpecifyValidEndDate = 'Please specify valid end date';
+	$lang_Budget_Error_StartDateShouldBeBeforeEndDate = 'Start date should be before end date';
+			
+	 			 					
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";
 	$lang_login_UserNameNotGiven = "User Name not given!";
