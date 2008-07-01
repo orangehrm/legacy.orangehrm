@@ -172,7 +172,7 @@ require_once ROOT_PATH . '/lib/common/authorize.php';
 
 $authorizeObj = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
 
-require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
+require_once ROOT_PATH . '/lib/common/JobTitleConfig.php';
 if (!empty($_SESSION['empID'])) {
 	$isApprover = JobTitleConfig::isEmployeeInRole($_SESSION['empID'], JobTitleConfig::ROLE_REVIEW_APPROVER);
 	$_SESSION['isApprover'] =  $isApprover;

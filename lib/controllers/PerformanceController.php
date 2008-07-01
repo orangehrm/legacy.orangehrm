@@ -33,8 +33,7 @@ require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_Search.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceMeasure.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceReview.php';
 
-//TODO: Move JobTitleConfig.php to common location
-require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
+require_once ROOT_PATH . '/lib/common/JobTitleConfig.php';
 require_once ROOT_PATH . '/lib/models/performance/PerformanceMailNotifier.php';
 require_once ROOT_PATH . '/lib/models/performance/SalaryReview.php';
 require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_ViewList.php';
@@ -42,7 +41,7 @@ require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_ViewList.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfMeasure.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_PerfReview.php';
 require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_SalaryReview.php';
-require_once ROOT_PATH . '/lib/extractor/performance/EXTRACTOR_JobTitleConfig.php';
+require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_JobTitleConfig.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpBasSalary.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpRepTo.php';
@@ -860,7 +859,7 @@ class PerformanceController {
      */
     private function _viewJobTitleConfigPage() {
 
-		$path = '/templates/performance/jobTitleConfiguration.php';
+		$path = '/templates/common/jobTitleConfiguration.php';
 
 		try {
 

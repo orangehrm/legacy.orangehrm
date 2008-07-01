@@ -126,6 +126,7 @@ lib/common/CommonFunctionsTest.php -text
 lib/common/Config.php -text
 lib/common/ConfigTest.php -text
 lib/common/FormCreator.php -text
+lib/common/JobTitleConfig.php -text
 lib/common/Language.php -text
 lib/common/LocaleUtil.php -text
 lib/common/LocaleUtilTest.php -text
@@ -192,6 +193,7 @@ lib/exception/ExceptionHandler.php -text
 lib/extractor/AllTests.php -text
 lib/extractor/budget/EXTRACTOR_Budget.php -text
 lib/extractor/common/AllTests.php -text
+lib/extractor/common/EXTRACTOR_JobTitleConfig.php -text
 lib/extractor/common/EXTRACTOR_Search.php -text
 lib/extractor/common/EXTRACTOR_ViewList.php -text
 lib/extractor/common/ExtractorViewListTest.php -text
@@ -260,7 +262,6 @@ lib/extractor/maintenance/EXTRACTOR_Modules.php -text
 lib/extractor/maintenance/EXTRACTOR_Rights.php -text
 lib/extractor/maintenance/EXTRACTOR_UserGroups.php -text
 lib/extractor/maintenance/EXTRACTOR_Users.php -text
-lib/extractor/performance/EXTRACTOR_JobTitleConfig.php -text
 lib/extractor/performance/EXTRACTOR_PerfMeasure.php -text
 lib/extractor/performance/EXTRACTOR_PerfReview.php -text
 lib/extractor/performance/EXTRACTOR_SalaryReview.php -text
@@ -391,7 +392,6 @@ lib/models/maintenance/UserGroups.php -text
 lib/models/maintenance/Users.php -text
 lib/models/maintenance/bugs.php -text
 lib/models/maintenance/modules.php -text
-lib/models/performance/JobTitleConfig.php -text
 lib/models/performance/PerformanceMailNotifier.php -text
 lib/models/performance/PerformanceMeasure.php -text
 lib/models/performance/PerformanceReview.php -text
@@ -497,6 +497,9 @@ scripts/yui/yahoo/yahoo.js -text
 templates/budget/footer.php -text
 templates/budget/header.php -text
 templates/budget/viewBudget.php -text
+templates/common/footer.php -text
+templates/common/header.php -text
+templates/common/jobTitleConfiguration.php -text
 templates/common/search.php -text
 templates/eimadmin/companyProperty.php -text
 templates/eimadmin/compstruct.php -text
@@ -583,7 +586,6 @@ templates/maintenance/usergroups.php -text
 templates/maintenance/users.php -text
 templates/performance/footer.php -text
 templates/performance/header.php -text
-templates/performance/jobTitleConfiguration.php -text
 templates/performance/mails/approval-subject.txt -text
 templates/performance/mails/approval.txt -text
 templates/performance/mails/review-notification-subject.txt -text

@@ -18,7 +18,7 @@
  *
  */
 
-require_once ROOT_PATH . '/lib/models/performance/JobTitleConfig.php';
+require_once ROOT_PATH . '/lib/common/JobTitleConfig.php';
 
 class EXTRACTOR_JobTitleConfig {
 
