@@ -886,7 +886,7 @@ class PerformanceController {
 			}		
 
 			$objs['jobTitleConfig'] = $jobTitleConfig;
-			$objs['roleList'] = JobTitleConfig::getAllRoles();
+			$objs['roleList'] = array(JobTitleConfig::ROLE_REVIEW_APPROVER, JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);
 			$objs['AvailableJobTitles'] = $availableJobTitles;
 			$objs['AssignedJobTitles'] = $assignedJobTitles;
 
@@ -909,7 +909,7 @@ class PerformanceController {
 				$config->save();
 	        	$message = 'UPDATE_SUCCESS';
 	        	$this->redirect($message);
-			} catch (PerformanceMeasureException $e) {
+			} catch (JobTitleConfigException $e) {
 				$message = 'UPDATE_FAILURE';
 	        	$this->redirect($message);
 			}
