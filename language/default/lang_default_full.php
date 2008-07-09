@@ -1386,6 +1386,7 @@
     $lang_Recruit_JobApplicationList_Name = 'Name';
     $lang_Recruit_JobApplicationList_PositionApplied = 'Position Applied';
     $lang_Recruit_JobApplicationList_Actions = 'Actions';
+    $lang_Recruit_JobApplicationList_MoreDetails = 'More Details';
     $lang_Recruit_JobApplicationList_EventHistory = 'Event History';
     $lang_Recruit_JobApplicationList_Details = 'Details';
     $lang_Recruit_JobApplicationList_NoApplications = 'No Applicants found';

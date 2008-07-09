@@ -97,7 +97,7 @@ $statusList = array(
             <th><?php echo $lang_Recruit_HiringManager; ?></th>
             <th><?php echo $lang_Recruit_VacancyStatus; ?></th>
             <th><?php echo $lang_Recruit_JobApplicationList_Actions; ?></th>
-            <th></th>
+            <th><?php echo $lang_Recruit_JobApplicationList_MoreDetails; ?></th>
             </tr>
         </thead>
         <?php
