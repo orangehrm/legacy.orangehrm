@@ -397,25 +397,36 @@ class Training {
 		$count = 0;
 		$sql = sprintf('SELECT count(*) FROM '. self :: TABLE_NAME);
 			
+		$whereNeeded = true;
+		
 		if (!empty($supervisorEmpNum)) {
 			
 			$empIdList =  implode(',', $subordinateIds);			
 			$filterEmp = sprintf(', %s WHERE %s = %s AND %s IN (%s) ', 
 				self::TRAINING_EMP_TABLE_NAME, self::DB_FIELD_TRAINING_ID, self::DB_FIELD_ID, self::DB_FIELD_EMP_NUMBER, $empIdList);
 			$sql .= $filterEmp;
-						
+			
+			// Where is no longer needed since already added here.
+			$whereNeeded = false;						
 		}
 
 		if (!empty ($selectCondition)) {
 
-			$where = '';
+			$whereClause = '';
+			
 			foreach ($selectCondition as $condition) {
-				if (!empty($where)) {
-					$where .= ' AND ';
-				}
-				$where .= ' ( ' . $condition . ' )';
+
+				// Add a 'AND' if not the first clause or if already added clause beforehand (for supervisor)				
+				if (!empty($whereClause) || !$whereNeeded) {
+					$whereClause .= ' AND ';
+				} 
+				$whereClause .= ' ( ' . $condition . ' )';
 			}
-			$sql .= ' WHERE ' . $where;
+			
+			if ($whereNeeded) {
+				$sql .= ' WHERE ';
+			}		
+			$sql .= $whereClause;
 		}
 		$sqlBuilder = new SQLQBuilder();
 		$result = $dbConnection->executeQuery($sql);
@@ -581,9 +592,9 @@ class Training {
 						
 			$groupBy = 'a.' . self :: DB_FIELD_ID;	
 					
-			$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, $sortBy, $sortOrder, $limit, $groupBy);																
+			$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, $sortBy, $sortOrder, $limit, $groupBy);															
 		}	
-		
+			
 		$trainingList = array ();
 
 		$conn = new DMLFunctions();
