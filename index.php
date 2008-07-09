@@ -953,12 +953,14 @@ function preloadAllImages() {
                             <?php echo $lang_Menu_Training_List; ?>
                         </a>
                     </li>
+                    <?php if ($authorizeObj->isSupervisor()) { ?>                    
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?trainingcode=Training&action=ViewAdd" target="rightMenu">
                             <?php echo $lang_Menu_Training_Request; ?>
                         </a>
                     </li>
-<?php                 } ?>
+<?php                 }
+                    } ?>
                 </ul>
             </TD>
 <?php			}
