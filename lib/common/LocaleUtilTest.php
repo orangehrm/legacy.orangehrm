@@ -208,6 +208,15 @@ class LocaleUtilTest extends PHPUnit_Framework_TestCase {
 
     	$date = '2007-12-22';
     	$this->assertNull($localeUtil->convertToStandardDateFormat($date));
+    	
+    	// With date and time specified, only date should be considered.
+		$this->sysConf->dateFormat = "d-m-Y";
+		$localeUtil->setSysConf($this->sysConf);
+
+    	$expected = '2007-12-22';
+    	$date = '22-12-2007 10:20:00';
+    	$this->assertEquals($expected, $localeUtil->convertToStandardDateFormat($date));
+    	
     }
 
     public function testConvertToStandardDateTimeFormat() {

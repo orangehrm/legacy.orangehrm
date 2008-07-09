@@ -299,6 +299,11 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 
 		for ($i=0; $i<count($time); $i++) {
 
+			// If format string is over, ignore additional text in search string and continue
+			if (!isset($format[$j])) {
+				break;
+			}
+			
 			$ch = $format[$j];
 			$sCh = $time[$i];
 
