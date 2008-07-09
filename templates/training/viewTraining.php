@@ -268,11 +268,11 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 		<br /><br />
 		<table border="0">
 		<tr>
-		   	<th width="100" style="align:center;"><?php echo $lang_Training_AvailableEmployees; ?></th>
+		   	<th width="130" style="align:center;"><?php echo $lang_Training_AvailableEmployees; ?></th>
 			<th width="100"/>
-		   	<th width="125" style="align:center;"><?php echo $lang_Training_AssignedEmployees; ?></th>
+		   	<th width="130" style="align:center;"><?php echo $lang_Training_AssignedEmployees; ?></th>
 		</tr>
-		<tr><td width="100" >
+		<tr><td width="130" >
 			<select size="10" id="cmbAvailableEmployees" name="cmbAvailableEmployees[]" style="width:125px;"
 					<?php echo ($supervisorMode) ? 'readonly' : ''; ?>
 					multiple="multiple">
@@ -294,7 +294,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 					<?php echo ($supervisorMode) ? 'disabled' : ''; ?> 
 					value="< <?php echo $lang_Leave_Common_Remove; ?>" style="width:80%">
 			</td>
-			<td>
+			<td width="130">
 			<select size="10" name="cmbAssignedEmployees[]" id="cmbAssignedEmployees" style="width:125px;"
 					<?php echo ($supervisorMode) ? 'readonly' : ''; ?>
 			        multiple="multiple">
