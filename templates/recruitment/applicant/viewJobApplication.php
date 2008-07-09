@@ -63,8 +63,8 @@ $iconDir = "../../themes/{$styleSheet}/icons/";
 $backImg = $picDir . 'btn_back.gif';
 $backImgPressed = $picDir . 'btn_back_02.gif';
 
-$saveImg = $picDir . 'btn_save.gif';
-$saveImgPressed = $picDir . 'btn_save_02.gif';
+$saveImg = $iconDir . 'apply.gif';
+$saveImgPressed = $iconDir . 'apply_o.gif';
 
 $clearImg = $picDir . 'btn_clear.gif';
 $clearImgPressed = $picDir . 'btn_clear_02.gif';

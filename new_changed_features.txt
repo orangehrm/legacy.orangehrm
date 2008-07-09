@@ -6,6 +6,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
    2008703 - Training:Add/Remove Button positions are invalid
    1992752 - Performance Measure: Alignment error in Add Remove buttons
    1993465 - Applicant List - Actions not aligned with the column header
+   1993467 - Better to have an "Apply" button to apply for a job
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
 
