@@ -4,6 +4,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
    2008737 - Training: "Search By: Supervisor" will give a SQL Error
    1990698 - Define Specific Holidays : > gives an error page
    2008703 - Training:Add/Remove Button positions are invalid
+   1992752 - Performance Measure: Alignment error in Add Remove buttons
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
 
