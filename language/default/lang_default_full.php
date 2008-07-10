@@ -1664,6 +1664,7 @@
 	$lang_Training_ListHeading = 'Trainings';
 	$lang_Training_DeleteMessage = 'Deletion of Trainings cannot be undone.';
 	$lang_Training_AddTitle = 'Add Training Request';
+	$lang_Training_RequestTrainingTitle = 'Request Training';
 	$lang_Training_EditTitle = 'Edit Training';
 	$lang_Training_TrainingCourse = 'Training Course';
 	$lang_Training_Cost = 'Cost';

@@ -181,7 +181,18 @@ function removeEmployees() {
 
 </script>
 <h2>
-<?php echo ($addMode) ? $lang_Training_AddTitle :	$lang_Training_EditTitle;	?>
+<?php
+	if ($addMode) {
+		if ($authorizeObj->isSupervisor()) {
+			$pageTitle = $lang_Training_RequestTrainingTitle;
+		} else {
+			$pageTitle = $lang_Training_AddTitle;
+		}
+	} else {
+		$pageTitle = $lang_Training_EditTitle;
+	}
+	echo $pageTitle;
+?>
 </h2>
 <hr/>
 <div class="navigation">
