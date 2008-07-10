@@ -17,7 +17,7 @@ class Conf {
 		$this->dbuser	= 'root';
 		$this->dbpass	= '';
 		$this->version = '2.2';
-                $this->customVersion = 'ors-0.1-beta.1';
+                $this->customVersion = 'ors-0.1-beta.2';
 
 
 		$this->emailConfiguration = dirname(__FILE__).'mailConf.php';
