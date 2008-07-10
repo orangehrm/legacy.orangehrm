@@ -39,6 +39,16 @@ $eventStatusList = array(
     JobApplicationEvent::STATUS_INTERVIEW_FINISHED => $lang_Recruit_JobApplicationHistory_StatusFinished
 );
 
+$actionList = array(
+	'FirstInterview' => $lang_Recruit_JobApplicationAction_FirstInterview,
+	'SecondInterview' => $lang_Recruit_JobApplicationAction_SecondInterview,
+	'Reject' => $lang_Recruit_JobApplicationAction_Reject,
+	'OfferJob' => $lang_Recruit_JobApplicationAction_OfferJob,
+	'MarkDeclined' => $lang_Recruit_JobApplicationAction_MarkDeclined,
+	'SeekApproval' => $lang_Recruit_JobApplicationAction_SeekApproval,
+	'Approve' => $lang_Recruit_JobApplicationAction_Approve
+);
+
 $eventTitles = array(
     JobApplicationEvent::EVENT_REJECT => $lang_Recruit_JobApplicationHistory_Rejected,
     JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW => $lang_Recruit_JobApplicationHistory_FirstInterview,
@@ -218,17 +228,53 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
   			 onMouseOver="this.src='<?php echo $backImgPressed;?>';" src="<?php echo $backImg;?>"
   			 onClick="goBack();">
 	</div>
+	
+	<div class="message">
+    
     <?php $message =  isset($_GET['message']) ? $_GET['message'] : null;
     	if (isset($message)) {
 			$col_def = CommonFunctions::getCssClassForMessage($message);
 			$message = "lang_Common_" . $message;
 	?>
-	<div class="message">
+
 		<font class="<?php echo $col_def?>" size="-1" face="Verdana, Arial, Helvetica, sans-serif">
 			<?php echo (isset($$message)) ? $$message: ""; ?>
 		</font>
+	<?php }	?>	
+	
+	
+	<?php
+		if (isset($_GET['attemptedAction'])) {
+			
+			$attemptedAction = $_GET['attemptedAction'];
+			$currentStatus = $application->getStatus();
+			
+			if (($attemptedAction == 'FirstInterview') 
+					&& !in_array($currentStatus, array(JobApplication::STATUS_SUBMITTED, JobApplication::STATUS_REJECTED))) {
+								
+				$statusMessage = $lang_Recruit_DuplicateFirstInterview;								 
+			} else if (($attemptedAction == 'SecondInterview') 
+					&& !in_array($currentStatus, array(JobApplication::STATUS_SUBMITTED, JobApplication::STATUS_REJECTED))) {
+				
+				$statusMessage = $lang_Recruit_DuplicateSecondInterview;
+			} else {
+				$actionDescription = isset($actionList[$attemptedAction]) ? $actionList[$attemptedAction] : $attemptedAction;
+				$statusDescription = $statusList[$currentStatus];
+				
+				$statusMessage = preg_replace(array('/#action/', '/#status/'), array($actionDescription, $statusDescription),
+						$lang_Recruit_InvalidStatusError);
+			}
+			$statusMessage .= '. ' . $lang_Recruit_SeeBelowForApplicationDetails;
+			
+	?>
+		<font class="error" size="-1" face="Verdana, Arial, Helvetica, sans-serif">
+			<?php echo $statusMessage; ?>
+		</font>		
+	<?php			
+		}
+	?>	
 	</div>
-	<?php }	?>
+		
   <div class="roundbox">
   		<div class="txtName"><?php echo $lang_Recruit_JobApplicationHistory_DateApplied; ?></div>
         <div class="txtValue"><?php echo LocaleUtil::getInstance()->formatDate($application->getAppliedDateTime()); ?></div><br />

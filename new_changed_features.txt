@@ -10,6 +10,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
    2009435 - Budget:2 UI paths (not necessary) for the same screen
    2008726 - Training:Supervisor should not be able to add training(s)
    2008721 - Training:Unnecessary back button in Training Request
+   1994187 - Can schedule 1st interview multiple times for same applicant
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
 

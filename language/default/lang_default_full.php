@@ -1498,6 +1498,11 @@
 	$lang_Recruit_ApplySuccess = 'Your application for the position of #jobtitle# was received. An email confirmation was sent to the following email address: #email#';
 	$lang_Recruit_ApplyFailure = 'There was an error while processing your application. Please try again later.';
 	
+	$lang_Recruit_DuplicateFirstInterview = 'You Attempted to schedule a duplicate first interview for this job application';
+	$lang_Recruit_DuplicateSecondInterview = 'You Attempted to schedule a duplicate second interview for application';
+	$lang_Recruit_InvalidStatusError = '#action action is not allowed for job application in the status #status';
+	$lang_Recruit_SeeBelowForApplicationDetails = 'See below for application details';
+	
 	// Performance review module
 	$lang_Performance_Measure_ID = 'ID';
 	$lang_Performance_Measure_Name = 'Name';

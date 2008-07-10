@@ -48,6 +48,8 @@ require_once ROOT_PATH . '/lib/controllers/PerformanceController.php';
  */
 class RecruitmentController {
 
+	const INVALID_STATUS_ERROR = 'INVALID_STATUS_ERROR';
+	
 	private $authorizeObj;
 
     /**
@@ -69,9 +71,7 @@ class RecruitmentController {
 			trigger_error("Invalid Action " . $_GET['action'], E_USER_NOTICE);
 			return;
 		}
-
 		switch ($code) {
-
 			case 'Vacancy' :
 				$viewListExtractor = new EXTRACTOR_ViewList();
 
@@ -444,6 +444,18 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
+            
+            // Validate if in correct status.            
+            $currentStatus = $application->getStatus(); 
+            
+            $invalidStatuses = array(JobApplication::STATUS_REJECTED, JobApplication::STATUS_OFFER_DECLINED,
+            	JobApplication::STATUS_HIRED, JobApplication::STATUS_JOB_OFFERED);
+            if (in_array($currentStatus, $invalidStatuses)) {  
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+				return;
+            }            
+            
             $application->setStatus(JobApplication::STATUS_REJECTED);
             try {
                 $application->save();
@@ -467,9 +479,19 @@ class RecruitmentController {
     private function _saveFirstInterview($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
 
-            // TODO: Validate if Hiring manager or interview manager and in correct status
+            // TODO: Validate if Hiring manager or interview manager and in correct status                        
+            
             $applicationId = $event->getApplicationId();
             $application = JobApplication::getJobApplication($applicationId);
+            
+            // Validate if in correct status.            
+            $currentStatus = $application->getStatus(); 
+            if ($currentStatus != JobApplication::STATUS_SUBMITTED) {  
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
+            	$this->_showInvalidStatusError($applicationId, $attemptedAction);      	
+				return;
+            }
+            
             $application->setStatus(JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED);
             try {
                 $application->save();
@@ -492,6 +514,17 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
+    
+    /**
+     * Show error message when user attempts to apply an action to a job application in an invalid state.
+     * 
+     * eg: When attempting to schedule a first interview where a interview has already been scheduled.
+     * This is normally possible only if the user presses the back button on the browser and attempts to redo an action.
+     */
+    private function _showInvalidStatusError($applicationId, $attemptedAction) {
+		$this->redirect(RecruitmentController::INVALID_STATUS_ERROR, 
+			"?recruitcode=Application&action=ViewHistory&id={$applicationId}&attemptedAction={$attemptedAction}");    	
+    }
 
     private function _saveSecondInterview($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
@@ -499,6 +532,15 @@ class RecruitmentController {
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $applicationId = $event->getApplicationId();
             $application = JobApplication::getJobApplication($applicationId);
+
+            // Validate if in correct status.            
+            $currentStatus = $application->getStatus(); 
+            if ($currentStatus != JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED) {  
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
+            	$this->_showInvalidStatusError($applicationId, $attemptedAction);      	
+				return;
+            }
+            
             $application->setStatus(JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
 
             try {
@@ -576,6 +618,16 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
+            
+            // Validate if in correct status.            
+            $currentStatus = $application->getStatus(); 
+            
+            if ($currentStatus != JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED) {  
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+				return;
+            }   
+                        
             $application->setStatus(JobApplication::STATUS_JOB_OFFERED);
 
             try {
@@ -597,6 +649,16 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
+            
+            // Validate if in correct status.            
+            $currentStatus = $application->getStatus(); 
+            
+            if ($currentStatus != JobApplication::STATUS_JOB_OFFERED) {  
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+				return;
+            } 
+                        
             $application->setStatus(JobApplication::STATUS_OFFER_DECLINED);
 
             try {
@@ -638,6 +700,15 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
+            
+            // Validate if in correct status.            
+            $currentStatus = $application->getStatus(); 
+            
+            if ($currentStatus != JobApplication::STATUS_JOB_OFFERED) {  
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+				return;
+            }            
             $application->setStatus(JobApplication::STATUS_PENDING_APPROVAL);
 
             try {
@@ -667,6 +738,15 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
+            
+            // Validate if in correct status.            
+            $currentStatus = $application->getStatus(); 
+            
+            if ($currentStatus != JobApplication::STATUS_PENDING_APPROVAL) {  
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+				return;
+            }            
             $application->setStatus(JobApplication::STATUS_HIRED);
 
             try {
