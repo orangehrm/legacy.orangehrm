@@ -616,7 +616,7 @@ class LeaveController {
 	public function adminApproveLeave() {
 		$tmpObj = $this->getObjLeave();
 		$tmpObj->setLeaveStatus(Leave::LEAVE_STATUS_LEAVE_APPROVED);
-		$res = $tmpObj->changeLeaveStatus();
+		$res = $tmpObj->changeLeaveStatus(null, true);
 		$message = ($res) ? "APPROVE_SUCCESS" : "APPROVE_FAILURE";
 		return $message;
 	}
