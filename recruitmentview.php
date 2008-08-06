@@ -161,15 +161,17 @@ for ($i = 0; $i < count($valueMap); $i++) {
 
 	function returnSearch() {
 
-		if ($('loc_code').value == -1) {
+		searchBy = $('loc_code');
+
+		if (searchBy.options[searchBy.selectedIndex].value == -1) {
 			alert("<?php echo $lang_Common_SelectField; ?>");
-			$('loc_code').Focus();
+			searchBy.focus();
 			return;
 		};
-		var searchNdx = $('loc_code').value;
+		searchNdx = searchBy.options[searchBy.selectedIndex].value;
 		var searchVal = $('loc_name').value;
 
-		if (searchNdx in maps) {
+		if (searchNdx == 3) {
 		    map = maps[searchNdx];
 		    if (searchVal in map) {
 		        $('loc_name').value = map[searchVal];
