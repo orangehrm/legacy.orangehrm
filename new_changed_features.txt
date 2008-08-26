@@ -1,4 +1,9 @@
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
+	
+	Bug fixes
+	---------
+	2067151 - Leave:Ess Apply leave,doesnt filter properly
+
    Bug Fixes
    1992788 - ORS:Sal Review:Give offset error->search by review date:Time	
    2008737 - Training: "Search By: Supervisor" will give a SQL Error
@@ -11,6 +16,8 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
    2008726 - Training:Supervisor should not be able to add training(s)
    2008721 - Training:Unnecessary back button in Training Request
    1994187 - Can schedule 1st interview multiple times for same applicant
+	
+
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
 
