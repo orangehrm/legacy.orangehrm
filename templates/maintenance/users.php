@@ -77,6 +77,12 @@ function goBack() {
 			return false;
 		}
 
+		if (frm.txtUserName.value.search(/['\"\*\+\-]/) != -1) {
+			alert("<?php echo $lang_Admin_Users_Errors_SpecialCharacters; ?>!");
+			frm.txtUserName.focus();
+			return false;
+		}
+
 		if(frm.txtUserPassword.value.length < 4) {
 			alert("<?php echo $lang_Admin_Users_Errors_PasswordShouldBeAtleastFourCharactersLong; ?>!");
 			frm.txtUserPassword.focus();
