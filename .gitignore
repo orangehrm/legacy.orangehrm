@@ -1,0 +1,9 @@
+/.project
+/.settings
+build/dist
+build/myconf.php
+build/report
+build/reports
+lib/confs/Conf.php
+lib/confs/mailConf.php
+lib/logs/logDB.txt
