@@ -452,6 +452,11 @@ license/LICENSE.TXT -text
 /login.php -text
 /mtview.php -text
 /new_changed_features.txt -text
+plugins/AllTests.php -text
+plugins/PlugInFactory.php -text
+plugins/PlugInFactoryException.php -text
+plugins/Plugin.php -text
+plugins/PluginTest.php -text
 plugins/ajaxCalls/haltResumeHsp.php -text
 plugins/fpdf2/font/courier.php -text
 plugins/fpdf2/font/helvetica.php -text
@@ -490,6 +495,7 @@ plugins/fpdf2/html2pdf.php -text
 plugins/fpdf2/html_table.php -text
 plugins/fpdf2/htmlparser.inc -text
 plugins/fpdf2/htmlparser.inc.bak -text
+plugins/plugInCommon.php -text
 plugins/printBenefits/PrintBenefits.php -text
 plugins/printBenefits/hspPdf.css -text
 plugins/printBenefits/pdfFooter.php -text
@@ -800,6 +806,8 @@ themes/beyondT/icons/exceptions/24-notice.png -text
 themes/beyondT/icons/exceptions/error.png -text
 themes/beyondT/icons/exceptions/notice.png -text
 themes/beyondT/icons/exceptions/warning.png -text
+themes/beyondT/icons/export.jpg -text
+themes/beyondT/icons/export_o.jpg -text
 themes/beyondT/icons/flag.gif -text
 themes/beyondT/icons/hide.gif -text
 themes/beyondT/icons/hide_o.gif -text

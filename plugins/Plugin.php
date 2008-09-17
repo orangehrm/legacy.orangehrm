@@ -17,23 +17,26 @@
  * Boston, MA  02110-1301, USA
  *
  */
-?>
-<script language="JavaScript">
-function welcomeSubmit() {
-	document.frmInstall.actionResponse.value  = 'WELCOMEOK';
-	document.frmInstall.submit();
+require_once ROOT_PATH . '/lib/dao/DMLFunctions.php';
+require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
+
+class Plugin {
+		
+	private static $PluginArray = array('CSVREPORT' => 'plugins/csv/installer.xml', 'LDAP' => 'plugins/ldap/installer.xml');
+	
+	public static function fetchPlugin($plugInName){
+	
+		if(array_key_exists($plugInName , self::$PluginArray)){
+		
+			return self::$PluginArray[$plugInName];
+		}else{
+		
+			return false;
+		}
+		
+		 
+	
+	}
+	 
 }
-</script>
-	<div id="content">
-		<h2>Welcome to the OrangeHRM ver 2.4.0.1 Setup Wizard</h2>
-
-
-		<p>This installer creates the OrangeHRM database tables and sets the
-        configuration files that you need to start.</p>
-        <p>
-		Click <b>[Next]</b> to Start the Wizard.</p>
-        <input class="button" type="button" value="Back" onclick="back();" disabled="disabled">
-		<input type="button" name="next" value="Next" onclick="welcomeSubmit();" id="next" tabindex="1">
-     </div>
-		<h4 id="welcomeLink"><a href="http://www.orangehrm.com" target="_blank" tabindex="36">OrangeHRM.com</a></h4>
-
+?>

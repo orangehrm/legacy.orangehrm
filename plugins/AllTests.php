@@ -17,23 +17,39 @@
  * Boston, MA  02110-1301, USA
  *
  */
-?>
-<script language="JavaScript">
-function welcomeSubmit() {
-	document.frmInstall.actionResponse.value  = 'WELCOMEOK';
-	document.frmInstall.submit();
+
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'plugin_AllTests::main');
 }
-</script>
-	<div id="content">
-		<h2>Welcome to the OrangeHRM ver 2.4.0.1 Setup Wizard</h2>
+
+require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+set_include_path(get_include_path() . PATH_SEPARATOR . "../build");
+
+require_once 'PluginTest.php';
+require_once 'ldap/LdapDetailsTest.php';
+require_once 'ldap/LdapLoginTest.php';
 
 
-		<p>This installer creates the OrangeHRM database tables and sets the
-        configuration files that you need to start.</p>
-        <p>
-		Click <b>[Next]</b> to Start the Wizard.</p>
-        <input class="button" type="button" value="Back" onclick="back();" disabled="disabled">
-		<input type="button" name="next" value="Next" onclick="welcomeSubmit();" id="next" tabindex="1">
-     </div>
-		<h4 id="welcomeLink"><a href="http://www.orangehrm.com" target="_blank" tabindex="36">OrangeHRM.com</a></h4>
+class plugin_AllTests
+{
+    public static function main()
+    {
+        PHPUnit_TextUI_TestRunner::run(self::suite());
+    }
 
+    public static function suite()
+    {
+        $suite = new PHPUnit_Framework_TestSuite('OrangeHRM Plugin unit tests');
+        $suite->addTestSuite('PluginTest');
+        $suite->addTestSuite('LdapDetailsTest');
+        $suite->addTestSuite('LdapLoginTest');
+        return $suite;
+    }
+}
+
+if (PHPUnit_MAIN_METHOD == 'plugin_AllTests::main') {
+    plugin_AllTests::main();
+}
+?>

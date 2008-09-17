@@ -18,6 +18,14 @@
  *
  */
 
+ $_SESSION['moduleType'] = 'timeMod';
+require_once ROOT_PATH . '/plugins/PlugInFactoryException.php';
+require_once ROOT_PATH . '/plugins/PlugInFactory.php';
+// Check csv plugin available 
+$PlugInObj = PlugInFactory::factory("CSVREPORT");
+if(is_object($PlugInObj) && $PlugInObj->checkAuthorizeLoginUser(authorize::AUTHORIZE_ROLE_ADMIN) && $PlugInObj->checkAuthorizeModule( $_SESSION['moduleType'])){
+	$csvExportRepotsPluginAvailable = true;
+}
 $employmentStatuses = $records[0];
 
  if (isset($records[1])) {
@@ -87,6 +95,13 @@ function formReset() {
 	statusDefault.selected = true;
 }
 
+function exportData() {
+		if (!validate()) {
+			return;
+		}
+		var url = "../../plugins/csv/CSVController.php?path=<?php echo addslashes(ROOT_PATH) ?>&moduleType=<?php echo  $_SESSION['moduleType'] ?>&userEmpID=" + $('cmbUserEmpID').value + "&divisionId=" +  $('cmbLocation').value + "&supervisorId=" + $('txtRepEmpID').value + "&employmentStatusId=" + $('cmbEmploymentStatus').value + "&fromDate=" + $('txtStartDate').value + "&toDate=" +$('txtEndDate').value  + "&obj=<?php  echo   base64_encode(serialize($PlugInObj))?>";
+        window.location = url;
+}
 YAHOO.OrangeHRM.container.init();
 </script>
 <h2>
@@ -116,7 +131,7 @@ YAHOO.OrangeHRM.container.init();
 				<input type="button" id="popEmp" name="popEmp" value="..." onclick="returnEmpDetail();" />
 			<?php } else if ($_SESSION['isSupervisor'] == 'Yes') { ?>
 			<input type="hidden" name="txtUserEmpID" id="txtUserEmpID" value="">
-			<select name="cmbUserEmpID">
+			<select name="cmbUserEmpID" id="cmbUserEmpID">
 			<option value="-1">-<?php echo $lang_Leave_Common_Select;?>-</option>
 			<?php
 		   	if (is_array($subList)) {
@@ -124,10 +139,14 @@ YAHOO.OrangeHRM.container.init();
 		   		foreach ($subList as $sub) {
 		    ?>
 		 	<option value="<?php echo $sub[0]; ?>" <?php echo (isset($_SESSION['cmbUserEmpID']) && $_SESSION['posted'] && $_SESSION['cmbUserEmpID'] == $sub[0])?"selected":""; ?>><?php echo $sub[1]; ?></option>
-		   <?php }  }
-    		}
+		   <?php 
+		   } 
 		   ?>
-			</td>
+		   </select>
+		  <?php  
+		    }
+    		}
+		   ?>			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<tr>
@@ -137,8 +156,7 @@ YAHOO.OrangeHRM.container.init();
 			<td>
 			  <input type="text" id="txtLocation" name="txtLocation" value="<?php echo (isset($_SESSION['txtLocation']) && $_SESSION['posted'])?$_SESSION['txtLocation']:$lang_Time_Common_All; ?>" readonly />
 			  <input type="hidden" id="cmbLocation" name="cmbLocation" value="<?php echo (isset($_SESSION['cmbLocation']) && $_SESSION['posted'])?$_SESSION['cmbLocation']:"-1"; ?>" />
-			  <input type="button" id="popLoc" name="popLoc" value="..." onclick="returnLocDet();" />
-			</td>
+			  <input type="button" id="popLoc" name="popLoc" value="..." onclick="returnLocDet();" />			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<?php if ($_SESSION['isAdmin'] == 'Yes') { ?>
@@ -148,8 +166,7 @@ YAHOO.OrangeHRM.container.init();
 			<td></td>
 			<td><input type="text" name="cmbRepEmpID" id="cmbRepEmpID" value="<?php echo (isset($_SESSION['cmbRepEmpID']) && $_SESSION['posted'])?$_SESSION['cmbRepEmpID']:$lang_Time_Common_All; ?>" readonly />
 				<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" value="<?php echo (isset($_SESSION['txtRepEmpID']) && $_SESSION['posted'])?$_SESSION['txtRepEmpID']:"-1"; ?>" />
-				<input type="button" id="popEmpRep" name="popEmpRep" value="..." onclick="returnEmpRepDetail();" />
-			</td>
+				<input type="button" id="popEmpRep" name="popEmpRep" value="..." onclick="returnEmpRepDetail();" />			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<?php } else if ($_SESSION['isSupervisor'] == 'Yes') { ?>
@@ -161,7 +178,7 @@ YAHOO.OrangeHRM.container.init();
 			<td><?php echo $lang_Time_EmploymentStatus; ?></td>
 			<td></td>
 			<td>
-				<select name="cmbEmploymentStatus">
+				<select name="cmbEmploymentStatus" id="cmbEmploymentStatus">
 			<?php if (is_array($employmentStatuses)) { ?>
 					<option value="-1" <?php echo (isset($_SESSION['cmbEmploymentStatus']) && $_SESSION['posted'] && $_SESSION['cmbEmploymentStatus'] == "-1")?"selected":""; ?> id="statusDefault"><?php echo $lang_Time_Common_All; ?></option>
 				<?php foreach ($employmentStatuses as $employmentStatus) { ?>
@@ -171,8 +188,7 @@ YAHOO.OrangeHRM.container.init();
 			?>
 				    <option value="-2" <?php echo (isset($_SESSION['cmbEmploymentStatus']) && $_SESSION['posted'] && $_SESSION['cmbEmploymentStatus'] == "-2")?"selected":""; ?>>- <?php echo $lang_Time_NoEmploymentStatusDefined; ?> -</option>
 			<?php } ?>
-				</select>
-			</td>
+				</select>			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<tr>
@@ -181,8 +197,7 @@ YAHOO.OrangeHRM.container.init();
 			<td ></td>
 			<td >
 				<input type="text" id="txtStartDate" name="txtStartDate" value="<?php echo (isset($_SESSION['txtStartDate']) && $_SESSION['posted'])?$_SESSION['txtStartDate']:""; ?>" size="10"/>
-				<input type="button" id="btnStartDate" name="btnStartDate" value="  " class="calendarBtn"/>
-			</td>
+				<input type="button" id="btnStartDate" name="btnStartDate" value="  " class="calendarBtn"/>			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<tr>
@@ -191,27 +206,34 @@ YAHOO.OrangeHRM.container.init();
 			<td ></td>
 			<td >
 				<input type="text" id="txtEndDate" name="txtEndDate" value="<?php echo (isset($_SESSION['txtEndDate']) && $_SESSION['posted'])?$_SESSION['txtEndDate']:""; ?>" size="10"/>
-				<input type="button" id="btnEndDate" name="btnEndDate" value="  " class="calendarBtn"/>
-			</td>
+				<input type="button" id="btnEndDate" name="btnEndDate" value="  " class="calendarBtn"/>			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<tr>
-			<td class="tableMiddleLeft"></td>
-			<td></td>
-			<td></td>
-			<td>
-				<input type="image" name="btnView" alt="View"
+		  <td class="tableMiddleLeft"></td>
+		  <td></td>
+		  <td></td>
+		  <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="left" valign="middle"><input type="image" name="btnView2" alt="View"
 					   src="../../themes/beyondT/icons/view.gif"
 					   onmouseover="this.src='../../themes/beyondT/icons/view_o.gif';"
-					   onmouseout="this.src='../../themes/beyondT/icons/view.gif';" />
-				<input type="image" name="btnReset" alt="Reset"
+					   onmouseout="this.src='../../themes/beyondT/icons/view.gif';" /></td>
+              <td align="left" valign="middle"><input type="image" name="btnReset2" alt="Reset"
 					   onclick="formReset(); return false;"
 					   src="../../themes/beyondT/icons/reset.gif"
 					   onmouseover="this.src='../../themes/beyondT/icons/reset_o.gif';"
-					   onmouseout="this.src='../../themes/beyondT/icons/reset.gif';" />
-			</td>
-			<td class="tableMiddleRight"></td>
-		</tr>
+					   onmouseout="this.src='../../themes/beyondT/icons/reset.gif';" /></td>
+              <td align="left" valign="middle"><?php  if(isset($csvExportRepotsPluginAvailable))  {   ?> <input type="image" name="btnExportData" alt="Export to CSV"
+					   onclick="exportData(); return false;"
+					   src="../../themes/beyondT/icons/export.jpg"
+					   onmouseover="this.src='../../themes/beyondT/icons/export_o.jpg';"
+					   onmouseout="this.src='../../themes/beyondT/icons/export.jpg';" /><?php  } ?></td>
+            </tr>
+          </table></td>
+		  <td class="tableMiddleRight"></td>
+  </tr>
+		
 	</tbody>
 	<tfoot>
 	  	<tr>
