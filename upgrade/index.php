@@ -20,7 +20,7 @@
 /* Check whether the upgrading has been done */
 
 if (file_exists('../lib/confs/upgradeConf.php')) {
-    header('../');
+    header('location:../');
 } elseif (!file_exists('../../lib/confs/Conf.php')) {
     echo "You have put upgrader in wrong location. It should be under /newversion/upgrade/";
 } else {
