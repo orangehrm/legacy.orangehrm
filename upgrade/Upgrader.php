@@ -20,14 +20,16 @@
 abstract class Upgrader {
 
 	public $errorArray = array();
-	private $dbHost;
-	private $dbUsername;
-	private $dbPassword;
-	private $oldDbName;
+	protected $dbHost;
+	protected $dbPort;
+	protected $dbUsername;
+	protected $dbPassword;
+	protected $oldDbName;
 	protected $conn;
 
 	public function __construct(Conf $confObj) {
 		$this->dbHost = $confObj->dbhost;
+		$this->dbport = $confObj->dbport;
 		$this->dbUsername = $confObj->dbuser;
 		$this->dbPassword = $confObj->dbpass;
 		$this->oldDbName = $confObj->dbname;
@@ -131,7 +133,6 @@ abstract class Upgrader {
 	 * @param $dbName Name of the database
 	 * @return array Tables in given database
 	 */
-
 	public function getAllTables($dbName) {
 
 	    $tablesArray = array();
@@ -147,6 +148,77 @@ abstract class Upgrader {
 		return $tablesArray;
 
 	}
+
+	/**
+	 * Applies constraints in current database.
+	 * @param string $sqlFile Path of SQL file that contains constraints
+	 * @param string $dbName Name of database where constraints are applied
+	 * @return bool Returns true on success and false on failure
+	 */
+	public abstract function applyConstraints($sqlPath, $dbName);
+
+	/**
+	 * Create new tables that were introduced in new version.
+	 * @param string $sqlPath Path of SQL file that contains SQL for new tables
+	 * @param string $dbName Name of the database of new installation
+	 * @return bool Returns true on success and false on failure
+	 */
+	public abstract function createNewTables($sqlPath, $dbName);
+
+	/**
+	 * Applies database alterations to comply with new version.
+	 * This can include new constraints, adding new data columns etc.
+	 * @param string $sqlPath Path of SQL file that contains alterations
+	 * @param string $dbName Name of the database of new installation
+	 * @return bool Returns true on success and false on failure
+	 */
+	public abstract function applyDbAlterations($sqlPath, $dbName);
+
+	/**
+	 * Stores default data specific to new version.
+	 * @param string $sqlPath Path of SQL file that contains SQL for default data
+	 * @param string $dbName Name of the database of new installation
+	 * @return bool Returns true on success and false on failure
+	 */
+	public abstract function storeDefaultData($sqlPath, $dbName);
+
+	/**
+	 * Applies database value changes like encryption
+	 * @param string $dbName Name of the database to apply value changes
+	 * @return bool Returns true on success and false on failure
+	 */
+	public abstract function changeExistingData($dbName);
+
+	/**
+	 * Creates /lib/confs/Conf.php file of new installation
+	 * @param string $newDbName Name of database of new installation
+	 * @return bool Returns true on success and false on failure
+	 */
+	public abstract function createConfFile($newDbName);
+
+	/**
+	 * Creates /lib/confs/upgradeConf.php file of new installation
+	 * @return bool Returns true on success and false on failure
+	 */
+	public abstract function createUpgradeConfFile();
+
+	/**
+	 * Copy given file to given location
+	 * @param string $filePath File path of file to be copied
+	 * @param string $newFilePath File path of copied file
+	 */
+	public function copyFile($filePath, $newFilePath) {
+
+		$result = @copy($filePath, $newFilePath);
+
+		if (!$result) {
+		    return false;
+		}
+
+		return true;
+
+	}
+
 }
 
 ?>

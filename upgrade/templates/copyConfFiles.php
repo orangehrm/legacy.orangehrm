@@ -6,9 +6,9 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
 
 <htm>
 <head>
-<title>New Database Schema Changes</title>
+<title>Locating Configuration Files</title>
 <link type="text/css" rel="stylesheet" href="upgraderStyle.css" />
-<script language="javascript" type="text/javascript" src="templates/newDbChanges-ajax.js"></script>
+<script language="javascript" type="text/javascript" src="templates/locateConfFiles-ajax.js"></script>
 <style type="text/css">
 #button {
 	disply: none;
@@ -18,38 +18,37 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
 <body>
 <table width="400" border="0" cellspacing="20" cellpadding="5" align="center">
   <tr>
-    <td><h1>New Database Schema Changes</h1></td>
+    <td><h1>Locating Configuration Files</h1></td>
   </tr>
   <tr>
-    <td><p id="message">Upgrader is now applying database schema changes introduced by version 2.4.1</p>
+    <td><p id="message">Upgrader is now locating configuration files.</p>
 	<table width="200" border="0" cellspacing="5" cellpadding="5" align="center">
   <tr>
-    <td>Creating new database tables</td>
-    <td><div id="tables"></div></td>
+    <td>Creating Conf.php</td>
+    <td><div id="conf"></div></td>
   </tr>
   <tr>
-    <td>Applyinfg new database alterations</td>
-    <td><div id="alter"></div></td>
+    <td>Creating upgradeConf.php</td>
+    <td><div id="upgrade"></div></td>
   </tr>
   <tr>
-    <td>Storing default data</td>
-    <td><div id="store"></div></td>
+    <td>Copying mailConf.php</td>
+    <td><div id="mail"></div></td>
   </tr>
 </table>
-
 	</td>
   </tr>
   <tr>
     <td align="center">
-	<form name="frmNewDbChanges" method="post" action="UpgradeController.php">
+	<form name="frmUpgraderFinished" method="post" action="UpgradeController.php">
 	<input type="hidden" name="hdnState" value="" />
-	<input type="submit" name="btnSubmit" value="Continue"  size="40" id="button" />
+	<input type="submit" name="btnSubmit" value="Finish"  size="40" id="button" />
 	</form>
 	</td>
   </tr>
 </table>
 <script language="javascript" type="text/javascript">
-newDbChanges();
+locateConfFiles();
 </script>
 </body>
 </html>

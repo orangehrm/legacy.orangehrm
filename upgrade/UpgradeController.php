@@ -99,22 +99,34 @@ switch ($state) {
 		break;
 
 	case 'dataImport':
-
 		$tableName = $_REQUEST['table'];
 		if ($upgrader->importDataFromTable($tableName, $oldConfObj->dbname, $_SESSION['newDb'])) {
 		    echo 'Yes-'.$tableName;
 		} else {
 			echo 'No-'.$tableName;
 		}
+		break;
 
+	case 'oldConstraints':
+		$sqlPath = 'sql/2222constraints.sql';
+		$dbName = $_SESSION['newDb'];
+		if ($upgrader->applyConstraints($sqlPath, $dbName)) {
+			require_once 'templates/newDbChanges.php';
+		} else {
+			require_once 'templates/constraintsError.php';
+		}
 		break;
 
 	case 'newDbChanges':
 
-		switch ($_POST['action']) {
+		$action = $_REQUEST['action'];
+		$dbName = $_SESSION['newDb'];
+
+		switch ($action) {
 
 		    case 'tables':
-		    	if ($upgrader->createNewTables()) {
+		    	$sqlPath = 'sql/2222to241newTables.sql';
+		    	if ($upgrader->createNewTables($sqlPath, $dbName)) {
 					echo 'tablesYes';
 		    	} else {
 					echo 'tablesNo';
@@ -122,7 +134,8 @@ switch ($state) {
 		    	break;
 
 		    case 'alter':
-		    	if ($upgrader->applyDbAlterations()) {
+		    	$sqlPath = 'sql/2222to241alterations.sql';
+		    	if ($upgrader->applyDbAlterations($sqlPath, $dbName)) {
 					echo 'alterYes';
 		    	} else {
 					echo 'alterNo';
@@ -130,7 +143,8 @@ switch ($state) {
 		    	break;
 
 		    case 'store':
-		    	if ($upgrader->storeDefaultData()) {
+		    	$sqlPath = 'sql/2222to241defaultData.sql';
+		    	if ($upgrader->storeDefaultData($sqlPath, $dbName)) {
 					echo 'storeYes';
 		    	} else {
 					echo 'storeNo';
@@ -140,6 +154,66 @@ switch ($state) {
 		}
 
 		break;
+
+	case 'dbValueChangeOption':
+		require_once 'templates/dbValueChanges.php';
+		break;
+
+	case 'dbValueChanges':
+
+		if (isset($_POST['chkEncryption']) && $_POST['chkEncryption'] == 'Enable') {
+		    if ($upgrader->changeExistingData($_SESSION['newDb'])) {
+				require_once 'templates/copyConfFiles.php';
+		    } else {
+		        require_once 'templates/dbValuesError.php';
+		    }
+		} else {
+		    require_once 'templates/copyConfFiles.php';
+		}
+
+		break;
+
+	case 'locateConfFiles':
+
+		$action = $_REQUEST['action'];
+		$dbName = $_SESSION['newDb'];
+
+		switch ($action) {
+
+		    case 'conf':
+		    	if ($upgrader->createConfFile($dbName)) {
+					echo 'confYes';
+		    	} else {
+					echo 'confNo';
+		    	}
+		    	break;
+
+		    case 'upgrade':
+		    	if ($upgrader->createUpgradeConfFile()) {
+					echo 'upgradeYes';
+		    	} else {
+					echo 'upgradeNo';
+		    	}
+		    	break;
+
+		    case 'mail':
+		    	$filePath = '../../lib/confs/mailConf.php';
+		    	if (file_exists($filePath)) {
+			    	$newFilePath = '../lib/confs/mailConf.php';
+			    	if ($upgrader->copyFile($filePath, $newFilePath)) {
+						echo 'mailYes';
+			    	} else {
+						echo 'mailNo';
+			    	}
+		    	} else {
+					echo 'mailNoFile';
+		    	}
+		    	break;
+
+		}
+
+		break;
+
 
 	case 'invalidLogin':
 		unset($_SESSION['authorized']);
@@ -159,6 +233,29 @@ switch ($state) {
 		header('location:../../');
 		break;
 
+	case 'upgradeFinish':
+		unset($_SESSION['authorized']);
+		unset($_SESSION['inProgress']);
+		header('location:../');
+		break;
+
+	case 'confError':
+		$conf = '../lib/confs/Conf.php';
+		$upgradeConf = '../lib/confs/upgradeConf.php';
+		$mailConf ='../lib/confs/mailConf.php';
+		if (file_exists($conf)) {
+		    unlink($conf);
+		}
+		if (file_exists($upgradeConf)) {
+		    unlink($upgradeConf);
+		}
+		if (file_exists($mailConf)) {
+		    unlink($mailConf);
+		}
+		unset($_SESSION['authorized']);
+		unset($_SESSION['inProgress']);
+		header('location:./');
+		break;
 
 }
 

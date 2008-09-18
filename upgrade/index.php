@@ -16,6 +16,15 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
+
+/* Check whether the upgrading has been done */
+
+if (file_exists('../lib/confs/upgradeConf.php')) {
+    header('../');
+} elseif (!file_exists('../../lib/confs/Conf.php')) {
+    echo "You have put upgrader in wrong location. It should be under /newversion/upgrade/";
+} else {
+
 ?>
 
 <htm>
@@ -56,3 +65,4 @@
 </table>
 </body>
 </html>
+<?php } ?>

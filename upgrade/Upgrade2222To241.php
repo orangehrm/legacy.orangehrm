@@ -52,6 +52,183 @@ class Upgrade2222To241 extends Upgrader {
 
 	}
 
+	public function applyConstraints($sqlPath, $dbName) {
+
+		$result = $this->executeSql($sqlPath, $dbName);
+		return $result;
+
+	}
+
+	public function createNewTables($sqlPath, $dbName) {
+
+		$result = $this->executeSql($sqlPath, $dbName);
+		return $result;
+
+	}
+
+	public function applyDbAlterations($sqlPath, $dbName) {
+
+		$result = $this->executeSql($sqlPath, $dbName);
+		return $result;
+
+	}
+
+	public function storeDefaultData($sqlPath, $dbName) {
+
+		$result = $this->executeSql($sqlPath, $dbName);
+		return $result;
+
+	}
+
+	public function changeExistingData($dbName) {
+
+		mysql_select_db($dbName);
+
+		/* Checking cryptokeys folder */
+
+		if (!is_writable("../lib/confs/cryptokeys")) {
+		    $errorArray[] = "/lib/confs/cryptokeys folder is not writable";
+		    $this->errorArray = $errorArray;
+		    return false;
+		}
+
+
+		/* Creating Encryption Key */
+
+		$filePath = "../lib/confs/cryptokeys/key.ohrm";
+		$cryptKey = "";
+
+		for($i = 0; $i < 4; $i++) {
+			$cryptKey .= md5(rand(10000000, 99999999));
+		}
+
+		$cryptKey = str_shuffle($cryptKey);
+
+		$handle = @fopen($filePath, 'w');
+		$result = @fwrite($handle, $cryptKey, 128);
+		if (!$result) {
+		    $errorArray[] = "Encryption key could not be written to /lib/confs/cryptokeys";
+		    $this->errorArray = $errorArray;
+		    return false;
+		}
+
+	    fclose($handle);
+
+	    /* Reading Encryption Key */
+
+	    if (!is_readable($filePath)) {
+		    $errorArray[] = "Encryption key is not readable";
+		    $this->errorArray = $errorArray;
+		    return false;
+	    }
+
+	    $key = trim(file_get_contents($filePath));
+
+		/* Applying Encryption */
+
+	    $query = "UPDATE `hs_hr_employee` SET `emp_ssn_num` = AES_ENCRYPT(`emp_ssn_num`, '$key')";
+	    if (!mysql_query($query)) {
+		    $errorArray[] = "Applying encryption to Employee SSN Number failed";
+		    $this->errorArray = $errorArray;
+		    return false;
+	    }
+
+	    $query = "UPDATE `hs_hr_emp_basicsalary` SET `ebsal_basic_salary` = AES_ENCRYPT(`ebsal_basic_salary`, '$key')";
+	    if (!mysql_query($query)) {
+		    $errorArray[] = "Applying encryption to Employee Basic Salary failed";
+		    $this->errorArray = $errorArray;
+		    return false;
+	    }
+
+	    return true;
+
+	}
+
+	public function createConfFile($newDbName) {
+
+		/* Checking lib/confs directory */
+		if (!is_writable("../lib/confs")) {
+		    $errorArray[] = "/lib/confs is not writable";
+		    $this->errorArray = $errorArray;
+		    return false;
+		}
+
+		$dbHost = $this->dbHost;
+		$dbHostPort = $this->dbPassword;
+		$dbName = $newDbName;
+		$dbUser = $this->dbUsername;
+		$dbPassword = $this->dbPassword;
+
+    $confContent = <<< CONFCONT
+<?php
+class Conf {
+
+	var \$smtphost;
+	var \$dbhost;
+	var \$dbport;
+	var \$dbname;
+	var \$dbuser;
+	var \$version;
+
+	function Conf() {
+
+		\$this->dbhost	= '$dbHost';
+		\$this->dbport 	= '$dbHostPort';
+		\$this->dbname	= '$dbName';
+		\$this->dbuser	= '$dbUser';
+		\$this->dbpass	= '$dbPassword';
+		\$this->version = '2.4.1';
+
+		\$this->emailConfiguration = dirname(__FILE__).'/mailConf.php';
+		\$this->errorLog =  realpath(dirname(__FILE__).'/../logs/').'/';
+	}
+}
+?>
+CONFCONT;
+
+		$filename = '../lib/confs/Conf.php';
+		$handle = fopen($filename, 'w');
+		if (!fwrite($handle, $confContent)) {
+			$errorArray[] = "Conf.php could not be written to /lib/confs";
+		    $this->errorArray = $errorArray;
+		    return false;
+		}
+
+	    fclose($handle);
+
+	    return true;
+
+	}
+
+	public function createUpgradeConfFile() {
+
+		/* Checking lib/confs directort */
+		if (!is_writable("../lib/confs")) {
+		    $errorArray[] = "/lib/confs is not writable";
+		    $this->errorArray = $errorArray;
+		    return false;
+		}
+
+    $confContent = <<< CONFCONT
+<?php
+/* Upgraded from version 2.2.2.2 to 2.4.1 */
+?>
+CONFCONT;
+
+		$filename = '../lib/confs/upgradeConf.php';
+		$handle = fopen($filename, 'w');
+		if (!fwrite($handle, $confContent)) {
+			$errorArray[] = "upgradeConf.php could not be written to /lib/confs";
+		    $this->errorArray = $errorArray;
+		    return false;
+		}
+
+	    fclose($handle);
+
+	    return true;
+
+	}
+
 }
 
 ?>

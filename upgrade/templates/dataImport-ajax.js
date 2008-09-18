@@ -49,7 +49,6 @@ function requestSender() {
 	if(xmlHttp.readyState==4) {
 
 		var response = xmlHttp.responseText;
-
 		var results = response.split("-");
 
 		if (results[0] == "Yes") {
@@ -61,9 +60,10 @@ function requestSender() {
 			failiureCount++;
 		}
 
+		tablesCount++;
+
 		if (tablesCount < numOfTables) {
 			dataImport();
-			tablesCount++;
 		} else {
 			showFinalResults();
 		}
@@ -84,14 +84,14 @@ function showFinalResults() {
 
 	if (failiureCount > 0) {
 		$("message").innerHTML = "There were errors when importing data. You may delete this database and start with a new one";
-		document.frmNewDbChanges.hdnState.value = "dataImportError";
-		document.frmNewDbChanges.btnSubmit.value = "Back";
-		document.frmNewDbChanges.btnSubmit.style.display = "block";
+		document.frmDataImport.hdnState.value = "dataImportError";
+		document.frmDataImport.btnSubmit.value = "Back";
+		document.frmDataImport.btnSubmit.style.display = "block";
 	} else {
 		$("message").innerHTML = "Upgrader successfully imported data from current database. Please click Continue button to proceed";
-		document.frmNewDbChanges.hdnState.value = "newDbChanges";
-		document.frmNewDbChanges.btnSubmit.value = "Continue";
-		document.frmNewDbChanges.btnSubmit.style.display = "block";
+		document.frmDataImport.hdnState.value = "oldConstraints";
+		document.frmDataImport.btnSubmit.value = "Continue";
+		document.frmDataImport.btnSubmit.style.display = "block";
 	}
 
 }

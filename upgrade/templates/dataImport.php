@@ -16,6 +16,14 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
 	display: block;
 	height: 10px;
 }
+
+#btnSubmit {
+	display:none;
+}
+
+#divProgressBarContainer {
+	text-align:center;
+}
 -->
 </style>
 
@@ -26,8 +34,8 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
     <td><h1>Data Import from Current Database</h1></td>
   </tr>
   <tr>
-    <td><p>Upgrader successfully created database tables for new installation. Now it's importing data from current database.</p>
-	<div id="divProgressBarContainer" class="statusValue">
+    <td><p id="message">sUpgrader successfully created database tables for new installation. Now it's importing data from current database.</p>
+	  <div id="divProgressBarContainer" class="statusValue">
 		<span style="width:200px; display: block; float: left; height: 10px; border: solid 1px #000000;">
 			<span id="progressBar" style="width: 0%;">&nbsp;</span>
 		</span>
@@ -39,8 +47,8 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
   <tr>
     <td align="center">
 	<form name="frmDataImport" method="post" action="UpgradeController.php">
-	<input type="hidden" name="hdnState" value="newDbChnages" />
-	<input type="submit" name="btnSubmit" value="Continue"  size="40" />
+	<input type="hidden" name="hdnState" value="oldConstraints" />
+	<input type="submit" name="btnSubmit" value="Continue"  size="40" id="btnSubmit" />
 	</form>
 	</td>
   </tr>

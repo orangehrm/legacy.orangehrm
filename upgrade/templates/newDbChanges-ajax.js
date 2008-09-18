@@ -1,10 +1,16 @@
+var xmlHttp;
+var errorCount = 0;
+var actions = new Array();
+actions[0] = "tables";
+actions[1] = "alter";
+actions[2] = "store";
+var index = 0;
+
 function $($id) {
 	return document.getElementById($id);
 }
 
 function newDbChanges() {
-
-	var xmlHttp;
 
 	try { // Firefox, Opera 8.0+, Safari
   		xmlHttp=new XMLHttpRequest();
@@ -28,8 +34,8 @@ function newDbChanges() {
 
 	xmlHttp.onreadystatechange=requestSender;
 
-	xmlHttp.open("POST","UpgradeController.php",true);
-	xmlHttp.send("hdnState=newDbChanges&action="+actions[index]);
+	xmlHttp.open("GET","UpgradeController.php?hdnState=newDbChanges&action="+actions[index],true);
+	xmlHttp.send(null);
 
 }
 
@@ -37,13 +43,7 @@ function requestSender() {
 
 	if(xmlHttp.readyState==4) {
 
-		var response = xmlHttp.responseText.trim();
-		var errorCount = 0;
-		var actions = new Array();
-		actions[0] = "tables";
-		actions[1] = "alter";
-		actions[2] = "store";
-		var index = 0;
+		var response = xmlHttp.responseText;
 
 		switch (response) {
 
@@ -76,9 +76,10 @@ function requestSender() {
 
 		}
 
+		index++;
+
 		if (index < 3) {
 			newDbChanges();
-			index++;
 		} else {
 			showFinalResults();
 		}
@@ -91,12 +92,12 @@ function showFinalResults() {
 
 	if (errorCount > 0) {
 		$("message").innerHTML = "There were errors when applying new database changes. You may delete this database and start with a new one";
-		document.frmNewDbChanges.hdnState.value = "newDbChangesError";
+		document.frmNewDbChanges.hdnState.value = "upgradeStart";
 		document.frmNewDbChanges.btnSubmit.value = "Back";
 		document.frmNewDbChanges.btnSubmit.style.display = "block";
 	} else {
 		$("message").innerHTML = "Upgrader successfully applied new database changes. Please click Continue button to proceed";
-		document.frmNewDbChanges.hdnState.value = "valuesChange";
+		document.frmNewDbChanges.hdnState.value = "dbValueChangeOption";
 		document.frmNewDbChanges.btnSubmit.value = "Continue";
 		document.frmNewDbChanges.btnSubmit.style.display = "block";
 	}
