@@ -1021,7 +1021,6 @@ themes/beyondT/pictures/users.gif -text
 themes/beyondT/pictures/users_o.gif -text
 themes/beyondT/pictures/viewemprep.gif -text
 themes/beyondT/pictures/viewemprep_o.gif -text
-/upgrade.php -text
 upgrade/Authorize.php -text
 upgrade/Upgrade2222To241.php -text
 upgrade/UpgradeController.php -text
