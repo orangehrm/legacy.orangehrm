@@ -20,10 +20,6 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
 #btnSubmit {
 	display:none;
 }
-
-#divProgressBarContainer {
-	text-align:center;
-}
 -->
 </style>
 
@@ -34,7 +30,7 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
     <td><h1>Data Import from Current Database</h1></td>
   </tr>
   <tr>
-    <td><p id="message">sUpgrader successfully created database tables for new installation. Now it's importing data from current database.</p>
+    <td><p id="message">Upgrader successfully created database tables for new installation. Now it's importing data from current database.</p>
 	  <div id="divProgressBarContainer" class="statusValue">
 		<span style="width:200px; display: block; float: left; height: 10px; border: solid 1px #000000;">
 			<span id="progressBar" style="width: 0%;">&nbsp;</span>

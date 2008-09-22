@@ -35,6 +35,12 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
     <td>Copying mailConf.php</td>
     <td><div id="mail"></div></td>
   </tr>
+ <?php if($oldVersion == '2.3') { ?> 
+  <tr>
+    <td>Copying key.ohrm</td>
+    <td><div id="enckey"></div></td>
+  </tr>
+  <?php } ?>
 </table>
 	</td>
   </tr>
@@ -48,6 +54,19 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
   </tr>
 </table>
 <script language="javascript" type="text/javascript">
+var actions = new Array();
+<?php if($oldVersion == '2.3') { ?> 
+	actions[0] = "conf";
+	actions[1] = "upgrade";
+	actions[2] = "mail";
+	actions[3] = "enckey";
+	
+ <?php  } elseif ($oldVersion == '2.2.2.2') { ?>
+ 	actions[0] = "conf";
+	actions[1] = "upgrade";
+	actions[2] = "mail";
+ <?php } ?>
+setData(actions) ;
 locateConfFiles();
 </script>
 </body>

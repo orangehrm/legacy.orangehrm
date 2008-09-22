@@ -1023,6 +1023,7 @@ themes/beyondT/pictures/viewemprep.gif -text
 themes/beyondT/pictures/viewemprep_o.gif -text
 upgrade/Authorize.php -text
 upgrade/Upgrade2222To241.php -text
+upgrade/Upgrade23To241.php -text
 upgrade/UpgradeController.php -text
 upgrade/Upgrader.php -text
 upgrade/index.php -text
@@ -1031,6 +1032,11 @@ upgrade/sql/2222tables.sql -text
 upgrade/sql/2222to241alterations.sql -text
 upgrade/sql/2222to241defaultData.sql -text
 upgrade/sql/2222to241newTables.sql -text
+upgrade/sql/23constraints.sql -text
+upgrade/sql/23tables.sql -text
+upgrade/sql/23to241alterations.sql -text
+upgrade/sql/23to241defaultData.sql -text
+upgrade/sql/23to241newTables.sql -text
 upgrade/templates/constraintsError.php -text
 upgrade/templates/copyConfFiles.php -text
 upgrade/templates/dataError.php -text

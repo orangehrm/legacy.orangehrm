@@ -1,10 +1,11 @@
 var xmlHttp;
 var errorCount = 0;
 var actions = new Array();
-actions[0] = "conf";
-actions[1] = "upgrade";
-actions[2] = "mail";
 var index = 0;
+
+function setData(actionsArray) {
+	actions = actionsArray;
+}
 
 function $($id) {
 	return document.getElementById($id);
@@ -77,12 +78,25 @@ function requestSender() {
 				$("mail").innerHTML = "Failed";
 				errorCount++;
 				break;
+			
+			case "enckeyYes":
+				$("enckey").innerHTML = "Done";
+				break;
+
+			case "enckeyNoFile":
+				$("enckey").innerHTML = "key.ohrm hasn't been created in current installation. No need to copy.";
+				break;
+
+			case "enckeyNo":
+				$("enckey").innerHTML = "Failed";
+				errorCount++;
+				break;
 
 		}
 
 		index++;
 
-		if (index < 3) {
+		if (index < actions.length) {
 			locateConfFiles();
 		} else {
 			showFinalResults();

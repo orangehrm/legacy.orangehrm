@@ -42,8 +42,18 @@ function __autoload($class_name) {
 
 /* Initializing Upgrader Object */
 if ($oldVersion == '2.2.2.2') {
+    $oldTablesSqlPath = 'sql/2222tables.sql';
+    $oldConstraintsSqlPath = 'sql/2222constraints.sql';
+    $newTablesSqlPath = 'sql/2222to241newTables.sql';
+    $newAlterSqlPath = 'sql/2222to241alterations.sql';
+    $newDefaultDataSqlPath = 'sql/2222to241defaultData.sql';
     $upgrader = new Upgrade2222To241($oldConfObj);
 } elseif ($oldVersion == '2.3') {
+    $oldTablesSqlPath = 'sql/23tables.sql';
+    $oldConstraintsSqlPath = 'sql/23constraints.sql';
+    $newTablesSqlPath = 'sql/23to241newTables.sql';
+    $newAlterSqlPath = 'sql/23to241alterations.sql';
+    $newDefaultDataSqlPath = 'sql/23to241defaultData.sql';
     $upgrader = new Upgrade23To241($oldConfObj);
 }
 
@@ -82,10 +92,7 @@ switch ($state) {
 	case 'dbInfo':
 		$dbName = mysql_real_escape_string(trim($_POST['newDbName']));
 		if ($upgrader->isDatabaseAccessible($dbName)) {
-
-			$sqlPath = 'sql/2222tables.sql';
-
-			if ($upgrader->executeSql($sqlPath, $dbName)) {
+			if ($upgrader->executeSql($oldTablesSqlPath, $dbName)) {
 				$_SESSION['newDb'] = $dbName;
 				$tablesArray = $upgrader->getAllTables($dbName);
 				require_once 'templates/dataImport.php';
@@ -108,9 +115,8 @@ switch ($state) {
 		break;
 
 	case 'oldConstraints':
-		$sqlPath = 'sql/2222constraints.sql';
 		$dbName = $_SESSION['newDb'];
-		if ($upgrader->applyConstraints($sqlPath, $dbName)) {
+		if ($upgrader->applyConstraints($oldConstraintsSqlPath, $dbName)) {
 			require_once 'templates/newDbChanges.php';
 		} else {
 			require_once 'templates/constraintsError.php';
@@ -125,8 +131,7 @@ switch ($state) {
 		switch ($action) {
 
 		    case 'tables':
-		    	$sqlPath = 'sql/2222to241newTables.sql';
-		    	if ($upgrader->createNewTables($sqlPath, $dbName)) {
+		    	if ($upgrader->createNewTables($newTablesSqlPath, $dbName)) {
 					echo 'tablesYes';
 		    	} else {
 					echo 'tablesNo';
@@ -134,8 +139,7 @@ switch ($state) {
 		    	break;
 
 		    case 'alter':
-		    	$sqlPath = 'sql/2222to241alterations.sql';
-		    	if ($upgrader->applyDbAlterations($sqlPath, $dbName)) {
+		    	if ($upgrader->applyDbAlterations($newAlterSqlPath, $dbName)) {
 					echo 'alterYes';
 		    	} else {
 					echo 'alterNo';
@@ -143,8 +147,7 @@ switch ($state) {
 		    	break;
 
 		    case 'store':
-		    	$sqlPath = 'sql/2222to241defaultData.sql';
-		    	if ($upgrader->storeDefaultData($sqlPath, $dbName)) {
+		    	if ($upgrader->storeDefaultData($newDefaultDataSqlPath, $dbName)) {
 					echo 'storeYes';
 		    	} else {
 					echo 'storeNo';
@@ -156,7 +159,11 @@ switch ($state) {
 		break;
 
 	case 'dbValueChangeOption':
-		require_once 'templates/dbValueChanges.php';
+                if($oldVersion == '2.3'){
+                  require_once 'templates/copyConfFiles.php';   
+                }elseif($oldVersion == '2.2.2.2'){
+                  require_once 'templates/dbValueChanges.php';
+                }
 		break;
 
 	case 'dbValueChanges':
@@ -177,7 +184,7 @@ switch ($state) {
 
 		$action = $_REQUEST['action'];
 		$dbName = $_SESSION['newDb'];
-
+               
 		switch ($action) {
 
 		    case 'conf':
@@ -207,6 +214,20 @@ switch ($state) {
 			    	}
 		    	} else {
 					echo 'mailNoFile';
+		    	}
+		    	break;
+
+            case 'enckey':
+		    	$filePath = '../../lib/confs/cryptokeys/key.ohrm';
+		    	if (file_exists($filePath)) {
+			    	$newFilePath = '../lib/confs/cryptokeys/key.ohrm';
+			    	if ($upgrader->copyFile($filePath, $newFilePath)) {
+						echo 'enckeyYes';
+			    	} else {
+						echo 'enckeyNo';
+			    	}
+		    	} else {
+					echo 'enckeyNoFile';
 		    	}
 		    	break;
 
