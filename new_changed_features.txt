@@ -1,3 +1,9 @@
+New & Changed Features for OrangeHRM ver 2.4.1-alpha.2
+
+	New features
+	------------
+	First implementation of upgrader from version 2.3 to 2.4.1
+
 New & Changed Features for OrangeHRM ver 2.4.1-alpha.1
 
 	New features
