@@ -9,11 +9,6 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
 <title>Locating Configuration Files</title>
 <link type="text/css" rel="stylesheet" href="upgraderStyle.css" />
 <script language="javascript" type="text/javascript" src="templates/locateConfFiles-ajax.js"></script>
-<style type="text/css">
-#button {
-	disply: none;
-}
-</style>
 </head>
 <body>
 <table width="400" border="0" cellspacing="20" cellpadding="5" align="center">
@@ -48,7 +43,7 @@ if (!isset($_SESSION['authorized']) || $_SESSION['authorized'] !='Yes') {
     <td align="center">
 	<form name="frmUpgraderFinished" method="post" action="UpgradeController.php">
 	<input type="hidden" name="hdnState" value="" />
-	<input type="submit" name="btnSubmit" value="Finish"  size="40" id="button" />
+	<input type="submit" name="btnSubmit" value="Finish"  size="40" id="btnSubmit" style="display:none" />
 	</form>
 	</td>
   </tr>
