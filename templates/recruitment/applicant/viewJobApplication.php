@@ -197,12 +197,12 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	}
 
 	function hideLoading() {
-		status = $('status');
+		var status = $('status');
 		status.style.display = 'none';
 	}
 
 	function showLoading() {
-		status = $('status');
+		var status = $('status');
 		status.style.display = 'block';
 	}
 
