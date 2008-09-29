@@ -17,6 +17,9 @@
  * Boston, MA  02110-1301, USA
  */
 
+session_start();
+session_destroy();
+
 /* Check whether the upgrading has been done */
 
 if (file_exists('../lib/confs/upgradeConf.php')) {

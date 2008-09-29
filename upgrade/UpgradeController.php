@@ -160,7 +160,7 @@ switch ($state) {
 
 	case 'dbValueChangeOption':
                 if($oldVersion == '2.3'){
-                  require_once 'templates/copyConfFiles.php';   
+                  require_once 'templates/copyConfFiles.php';
                 }elseif($oldVersion == '2.2.2.2'){
                   require_once 'templates/dbValueChanges.php';
                 }
@@ -184,7 +184,7 @@ switch ($state) {
 
 		$action = $_REQUEST['action'];
 		$dbName = $_SESSION['newDb'];
-               
+
 		switch ($action) {
 
 		    case 'conf':
@@ -255,8 +255,7 @@ switch ($state) {
 		break;
 
 	case 'upgradeFinish':
-		unset($_SESSION['authorized']);
-		unset($_SESSION['inProgress']);
+		session_destroy();
 		header('location:../');
 		break;
 
