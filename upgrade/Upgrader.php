@@ -185,9 +185,10 @@ abstract class Upgrader {
 	/**
 	 * Applies database value changes like encryption
 	 * @param string $dbName Name of the database to apply value changes
+	 * @param array $choiceArr Array containing user choices
 	 * @return bool Returns true on success and false on failure
 	 */
-	public abstract function changeExistingData($dbName);
+	public abstract function changeExistingData($dbName, $choiceArr);
 
 	/**
 	 * Creates /lib/confs/Conf.php file of new installation

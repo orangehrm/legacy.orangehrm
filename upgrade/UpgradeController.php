@@ -168,14 +168,16 @@ switch ($state) {
 
 	case 'dbValueChanges':
 
+		$choiceArr = array();
+
 		if (isset($_POST['chkEncryption']) && $_POST['chkEncryption'] == 'Enable') {
-		    if ($upgrader->changeExistingData($_SESSION['newDb'])) {
-				require_once 'templates/copyConfFiles.php';
-		    } else {
-		        require_once 'templates/dbValuesError.php';
-		    }
-		} else {
+			$choiceArr[] = "encryption";
+		}
+
+		if ($upgrader->changeExistingData($_SESSION['newDb'], $choiceArr)) {
 		    require_once 'templates/copyConfFiles.php';
+		} else {
+		    require_once 'templates/dbValuesError.php';
 		}
 
 		break;

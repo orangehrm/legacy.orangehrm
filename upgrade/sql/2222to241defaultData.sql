@@ -28,5 +28,3 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_job_vacancy', 'vacancy_id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_job_application', 'application_id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_job_application_events', 'id');
-
-UPDATE `hs_hr_timesheet_submission_period` SET `start_day` = '0', `end_day` = '6' WHERE `start_day` = '1';

@@ -80,9 +80,38 @@ class Upgrade2222To241 extends Upgrader {
 
 	}
 
-	public function changeExistingData($dbName) {
+	public function changeExistingData($dbName, $choiceArr) {
 
 		mysql_select_db($dbName);
+
+		$errorCount = 0;
+
+		/* Data Encryption */
+
+		if (!array_search("encryption", $choiceArr)) {
+			if (!$this->_encryptData()) {
+			    $errorCount++;
+			}
+		}
+
+		/* Timesheet value changes (00:00:00 --> 23:59:59) */
+
+		$query = "UPDATE `hs_hr_timesheet` SET `end_date` = REPLACE(`end_date`, '00:00:00', '23:59:59')";
+
+		if (!mysql_query($query)) {
+			$this->errorArray[] = "Timesheet related values were not updated";
+			$errorCount++;
+		}
+
+		if ($errorCount == 0) {
+		    return true;
+		} else {
+		    return false;
+		}
+
+	}
+
+	private function _encryptData() {
 
 		/* Checking cryptokeys folder */
 
