@@ -364,7 +364,11 @@ function moverHistoryEditBtn() {
         $id = $jobTitleItem->getId();
         $code = $jobTitleItem->getCode();
         $name = CommonFunctions::escapeHtml($jobTitleItem->getName());
-        $from = LocaleUtil::getInstance()->formatDate($jobTitleItem->getStartDate());
+		if($jobTitleItem->getStartDate()  == '0000-00-00 00:00:00'){
+			 $from = '0000-00-00';
+		}else{
+			$from = LocaleUtil::getInstance()->formatDate($jobTitleItem->getStartDate());
+		}
         $to = LocaleUtil::getInstance()->formatDate($jobTitleItem->getEndDate());
 ?>
     <tr id="jobTitleHistoryRow<?php echo $id;?>">
