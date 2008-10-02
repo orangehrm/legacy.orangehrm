@@ -192,7 +192,7 @@ if ((isset($this->getArr['capturemode'])) && ($this->getArr['capturemode'] == 'a
                   <td><table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
 					  <tr>
 					    <td><span class="error">*</span> <?php echo $lang_compstruct_Name; ?></td>
-					    <td> <textarea name='txtLocDescription' rows="3" tabindex='3' cols="30"></textarea></td>
+					    <td><input type="text" name="txtLocDescription" id="txtLocDescription" ></td>
 					  <tr>
 						  <td><span class="error">*</span> <?php echo $lang_compstruct_country; ?></td>
 						  <td><select name="cmbCountry" onChange="document.getElementById('status').innerHTML = '<?php echo $lang_Commn_PleaseWait;?>....'; xajax_populateStates(this.value);">
@@ -413,8 +413,7 @@ function mover() {
 						  </tr>
 						  <tr>
 						    <td><span class="error">*</span> <?php echo $lang_compstruct_Name; ?></td>
-						  	<td> <textarea name='txtLocDescription' rows="3" disabled tabindex='3' cols="30"><?php echo $message[0][1]?></textarea>
-						    </td>
+						  	<td><input type="text" name="txtLocDescription" id="txtLocDescription"  value="<?php echo $message[0][1]?>" disabled="disabled"></td>
 						  </tr>
 				  <tr>
 						  <td><span class="error">*</span> <?php echo $lang_compstruct_country; ?></td>
