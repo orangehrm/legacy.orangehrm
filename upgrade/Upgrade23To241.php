@@ -68,7 +68,7 @@ class Upgrade23To241 extends Upgrader {
 		return $result;
 	}
 
-	public function changeExistingData($dbName) {
+	public function changeExistingData($dbName, $choiceArr) {
 	    return true;
 	}
 
