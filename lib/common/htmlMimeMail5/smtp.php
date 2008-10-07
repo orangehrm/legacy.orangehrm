@@ -165,7 +165,7 @@ class smtp
 
             $this->send_data($headers);
             $this->send_data('');
-            $this->send_data($body);
+            $this->send_data(trim($body));
             $this->send_data('.');
 
             $result = (substr(trim($this->get_data()), 0, 3) === '250');
