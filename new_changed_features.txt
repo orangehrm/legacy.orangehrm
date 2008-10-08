@@ -1,17 +1,33 @@
-New & Changed Features for OrangeHRM ver 2.4.1-alpha.3
-    
-        Bug fixes
+New & Changed Features for OrangeHRM ver 2.4.1-beta.1
+
+	New features
+	------------
+	Improved Upgrader UIs (similar to Installer UIs)
+
+    Bug fixes
 	---------
-        1846251 - User should not be able to apply leave when balance is 0 
-        2127717 - Error when using japanese language in XAMPP
+	2149134 - Upgrader: Stopper when upgrading 2.3 to 2.4
+	2078231 -  PIM: Edit salary goes to notice page -Stopper
+	2026736 - Admin:Location name should be a text box
+	2002924 - Time:Approved state timesheet can be edited using punch in
+	2149200 - admin assign leave's mail notification doesnt go via SMTP
+	2046187 - Time: Two same time events can be started @ same time
+	2088791 - Time: Punch in/out helps to update approved timesheet
+
+New & Changed Features for OrangeHRM ver 2.4.1-alpha.3
+
+    Bug fixes
+	---------
+	1846251 - User should not be able to apply leave when balance is 0
+	2127717 - Error when using japanese language in XAMPP
 	2127805 - jobs.php have javascript erros
-        2129732 - HTML error in job application
-        2129793 - Error in IE when country selected in Job Application
-        2127844 - Upgrader: Conflicting sessions creates a stopper
-        2128008 - Upgrader: Timesheet data will be hidden after upgrading
-        2135580 - Upgrader:Changing jobtitle first time doesnt show in history
-        2127974 - Upgrader: Upgrading process will be aborted
-        2127780 - Up grader: Any users can upgrade system to 2.4 .0.1
+	2129732 - HTML error in job application
+	2129793 - Error in IE when country selected in Job Application
+	2127844 - Upgrader: Conflicting sessions creates a stopper
+	2128008 - Upgrader: Timesheet data will be hidden after upgrading
+	2135580 - Upgrader:Changing jobtitle first time doesnt show in history
+	2127974 - Upgrader: Upgrading process will be aborted
+	2127780 - Up grader: Any users can upgrade system to 2.4 .0.1
 
 New & Changed Features for OrangeHRM ver 2.4.1-alpha.2
 
