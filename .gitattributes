@@ -1026,7 +1026,6 @@ upgrade/Upgrade2222To241.php -text
 upgrade/Upgrade23To241.php -text
 upgrade/Upgrader.php -text
 upgrade/index.php -text
-upgrade/index.php-back -text
 upgrade/sql/2222constraints.sql -text
 upgrade/sql/2222tables.sql -text
 upgrade/sql/2222to241alterations.sql -text
