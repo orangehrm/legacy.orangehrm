@@ -34,8 +34,8 @@ function locateConfFiles() {
   	}
 
 	xmlHttp.onreadystatechange=requestSender;
+	xmlHttp.open("GET","./?hdnState=locateConfFiles&action="+actions[index],true);
 
-	xmlHttp.open("GET","UpgradeController.php?hdnState=locateConfFiles&action="+actions[index],true);
 	xmlHttp.send(null);
 
 }
@@ -57,15 +57,6 @@ function requestSender() {
 				errorCount++;
 				break;
 
-			case "upgradeYes":
-				$("upgrade").innerHTML = "Done";
-				break;
-
-			case "upgradeNo":
-				$("upgrade").innerHTML = "Failed";
-				errorCount++;
-				break;
-
 			case "mailYes":
 				$("mail").innerHTML = "Done";
 				break;
@@ -78,7 +69,7 @@ function requestSender() {
 				$("mail").innerHTML = "Failed";
 				errorCount++;
 				break;
-			
+
 			case "enckeyYes":
 				$("enckey").innerHTML = "Done";
 				break;
@@ -89,6 +80,15 @@ function requestSender() {
 
 			case "enckeyNo":
 				$("enckey").innerHTML = "Failed";
+				errorCount++;
+				break;
+
+			case "upgradeYes":
+				$("upgrade").innerHTML = "Done";
+				break;
+
+			case "upgradeNo":
+				$("upgrade").innerHTML = "Failed";
 				errorCount++;
 				break;
 
@@ -114,7 +114,7 @@ function showFinalResults() {
 		document.frmUpgraderFinished.btnSubmit.value = "Back";
 		document.frmUpgraderFinished.btnSubmit.style.display = "block";
 	} else {
-		$("message").innerHTML = "Upgrader successfully located configuration files and you have completed upgrading. Please click Finsh button to login to new installation. If you are satisfied with upgrade, you can replace old installation with this as stated in upgrade guide";
+		$("message").innerHTML = "Upgrader successfully located configuration files and you have completed upgrading. Please click Finish button to login to new installation. If you are satisfied with upgrade, you can replace old installation with this as stated in upgrade guide";
 		document.frmUpgraderFinished.hdnState.value = "upgradeFinish";
 		document.frmUpgraderFinished.btnSubmit.value = "Finish";
 		document.frmUpgraderFinished.btnSubmit.style.display = "block";

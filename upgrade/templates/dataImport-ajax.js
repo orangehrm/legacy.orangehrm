@@ -39,7 +39,7 @@ function dataImport() {
 
 	xmlHttp.onreadystatechange=requestSender;
 
-	xmlHttp.open("GET","UpgradeController.php?hdnState=dataImport&table="+tablesArray[tablesCount],true);
+	xmlHttp.open("GET","./?hdnState=dataImport&table="+tablesArray[tablesCount],true);
 	xmlHttp.send(null);
 
 }

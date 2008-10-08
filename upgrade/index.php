@@ -17,55 +17,276 @@
  * Boston, MA  02110-1301, USA
  */
 
+require_once 'Authorize.php';
+
 session_start();
-session_destroy();
 
 /* Check whether the upgrading has been done */
-
 if (file_exists('../lib/confs/upgradeConf.php')) {
     header('location:../');
-} elseif (!file_exists('../../lib/confs/Conf.php')) {
+}
+
+/* Check whether the newversion is in correct location */
+if (!file_exists('../../lib/confs/Conf.php')) {
     echo "You have put upgrader in wrong location. It should be under /newversion/upgrade/";
+    die;
+}
+
+/* Initializing current Conf Object */
+$oldConfObj = new Conf();
+$oldVersion = $oldConfObj->version;
+
+/* Loading relevant upgrader class */
+function __autoload($class_name) {
+    require_once $class_name . '.php';
+}
+
+/* Initializing upgrader details */
+if ($oldVersion == '2.2.2.2') {
+	$steps = array('welcome', 'version check', 'database information', 'data import', 'database changes', 'value changes', 'configuration files');
+	$screenArr = array('welcome'=>0, 'versionCheck'=>1, 'dbInfo'=>2, 'dataImport'=>3, 'dbChanges'=>4, 'valueChanges'=>5, 'confFiles'=>6);
+	$oldTablesSqlPath = 'sql/2222tables.sql';
+    $oldConstraintsSqlPath = 'sql/2222constraints.sql';
+    $newTablesSqlPath = 'sql/2222to241newTables.sql';
+    $newAlterSqlPath = 'sql/2222to241alterations.sql';
+    $newDefaultDataSqlPath = 'sql/2222to241defaultData.sql';
+    $upgrader = new Upgrade2222To241($oldConfObj);
+} elseif ($oldVersion == '2.3') {
+	$steps = array('welcome', 'version check', 'database information', 'data import', 'database changes', 'configuration files');
+	$screenArr = array('welcome'=>0, 'versionCheck'=>1, 'dbInfo'=>2, 'dataImport'=>3, 'dbChanges'=>4, 'confFiles'=>5);
+    $oldTablesSqlPath = 'sql/23tables.sql';
+    $oldConstraintsSqlPath = 'sql/23constraints.sql';
+    $newTablesSqlPath = 'sql/23to241newTables.sql';
+    $newAlterSqlPath = 'sql/23to241alterations.sql';
+    $newDefaultDataSqlPath = 'sql/23to241defaultData.sql';
+    $upgrader = new Upgrade23To241($oldConfObj);
+}
+
+/* Variables used for Ajax calls */
+$dataImportAjax = 'No';
+$dbChangesAjax = 'No';
+$confFilesAjax = 'No';
+
+/* Checking whether upgrader support curret version */
+$versionSupport = false;
+if ($oldVersion == '2.2.2.2' || $oldVersion == '2.3') {
+    $versionSupport = true;
+}
+
+if (!isset($_REQUEST['hdnState'])) {
+	$currScreen = $screenArr['welcome']; $currPage = 'templates/welcome.inc'; require_once 'templates/mainUi.php';
 } else {
 
-?>
+	$state = $_REQUEST['hdnState'];
 
-<htm>
-<head>
-<title>Welcome to OrangeHRM 2.4.1 Upgrader</title>
-<link type="text/css" rel="stylesheet" href="templates/upgraderStyle.css" />
-</head>
-<body>
-<table width="400" border="0" cellspacing="20" cellpadding="5" align="center">
-  <tr>
-    <td><h1>Welcome to OrangeHRM 2.4.1 Upgrader</h1></td>
-  </tr>
-  <tr>
-    <td><p>Please enter your admin login details to proceed with the upgrader</p>
-	<form name="frmAdminLogin" method="post" action="UpgradeController.php">
-	<table width="200" border="0" cellspacing="5" cellpadding="5" align="center">
-  <tr>
-    <td>Username:</td>
-    <td><input type="text" name="txtUsername" size="20" /></td>
-  </tr>
-  <tr>
-    <td>Password:</td>
-    <td><input type="password" name="txtPassword" size="20" /></td>
-  </tr>
-  <tr>
-    <td colspan="2" align="center"><input type="submit" name="btnLogin" value="Login"  size="40" /></td>
-    </tr>
-</table>
-<input type="hidden" name="hdnState" value="authAdmin" />
-<input type="hidden" name="hdnInProgress" value="authAdmin" />
-</form>
-</td>
-  </tr>
-  <tr>
-    <td>
-	</td>
-  </tr>
-</table>
-</body>
-</html>
-<?php } ?>
+	switch ($state) {
+
+		case 'authAdmin':
+			if (Authorize::authAdmin(trim($_POST['txtUsername']), trim($_POST['txtPassword']))) {
+			   	if ($versionSupport) {
+					$currScreen = $screenArr['versionCheck']; $currPage = 'templates/upgradeStart.inc'; require_once 'templates/mainUi.php';
+			   	} else {
+			   		$currScreen = $screenArr['versionCheck']; $currPage = 'templates/error-version.inc'; require_once 'templates/mainUi.php';
+			   	}
+			} else {
+			    $currScreen = $screenArr['welcome']; $currPage = 'templates/error-login.inc'; require_once 'templates/mainUi.php';
+			}
+			break;
+
+		case 'upgradeStart':
+			if ($upgrader->isDataCompatible()) {
+				$currScreen = $screenArr['dbInfo']; $currPage = 'templates/dbInfo.inc'; require_once 'templates/mainUi.php';
+			} else {
+				$currScreen = $screenArr['dbInfo']; $currPage = 'templates/error-data.inc'; require_once 'templates/mainUi.php';
+			}
+			break;
+
+		case 'dbInfo':
+			$dbName = mysql_real_escape_string(trim($_POST['newDbName']));
+			if ($upgrader->isDatabaseAccessible($dbName)) {
+				if ($upgrader->executeSql($oldTablesSqlPath, $dbName)) {
+					$_SESSION['newDb'] = $dbName;
+					$dataImportAjax = 'Yes';
+					$tablesArray = $upgrader->getAllTables($dbName);
+					$currScreen = $screenArr['dataImport']; $currPage = 'templates/dataImport.inc'; require_once 'templates/mainUi.php';
+				} else {
+					$currScreen = $screenArr['dbInfo']; $currPage = 'templates/error-tableCreation.inc'; require_once 'templates/mainUi.php';
+				}
+			} else {
+				$currScreen = $screenArr['dbInfo']; $currPage = 'templates/error-db.inc'; require_once 'templates/mainUi.php';
+			}
+			break;
+
+		case 'dataImport':
+			$tableName = $_REQUEST['table'];
+			if ($upgrader->importDataFromTable($tableName, $oldConfObj->dbname, $_SESSION['newDb'])) {
+			    echo 'Yes-'.$tableName;
+			} else {
+				echo 'No-'.$tableName;
+			}
+			break;
+
+		case 'oldConstraints':
+			$dbName = $_SESSION['newDb'];
+			if ($upgrader->applyConstraints($oldConstraintsSqlPath, $dbName)) {
+				$dbChangesAjax = 'Yes';
+				$currScreen = $screenArr['dbChanges']; $currPage = 'templates/newDbChanges.inc'; require_once 'templates/mainUi.php';
+			} else {
+				$currScreen = $screenArr['dbChanges']; $currPage = 'templates/error-constraints.inc'; require_once 'templates/mainUi.php';
+			}
+			break;
+
+		case 'newDbChanges':
+
+			$action = $_REQUEST['action'];
+			$dbName = $_SESSION['newDb'];
+
+			switch ($action) {
+
+			    case 'tables':
+			    	if ($upgrader->createNewTables($newTablesSqlPath, $dbName)) {
+						echo 'tablesYes';
+			    	} else {
+						echo 'tablesNo';
+			    	}
+			    	break;
+
+			    case 'alter':
+			    	if ($upgrader->applyDbAlterations($newAlterSqlPath, $dbName)) {
+						echo 'alterYes';
+			    	} else {
+						echo 'alterNo';
+			    	}
+			    	break;
+
+			    case 'store':
+			    	if ($upgrader->storeDefaultData($newDefaultDataSqlPath, $dbName)) {
+						echo 'storeYes';
+			    	} else {
+						echo 'storeNo';
+			    	}
+			    	break;
+
+			}
+
+			break;
+
+		case 'dbValueChangeOption':
+	                if($oldVersion == '2.3'){
+	                	$confFilesAjax = 'Yes';
+	                	$currScreen = $screenArr['confFiles']; $currPage = 'templates/copyConfFiles.inc'; require_once 'templates/mainUi.php';
+	                }elseif($oldVersion == '2.2.2.2'){
+	                	$currScreen = $screenArr['valueChanges']; $currPage = 'templates/dbValueChanges.inc'; require_once 'templates/mainUi.php';
+	                }
+			break;
+
+		case 'dbValueChanges':
+
+			$choiceArr = array();
+
+			if (isset($_POST['chkEncryption']) && $_POST['chkEncryption'] == 'Enable') {
+				$choiceArr[] = "encryption";
+			}
+
+			if ($upgrader->changeExistingData($_SESSION['newDb'], $choiceArr)) {
+				$confFilesAjax = 'Yes';
+	        	$currScreen = $screenArr['confFiles']; $currPage = 'templates/copyConfFiles.inc'; require_once 'templates/mainUi.php';
+			} else {
+			    $currScreen = $screenArr['valueChanges']; $currPage = 'templates/error-dbValues.inc'; require_once 'templates/mainUi.php';
+			}
+
+			break;
+
+		case 'locateConfFiles':
+
+			$action = trim($_REQUEST['action']);
+			$dbName = trim($_SESSION['newDb']);
+
+			switch ($action) {
+
+			    case 'conf':
+			    	if ($upgrader->createConfFile($dbName)) {
+						echo 'confYes';
+			    	} else {
+						echo 'confNo';
+			    	}
+			    	break;
+
+			    case 'mail':
+			    	$filePath = '../../lib/confs/mailConf.php';
+			    	if (file_exists($filePath)) {
+				    	$newFilePath = '../lib/confs/mailConf.php';
+				    	if ($upgrader->copyFile($filePath, $newFilePath)) {
+							echo 'mailYes';
+				    	} else {
+							echo 'mailNo';
+				    	}
+			    	} else {
+						echo 'mailNoFile';
+			    	}
+			    	break;
+
+	            case 'enckey':
+			    	$filePath = '../../lib/confs/cryptokeys/key.ohrm';
+			    	if (file_exists($filePath)) {
+				    	$newFilePath = '../lib/confs/cryptokeys/key.ohrm';
+				    	if ($upgrader->copyFile($filePath, $newFilePath)) {
+							echo 'enckeyYes';
+				    	} else {
+							echo 'enckeyNo';
+				    	}
+			    	} else {
+						echo 'enckeyNoFile';
+			    	}
+			    	break;
+
+			    case 'upgrade':
+			    	if ($upgrader->createUpgradeConfFile()) {
+						echo 'upgradeYes';
+			    	} else {
+						echo 'upgradeNo';
+			    	}
+			    	break;
+
+			}
+
+			break;
+
+		case 'invalidLogin':
+			header('location:./');
+			break;
+
+		case 'versionError':
+			header('location:../../');
+			break;
+
+		case 'dataError':
+			header('location:../../');
+			break;
+
+		case 'upgradeFinish':
+			session_destroy();
+			header('location:../');
+			break;
+
+		case 'confError':
+			$conf = '../lib/confs/Conf.php';
+			$upgradeConf = '../lib/confs/upgradeConf.php';
+			$mailConf ='../lib/confs/mailConf.php';
+			if (file_exists($conf)) {
+			    unlink($conf);
+			}
+			if (file_exists($upgradeConf)) {
+			    unlink($upgradeConf);
+			}
+			if (file_exists($mailConf)) {
+			    unlink($mailConf);
+			}
+			header('location:./');
+			break;
+
+	}
+
+}
+
+?>

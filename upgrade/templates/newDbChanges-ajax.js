@@ -34,7 +34,7 @@ function newDbChanges() {
 
 	xmlHttp.onreadystatechange=requestSender;
 
-	xmlHttp.open("GET","UpgradeController.php?hdnState=newDbChanges&action="+actions[index],true);
+	xmlHttp.open("GET","./?hdnState=newDbChanges&action="+actions[index],true);
 	xmlHttp.send(null);
 
 }
