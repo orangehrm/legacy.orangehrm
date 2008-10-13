@@ -19,53 +19,26 @@
 
 require_once 'Upgrader.php';
 
-class Upgrade23To241 extends Upgrader {
+class Upgrade24To241 extends Upgrader {
 
 	public function isDataCompatible() {
-
-	/* By 2.4.1, hs_hr_empreport.rep_name and hs_pr_salary_grade.sal_grd_name were made unique */
-		$flag = true;
-		$errorArray = array();
-		// This query check whether there are duplicate report names
-		$query = "SELECT COUNT(*) as repetitions, `rep_name` FROM `hs_hr_empreport` GROUP BY `rep_name` HAVING repetitions > 1";
-		$result = mysql_query($query, $this->conn);
-		if (mysql_num_rows($result) > 0) {
-			$flag = false;
-			$errorArray[] = "You have duplicate report names in Report Module (Reports > View Reports)";
-		}
-		// This query check whether there are duplicate pay grades
-		$query = "SELECT COUNT(*) as repetitions, `sal_grd_name` FROM `hs_pr_salary_grade` GROUP BY `sal_grd_name` HAVING repetitions > 1";
-		$result = mysql_query($query, $this->conn);
-		if (mysql_num_rows($result) > 0) {
-			$flag = false;
-			$errorArray[] = "You have duplicate pay grade names in Admin Module (Admin > Job > Pay Grades)";
-		}
-		$this->errorArray = $errorArray;
-		return $flag;
+	    return true;
 	}
 
 	public function applyConstraints($sqlPath, $dbName) {
-
-		$result = $this->executeSql($sqlPath, $dbName);
-		return $result;
+	    return true;
 	}
 
 	public function createNewTables($sqlPath, $dbName) {
-
-		$result = $this->executeSql($sqlPath, $dbName);
-		return $result;
+	    return true;
 	}
 
 	public function applyDbAlterations($sqlPath, $dbName) {
-
-		$result = $this->executeSql($sqlPath, $dbName);
-		return $result;
+	    return true;
 	}
 
 	public function storeDefaultData($sqlPath, $dbName) {
-
-		$result = $this->executeSql($sqlPath, $dbName);
-		return $result;
+	    return true;
 	}
 
 	public function changeExistingData($dbName, $choiceArr) {
@@ -122,6 +95,7 @@ CONFCONT;
 		}
 	    fclose($handle);
 	    return true;
+
 	}
 
 	public function createUpgradeConfFile() {
@@ -134,7 +108,7 @@ CONFCONT;
 		}
     $confContent = <<< CONFCONT
 <?php
-/* Upgraded from version 2.3 to 2.4.1 */
+/* Upgraded from version 2.4 to 2.4.1 */
 ?>
 CONFCONT;
 
@@ -147,6 +121,11 @@ CONFCONT;
 		}
 	    fclose($handle);
 	    return true;
+
 	}
+
+
+
 }
+
 ?>

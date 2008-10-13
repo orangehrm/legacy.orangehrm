@@ -60,6 +60,12 @@ if ($oldVersion == '2.2.2.2') {
     $newAlterSqlPath = 'sql/23to241alterations.sql';
     $newDefaultDataSqlPath = 'sql/23to241defaultData.sql';
     $upgrader = new Upgrade23To241($oldConfObj);
+} elseif ($oldVersion == '2.4') {
+	$steps = array('welcome', 'version check', 'database information', 'data import', 'configuration files');
+	$screenArr = array('welcome'=>0, 'versionCheck'=>1, 'dbInfo'=>2, 'dataImport'=>3, 'confFiles'=>4);
+	$oldTablesSqlPath = 'sql/24tables.sql';
+    $oldConstraintsSqlPath = 'sql/24constraints.sql';
+    $upgrader = new Upgrade24To241($oldConfObj);
 }
 
 /* Variables used for Ajax calls */
@@ -69,7 +75,7 @@ $confFilesAjax = 'No';
 
 /* Checking whether upgrader support curret version */
 $versionSupport = false;
-if ($oldVersion == '2.2.2.2' || $oldVersion == '2.3') {
+if ($oldVersion == '2.2.2.2' || $oldVersion == '2.3' || $oldVersion == '2.4') {
     $versionSupport = true;
 }
 
@@ -130,7 +136,13 @@ if (!isset($_REQUEST['hdnState'])) {
 			$dbName = $_SESSION['newDb'];
 			if ($upgrader->applyConstraints($oldConstraintsSqlPath, $dbName)) {
 				$dbChangesAjax = 'Yes';
-				$currScreen = $screenArr['dbChanges']; $currPage = 'templates/newDbChanges.inc'; require_once 'templates/mainUi.php';
+				if ($oldVersion == '2.4') {
+					$confFilesAjax = 'Yes';
+				    $currScreen = $screenArr['confFiles']; $currPage = 'templates/copyConfFiles.inc';
+				} else {
+				    $currScreen = $screenArr['dbChanges']; $currPage = 'templates/newDbChanges.inc';
+				}
+				require_once 'templates/mainUi.php';
 			} else {
 				$currScreen = $screenArr['dbChanges']; $currPage = 'templates/error-constraints.inc'; require_once 'templates/mainUi.php';
 			}
@@ -174,10 +186,11 @@ if (!isset($_REQUEST['hdnState'])) {
 		case 'dbValueChangeOption':
 	                if($oldVersion == '2.3'){
 	                	$confFilesAjax = 'Yes';
-	                	$currScreen = $screenArr['confFiles']; $currPage = 'templates/copyConfFiles.inc'; require_once 'templates/mainUi.php';
+	                	$currScreen = $screenArr['confFiles']; $currPage = 'templates/copyConfFiles.inc';
 	                }elseif($oldVersion == '2.2.2.2'){
-	                	$currScreen = $screenArr['valueChanges']; $currPage = 'templates/dbValueChanges.inc'; require_once 'templates/mainUi.php';
+	                	$currScreen = $screenArr['valueChanges']; $currPage = 'templates/dbValueChanges.inc';
 	                }
+	                require_once 'templates/mainUi.php';
 			break;
 
 		case 'dbValueChanges':

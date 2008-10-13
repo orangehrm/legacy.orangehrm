@@ -276,7 +276,7 @@ CONFCONT;
 
 	public function createUpgradeConfFile() {
 
-		/* Checking lib/confs directort */
+		/* Checking lib/confs directory */
 		if (!is_writable("../lib/confs")) {
 		    $errorArray[] = "/lib/confs is not writable";
 		    $this->errorArray = $errorArray;
