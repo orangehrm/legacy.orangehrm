@@ -24,8 +24,8 @@
 
 a {
 	color: #009900;
+	text-decoration: underline;
 }
-
 
 .left_Active {
 	background-image : url('../../themes/beyondT/pictures/nCurrentTab_left.gif');
@@ -207,10 +207,6 @@ td {
 .see {
 	margin: 0;
 	font-style:italic;
-}
-
-a {
-	text-decoration: none;
 }
 
 li {

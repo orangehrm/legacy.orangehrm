@@ -114,7 +114,7 @@ function showFinalResults() {
 		document.frmUpgraderFinished.btnSubmit.value = "Back";
 		document.frmUpgraderFinished.btnSubmit.style.display = "block";
 	} else {
-		$("message").innerHTML = "Upgrader successfully located configuration files and you have completed upgrading. Please click Finish button to login to new installation. If you are satisfied with upgrade, you can replace old installation with this as stated in upgrade guide";
+		$("message").innerHTML = "Upgrader successfully located configuration files and you have completed upgrading. Please click Finish button to login to new installation. If you are satisfied with upgrade, you can replace old installation. Check <a href=\"http://www.orangehrm.com/upgrade-instructions.shtml\" target=\"_blank\">Upgrade Instructions</a> at our web site for more details.";
 		document.frmUpgraderFinished.hdnState.value = "upgradeFinish";
 		document.frmUpgraderFinished.btnSubmit.value = "Finish";
 		document.frmUpgraderFinished.btnSubmit.style.display = "block";
