@@ -220,6 +220,21 @@ class MailNotifications {
 			}
 		}
 
+		if(!is_array($this->to)  && is_array($notificationAddresses)){
+						 
+			if(!@$mailer->send(NULL , $this->mailType)){
+				
+				$logMessage .= " - FAILED \r\nReason(s):";
+				if (isset($mailer->errors)) {
+					$logMessage .= "\r\n\t*\t".implode("\r\n\t*\t",$mailer->errors);
+				}
+				
+			}else{
+				$logMessage .= " - SUCCEEDED";					
+			}
+			
+		}
+
 		if ((!is_array($this->to)) || (!@$mailer->send($this->to, $this->mailType))) {
 
 			$logMessage .= " - FAILED \r\nReason(s):";
