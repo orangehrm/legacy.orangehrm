@@ -1,3 +1,20 @@
+New & Changed Features for OrangeHRM ver 2.4.1-beta.2
+
+	New features
+	------------
+	Added upgrader from 2.4 to 2.4.1
+
+    Bug fixes
+	---------
+	2049098 - Time: Timesheets printing issue
+	2090499 - Time:Reported date misleads Employee report time calculation
+	2149309 - CRB-Calender control has no arrow to skip year by year
+	2086450 - Leave:Ess not assigned to supervisor->apply leave->no mails
+	2135580 - Upgrader:Changing jobtitle first time doesnt show in history
+	2163577 - Upgrader does not mention about right access to 'newversion'
+	2163431 - Upgrader - not clear it's asking for an existing db
+	2163356 - Improvements to upgrade page text
+
 New & Changed Features for OrangeHRM ver 2.4.1-beta.1
 
 	New features
