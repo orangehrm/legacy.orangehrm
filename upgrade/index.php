@@ -32,6 +32,12 @@ if (!file_exists('../../lib/confs/Conf.php')) {
     die;
 }
 
+/* Check whether /newversion is writable */
+if (!is_writable('../')) {
+    echo realpath("../")." is not writable. Please set write permission and re-run the upgrader.";
+    die;
+}
+
 /* Initializing current Conf Object */
 $oldConfObj = new Conf();
 $oldVersion = $oldConfObj->version;
