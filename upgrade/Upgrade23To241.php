@@ -64,9 +64,56 @@ class Upgrade23To241 extends Upgrader {
 
 	public function storeDefaultData($sqlPath, $dbName) {
 
-		$result = $this->executeSql($sqlPath, $dbName);
-		return $result;
+		$result1 = $this->executeSql($sqlPath, $dbName);
+		$result2 = $this->_fillEmployeeHistoryTable($dbName);
+		
+		if($result1 && $result2){
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
+	
+	private function _fillEmployeeHistoryTable($dbName){
+
+		mysql_selectdb($dbName);
+		/* Get employee data from `hs_hr_employee` and `hs_hr_job_title` tables */
+
+		$query = "SELECT a.`emp_number` , a.`job_title_code` , a.`joined_date` , b.`jobtit_name` FROM hs_hr_employee a, hs_hr_job_title b WHERE a.`job_title_code` IS NOT NULL AND a.`job_title_code` = b.`jobtit_code`";
+		$result = mysql_query($query);
+		
+		if (mysql_num_rows($result) > 0) {
+
+			while($row = mysql_fetch_array($result)){
+
+				if(isset($insertSqlSub)){
+                	$insertSqlSub = $insertSqlSub .  ' , '  . '(' .  "'" .  $row['emp_number'] .  "'" . ' , ' . "'" . $row['job_title_code'] . "'" . ' , ' . "'" . $row['jobtit_name'] .  "'" . ' , ' . "'" . $row['joined_date'] . "'" . ' ) ';
+                 }else{
+                 	$insertSqlSub = '(' .  "'" .  $row['emp_number'] .  "'" . ' , ' . "'" . $row['job_title_code'] . "'" . ' , ' . "'" . $row['jobtit_name'] .  "'" . ' , ' . "'" . $row['joined_date'] . "'" . ' ) ';
+                 }
+
+            }
+
+            /* Insert data to hs_hr_emp_jobtitle_history table  */
+
+            $insqrtSql = "INSERT INTO hs_hr_emp_jobtitle_history (`emp_number` , `code` , `name` , `start_date`) VALUES $insertSqlSub";
+
+            if (!mysql_query($insqrtSql)) {
+            	
+            	$this->errorArray[] = "Filling Employee History table failed";
+    			return false;
+    			
+    		}
+
+        	return true;
+		
+		} else {
+			return true;
+		}
+		
+	}
+	
 
 	public function changeExistingData($dbName, $choiceArr) {
 	    return true;
