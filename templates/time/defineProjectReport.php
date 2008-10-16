@@ -67,6 +67,69 @@ function validate() {
 	return true;
 }
 
+function setProjects(check){
+	
+	var obj = document.getElementById('cmbProject');
+	obj.length = 0;
+	
+	if(check == true) {
+		
+		<?php 
+			if(count($projects)){
+				
+		   		$customerObj = new Customer();
+				$count = 0; 
+				
+		    	foreach ($projects as $project) {
+		    		
+					if($project->getProjectId()  != ""){
+						
+						$customerDet = $customerObj->fetchCustomer($project->getCustomerId(), true);
+		  ?>	
+		  obj.options[<?php echo $count ?>] = new Option( '<?php  echo "{$customerDet->getCustomerName()} - {$project->getProjectName()}" ?>' ,'<?php echo $project->getProjectId()  ?>');
+		  <?php
+		  			$count++;
+		  			
+		  			}
+		  			
+		  		}
+		  		
+			}else{
+			?>
+			  obj.options[-2] = new Option( '- <?php echo $lang_Time_Timesheet_NoProjects;?> - ' ,' -2 ');
+			<?php	
+			}
+		  ?>
+	}else{
+		  <?php
+		  if(count($projects)){
+		  	
+		  		$customerObj = new Customer();
+		  		$count = 0; 
+		  		
+		    	foreach ($projects as $project) {
+		    		
+					if($project->getDeleted() == 0 ){
+						
+                     	$customerDet = $customerObj->fetchCustomer($project->getCustomerId(), true);
+		  ?>	
+		  obj.options[<?php echo $count?>] = new Option( '<?php  echo "{$customerDet->getCustomerName()} - {$project->getProjectName()}" ?>' ,  <?php  echo $project->getProjectId() ?>);
+		  <?php
+		  			$count++;
+		  			
+		  			} 
+		  			
+				}
+				
+		  	}else{
+			?>
+			   obj.options[-2] = new Option( '- <?php echo $lang_Time_Timesheet_NoProjects;?> - ' ,' -2 ');
+			<?php		
+			}
+		  ?>
+	}
+}
+
 YAHOO.OrangeHRM.container.init();
 YAHOO.util.Event.addListener($("frmReport"), "submit", viewProjectReport);
 
@@ -109,30 +172,39 @@ YAHOO.util.Event.addListener($("frmReport"), "submit", viewProjectReport);
                           $customerObj = new Customer();
 
                           foreach ($projects as $project) {
-                              $customerDet = $customerObj->fetchCustomer($project->getCustomerId(), true);
-
-                              $selected = "";
-                              if (isset($projectId) && ($projectId == $project->getProjectId())) {
-							      $selected = "selected";
-							  }
+                          	
+                          	if($project->getDeleted() == 0){
+                          		
+                            	$customerDet = $customerObj->fetchCustomer($project->getCustomerId(), true);
+								$selected = "";
+								
+                              	if (isset($projectId) && ($projectId == $project->getProjectId())) {
+							  	    $selected = "selected";
+							  	}
 				?>
 						<option value="<?php echo $project->getProjectId(); ?>" <?php echo $selected; ?> ><?php echo "{$customerDet->getCustomerName()} - {$project->getProjectName()}"; ?></option>
-				<?php 	}
+				<?php 		} 
+						}
 					} else { ?>
 						<option value="-2">- <?php echo $lang_Time_Timesheet_NoProjects;?> -</option>
 				<?php } ?>
-				</select>
-			</td>
+				</select>			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
+		<tr>
+		  <td class="tableMiddleLeft"></td>
+		  <td >&nbsp;</td>
+		  <td ></td>
+		  <td align="left" valign="middle" ><input type="checkbox" name="deleted2" value="checkbox" onclick="if (this.checked) {  setProjects(true);  }else{ setProjects(false); }" /> <?php echo $lang_Time_Timesheet_IncludeDeleteProjects ?></td>
+		  <td class="tableMiddleRight"></td>
+	  </tr>
 		<tr>
 			<td class="tableMiddleLeft"></td>
 			<td ><?php echo $lang_Time_Common_FromDate; ?></td>
 			<td ></td>
 			<td >
 				<input type="text" id="txtFromDate" name="txtFromDate" value="" size="10"/>
-				<input type="button" id="btnFromDate" name="btnFromDate" value="  " class="calendarBtn"/>
-			</td>
+				<input type="button" id="btnFromDate" name="btnFromDate" value="  " class="calendarBtn"/>			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<tr>
@@ -141,8 +213,7 @@ YAHOO.util.Event.addListener($("frmReport"), "submit", viewProjectReport);
 			<td ></td>
 			<td >
 				<input type="text" id="txtToDate" name="txtToDate" value="" size="10"/>
-				<input type="button" id="btnToDate" name="btnToDate" value="  " class="calendarBtn"/>
-			</td>
+				<input type="button" id="btnToDate" name="btnToDate" value="  " class="calendarBtn"/>			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 		<tr>
@@ -153,8 +224,7 @@ YAHOO.util.Event.addListener($("frmReport"), "submit", viewProjectReport);
 				<input type="image" name="btnView" alt="View"
 					   src="../../themes/beyondT/icons/view.gif"
 					   onmouseover="this.src='../../themes/beyondT/icons/view_o.gif';"
-					   onmouseout="this.src='../../themes/beyondT/icons/view.gif';" />
-			</td>
+					   onmouseout="this.src='../../themes/beyondT/icons/view.gif';" />			</td>
 			<td class="tableMiddleRight"></td>
 		</tr>
 	</tbody>
