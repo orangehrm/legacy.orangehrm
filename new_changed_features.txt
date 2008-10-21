@@ -1,3 +1,11 @@
+New & Changed Features for OrangeHRM ver 2.4.1-beta.3
+
+    Bug fixes
+	---------
+	2047966 - Admin: Project deletion may affect to the reports
+	2163329 - There are no installation instructions with the download
+	2127915 - Upgrader: DB name is not validated
+
 New & Changed Features for OrangeHRM ver 2.4.1-beta.2
 
 	New features
