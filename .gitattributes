@@ -452,6 +452,7 @@ license/LICENSE.TXT -text
 /login.php -text
 /mtview.php -text
 /new_changed_features.txt -text
+/orangehrm-quick-start-guide.html -text
 plugins/AllTests.php -text
 plugins/PlugInFactory.php -text
 plugins/PlugInFactoryException.php -text
