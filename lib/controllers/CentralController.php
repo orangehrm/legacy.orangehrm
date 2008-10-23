@@ -1256,9 +1256,15 @@ switch ($moduletype) {
 																							}
 																						}
 
+																						if(isset($_REQUEST['pageNO'])){
+																							$pageNO = $_REQUEST['pageNO'];
+																						}else{
+																							$pageNO = 1;
+																						}
+
 																						$leaveController->setId($id);
 																						$leaveController->setLeaveTypeId($leaveTypeId);
-																						$leaveController->viewLeaves("summary", $year, $searchBy, $sortBy, $sortOrder);
+																						$leaveController->viewLeaves("summary", $year, $searchBy, $sortBy, $sortOrder, $pageNO);
 																						break;
 
 													case 'Leave_Edit_Summary'		:	$id = isset($_REQUEST['id'])? $_REQUEST['id'] : $_SESSION['empID'];
@@ -1277,9 +1283,15 @@ switch ($moduletype) {
 																							}
 																						}
 
+																						if(isset($_REQUEST['pageNO'])){
+																							$pageNO = $_REQUEST['pageNO'];
+																						}else{
+																							$pageNO = 1;
+																						}
+
 																						$leaveController->setId($id);
 																						$leaveController->setLeaveTypeId($leaveTypeId);
-																						$leaveController->editLeaves("summary", $year, $searchBy, $sortBy, $sortOrder);
+																						$leaveController->editLeaves("summary", $year, $searchBy, $sortBy, $sortOrder, $pageNO);
 																						break;
 
 													case 'Leave_Quota_Copy_Last_Year' :	$leaveController->copyLeaveQuotaFromLastYear($_GET['currYear']);

@@ -17,12 +17,13 @@
  * Boston, MA  02110-1301, USA
  */
  $empInfo = null;
- if (isset($records[count($records)-1][0])) {
- 	$empInfo = $records[count($records)-1][0];
+ if (isset($records[1]) && is_array($records[1])) {	
+ 	$empInfo = $records[1][0];
  }
 
+$currentPage = $records[2] ;
+$allRecords =   $records[3] ;
  array_pop($records);
-
  $deletedLeaveTypesFound = false;
  $auth = $modifier[1];
  $dispYear = $modifier[2];
@@ -144,13 +145,38 @@
 	width: 40px;
 }
 
+#paging, #paging a {
+	color:gray;
+}
+
 -->
 </style>
+
+
 
 <script language="javascript">
 
 	function init() {
 	  oLinkNewTimeEvent = new YAHOO.widget.Button("linkTakenLeave");
+	}
+	
+	function nextPage() {
+		i=document.frmSummary.pageNO.value;
+		i++;
+		document.frmSummary.pageNO.value=i;
+		document.frmSummary.submit();
+	}
+	
+	function prevPage() {
+		var i=document.frmSummary.pageNO.value;
+		i--;
+		document.frmSummary.pageNO.value=i;
+		document.frmSummary.submit();
+	}
+	
+	function chgPage(pNO) {
+		document.frmSummary.pageNO.value=pNO;
+		document.frmSummary.submit();
 	}
 
 	function validateLeaveQuotaAmount(strValue) {
@@ -288,8 +314,10 @@
 		<input type="hidden" name="leaveTypeId" value="<?php echo isset($_REQUEST['leaveTypeId'])?$_REQUEST['leaveTypeId']:LeaveQuota::LEAVEQUOTA_CRITERIA_ALL; ?>" />
 		<input type="hidden" name="year" value="<?php echo isset($_REQUEST['year'])?$_REQUEST['year']:date('Y'); ?>" />
 		<input type="hidden" name="searchBy" value="<?php echo isset($_REQUEST['searchBy'])?$_REQUEST['searchBy']:"employee"; ?>"/>
-
-	<?php
+		<input type="hidden" name="pageNO" value="<?php echo $currentPage ?>" />
+<table border="0" cellpadding="2" cellspacing="2" width="100%">
+<tr>
+  <td align="left" valign="middle"><?php
 		if ($auth === 'admin' ) {
 	?>
 
@@ -317,7 +345,19 @@
 	</p>
 <?php		
 		}
+?></td>
+  <td align="right" valign="middle">
+<div id="paging">
+<?php
+		$commonFunc = new CommonFunctions();
+		$pageStr = $commonFunc->printPageLinks($allRecords , $currentPage);
+		$pageStr = preg_replace(array('/#first/', '/#previous/', '/#next/', '/#last/'), array($lang_empview_first, $lang_empview_previous, $lang_empview_next, $lang_empview_last), $pageStr);
+		echo $pageStr;	
 ?>
+</div>
+</td>
+</tr>
+</table>
 <table border="0" cellpadding="0" cellspacing="0">
   <thead>
   	<tr>
