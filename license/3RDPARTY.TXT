@@ -29,10 +29,10 @@ Files: scripts/time.js
 Modified files: (Modifications are listed in the file)
 scripts/time.js
 
-3. htmlMimeMail - (http://www.phpguru.org/static/mime.mail.html)
+3. Zend Framework - (http://framework.zend.com)
 
-License: GPL v2
-License File: 3rdParty/htmlMimeMail.license
+License: New BSD License
+License File: 3rdParty/ZendFramework.license
 
 Files:
 

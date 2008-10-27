@@ -991,6 +991,11 @@
 	$lang_SmtpPort = "SMTP Port";
 	$lang_SmtpUser = "SMTP User";
 	$lang_SmtpPassword = "SMTP Password";
+	$lang_EmailSecurity = "Use Secure Connection";
+	$lang_EmailAuthentication = "Use SMTP Authentication";
+	$lang_Email_SSL = "SSL";
+	$lang_Email_TLS = "TLS";
+	$lang_Email_SendMail_Instructions = "Please set correct path to sendmail by changing sendmail_path in php.ini";
 	$lang_Error_Invalid_Port = "Invalid SMTP Port";
 
 	//Projects

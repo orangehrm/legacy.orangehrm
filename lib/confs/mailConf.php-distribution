@@ -24,9 +24,8 @@
 	$this->smtpUser = '';
 	$this->smtpPass = '';
 
-	// only if mailType is sendmail
-	$this->sendmailPath = '/usr/lib/sendmail -ti';
-
 	$this->mailType = 'sendmail';
 	$this->mailAddress = 'orangehrm@localhost.localdomain';
+	$this->smtpAuth = 'LOGIN';
+	$this->smtpSecurity = 'NONE';
 ?>

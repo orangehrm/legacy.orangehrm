@@ -48,7 +48,7 @@ $editArr = $this->popArr['editArr'];
 <script type="text/javascript" >
 	function changeMailType() {
  		value = $('txtMailType').value;
- 		panels = ['sendmailDetails', 'smtpDetails1', 'smtpDetails2'];
+ 		panels = ['sendmailDetails', 'smtpDetails1', 'smtpDetails2', 'smtpDetails3', 'smtpDetails4'];
 
  		for (i=0; i<panels.length; i++) {
  			$(panels[i]).className = 'hide';
@@ -59,27 +59,30 @@ $editArr = $this->popArr['editArr'];
  																					 break;
  			case '<?php echo EmailConfiguration::EMAILCONFIGURATION_TYPE_SMTP; ?>' : $(panels[1]).className = 'show';
  																					 $(panels[2]).className = 'show';
+ 																					 $(panels[3]).className = 'show';
+ 																					 $(panels[4]).className = 'show';
  																					 break;
  		}
 	}
 
-	function edit() {
-		btnEdit = $('btnEdit');
+	function changeAuth() {
 
-		if (btnEdit.title == 'Edit') {
+		var authRadio = document.frmEmailConfig.optAuth;
 
-			btnEdit.title = 'Save';
-			btnEdit.src = '../../themes/<?php echo $styleSheet; ?>/pictures/btn_save.gif';
+		var val;
+		for (var i=0; i < authRadio.length; i++) {
+   			if (authRadio[i].checked) {
+      			val = authRadio[i].value;
+      		}
+   		}
 
-			emailConfigControls = new Array('txtMailAddress', 'txtMailType', 'txtSendmailPath', 'txtSmtpHost', 'txtSmtpPort', 'txtSmtpUser', 'txtSmtpPass');
-
-			for (i in emailConfigControls) {
-				$(emailConfigControls[i]).disabled = false;
-			}
-
-		} else {
-			validate();
-		}
+   		if (val == "NONE") {
+			$('txtSmtpPass').disabled = true;
+			$('txtSmtpUser').disabled = true;
+   		} else {
+			$('txtSmtpPass').disabled = false;
+			$('txtSmtpUser').disabled = false;
+   		}
 	}
 
 	function validate() {
@@ -159,11 +162,11 @@ function mover() {
         <td class="tableMiddleLeft"></td>
         <td><?php echo $lang_MailFrom; ?></td>
         <td width="25px">&nbsp;</td>
-        <td><input type="text" name="txtMailAddress" id="txtMailAddress" value="<?php echo $editArr->getMailAddress();?>" disabled /></td>
+        <td><input type="text" name="txtMailAddress" id="txtMailAddress" value="<?php echo $editArr->getMailAddress();?>"/></td>
         <td width="25px">&nbsp;</td>
 		<td><?php echo $lang_MailSendingMethod; ?></td>
 		<td width="25px">&nbsp;</td>
-		<td><select name="txtMailType" id="txtMailType" onchange="changeMailType();" onclick="changeMailType();" disabled>
+		<td><select name="txtMailType" id="txtMailType" onchange="changeMailType();" onclick="changeMailType();">
 				<option value="0">-- Select --</option>
 				<option value="<?php echo EmailConfiguration::EMAILCONFIGURATION_TYPE_SENDMAIL; ?>" <?php echo ($editArr->getMailType() == EmailConfiguration::EMAILCONFIGURATION_TYPE_SENDMAIL )? 'selected': ''?> ><?php echo $lang_MailTypes_Sendmailer; ?></option>
 				<option value="<?php echo EmailConfiguration::EMAILCONFIGURATION_TYPE_SMTP; ?>" <?php echo ($editArr->getMailType() == EmailConfiguration::EMAILCONFIGURATION_TYPE_SMTP)? 'selected': ''?> ><?php echo $lang_MailTypes_Smtp; ?></option>
@@ -174,9 +177,7 @@ function mover() {
 	  <!-- Sendmail -->
 	  <tr id="sendmailDetails">
         <td class="tableMiddleLeft"></td>
-        <td><?php echo $lang_SendmailPath; ?></td>
-        <td width="25px">&nbsp;</td>
-        <td><input type="text" name="txtSendmailPath" id="txtSendmailPath" value="<?php echo $editArr->getSendmailPath();?>" disabled /></td>
+        <td colspan="3"><?php echo $lang_Email_SendMail_Instructions; ?></td>
         <td width="25px">&nbsp;</td>
 		<td>&nbsp;</td>
 		<td width="25px">&nbsp;</td>
@@ -189,26 +190,54 @@ function mover() {
         <td class="tableMiddleLeft"></td>
         <td><?php echo $lang_SmtpHost; ?></td>
         <td width="25px">&nbsp;</td>
-        <td><input type="text" name="txtSmtpHost" id="txtSmtpHost" value="<?php echo $editArr->getSmtpHost();?>" disabled /></td>
+        <td><input type="text" name="txtSmtpHost" id="txtSmtpHost" value="<?php echo $editArr->getSmtpHost();?>" /></td>
         <td width="25px">&nbsp;</td>
 		<td><?php echo $lang_SmtpPort; ?></td>
 		<td width="25px">&nbsp;</td>
-		<td><input type="text" name="txtSmtpPort" id="txtSmtpPort" value="<?php echo $editArr->getSmtpPort();?>" size="4" disabled /></td>
+		<td><input type="text" name="txtSmtpPort" id="txtSmtpPort" value="<?php echo $editArr->getSmtpPort();?>" size="4"/></td>
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
 	  <tr id="smtpDetails2">
         <td class="tableMiddleLeft"></td>
-        <td><?php echo $lang_SmtpUser; ?></td>
-        <td width="25px">&nbsp;</td>
-        <td><input type="text" name="txtSmtpUser" id="txtSmtpUser" value="<?php echo $editArr->getSmtpUser();?>" disabled /></td>
-        <td width="25px">&nbsp;</td>
-		<td><?php echo $lang_SmtpPassword; ?></td>
+		<td><?php echo $lang_EmailAuthentication; ?></td>
 		<td width="25px">&nbsp;</td>
-		<td><input type="password" name="txtSmtpPass" id="txtSmtpPass" value="<?php echo $editArr->getSmtpPass();?>" disabled /></td>
+		<td><input type="radio" onchange="changeAuth();" name="optAuth" value="NONE" <?php echo ($editArr->getSmtpAuth() == "NONE") ? "checked" : ""?> /><?php echo $lang_Common_No; ?>
+			<input type="radio" onchange="changeAuth();" name="optAuth" value="LOGIN" <?php echo ($editArr->getSmtpAuth() == "LOGIN") ? "checked" : ""?> /><?php echo $lang_Common_Yes; ?></td>
+        <td width="25px">&nbsp;</td>
+		<td>&nbsp;</td>
+		<td width="25px">&nbsp;</td>
+		<td>&nbsp;</td>
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
+	  <tr id="smtpDetails3">
+        <td class="tableMiddleLeft"></td>
+        <td><?php echo $lang_SmtpUser; ?></td>
+        <td width="25px">&nbsp;</td>
+        <td><input type="text" name="txtSmtpUser" id="txtSmtpUser" value="<?php echo $editArr->getSmtpUser();?>" <?php echo ($editArr->getSmtpAuth() == "NONE") ? "disabled" : ""; ?> /></td>
+        <td width="25px">&nbsp;</td>
+		<td><?php echo $lang_SmtpPassword; ?></td>
+		<td width="25px">&nbsp;</td>
+		<td><input type="password" name="txtSmtpPass" id="txtSmtpPass" value="<?php echo $editArr->getSmtpPass();?>"  <?php echo ($editArr->getSmtpAuth() == "NONE") ? "disabled" : "";?> /></td>
+        <td width="25px">&nbsp;</td>
+        <td class="tableMiddleRight"></td>
+      </tr>
+	  <tr id="smtpDetails4">
+        <td class="tableMiddleLeft"></td>
+		<td><?php echo $lang_EmailSecurity; ?></td>
+		<td width="25px">&nbsp;</td>
+		<td><input type="radio" name="optSecurity" value="NONE" <?php echo ($editArr->getSmtpSecurity() == "NONE") ? "checked" : ""; ?> /><?php echo $lang_Common_No; ?>
+			<input type="radio" name="optSecurity" value="SSL" <?php echo ($editArr->getSmtpSecurity() == "SSL") ? "checked" : ""; ?> /><?php echo $lang_Email_SSL; ?>
+			<input type="radio" name="optSecurity" value="TLS" <?php echo ($editArr->getSmtpSecurity() == "TLS") ? "checked" : ""; ?> /><?php echo $lang_Email_TLS; ?></td>
+        <td width="25px">&nbsp;</td>
+		<td>&nbsp;</td>
+		<td width="25px">&nbsp;</td>
+		<td>&nbsp;</td>
+        <td width="25px">&nbsp;</td>
+        <td class="tableMiddleRight"></td>
+      </tr>
+
 	  <tr>
         <td class="tableMiddleLeft"></td>
         <td>&nbsp;</td>
@@ -221,7 +250,7 @@ function mover() {
         <td width="25px">
 			<?php
 			   if($locRights['edit']) { ?>
-			        <input type="image" class="button1" id="btnEdit" src="../../themes/<?php echo $styleSheet; ?>/pictures/btn_edit.gif" title="Edit" onMouseOut="mout();" onMouseOver="mover();" name="Edit" onclick="edit(); return false;" />
+			        <input type="image" class="button1" id="btnEdit" src="../../themes/<?php echo $styleSheet; ?>/pictures/btn_save.gif" title="Save" onMouseOut="mout();" onMouseOver="mover();" name="Save" />
 <?php			} else { ?>
 			        <input type="image" class="button1" id="btnEdit" src="../../themes/<?php echo $styleSheet; ?>/pictures/btn_edit.gif" onClick="alert('<?php echo $lang_Common_AccessDenied;?>'); return false;" />
 <?php			}  ?></td>

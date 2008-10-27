@@ -30,6 +30,13 @@ class EmailConfiguration {
 	const EMAILCONFIGURATION_TYPE_SENDMAIL = 'sendmail';
 	const EMAILCONFIGURATION_TYPE_SMTP = 'smtp';
 
+	const EMAILCONFIGURATION_SMTP_SECURITY_NONE = 'NONE';
+	const EMAILCONFIGURATION_SMTP_SECURITY_TLS = 'TLS';
+	const EMAILCONFIGURATION_SMTP_SECURITY_SSL = 'SSL';
+
+	const EMAILCONFIGURATION_SMTP_AUTH_NONE = 'NONE';
+	const EMAILCONFIGURATION_SMTP_AUTH_LOGIN = 'LOGIN';
+
 	private $smtpHost;
 	private $smtpUser;
 	private $smtpPass;
@@ -37,6 +44,9 @@ class EmailConfiguration {
 	private $mailAddress;
 	private $mailType;
 	private $sendmailPath;
+
+	private $smtpSecurity;
+	private $smtpAuth;
 
 	private $configurationFile;
 
@@ -96,6 +106,22 @@ class EmailConfiguration {
 		$this->sendmailPath = $sendmailPath;
 	}
 
+	public function setSmtpAuth($auth) {
+		$this->smtpAuth = $auth;
+	}
+
+	public function getSmtpAuth() {
+		return $this->smtpAuth;
+	}
+
+	public function setSmtpSecurity($security) {
+		$this->smtpSecurity = $security;
+	}
+
+	public function getSmtpSecurity() {
+		return $this->smtpSecurity;
+	}
+
 	public function __construct() {
 		$confObj = new Conf();
 
@@ -130,10 +156,10 @@ class EmailConfiguration {
 	$this->smtpPass = \''.$this->getSmtpPass().'\';
 	$this->smtpPort = \''.$this->getSmtpPort().'\';
 
-	$this->sendmailPath = \''.$this->getSendmailPath().'\';
-
 	$this->mailType = \''.$this->getMailType().'\';
 	$this->mailAddress = \''.$this->getMailAddress().'\';
+	$this->smtpAuth = \''.$this->getSmtpAuth().'\';
+	$this->smtpSecurity = \''.$this->getSmtpSecurity().'\';
 ?>';
 
 		return file_put_contents($this->configurationFile, $content);
