@@ -1326,7 +1326,13 @@ switch ($moduletype) {
 																							}
 																						}
 
-																						$url =  '?leavecode=Leave&action=Leave_Summary&message=' .$mes."&id=$id&year=$year&leaveTypeId=$leaveTypeId&searchBy=$searchBy";
+																						if(isset($_REQUEST['pageNO'])){
+																							$pageNO = $_REQUEST['pageNO'];
+																						}else{
+																							$pageNO = 1;
+																						}
+																						
+																						$url =  '?leavecode=Leave&action=Leave_Summary&message=' .$mes."&id=$id&year=$year&leaveTypeId=$leaveTypeId&searchBy=$searchBy&pageNO=$pageNO";
 
 																						if ($sortBy != null && $sortOrder != null) {
 																							$url .= "&sortField=${sortBy}&sortOrder${sortBy}=${sortOrder}";
