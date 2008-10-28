@@ -622,26 +622,12 @@ class HspMailNotification {
 			$logMessage .= " - SUCCEEDED";
 		}
 
-		//$logPath = $this -> _getLogPath();
+		$logPath = ROOT_PATH.'/lib/logs/';
 
-		//error_log($logMessage."\r\n", 3, $logPath."notification_mails.log");
+		error_log($logMessage."\r\n", 3, $logPath."notification_mails.log");
 
 		return $success;
 	}
-
-	/**
-	* Get email log file path from email configuration
-	* If not set return default log path
-	* @return String $logPaath
-	*/
-	/*public function _getLogPath() {
-		$logPath = $this -> emailConfig ->getLogPath();
-		if (!empty($logPath) && isset($logPath)) {
-			return $logPath;
-		} else {
-			return ROOT_PATH.'/lib/logs/';
-		}
-	}*/
 
 }
 ?>
