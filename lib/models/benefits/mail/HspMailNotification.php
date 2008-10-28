@@ -20,6 +20,8 @@
  * @copyright 2006 OrangeHRM Inc., http://www.orangehrm.com
  */
 
+set_include_path(get_include_path() . PATH_SEPARATOR . ROOT_PATH . '/lib/common');
+
 require_once ROOT_PATH . '/lib/common/Zend/Mail.php';
 require_once ROOT_PATH . '/lib/common/Zend/Mail/Transport/Smtp.php';
 require_once ROOT_PATH . '/lib/common/Zend/Mail/Transport/Sendmail.php';
