@@ -1,3 +1,14 @@
+New & Changed Features for OrangeHRM ver 2.4.1-beta.4
+
+	New features
+	------------
+	Introduced Zend Mail (Zend Framework 1.6.2) and removed htmlMimeMail5
+
+    Bug fixes
+	---------
+	2141811 - Benefits Module: After deleting an employee name not shown
+	1943684 - Paging not implemented in Leave Summary
+
 New & Changed Features for OrangeHRM ver 2.4.1-beta.3
 
     Bug fixes
