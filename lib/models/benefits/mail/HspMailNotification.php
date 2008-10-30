@@ -652,7 +652,7 @@ class HspMailNotification {
 			$success = false;
 			$errorMsg = $e->getMessage();
 			if (isset($errorMsg)) {
-				$logMessage .= " - FAILED \r\nReason: " . $e->getMessage();
+				$logMessage .= " - FAILED \r\nReason: $errorMsg";
 			}
 		}
 
