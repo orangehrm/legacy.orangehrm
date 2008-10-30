@@ -175,7 +175,7 @@ class RecruitmentMailNotifier {
 
 		Zend_Mail::setDefaultTransport($transport);
 		$mailer = new Zend_Mail();
-		$mailer->setFrom($this->emailConf->getMailAddress());
+		$mailer->setFrom($this->emailConf->getMailAddress(), "OrangeHRM");
 
 		return $mailer;
 

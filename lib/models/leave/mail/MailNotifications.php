@@ -172,7 +172,7 @@ class MailNotifications {
 
 		Zend_Mail::setDefaultTransport($transport);
 		$this->mailer = new Zend_Mail();
-		$this->mailer->setFrom($confObj->getMailAddress(), "SingleSourceHRM");
+		$this->mailer->setFrom($confObj->getMailAddress(), "OrangeHRM");
 
 		$sysConfObj = new sysConf();
 
