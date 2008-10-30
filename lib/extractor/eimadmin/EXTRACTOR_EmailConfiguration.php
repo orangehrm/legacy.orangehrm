@@ -47,8 +47,8 @@ class EXTRACTOR_EmailConfiguration {
 			$this->emailConfiguration->setMailType($postArr["txtMailType"]);
 			$this->emailConfiguration->setMailAddress($postArr["txtMailAddress"]);
 
-			$this->emailConfiguration->setSmtpAuth($postArr["optAuth"]);
-			$this->emailConfiguration->setSmtpSecurity($postArr["optSecurity"]);
+			//$this->emailConfiguration->setSmtpAuth($postArr["optAuth"]);
+			//$this->emailConfiguration->setSmtpSecurity($postArr["optSecurity"]);
 
 			return $this->emailConfiguration;
 	}

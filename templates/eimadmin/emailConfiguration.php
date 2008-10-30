@@ -48,7 +48,7 @@ $editArr = $this->popArr['editArr'];
 <script type="text/javascript" >
 	function changeMailType() {
  		value = $('txtMailType').value;
- 		panels = ['sendmailDetails', 'smtpDetails1', 'smtpDetails2', 'smtpDetails3', 'smtpDetails4'];
+ 		panels = ['sendmailDetails', 'smtpDetails1', 'smtpDetails3'];
 
  		for (i=0; i<panels.length; i++) {
  			$(panels[i]).className = 'hide';
@@ -59,9 +59,7 @@ $editArr = $this->popArr['editArr'];
  																					 break;
  			case '<?php echo EmailConfiguration::EMAILCONFIGURATION_TYPE_SMTP; ?>' : $(panels[1]).className = 'show';
  																					 $(panels[2]).className = 'show';
- 																					 $(panels[3]).className = 'show';
- 																					 $(panels[4]).className = 'show';
- 																					 break;
+  																					 break;
  		}
 	}
 
@@ -198,6 +196,7 @@ function mover() {
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
+      <!--
 	  <tr id="smtpDetails2">
         <td class="tableMiddleLeft"></td>
 		<td><?php echo $lang_EmailAuthentication; ?></td>
@@ -211,6 +210,7 @@ function mover() {
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
+      -->
 	  <tr id="smtpDetails3">
         <td class="tableMiddleLeft"></td>
         <td><?php echo $lang_SmtpUser; ?></td>
@@ -223,6 +223,7 @@ function mover() {
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
+      <!--
 	  <tr id="smtpDetails4">
         <td class="tableMiddleLeft"></td>
 		<td><?php echo $lang_EmailSecurity; ?></td>
@@ -237,7 +238,7 @@ function mover() {
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
-
+	  -->
 	  <tr>
         <td class="tableMiddleLeft"></td>
         <td>&nbsp;</td>

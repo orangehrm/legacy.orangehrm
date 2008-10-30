@@ -246,8 +246,11 @@ class MailNotifications {
 			try {
 				$mailer->send();
 				$logMessage .= " - SUCCEEDED";
-			} catch (Zend_Mail_Transport_Exception $e) {
-				$logMessage .= " - FAILED \r\nReason: " . $e->getMessage();
+			} catch (Exception $e) {
+				$errorMsg = $e->getMessage();
+				if (isset($errorMsg)) {
+					$logMessage .= " - FAILED \r\nReason: $errorMsg";
+				}
 			}
 		}
 
