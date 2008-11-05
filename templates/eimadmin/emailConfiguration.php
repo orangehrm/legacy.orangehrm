@@ -48,7 +48,7 @@ $editArr = $this->popArr['editArr'];
 <script type="text/javascript" >
 	function changeMailType() {
  		value = $('txtMailType').value;
- 		panels = ['sendmailDetails', 'smtpDetails1', 'smtpDetails3'];
+ 		panels = ['sendmailDetails', 'smtpDetails1', 'smtpDetails2', 'smtpDetails3'];
 
  		for (i=0; i<panels.length; i++) {
  			$(panels[i]).className = 'hide';
@@ -59,44 +59,65 @@ $editArr = $this->popArr['editArr'];
  																					 break;
  			case '<?php echo EmailConfiguration::EMAILCONFIGURATION_TYPE_SMTP; ?>' : $(panels[1]).className = 'show';
  																					 $(panels[2]).className = 'show';
+ 																					 $(panels[3]).className = 'show';
   																					 break;
  		}
-	}
-
-	function changeAuth() {
-
-		var authRadio = document.frmEmailConfig.optAuth;
-
-		var val;
-		for (var i=0; i < authRadio.length; i++) {
-   			if (authRadio[i].checked) {
-      			val = authRadio[i].value;
-      		}
-   		}
-
-   		if (val == "NONE") {
-			$('txtSmtpPass').disabled = true;
-			$('txtSmtpUser').disabled = true;
-   		} else {
-			$('txtSmtpPass').disabled = false;
-			$('txtSmtpUser').disabled = false;
-   		}
 	}
 
 	function validate() {
 		var errors = new Array();
 		var error = false;
 
-		var email = $('txtMailAddress');
-		if (!checkEmail(email.value)) {
+		var fromEmail = $("txtMailAddress").value;
+
+		if (fromEmail == "") {
 			error = true;
-			errors.push('<?php echo $lang_Error_InvalidEmail; ?>');
+			errors.push("<?php echo $lang_Error_FromEmailEmpty; ?>");
+		} else if(!checkEmail(fromEmail)) {
+			error = true;
+			errors.push("<?php echo $lang_Error_FromEmailInvalid; ?>");
 		}
 
-		var port = $('txtSmtpPort');
-		if ( !numbers(port) || ((port <= 0) || (port > 65535))) {
-			error = true;
-			errors.push('<?php echo $lang_Error_Invalid_Port; ?>');
+		if ($("txtMailType").value == "smtp") {
+
+			if ($("txtSmtpHost").value == "") {
+				error = true;
+				errors.push("<?php echo $lang_Error_SmtpHostEmpty; ?>");
+			}
+
+			var smtpPort = $("txtSmtpPort");
+			if (smtpPort.value == "") {
+				error = true;
+				errors.push("<?php echo $lang_Error_SmtpPortEmpty; ?>");
+			} else if (!numbers(smtpPort) || ((smtpPort.value <= 0) || (smtpPort.value > 65535))) {
+				error = true;
+				errors.push("<?php echo $lang_Error_Invalid_Port; ?>");
+			}
+
+			if ($("txtSmtpUser").value == "") {
+				error = true;
+				errors.push("<?php echo $lang_Error_SmtpUsernameEmpty; ?>");
+			}
+
+			if ($("txtSmtpPass").value == "") {
+				error = true;
+				errors.push("<?php echo $lang_Error_SmtpPasswordEmpty; ?>");
+			}
+
+			if ($("chkTestEmail").checked == true) {
+
+				var testEmail = $("txtTestEmail").value;
+
+				if (testEmail == "") {
+					error = true;
+					errors.push("<?php echo $lang_Error_TestEmailEmpty; ?>");
+				} else if(!checkEmail(testEmail)) {
+					error = true;
+					errors.push("<?php echo $lang_Error_TestEmailValid; ?>");
+				}
+
+			}
+
 		}
 
 		if (error) {
@@ -112,32 +133,27 @@ $editArr = $this->popArr['editArr'];
 			$('frmEmailConfig').submit();
 			return true;
 		}
+
 	}
 
 	function $(id) {
 		return document.getElementById(id);
 	}
 
-	function mout() {
-	var Edit = $("btnEdit");
-
-	if(Edit.title=='Save')
-		Edit.src='../../themes/<?php echo $styleSheet; ?>/pictures/btn_save.gif';
-	else
-		Edit.src='../../themes/<?php echo $styleSheet; ?>/pictures/btn_edit.gif';
-}
-
-function mover() {
-	var Edit = $("btnEdit");
-
-	if(Edit.title=='Save')
-		Edit.src='../../themes/<?php echo $styleSheet; ?>/pictures/btn_save_02.gif';
-	else
-		Edit.src='../../themes/<?php echo $styleSheet; ?>/pictures/btn_edit_02.gif';
-}
 </script>
 <body>
 <h2><?php echo $lang_Admin_EMX_MailConfiguration; ?><hr/></h2>
+
+<?php if (isset($_GET['showMsg']) && $_GET['showMsg'] == "TEST_EMAIL_SUCCESS") { ?>
+<div style="color:#339933;margin:5px">
+<?php echo $lang_SmtpTestEmailSucceeded ?>
+</div>
+<?php } elseif (isset($_GET['showMsg']) && $_GET['showMsg'] == "TEST_EMAIL_FAILIURE") { ?>
+<div style="color:#FF3300;margin:5px">
+<?php echo $lang_SmtpTestEmailFailed ?>
+</div>
+<?php } ?>
+
 <form id="frmEmailConfig" name="frmEmailConfig" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?uniqcode=EMX&id=1" onsubmit="validate(); return false;">
 <input type="hidden" name="sqlState" id="sqlState" />
   <table border="0" cellpadding="0" cellspacing="0">
@@ -196,22 +212,7 @@ function mover() {
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
-      <!--
 	  <tr id="smtpDetails2">
-        <td class="tableMiddleLeft"></td>
-		<td><?php echo $lang_EmailAuthentication; ?></td>
-		<td width="25px">&nbsp;</td>
-		<td><input type="radio" onchange="changeAuth();" name="optAuth" value="NONE" <?php echo ($editArr->getSmtpAuth() == "NONE") ? "checked" : ""?> /><?php echo $lang_Common_No; ?>
-			<input type="radio" onchange="changeAuth();" name="optAuth" value="LOGIN" <?php echo ($editArr->getSmtpAuth() == "LOGIN") ? "checked" : ""?> /><?php echo $lang_Common_Yes; ?></td>
-        <td width="25px">&nbsp;</td>
-		<td>&nbsp;</td>
-		<td width="25px">&nbsp;</td>
-		<td>&nbsp;</td>
-        <td width="25px">&nbsp;</td>
-        <td class="tableMiddleRight"></td>
-      </tr>
-      -->
-	  <tr id="smtpDetails3">
         <td class="tableMiddleLeft"></td>
         <td><?php echo $lang_SmtpUser; ?></td>
         <td width="25px">&nbsp;</td>
@@ -223,22 +224,18 @@ function mover() {
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
-      <!--
-	  <tr id="smtpDetails4">
+	  <tr id="smtpDetails3">
         <td class="tableMiddleLeft"></td>
-		<td><?php echo $lang_EmailSecurity; ?></td>
-		<td width="25px">&nbsp;</td>
-		<td><input type="radio" name="optSecurity" value="NONE" <?php echo ($editArr->getSmtpSecurity() == "NONE") ? "checked" : ""; ?> /><?php echo $lang_Common_No; ?>
-			<input type="radio" name="optSecurity" value="SSL" <?php echo ($editArr->getSmtpSecurity() == "SSL") ? "checked" : ""; ?> /><?php echo $lang_Email_SSL; ?>
-			<input type="radio" name="optSecurity" value="TLS" <?php echo ($editArr->getSmtpSecurity() == "TLS") ? "checked" : ""; ?> /><?php echo $lang_Email_TLS; ?></td>
+        <td><?php echo $lang_SmtpSendTestEmail; ?></td>
         <td width="25px">&nbsp;</td>
-		<td>&nbsp;</td>
+        <td><input type="checkbox" name="chkTestEmail" id="chkTestEmail" /></td>
+        <td width="25px">&nbsp;</td>
+		<td><?php echo $lang_SmptTestEmailAddress; ?></td>
 		<td width="25px">&nbsp;</td>
-		<td>&nbsp;</td>
+		<td><input type="text" name="txtTestEmail" id="txtTestEmail" /></td>
         <td width="25px">&nbsp;</td>
         <td class="tableMiddleRight"></td>
       </tr>
-	  -->
 	  <tr>
         <td class="tableMiddleLeft"></td>
         <td>&nbsp;</td>
@@ -251,7 +248,7 @@ function mover() {
         <td width="25px">
 			<?php
 			   if($locRights['edit']) { ?>
-			        <input type="image" class="button1" id="btnEdit" src="../../themes/<?php echo $styleSheet; ?>/pictures/btn_save.gif" title="Save" onMouseOut="mout();" onMouseOver="mover();" name="Save" />
+			        <input type="image" class="button1" id="btnEdit" src="../../themes/<?php echo $styleSheet; ?>/pictures/btn_save.gif" title="Save" name="Save" />
 <?php			} else { ?>
 			        <input type="image" class="button1" id="btnEdit" src="../../themes/<?php echo $styleSheet; ?>/pictures/btn_edit.gif" onClick="alert('<?php echo $lang_Common_AccessDenied;?>'); return false;" />
 <?php			}  ?></td>
