@@ -1,3 +1,11 @@
+New & Changed Features for OrangeHRM ver 2.4.1-beta.5
+
+    Bug fixes
+	---------
+	2218227 - [Upgrader] Stopper when assigning leave by admin
+	2218294 - [Upgrader] Stopper when applying leave
+	2219006 - [Upgrader]  No warning is given for default SMTP settings
+
 New & Changed Features for OrangeHRM ver 2.4.1-beta.4
 
 	New features
