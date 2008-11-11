@@ -1331,7 +1331,7 @@ switch ($moduletype) {
 																						}else{
 																							$pageNO = 1;
 																						}
-																						
+
 																						$url =  '?leavecode=Leave&action=Leave_Summary&message=' .$mes."&id=$id&year=$year&leaveTypeId=$leaveTypeId&searchBy=$searchBy&pageNO=$pageNO";
 
 																						if ($sortBy != null && $sortOrder != null) {
@@ -1592,10 +1592,10 @@ switch ($moduletype) {
 																							$dayDiff -= 7;
 																						}
 
-																						$clientStartDateTimestamp = time() + $timeZoneDiff * 60 + (($dayDiff) * 3600 * 24);
+																						$clientStartDateTimestamp = strtotime("+$dayDiff day", (time() + $timeZoneDiff*60));
 
 																						$clientStartDate = date('Y-m-d', $clientStartDateTimestamp);
-																						$clientEndDate = date('Y-m-d', $clientStartDateTimestamp + (6 * 3600 * 24));
+																						$clientEndDate = date('Y-m-d', strtotime("+6 day", $clientStartDateTimestamp));
 
 																					}
 

@@ -228,7 +228,7 @@ class TimeEvent {
 
 		throw new TimeEventException("Overlapping time period", TimeEventException::OVERLAPPING_TIME_PERIOD);
 	}
-        
+
 	/**
 	* Check for given start time already exist in time events
 	* @return bool Returns false if record not found,  other wise return Exception
@@ -263,11 +263,11 @@ class TimeEvent {
 	 * @throws TimeEventException Overlapping time period 2
 	 */
 	public function addTimeEvent() {
-	
-		if ($this->getStartTime() != null && $this->getEmployeeId() != null){     
+
+		if ($this->getStartTime() != null && $this->getEmployeeId() != null){
 			$this->_checkStartTimeInTimeEvent();
 		}
-                
+
 		$this->_isOverlapping();
 
 		$newId = UniqueIDGenerator::getInstance()->getNextID(self::TIME_EVENT_DB_TABLE_TIME_EVENT, self::TIME_EVENT_DB_FIELD_TIME_EVENT_ID);
@@ -539,7 +539,7 @@ class TimeEvent {
 
 		return $eventArr;
 	}
-	
+
 	/**
 	 * Fetch time event records by given employee ids , time event strattime , time event endtime
 	 *
@@ -547,27 +547,27 @@ class TimeEvent {
 	 * @return Array TimesheetId
 	 */
  	public function fetchTimeSheetIds($employeeIds) {
- 		
+
  		$timeSheetIdArray = NULL ;
  		$sqlBuilder = new SQLQBuilder();
-		$selectTable = "`".self::TIME_EVENT_DB_TABLE_TIME_EVENT."` a ";		
+		$selectTable = "`".self::TIME_EVENT_DB_TABLE_TIME_EVENT."` a ";
 		$selectFields[0] = "DISTINCT(a.`".self::TIME_EVENT_DB_FIELD_TIMESHEET_ID."`)";
-		
+
 		$selectConditions[0] = "a.`".self::TIME_EVENT_DB_FIELD_EMPLOYEE_ID."` IN('".implode("', '", $employeeIds)."')";
 		$selectConditions[1] = "((a.`".self::TIME_EVENT_DB_FIELD_START_TIME."` >= '{$this->getStartTime()}' AND " .  "a.`".self::TIME_EVENT_DB_FIELD_END_TIME."` <= '{$this->getEndTime()}')"
-		 .  " OR (a.`".self::TIME_EVENT_DB_FIELD_REPORTED_DATE."` >= '{$this->getStartTime()}' AND " . "a.`".self::TIME_EVENT_DB_FIELD_REPORTED_DATE."` <= '{$this->getEndTime()}'))"; 
-		
+		 .  " OR (a.`".self::TIME_EVENT_DB_FIELD_REPORTED_DATE."` >= '{$this->getStartTime()}' AND " . "a.`".self::TIME_EVENT_DB_FIELD_REPORTED_DATE."` <= '{$this->getEndTime()}'))";
+
 		$query = $sqlBuilder->simpleSelect($selectTable, $selectFields, $selectConditions, NULL , NULL);
-          
+
 		$dbConnection = new DMLFunctions();
 		$result = $dbConnection -> executeQuery($query);
-               
+
 		while ($row = mysql_fetch_row($result)) {
-			$timeSheetIdArray[] = $row[0];   
+			$timeSheetIdArray[] = $row[0];
 		}
-                
+
 		return $timeSheetIdArray;
-                              
+
  	}
 
 	/**
@@ -628,14 +628,14 @@ class TimeEvent {
 				$diff=$diff-7;
 			}
 
-			$timesheetObj->setStartDate(date('Y-m-d', $currTime+($diff*3600*24)));
+			$timesheetObj->setStartDate(date('Y-m-d', strtotime("+$diff day", $currTime)));
 
 			$diff=$timesheetSubmissionPeriods[0]->getEndDay()-$day;
 			if (0 > $diff) {
 				$diff=$diff+7;
 			}
 
-			$timesheetObj->setEndDate(date('Y-m-d', $currTime+($diff*3600*24))." 23:59:59");
+			$timesheetObj->setEndDate(date('Y-m-d', strtotime("+$diff day", $currTime))." 23:59:59");
 
 			$timesheetObj->setTimesheetPeriodId($timesheetSubmissionPeriods[0]->getTimesheetPeriodId());
 			$timesheetObj->setEmployeeId($this->getEmployeeId());
@@ -668,7 +668,7 @@ class TimeEvent {
 		$selectFields[3] = "a.`".self::TIME_EVENT_DB_FIELD_START_TIME."`";
 		$selectFields[4] = "a.`".self::TIME_EVENT_DB_FIELD_END_TIME."`";
 		$selectFields[5] = "a.`".self::TIME_EVENT_DB_FIELD_REPORTED_DATE."`";
-		
+
 		$selectConditions[0] = "((a.`".self::TIME_EVENT_DB_FIELD_START_TIME."` >= '{$startDate} 00:00:00' AND " .  "a.`".self::TIME_EVENT_DB_FIELD_END_TIME."` <= '{$endDate} 23:59:59')"
 		 .  " OR (a.`".self::TIME_EVENT_DB_FIELD_REPORTED_DATE."` >= '{$startDate} 00:00:00' AND " . "a.`".self::TIME_EVENT_DB_FIELD_REPORTED_DATE."` <= '{$endDate} 23:59:59}'))";
 
@@ -685,40 +685,40 @@ class TimeEvent {
 		}
 
 		$query = $sqlBuilder->simpleSelect($selectTable, $selectFields, $selectConditions);
-		
+
 		$dbConnection = new DMLFunctions();
 		$result = $dbConnection->executeQuery($query);
 
 		$arrData=null;
 		$searchStartDateTimestap = strtotime(date("Y-m-d", strtotime($startDate)));
 		$searchEndDateTimestap = strtotime(date("Y-m-d", strtotime($endDate)));
-		  
+
 		while ($row = mysql_fetch_assoc($result)) {
-			
+
 			$add = FALSE;
 			$eventStartTime = strtotime(date("Y-m-d", strtotime($row[self::TIME_EVENT_DB_FIELD_START_TIME])));
 			$eventEndTime = strtotime(date("Y-m-d", strtotime($row[self::TIME_EVENT_DB_FIELD_END_TIME])));
 			$eventReportedDate = strtotime(date("Y-m-d", strtotime($row[self::TIME_EVENT_DB_FIELD_REPORTED_DATE])));
-			
-			if($eventStartTime < 0 && $eventReportedDate){		
+
+			if($eventStartTime < 0 && $eventReportedDate){
 				 $add =TRUE;
 			}elseif ($eventStartTime > 0 && $eventReportedDate){
 				if(($eventStartTime  >= $searchStartDateTimestap) && ($eventEndTime <= $searchEndDateTimestap)){
 					$add =TRUE;
 				}
 			}
-			
+
 			if($add){
-				
+
 				if(isset($arrData[$row[self::TIME_EVENT_DB_FIELD_PROJECT_ID]][$row[self::TIME_EVENT_DB_FIELD_ACTIVITY_ID]])) {
 					$arrData[$row[self::TIME_EVENT_DB_FIELD_PROJECT_ID]][$row[self::TIME_EVENT_DB_FIELD_ACTIVITY_ID]]=$arrData[$row[self::TIME_EVENT_DB_FIELD_PROJECT_ID]][$row[self::TIME_EVENT_DB_FIELD_ACTIVITY_ID]] + $row[self::TIME_EVENT_DB_FIELD_DURATION];
 				}else{
 					$arrData[$row[self::TIME_EVENT_DB_FIELD_PROJECT_ID]][$row[self::TIME_EVENT_DB_FIELD_ACTIVITY_ID]]= $row[self::TIME_EVENT_DB_FIELD_DURATION];
 				}
-			} 
-			
+			}
+
 		}
-			
+
 		return $arrData;
 	}
 

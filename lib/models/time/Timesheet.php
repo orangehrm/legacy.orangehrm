@@ -156,22 +156,14 @@ class Timesheet {
 
 		if ($this->getStartDate() == null) {
 
-			/**
-			 * Here days should be in following values
-			 * Mo=1, Tu=2, We=3, Th=4, Fr=5, Sa=6, Su=7
-			 */
-			if (date('w') == 0) { // If it is Sunday
-				$day = 7;
-			} else {
-				$day = date('w');
-			}
+			$day = date('N');
 
 			$diff=$timesheetSubmissionPeriods[0]->getStartDay()-$day;
 			if ($diff > 0) {
 				$diff-=7;
 			}
 
-			$this->setStartDate(date('Y-m-d', time()+($diff*3600*24)));
+			$this->setStartDate(date('Y-m-d', strtotime("+$diff day", time())));
 
 			$diff1=$timesheetSubmissionPeriods[0]->getEndDay()-$day;
 
@@ -179,7 +171,7 @@ class Timesheet {
 				$diff1+=6-($diff1-$diff);
 			}
 
-			$this->setEndDate(date('Y-m-d', time()+($diff1*3600*24))." 23:59:59");
+			$this->setEndDate(date('Y-m-d', strtotime("+$diff1 day", time()))." 23:59:59");
 
 			$this->setTimesheetPeriodId($timesheetSubmissionPeriods[0]->getTimesheetPeriodId());
 		}
@@ -378,7 +370,7 @@ class Timesheet {
 
 		return false;
 	}
-	
+
 	/**
 	 * Retrieve timesheets in bulk
 	 *
@@ -436,7 +428,7 @@ class Timesheet {
 
 		return $objArr;
 	}
-	
+
 
 	/**
 	 * Retrieve timesheets by TimesheetId in bulk
@@ -448,7 +440,7 @@ class Timesheet {
 	 * @return Timesheet[] array of timesheets
 	 */
 	public function fetchTimesheetsByTimesheetIdBulk($page, $timsheetIds) {
-		
+
 		$sql_builder = new SQLQBuilder();
 		$selectTable = self::TIMESHEET_DB_TABLE_TIMESHEET." a ";
 
@@ -616,21 +608,21 @@ class Timesheet {
 		}
 
 	}
-        
+
         /**
          * Check for given date in approved timesheet for given employee
-         * @param string $date 
+         * @param string $date
 		 * @param string $empId
          * @return bool Returns true if record found, false other wise
          */
-        
+
         public static function checkDateInApprovedTimesheet($date, $empId){
 
             $sqlBuilder = new SQLQBuilder();
 
             $selectTable = "`".self::TIMESHEET_DB_TABLE_TIMESHEET."` a ";
             $selectFields[0] = "a.`".self::TIMESHEET_DB_FIELD_TIMESHEET_ID."`";
-          
+
             $selectConditions[0] = "a.`".self::TIMESHEET_DB_FIELD_START_DATE."` <= '{$date}'" ;
             $selectConditions[1] = "a.`".self::TIMESHEET_DB_FIELD_END_DATE."` >= '{$date}'";
             $selectConditions[2] = "a.`".self::TIMESHEET_DB_FIELD_STATUS."` = '" .self::TIMESHEET_STATUS_APPROVED . "'";
@@ -639,13 +631,13 @@ class Timesheet {
             $query = $sqlBuilder->simpleSelect($selectTable, $selectFields, $selectConditions, NULL, NULL, 1);
             $dbConnection = new DMLFunctions();
             $result = $dbConnection->executeQuery($query);
-            
+
             if(mysql_num_rows($result) > 0){
             	return true;
             }else{
             	return false;
             }
-            
+
         }
 
 	/**
