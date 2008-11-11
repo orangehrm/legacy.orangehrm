@@ -44,7 +44,7 @@ class LeaveController {
 	private $leaveTypeId;
 	private $objLeave;
 	private $authorize;
-	
+
 	public function setId($id) {
 		$this->id = $id;
 	}
@@ -702,8 +702,8 @@ class LeaveController {
 		} else {
 
 			$this->setId($_SESSION['empID']);
-			$tmpObj = new LeaveQuota();
-			$tmpObjs[1] = $tmpObj->fetchLeaveQuota($this->getId());
+			$tmpObj = new LeaveType();
+			$tmpObjs[1] = $tmpObj->fetchLeaveTypes();
 
 			$workShift = Workshift::getWorkshiftForEmployee($this->getId());
 			$shiftLength = isset($workShift) ? $workShift->getHoursPerDay() : Leave::LEAVE_LENGTH_FULL_DAY;
