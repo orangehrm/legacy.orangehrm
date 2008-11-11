@@ -19,7 +19,7 @@
 
 require_once ROOT_PATH . '/lib/confs/sysConf.php';
 require_once ROOT_PATH . '/lib/models/time/Workshift.php';
-require_once ROOT_PATH . '/lib/models/eimadmin/EmailConfiguration.php'; 
+require_once ROOT_PATH . '/lib/models/eimadmin/EmailConfiguration.php';
 
  $employees = null;
 
@@ -145,7 +145,7 @@ require_once ROOT_PATH . '/lib/models/eimadmin/EmailConfiguration.php';
 
 				if (fromTime == toTime) {
 					err = true;
-					msg += " - <?php echo $lang_Leave_Error_ZeroLengthHours; ?>\n"					
+					msg += " - <?php echo $lang_Leave_Error_ZeroLengthHours; ?>\n"
 				} else if (fromTime > toTime) {
 					err = true;
 					msg += " - <?php echo $lang_Leave_Error_ToTimeBeforeFromTime; ?>\n"
@@ -186,7 +186,7 @@ require_once ROOT_PATH . '/lib/models/eimadmin/EmailConfiguration.php';
 					$sendmailPath = substr($sendmailPath, 0, strpos($sendmailPath, ' '));
 					if (is_file($sendmailPath)) {
 						if (!is_executable($sendmailPath)) {
-							$mailConfigError = true; 
+							$mailConfigError = true;
 							$mailConfigErrorMsg = $lang_Error_EmailConfigError_SendmailNotExecutable;
 						}
 					} elseif (is_link($sendmailPath)) {
@@ -603,6 +603,7 @@ $timeElementClass = (!empty($prevLeaveFromDate) && ($prevLeaveFromDate == $prevL
                 } else { ?>
             <option value="-1">-- <?php echo $lang_Error_NoLeaveTypes; ?> --</option>
             <?php } ?>
+
           </select>
 
         </td>
