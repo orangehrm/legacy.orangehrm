@@ -27,7 +27,7 @@ class Authorize {
 		mysql_connect($oldConfObj->dbhost, $oldConfObj->dbuser, $oldConfObj->dbpass);
 		mysql_select_db($oldConfObj->dbname);
 
-		$query = "SELECT `id` FROM `hs_hr_users` WHERE `user_name` = '$username' AND `user_password` = '".md5($password)."' AND `is_admin` = 'Yes'";
+		$query = "SELECT `id` FROM `hs_hr_users` WHERE `user_name` = '$username' AND `user_password` = '".md5($password)."' AND `is_admin` = 'Yes' AND `userg_id` = 'USG001'";
 		$result = mysql_query($query);
 
 		if (mysql_num_rows($result) == 1) {
