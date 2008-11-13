@@ -16,6 +16,7 @@ function validate() {
 		document.getElementById("newDbName").focus();
 		return false;
     } else {
+    	document.getElementById("btnSubmit").disabled = true;
         return true;
     }
 
@@ -38,6 +39,6 @@ function resetErrors() {
 <form name="frmDbInfo" method="post" action="./" onsubmit="return validate()">
 <input type="hidden" name="hdnState" value="dbInfo" />
 <input type="text" name="newDbName" size="40" id="newDbName" /><div id="errMsg"></div><br />
-<input type="submit" name="btnSubmit" value="Continue"  size="40" />
+<input type="submit" name="btnSubmit" value="Continue" id="btnSubmit" size="40" />
 </form>
 </div>
