@@ -56,7 +56,8 @@ $editArr = $this->popArr['editArr'];
 
  		switch (value) {
  			case '<?php echo EmailConfiguration::EMAILCONFIGURATION_TYPE_SENDMAIL; ?>' :$(panels[0]).className = 'show';
- 																					 break;
+ 																						$(panels[3]).className = 'show';
+ 																					 	break;
  			case '<?php echo EmailConfiguration::EMAILCONFIGURATION_TYPE_SMTP; ?>' : $(panels[1]).className = 'show';
  																					 $(panels[2]).className = 'show';
  																					 $(panels[3]).className = 'show';
