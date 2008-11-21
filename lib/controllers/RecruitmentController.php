@@ -396,18 +396,18 @@ class RecruitmentController {
 
 	private static function _getEmployeeSearchList() {
 		$employeeSearchList = array();
-	
+
 		$selecteFields[] = 'CONCAT(em.`emp_firstname`, \' \', em.`emp_lastname`)';
 		$selecteFields[] = 'jt.`jobtit_name`';
 		$selecteFields[] = 'em.`emp_number`';
-		
+
 		$selectTables[] = '`hs_hr_employee` AS em';
-		$selectTables[] = '`hs_hr_job_title` AS jt'; 
-		
+		$selectTables[] = '`hs_hr_job_title` AS jt';
+
 		$joinConditions[1] = 'jt.`jobtit_code` = em.`job_title_code`';
-		
+
 		$orderCondition = $selecteFields[1];
-		
+
 		$sqlBuilder = new SQLQBuilder();
 		$query = $sqlBuilder->selectFromMultipleTable($selecteFields, $selectTables, $joinConditions, null, null, $orderCondition);
 
@@ -415,7 +415,7 @@ class RecruitmentController {
 
 		$dbConnection = new DMLFunctions();
 		$result = $dbConnection->executeQuery($query);
-		
+
 		$result = $dbConnection->executeQuery($query);
 
 		while($row = mysql_fetch_array($result, MYSQL_NUM)) {
@@ -794,6 +794,8 @@ class RecruitmentController {
         $empInfo->setEmpJobTitle($vacancy->getJobTitleCode());
         $empInfo->setEmpStatus(0);
         $empInfo->setEmpEEOCat(0);
+        $empInfo->setEmpJoinedDate("null");
+        $empInfo->setEmpTerminatedDate("null");
         $result = $empInfo->updateEmpJobInfo();
 
         return $empInfo->getEmpId();
