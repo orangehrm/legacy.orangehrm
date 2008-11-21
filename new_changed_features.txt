@@ -1,3 +1,13 @@
+New & Changed Features for OrangeHRM ver 2.4.1-beta.7
+
+    Bug fixes
+	---------
+	2283560 - Send mail configuration testing should implemented
+	2314620 - Leave types list order should be the defined order
+	2211401 - Mysql errors with traditional/restricted modes
+	1962330 - PIM -> License : Unnecessary text value display in start and
+	2031266 - Leave:Copy leave quota creates duplicate leave types
+
 New & Changed Features for OrangeHRM ver 2.4.1-beta.6
 
     Bug fixes
