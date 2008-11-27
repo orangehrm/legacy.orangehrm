@@ -116,7 +116,7 @@ abstract class Upgrader {
 	* @param string $toDb Name of the importing database
 	* @return bool Returns true on success and false on failure
 	*/
-	public function importDataFromTable($tableName, $fromDb, $toDb) {
+	public function importDataInFull($tableName, $fromDb, $toDb) {
 
 		mysql_select_db($toDb);
 		$query = "INSERT $tableName SELECT * FROM $fromDb.$tableName";
@@ -125,6 +125,94 @@ abstract class Upgrader {
 		} else {
 		    return false;
 		}
+
+	}
+
+	/**
+	 * Imports data from a table to a new table using multiple inserts.
+	 * Both tables need to be in same database schema.
+	 * This is used when filtering is needed before storing.
+	 * @param string $tableName Table nanme
+	 * @param string $fromDb Name of the source database
+	 * @param string $toDb Name of the importing database
+	 * @return bool Return true on success, false on failiure
+	 */
+
+	public function importDataRowByRow($tableName, $fromDb, $toDb) {
+
+	    mysql_select_db($fromDb);
+
+	    $fetchResult = mysql_query("SELECT * FROM `$tableName`");
+	    $fetchResultCount = mysql_num_rows($fetchResult);
+
+	    if ($fetchResultCount > 0) {
+
+		    $storeCount = 0;
+		    $storeQuery = "INSERT INTO `$tableName` VALUES";
+
+		    while ($row = mysql_fetch_array($fetchResult, MYSQL_NUM)) {
+
+		    	$storeQuery .= " (";
+
+				$count = count($row);
+
+		        for ($i=0; $i<$count; $i++) {
+
+		        	if (is_null($row[$i]) || $row[$i] == '0000-00-00' || $row[$i] == '0000-00-00 00:00:00') {
+		        	    $storeQuery .= " ".'NULL';
+		        	} else {
+		        	    $storeQuery .= " '".$row[$i]."'";
+		        	}
+
+		        	if ($i < ($count-1)) {
+		        	    $storeQuery .= ",";
+		        	}
+
+		        }
+
+		        $storeCount++;
+
+		        if ($storeCount < $fetchResultCount) {
+		            $storeQuery .= "),";
+		        } else {
+		            $storeQuery .= ")";
+		        }
+
+		    }
+
+		    mysql_select_db($toDb);
+
+		    if (mysql_query($storeQuery)) {
+		        return true;
+		    } else {
+		        return false;
+		    }
+
+	    } else { // If $fetchResultCouint is zero, no need to import
+	        return true;
+	    }
+
+	}
+
+	/**
+	 * Handle imprting data from a Table.
+	 * Identify which tables need to go through filtering
+	 * @param string $tableName Table name
+	 * @param string $fromDb Name of source database
+	 * @param string $toDb Name of importing database
+	 * @return bool Return true on success, false on failiure
+	 */
+
+	public function importDataFromTable($tableName, $fromDb, $toDb) {
+
+	    $toFilterArr = array('hs_hr_db_version', 'hs_hr_emp_children', 'hs_hr_emp_licenses', 'hs_hr_emp_passport', 'hs_hr_employee',
+	    						'hs_hr_file_version', 'hs_hr_users', 'hs_hr_versions', 'hs_hr_holidays');
+
+	    if (!array_search($tableName, $toFilterArr)) {
+	    	return $this->importDataInFull($tableName, $fromDb, $toDb);
+	    } else {
+	        return $this->importDataRowByRow($tableName, $fromDb, $toDb);
+	    }
 
 	}
 
