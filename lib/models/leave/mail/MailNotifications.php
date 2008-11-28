@@ -235,10 +235,8 @@ class MailNotifications {
 			$logMessage .= "\r\nCC to";
 
 			foreach ($notificationAddresses as $cc) {
-				if (!in_array($cc, $this->to)) {
 					$mailer->addCc($cc);
 					$logMessage .= "\r\n".$cc;
-				}
 			}
 
 		}
