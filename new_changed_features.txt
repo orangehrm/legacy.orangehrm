@@ -1,3 +1,17 @@
+New & Changed Features for OrangeHRM ver 2.4.1-beta.8
+
+	New features
+	------------
+	Improved upgraders to work in MySQL Traditional mode
+
+    Bug fixes
+	---------
+	2336771 - Admin View first time sheet not the current to Approve
+	2086450 - Leave:Ess not assigned to supervisor->apply leave->no mails
+	1930077 - HSP-ESS users edit leave comment, isn't reflect after saving
+	2086450 - Leave:Ess not assigned to supervisor->apply leave->no mails
+	2030132 - Admin:Employment status:notice page
+
 New & Changed Features for OrangeHRM ver 2.4.1-beta.7
 
     Bug fixes
