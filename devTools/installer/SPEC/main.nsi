@@ -30,7 +30,7 @@
 ; Product Details
 
   !define ProductName "OrangeHRM"
-  !define ProductVersion "2.4.1-beta.8"
+  !define ProductVersion "2.4.1"
 
   !define Organization "OrangeHRM Inc."
 
