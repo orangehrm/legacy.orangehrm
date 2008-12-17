@@ -3,6 +3,7 @@ New & Changed Features for OrangeHRM ver 2.4.1
     Bug fixes
 	---------
 	2343535 - Two 2008-26-10 shown - last leave date omitted
+	2433061 - can't save job titile in PIM with mysql Traditional mode
 
 New & Changed Features for OrangeHRM ver 2.4.1-beta.8
 
