@@ -198,7 +198,7 @@ function removeEmployees() {
 <div class="navigation">
 <?php if (!($addMode && $authorizeObj->isSupervisor())) { ?>
 	<img title="Back" onMouseOut="this.src='<?php echo $picDir; ?>/btn_back.gif';" onMouseOver="this.src='<?php echo $picDir; ?>/btn_back_02.gif';"  src="<?php echo $picDir; ?>/btn_back.gif" onClick="goBack();">
-<?php } ?>	
+<?php } ?>
 <?php
 if (isset($_GET['message']) && !empty($_GET['message'])) {
 
