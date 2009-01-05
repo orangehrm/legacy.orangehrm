@@ -37,13 +37,13 @@ function apply(jobId) {
 .jobTitle {
 	font-weight: bold;
 	font-size: 15px;
-    color: black;
+    color: #00399e;
 }
 
-.jobDescription {
-	background: #b1fdf7;
+.jobDescription {	
 	padding: 5px 10px 5px 10px;
 	margin: 5px 0px 5px 0px;
+	color: #00399e;
 }
 
 .roundbox {
@@ -65,8 +65,8 @@ body {
 }
 </style>
 </head>
-<body>
-	<p><h2 class="moduleTitle"><?php echo $lang_Recruit_ApplicantVacancyList_Heading; ?></h2></p>
+<body style="background-color: transparent;">
+	
 <?php
 	if (empty($vacancies)) {
 ?>
