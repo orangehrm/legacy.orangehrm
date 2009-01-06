@@ -351,7 +351,7 @@ class ReportGenerator {
 
  		if(isset($this->field['SERPIR'])==1){
 
- 			$headingName['SERPIR'] = 'Joined Date';
+ 			$headingName['SERPIR'] = 'Start Date';
  			$parentTableFieldName['SERPIR']  	= 'a.JOINED_DATE';
  			$parentTableName['SERPIR']	    	= 'HS_HR_EMPLOYEE a';
  			$existingTableFieldName['SERPIR']	= 'a.JOINED_DATE';

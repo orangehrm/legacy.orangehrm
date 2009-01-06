@@ -600,7 +600,7 @@
 	$lang_hrEmpMain_currency 				= "通貨";
 	$lang_hrEmpMain_minpoint 				= "Minimum Salary";
 	$lang_hrEmpMain_maxpoint 				= "Maximum Salary";
-	$lang_hrEmpMain_bassalary 				= "Basic Salary";
+	$lang_hrEmpMain_bassalary 				= "Base Salary";
 	$lang_hrEmpMain_assignedsalary 			= "Assigned Salary";
 
  	$lang_hrEmpMain_heading 				= "Employee Report";
@@ -866,7 +866,7 @@
 	$lang_rep_Education = "Education";
 	$lang_rep_EmploymentStatus = "Employment Status仕事ステータス";
 	$lang_rep_ServicePeriod = "Service Period";
-	$lang_rep_JoinedDate = "Joined Date";
+	$lang_rep_JoinedDate = "Start Date";
 	$lang_rep_JobTitle = "職タイトルJob Title";
 	$lang_rep_Language = "Language";
 	$lang_rep_Skill = "Skill";

@@ -179,19 +179,19 @@ class RepViewController {
 
 				case 'EMPDEF'  :		$report = new EmpReport();
 										$report = $object;
-										
+
 										$res = $report -> addReport();
-										
+
 										if ($res){
 											$id = $report -> getRepID();
-		
+
 											$repusg = new EmpRepUserGroup();
-		
+
 											$repusg -> setRepCode($id);
 											$repusg -> setUserGroupID($_SESSION['userGroup']);
 											$repusg -> addRepUserGroup();
 										}
-										
+
 										break;
 			}
 
@@ -214,7 +214,7 @@ class RepViewController {
 
 			} else {
 				$errorCode = mysql_errno();
-											
+
 				switch ($errorCode) {
 					case 1062:
 						$showMsg = 'DUPLICATE_NAME_ADDED';
@@ -251,7 +251,7 @@ class RepViewController {
 			} else {
 
 				$errorCode = mysql_errno();
-				
+
 				switch ($errorCode) {
 					case 1062:
 						$showMsg = 'UPDATED_TO_DUPLICATE_NAME';
@@ -301,7 +301,7 @@ class RepViewController {
 							$form_creator->popArr['arrAgeSim'] = array ('Less Than' => '>','Greater Than' =>'<','Range' =>'range');
 							//$form_creator->popArr['arrEmpType']= array( 'Permanent', 'Expatriate', 'Contract', 'Temporary' , 'Others');
 							$form_creator->popArr['arrSerPer'] = array ('Less Than' => '>','Greater Than' =>'<','Range' =>'range');
-							$form_creator->popArr['arrJoiDat'] = array ('Joined After' => '>','Joined Before' =>'<','Joined In Between' =>'range');
+							$form_creator->popArr['arrJoiDat'] = array ('Start After' => '>','Start Before' =>'<','Start In Between' =>'range');
 
 							$report = new EmpReport();
 							$empinfo = new EmpInfo();

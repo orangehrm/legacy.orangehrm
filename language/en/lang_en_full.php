@@ -459,7 +459,7 @@
 	$lang_hremp_EmpMiddleName 				= "Middle Name";
 	$lang_hremp_nickname 					= "Nick Name ";
 	$lang_hremp_photo 						= "Photo ";
-	$lang_hremp_ssnno 						= "SSN No :";
+	$lang_hremp_ssnno 						= "Tax File No :";
 	$lang_hremp_nationality 				= "Nationality";
 	$lang_hremp_sinno 						= "SIN No :";
 	$lang_hremp_dateofbirth 				= "Date of Birth";
@@ -478,7 +478,7 @@
 	$lang_hremp_selempstat 					= "Select Empl. Status";
 	$lang_hremp_eeocategory 				= "EEO Category";
 	$lang_hremp_seleeocat 					= "Select EEO Cat";
-	$lang_hremp_joindate 					= "Joined Date";
+	$lang_hremp_joindate 					= "Start Date";
 	$lang_hremp_SelectJobTitle				= "Select Job Title";
 	$lang_hremp_EmpStatus					= "Employment Status";
 	$lang_hremp_Workstation					= "Workstation";
@@ -602,7 +602,7 @@
 	$lang_hrEmpMain_currency 				= "Currency";
 	$lang_hrEmpMain_minpoint 				= "Minimum Salary";
 	$lang_hrEmpMain_maxpoint 				= "Maximum Salary";
-	$lang_hrEmpMain_bassalary 				= "Basic Salary";
+	$lang_hrEmpMain_bassalary 				= "Base Salary";
 	$lang_hrEmpMain_assignedsalary 			= "Assigned Salary";
 
  	$lang_hrEmpMain_heading 				= "Employee Report";
@@ -880,7 +880,7 @@
 	$lang_rep_JoinDate = "Join Date";
 	$lang_rep_Qualification = "Qualification";
 	$lang_rep_EmployeeStates = "Employee States";
-	$lang_rep_JoinedDate = "Joined Date";
+	$lang_rep_JoinedDate = "Start Date";
 
 	$lang_rep_SelectPayGrade = "Select Salary Grade";
 	$lang_rep_SelectEducation = "Select Education Type";
@@ -916,7 +916,7 @@
 	$lang_rep_Skills = "Skills";
 	$lang_rep_SalaryGrade = "Salary Grade";
 	$lang_rep_EmployeeStatus = "Employee Status";
-	$lang_rep_JoinedDate = "Joined Date";
+	$lang_rep_JoinedDate = "Start Date";
 	$lang_rep_SubDivision = "Sub Division";
 	$lang_rep_JobTitle = "Job Title";
 	$lang_rep_YearOfPassing = "Year of Passing";

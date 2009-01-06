@@ -202,29 +202,29 @@
 	$lang_Menu_Recruit = "Recruitment";
 	$lang_Menu_Recruit_JobVacancies = "Job Vacancies";
 	$lang_Menu_Recruit_JobApplicants = "Applicants";
-    
+
     // Performance module
     $lang_Menu_Performance = "Performance";
     $lang_Menu_Performance_ReviewPeriod = "Review Period";
     $lang_Menu_Performance_Measures = "Performance Measures";
     $lang_Menu_Performance_Reviews = "Performance Reviews";
     $lang_Menu_Performance_ConfigureJobTitles = "Configure Job Titles";
-    
+
     // Health and Safety module
     $lang_Menu_HealthAndSafety = "Health & Safety";
-    $lang_Menu_HealthAndSafety_ErgonomicAssessments = "Ergonomic Assessments";    
-    $lang_Menu_HealthAndSafety_RiskAssessments = "Risk Assessments";    
+    $lang_Menu_HealthAndSafety_ErgonomicAssessments = "Ergonomic Assessments";
+    $lang_Menu_HealthAndSafety_RiskAssessments = "Risk Assessments";
     $lang_Menu_HealthAndSafety_Injuries = "Injuries";
 
 	// Training module
     $lang_Menu_Training = "Training";
     $lang_Menu_Training_List = "Training List";
     $lang_Menu_Training_Request = "Training Request";
-    	
+
    	// Budget module
 	$lang_Menu_Budget = 'Budgets';
 	$lang_Menu_Budget_BudgetList = 'Budget List';
-   	
+
 	/**
 	 * Common
 	 */
@@ -281,7 +281,7 @@
 	$lang_Common_DELETE_FAILURE 			= "Failed to Delete";
 	$lang_Common_DUPLICATE_NAME_FAILURE     = "Name is already in use";
 	$lang_Common_UNKNOWN_FAILURE            = "Operation Failed";
-	
+
 	$lang_Leave_Common_Weekend 				= "Weekend";
 
 	// admin module
@@ -529,7 +529,7 @@
 	$lang_hremp_EmpMiddleName 				= "Middle Name";
 	$lang_hremp_nickname 					= "Nick Name ";
 	$lang_hremp_photo 						= "Photo ";
-	$lang_hremp_ssnno 						= "SSN No :";
+	$lang_hremp_ssnno 						= "Tax File No :";
 	$lang_hremp_nationality 				= "Nationality";
 	$lang_hremp_sinno 						= "SIN No :";
 	$lang_hremp_dateofbirth 				= "Date of Birth";
@@ -550,7 +550,7 @@
     $lang_hremp_jobspecduties               = "Job Duties";
 	$lang_hremp_eeocategory 				= "EEO Category";
 	$lang_hremp_seleeocat 					= "Select EEO Cat";
-	$lang_hremp_joindate 					= "Joined Date";
+	$lang_hremp_joindate 					= "Start Date";
 	$lang_hremp_termination_date			= "Termination Date";
 	$lang_hremp_termination_reason			= "Termination Reason";
 	$lang_hremp_SelectJobTitle				= "Select Job Title";
@@ -708,7 +708,7 @@
 	$lang_hrEmpMain_currency 				= "Currency";
 	$lang_hrEmpMain_minpoint 				= "Minimum Salary";
 	$lang_hrEmpMain_maxpoint 				= "Maximum Salary";
-	$lang_hrEmpMain_bassalary 				= "Basic Salary";
+	$lang_hrEmpMain_bassalary 				= "Base Salary";
 	$lang_hrEmpMain_assignedsalary 			= "Assigned Salary";
 
  	$lang_hrEmpMain_heading 				= "Employee Report";
@@ -1008,7 +1008,7 @@
 	$lang_rep_Education = "Education";
 	$lang_rep_EmploymentStatus = "Employment Status";
 	$lang_rep_ServicePeriod = "Service Period";
-	$lang_rep_JoinedDate = "Joined Date";
+	$lang_rep_JoinedDate = "Start Date";
 	$lang_rep_JobTitle = "Job Title";
 	$lang_rep_Language = "Language";
 	$lang_rep_Skill = "Skill";
@@ -1021,7 +1021,7 @@
 	$lang_rep_JoinDate = "Join Date";
 	$lang_rep_Qualification = "Qualification";
 	$lang_rep_EmployeeStates = "Employee States";
-	$lang_rep_JoinedDate = "Joined Date";
+	$lang_rep_JoinedDate = "Start Date";
 
 	$lang_rep_SelectPayGrade = "Select Salary Grade";
 	$lang_rep_SelectEducation = "Select Education Type";
@@ -1059,7 +1059,7 @@
 	$lang_rep_Skills = "Skills";
 	$lang_rep_SalaryGrade = "Salary Grade";
 	$lang_rep_EmployeeStatus = "Employee Status";
-	$lang_rep_JoinedDate = "Joined Date";
+	$lang_rep_JoinedDate = "Start Date";
 	$lang_rep_SubDivision = "Sub Division";
 	$lang_rep_JobTitle = "Job Title";
 	$lang_rep_YearOfPassing = "Year of Passing";
@@ -1512,12 +1512,12 @@
 	$lang_Recruit_ApplicationStatus_FailureHeading = 'Job Application Error';
 	$lang_Recruit_ApplySuccess = 'Your application for the position of #jobtitle# was received. An email confirmation was sent to the following email address: #email#';
 	$lang_Recruit_ApplyFailure = 'There was an error while processing your application. Please try again later.';
-	
+
 	$lang_Recruit_DuplicateFirstInterview = 'You Attempted to schedule a duplicate first interview for this job application';
 	$lang_Recruit_DuplicateSecondInterview = 'You Attempted to schedule a duplicate second interview for application';
 	$lang_Recruit_InvalidStatusError = '#action action is not allowed for job application in the status #status';
 	$lang_Recruit_SeeBelowForApplicationDetails = 'See below for application details';
-	
+
 	// Performance review module
 	$lang_Performance_Measure_ID = 'ID';
 	$lang_Performance_Measure_Name = 'Name';
@@ -1525,26 +1525,26 @@
 	$lang_Performance_Measure_ListHeading = 'Performance Measures';
 	$lang_Performance_Measure_EditTitle = 'Edit Performance Measure';
 	$lang_Performance_Measure_Error_NoJobTitleSelected = 'No Job title selected!';
-	$lang_Performance_Measure_Error_SpecifyPerfMeasureName = 'Please specify performance measure name';	
+	$lang_Performance_Measure_Error_SpecifyPerfMeasureName = 'Please specify performance measure name';
 	$lang_Performance_Measure_AvailableJobTitles = 'Available Job Titles';
-	$lang_Performance_Measure_AssignedJobTitles = 'Assigned Job Titles'; 
+	$lang_Performance_Measure_AssignedJobTitles = 'Assigned Job Titles';
 	$lang_Performance_Measure_NameInUse_Error   = 'This name is in use';
 	$lang_Performance_Measure_JobTitlesForWhichThisApplies = 'Job titles for which this performance measure applies';
-		
+
 	$lang_Performance_review_ID = 'Review ID';
 	$lang_Performance_review_EmployeeName = 'Employee Name';
 	$lang_Performance_review_ReviewDate = 'Review Date';
 	$lang_Performance_review_ReviewStatus = 'Review Status';
-	$lang_Performance_review_ReviewYear = 'Review Year';			
-	
+	$lang_Performance_review_ReviewYear = 'Review Year';
+
 	$lang_Performance_Review_ListHeading = 'Performance Reviews';
 	$lang_Performance_Review_DeletionMessage = 'Deletion will affect Performance review scores';
 	$lang_Performance_Review_Scheduled = 'Scheduled';
 	$lang_Performance_Review_Completed = 'Completed';
 	$lang_Performance_Review_SubmittedForApproval = 'Submitted for Approval';
 	$lang_Performance_Review_Approved = 'Approved';
-	
-	$lang_Performance_Review_EditTitle = 'Edit Performance Review';	
+
+	$lang_Performance_Review_EditTitle = 'Edit Performance Review';
 	$lang_Performance_Review_ScheduleTitle = 'Schedule Performance Review';
 	$lang_Performance_Review_Error_NoPerformanceMeasureSelected = 'No Performance Measure selected';
 	$lang_Performance_Review_AssignPerformanceMeasures = 'Assign Performance Measures';
@@ -1563,12 +1563,12 @@
 	$lang_Performance_Review_PerformanceMeasure = 'Performance Measure';
 	$lang_Performance_Review_Score = 'Score';
 	$lang_Performance_Review_Error_ScoreShouldBeDecimal = 'Score should be a valid number';
-	
-	$lang_Performance_Review_JobTitleConfigTitle = 'Configure Job Titles';	
+
+	$lang_Performance_Review_JobTitleConfigTitle = 'Configure Job Titles';
 	$lang_Performance_Review_JobTitleApprovePerformanceReview = 'Approve Performance Reviews';
 	$lang_Performance_Review_JobTitleApproveSalaryReview = 'Approve Salary Reviews';
 	$lang_Performance_JobTitleRoleLabel = 'Job titles allowed to:';
-	
+
 	$lang_Menu_Performance_SalaryReviews = 'Salary Reviews';
     $lang_Performance_SalaryReview_ID = 'Review ID';
     $lang_Performance_SalaryReview_EmployeeName = 'Employee Name';
@@ -1579,16 +1579,16 @@
     $lang_Performance_SalaryReview_Rejected = 'Rejected';
     $lang_Performance_SalaryReview_ListHeading = 'Salary Reviews';
     $lang_Performance_SalaryReview_DeletionMessage = 'Deletion will affect Salary reivew information';
-			
+
 	$lang_Performance_SalaryReview_Error_PleaseSpecifyEmployee = 'Please specify an employee.';
-	$lang_Performance_SalaryReview_EditTitle = 'Edit Salary Review';	
+	$lang_Performance_SalaryReview_EditTitle = 'Edit Salary Review';
 	$lang_Performance_SalaryReview_AddTitle = 'Add Salary Review';
 	$lang_Performance_SalaryReview_EmployeeName = 'Employee Name';
 	$lang_Performance_SalaryReview_SalaryIncrease = 'Salary Increase';
 	$lang_Performance_SalaryReview_CurrentSalary = 'Current Salary';
-	$lang_Performance_SalaryReview_ReviewNotes = 'Notes';	
-	$lang_Performance_SalaryReview_Error_IncreaseShouldBeDecimal = 'Salary Increase should be a valid amount';		
-	$lang_Performance_SalaryReview_Error_NotesShouldBeSpecified = 'Notes field should be filled';		
+	$lang_Performance_SalaryReview_ReviewNotes = 'Notes';
+	$lang_Performance_SalaryReview_Error_IncreaseShouldBeDecimal = 'Salary Increase should be a valid amount';
+	$lang_Performance_SalaryReview_Error_NotesShouldBeSpecified = 'Notes field should be filled';
 	$lang_Performance_SalaryReview_SalaryNotFound = 'Salary not found';
 	$lang_Performance_SalaryReview_FetchCurrentSalaryForSelectedEmployee = 'Retrieve the current salary for selected employee';
 	$lang_Performance_SalaryReview_NoSalaryDefinedForEmployee = 'No Salary defined for selected employee';
@@ -1599,8 +1599,8 @@
 	$lang_Performance_Errors_NO_SALARY_DEFINED_FAILURE  = "No salary defined for employee";
 	$lang_Performance_Errors_UNKNOWN_FAILURE = 'Unknown Failure';
 	$lang_Performance_Errors_DELETE_FAILURE = 'Failed to Delete';
-	$lang_Performance_Errors_DELETE_SUCCESS = 'Successfully Deleted';	
-				
+	$lang_Performance_Errors_DELETE_SUCCESS = 'Successfully Deleted';
+
 	// Health & Safety Module
 	// Ergonomic Assessment
 	$lang_Health_ErgonomicAssessment_ID = 'ID';
@@ -1610,17 +1610,17 @@
 	$lang_Health_ErgonomicAssessment_StartDate = 'Start Date';
 	$lang_Health_ErgonomicAssessment_EndDate = 'End Date';
 	$lang_Health_ErgonomicAssessment_Status = 'Status';
-	
+
 	$lang_Health_ErgonomicAssessment_Incomplete = 'Incomplete';
 	$lang_Health_ErgonomicAssessment_Complete = 'Complete';
 	$lang_Health_ErgonomicAssessment_ListHeading = 'Ergonomic Assessments';
 	$lang_Health_ErgonomicAssessment_DeleteMessage = 'Deletion of ergonomic assessments cannot be undone.';
-	
+
 	$lang_Health_ErgonomicAssessment_Error_PleaseSpecifyEmployee = 'Please specify an employee';
 	$lang_Health_ErgonomicAssessment_Error_PleaseSpecifyValidStartDate = 'Please specify valid start date';
 	$lang_Health_ErgonomicAssessment_Error_PleaseSpecifyValidEndDate = 'Please specify valid end date';
 	$lang_Health_ErgonomicAssessment_Error_StartDateShouldBeBeforeEndDate = 'Start date should be before end date';
-	
+
 	$lang_Health_ErgonomicAssessment_AddTitle = 'Add Ergonomic Assessment';
 	$lang_Health_ErgonomicAssessment_EditTitle = 'Edit Ergonomic Assessment';
 	$lang_Health_ErgonomicAssessment_Notes = 'Notes';
@@ -1635,14 +1635,14 @@
 	$lang_Health_Injury_Injury = 'Injury';
 	$lang_Health_Injury_TimeOffWork = 'Time Off';
 	$lang_Health_Injury_Result = 'Result';
-			
+
 	$lang_Health_Injury_ListHeading = 'Employee Injury reports';
 	$lang_Health_Injury_DeleteMessage = 'Deletion of Injury Reports cannot be undone.';
-	
+
 	$lang_Health_Injury_Error_PleaseSpecifyEmployee = 'Please specify an employee';
 	$lang_Health_Injury_Error_PleaseSpecifyValidIncidentDate = 'Please specify valid incident date';
 	$lang_Health_Injury_Error_PleaseSpecifyValidReportedDate = 'Please specify valid reported date';
-	$lang_Health_Injury_Error_IncidentDateShouldBeBeforeReportedDate = 'Incident date should be before reported date';	
+	$lang_Health_Injury_Error_IncidentDateShouldBeBeforeReportedDate = 'Incident date should be before reported date';
 	$lang_Health_Injury_Error_PleaseSpecifyInjury = 'Please specify injury';
 	$lang_Health_Injury_Error_TimeOffWorkShouldBeDecimal = 'Time off Work should be a valid number';
 
@@ -1658,22 +1658,22 @@
 	$lang_Health_RiskAssessment_EndDate = 'End Date';
 	$lang_Health_RiskAssessment_Description = 'Description';
 	$lang_Health_RiskAssessment_Status = 'Status';
-			
+
 	$lang_Health_RiskAssessment_Unresolved = 'Unresolved';
 	$lang_Health_RiskAssessment_Resolved = 'Resolved';
 	$lang_Health_RiskAssessment_ListHeading = 'Risk Assessments';
 	$lang_Health_RiskAssessment_DeleteMessage = 'Deletion of Risk Assessments cannot be undone.';
-	
+
 	$lang_Health_RiskAssessment_Error_PleaseSpecifySubDivision = 'Please specify sub division';
 	$lang_Health_RiskAssessment_Error_PleaseSpecifyValidStartDate = 'Please specify valid start date';
 	$lang_Health_RiskAssessment_Error_PleaseSpecifyValidEndDate = 'Please specify valid end date';
 	$lang_Health_RiskAssessment_Error_StartDateShouldBeBeforeEndDate = 'Start date should be before end date';
-	
+
 	$lang_Health_RiskAssessment_AddTitle = 'Add Risk Assessment';
 	$lang_Health_RiskAssessment_EditTitle = 'Edit Risk Assessment';
-	
+
 	$lang_Health_RiskAssessment_SubDivision = 'Sub Division';
-	
+
 	// Training
 	$lang_Training_Id = 'ID';
 	$lang_Training_Description = 'Description';
@@ -1688,7 +1688,7 @@
 	$lang_Training_EditTitle = 'Edit Training';
 	$lang_Training_TrainingCourse = 'Training Course';
 	$lang_Training_Cost = 'Cost';
-	$lang_Training_Company = 'Company';	
+	$lang_Training_Company = 'Company';
 	$lang_Training_Notes = 'Notes';
 	$lang_Training_Error_PleaseSpecifyId = 'Please specify an ID';
 	$lang_Training_Error_PleaseSpecifyDescription = 'Please specify description';
@@ -1697,22 +1697,22 @@
 	$lang_Training_AvailableEmployees = 'Available Employees';
 	$lang_Training_AssignedEmployees = 'Assigned Employees';
 	$lang_Training_Error_NoEmployeeSelected = 'No Employee selected!';
-	
+
 	// Budget
 	$lang_Budget_Created = 'Created';
 	$lang_Budget_Submitted = 'Submitted';
-	$lang_Budget_SubmittedForApproval = 'Submitted For Approval';	
-	$lang_Budget_NotApproved = 'Not Approved'; 
+	$lang_Budget_SubmittedForApproval = 'Submitted For Approval';
+	$lang_Budget_NotApproved = 'Not Approved';
 	$lang_Budget_Approved = 'Approved';
 	$lang_Budget_Id = 'ID';
 	$lang_Budget_Type = 'Budget Type';
 	$lang_Budget_Unit = 'Budget Unit';
-	$lang_Budget_Value = 'Budget Value'; 
+	$lang_Budget_Value = 'Budget Value';
 	$lang_Budget_StartDate = 'Start Date';
 	$lang_Budget_EndDate = 'End Date';
 	$lang_Budget_Status = 'Status';
 	$lang_Budget_ListHeading = 'Budgets';
-	$lang_Budget_DeleteMessage = 'Deletion of Budgets cannot be undone';	
+	$lang_Budget_DeleteMessage = 'Deletion of Budgets cannot be undone';
  	$lang_Budget_Salary = 'Salary';
 	$lang_Budget_Training = 'Training';
 	$lang_Budget_Employee = 'Employee';
@@ -1721,17 +1721,17 @@
 
 	$lang_Budget_AddTitle = 'Add Budget';
 	$lang_Budget_EditTitle = 'Edit Budget';
-	
+
 	$lang_Budget_JobTitleApproveBudget = 'Approve Budget';
-	
+
 	$lang_Budget_Error_PleaseSpecifyBudgetType = 'Please specify budget type';
 	$lang_Budget_Error_PleaseSpecifyBudgetUnit = 'Please specify budget unit';
 	$lang_Budget_Error_PleaseSpecifyBudgetValue = 'Please specify budget value';
 	$lang_Budget_Error_PleaseSpecifyValidStartDate = 'Please specify valid start date';
 	$lang_Budget_Error_PleaseSpecifyValidEndDate = 'Please specify valid end date';
 	$lang_Budget_Error_StartDateShouldBeBeforeEndDate = 'Start date should be before end date';
-			
-	 			 					
+
+
 	// login page
 	$lang_login_title = "OrangeHRM - New Level of HR Management";
 	$lang_login_UserNameNotGiven = "User Name not given!";
@@ -1788,13 +1788,13 @@
 	$lang_Time_Errors_INVALID_ID_FAILURE = "Invalid id";
 
 	$lang_Menu_Time_WorkShifts = "Work shifts";
-    
+
     /* Search */
     $lang_Search_Match_All = 'Match all of the following';
     $lang_Search_Match_Any = 'Match any of the following';
-    $lang_Search_Select_Field = '-- Select Field --';    
+    $lang_Search_Select_Field = '-- Select Field --';
     $lang_Search_ValueNotSet = "- NULL -";
-        
+
     /* Search operators */
     $lang_Search_Operator_lt = 'Less Than';
     $lang_Search_Operator_gt = 'Greater Than';
@@ -1803,14 +1803,14 @@
     $lang_Search_Operator_starts = 'Starts With';
     $lang_Search_Operator_ends = 'Ends With';
     $lang_Search_Operator_contains = 'Contains';
-    $lang_Search_Operator_not_contains = "Does not contain";    
+    $lang_Search_Operator_not_contains = "Does not contain";
     $lang_Search_Operator_empty = "Is Empty";
     $lang_Search_Operator_not_empty = "Is not Empty";
-            
+
     // Don't change #start, #end, #all
     $lang_Search_Results_n_to_m_of_All = 'Results #start - #end of #all';
-    
-    // Performance    
+
+    // Performance
     $lang_Performance_Assign_Review_Period = 'Assign Review Period';
 	$lang_Common_To = "to";
 ?>

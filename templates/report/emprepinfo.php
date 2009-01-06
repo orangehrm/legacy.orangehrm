@@ -1269,10 +1269,10 @@ for ($c = 0; count($arrAgeSim) > $c; $c++)
 <?php // Service Period Ends ?>
 
 
-<?php // Joined Date ?>
+<?php // Start Date ?>
 					<tr>
 					   <td><input <?php echo isset($_POST['txtRepName']) ? '' : 'disabled'?> type='checkbox' <?php echo in_array('JOIDAT',$editCriteriaChk) ? 'checked' : ''?> type='checkbox' class='checkbox' name='chkcriteria[]' id='JoinedDate' value="JOIDAT" onclick="chkboxCriteriaEnable()" <?php echo  (isset($this->postArr['chkcriteria']) && in_array('JOIDAT', $this->postArr['chkcriteria'] )) ? 'checked' : '' ?> ></td>
-					  <td valign="top"><?php echo $lang_rep_JoinedDate; ?></td>
+					  <td valign="center"><?php echo $lang_rep_JoinedDate; ?></td>
 					    <td align="left" valign="middle"> <select  name="cmbJoiDatCode" onChange="disableJoiDatField()"  <?php echo  (isset($this->postArr['chkcriteria']) && in_array('JOIDAT', $this->postArr['chkcriteria'] )) ? '' : 'disabled' ?>  class="cmb" >
 					     <option value="0">--<?php echo $lang_rep_SelectComparison; ?>--</option>
 <?php
@@ -1303,7 +1303,7 @@ for ($c = 0; count($arrAgeSim) > $c; $c++)
                         </td>
 					</tr>
 
-<?php // Joined Date Ends ?>
+<?php // Start Date Ends ?>
 
    					<tr>
 					 <td><input <?php echo isset($_POST['txtRepName']) ? '' : 'disabled'?> type='checkbox' <?php echo in_array('JOBTITLE',$editCriteriaChk) ? 'checked' : ''?> type='checkbox' class='checkbox' name='chkcriteria[]' id='JobTitle' value="JOBTITLE" onclick="chkboxCriteriaEnable()" <?php echo  (isset($this->postArr['chkcriteria']) && in_array('JOBTITLE', $this->postArr['chkcriteria'] )) ? 'checked' : '' ?> ></td>

@@ -33,7 +33,7 @@ $lang_Template_rep_headName = array('Employee No'=>$lang_rep_EmployeeNo,
 									'Date of Birth'=>$lang_rep_DateOfBirth,
 									'Salary Grade'=>$lang_rep_SalaryGrade,
 									'Employee Status'=>$lang_rep_EmployeeStatus,
-									'Joined Date'=>$lang_rep_JoinedDate,
+									'Start Date'=>$lang_rep_JoinedDate,
 									'Job Title'=>$lang_rep_JobTitle,
 									'Qualifications'=>$lang_rep_Qualification,
 									'Year of passing'=>$lang_rep_YearOfPassing,
@@ -138,7 +138,7 @@ li{
 												 break;
 						case 'Date of Birth' : $dateFields[$i] = true;
 												 break;
-						case 'Joined Date' : $dateFields[$i] = true;
+						case 'Start Date' : $dateFields[$i] = true;
 												 break;
 
 					}
