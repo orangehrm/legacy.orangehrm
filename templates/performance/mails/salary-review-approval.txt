@@ -1,4 +1,9 @@
 You have been requested to approve the salary review of #employee# done on #reviewdate#.
-Please login to OrangeHRM and review the details of this salary review.
+Please login to OrangeHRM http:// #url# and approve/reject the salary review.
 
-OrangeHRM
+If you would like assistance or more information please contact the Human Resources.
+
+
+Regards
+
+Human Resources

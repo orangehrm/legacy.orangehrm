@@ -177,10 +177,10 @@ switch ($moduletype) {
 	case 'leave'	:	$locRights = $rights->getRights($_SESSION['userGroup'],LEAVE); break;
 	case 'timeMod'	:	$locRights = $rights->getRights($_SESSION['userGroup'],TIMEMOD); break;
 	case 'recruitMod' :	$locRights = $rights->getRights($_SESSION['userGroup'],RECRUITMOD); break;
-    case 'perfMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],PERFMOD); break;    
-    case 'healthMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],HEALTHMOD); break;    
-	case 'trainingMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],TRAININGMOD); break;    
-	case 'budgetMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],BUDGETMOD); break;	
+    case 'perfMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],PERFMOD); break;
+    case 'healthMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],HEALTHMOD); break;
+	case 'trainingMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],TRAININGMOD); break;
+	case 'budgetMod'  : $locRights = $rights->getRights($_SESSION['userGroup'],BUDGETMOD); break;
 }
 
 if(!is_array($locRights) && $locRights == false)
@@ -1331,8 +1331,8 @@ switch ($moduletype) {
                                                                                         } else {
                                                                                             $message = "";
 	                                                                                    }
-	                                                                                    
-	                                                                                    $leaveController->redirect($message);																						
+
+	                                                                                    $leaveController->redirect($message);
 																						break;
 
 													case 'Leave_Request_ChangeStatus': 	$objs = $leaveRequestsExtractor->parseEditData($_POST);
@@ -1343,13 +1343,13 @@ switch ($moduletype) {
 																								$leaveController->setId($obj->getLeaveId());
 																			                    $res=$leaveController->changeStatus("change");
 	 	                                                                                        if ($res) {
-	 	                                                                                            $numChanged++;																							
+	 	                                                                                            $numChanged++;
 																									$leaveController->sendChangedLeaveNotification($obj, true);
 																								}
 																							}
 																						}
 																						$message = ($numChanged > 0) ? "CHANGE_STATUS_SUCCESS" : "";
-							                                                            $leaveController->redirect($message);																						
+							                                                            $leaveController->redirect($message);
 																						break;
 
 													case 'Leave_Apply'				: 	$obj = $leaveRequestsExtractor->parseAddData($_POST);

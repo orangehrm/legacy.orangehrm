@@ -1,4 +1,10 @@
 You have been requested to approve the performance review of #employee# done on #reviewdate#.
-Please login to OrangeHRM and review the results of this performance review.
+Please login to OrangeHRM #url# and approve/reject the performance review.
 
-OrangeHRM
+If you would like assistance or more information please contact the Human Resources.
+
+
+Regards
+
+Human Resources
+

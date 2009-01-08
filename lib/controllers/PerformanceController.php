@@ -60,7 +60,7 @@ class PerformanceController {
         if (isset($_SESSION) && isset($_SESSION['fname']) ) {
 			$this->authorizeObj = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
         }
-        
+
         $this->sendReviewReminderEmails();
     }
 
@@ -76,7 +76,7 @@ class PerformanceController {
 		}
 
 		$viewListExtractor = new EXTRACTOR_ViewList();
-		
+
 		switch ($code) {
 
 			case 'ReviewPeriod' :
@@ -90,55 +90,55 @@ class PerformanceController {
 	                    break;
 	            }
                 break;
-                
+
 			case 'PerfMeasure' :
-			
+
 				$perfMeasureExtractor = new EXTRACTOR_PerfMeasure();
 
 	            switch ($_GET['action']) {
 
 	                case 'List' :
 	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
-	                    $this->_viewMeasures($searchObject);	                    	                
+	                    $this->_viewMeasures($searchObject);
 	                    break;
-	                    
+
 	                case 'View' :
 	                	$id = isset($_GET['id'])? $_GET['id'] : null;
 	                	$this->_viewMeasure($id);
 						break;
-							                    
+
 	                case 'ViewAdd' :
 	                	$this->_viewAddMeasure();
 	                	break;
-	                	
+
 	                case 'Update' :
 	                	$perfMeasure = $perfMeasureExtractor->parseUpdateData($_POST);
 	                	$this->_saveMeasure($perfMeasure);
-	                	break;	                    
+	                	break;
 	               	case 'Delete' :
 	                    $ids = $_POST['chkID'];
-	                    $this->_deleteMeasures($ids);	               		
+	                    $this->_deleteMeasures($ids);
 	               		break;
-	                		                    
+
 	            }
                 break;
 
 			case 'PerfReviews' :
 
 				$perfReviewExtractor = new EXTRACTOR_PerfReview();
-				
+
 	            switch ($_GET['action']) {
 
 	                case 'List' :
 	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
-	                    $this->_viewReviews($searchObject);	                    	                
+	                    $this->_viewReviews($searchObject);
 	                    break;
-	                    
+
 	                case 'View' :
 	                	$id = isset($_GET['id'])? $_GET['id'] : null;
 	                	$this->_viewReview($id);
 						break;
-							                    
+
 	                case 'ViewAdd' :
 	                	$this->_viewAddReview();
 	                	break;
@@ -146,51 +146,52 @@ class PerformanceController {
 	                case 'ViewResults' :
 	                	$this->_viewReviewResults($_GET['id']);
 	                	break;
-	                	
+
 	                case 'Update' :
 	                	$perfReview = $perfReviewExtractor->parseUpdateData($_POST);
 	                	$this->_saveReview($perfReview);
-	                	break;	                    
+	                	break;
 	               	case 'Delete' :
 	                    $ids = $_POST['chkID'];
-	                    $this->_deleteReviews($ids);	               		
+	                    $this->_deleteReviews($ids);
 	               		break;
-	                    
+
 	            }
-                break;                                                                
+                break;
 
 			case 'JobTitleConfig' :
-			
+
 	            switch ($_GET['action']) {
 
 	                case 'View' :
-	                    $this->_viewJobTitleConfigPage();	                    	                
+	                    $this->_viewJobTitleConfigPage();
 	                    break;
-	                    
+
 	                case 'Update' :
 						$jobTitleConfigExtractor = new EXTRACTOR_JobTitleConfig();
 						$config = $jobTitleConfigExtractor->parseUpdateData($_POST);
 						$this->_saveJobTitleConfig($config);
-						break;	                    
+						break;
 	            }
-                break;                                                                
+                break;
 
 			case 'SalaryReview' :
 
 				$salaryReviewExtractor = new EXTRACTOR_SalaryReview();
-				
+
 	            switch ($_GET['action']) {
+
 
 	                case 'List' :
 	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
-	                    $this->_viewSalaryReviews($searchObject);	                    	                
+	                    $this->_viewSalaryReviews($searchObject);
 	                    break;
-	                    
+
 	                case 'View' :
 	                	$id = isset($_GET['id'])? $_GET['id'] : null;
 	                	$this->_viewSalaryReview($id);
 						break;
-							                    
+
 	                case 'ViewAdd' :
 	                	$this->_viewAddSalaryReview();
 	                	break;
@@ -198,25 +199,25 @@ class PerformanceController {
 	                case 'Update' :
 	                	$salaryReview = $salaryReviewExtractor->parseUpdateData($_POST);
 	                	$this->_saveSalaryReview($salaryReview);
-	                	break;	                    
+	                	break;
 	               	case 'Delete' :
 	                    $ids = $_POST['chkID'];
-	                    $this->_deleteSalaryReviews($ids);	               		
+	                    $this->_deleteSalaryReviews($ids);
 	               		break;
 	                case 'Approve' :
 	                	$salaryReview = $salaryReviewExtractor->parseUpdateData($_POST);
 	                	$this->_approveSalaryReview($salaryReview);
-	                	break;	                    	               		
+	                	break;
 	                case 'Reject' :
 	                	$salaryReview = $salaryReviewExtractor->parseUpdateData($_POST);
 	                	$this->_rejectSalaryReview($salaryReview);
-	                	break;	                    	               			                    
+	                	break;
 	            }
                 break;
 
 	    }
     }
-    
+
     /**
      * Save Performance measure in the database
      * @param PerformanceMeasure $measure Performance Measure to save
@@ -234,9 +235,9 @@ class PerformanceController {
 		} else {
             $this->_notAuthorized();
 		}
-    }    
-    
-	/**	
+    }
+
+	/**
 	 * View list of performance measures
 	 * @param SearchObject Object with search parameters
 	 */
@@ -244,12 +245,12 @@ class PerformanceController {
 
 		if ($this->authorizeObj->isAdmin()) {
         	$list = PerformanceMeasure::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
-        	$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());        	
+        	$count = PerformanceMeasure::getCount($searchObject->getSearchString(), $searchObject->getSearchField());
         	$this->_viewList($searchObject->getPageNumber(), $count, $list, true);
 		} else {
             $this->_notAuthorized();
 		}
-    }    
+    }
 
 	/**
 	 * View add Performance Measure page
@@ -281,21 +282,21 @@ class PerformanceController {
 			$jobTitles = $jobTitle->getJobTit();
 			$jobTitles = is_null($jobTitles) ? array() : $jobTitles;
 			$assignedJobTitles = $perfMeasure->getJobTitles();
-			
+
 			// Find available job titles
-			
+
 			if (empty($assignedJobTitles)) {
 				$availableJobTitles = $jobTitles;
 			} else {
-				$availableJobTitles = array();				
+				$availableJobTitles = array();
 
 				foreach ($jobTitles as $title) {
 					$jobTitleCode = $title[0];
 					if (!array_key_exists($jobTitleCode, $assignedJobTitles)) {
 						$availableJobTitles[] = $title;
 					}
-				}	
-			}		
+				}
+			}
 
 			$objs['perfMeasureList'] = PerformanceMeasure::getAll();
 			$objs['perfMeasure'] = $perfMeasure;
@@ -327,7 +328,7 @@ class PerformanceController {
             $this->_notAuthorized();
 		}
     }
-    
+
 	/**
 	 * View list of performance reviews
 	 * @param SearchObject Object with search parameters
@@ -335,7 +336,7 @@ class PerformanceController {
     private function _viewReviews($searchObject) {
 
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || ($_SESSION['isApprover'])) {
-			
+
 			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
         	$list = PerformanceReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
         	$count = PerformanceReview::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);
@@ -343,24 +344,24 @@ class PerformanceController {
 		} else {
             $this->_notAuthorized();
 		}
-    }    
-    
+    }
+
     /**
      * Create a performance review. Used when automatically creating performance reviews.
-     * 
+     *
      * @param int $empNum Employee number
      * @param String $reviewDate Review Date (optional). If not given, will create review with default period.
      * @param String $notes Notes to be added to the review. Optional
-     * 
+     *
      * @return boolean True if successful, false otherwise
      */
     public function createReview($empNum, $notes = '', $reviewDate = null) {
-    	
-    	if (empty($reviewDate)) {    	
+
+    	if (empty($reviewDate)) {
     		$reviewTimeStamp = time() + PerformanceReview::DEFAULT_REVIEW_PERIOD * 30 * 24 * 60 * 60;
-    		$reviewDate = date(LocaleUtil::STANDARD_DATE_FORMAT, $reviewTimeStamp);	
+    		$reviewDate = date(LocaleUtil::STANDARD_DATE_FORMAT, $reviewTimeStamp);
     	}
-    	
+
     	$review = new PerformanceReview();
     	$review->setEmpNumber($empNum);
     	$review->setReviewNotes($notes);
@@ -372,7 +373,7 @@ class PerformanceController {
 			return false;
 		}
     }
-    
+
     /**
      * Save Performance review in the database
      * @param PerformanceReview $review Performance Review to save
@@ -380,7 +381,7 @@ class PerformanceController {
     private function _saveReview($review) {
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || ($_SESSION['isApprover'])) {
 			try {
-				
+
 				$id = $review->getId();
 				if (!empty($id)) {
 					$addNew = false;
@@ -389,14 +390,14 @@ class PerformanceController {
 				} else {
 					$addNew = true;
 				}
-				
+
 				$review->save();
-				
-				if (!$addNew && ($review->getStatus() != $oldStatus) && 
+
+				if (!$addNew && ($review->getStatus() != $oldStatus) &&
 						($review->getStatus() == PerformanceReview::STATUS_SUBMITTED_FOR_APPROVAL)) {
 					$this->_sendApproveReviewEmail($review);
 				}
-				
+
 	        	$message = 'UPDATE_SUCCESS';
 	        	$this->redirect($message, '?perfcode=PerfReviews&action=List');
 			} catch (PerformanceReviewException $e) {
@@ -406,25 +407,25 @@ class PerformanceController {
 		} else {
             $this->_notAuthorized();
 		}
-    } 
-    
+    }
+
     private function _sendApproveReviewEmail($review) {
     	$receipients = JobTitleConfig::getEmployeesWithRole(JobTitleConfig::ROLE_REVIEW_APPROVER);
 
 		if (!empty($receipients)) {
     		$mailNotifier = new PerformanceMailNotifier();
-    		$mailNotifier->sendApproveReviewEmails($receipients, $review);    		
-		}    	
+    		$mailNotifier->sendApproveReviewEmails($receipients, $review);
+		}
     }
-    
+
     private function sendReviewReminderEmails() {
     	$reviews = PerformanceReview::getReviewsPendingNotification();
 
 		if (!empty($reviews)) {
-    		$mailNotifier = new PerformanceMailNotifier();    		
-			    	
+    		$mailNotifier = new PerformanceMailNotifier();
+
 	    	foreach($reviews as $review) {
-    			$mailNotifier->sendPerformanceReviewReminder($review);	 
+    			$mailNotifier->sendPerformanceReviewReminder($review);
     			$review->setNotificationSent();
 				try {
     				$review->save();
@@ -432,9 +433,9 @@ class PerformanceController {
 					continue;
 				}
 	    	}
-		}    	
+		}
     }
-        
+
 	/**
 	 * View add Performance Review page
 	 */
@@ -452,21 +453,21 @@ class PerformanceController {
 	private function _viewReviewResults($id) {
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || ($_SESSION['isApprover'])) {
 			$path = '/templates/performance/viewReviewResults.php';
-	
+
 			try {
 				$perfReview = PerformanceReview::getPerformanceReview($id);
 				$assignedMeasures = $perfReview->getPerformanceMeasures();
-				
+
 				$objs['perfReview'] = $perfReview;
 				$objs['AssignedPerfMeasures'] = $assignedMeasures;
 				$objs['authorizeObj'] = $this->authorizeObj;
-	
+
 				$template = new TemplateMerger($objs, $path);
 				$template->display();
 			} catch (PerformanceReviewException $e) {
 				$message = 'UNKNOWN_FAILURE';
 	            $this->redirect($message);
-			}			
+			}
 	    } else {
             $this->_notAuthorized();
 		}
@@ -482,41 +483,41 @@ class PerformanceController {
 
 		try {
 			$perfMeasures = null;
-						
+
 			if (empty($id)) {
 				$perfReview = new PerformanceReview();
 			} else {
 				$perfReview = PerformanceReview::getPerformanceReview($id);
-				
-				$empNum = $perfReview->getEmpNumber();			
-				$empInfo = new EmpInfo;						
+
+				$empNum = $perfReview->getEmpNumber();
+				$empInfo = new EmpInfo;
 				$empJobInfo = $empInfo->filterEmpJobInfo($empNum);
-				
+
 				if (isset($empJobInfo[0])) {
 					$jobTitleCode = $empJobInfo[0][2];
 					if (!empty($jobTitleCode)) {
 						$perfMeasures = PerformanceMeasure::getAllForJobTitle($jobTitleCode);
-					}				
-				}				
+					}
+				}
 			}
 
 			$perfMeasures = is_null($perfMeasures) ? PerformanceMeasure::getAll() : $perfMeasures;
 			$assignedMeasures = $perfReview->getPerformanceMeasures();
-			
+
 			// Find available performance measures
-			
+
 			if (empty($assignedMeasures)) {
 				$availableMeasures = $perfMeasures;
 			} else {
-				$availableMeasures = array();				
+				$availableMeasures = array();
 
 				foreach ($perfMeasures as $measure) {
 					$perfMeasureId = $measure->getId();
 					if (!array_key_exists($perfMeasureId, $assignedMeasures)) {
 						$availableMeasures[] = $measure;
 					}
-				}	
-			}		
+				}
+			}
 
 			$objs['perfReview'] = $perfReview;
 			$objs['AvailablePerfMeasures'] = $availableMeasures;
@@ -557,55 +558,56 @@ class PerformanceController {
     private function _viewSalaryReviews($searchObject) {
 
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
-			
+
 			$supervisorEmpNum = ($this->authorizeObj->isSupervisor() && !$_SESSION['isSalaryApprover']) ? $this->authorizeObj->getEmployeeId(): null;
         	$list = SalaryReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
         	$count = SalaryReview::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);
-        	
+
         	/** Override module settings and allow supervisors to add salary reviews */
         	if ($this->authorizeObj->isSupervisor()) {
         		$locRights = $_SESSION['localRights'];
 				$locRights['add'] = true;
-				$locRights['delete'] = true;    		
-        		$_SESSION['localRights'] = $locRights;        			
-        	}        	
-        	
+				$locRights['delete'] = true;
+        		$_SESSION['localRights'] = $locRights;
+        	}
+
         	$this->_viewList($searchObject->getPageNumber(), $count, $list, true);
 		} else {
             $this->_notAuthorized();
 		}
-    }    
-    
-    
+    }
+
+
     /**
      * Approve Salary review
      * @param SalaryReview $review Salary Review to approve
      */
     private function _approveSalaryReview($review) {
+
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
 			$review->setStatus(SalaryReview::STATUS_APPROVED);
 
 			try {
 				$review->save();
-				
+
 				// Update salary
 				$result = $this->_changeEmployeeSalary($review->getEmpNumber(), $review->getIncrease());
 				if (!$result) {
 					$message = 'SALARY_CHANGE_FAILURE';
-	        		$this->redirect($message);					
-				} else {				
+	        		$this->redirect($message);
+				} else {
 		        	$message = 'UPDATE_SUCCESS';
 		        	$this->redirect($message, '?perfcode=SalaryReview&action=List');
-				}				
+				}
 			} catch (SalaryReviewException $e) {
 				$message = 'UPDATE_FAILURE';
 	        	$this->redirect($message);
-			}			
-									
+			}
+
 		} else {
             $this->_notAuthorized();
 		}
-    } 
+    }
 
     /**
      * Reject Salary review
@@ -614,59 +616,59 @@ class PerformanceController {
     private function _rejectSalaryReview($review) {
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor() || $_SESSION['isSalaryApprover']) {
 			$review->setStatus(SalaryReview::STATUS_REJECTED);
-			
+
 			try {
-				
+
 				// Get current review status
 				$currentReview = SalaryReview::getSalaryReview($review->getId());
 
 				$review->save();
-				
+
 				// Update salary by undoing salary change only if rejecting currently approved review.
 				if ($currentReview->getStatus() == SalaryReview::STATUS_APPROVED) {
-				
+
 					$salaryChange = -1 * $review->getIncrease();
 					$result = $this->_changeEmployeeSalary($review->getEmpNumber(), $salaryChange);
 					if (!$result) {
 						$message = 'SALARY_CHANGE_FAILURE';
 		        		$this->redirect($message);
-		        		return;					
+		        		return;
 					}
 				}
-				
+
 	        	$message = 'UPDATE_SUCCESS';
-	        	$this->redirect($message, '?perfcode=SalaryReview&action=List');				
+	        	$this->redirect($message, '?perfcode=SalaryReview&action=List');
 			} catch (SalaryReviewException $e) {
 				$message = 'UPDATE_FAILURE';
 	        	$this->redirect($message);
 			}
-				
+
 		} else {
             $this->_notAuthorized();
 		}
-    } 
-    
+    }
+
 	/**
 	 * Change given employees salary by given amount
 	 * Amount can be positive or negative
-	 * 
+	 *
 	 * @return True if successfully changed, false otherwise
-	 */    
+	 */
     private function _changeEmployeeSalary($empNum, $amount) {
-    	
+
     	$empBasicSalary = new EmpBasSalary();
-    	    	
+
     	$salaryInfo = $empBasicSalary->getAssEmpBasSal($empNum);
-    	
+
     	/* No salary information available */
     	if (empty($salaryInfo)) {
     		return false;
     	}
-    	
+
     	if (isset($salaryInfo[0][3]) && !empty($salaryInfo[0][3])) {
     		$currentBasicSalary = $salaryInfo[0][3];
 	    	$newBasicSalary = $currentBasicSalary + $amount;
-	    	
+
 	    	$empBasicSalary->setEmpId($empNum);
 	    	$empBasicSalary->setEmpSalGrdCode($salaryInfo[0][1]);
 	    	$empBasicSalary->setEmpCurrCode($salaryInfo[0][2]);
@@ -675,7 +677,7 @@ class PerformanceController {
     	} else {
     		return false;
     	}
-    	
+
     }
 
     /**
@@ -684,26 +686,26 @@ class PerformanceController {
      */
     private function _saveSalaryReview($review) {
 		if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
-			try {			
+			try {
 				$id = $review->getId();
 				$addNew = (empty($id));
-				
+
 				/* Check if employee has salary defined */
 				if ($addNew) {
 					$currentSalary = self::_getBaseSalary($review->getEmpNumber());
 					if (empty($currentSalary)) {
 						$message = 'NO_SALARY_DEFINED_FAILURE';
 			        	$this->redirect($message);
-						return;						
+						return;
 					}
 				}
-				
+
 				$review->save();
-				
+
 				if ($addNew) {
 					$this->_sendSalaryReviewNotice($review);
 				}
-				
+
 	        	$message = 'UPDATE_SUCCESS';
 	        	$this->redirect($message, '?perfcode=SalaryReview&action=List');
 			} catch (SalaryReviewException $e) {
@@ -713,17 +715,17 @@ class PerformanceController {
 		} else {
             $this->_notAuthorized();
 		}
-    } 
-    
+    }
+
     private function _sendSalaryReviewNotice($review) {
-    	
+
     	$receipients = JobTitleConfig::getEmployeesWithRole(JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);
 
 		if (!empty($receipients)) {
     		$mailNotifier = new PerformanceMailNotifier();
-    		$mailNotifier->sendSalaryReviewNoticeEmails($receipients, $review);    		
-		}    	
-    }    
+    		$mailNotifier->sendSalaryReviewNoticeEmails($receipients, $review);
+		}
+    }
 	/**
 	 * Delete Salary Reviews with given IDs
 	 * @param Array $ids Array with Salary Review ID's to delete
@@ -740,8 +742,8 @@ class PerformanceController {
 		} else {
             $this->_notAuthorized();
 		}
-    }    
-    
+    }
+
 	/**
 	 * View add Salary Review page
 	 */
@@ -752,7 +754,7 @@ class PerformanceController {
             $this->_notAuthorized();
 		}
 	}
-    
+
     /**
      * View Salary Reviews
      * @param int $id Id of Salary Review. If empty, A new Salary Review is shown
@@ -762,17 +764,17 @@ class PerformanceController {
 		$path = '/templates/performance/viewSalaryReview.php';
 
 		try {
-			
+
 			$currentSalary = '';
 			$subordinates = '';
-			
+
 			if (empty($id)) {
 				$salaryReview = new SalaryReview();
 
-				if ($this->authorizeObj->isSupervisor()) {				
+				if ($this->authorizeObj->isSupervisor()) {
 					$repObj = new EmpRepTo();
 					$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
-				}				
+				}
 			} else {
 				$salaryReview = SalaryReview::getSalaryReview($id);
 				$currentSalary = self::_getBaseSalary($salaryReview->getEmpNumber());
@@ -790,30 +792,30 @@ class PerformanceController {
             $this->redirect($message);
 		}
     }
-    
+
 	/**
 	 * Get the base salary for the given employee
-	 * 
+	 *
 	 * @param int $empNum Employee number
-	 * 
+	 *
 	 * @return Base salary amount (with currency) or null if not defined. Eg: "120 USD"
-	 */    
+	 */
     public static function _getBaseSalary($empNum) {
-    	
+
     	$salary = null;
-    	
-    	$empBasicSalary = new EmpBasSalary();    	    	
+
+    	$empBasicSalary = new EmpBasSalary();
     	$salaryInfo = $empBasicSalary->getAssEmpBasSal($empNum);
-    	
+
     	if (!empty($salaryInfo) && isset($salaryInfo[0][3]) && !empty($salaryInfo[0][3])) {
     		$currentSalary = $salaryInfo[0][3];
     		$currency = $salaryInfo[0][2];
     		$salary = $currentSalary . ' ' . $currency;
     	}
-    	
-    	return $salary;    	
+
+    	return $salary;
     }
-    
+
 	/**
 	 * Generic method to display a list
 	 * @param int $pageNumber Page Number
@@ -830,22 +832,22 @@ class PerformanceController {
         $formCreator->popArr['showSearch'] = $showSearch;
         $formCreator->popArr['searchFieldCount'] = $searchFieldCount;
         $formCreator->display();
-	}    
+	}
 
     /**
      * Display list Employees
      * @param Object $searchObj Search Object extended from AbstractSearch class
-     * 
+     *
      */
     private function _viewEmployees($searchObj) {
 
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isSupervisor()) {
             $managerId = $this->authorizeObj->isAdmin()? null : $this->authorizeObj->getEmployeeId();
-                       
+
             $searchObj->search();
-            
+
             $path = '/templates/common/search.php';
-            $objs['titleVar'] = 'lang_Performance_Assign_Review_Period'; 
+            $objs['titleVar'] = 'lang_Performance_Assign_Review_Period';
             $objs['searchObj'] = $searchObj;
             $template = new TemplateMerger($objs, $path, null, null);
             $template->display();
@@ -853,7 +855,7 @@ class PerformanceController {
             $this->_notAuthorized();
         }
     }
-        
+
     /**
      * View Job title configuration page
      */
@@ -864,26 +866,26 @@ class PerformanceController {
 		try {
 
 			$role = isset($_GET['role'])? $_GET['role'] : JobTitleConfig::ROLE_REVIEW_APPROVER;
-			
+
 			$jobTitle = new JobTitle();
 			$jobTitles = $jobTitle->getJobTit();
 			$jobTitles = is_null($jobTitles) ? array() : $jobTitles;
 			$jobTitleConfig = JobTitleConfig::getJobTitleConfig($role);
 			$assignedJobTitles = $jobTitleConfig->getJobTitles();
-			
+
 			// Find available job titles
 			if (empty($assignedJobTitles)) {
 				$availableJobTitles = $jobTitles;
 			} else {
-				$availableJobTitles = array();				
+				$availableJobTitles = array();
 
 				foreach ($jobTitles as $title) {
 					$jobTitleCode = $title[0];
 					if (!array_key_exists($jobTitleCode, $assignedJobTitles)) {
 						$availableJobTitles[] = $title;
 					}
-				}	
-			}		
+				}
+			}
 
 			$objs['jobTitleConfig'] = $jobTitleConfig;
 			$objs['roleList'] = array(JobTitleConfig::ROLE_REVIEW_APPROVER, JobTitleConfig::ROLE_SALARY_REVIEW_APPROVER);
@@ -916,7 +918,7 @@ class PerformanceController {
 		} else {
             $this->_notAuthorized();
 		}
-    }    
+    }
 
 
 	/**

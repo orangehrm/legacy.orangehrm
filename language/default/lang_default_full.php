@@ -516,7 +516,7 @@
  	$lang_geninfo_heading 					= "Company Info : General";
 	$lang_geninfo_compname 					= "Company Name";
 	$lang_geninfo_numEmployees				= "Number of Employees";
-	$lang_geninfo_taxID 					= "Tax ID";
+	$lang_geninfo_taxID 					= "ABN";
 	$lang_geninfo_naics 					= "NAICS";
 	$lang_geninfo_err_CompanyName 			= "Company name cannot be blank";
 	$lang_geninfo_err_Phone 				= "Not a valid phone/fax number";
@@ -1302,6 +1302,7 @@
 
 	$lang_Time_DurationFormat = "hh:mm or 0.00h";
 	$lang_Time_InsertTime="Insert time";
+	$lang_Time_SheduleFormat ="HH:MM";
 
 	$lang_Time_Errors_NO_RECORDS_CHANGED_WARNING = "No changes to save";
 	$lang_Time_Errors_EXCEPTION_THROWN_WARNING = "Encountered a problem";

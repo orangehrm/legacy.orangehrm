@@ -285,8 +285,12 @@ $applicantName = $application->getFirstName() . ' ' . $application->getLastName(
         <input type="text" id="txtDate" name="txtDate" value="" size="10" tabindex="1" />
         <input type="button" id="btnToDate" name="btnToDate" value="  " class="calendarBtn"/><br/>
 
-        <label for="txtTime"><span class="error">*</span> <?php echo $lang_Recruit_JobApplication_Schedule_Time; ?></label>
-        <input type="text" id="txtTime" name="txtTime" tabindex="2" /><br/>
+        <label for="txtTime" ><span class="error">*</span> <?php echo $lang_Recruit_JobApplication_Schedule_Time; ?> </label>
+        <input type="text" id="txtTime" name="txtTime" tabindex="2" />
+        <label  for="txtTime"><?php echo $lang_Time_SheduleFormat; ?></label>
+  <br/>
+
+
 
 		<label for="cmbInterviewer"><span class="error">*</span> <?php echo $lang_Recruit_JobApplication_Schedule_Interviewer; ?></label>
         <select id="cmbInterviewer" name="cmbInterviewer" tabindex="3">

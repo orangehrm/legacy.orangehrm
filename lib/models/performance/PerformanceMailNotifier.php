@@ -47,7 +47,7 @@ class PerformanceMailNotifier {
 	const TEMPLATE_SUBMITTED_FOR_APPROVAL = 'approval.txt';
 	const TEMPLATE_REVIEW_NOTIFICATION = 'review-notification.txt';
 	const TEMPLATE_SALARY_REVIEW_APPROVAL = 'salary-review-approval.txt';
-	
+
 	/**
 	 * Mail subject templates
 	 */
@@ -63,7 +63,8 @@ class PerformanceMailNotifier {
     const VARIABLE_REQUESTED_BY = '#who#';
     const VARIABLE_EMPLOYEE = '#employee#';
     const VARIABLE_REVIEW_DATE = '#reviewdate#';
-   
+    const VARIABLE_URL='#url#';
+
 	/*
 	 * Class atributes
 	 **/
@@ -73,7 +74,7 @@ class PerformanceMailNotifier {
 
 	/* Mailer instance. used only for testing */
 	private $mailer;
-	
+
 	private $employeeIdLength;
 
 	/**
@@ -93,9 +94,9 @@ class PerformanceMailNotifier {
 
 		$this->mailType = $this->emailConf->getMailType();
 		$this->logFile = $logPath . "notification_mails.log";
-		
+
 		$sysConfObj = new sysConf();
-		$this->employeeIdLength = $sysConfObj->getEmployeeIdLength();		
+		$this->employeeIdLength = $sysConfObj->getEmployeeIdLength();
 	}
 
 	/**
@@ -131,7 +132,7 @@ class PerformanceMailNotifier {
 	}
 
 	/**
-	 * Send approve review email 
+	 * Send approve review email
 	 *
 	 * @param PerformanceReview $review
 	 *
@@ -142,9 +143,9 @@ class PerformanceMailNotifier {
 		$empNum = $review->getEmpNumber();
 		$empName = $this->_getEmpName($empNum);
 		$reviewDate = LocaleUtil::getInstance()->formatDate($review->getReviewDate());
-		
+
 		$emails = null;
-		
+
 		foreach($receipients as $receipient) {
 			$to = $receipient[1];
 			$toEmpNum = $receipient[2];
@@ -160,30 +161,30 @@ class PerformanceMailNotifier {
 
 		$subject = $this->_getTemplate(self::SUBJECT_SUBMITTED_FOR_APPROVAL);
 		$body = $this->_getTemplate(self::TEMPLATE_SUBMITTED_FOR_APPROVAL);
-		
+
 		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE);
 		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewDate);
-		
+
 		$subject = str_replace($search, $replace, $subject);
 		$body = str_replace($search, $replace, $body);
-		
+
 		$notificationType = null;
 		$result = $this->_sendMail($emails, $subject, $body, $notificationType);
 	 }
 
 	/**
-	 * Send reminder of performance review 
+	 * Send reminder of performance review
 	 *
 	 * @param PerformanceReview $review
 	 *
 	 * @return boolean True if mail sent, false otherwise
 	 */
-	 public function sendPerformanceReviewReminder($review) {			
-		
+	 public function sendPerformanceReviewReminder($review) {
+
 		$empNum = $review->getEmpNumber();
 		$empName = $this->_getEmpName($empNum);
 		$reviewDate = LocaleUtil::getInstance()->formatDate($review->getReviewDate());
-		
+
 		// Get supervisors:
 		$empRepToObj = new EmpRepTo();
 		$supInfo = $empRepToObj->getEmpSup(str_pad($empNum, $this->employeeIdLength, "0", STR_PAD_LEFT));
@@ -197,17 +198,19 @@ class PerformanceMailNotifier {
 				}
 			}
 		}
-		
+
 		if (empty($receipients)) {
 			return true;
 		}
 
+		$url_salary_review= 'http://'.$_SERVER['HTTP_HOST'].$_SESSION['WPATH'];
+
 		$subject = $this->_getTemplate(self::SUBJECT_REVIEW_NOTIFICATION);
 		$body = $this->_getTemplate(self::TEMPLATE_REVIEW_NOTIFICATION);
-		
-		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE);
-		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewDate);
-		
+
+		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE,self::VARIABLE_URL);
+		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewDate,$url_salary_review);
+
 		$subject = str_replace($search, $replace, $subject);
 		$body = str_replace($search, $replace, $body);
 		$notificationType = null;
@@ -215,7 +218,7 @@ class PerformanceMailNotifier {
 	 }
 
 	/**
-	 * Send approve review email 
+	 * Send approve review email
 	 *
 	 * @param PerformanceReview $review
 	 *
@@ -226,9 +229,9 @@ class PerformanceMailNotifier {
 		$empNum = $review->getEmpNumber();
 		$empName = $this->_getEmpName($empNum);
 		$reviewTime = LocaleUtil::getInstance()->formatDateTime($review->getCreatedTime());
-		
+
 		$emails = null;
-		
+
 		foreach($receipients as $receipient) {
 			$to = $receipient[1];
 			$toEmpNum = $receipient[2];
@@ -241,20 +244,21 @@ class PerformanceMailNotifier {
 		if (empty($emails)) {
 			return true;
 		}
+		$url_salary_review= 'http://'.$_SERVER['HTTP_HOST'].$_SESSION['WPATH'];
 
 		$subject = $this->_getTemplate(self::SUBJECT_SALARY_REVIEW_APPROVAL);
 		$body = $this->_getTemplate(self::TEMPLATE_SALARY_REVIEW_APPROVAL);
-		
-		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE);
-		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewTime);
-		
+
+		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE,self::VARIABLE_URL);
+		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewTime,$url_salary_review);
+
 		$subject = str_replace($search, $replace, $subject);
 		$body = str_replace($search, $replace, $body);
-		
+
 		$notificationType = null;
 		$result = $this->_sendMail($emails, $subject, $body, $notificationType);
 	 }
-	 
+
 	/**
 	 * Send email with given parameters
 	 *
