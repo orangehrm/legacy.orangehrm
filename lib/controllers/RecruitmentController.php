@@ -339,9 +339,13 @@ class RecruitmentController {
 	 */
 	public function showJobApplication($id) {
 		$path = '/templates/recruitment/applicant/viewJobApplication.php';
-
+		$fieldsData=JobApplication::fetchApplicationData();
+		$field=new JobApplicationField();
+		$fields=$field->fetchApplicationFields();	
+		
 		$objs['vacancy'] = JobVacancy::getJobVacancy($id);
-
+		$objs['applicationFields']=$fields;
+		$objs['applicationData']=$fieldsData;
 		$countryinfo = new CountryInfo();
 		$objs['countryList'] = $countryinfo->getCountryCodes();
 		
@@ -355,11 +359,17 @@ class RecruitmentController {
 	/**
 	 * Handle job application by applicant
 	 */
-	public function applyForJob() {
+	public function applyForJob() {		
+		$field=new JobApplicationField();
+		$dynamicFields=$field->filterDynamicFields($_REQUEST);		
 		$extractor = new EXTRACTOR_JobApplication();
 		$jobApplication = $extractor->parseData($_POST);
 		try {
-		    $jobApplication->save();
+		    $jobApplication->save();		      
+		    foreach ($dynamicFields as $field){		    	
+		    	$field->setApplicationId($jobApplication->getId());		    	   	
+		    	$field->saveFieldData();
+		    }	  
 		    $result = true;
 		} catch (JobApplicationException $e) {
 			$result = false;

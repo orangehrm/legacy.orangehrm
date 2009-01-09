@@ -54,6 +54,7 @@ $objAjax->processRequests();
 $vacancy = $records['vacancy'];
 $countryList = $records['countryList'];
 $company = $records['company'];
+$applicationFields=$records['applicationFields'];
 
 $formAction = $_SERVER['PHP_SELF'] . '?recruitcode=ApplicantApply';
 
@@ -79,6 +80,10 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 <?php
 	$objAjax->printJavascript();
 ?>
+<?php include ROOT_PATH."/lib/common/calendar.php"; ?>
+<script type="text/javascript" src="../../scripts/archive.js"></script>
+<script src="../../scripts/time.js"></script>
+
 <script>
 
     function goBack() {
@@ -86,6 +91,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
     }
 
 	function validate() {
+	return true;
+	exit;
 		err = false;
 		var msg = '<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
 		var errors = new Array();
@@ -205,6 +212,85 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		status = $('status');
 		status.style.display = 'block';
 	}
+	
+	var emplyeeinfoCount=0;
+	
+	function addMore(cat) {	
+		tbody = document.getElementById(cat);		
+		var tableRow = document.createElement('tr');
+		str='';
+		if(cat=='employeement_info'){
+			 emplyeeinfoCount++;
+			 elementName=cat+'_'+emplyeeinfoCount;
+			 tableRow.setAttribute('id',elementName);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_employer').value;
+			 td.innerHTML="<input type='hidden' id='form_employer[]' name='form_employer[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_job_title').value;
+			 td.innerHTML="<input type='hidden' id='form_job_title[]' name='form_job_title[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_start_date').value;
+			 td.innerHTML="<input type='hidden' id='form_start_date[]' name='form_start_date[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_end_date').value;
+			 td.innerHTML="<input type='hidden' id='form_end_date[]' name='form_end_date[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_duties').value;
+			 td.innerHTML="<input type='hidden' id='form_duties[]' name='form_duties[]' value='"+value+"'>"+value;
+			 td.setAttribute('style', 'white-space:pre');
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');			
+			 td.innerHTML="<input type='button' value='delete' onclick=\"deleteRow('"+emplyeeinfoCount+"','"+cat+"')\" style='width:40px;'/>";
+			 tableRow.appendChild(td);			 
+		}
+		skillCount=0;
+		if(cat=='skill_info'){
+			 skillCount++;
+			 elementName=cat+'_'+skillCount;
+			 tableRow.setAttribute('id',elementName);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_skill').value;
+			 td.innerHTML="<input type='hidden' id='form_skill[]' name='form_skill[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_skill_years_of_experience').value;
+			 td.innerHTML="<input type='hidden' id='form_skill_years_of_experience[]' name='form_skill_years_of_experience[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);			 
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_skill_comments').value;
+			 td.innerHTML="<input type='hidden' id='form_skill_comments[]' name='form_skill_comments[]' value='"+value+"'>"+value;
+			 td.setAttribute('style', 'white-space:pre');
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');			
+			 td.innerHTML="<input type='button' value='delete' onclick=\"deleteRow('"+skillCount+"','"+cat+"')\" style='width:40px;'/>";
+			 tableRow.appendChild(td);			 
+		}
+		
+		tbody.appendChild(tableRow);		
+	}
+	
+	function deleteRow(emplyeeinfoCount,cat){	
+		tbody =  $(cat);
+		var element = document.getElementById(cat+'_'+emplyeeinfoCount);
+		tbody.removeChild(element);
+		eval("emplyeeinfoCount=emplyeeinfoCount-1");
+
+	}
 
 </script>
 
@@ -216,7 +302,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
     label,select,input,textarea {
         display: block;  /* block float the labels to left column, set a width */
-        width: 150px;
+        width: 200px;
         float: left;
         margin: 8px 0px 2px 0px; /* set top margin same as form input - textarea etc. elements */
     }
@@ -235,7 +321,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
     label {
         text-align: left;
-        width: 110px;
+        width: 150px;
         padding-left: 10px;
     }
 
@@ -255,7 +341,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
     form {
         min-width: 550px;
-        max-width: 770px;
+        max-width: 900px;
     }
 
     br {
@@ -266,14 +352,14 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         margin-top: 10px;
         margin-left: auto;
         margin-right: auto;
-        width: 760px;
+        width: 900px;
     }
 
     body {
     	margin-top: 10px;
         margin-left: auto;
         margin-right: auto;
-        width: 780px;
+        width: 900px;
     }
 
     .roundbox_content {
@@ -337,7 +423,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         <input type="text" id="txtStreet1" name="txtStreet1" tabindex="4" >
 
 		<label for="txtStreet2"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Street2; ?></label>
-        <input type="text" id="txtStreet2" name="txtStreet2" tabindex="5" ><br/>
+        <input type="text" id="txtStreet2" name="txtStreet2" tabindex="5"><br/>
 
 		<label for="txtCity"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_City; ?></label>
         <input type="text" id="txtCity" name="txtCity" tabindex="6" >
@@ -367,6 +453,44 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Email; ?></label>
         <input type="text" id="txtEmail" name="txtEmail" tabindex="12" ><br/>
+        
+        <!-- Employment Information----------------------------------------->
+        <label for="txtEmail"><?php echo "Employment Information" ?></label><br/>
+        <div style="margin-left: 20px;">  
+	        <label for="employer"><?php echo "Employer" ?></label> <input type="text" id="form_employer" name="form_employer" ><br/>
+	        <label for="job_title"><?php echo "Job Title" ?></label> <input type="text" id="form_job_title" name="form_job_title" ><br/>
+	        <label for="start_date"><?php echo "Start Date" ?></label> <input type="text" readonly id="form_start_date" name="form_start_date"  onchange="fillToDate();" onfocus="fillToDate();" >
+	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"  /><br/>
+	        <label for="end_date"><?php echo "End Date" ?></label> <input type="text" readonly id="form_end_date" name="form_end_date"  onchange="fillToDate();" onfocus="fillToDate();" >
+	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"/><br/>
+	        <label for="duties"><?php echo "Duties" ?></label> <textarea type="text" id="form_duties" name="form_duties"></textarea><br/>
+		<img onClick="addMore('employeement_info');" id="saveBtn"	src="<?php echo $saveImg;?>">	
+		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
+		<tbody id="employeement_info" >
+		
+		</tbody>
+		</table>
+		</div>
+		
+		<!-- Skills ----------------------------------------->
+		<label for="txtEmail"><?php echo "Skills" ?></label><br/>
+        <div style="margin-left: 20px;">  
+	        <label for="skill"><?php echo "Skill" ?></label> <input type="text" id="form_skill" name="form_skill" ><br/>
+	        <label for="form_skill_years_of_experience"><?php echo "Years of experience" ?></label> <input type="text" id="form_skill_years_of_experience" name="form_skill_years_of_experience" ><br/>
+	        <label for="skill_comments"><?php echo "Comments" ?></label> <textarea type="text" id="form_skill_comments" name="form_skill_comments"></textarea><br/>
+		<img onClick="addMore('skill_info');" id="saveBtn"	src="<?php echo $saveImg;?>">	
+		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
+		<tbody id="skill_info" >
+		
+		</tbody>
+		</table>
+		</div>
+		<?php foreach ($applicationFields as $field){ ?>
+		<label for="<?php echo $field->getLable() ?>"><span class="error"><?php echo ($field->getRequired())?"*":""?></span><?php echo $field->getLable(); ?></label>
+			<?php 				
+				echo $field->drawElement()."<br/>";		
+		
+			 } ?>
 
 		<label for="txtQualifications"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Qualifications; ?></label>
         <textarea id="txtQualifications" name="txtQualifications" tabindex="13" ></textarea><br/><br/>
@@ -393,5 +517,6 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
     </script>
 
     <div id="notice"><?php echo preg_replace('/#star/', '<span class="error">*</span>', $lang_Commn_RequiredFieldMark); ?>.</div>
+<div id="cal1Container" style="position:absolute;" ></div>
 </body>
 </html>

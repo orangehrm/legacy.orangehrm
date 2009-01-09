@@ -26,6 +26,7 @@ require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
 require_once ROOT_PATH . '/lib/common/SearchObject.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobVacancy.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
+require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationField.php';
 
 /**
  * Class representing a Job Application
@@ -612,6 +613,25 @@ class JobApplication {
         }
 
         return $application;
+    }
+    
+    public function fetchApplicationData(){
+    	$sqlBuilder=new SQLQBuilder();
+    	$fields[]='*';    	
+    	$sql=$sqlBuilder->simpleSelect(JobApplicationField::TABLE_FIELD_DATA,$fields);    	
+    	$conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+		
+        $objectArray=array();
+        while ($result && ($row = mysql_fetch_assoc($result))) {        	
+        	$obj=new JobApplicationField();
+        	$obj->setApplicationId($row[JobApplicationField::applicationDataFieldApplicationId]);
+        	$obj->setId($row[JobApplicationField::applicationDataFieldId]);
+        	$obj->setFieldValue($row[JobApplicationField::applicationDataFieldValue]);
+        	$obj->setFiledValueText($row[JobApplicationField::applicationDataFieldSubValues]);        	
+            $objectArray[]=$obj;
+        }
+        return $objectArray;
     }
 }
 
