@@ -300,6 +300,7 @@ lib/models/eimadmin/EmailNotificationConfiguration.php -text
 lib/models/eimadmin/EmailNotificationConfigurationTest.php -text
 lib/models/eimadmin/EmployStat.php -text
 lib/models/eimadmin/EthnicRace.php -text
+lib/models/eimadmin/Fluency.php -text
 lib/models/eimadmin/GenInfo.php -text
 lib/models/eimadmin/JobSpec.php -text
 lib/models/eimadmin/JobSpecTest.php -text
@@ -398,9 +399,17 @@ lib/models/performance/PerformanceReview.php -text
 lib/models/performance/PerformanceScore.php -text
 lib/models/performance/SalaryReview.php -text
 lib/models/recruitment/AllTests.php -text
+lib/models/recruitment/AppicantLanguageInformation.php -text
+lib/models/recruitment/ApplicantEducationInfo.php -text
+lib/models/recruitment/ApplicantEmployementInfo.php -text
+lib/models/recruitment/ApplicantLicenseInformation.php -text
+lib/models/recruitment/ApplicantSkills.php -text
+lib/models/recruitment/ApplicationFieldValue.php -text
+lib/models/recruitment/FormFieldBase.php -text
 lib/models/recruitment/JobApplication.php -text
 lib/models/recruitment/JobApplicationEvent.php -text
 lib/models/recruitment/JobApplicationEventTest.php -text
+lib/models/recruitment/JobApplicationField.php -text
 lib/models/recruitment/JobApplicationTest.php -text
 lib/models/recruitment/JobVacancy.php -text
 lib/models/recruitment/JobVacancyTest.php -text
