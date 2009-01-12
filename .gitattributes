@@ -206,6 +206,7 @@ lib/extractor/eimadmin/EXTRACTOR_EmailConfiguration.php -text
 lib/extractor/eimadmin/EXTRACTOR_EmailNotificationConfiguration.php -text
 lib/extractor/eimadmin/EXTRACTOR_EmpStat.php -text
 lib/extractor/eimadmin/EXTRACTOR_EthnicRace.php -text
+lib/extractor/eimadmin/EXTRACTOR_Fluency.php -text
 lib/extractor/eimadmin/EXTRACTOR_GenInfo.php -text
 lib/extractor/eimadmin/EXTRACTOR_JobSpec.php -text
 lib/extractor/eimadmin/EXTRACTOR_JobTitEmpStat.php -text
@@ -518,6 +519,7 @@ templates/eimadmin/emailConfiguration.php -text
 templates/eimadmin/emailNotificationConfiguration.php -text
 templates/eimadmin/empstat.php -text
 templates/eimadmin/ethnicrace.php -text
+templates/eimadmin/fluency.php -text
 templates/eimadmin/geninfo.php -text
 templates/eimadmin/jobSpec.php -text
 templates/eimadmin/jobtitle.php -text
