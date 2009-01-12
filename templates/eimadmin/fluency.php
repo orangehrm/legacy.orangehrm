@@ -211,7 +211,7 @@ function edit()
 		return;
 	}
 
-	var frm=document.frmSkills;
+	var frm=document.frmFluency;
 
 	for (var i=0; i < frm.elements.length; i++)
 		frm.elements[i].disabled = false;
@@ -221,20 +221,20 @@ function edit()
 
 	function addUpdate() {
 
-		if (document.frmSkills.txtSkillName.value == '') {
+		if (document.frmFluency.txtFluencyName.value == '') {
 		        alert("<?php echo $lang_Admin_Skill_Errors_NameCannotBeBlank; ?>");
 			return false;
 		}
 
-		document.frmSkills.sqlState.value = "UpdateRecord";
-		document.frmSkills.submit();
+		document.frmFluency.sqlState.value = "UpdateRecord";
+		document.frmFluency.submit();
 	}
 
 	function clearAll() {
 		if(document.Edit.title!='Save')
 			return;
 
-			document.frmSkills.txtSkillName.value = '';
+			document.frmFluency.txtFluencyName.value = '';
 	}
 </script>
 <link href="../../themes/<?php echo $styleSheet;?>/css/style.css" rel="stylesheet" type="text/css">
@@ -244,14 +244,14 @@ function edit()
 <table width='100%' cellpadding='0' cellspacing='0' border='0' class='moduleTitle'>
   <tr>
     <td valign='top'></td>
-    <td width='100%'><h2><?php echo "$lang_Menu_Admin_Skills : $lang_Menu_Admin_Skills_Skills"; ?></h2></td>
+    <td width='100%'><h2><?php echo "$lang_Menu_Admin_fluency : $lang_Menu_Admin_fluency"; ?></h2></td>
     <td valign='top' align='right' nowrap style='padding-top:3px; padding-left: 5px;'></td>
   </tr>
 </table>
 <p>
 <p>
 <table width="431" border="0" cellspacing="0" cellpadding="0" ><td width="177">
-<form name="frmSkills" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>&id=<?php echo $this->getArr['id']?>">
+<form name="frmFluency" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>&id=<?php echo $this->getArr['id']?>">
 
   <tr>
     <td height="27" valign='top'> <p> <img title="Back" onMouseOut="this.src='../../themes/beyondT/pictures/btn_back.gif';" onMouseOver="this.src='../../themes/beyondT/pictures/btn_back_02.gif';" src="../../themes/beyondT/pictures/btn_back.gif" onClick="goBack();">
@@ -292,25 +292,15 @@ function edit()
                   <td><table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
 							  <tr>
 							    <td><?php echo $lang_Commn_code; ?></td>
-							    <td> <input type="hidden"  name="txtSkillID" value=<?php echo $message[0][0]?>> <strong><?php echo $message[0][0]?></strong> </td>
+							    <td> <input type="hidden"  name="txtFluencyCode" value=<?php echo $message[0][0]?>> <strong><?php echo $message[0][0]?></strong> </td>
 							  </tr>
 							  <tr>
 							    <td nowrap valign="top"><span class="error">*</span> <?php echo $lang_Commn_name; ?></td>
 <?php
-								 /* Remove newlines from the skill name.
-                                                                  * Earlier, skill name was a textarea and can contain new lines in it
-                                                                  */
-								 $skillName = preg_replace("/[\n\r]/"," ",trim($message[0][1]) );
+								 $fluecnyName = preg_replace("/[\n\r]/"," ",trim($message[0][1]) );
 ?>
-							  	  <td align="left" valign="top"> <input type="text" name='txtSkillName' disabled tabindex='3'  value="<?php echo $skillName ?>" ></td>
+							  	  <td align="left" valign="top"> <input type="text" name='txtFluencyName' disabled tabindex='3'  value="<?php echo $fluecnyName ?>" ></td>
 							  </tr>
-							  <tr>
-							    <td nowrap valign="top"> <?php echo $lang_Commn_description; ?></td>
-							  	  <td align="left" valign="top">
-							              <textarea name='txtSkillDesc' disabled rows="3" cols="30" tabindex='3' ><?php echo $message[0][2]?></textarea>
-                                                            </td>
-							  </tr>
-
 					  <tr><td></td><td align="right" width="100%">
 <?php			if($locRights['edit']) { ?>
 			        <img src="../../themes/beyondT/pictures/btn_edit.gif" title="Edit" onMouseOut="mout();" onMouseOver="mover();" name="Edit" onClick="edit();">

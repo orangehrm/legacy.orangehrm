@@ -293,6 +293,11 @@ class ViewController {
 				$res = $this-> skills -> delSkills($arrList);
 				break;
 
+			case 'FLU' :
+				$this-> fluency = new Fluency();
+				$res = $this-> fluency -> delFluency($arrList);
+				break;
+
 			case 'ETH' :
 
 				$this-> ethnicrace = new EthnicRace();
@@ -1507,6 +1512,11 @@ class ViewController {
 									$res = $skill -> updateSkills();
 									break;
 
+				case 'FLU'  :		$fluency = new Fluency();
+									$fluency = $object;
+									$res = $fluency -> updateFluency();
+									break;
+
 				case 'ETH'  :		$ethnicrace = new EthnicRace();
 									$ethnicrace = $object;
 									$res = $ethnicrace -> updateEthnicRace();
@@ -2218,12 +2228,12 @@ class ViewController {
 							}
 
 							break;
+
 			case 'FLU' :	$form_creator ->formPath = '/templates/eimadmin/fluency.php';
 							$fluency = new Fluency();							
 							if($getArr['capturemode'] == 'updatemode') {
-								$form_creator ->popArr['editArr'] = $skill ->filterSkills($getArr['id']);
+								$form_creator ->popArr['editArr'] = $fluency->filterFluency($getArr['id']);
 							}
-
 							break;
 
 			case 'ETH' :	$form_creator ->formPath = '/templates/eimadmin/ethnicrace.php';

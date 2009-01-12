@@ -863,6 +863,11 @@ function preloadAllImages() {
 	            			<?php echo $lang_Menu_Recruit_JobVacancies; ?>
 	            		</a>
 	            	</li>
+	            	<li id="jobVacancies">
+	            		<a href="lib/controllers/CentralController.php?recruitcode=Application_Config&action=List" target="rightMenu">
+	            			<?php echo $lang_Recruit_Applicaton_configure; ?>
+	            		</a>
+	            	</li>
                     <?php }
                     if ($_SESSION['isAdmin']=='Yes' || $_SESSION['isManager'] || $_SESSION['isDirector']) {
                     ?>

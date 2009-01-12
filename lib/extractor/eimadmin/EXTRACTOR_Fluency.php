@@ -31,9 +31,9 @@ class EXTRACTOR_Fluency {
 	}
 
 	function parseEditData($postArr) {			
-		$this->parent_fluency -> setFluencyCode(trim($postArr['txtFluencyId']));
-		$this->parent_fluency -> setSkillName(trim($postArr['txtFluencyName']));
-		return $this->parent_skills;
+		$this->parent_fluency -> setFluencyCode(trim($postArr['txtFluencyCode']));
+		$this->parent_fluency -> setDescripton(trim($postArr['txtFluencyName']));
+		return $this->parent_fluency;
 	}
 
 }

@@ -198,6 +198,43 @@ class RecruitmentController {
                 }
 
 	            break;
+	       case 'Application_Config' :
+				$viewListExtractor = new EXTRACTOR_ViewList();
+
+	            switch ($_GET['action']) {
+
+	                case 'List' :
+	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
+	                    $this->_viewVacancies($searchObject);
+	                    break;
+
+	                case 'View' :
+	                	$id = isset($_GET['id'])? $_GET['id'] : null;
+	                	$this->_viewVacancy($id);
+						break;
+
+	                case 'ViewAdd' :
+	                	$this->_viewAddVacancy();
+	                	break;
+
+					case 'Add' :
+						$extractor = new EXTRACTOR_JobVacancy();
+						$vacancy = $extractor->parseData($_POST);
+						$this->_addVacancy($vacancy);
+						break;
+
+					case 'Update' :
+						$extractor = new EXTRACTOR_JobVacancy();
+						$vacancy = $extractor->parseData($_POST);
+						$this->_updateVacancy($vacancy);
+						break;
+
+	                case 'Delete' :
+	                    $ids = $_POST['chkID'];
+	                    $this->_deleteVacancies($ids);
+	                	break;
+	            }
+                break;
 	    }
     }
 
