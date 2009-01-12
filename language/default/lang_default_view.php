@@ -70,7 +70,13 @@ switch ($_GET['uniqcode']) {
 			$headings= array($lang_view_SkillID,$lang_view_SkillName);
 			$headingInfo = array($lang_view_SkillID,$lang_view_SkillName,1,"$lang_Menu_Admin_Skills : $lang_Menu_Admin_Skills",$lang_view_message3);
 			break;
-
+		
+		case 'FLU' :
+			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name );
+			$headings= array($lang_view_FluencyId,$lang_view_FlencyDescripton);
+			$headingInfo = array($lang_view_FluencyId,$lang_view_FlencyDescripton,1,"$lang_Menu_Admin_fluency : $lang_Menu_Admin_fluency",$lang_view_message3);
+			break;
+			
 		case 'LOC' :
 			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name, $lang_view_CityName);
 			$headings= array("$lang_compstruct_Location $lang_view_ID",$lang_view_LocationName, $lang_view_CityName);
@@ -94,7 +100,7 @@ switch ($_GET['uniqcode']) {
 			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name );
 			$headings= array("$lang_empview_Language $lang_view_ID",$lang_view_LanguagName);
 			$headingInfo = array ("$lang_empview_Language $lang_view_ID",$lang_view_LanguagName,1,"$lang_Menu_Admin_Skills : $lang_Menu_Admin_Skills_Languages",$lang_view_message21);
-			break;
+			break;		
 
 		case 'MME' :
 			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_view_ID , $lang_Commn_name, $lang_view_Type);

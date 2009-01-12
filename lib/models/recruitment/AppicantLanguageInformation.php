@@ -23,7 +23,7 @@ require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
  */
 class AppicantLanguageInformation {
 	
-	const TABLE = 'appicant_language_information';
+	const TABLE = 'hs_hr_appicant_language_information';
 	
 	const ID = 'id';
 	private $iD;
@@ -108,13 +108,11 @@ class AppicantLanguageInformation {
 	}
 	
 	public function save() {
-		$sqlBuilder = new SQLQBuilder ( );
-		$insetFields [] = self::ID;
+		$sqlBuilder = new SQLQBuilder ( );		
 		$insetFields [] = self::APPLICATION_ID;
 		$insetFields [] = self::FLUENCY_CODE;
-		$insetFields [] = self::LANG_CODE;
+		$insetFields [] = self::LANG_CODE;		
 		
-		$values [] = $this->getID ();
 		$values [] = $this->getApplicationId ();
 		$values [] = $this->getFluencyCode ();
 		$values [] = $this->getLangCode ();

@@ -1080,6 +1080,9 @@ function preloadAllImages() {
                     <TR>
                       <TD onMouseOver="ypSlideOutMenu.showMenu('menu4')" onMouseOut="ypSlideOutMenu.hideMenu('menu4')" vAlign=center align=left width=142 height=17><A class=rollmenu href="index.php?uniqcode=LAN&menu_no=3&submenutop=EIMModule&menu_no_top=eim"><?php echo $lang_Menu_Admin_Skills_Languages; ?></A></TD>
                     </TR>
+                    <TR>
+                      <TD onMouseOver="ypSlideOutMenu.showMenu('menu4')" onMouseOut="ypSlideOutMenu.hideMenu('menu4')" vAlign=center align=left width=142 height=17><A class=rollmenu href="index.php?uniqcode=FLU&menu_no=3&submenutop=EIMModule&menu_no_top=eim"><?php echo $lang_Menu_Admin_fluency; ?></A></TD>
+                    </TR>
                     </TBODY>
                   </TABLE>
                 </DIV>

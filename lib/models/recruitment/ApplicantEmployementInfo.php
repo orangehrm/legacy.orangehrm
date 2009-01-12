@@ -9,7 +9,7 @@
  */
 class ApplicantEmployementInfo {
 	
-	const TABLE = 'applicant_employement_info';
+	const TABLE = 'hs_hr_applicant_employement_info';
 	/**
 	 * @orm employer char
 	 */
@@ -125,7 +125,7 @@ class ApplicantEmployementInfo {
 		$insetFields [] = self::DUTIES;
 		$insetFields [] = self::EMPLOYER;
 		$insetFields [] = self::END_DATE;
-		$insetFields [] = self::ID;
+		//$insetFields [] = self::ID;
 		$insetFields [] = self::JOB_TITLE;
 		$insetFields [] = self::START_DATE;	
 		
@@ -133,7 +133,7 @@ class ApplicantEmployementInfo {
 		$values [] = $this->getDuties();
 		$values [] = $this->getEmployer();
 		$values [] = $this->getEndDate();
-		$values [] = $this->getID();
+		//$values [] = $this->getID();
 		$values [] = $this->getJobTitle();
 		$values [] = $this->getStartDate();		
 		

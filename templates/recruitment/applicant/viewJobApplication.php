@@ -55,7 +55,10 @@ $vacancy = $records['vacancy'];
 $countryList = $records['countryList'];
 $company = $records['company'];
 $applicationFields=$records['applicationFields'];
-
+$skills=$records['skills'];
+$licenses=$records['licensesCodes'];
+$languages=$records['language'];
+$flencies=$records['fluency'];
 $formAction = $_SERVER['PHP_SELF'] . '?recruitcode=ApplicantApply';
 
 $picDir = "../../themes/{$styleSheet}/pictures/";
@@ -65,6 +68,8 @@ $backImg = $picDir . 'btn_back.gif';
 $backImgPressed = $picDir . 'btn_back_02.gif';
 
 $saveImg = $iconDir . 'apply.gif';
+
+$addImg = $picDir . 'btn_add.gif';
 $saveImgPressed = $iconDir . 'apply_o.gif';
 
 $clearImg = $picDir . 'btn_clear.gif';
@@ -91,10 +96,37 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
     }
 
 	function validate() {
-	return true;
-	exit;
+	
 		err = false;
+
 		var msg = '<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
+		
+		if(emplyeeinfoCount==0){
+			msg+='Please enter employeement information \n'; err=true;
+		}
+		if(skillCount==0){
+			msg+='Please enter Skills information \n'; err=true;
+		}
+		if(licenseInfoCount==0){
+			msg+='Please enter Licenses information \n'; err=true;
+		}
+		if(languageInfoCount==0){
+			msg+='Please enter Language information \n'; err=true;
+		}
+		if(educationInfoCount==0){
+			msg+='Please enter Educational information \n'; err=true;
+		}
+		if(err==true){
+			alert(msg);
+			return false;
+		}else{
+			return true;
+		}
+		
+		
+	//return true;
+	exit;
+		
 		var errors = new Array();
 
 		var fields = new Array("txtFirstName", "txtMiddleName", "txtLastName", "txtStreet1",
@@ -214,8 +246,18 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	}
 	
 	var emplyeeinfoCount=0;
+	var skillCount=0;
+	var licenseInfoCount=0;
+	var languageInfoCount=0;
+	var educationInfoCount=0;
+	
+	function validateListBox(){
+	
+	}
 	
 	function addMore(cat) {	
+		var err=false;
+		var msg='';
 		tbody = document.getElementById(cat);		
 		var tableRow = document.createElement('tr');
 		str='';
@@ -226,27 +268,27 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_employer').value;
-			 td.innerHTML="<input type='hidden' id='form_employer[]' name='form_employer[]' value='"+value+"' />"+value;
+			 td.innerHTML="<input type='hidden' id='employer[]' name='employer[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);
 			 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_job_title').value;
-			 td.innerHTML="<input type='hidden' id='form_job_title[]' name='form_job_title[]' value='"+value+"' />"+value;
+			 td.innerHTML="<input type='hidden' id='job_title[]' name='job_title[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);
 			 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_start_date').value;
-			 td.innerHTML="<input type='hidden' id='form_start_date[]' name='form_start_date[]' value='"+value+"' />"+value;
+			 td.innerHTML="<input type='hidden' id='start_date[]' name='start_date[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);
 			 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_end_date').value;
-			 td.innerHTML="<input type='hidden' id='form_end_date[]' name='form_end_date[]' value='"+value+"' />"+value;
+			 td.innerHTML="<input type='hidden' id='end_date[]' name='end_date[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);
 			 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_duties').value;
-			 td.innerHTML="<input type='hidden' id='form_duties[]' name='form_duties[]' value='"+value+"'>"+value;
+			 td.innerHTML="<input type='hidden' id='duties[]' name='duties[]' value='"+value+"'>"+value;
 			 td.setAttribute('style', 'white-space:pre');
 			 tableRow.appendChild(td);
 			 
@@ -254,41 +296,138 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 td.innerHTML="<input type='button' value='delete' onclick=\"deleteRow('"+emplyeeinfoCount+"','"+cat+"')\" style='width:40px;'/>";
 			 tableRow.appendChild(td);			 
 		}
-		skillCount=0;
+		
 		if(cat=='skill_info'){
 			 skillCount++;
 			 elementName=cat+'_'+skillCount;
 			 tableRow.setAttribute('id',elementName);
 			 
 			 td=document.createElement('td');
-			 value=document.getElementById('form_skill').value;
-			 td.innerHTML="<input type='hidden' id='form_skill[]' name='form_skill[]' value='"+value+"' />"+value;
+			 elm=document.getElementById("form_skill");			 
+			 value=elm.value;
+			 text= elm.options[elm.selectedIndex].text;			
+			 if(value< 0){
+			 	err=true; msg='Please select a Skill';
+			 }
+			 td.innerHTML="<input type='hidden' id='skill[]' name='skill[]' value='"+value+"' />"+text;
 			 tableRow.appendChild(td);
 			 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_skill_years_of_experience').value;
-			 td.innerHTML="<input type='hidden' id='form_skill_years_of_experience[]' name='form_skill_years_of_experience[]' value='"+value+"' />"+value;
+			 td.innerHTML="<input type='hidden' id='skill_years_of_experience[]' name='skill_years_of_experience[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);			 
 			 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_skill_comments').value;
-			 td.innerHTML="<input type='hidden' id='form_skill_comments[]' name='form_skill_comments[]' value='"+value+"'>"+value;
+			 td.innerHTML="<input type='hidden' id='skill_comments[]' name='skill_comments[]' value='"+value+"'>"+value;
 			 td.setAttribute('style', 'white-space:pre');
 			 tableRow.appendChild(td);
 			 
 			 td=document.createElement('td');			
 			 td.innerHTML="<input type='button' value='delete' onclick=\"deleteRow('"+skillCount+"','"+cat+"')\" style='width:40px;'/>";
 			 tableRow.appendChild(td);			 
+		}		
+		
+		if(cat=='license_info'){
+			 licenseInfoCount++;
+			 elementName=cat+'_'+licenseInfoCount;
+			 tableRow.setAttribute('id',elementName);
+			 
+			 td=document.createElement('td');
+			 elm=document.getElementById("form_license_type");			 
+			 value=elm.value;
+			 text= elm.options[elm.selectedIndex].text;
+			 if(value< 0){
+			 	err=true; msg='Please select a License type a skill';
+			 }
+			 td.innerHTML="<input type='hidden' id='license_type[]' name='license_type[]' value='"+value+"' />"+text;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_licens_exp_date').value;
+			 td.innerHTML="<input type='hidden' id='licens_exp_date[]' name='licens_exp_date[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');			
+			 td.innerHTML="<input type='button' value='delete' onclick=\"deleteRow('"+licenseInfoCount+"','"+cat+"')\" style='width:40px;'/>";
+			 tableRow.appendChild(td);			 
 		}
 		
-		tbody.appendChild(tableRow);		
+		if(cat=='language_info'){
+			 languageInfoCount++;
+			 elementName=cat+'_'+languageInfoCount;
+			 tableRow.setAttribute('id',elementName);
+			 
+			 td=document.createElement('td');
+			 elm=document.getElementById("form_language_language");			 
+			 value=elm.value;
+			 text= elm.options[elm.selectedIndex].text;
+			 if(value< 0){
+			 	err=true; msg='Please select a Language';
+			 }		 
+			 td.innerHTML="<input type='hidden' id='language_language[]' name='language_language[]' value='"+value+"' />"+text;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 elm=document.getElementById("form_language_fluency");			 
+			 value=elm.value;
+			 text= elm.options[elm.selectedIndex].text;	
+			 if(value< 0){
+			 	err=true; msg='Please select a Fluency';
+			 }
+			 td.innerHTML="<input type='hidden' id='language_fluency[]' name='language_fluency[]' value='"+value+"' />"+text;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');			
+			 td.innerHTML="<input type='button' value='delete' onclick=\"deleteRow('"+languageInfoCount+"','"+cat+"')\" style='width:40px;'/>";
+			 tableRow.appendChild(td);				 
+		}	
+		
+		if(cat=='education_info'){
+			 educationInfoCount++;
+			 elementName=cat+'_'+educationInfoCount;
+			 tableRow.setAttribute('id',elementName);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_education_education').value;
+			 td.innerHTML="<input type='hidden' id='education_education[]' name='education_education[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_education_major').value;
+			 td.innerHTML="<input type='hidden' id='education_major[]' name='education_major[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);			
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_education_year').value;
+			 td.innerHTML="<input type='hidden' id='education_year[]' name='education_year[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');
+			 value=document.getElementById('form_education_score').value;
+			 td.innerHTML="<input type='hidden' id='education_score[]' name='education_score[]' value='"+value+"' />"+value;
+			 tableRow.appendChild(td);
+			 
+			 td=document.createElement('td');			
+			 td.innerHTML="<input type='button' value='delete' onclick=\"deleteRow('"+educationInfoCount+"','"+cat+"')\" style='width:40px;'/>";
+			 tableRow.appendChild(td);				 
+		}	
+		if(value< 0){
+			 	err=true; msg='Please select a Fluency';
+			 }
+			 if(err){
+			 	alert(msg);
+			 }else{
+			 	tbody.appendChild(tableRow);
+			 }
+		
 	}
 	
-	function deleteRow(emplyeeinfoCount,cat){	
-		tbody =  $(cat);
-		var element = document.getElementById(cat+'_'+emplyeeinfoCount);
+	function deleteRow(applicatonInfo,cat){	
+		tbody =  $(cat);		
+		var element = document.getElementById(cat+'_'+applicatonInfo);
 		tbody.removeChild(element);
-		eval("emplyeeinfoCount=emplyeeinfoCount-1");
+		eval("applicatonInfo=applicatonInfo-1");
 
 	}
 
@@ -457,14 +596,14 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         <!-- Employment Information----------------------------------------->
         <label for="txtEmail"><?php echo "Employment Information" ?></label><br/>
         <div style="margin-left: 20px;">  
-	        <label for="employer"><?php echo "Employer" ?></label> <input type="text" id="form_employer" name="form_employer" ><br/>
+	        <label for="employer"><?php echo "Employer" ?></label> <input type="text" id="form_employer" name="form_employer" >
 	        <label for="job_title"><?php echo "Job Title" ?></label> <input type="text" id="form_job_title" name="form_job_title" ><br/>
 	        <label for="start_date"><?php echo "Start Date" ?></label> <input type="text" readonly id="form_start_date" name="form_start_date"  onchange="fillToDate();" onfocus="fillToDate();" >
-	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"  /><br/>
+	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"  />
 	        <label for="end_date"><?php echo "End Date" ?></label> <input type="text" readonly id="form_end_date" name="form_end_date"  onchange="fillToDate();" onfocus="fillToDate();" >
 	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"/><br/>
 	        <label for="duties"><?php echo "Duties" ?></label> <textarea type="text" id="form_duties" name="form_duties"></textarea><br/>
-		<img onClick="addMore('employeement_info');" id="saveBtn"	src="<?php echo $saveImg;?>">	
+		<img onClick="addMore('employeement_info');" id="saveBtn"	src="<?php echo $addImg;?>">	
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="employeement_info" >
 		
@@ -475,26 +614,100 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		<!-- Skills ----------------------------------------->
 		<label for="txtEmail"><?php echo "Skills" ?></label><br/>
         <div style="margin-left: 20px;">  
-	        <label for="skill"><?php echo "Skill" ?></label> <input type="text" id="form_skill" name="form_skill" ><br/>
+	        <label for="skill"><?php echo "Skill" ?></label> 
+	        <select id="form_skill" name="form_skill">
+	        <option value="-1" selected="selected">-select-</option>
+	        <?php	if(sizeof($skills)>0){ 
+	        			foreach ($skills as $skill){?>
+	        				<option value="<?php echo $skill[0] ?>"><?php echo $skill[1] ?></option>
+	        <?php 		}
+	       			}  ?>
+	        </select>
 	        <label for="form_skill_years_of_experience"><?php echo "Years of experience" ?></label> <input type="text" id="form_skill_years_of_experience" name="form_skill_years_of_experience" ><br/>
 	        <label for="skill_comments"><?php echo "Comments" ?></label> <textarea type="text" id="form_skill_comments" name="form_skill_comments"></textarea><br/>
-		<img onClick="addMore('skill_info');" id="saveBtn"	src="<?php echo $saveImg;?>">	
+		<img onClick="addMore('skill_info');" id="saveBtn"	src="<?php echo $addImg;?>">	
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="skill_info" >
 		
 		</tbody>
 		</table>
 		</div>
+		
+		<!-- License Information ----------------------------------------->
+		<label for="txtEmail"><?php echo "License Information" ?></label><br/>
+        <div style="margin-left: 20px;">  
+	        <label for="form_license_type"><?php echo "License Type " ?></label> 
+	        <select id="form_license_type" name="form_license_type">
+	        <option value="-1" selected="selected">-select-</option>
+	        <?php	if(sizeof($licenses)>0){ 
+	        			foreach ($licenses as $license){?>
+	        				<option value="<?php echo $license[0] ?>"><?php echo $license[1] ?></option>
+	        <?php 		}
+	       			}  ?>
+	        </select>	            
+	        <label for="form_licens_exp_date"><?php echo "Expiry Date" ?></label> <input type="text" readonly id="form_licens_exp_date" name="form_licens_exp_date"  onchange="fillToDate();" onfocus="fillToDate();" >
+	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"  /><br/>	        
+		<img onClick="addMore('license_info');" id="saveBtn"	src="<?php echo $addImg;?>">	
+		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
+		<tbody id="license_info" >
+		
+		</tbody>
+		</table>
+		</div>
+		
+		
+		<!--Language Information ----------------------------------------->
+		<label for="txtEmail"><?php echo "Language Information " ?></label><br/>
+        <div style="margin-left: 20px;">  
+	        <label for="form_language_language"><?php echo "Language  " ?></label> 
+	         <select id="form_language_language" name="form_language_language">
+	        <option value="-1" selected="selected">-select-</option>
+	        <?php	if(sizeof($languages)>0){ 
+	        			foreach ($languages as $language){?>
+	        				<option value="<?php echo $language[0] ?>"><?php echo $language[1] ?></option>
+	        <?php 		}
+	       			}  ?>
+	        </select>
+	          
+	        <label for="form_language_fluency"><?php echo "Fluency  " ?></label> 
+	        <select id="form_language_fluency" name="form_language_fluency">
+	        <option value="-1" selected="selected">-select-</option>
+	        <?php	if(sizeof($flencies)>0){ 
+	        			foreach ($flencies as $flency){?>
+	        				<option value="<?php echo $flency[0] ?>"><?php echo $flency[1] ?></option>
+	        <?php 		}
+	       			}  ?>
+	        </select><br/>
+		<img onClick="addMore('language_info');" id="saveBtn"	src="<?php echo $addImg;?>"><br/>
+		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
+		<tbody id="language_info" >
+		
+		</tbody>
+		</table>
+		</div>
+		
+		<!--Education Information ----------------------------------------->
+		<label for="txtEmail"><?php echo "Education Information " ?></label><br/>
+        <div style="margin-left: 20px;">  
+	        <label for="form_education_education"><?php echo "Education " ?></label> <input type="text" id="form_education_education" name="form_education_education" />	      
+	        <label for="form_education_major"><?php echo "Major/Specialization " ?></label> <input type="text" id="form_education_major" name="form_education_major" /><br/>
+	         <label for="form_education_year"><?php echo "Year completed (Year) " ?></label> <input type="text" id="form_education_year" name="form_education_year" />      
+	        <label for="form_education_score"><?php echo "Average score " ?></label> <input type="text" id="form_education_score" name="form_education_score" /><br/>	
+		<img onClick="addMore('education_info');" id="saveBtn"	src="<?php echo $addImg;?>">
+		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
+		<tbody id="education_info" >
+		
+		</tbody>
+		</table>
+		</div>
+		
 		<?php foreach ($applicationFields as $field){ ?>
 		<label for="<?php echo $field->getLable() ?>"><span class="error"><?php echo ($field->getRequired())?"*":""?></span><?php echo $field->getLable(); ?></label>
 			<?php 				
 				echo $field->drawElement()."<br/>";		
-		
-			 } ?>
-
-		<label for="txtQualifications"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Qualifications; ?></label>
-        <textarea id="txtQualifications" name="txtQualifications" tabindex="13" ></textarea><br/><br/>
-
+			 } ?>		
+        <input type="hidden" id="txtQualifications" name="txtQualifications" tabindex="13" />
+		<br/><br/>
         <div align="left">
             <img onClick="save();" id="saveBtn"
 				onMouseOut="this.src='<?php echo $saveImg;?>';"

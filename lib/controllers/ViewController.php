@@ -202,7 +202,7 @@ class ViewController {
 			case 'PAC' :
 						$this->reDirect($getArr);
 						break;
-			default:
+			default:				
 						$form_creator = new FormCreator($getArr,$postArr);
 						$form_creator ->formPath ='/view.php';
 
@@ -429,6 +429,11 @@ class ViewController {
 
 			$this-> skills = new Skills();
 			$message = $this-> skills -> getListofSkills($pageNO,$schStr,$mode, $sortField, $sortOrder);
+			return $message;
+		case 'FLU' :
+
+			$this-> fluency = new Fluency();
+			$message = $this-> fluency -> getFluencyCodes($pageNO,$schStr,$mode, $sortField, $sortOrder);
 			return $message;
 
 		case 'ETH' :
@@ -908,7 +913,7 @@ class ViewController {
 	}
 
 
-	function addData($index,$object,$noRedirect = false) {
+	function addData($index,$object,$noRedirect = false) {		
 		try {
 			switch ($index) {
 
@@ -1081,6 +1086,11 @@ class ViewController {
 				case 'SKI'  :		$skill = new Skills();
 									$skill = $object;
 									$res = $skill -> addSkills();
+									break;
+									
+				case 'FLU'  :		$fluency = new Fluency();
+									$fluency = $object;
+									$res = $fluency -> save();
 									break;
 
 				case 'ETH'  :		$ethnicrace = new EthnicRace();
@@ -2203,6 +2213,13 @@ class ViewController {
 			case 'SKI' :	$form_creator ->formPath = '/templates/eimadmin/skills.php';
 							$skill = new Skills();
 
+							if($getArr['capturemode'] == 'updatemode') {
+								$form_creator ->popArr['editArr'] = $skill ->filterSkills($getArr['id']);
+							}
+
+							break;
+			case 'FLU' :	$form_creator ->formPath = '/templates/eimadmin/fluency.php';
+							$fluency = new Fluency();							
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $skill ->filterSkills($getArr['id']);
 							}

@@ -78,6 +78,7 @@ require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_Projects.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_ProjectAdmin.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_ProjectActivity.php';
 require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_SimpleBenefit.php';
+require_once ROOT_PATH . '/lib/extractor/eimadmin/EXTRACTOR_Fluency.php';
 
 require_once ROOT_PATH . '/lib/extractor/maintenance/EXTRACTOR_Bugs.php';
 require_once ROOT_PATH . '/lib/extractor/maintenance/EXTRACTOR_Users.php';
@@ -96,6 +97,7 @@ require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpMembership.php';
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpWorkExp.php';
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpQualification.php';
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpPassPort.php';
+
 
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpAttach.php';
 require_once ROOT_PATH . '/lib/extractor/hrfunct/EXTRACTOR_EmpRepTo.php';
@@ -441,6 +443,12 @@ switch ($moduletype) {
 										}
 
 										break;
+						case 'FLU'	:
+										if(isset($_POST['sqlState'])) {
+											$extractor = new EXTRACTOR_Fluency();
+										}
+
+										break;
 
 						case 'EXA'	:
 										if(isset($_POST['sqlState'])) {
@@ -733,15 +741,15 @@ switch ($moduletype) {
 							$parsedObject = $extractor->parseData($_POST);
 							$view_controller -> reDirect($_GET,$parsedObject);
 							break;
-						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'addmode') {
+						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'addmode') {							
 							$extObject = $extractor->reloadData($_POST);
 							$view_controller -> reDirect($_GET,$extObject);
 							break;
-						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'updatemode') {
+						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'updatemode') {							
 							$extObject = $extractor->reloadData($_POST);
 							$view_controller -> reDirect($_GET,$extObject);
 							break;
-						} else {
+						} else {													
 							$view_controller -> reDirect($_GET);
 							break;
 						}

@@ -138,6 +138,10 @@
 	$lang_Menu_Admin_Skills 					= "Skills";
 	$lang_Menu_Admin_Skills_Skills 				= "Skills";
 	$lang_Menu_Admin_Skills_Languages 			= "Languages";
+	
+	$lang_Menu_Admin_fluency 					= 	"Fluency";
+	$lang_view_FluencyId						=	"Flecny Id";
+	$lang_view_FlencyDescripton					=	"Name";
 
 	$lang_Menu_Admin_Memberships 					= "Memberships";
 	$lang_Menu_Admin_Memberships_Memberships 		= "Memberships";

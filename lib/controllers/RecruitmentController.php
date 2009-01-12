@@ -30,12 +30,22 @@ require_once ROOT_PATH . '/lib/models/eimadmin/CountryInfo.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/ProvinceInfo.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/JobTitle.php';
 require_once ROOT_PATH . '/lib/models/eimadmin/GenInfo.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/Skills.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/Licenses.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/Fluency.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/LanguageInfo.php';
 require_once ROOT_PATH . '/lib/models/hrfunct/EmpInfo.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobVacancy.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplication.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/models/recruitment/RecruitmentMailNotifier.php';
 require_once ROOT_PATH . '/lib/models/recruitment/RecruitmentAuthManager.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEmployementInfo.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantSkills.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantLicenseInformation.php';
+require_once ROOT_PATH . '/lib/models/recruitment/AppicantLanguageInformation.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEducationInfo.php';
+
 require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_ViewList.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobVacancy.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobApplication.php';
@@ -344,6 +354,12 @@ class RecruitmentController {
 		$fields=$field->fetchApplicationFields();	
 		
 		$objs['vacancy'] = JobVacancy::getJobVacancy($id);
+				
+		$objs['skills'] = Skills::getSkillCodes();
+		$objs['licensesCodes'] = Licenses::getLicensesCodes();
+		$objs['language'] = LanguageInfo::getLang();
+		$objs['fluency'] = Fluency::getFluencyCodes();
+		
 		$objs['applicationFields']=$fields;
 		$objs['applicationData']=$fieldsData;
 		$countryinfo = new CountryInfo();
@@ -365,7 +381,73 @@ class RecruitmentController {
 		$extractor = new EXTRACTOR_JobApplication();
 		$jobApplication = $extractor->parseData($_POST);
 		try {
-		    $jobApplication->save();		      
+		    $jobApplication->save();
+				    /* saving employeement info */		
+				if(isset($_REQUEST['employer']) && sizeof($_REQUEST['employer'])){
+					$employers=$_REQUEST['employer'];
+					$applicatnEmployer=new ApplicantEmployementInfo();
+					foreach ($employers as $key=>$emploer){
+						$applicatnEmployer->setApplicationId($jobApplication->getId());
+						$applicatnEmployer->setDuties($_REQUEST['duties'][$key]);
+						$applicatnEmployer->setEmployer($emploer);
+						$applicatnEmployer->setEndDate($_REQUEST['end_date'][$key]);
+						$applicatnEmployer->setJobTitle($_REQUEST['job_title'][$key]);
+						$applicatnEmployer->setStartDate($_REQUEST['start_date'][$key]);
+						$applicatnEmployer->save();				
+					}			
+				}
+				/* saving skill  info */
+				if(isset($_REQUEST['skill']) && sizeof($_REQUEST['skill'])){			
+					$skills=$_REQUEST['skill'];
+					$applicantSkill=new ApplicantSkills();
+					foreach ($skills as $key=>$skill){
+						$applicantSkill->setApplicationId($jobApplication->getId());
+						$applicantSkill->setComments($_REQUEST['skill_comments'][$key]);				
+						$applicantSkill->setSkillCode($_REQUEST['skill'][$key]);
+						$applicantSkill->setYearsOfExperience($_REQUEST['skill_years_of_experience'][$key]);				
+						$applicantSkill->save();						
+					}			
+				}
+				
+				/* saving License Information info */		
+				if(isset($_REQUEST['license_type']) && sizeof($_REQUEST['license_type'])){
+					$licenseInfo=$_REQUEST['license_type'];
+					$applicatnLicenseInfo=new ApplicantLicenseInformation();
+					foreach ($licenseInfo as $key=>$license){
+						$applicatnLicenseInfo->setApplicationId($jobApplication->getId());
+						$sysconf=new sysConf();
+						if($_REQUEST['licens_exp_date'][$key]!=$sysconf->getDateInputHint()) $applicatnLicenseInfo->setExpiryDate($_REQUEST['licens_exp_date'][$key]);
+						$applicatnLicenseInfo->setLecenseCode($_REQUEST['license_type'][$key]);				
+						$applicatnLicenseInfo->save();				
+					}			
+				}
+				
+				/* saving language Information info */		
+				if(isset($_REQUEST['language_language']) && sizeof($_REQUEST['language_language'])){
+					$languageInfo=$_REQUEST['language_language'];
+					$applicantLangInfo=new AppicantLanguageInformation();
+					foreach ($languageInfo as $key=>$lan){
+						$applicantLangInfo->setApplicationId($jobApplication->getId());
+						$applicantLangInfo->setFluencyCode($_REQUEST['language_fluency'][$key]);
+						$applicantLangInfo->setLangCode($_REQUEST['language_language'][$key]);				
+						$applicantLangInfo->save();				
+					}			
+				}
+				
+			/* saving Educational Information info */		
+				if(isset($_REQUEST['education_education']) && sizeof($_REQUEST['education_education'])){
+					$eduInfo=$_REQUEST['education_education'];
+					$applicantEduInfo=new ApplicantEducationInfo();
+					foreach ($eduInfo as $key=>$edu){
+						$applicantEduInfo->setApplicationId($jobApplication->getId());
+						$applicantEduInfo->setAverageScore($_REQUEST['education_score'][$key]);
+						$applicantEduInfo->setEducation($_REQUEST['education_education'][$key]);	
+						$applicantEduInfo->setMajorSpecialization($_REQUEST['education_major'][$key]);	
+						$applicantEduInfo->setYearCompleted($_REQUEST['education_year'][$key]);				
+						$applicantEduInfo->save();				
+					}			
+				}  
+		    
 		    foreach ($dynamicFields as $field){		    	
 		    	$field->setApplicationId($jobApplication->getId());		    	   	
 		    	$field->saveFieldData();

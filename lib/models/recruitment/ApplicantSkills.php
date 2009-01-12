@@ -7,7 +7,7 @@
  * @orm ApplicantSkills
  */
 class ApplicantSkills {
-	const TABLE = 'applicant_skills';
+	const TABLE = 'hs_hr_applicant_skills';
 	/**
 	 * @orm years_of_experience int
 	 */

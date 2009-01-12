@@ -5,7 +5,7 @@
  */
 class ApplicantLicenseInformation {
 	
-	const TABLE = 'applicant_license_information';
+	const TABLE = 'hs_hr_applicant_license_information';
 	/**
 	 * @orm expiry_date date
 	 */
@@ -96,15 +96,17 @@ class ApplicantLicenseInformation {
 	
 	public function save() {
 		$sqlBuilder = new SQLQBuilder ( );
+		
 		$insetFields [] = self::APPLICATION_ID;
-		$insetFields [] = self::EXPIRY_DATE;
-		$insetFields [] = self::ID;
-		$insetFields [] = self::LICENSE_CODE;
-		
 		$values [] = $this->getApplicationId ();
-		$values [] = $this->getExpiryDate ();
-		$values [] = $this->getID ();
 		
+		$insetFields [] = self::LICENSE_CODE;
+		$values [] = $this->getLecenseCode();
+		
+		if(strlen( $this->getExpiryDate ()>0)){
+			$insetFields [] = self::EXPIRY_DATE;
+			$values [] = $this->getExpiryDate ();
+		}		
 		$sql = $sqlBuilder->simpleInsert ( self::TABLE, $values, $insetFields );
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );

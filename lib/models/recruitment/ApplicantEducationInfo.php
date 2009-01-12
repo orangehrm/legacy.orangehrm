@@ -18,7 +18,7 @@
  */
 class ApplicantEducationInfo {
 	
-	const TABLE = 'applicant_education_info';
+	const TABLE = 'hs_hr_applicant_education_info';
 	/**
 	 * @orm major_specialization char
 	 */
@@ -135,8 +135,7 @@ class ApplicantEducationInfo {
 		$sqlBuilder = new SQLQBuilder ( );
 		$insetFields [] = self::APPLICATION_ID;
 		$insetFields [] = self::AVERAGE_SCORE;
-		$insetFields [] = self::EDU_CODE;
-		$insetFields [] = self::ID;
+		$insetFields [] = self::EDU_CODE;		
 		$insetFields [] = self::YEAR_COMPLEATED;
 		
 		$values [] = $this->getApplicationId ();
