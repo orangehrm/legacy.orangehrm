@@ -2,6 +2,7 @@
 /CHANGELOG.TXT -text
 /INSTALL.html -text
 /README.TXT -text
+/applicationconfigview.php -text
 /budgetview.php -text
 build/build.xml -text
 build/fix-ids.php -text
@@ -103,6 +104,7 @@ installer/progress.php -text
 installer/registration.php -text
 installer/style.css -text
 installer/welcome.php -text
+job/jobs.php -text
 /jobs.php -text
 language/da/lang_da_full.php -text
 language/default/lang_default_applicationconfigview.php -text
