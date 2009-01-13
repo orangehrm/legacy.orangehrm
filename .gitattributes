@@ -105,6 +105,7 @@ installer/style.css -text
 installer/welcome.php -text
 /jobs.php -text
 language/da/lang_da_full.php -text
+language/default/lang_default_applicationconfigview.php -text
 language/default/lang_default_budgetview.php -text
 language/default/lang_default_empview.php -text
 language/default/lang_default_full.php -text
@@ -267,6 +268,7 @@ lib/extractor/performance/EXTRACTOR_PerfMeasure.php -text
 lib/extractor/performance/EXTRACTOR_PerfReview.php -text
 lib/extractor/performance/EXTRACTOR_SalaryReview.php -text
 lib/extractor/recruitment/AllTests.php -text
+lib/extractor/recruitment/EXTRACTOR_ApplicationField.php -text
 lib/extractor/recruitment/EXTRACTOR_JobApplication.php -text
 lib/extractor/recruitment/EXTRACTOR_JobApplicationEvent.php -text
 lib/extractor/recruitment/EXTRACTOR_JobVacancy.php -text
@@ -612,6 +614,7 @@ templates/recruitment/applicant/header.php -text
 templates/recruitment/applicant/jobApplicationStatus.php -text
 templates/recruitment/applicant/viewJobApplication.php -text
 templates/recruitment/applicant/viewVacancies.php -text
+templates/recruitment/applicationField.php -text
 templates/recruitment/applicationList.php -text
 templates/recruitment/confirmAction.php -text
 templates/recruitment/footer.php -text
