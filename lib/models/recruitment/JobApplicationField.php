@@ -39,6 +39,9 @@ class JobApplicationField extends FormFieldBase {
 	const required = "required";
 	const tabOrder = "tab_order";
 	const subFieldLogic = "sub_field_logic";
+	const deleted=	"deleted";
+	
+	private $fieldTypes;
 	
 	/* this constant for the field data table many to many table relationship*/
 	const TABLE_FIELD_DATA = 'hs_hr_job_application_data';
@@ -52,7 +55,12 @@ class JobApplicationField extends FormFieldBase {
 	
 	//@orm has many ApplicationFieldValue inverse(field)
 	
-
+	
+	
+	public function getFieldTypes(){
+		return array(1=>'text',2=>'datefield',3=>'textarea',4=>'checkbox');
+	}
+	
 	public function getApplication() {
 		return $this->application;
 	}
@@ -68,10 +76,12 @@ class JobApplicationField extends FormFieldBase {
 		$this->applicationId = $applicationId;
 	}
 	
-	public function fetchApplicationFields() {
+	public function fetchApplicationFields($deleted=false) {
 		$sqlBuilder = new SQLQBuilder ( );
-		$fields [] = '*';
-		$sql = $sqlBuilder->simpleSelect ( self::TABLE_FIELD, $fields, null, JobApplicationField::tabOrder, "ASC" );
+		$fields [] = '*';		
+		if(!$deleted) $conditions[]=self::deleted."=0";
+		$sql = $sqlBuilder->simpleSelect ( self::TABLE_FIELD, $fields, $conditions, JobApplicationField::tabOrder, "ASC" );
+		
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		$objectArray = $this->_buildObjArr ( $result );
@@ -100,7 +110,45 @@ class JobApplicationField extends FormFieldBase {
 		$values [] = $this->getFieldValue ();
 		$values [] = $this->getFiledValueText ();
 		
-		$sql = $sqlBuilder->simpleInsert ( self::TABLE_FIELD_DATA, $values, $insetFields );
+		$sql = $sqlBuilder->simpleInsert ( self::TABLE_FIELD_DATA, $values, $insetFields );		
+		$conn = new DMLFunctions ( );
+		$result = $conn->executeQuery ( $sql );
+		return $result;
+	}
+	
+	public function saveField(){
+		$sqlBuilder = new SQLQBuilder ( );		
+		$insetFields [] = self::lable;
+		$insetFields [] = self::fieldType;
+		$insetFields [] = self::toolTip;
+		$insetFields [] = self::tabOrder;
+		
+		
+		$values [] = $this->getLable();
+		$values [] = $this->getFieldType();
+		$values [] = $this->getToolTip();
+		$values [] = $this->getTabOrder();
+		
+		$sql = $sqlBuilder->simpleInsert ( self::TABLE_FIELD, $values, $insetFields );		
+		$conn = new DMLFunctions ( );
+		$result = $conn->executeQuery ( $sql );
+		return $result;
+	}
+	public function updateField(){
+		$sqlBuilder = new SQLQBuilder ( );		
+		$changeFields [] = self::lable;
+		$changeFields [] = self::fieldType;
+		$changeFields [] = self::toolTip;
+		$changeFields [] = self::tabOrder;
+		
+		$conditions[]=self::id."='".$this->getId()."'";		
+		
+		$values [] = $this->getLable();
+		$values [] = $this->getFieldType();
+		$values [] = $this->getToolTip();
+		$values [] = $this->getTabOrder();
+		
+		$sql = $sqlBuilder->simpleUpdate(self::TABLE_FIELD, $changeFields, $values,$conditions);			
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		return $result;
@@ -128,6 +176,32 @@ class JobApplicationField extends FormFieldBase {
 		return $dynamicData;
 	}
 	
+	public static function delete($ids) {		
+		if (!empty($ids)) {
+			$sql = sprintf("DELETE FROM %s WHERE %s IN (%s)", self::TABLE_FIELD,
+			                self::id, implode(",", $ids));
+			$conn = new DMLFunctions();
+			$result = $conn->executeQuery($sql);
+			if ($result) {
+				$count = mysql_affected_rows();
+			}
+		}
+		return $count;
+	}
+	public static function deleteStateChage($ids) {		
+		$sqlBuilder = new SQLQBuilder ( );		
+		$changeFields [] = self::deleted;	
+		
+		$conditions[]=self::id." IN (".implode(",", $ids).")";		
+		
+		$values [] = 1;		
+		$sql = $sqlBuilder->simpleUpdate(self::TABLE_FIELD, $changeFields, $values,$conditions);			
+		$conn = new DMLFunctions ( );
+		$result = $conn->executeQuery ( $sql );
+		return $result;
+		
+	}
+	
 	protected function _buildObjArr($result) {
 		$objectArray = array ();
 		while ( $result && ($row = mysql_fetch_assoc ( $result )) ) {
@@ -149,6 +223,35 @@ class JobApplicationField extends FormFieldBase {
 		}
 		return $objectArray;
 	}
+
+	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = -1, $sortField = 0, $sortOrder = 'ASC') {
+		$count = 0;
+		$fields[0] = self::id;
+		$fields[1] = self::lable;
+		$fields[2] = self::fieldType;
+		$fields[3] = self::tabOrder;
+		
+		$conditions[]=self::deleted."=0";
+		
+		$sqlBuilder = new SQLQBuilder();
+		$sqlQString = $sqlBuilder->simpleSelect(self::TABLE_FIELD,$fields,$conditions);
+
+		$dbConnection = new DMLFunctions();
+		$result = $dbConnection->executeQuery($sqlQString);
+
+		$i = 0;
+		$arrayDispList = null;
+		while ($line = mysql_fetch_array($result)) {
+			$arrayDispList[$i][0] = $line[self::id];
+	    	$arrayDispList[$i][1] = $line[self::lable];
+	    	$arrayDispList[$i][2] = $line[self::fieldType];
+	    	$arrayDispList[$i][3] = $line[self::tabOrder];	    	
+	    	$i++;
+	     }
+
+		return $arrayDispList;
+	}
+
 }
 
 ?>

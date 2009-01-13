@@ -81,12 +81,17 @@ class JobApplication {
     /** Fields retrieved from other tables */
     const JOB_TITLE_NAME = 'job_title_name';
     const HIRING_MANAGER_NAME = 'hiring_manager_name';
+    
+    /* Cv fields */
+    const CV_DATA = 'cv_data';
+    const CV_TYPE = 'cv_type';
+    const CV_EXTENSION = 'cv_extenstion';
 
 	private $dbFields = array(self::DB_FIELD_ID, self::DB_FIELD_VACANCY_ID, self::DB_FIELD_FIRSTNAME,
 		self::DB_FIELD_MIDDLENAME, self::DB_FIELD_LASTNAME,	self::DB_FIELD_STREET1,	self::DB_FIELD_STREET2,
 		self::DB_FIELD_CITY, self::DB_FIELD_COUNTRY_CODE, self::DB_FIELD_PROVINCE, self::DB_FIELD_ZIP,
 		self::DB_FIELD_PHONE, self::DB_FIELD_MOBILE, self::DB_FIELD_EMAIL, self::DB_FIELD_QUALIFICATIONS,
-        self::DB_FIELD_STATUS, self::DB_FIELD_APPLIED_DATETIME, self::DB_FIELD_EMP_NUMBER);
+        self::DB_FIELD_STATUS, self::DB_FIELD_APPLIED_DATETIME, self::DB_FIELD_EMP_NUMBER,self::CV_DATA,self::CV_TYPE,self::CV_EXTENSION);
 
 	private $id;
 	private $vacancyId;
@@ -106,8 +111,11 @@ class JobApplication {
     private $status = self::STATUS_SUBMITTED;
     private $appliedDateTime;
     private $empNumber;
-
+    private $cvData;
+	private $cvType;
+	private $cvExtention;
     private $events;
+    
 
     /**
      * Attributes retrieved from other objects
@@ -343,6 +351,30 @@ class JobApplication {
 
         return $latestEvent;
     }
+	
+	public function getCvData() {
+		return $this->cvData;
+	}
+	
+	public function setCvData($cvData) {
+		$this->cvData = $cvData;
+	}
+	
+	public function getCvType() {
+		return $this->cvType;
+	}
+	
+	public function setCvType($cvType) {
+		$this->cvType = $cvType;
+	}
+	
+	public function getCvExtention() {
+		return $this->cvExtention;
+	}
+	
+	public function setCvExtention($cvExtention) {
+		$this->cvExtention = $cvExtention;
+	}
 
     /**
      * Returns event of given type
@@ -447,8 +479,7 @@ class JobApplication {
 		$sqlBuilder->arr_insert = $this->_getFieldValuesAsArray();
 		$sqlBuilder->arr_insertfield = $this->dbFields;
 
-		$sql = $sqlBuilder->addNewRecordFeature2();
-
+		$sql = $sqlBuilder->addNewRecordFeature2();		
 		$conn = new DMLFunctions();
 
 		$result = $conn->executeQuery($sql);
@@ -513,6 +544,8 @@ class JobApplication {
         $fields[17] = 'a.' . self::DB_FIELD_EMP_NUMBER;
         $fields[18] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
         $fields[19] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
+        $fields[20] = 'a.' . self::CV_TYPE;
+      
 
         $tables[0] = self::TABLE_NAME . ' a';
         $tables[1] = JobVacancy::TABLE_NAME .' b';
@@ -573,6 +606,9 @@ class JobApplication {
         $values[15] = is_null($this->status) ? self::STATUS_SUBMITTED : $this->status;
         $values[16] = is_null($this->appliedDateTime) ? 'null' : $this->appliedDateTime;
         $values[17] = empty($this->empNumber) ? 'null' : $this->empNumber;
+        $values[18] = $this->cvData;
+        $values[19] = $this->cvType;
+        $values[20] = $this->cvExtention;
 
 		return $values;
 	}
@@ -603,6 +639,7 @@ class JobApplication {
         $application->setStatus($row[self::DB_FIELD_STATUS]);
         $application->setAppliedDateTime($row[self::DB_FIELD_APPLIED_DATETIME]);
         $application->setEmpNumber($row[self::DB_FIELD_EMP_NUMBER]);
+        $application->setCvType($row[self::CV_TYPE]);
 
         if (isset($row[self::JOB_TITLE_NAME])) {
             $application->setJobTitleName($row[self::JOB_TITLE_NAME]);
@@ -613,6 +650,29 @@ class JobApplication {
         }
 
         return $application;
+    }
+    public function fetchCvDataObject(){
+    	$sqlBuilder=new SQLQBuilder();
+    	$fields[]=self::DB_FIELD_ID;
+    	$fields[]=self::CV_TYPE;
+    	$fields[]=self::CV_DATA; 
+    	$fields[]=self::CV_EXTENSION; 
+    	
+    	$condition[]=self::DB_FIELD_ID."='".$this->getId()."'";
+    	
+    	$sql=$sqlBuilder->simpleSelect(self::TABLE_NAME,$fields,$condition);
+    	$conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+    	
+     	while ($result && ($row = mysql_fetch_assoc($result))) {        	
+        	$obj=new JobApplication();
+        	$obj->setId($row[self::DB_FIELD_ID]);
+        	$obj->setCvType($row[self::CV_TYPE]);
+        	$obj->setCvData($row[self::CV_DATA]);
+        	$obj->setCvExtention($row[self::CV_EXTENSION]);
+        	break;   	            
+        }
+        return $obj;
     }
     
     public function fetchApplicationData(){

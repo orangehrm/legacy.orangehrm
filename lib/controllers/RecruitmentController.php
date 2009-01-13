@@ -46,11 +46,13 @@ require_once ROOT_PATH . '/lib/models/recruitment/ApplicantLicenseInformation.ph
 require_once ROOT_PATH . '/lib/models/recruitment/AppicantLanguageInformation.php';
 require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEducationInfo.php';
 
+
 require_once ROOT_PATH . '/lib/extractor/common/EXTRACTOR_ViewList.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobVacancy.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobApplication.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ScheduleInterview.php';
+require_once ROOT_PATH . '/lib/extractor/recruitment/EXTRACTOR_ApplicationField.php';
 require_once ROOT_PATH . '/lib/controllers/PerformanceController.php';
 
 /**
@@ -187,6 +189,9 @@ class RecruitmentController {
                     case 'ViewDetails' :
                         $this->_viewApplicationDetails($id);
                         break;
+                   case 'DownloadCv' :
+                        $this->_downloadCv($id);
+                        break;                        
                     case 'ViewHistory' :
                         $this->_viewApplicationHistory($id);
                         break;
@@ -205,33 +210,33 @@ class RecruitmentController {
 
 	                case 'List' :
 	                	$searchObject = $viewListExtractor->parseSearchData($_POST, $_GET);
-	                    $this->_viewVacancies($searchObject);
+	                    $this->_viewApplicationFields($searchObject);
 	                    break;
 
 	                case 'View' :
 	                	$id = isset($_GET['id'])? $_GET['id'] : null;
-	                	$this->_viewVacancy($id);
+	                	$this->_viewApplicationField($id);
 						break;
 
 	                case 'ViewAdd' :
-	                	$this->_viewAddVacancy();
+	                	$this->_viewAddApplicationField();
 	                	break;
 
 					case 'Add' :
-						$extractor = new EXTRACTOR_JobVacancy();
-						$vacancy = $extractor->parseData($_POST);
-						$this->_addVacancy($vacancy);
+						$extractor = new EXTRACTOR_ApplicationField();
+						$field = $extractor->parseData($_POST);
+						$this->_addField($field);
 						break;
 
-					case 'Update' :
-						$extractor = new EXTRACTOR_JobVacancy();
-						$vacancy = $extractor->parseData($_POST);
-						$this->_updateVacancy($vacancy);
+					case 'Update' :						
+						$extractor = new EXTRACTOR_ApplicationField();						
+						$field = $extractor->parseData($_POST);						
+						$this->_updateField($field);
 						break;
 
 	                case 'Delete' :
 	                    $ids = $_POST['chkID'];
-	                    $this->_deleteVacancies($ids);
+	                    $this->_deleteField($ids);
 	                	break;
 	            }
                 break;
@@ -253,6 +258,15 @@ class RecruitmentController {
         $formCreator->popArr['count'] = $count;
         $formCreator->display();
 	}
+	private function _viewApplicationFieldList($pageNumber, $count, $list) {
+
+        $formCreator = new FormCreator($_GET, $_POST);
+        $formCreator->formPath = '/applicationconfigview.php';
+        $formCreator->popArr['currentPage'] = $pageNumber;
+        $formCreator->popArr['list'] = $list;
+        $formCreator->popArr['count'] = $count;
+        $formCreator->display();
+	}
 
 	/**
 	 * View list of vacancies
@@ -268,7 +282,39 @@ class RecruitmentController {
             $this->_notAuthorized();
 		}
     }
+    private function _viewApplicationFields($searchObject) {
 
+		if ($this->authorizeObj->isAdmin()) {
+        	$list = JobApplicationField::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
+        	$count = sizeof($list);
+        	$this->_viewApplicationFieldList($searchObject->getPageNumber(), $count, $list);
+		} else {
+            $this->_notAuthorized();
+		
+		}
+    }
+    
+	private function _viewAddApplicationField() {
+		if ($this->authorizeObj->isAdmin()) {
+	    	$this->_viewApplicationField();
+	    } else {
+            $this->_notAuthorized();
+		}
+	}
+	
+	private function _deleteField($ids) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+        		$count = JobApplicationField::deleteStateChage($ids);
+        		$message = 'DELETE_SUCCESS';
+			} catch (JobVacancyException $e) {
+				$message = 'DELETE_FAILURE';
+			}
+            $this->redirect($message, '?recruitcode=Application_Config&action=List');
+		} else {
+            $this->_notAuthorized();
+		}
+    }
 	/**
 	 * Delete vacancies with given IDs
 	 * @param Array $ids Array with Vacancy ID's to delete
@@ -327,6 +373,59 @@ class RecruitmentController {
 		} catch (JobVacancyException $e) {
 			$message = 'UNKNOWN_FAILURE';
             $this->redirect($message);
+		}
+    }
+    
+ 	private function _viewApplicationField($id = null) {		
+		$path = '/templates/recruitment/applicationField.php';		
+		try {
+			if (empty($id)) {
+				$applicationField = new JobApplicationField();
+			} else {
+				$applicationField = new JobApplicationField();
+				$applicationField->setId($id);				
+				$applicationField = $applicationField->fetchApplicationField();
+				$applicationField=$applicationField[0];
+				
+			}			
+			$objs['fieldTypes'] = JobApplicationField::getFieldTypes();
+			$objs['applicationField'] = $applicationField;
+			$template = new TemplateMerger($objs, $path);
+			$template->display();
+		} catch (JobVacancyException $e) {
+			$message = 'UNKNOWN_FAILURE';
+            $this->redirect($message);
+		}
+    }
+    
+	private function _addField($field) {		
+		if ($this->authorizeObj->isAdmin()) {
+			try {
+				$field->saveField();
+	        	$message = 'ADD_SUCCESS';
+	        	$this->redirect($message, '?recruitcode=Application_Config&action=List');
+			} catch (JobVacancyException $e) {
+				$message = 'ADD_FAILURE';
+	        	$this->redirect($message);
+			}
+		} else {
+            $this->_notAuthorized();
+		}
+
+    }
+    
+	private function _updateField($field) {
+		if ($this->authorizeObj->isAdmin()) {
+			try {				
+				$field->updateField();
+	        	$message = 'UPDATE_SUCCESS';
+	        	$this->redirect($message, '?recruitcode=Application_Config&action=List');
+			} catch (JobVacancyException $e) {
+				$message = 'UPDATE_FAILURE';
+	        	$this->redirect($message);
+			}
+		} else {
+            $this->_notAuthorized();
 		}
     }
 
@@ -395,7 +494,7 @@ class RecruitmentController {
 		$objs['skills'] = Skills::getSkillCodes();
 		$objs['licensesCodes'] = Licenses::getLicensesCodes();
 		$objs['language'] = LanguageInfo::getLang();
-		$objs['fluency'] = Fluency::getFluencyCodes();
+		$objs['fluency'] = Fluency::filterFluencyCodes();
 		
 		$objs['applicationFields']=$fields;
 		$objs['applicationData']=$fieldsData;
@@ -412,7 +511,7 @@ class RecruitmentController {
 	/**
 	 * Handle job application by applicant
 	 */
-	public function applyForJob() {		
+	public function applyForJob() {				
 		$field=new JobApplicationField();
 		$dynamicFields=$field->filterDynamicFields($_REQUEST);		
 		$extractor = new EXTRACTOR_JobApplication();
@@ -551,7 +650,24 @@ class RecruitmentController {
         $template = new TemplateMerger($objs, $path);
         $template->display();
     }
-
+	private function _downloadCv($id) {
+		$applicaton =new JobApplication($id);    	
+    	$applicaton=$applicaton->fetchCvDataObject(); 
+    	$size=strlen($applicaton->getCvData());
+    	$contentType=$applicaton->getCvType();
+    	$name="cv_applicatoin_id_".$applicaton->getId().".".$applicaton->getCvExtention();  	
+		@ob_clean();
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Cache-Control: private", false);
+		header("Content-type: $contentType");
+		header("Content-Disposition: attachment; filename=\"".$name."\";");
+		header("Content-Transfer-Encoding: binary");
+		header("Content-length: $size");
+		echo $applicaton->getCvData();
+    }
+	
     /**
      * View application history
      * @param int $id Application ID

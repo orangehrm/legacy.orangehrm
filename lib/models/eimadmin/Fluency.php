@@ -93,6 +93,31 @@ class Fluency {
 
 	}
 	
+	public function filterFluencyCodes () {
+		$sql_builder = new SQLQBuilder();		
+		$arrFieldList[0] = self::FLUENCY_CODE;
+		$arrFieldList[1] = self::DESCRIPTION;
+				
+		$sqlQString = $sql_builder->simpleSelect(self::TABLE,$arrFieldList);
+		$dbConnection = new DMLFunctions();
+		$message2 = $dbConnection -> executeQuery($sqlQString); 
+		$common_func = new CommonFunctions();
+		
+		$i=0;
+		 while ($line = mysql_fetch_array($message2, MYSQL_NUM)) {
+	    	$arrayDispList[$i][0] = $line[0];
+	    	$arrayDispList[$i][1] = $line[1];
+	    	$i++;
+	     }
+
+	     if (isset($arrayDispList)) {
+	       	return $arrayDispList;
+	     } else {
+
+	     }
+
+	}
+	
 	function filterFluency($getID) {
 
 		$this->getID = $getID;

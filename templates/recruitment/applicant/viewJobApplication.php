@@ -96,7 +96,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
     }
 
 	function validate() {
-	
+		return true;
+		exit;
 		err = false;
 
 		var msg = '<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
@@ -116,19 +117,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		if(educationInfoCount==0){
 			msg+='Please enter Educational information \n'; err=true;
 		}
-		if(err==true){
-			alert(msg);
-			return false;
-		}else{
-			return true;
-		}
-		
-		
-	//return true;
-	exit;
 		
 		var errors = new Array();
-
 		var fields = new Array("txtFirstName", "txtMiddleName", "txtLastName", "txtStreet1",
 						"txtStreet2", "txtCity", "txtCountry", "txtProvince", "txtZip", "txtPhone",
 						"txtMobile", "txtEmail", "txtQualifications");
@@ -543,7 +533,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	</div>
 	<?php }	?>
   <div class="roundbox">
-  <form name="fromJobApplication" id="fromJobApplication" method="post" action="<?php echo $formAction;?>">
+  <form name="fromJobApplication" id="fromJobApplication" method="post" action="<?php echo $formAction;?>" enctype="multipart/form-data">
   		<div class="positionApplyingFor">
   		<?php echo $lang_Recruit_ApplicationForm_Position . ' : ' . $vacancy->getJobTitleName(); ?><br/>
   		</div>
@@ -700,7 +690,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</tbody>
 		</table>
 		</div>
-		
+		 <label for="form_upload_cv"><?php echo "Upload CV" ?></label> <input type="file" id="cv" name="cv" /><br/>	
 		<?php foreach ($applicationFields as $field){ ?>
 		<label for="<?php echo $field->getLable() ?>"><span class="error"><?php echo ($field->getRequired())?"*":""?></span><?php echo $field->getLable(); ?></label>
 			<?php 				

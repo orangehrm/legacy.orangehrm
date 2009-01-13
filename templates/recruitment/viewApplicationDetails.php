@@ -155,6 +155,12 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
         <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Mobile; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getMobile()); ?></div><br/>
         <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Email; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getEmail()); ?></div><br/>
         <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Qualifications; ?></div><div class="txtBox"><pre style="font-family: Arial, Helvetica, sans-serif"><?php echo nl2br(wordwrap(trim(CommonFunctions::escapeHtml($application->getQualifications())), 65)); ?></pre></div><br/>
+        <?php 
+        //$applicatione=new JobApplication();
+       
+        if(strlen($application->getCvType())>0){ ?>
+        	 <div class="txtName"><?php echo 'Applicant CV'; ?></div><a href="<?php echo $baseURL."&action=DownloadCv&id=".$application->getId() ?>">Download Cv</a><br/>       
+  <?php } ?>
         <br />
 
         <div class="txtName"><?php echo $lang_Recruit_JobApplicationDetails_Status; ?></div>
