@@ -61,7 +61,7 @@ require_once ROOT_PATH . '/lib/controllers/PerformanceController.php';
 class RecruitmentController {
 
 	const INVALID_STATUS_ERROR = 'INVALID_STATUS_ERROR';
-	
+
 	private $authorizeObj;
 
     /**
@@ -191,7 +191,7 @@ class RecruitmentController {
                         break;
                    case 'DownloadCv' :
                         $this->_downloadCv($id);
-                        break;                        
+                        break;
                     case 'ViewHistory' :
                         $this->_viewApplicationHistory($id);
                         break;
@@ -228,9 +228,9 @@ class RecruitmentController {
 						$this->_addField($field);
 						break;
 
-					case 'Update' :						
-						$extractor = new EXTRACTOR_ApplicationField();						
-						$field = $extractor->parseData($_POST);						
+					case 'Update' :
+						$extractor = new EXTRACTOR_ApplicationField();
+						$field = $extractor->parseData($_POST);
 						$this->_updateField($field);
 						break;
 
@@ -290,10 +290,10 @@ class RecruitmentController {
         	$this->_viewApplicationFieldList($searchObject->getPageNumber(), $count, $list);
 		} else {
             $this->_notAuthorized();
-		
+
 		}
     }
-    
+
 	private function _viewAddApplicationField() {
 		if ($this->authorizeObj->isAdmin()) {
 	    	$this->_viewApplicationField();
@@ -301,7 +301,7 @@ class RecruitmentController {
             $this->_notAuthorized();
 		}
 	}
-	
+
 	private function _deleteField($ids) {
 		if ($this->authorizeObj->isAdmin()) {
 			try {
@@ -360,7 +360,7 @@ class RecruitmentController {
 			}
 
 			$empInfo = new EmpInfo;
-			$managers = $empInfo->getListofEmployee(0, JobTitle::MANAGER_JOB_TITLE_NAME, 6);
+			$managers = $empInfo->getListofEmployee(0, "", 6);
 			$jobTitle = new JobTitle();
 			$jobTitles = $jobTitle->getJobTit();
 
@@ -375,19 +375,19 @@ class RecruitmentController {
             $this->redirect($message);
 		}
     }
-    
- 	private function _viewApplicationField($id = null) {		
-		$path = '/templates/recruitment/applicationField.php';		
+
+ 	private function _viewApplicationField($id = null) {
+		$path = '/templates/recruitment/applicationField.php';
 		try {
 			if (empty($id)) {
 				$applicationField = new JobApplicationField();
 			} else {
 				$applicationField = new JobApplicationField();
-				$applicationField->setId($id);				
+				$applicationField->setId($id);
 				$applicationField = $applicationField->fetchApplicationField();
 				$applicationField=$applicationField[0];
-				
-			}			
+
+			}
 			$objs['fieldTypes'] = JobApplicationField::getFieldTypes();
 			$objs['applicationField'] = $applicationField;
 			$template = new TemplateMerger($objs, $path);
@@ -397,8 +397,8 @@ class RecruitmentController {
             $this->redirect($message);
 		}
     }
-    
-	private function _addField($field) {		
+
+	private function _addField($field) {
 		if ($this->authorizeObj->isAdmin()) {
 			try {
 				$field->saveField();
@@ -413,10 +413,10 @@ class RecruitmentController {
 		}
 
     }
-    
+
 	private function _updateField($field) {
 		if ($this->authorizeObj->isAdmin()) {
-			try {				
+			try {
 				$field->updateField();
 	        	$message = 'UPDATE_SUCCESS';
 	        	$this->redirect($message, '?recruitcode=Application_Config&action=List');
@@ -487,20 +487,20 @@ class RecruitmentController {
 		$path = '/templates/recruitment/applicant/viewJobApplication.php';
 		$fieldsData=JobApplication::fetchApplicationData();
 		$field=new JobApplicationField();
-		$fields=$field->fetchApplicationFields();	
-		
+		$fields=$field->fetchApplicationFields();
+
 		$objs['vacancy'] = JobVacancy::getJobVacancy($id);
-				
+
 		$objs['skills'] = Skills::getSkillCodes();
 		$objs['licensesCodes'] = Licenses::getLicensesCodes();
 		$objs['language'] = LanguageInfo::getLang();
 		$objs['fluency'] = Fluency::filterFluencyCodes();
-		
+
 		$objs['applicationFields']=$fields;
 		$objs['applicationData']=$fieldsData;
 		$countryinfo = new CountryInfo();
 		$objs['countryList'] = $countryinfo->getCountryCodes();
-		
+
 		$genInfo = new GenInfo();
 		$objs['company'] = $genInfo->getValue('COMPANY');
 
@@ -511,14 +511,14 @@ class RecruitmentController {
 	/**
 	 * Handle job application by applicant
 	 */
-	public function applyForJob() {				
+	public function applyForJob() {
 		$field=new JobApplicationField();
-		$dynamicFields=$field->filterDynamicFields($_REQUEST);		
+		$dynamicFields=$field->filterDynamicFields($_REQUEST);
 		$extractor = new EXTRACTOR_JobApplication();
 		$jobApplication = $extractor->parseData($_POST);
 		try {
 		    $jobApplication->save();
-				    /* saving employeement info */		
+				    /* saving employeement info */
 				if(isset($_REQUEST['employer']) && sizeof($_REQUEST['employer'])){
 					$employers=$_REQUEST['employer'];
 					$applicatnEmployer=new ApplicantEmployementInfo();
@@ -529,23 +529,23 @@ class RecruitmentController {
 						$applicatnEmployer->setEndDate($_REQUEST['end_date'][$key]);
 						$applicatnEmployer->setJobTitle($_REQUEST['job_title'][$key]);
 						$applicatnEmployer->setStartDate($_REQUEST['start_date'][$key]);
-						$applicatnEmployer->save();				
-					}			
+						$applicatnEmployer->save();
+					}
 				}
 				/* saving skill  info */
-				if(isset($_REQUEST['skill']) && sizeof($_REQUEST['skill'])){			
+				if(isset($_REQUEST['skill']) && sizeof($_REQUEST['skill'])){
 					$skills=$_REQUEST['skill'];
 					$applicantSkill=new ApplicantSkills();
 					foreach ($skills as $key=>$skill){
 						$applicantSkill->setApplicationId($jobApplication->getId());
-						$applicantSkill->setComments($_REQUEST['skill_comments'][$key]);				
+						$applicantSkill->setComments($_REQUEST['skill_comments'][$key]);
 						$applicantSkill->setSkillCode($_REQUEST['skill'][$key]);
-						$applicantSkill->setYearsOfExperience($_REQUEST['skill_years_of_experience'][$key]);				
-						$applicantSkill->save();						
-					}			
+						$applicantSkill->setYearsOfExperience($_REQUEST['skill_years_of_experience'][$key]);
+						$applicantSkill->save();
+					}
 				}
-				
-				/* saving License Information info */		
+
+				/* saving License Information info */
 				if(isset($_REQUEST['license_type']) && sizeof($_REQUEST['license_type'])){
 					$licenseInfo=$_REQUEST['license_type'];
 					$applicatnLicenseInfo=new ApplicantLicenseInformation();
@@ -553,41 +553,41 @@ class RecruitmentController {
 						$applicatnLicenseInfo->setApplicationId($jobApplication->getId());
 						$sysconf=new sysConf();
 						if($_REQUEST['licens_exp_date'][$key]!=$sysconf->getDateInputHint()) $applicatnLicenseInfo->setExpiryDate($_REQUEST['licens_exp_date'][$key]);
-						$applicatnLicenseInfo->setLecenseCode($_REQUEST['license_type'][$key]);				
-						$applicatnLicenseInfo->save();				
-					}			
+						$applicatnLicenseInfo->setLecenseCode($_REQUEST['license_type'][$key]);
+						$applicatnLicenseInfo->save();
+					}
 				}
-				
-				/* saving language Information info */		
+
+				/* saving language Information info */
 				if(isset($_REQUEST['language_language']) && sizeof($_REQUEST['language_language'])){
 					$languageInfo=$_REQUEST['language_language'];
 					$applicantLangInfo=new AppicantLanguageInformation();
 					foreach ($languageInfo as $key=>$lan){
 						$applicantLangInfo->setApplicationId($jobApplication->getId());
 						$applicantLangInfo->setFluencyCode($_REQUEST['language_fluency'][$key]);
-						$applicantLangInfo->setLangCode($_REQUEST['language_language'][$key]);				
-						$applicantLangInfo->save();				
-					}			
+						$applicantLangInfo->setLangCode($_REQUEST['language_language'][$key]);
+						$applicantLangInfo->save();
+					}
 				}
-				
-			/* saving Educational Information info */		
+
+			/* saving Educational Information info */
 				if(isset($_REQUEST['education_education']) && sizeof($_REQUEST['education_education'])){
 					$eduInfo=$_REQUEST['education_education'];
 					$applicantEduInfo=new ApplicantEducationInfo();
 					foreach ($eduInfo as $key=>$edu){
 						$applicantEduInfo->setApplicationId($jobApplication->getId());
 						$applicantEduInfo->setAverageScore($_REQUEST['education_score'][$key]);
-						$applicantEduInfo->setEducation($_REQUEST['education_education'][$key]);	
-						$applicantEduInfo->setMajorSpecialization($_REQUEST['education_major'][$key]);	
-						$applicantEduInfo->setYearCompleted($_REQUEST['education_year'][$key]);				
-						$applicantEduInfo->save();				
-					}			
-				}  
-		    
-		    foreach ($dynamicFields as $field){		    	
-		    	$field->setApplicationId($jobApplication->getId());		    	   	
+						$applicantEduInfo->setEducation($_REQUEST['education_education'][$key]);
+						$applicantEduInfo->setMajorSpecialization($_REQUEST['education_major'][$key]);
+						$applicantEduInfo->setYearCompleted($_REQUEST['education_year'][$key]);
+						$applicantEduInfo->save();
+					}
+				}
+
+		    foreach ($dynamicFields as $field){
+		    	$field->setApplicationId($jobApplication->getId());
 		    	$field->saveFieldData();
-		    }	  
+		    }
 		    $result = true;
 		} catch (JobApplicationException $e) {
 			$result = false;
@@ -651,11 +651,11 @@ class RecruitmentController {
         $template->display();
     }
 	private function _downloadCv($id) {
-		$applicaton =new JobApplication($id);    	
-    	$applicaton=$applicaton->fetchCvDataObject(); 
+		$applicaton =new JobApplication($id);
+    	$applicaton=$applicaton->fetchCvDataObject();
     	$size=strlen($applicaton->getCvData());
     	$contentType=$applicaton->getCvType();
-    	$name="cv_applicatoin_id_".$applicaton->getId().".".$applicaton->getCvExtention();  	
+    	$name="cv_applicatoin_id_".$applicaton->getId().".".$applicaton->getCvExtention();
 		@ob_clean();
 		header("Pragma: public");
 		header("Expires: 0");
@@ -667,7 +667,7 @@ class RecruitmentController {
 		header("Content-length: $size");
 		echo $applicaton->getCvData();
     }
-	
+
     /**
      * View application history
      * @param int $id Application ID
@@ -689,18 +689,18 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
-            
-            // Validate if in correct status.            
-            $currentStatus = $application->getStatus(); 
-            
+
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+
             $invalidStatuses = array(JobApplication::STATUS_REJECTED, JobApplication::STATUS_OFFER_DECLINED,
             	JobApplication::STATUS_HIRED, JobApplication::STATUS_JOB_OFFERED);
-            if (in_array($currentStatus, $invalidStatuses)) {  
-            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
-            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+            if (in_array($currentStatus, $invalidStatuses)) {
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);
 				return;
-            }            
-            
+            }
+
             $application->setStatus(JobApplication::STATUS_REJECTED);
             try {
                 $application->save();
@@ -724,19 +724,19 @@ class RecruitmentController {
     private function _saveFirstInterview($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
 
-            // TODO: Validate if Hiring manager or interview manager and in correct status                        
-            
+            // TODO: Validate if Hiring manager or interview manager and in correct status
+
             $applicationId = $event->getApplicationId();
             $application = JobApplication::getJobApplication($applicationId);
-            
-            // Validate if in correct status.            
-            $currentStatus = $application->getStatus(); 
-            if ($currentStatus != JobApplication::STATUS_SUBMITTED) {  
-            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
-            	$this->_showInvalidStatusError($applicationId, $attemptedAction);      	
+
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+            if ($currentStatus != JobApplication::STATUS_SUBMITTED) {
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
+            	$this->_showInvalidStatusError($applicationId, $attemptedAction);
 				return;
             }
-            
+
             $application->setStatus(JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED);
             try {
                 $application->save();
@@ -759,16 +759,16 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
-    
+
     /**
      * Show error message when user attempts to apply an action to a job application in an invalid state.
-     * 
+     *
      * eg: When attempting to schedule a first interview where a interview has already been scheduled.
      * This is normally possible only if the user presses the back button on the browser and attempts to redo an action.
      */
     private function _showInvalidStatusError($applicationId, $attemptedAction) {
-		$this->redirect(RecruitmentController::INVALID_STATUS_ERROR, 
-			"?recruitcode=Application&action=ViewHistory&id={$applicationId}&attemptedAction={$attemptedAction}");    	
+		$this->redirect(RecruitmentController::INVALID_STATUS_ERROR,
+			"?recruitcode=Application&action=ViewHistory&id={$applicationId}&attemptedAction={$attemptedAction}");
     }
 
     private function _saveSecondInterview($event) {
@@ -778,14 +778,14 @@ class RecruitmentController {
             $applicationId = $event->getApplicationId();
             $application = JobApplication::getJobApplication($applicationId);
 
-            // Validate if in correct status.            
-            $currentStatus = $application->getStatus(); 
-            if ($currentStatus != JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED) {  
-            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
-            	$this->_showInvalidStatusError($applicationId, $attemptedAction);      	
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+            if ($currentStatus != JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED) {
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
+            	$this->_showInvalidStatusError($applicationId, $attemptedAction);
 				return;
             }
-            
+
             $application->setStatus(JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
 
             try {
@@ -863,16 +863,16 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
-            
-            // Validate if in correct status.            
-            $currentStatus = $application->getStatus(); 
-            
-            if ($currentStatus != JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED) {  
-            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
-            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+
+            if ($currentStatus != JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED) {
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);
 				return;
-            }   
-                        
+            }
+
             $application->setStatus(JobApplication::STATUS_JOB_OFFERED);
 
             try {
@@ -894,16 +894,16 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
-            
-            // Validate if in correct status.            
-            $currentStatus = $application->getStatus(); 
-            
-            if ($currentStatus != JobApplication::STATUS_JOB_OFFERED) {  
-            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
-            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+
+            if ($currentStatus != JobApplication::STATUS_JOB_OFFERED) {
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);
 				return;
-            } 
-                        
+            }
+
             $application->setStatus(JobApplication::STATUS_OFFER_DECLINED);
 
             try {
@@ -945,15 +945,15 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
-            
-            // Validate if in correct status.            
-            $currentStatus = $application->getStatus(); 
-            
-            if ($currentStatus != JobApplication::STATUS_JOB_OFFERED) {  
-            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
-            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+
+            if ($currentStatus != JobApplication::STATUS_JOB_OFFERED) {
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);
 				return;
-            }            
+            }
             $application->setStatus(JobApplication::STATUS_PENDING_APPROVAL);
 
             try {
@@ -983,15 +983,15 @@ class RecruitmentController {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
-            
-            // Validate if in correct status.            
-            $currentStatus = $application->getStatus(); 
-            
-            if ($currentStatus != JobApplication::STATUS_PENDING_APPROVAL) {  
-            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';  
-            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);      	
+
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+
+            if ($currentStatus != JobApplication::STATUS_PENDING_APPROVAL) {
+            	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
+            	$this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);
 				return;
-            }            
+            }
             $application->setStatus(JobApplication::STATUS_HIRED);
 
             try {
@@ -1007,11 +1007,11 @@ class RecruitmentController {
 
 				// Create initial performance review
 				$performanceController = new PerformanceController();
-				
+
 				// TODO: Move to language files
 				$reviewNote = 'Review created at hire time';
 				$performanceController->createReview($empId, $reviewNote);
-				
+
                 // Send email informing approval to hiring manager
                 $notifier = new RecruitmentMailNotifier();
                 $mailResult = $notifier->sendApprovalToHiringManager($application, $event);

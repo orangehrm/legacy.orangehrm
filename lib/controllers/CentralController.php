@@ -217,8 +217,7 @@ $locRights['repDef'] = ($ugDet !== null && $ugDet[0][2] == '1') ? true : false;
 
 $_SESSION['localRights'] = $locRights;
 
-print_r($_REQUEST);
-//exit;
+
 switch ($moduletype) {
 
 	case 'admin' 	:  // beg. admin module
@@ -741,15 +740,15 @@ switch ($moduletype) {
 							$parsedObject = $extractor->parseData($_POST);
 							$view_controller -> reDirect($_GET,$parsedObject);
 							break;
-						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'addmode') {							
+						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'addmode') {
 							$extObject = $extractor->reloadData($_POST);
 							$view_controller -> reDirect($_GET,$extObject);
 							break;
-						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'updatemode') {							
+						} elseif(isset($_POST['sqlState']) && isset($_POST['capturemode']) && $_GET['capturemode'] == 'updatemode') {
 							$extObject = $extractor->reloadData($_POST);
 							$view_controller -> reDirect($_GET,$extObject);
 							break;
-						} else {													
+						} else {
 							$view_controller -> reDirect($_GET);
 							break;
 						}
