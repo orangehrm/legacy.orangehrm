@@ -24,7 +24,7 @@ $maxDispLen = $sysConst->viewDescLen;
 $locRights = $_SESSION['localRights'];
 
 $currentPage = $this->popArr['currentPage'];
-$searchFieldCount = $this->popArr['searchFieldCount']; 
+$searchFieldCount = $this->popArr['searchFieldCount'];
 
 $list = $this->popArr['list'];
 $baseURL = './CentralController.php?budgetcode='. $this->getArr['budgetcode'];
@@ -96,7 +96,7 @@ if ($searchFieldCount == 1) {
 				$searchStr[$i] = getDisplayValue($searchStr[$i], $valueMap[$code], $maxDispLen);
 			}
 		}
-	}		
+	}
 }
 
 $themeDir = '../../themes/' . $styleSheet;
@@ -180,35 +180,35 @@ for ($i = 0; $i < count($valueMap); $i++) {
 	}
 
 	function returnSearch() {
-	
-<?php if ($searchFieldCount == 1) { ?> 	
+
+<?php if ($searchFieldCount == 1) { ?>
 		return returnSearchSingle();
 
 <?php } else { ?>
 		return returnSearchMultiple();
-<?php } ?>			
+<?php } ?>
 	}
 
 <?php if ($searchFieldCount > 0) { ?>
 	function returnSearchMultiple() {
-	
+
 		var err = false;
 		var msg = '';
-		
+
 		var selectedOptions = 0;
-<?php 
-		 for ($i=0; $i<$searchFieldCount; $i++) { 
+<?php
+		 for ($i=0; $i<$searchFieldCount; $i++) {
 ?>
-		
+
 		var field = $('loc_code<?php echo $i;?>');
 		var value = $('loc_name<?php echo $i;?>');
-		
+
 		if (field.value != -1) {
 			selectedOptions = selectedOptions + 1;
 
 			var searchNdx = field.value;
 			var searchVal = value.value;
-		
+
 			if (searchNdx in maps) {
 			    map = maps[searchNdx];
 			    if (searchVal in map) {
@@ -228,19 +228,19 @@ for ($i = 0; $i < count($valueMap); $i++) {
 				        err = true;
 			        }
 			    }
-			}			
+			}
 		}
-		
+
 		if (selectedOptions == 0) {
 			err = true;
 			msg += "<?php echo $lang_Common_SelectField; ?>";
 		}
-		
+
 		if (err) {
 			alert(msg);
 			return;
 		}
-				
+
 <?php   } ?>
 
 
@@ -248,8 +248,8 @@ for ($i = 0; $i < count($valueMap); $i++) {
 		document.standardView.pageNO.value=1;
 		document.standardView.submit();
 	}
-<?php } ?>			
-	
+<?php } ?>
+
 	function returnSearchSingle() {
 
 		if ($('loc_code').value == -1) {
@@ -318,21 +318,21 @@ for ($i = 0; $i < count($valueMap); $i++) {
 	}
 
 	function clear_form() {
-<?php if ($searchFieldCount == 1) { ?> 	
+<?php if ($searchFieldCount == 1) { ?>
 		document.standardView.loc_code.options[0].selected=true;
 		document.standardView.loc_name.value='';
 <?php } else {
-		 for ($i=0; $i<$searchFieldCount; $i++) { 
+		 for ($i=0; $i<$searchFieldCount; $i++) {
 ?>
-		
+
 		var field = $('loc_code<?php echo $i;?>');
 		var value = $('loc_name<?php echo $i;?>');
 		field.options[0].selected = true;
 		value.value = '';
-				
+
 <?php   }
-	} 
-?>		
+	}
+?>
 	}
 </script>
 <body>
@@ -404,8 +404,8 @@ if($allowDelete) {
         <tr>
           <td background="<?php echo $themeDir;?>/pictures/table_r2_c1.gif"><img name="table_r2_c1" src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
           <td>
-          <table  border="0" cellpadding="5" cellspacing="0" class="">          
-<?php if ($searchFieldCount == 1) { ?>         
+          <table  border="0" cellpadding="5" cellspacing="0" class="">
+<?php if ($searchFieldCount == 1) { ?>
             <tr>
               <td width="200" class="dataLabel"><?php echo $SearchBy?>&nbsp;&nbsp;
                 <select style="z-index: 99;" name="loc_code" id="loc_code">
@@ -440,21 +440,21 @@ if($allowDelete) {
 ?>
                 </select>
               </td>
-              <td width="70" class="dataLabel" noWrap><?php echo ($i == 0) ? $description : ''; ?></td>              
+              <td width="70" class="dataLabel" noWrap><?php echo ($i == 0) ? $description : ''; ?></td>
               <td width="230" class="dataLabel" noWrap>
                 <input type=text size="20" name="loc_name[]" id="loc_name<?php echo $i;?>" class=dataField  value="<?php echo $searchStr[$i];?>">
              </td>
             <td align="right" width="180" class="dataLabel">
-<?php if ($i == 0) { ?>                        
+<?php if ($i == 0) { ?>
             	<img tabindex=3 title="Search" onClick="returnSearch();" onMouseOut="this.src='<?php echo $themeDir;?>/pictures/btn_search.gif';" onMouseOver="this.src='<?php echo $themeDir;?>/pictures/btn_search_02.gif';" src="<?php echo $themeDir;?>/pictures/btn_search.gif">&nbsp;&nbsp;<img title="Clear" onClick="clear_form();" onMouseOut="this.src='<?php echo $themeDir;?>/pictures/btn_clear.gif';" onMouseOver="this.src='<?php echo $themeDir;?>/pictures/btn_clear_02.gif';" src="<?php echo $themeDir;?>/pictures/btn_clear.gif">
-<?php } ?>            	
+<?php } ?>
            	</td>
-		   </tr>	
-<?php     } ?>	
+		   </tr>
+<?php     } ?>
 <?php } ?>
 
           </table>
-          
+
           </td>
           <td background="<?php echo $themeDir;?>/pictures/table_r2_c3.gif"><img name="table_r2_c3" src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
           <td><img src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
@@ -475,7 +475,7 @@ if($allowDelete) {
           <td><img src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="16" border="0" alt=""></td>
         </tr>
       </table>
-<?php } ?>      
+<?php } ?>
 	  <table border="0" width="100%">
 	  <tr>
 	  <td height="40" valign="bottom" align="right">
@@ -553,13 +553,13 @@ echo $pageStr;
 		 		<?php
 		 			  $k=1;
 		 			  if ($k < count($headings)) {
-		 			  	    $descField = getDisplayValue($list[$j][$k+$columnsToSkip], $valueMap[$k], $maxDispLen);
+		 			  	    $descField = getDisplayValue(LocaleUtil::getInstance()->formatDate($list[$j][$k+$columnsToSkip]), $valueMap[$k], $maxDispLen);
 		 			  }
 			 	?>
 		 		<td class="<?php echo $cssClass?>" width="400" ><a href="<?php echo $baseURL . '&id='. $list[$j][0];?>&action=View" class="listViewTdLinkS1"><?php echo $descField?></a></td>
 		 		<?php
 		 				for ($k=2; $k < count($headings); $k++) {
-		 			  	    $descField = getDisplayValue($list[$j][$k+$columnsToSkip], $valueMap[$k], $maxDispLen);
+		 			  	    $descField = getDisplayValue(LocaleUtil::getInstance()->formatDate($list[$j][$k+$columnsToSkip]), $valueMap[$k], $maxDispLen);
 		 		?>
 		 		<td class="<?php echo $cssClass?>" width="400" ><?php echo $descField?></td>
 		 		<?php } ?>
