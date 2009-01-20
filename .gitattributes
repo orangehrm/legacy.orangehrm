@@ -636,6 +636,7 @@ templates/recruitment/mails/seek-approval-director-subject.txt -text
 templates/recruitment/mails/seek-approval-director.txt -text
 templates/recruitment/scheduleInterview.php -text
 templates/recruitment/seekApproval.php -text
+templates/recruitment/view.php -text
 templates/recruitment/viewApplicationDetails.php -text
 templates/recruitment/viewApplicationHistory.php -text
 templates/report/emprepinfo.php -text
