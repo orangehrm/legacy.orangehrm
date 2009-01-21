@@ -537,6 +537,10 @@
 
 	$lang_hremp_ShowEmployeeContracts 			= "Show employee contracts";
 	$lang_hremp_HideEmployeeContracts 			= "Hide employee contracts";
+	
+	$lang_hremp_ShowEmployeePerformanceReview     = "Show employee performance review";
+    $lang_hremp_HideEmployeePerformanceReview    = "Hide employee performance review";
+    $lang_hremp_Completed_PerformanceReview ="Completed Performance Reviews";
 
 	$lang_hremp_SalaryShouldBeWithinMinAndMa= "Salary should be within min and max";
 
@@ -858,6 +862,7 @@
 	$lang_pim_tabs_License = "License";
 	$lang_pim_tabs_Membership = "Membership";
 	$lang_pim_tabs_Attachments = "Attachments";
+	$lang_pim_tabs_Review="Employee Reviews";
 
 	// Report module
 	$lang_rep_SelectionCriteria = "Selection Criteria";

@@ -398,9 +398,11 @@ lib/models/maintenance/UserGroups.php -text
 lib/models/maintenance/Users.php -text
 lib/models/maintenance/bugs.php -text
 lib/models/maintenance/modules.php -text
+lib/models/performance/AllTests.php -text
 lib/models/performance/PerformanceMailNotifier.php -text
 lib/models/performance/PerformanceMeasure.php -text
 lib/models/performance/PerformanceReview.php -text
+lib/models/performance/PerformanceReviewTest.php -text
 lib/models/performance/PerformanceScore.php -text
 lib/models/performance/SalaryReview.php -text
 lib/models/recruitment/AllTests.php -text
@@ -564,6 +566,8 @@ templates/hrfunct/hrempmembership.php -text
 templates/hrfunct/hremppayment.php -text
 templates/hrfunct/hremppers.php -text
 templates/hrfunct/hrempreportto.php -text
+templates/hrfunct/hrempreview.php -text
+templates/hrfunct/hrempreviewperformance.php -text
 templates/hrfunct/hrempskill.php -text
 templates/hrfunct/hrempwrkexp.php -text
 templates/hrfunct/photohandler.php -text

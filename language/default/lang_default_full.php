@@ -622,6 +622,10 @@
     $lang_hremp_ShowEmployeeJobHistory      = "Show employee history";
     $lang_hremp_HideEmployeeJobHistory      = "Hide employee history";
 
+    $lang_hremp_ShowEmployeePerformanceReview = "Show employee performance review";
+    $lang_hremp_HideEmployeePerformanceReview = "Hide employee performance review";
+    $lang_hremp_Completed_PerformanceReview =" Completed Performance Reviews";
+
     $lang_hremp_EmployeeJobHistory          = "Employee History";
     $lang_hremp_EmployeePreviousPositions   = "Previous Positions";
     $lang_hremp_EmployeePreviousSubUnits    = "Previous Sub-units";
@@ -1004,6 +1008,7 @@
 	$lang_pim_tabs_Membership = "Membership";
     $lang_pim_tabs_Benefits = "Benefits";
 	$lang_pim_tabs_Attachments = "Attachments";
+	$lang_pim_tabs_Review="Employee Reviews";
 
 	// Report module
 	$lang_rep_SelectionCriteria = "Selection Criteria";

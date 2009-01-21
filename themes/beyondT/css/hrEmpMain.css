@@ -573,6 +573,21 @@ textarea {
 #toggleJobHistoryLayerLink.hide {
 	background-image: url(../icons/contract_hide.gif);
 }
+#tooglePerformanceLayerLink {
+    background-position: left;
+    background-image: url(../icons/contract_show.png);
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    outline: none;
+}
+
+#tooglePerformanceLayerLink.show {
+    background-image: url(../icons/contract_show.png);
+}
+
+#tooglePerformanceLayerLink.hide {
+    background-image: url(../icons/contract_hide.gif);
+}
 
 table.historyTable th {
     border-width: 0px;

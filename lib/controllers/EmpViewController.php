@@ -1584,6 +1584,7 @@ class EmpViewController {
 							$empworkex= new EmpWorkExp();
 							$empeducation = new EmpEducation();
 							$education = new Education();
+							$performanceReview= new PerformanceReview();
 
 								$form_creator ->popArr['nation'] = $nationinfo ->getNationCodes();
 								$form_creator->popArr['loc'] = $location->getLocCodes();
@@ -1595,6 +1596,7 @@ class EmpViewController {
 
 								$form_creator->popArr['cntlist'] = $countrylist = $countryinfo->getCountryCodes();
 								$form_creator->popArr['ppcntlist'] = $countrylist;
+								
 
 							if($getArr['capturemode'] == 'addmode') {
 								$form_creator ->popArr['newID'] = $empinfo->getLastId();
@@ -1866,6 +1868,10 @@ class EmpViewController {
 							}
 
 							$form_creator->popArr['rsetConExt'] = $empconext ->getAssConExt($getArr['id']);
+							
+							$performanceReview->setEmpNumber($getArr['id']);
+							$form_creator->popArr['perfReview'] = $performanceReview->getCompltedPerformanceReviews();
+						
 							}
 
 							break;
