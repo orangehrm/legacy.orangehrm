@@ -1,3 +1,20 @@
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.3
+    
+    New features
+    
+    Branding of Job Vacancies page
+    Additional Fields in the Application Form
+    Configurability of the application form
+    Display time format when scheduling first interview
+    The date format should be changed to DD/MM/YYYY format throughout the product.
+    HR Admin selects any employee as the hiring manager
+    Include the hyperlink in the mail sent to approve the salary review.
+    Company Info – General - Change TaxID to ABN
+    Change "SSN No" to Tax file No.
+    Change "Basic Salary" to "Base Salary"
+    Change "Joined Date" to "Start Date"
+    Completed performance details in PIM  
+
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
 	
 	Bug fixes
