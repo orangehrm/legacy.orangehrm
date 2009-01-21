@@ -942,6 +942,132 @@ create table `hs_hr_budgets` (
   primary key  (`id`)
 ) engine=innodb default charset=utf8;
 
+CREATE TABLE `hs_hr_appicant_language_information` (
+  `ID` int(11) NOT NULL auto_increment,
+  `lang_code` int(11) NOT NULL,
+  `fluency_code` int(11) NOT NULL,
+  `application_id` int(11) default NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hs_hr_applicant_education_info`
+--
+
+CREATE TABLE `hs_hr_applicant_education_info` (
+  `major_specialization` varchar(255) default NULL,
+  `year_completed` int(11) NOT NULL,
+  `average_score` double NOT NULL,
+  `ID` int(11) NOT NULL auto_increment,
+  `edu_code` int(11) NOT NULL,
+  `application_id` int(11) default NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hs_hr_applicant_employement_info`
+--
+
+CREATE TABLE `hs_hr_applicant_employement_info` (
+  `employer` varchar(255) default NULL,
+  `job_title` varchar(255) default NULL,
+  `start_date` varchar(255) default NULL,
+  `end_date` varchar(255) default NULL,
+  `duties` varchar(255) default NULL,
+  `ID` int(11) NOT NULL auto_increment,
+  `application_id` int(11) NOT NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hs_hr_applicant_license_information`
+--
+
+CREATE TABLE `hs_hr_applicant_license_information` (
+  `expiry_date` date default NULL,
+  `ID` int(11) NOT NULL auto_increment,
+  `license_code` int(11) NOT NULL,
+  `application_id` int(11) default NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hs_hr_applicant_skills`
+--
+
+CREATE TABLE `hs_hr_applicant_skills` (
+  `years_of_experience` int(11) NOT NULL,
+  `comments` varchar(255) default NULL,
+  `ID` int(11) NOT NULL auto_increment,
+  `application_id` int(11) default NULL,
+  `skill_code` int(11) NOT NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+CREATE TABLE `hs_hr_job_application_field` (
+  `id` int(11) NOT NULL auto_increment,
+  `lable` varchar(255) default NULL,
+  `field_type` varchar(255) default NULL,
+  `length` int(11) default NULL,
+  `validation` varchar(255) default NULL,
+  `error_message` varchar(255) default NULL,
+  `field_value` varchar(255) default NULL,
+  `field_value_text` varchar(255) default NULL,
+  `tool_tip` varchar(255) default NULL,
+  `height` int(11) default NULL,
+  `required` tinyint(1) default NULL,
+  `tab_order` int(11) default NULL,
+  `deleted` tinyint(4) default '0',
+  `sub_field_logic` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hs_hr_job_application_field_value`
+--
+
+CREATE TABLE `hs_hr_job_application_field_value` (
+  `id` int(11) NOT NULL auto_increment,
+  `value` varchar(255) default NULL,
+  `field_id` int(11) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `FKhs_hr_job_733974` (`field_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `hs_hr_fluency` (
+  `fluency_code` int(11) NOT NULL,
+  `description` varchar(255) default NULL,
+  PRIMARY KEY  (`fluency_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `hs_hr_job_application_data` (
+  `application_Id` int(11) NOT NULL,
+  `application_field_id` int(11) NOT NULL,
+  `field_value` varchar(255) default NULL,
+  `field_sub_value` varchar(255) default NULL,
+  PRIMARY KEY  (`application_Id`,`application_field_id`),
+  KEY `FKhs_hr_job_39071` (`application_Id`),
+  KEY `FKhs_hr_job_233297` (`application_field_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+alter table `hs_hr_emp_jobtitle_history` AUTO_INCREMENT=6 ;
+
+alter table `hs_hr_job_application` add `cv_data` mediumblob NOT NULL;
+alter table `hs_hr_job_application` add`cv_type` varchar(50) NOT NULL;
+alter table `hs_hr_job_application` add  `cv_extenstion` varchar(10) NOT NULL;
+
 alter table hs_hr_training_employee
     add constraint foreign key (emp_number)
         references hs_hr_employee(emp_number) on delete cascade;
