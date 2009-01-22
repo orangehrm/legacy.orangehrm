@@ -23,6 +23,7 @@ $assignedPerfMeasures = $records['AssignedPerfMeasures'];
 $availablePerfMeasures = $records['AvailablePerfMeasures'];
 $employees = $records['employees'];
 $authorizeObj = $records['authorizeObj'];
+$subordinates = $records['subordinates'];
 
 $perfReviewId = $perfReview->getId();
 $addMode = empty($perfReviewId);
@@ -35,7 +36,7 @@ $reviewStatusList = array(PerformanceReview::STATUS_SCHEDULED => $lang_Performan
 ?>
 <link href="../../themes/<?php echo $styleSheet;?>/css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">@import url("../../themes/<?php echo $styleSheet;?>/css/style.css"); </style>
-    
+
 <style type="text/css">
 @import url("../../themes/beyondT/css/octopus.css");
 
@@ -74,7 +75,7 @@ label {
 .dateBtn {
     width: auto;
 }
-    
+
 </style>
 <script type="text/javascript" src="../../scripts/archive.js"></script>
 <script type="text/javascript" src="../../scripts/octopus.js"></script>
@@ -94,23 +95,23 @@ function update() {
 	err=false;
 	msg='<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
 
-	empNum = $('txtRepEmpID').value.trim(); 
+	empNum = $('txtRepEmpID').value.trim();
 	if (empNum == '') {
 		err=true;
 		msg+="\t- <?php echo $lang_Performance_Review_Error_PleaseSpecifyEmployee; ?>\n";
 	}
-	
+
 	reviewDateStamp = strToDate($("txtReviewDate").value, YAHOO.OrangeHRM.calendar.format);
 	if (!reviewDateStamp) {
 		err=true;
-		msg+="\t- <?php echo $lang_Performance_Review_Error_PleaseSpecifyValidDate; ?>\n";				
+		msg+="\t- <?php echo $lang_Performance_Review_Error_PleaseSpecifyValidDate; ?>\n";
 	} else {
-	
+
 		reviewDate = new Date();
 		reviewDate.setTime(reviewDateStamp);
 		if (isDaySaturdayOrSunday(reviewDate)) {
 			err=true;
-			msg+="\t- <?php echo $lang_Performance_Review_Error_ReviewDateShouldNotBeSaturdayOrSunday; ?>\n";		
+			msg+="\t- <?php echo $lang_Performance_Review_Error_ReviewDateShouldNotBeSaturdayOrSunday; ?>\n";
 		}
 	}
 
@@ -149,34 +150,34 @@ function isDaySaturdayOrSunday(dateVar) {
 
 /**
  * Adjusts the given date if it falls on a saturday or sunday.
- */ 
+ */
 function adjustIfSaturdayOrSunday(dateVar) {
 	var day = dateVar.getDay();
 	var oneDay = 1000 * 60 * 60 * 24;
 	var timeVal = dateVar.getTime();
-	
+
 	if (day == 0) {
 		dateVar.setTime(timeVal + oneDay);
-	} else if (day == 6) {						
+	} else if (day == 6) {
 		dateVar.setTime(timeVal + (oneDay * 2));
 	}
 	return dateVar;
 }
 
-/** 
+/**
  * Set the review date the given number of months to the future
  */
 function setReviewDate(numMonths) {
 	var d = new Date();
 	var thisMonth = d.getMonth();
 	d.setMonth(thisMonth + numMonths);
-	
+
 	// Check if falling on a saturday or sunday and adjust if so.
 	var newDate = d;
 	if (isDaySaturdayOrSunday(d)) {
 		newDate = adjustIfSaturdayOrSunday(d);
 	}
-	
+
 	$("txtReviewDate").value = formatDate(newDate, YAHOO.OrangeHRM.calendar.format);
 }
 
@@ -205,13 +206,31 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 <div id="editPanel">
 	<form name="frmEmp" id="frmPerfMeasure" method="post" action="?perfcode=PerfReviews&action=">
 		<div class="roundbox">
-			<label for="cmbRepEmpID"><span class="error">*</span> <?php echo $lang_Performance_Review_EmpNumber; ?></label>									        	
-	        
+			<label for="cmbRepEmpID"><span class="error">*</span> <?php echo $lang_Performance_Review_EmpNumber; ?></label>
+
 			<?php if ($addMode && ($authorizeObj->isAdmin())) { ?>
 				<input type="text" name="cmbRepEmpID" id="cmbRepEmpID" disabled />
-				<input class="button" type="button" value="..." onclick="returnEmpDetail();" />				
+				<input class="button" type="button" value="..." onclick="returnEmpDetail();" />
 				<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" />
-			<?php } else { ?>
+			<?php }
+
+					else if ($addMode && ($authorizeObj->isSupervisor())) { ?>
+						<select name="txtRepEmpID" id="txtRepEmpID">
+						<option value="-1">-<?php echo $lang_Leave_Common_Select;?>-</option>
+					<?php
+			   			if (is_array($subordinates)) {
+			   				sort($subordinates);
+			   				foreach ($subordinates as $employee) {
+			        ?>
+			 		<option value="<?php echo $employee[0] ?>"><?php echo $employee[1] ?></option>
+			  <?php 		}
+			   			}
+	          ?>
+	          	</select><br />
+            <?php
+                      }
+
+				 else { ?>
 				<input type="text" name="cmbRepEmpID" id="cmbRepEmpID" value="<?php echo  CommonFunctions::escapeHtml($perfReview->getEmployeeName());?>" disabled />
 				<input type="hidden" name="txtRepEmpID" id="txtRepEmpID" value="<?php echo $perfReview->getEmpNumber();?>" />
 	        <?php } ?>
@@ -219,52 +238,52 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 	        <label for="txtReviewDate"><span class="error">*</span> <?php echo $lang_Performance_Review_Date; ?></label>
 	        <input type="text" id="txtReviewDate" name="txtReviewDate" <?php echo ($approverMode) ? 'disabled' : '';?>
 	        	value="<?php echo LocaleUtil::getInstance()->formatDate($perfReview->getReviewDate());?>" size="10" tabindex="1" />
-	        
+
 	        <?php if (!$approverMode) { ?>
 	        <input type="button" id="btnReviewDate" name="btnReviewDate" value="  " class="calendarBtn"/>
-	        
+
 			<input type="button" id="btn3months" name="btn3months" class="dateBtn" value="3m" onclick="setReviewDate(3)" />
 			<input type="button" id="btn6months" name="btn6months" class="dateBtn" value="6m" onclick="setReviewDate(6)" />
 			<input type="button" id="btn6months" name="btn6months" class="dateBtn" value="12m" onclick="setReviewDate(12)" />
 			<?php } ?>
 			<br/>
 	        <?php if (false) {?>
-	        	<label for="cmbStatus"><?php echo $lang_Performance_Review_Status; ?></label>	        	
+	        	<label for="cmbStatus"><?php echo $lang_Performance_Review_Status; ?></label>
 				<select name="cmbStatus" id="cmbStatus" >
-			  		<?php 
+			  		<?php
 			  			foreach ($reviewStatusList as $statusCode=>$statusDesc) {
-			  				$selected = ($statusCode == $perfReview->getStatus()) ? 'selected' : ''; 
+			  				$selected = ($statusCode == $perfReview->getStatus()) ? 'selected' : '';
 			  				echo "<option value='" . $statusCode . "' $selected >" .$statusDesc. "</option>";
 			  			} ?>
-				</select>			  	        	
+				</select>
 	        	<br />
-	        	<label for="txtNotes"><?php echo $lang_Performance_Review_Notes; ?></label>	        	
-	        	<textarea id="txtNotes" name="txtNotes" > <?php echo CommonFunctions::escapeHtml($perfReview->getReviewNotes()); ?></textarea>	        	
+	        	<label for="txtNotes"><?php echo $lang_Performance_Review_Notes; ?></label>
+	        	<textarea id="txtNotes" name="txtNotes" > <?php echo CommonFunctions::escapeHtml($perfReview->getReviewNotes()); ?></textarea>
 			<?php } else { ?>
 			<?php     if (!$addMode) { ?>
 					<label for="none"><?php echo $lang_Performance_Review_Status;?></label>
 					<input type="text" disabled id="cmbStatusText" name="cmbStatusText"
 		        		value="<?php echo (isset($reviewStatusList[$perfReview->getStatus()])) ? $reviewStatusList[$perfReview->getStatus()] : '';?>">
-					<br />				
-			<?php     } ?>	
+					<br />
+			<?php     } ?>
 					<input type="hidden" id="cmbStatus" name="cmbStatus" value="<?php echo $perfReview->getStatus(); ?>"/>
-					<input type="hidden" id="txtNotes" name="txtNotes" 
+					<input type="hidden" id="txtNotes" name="txtNotes"
 						value="<?php echo CommonFunctions::escapeHtml($perfReview->getReviewNotes()); ?>" />
 			<?php } ?>
 			<br />
 	        <label for="none">&nbsp;</label>
 	        <input type="hidden" id="txtReviewId" name="txtReviewId" value="<?php echo $perfReview->getId(); ?>"/>
 	   	</div><br />
-		<?php if (!$approverMode) { ?>	   	
+		<?php if (!$approverMode) { ?>
         <img onClick="update();"
              onMouseOut="this.src='../../themes/beyondT/pictures/btn_save.gif';"
              onMouseOver="this.src='../../themes/beyondT/pictures/btn_save_02.gif';"
              src="../../themes/beyondT/pictures/btn_save.gif"
         >
         <?php } ?>
-		<?php if (!$addMode) { ?>        
+		<?php if (!$addMode) { ?>
         <a href="javascript:viewReviewResults();"><?php echo $lang_Performance_Review_Results; ?></a>
-		<?php } ?>        
+		<?php } ?>
 		<script type="text/javascript">
 		<!--
 		    if (document.getElementById && document.createElement) {
@@ -293,7 +312,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 			<?php if (!$approverMode) { ?>
 				<input type="button" name="btnassignJobTitle" id="btnassignJobTitle" onClick="assignJobTitle();" value=" <?php echo $lang_compstruct_add; ?> >" style="width:80%"><br><br>
 				<input type="button" name="btnremoveJobTitle" id="btnremoveJobTitle" onClick="removeJobTitle();" value="< <?php echo $lang_Leave_Common_Remove; ?>" style="width:80%">
-			<?php } ?>				
+			<?php } ?>
 			</td>
 			<td width="130">
 			<select size="10" name="cmbAssignedPerfMeasures[]" id="cmbAssignedPerfMeasures" style="width:125px;"

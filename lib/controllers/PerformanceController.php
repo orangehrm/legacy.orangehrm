@@ -340,6 +340,15 @@ class PerformanceController {
 			$supervisorEmpNum = ($this->authorizeObj->isSupervisor()) ? $this->authorizeObj->getEmployeeId(): null;
         	$list = PerformanceReview::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder(), $supervisorEmpNum);
         	$count = PerformanceReview::getCount($searchObject->getSearchString(), $searchObject->getSearchField(), $supervisorEmpNum);
+
+        	/** Override module settings and allow supervisors to add reviews */
+        	if ($this->authorizeObj->isSupervisor()) {
+        		$locRights = $_SESSION['localRights'];
+				$locRights['add'] = true;
+				$locRights['delete'] = true;
+        		$_SESSION['localRights'] = $locRights;
+        	}
+
         	$this->_viewList($searchObject->getPageNumber(), $count, $list, true, 2);
 		} else {
             $this->_notAuthorized();
@@ -480,12 +489,16 @@ class PerformanceController {
     private function _viewReview($id = null) {
 
 		$path = '/templates/performance/viewPerformanceReview.php';
-
+		$subordinates = null;
 		try {
 			$perfMeasures = null;
 
 			if (empty($id)) {
 				$perfReview = new PerformanceReview();
+					if ($this->authorizeObj->isSupervisor()) {
+					$repObj = new EmpRepTo();
+					$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
+					}
 			} else {
 				$perfReview = PerformanceReview::getPerformanceReview($id);
 
@@ -524,6 +537,7 @@ class PerformanceController {
 			$objs['AssignedPerfMeasures'] = $assignedMeasures;
 			$objs['employees'] = $assignedMeasures;
 			$objs['authorizeObj'] = $this->authorizeObj;
+			$objs['subordinates'] =$subordinates;
 
 			$template = new TemplateMerger($objs, $path);
 			$template->display();
@@ -538,7 +552,7 @@ class PerformanceController {
 	 * @param Array $ids Array with Performance Review ID's to delete
 	 */
     private function _deleteReviews($ids) {
-		if ($this->authorizeObj->isAdmin()) {
+		if ($this->authorizeObj->isAdmin()|| $this->authorizeObj->isSupervisor()) {
 			try {
         		$count = PerformanceReview::delete($ids);
         		$message = 'DELETE_SUCCESS';
