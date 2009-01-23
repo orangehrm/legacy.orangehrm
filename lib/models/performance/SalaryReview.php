@@ -49,12 +49,12 @@ class SalaryReview {
 	const STATUS_PENDING_APPROVAL = 0;
 	const STATUS_APPROVED = 1;
 	const STATUS_REJECTED = 2;
-	
+
 	/** Field order */
 	const SORT_FIELD_NONE = -1;
 	const SORT_FIELD_EMPLOYEE_NAME = 0;
 	const SORT_FIELD_REVIEW_DATE = 1;
-	
+
 	private $id;
 	private $empNumber;
 	private $increase;
@@ -335,15 +335,15 @@ class SalaryReview {
 
 		$selectCondition[] = "a." . self::DB_FIELD_ID . " = $id";
 		$list = self::_getList($selectCondition);
-		
+
 		$review = null;
 		if (count($list) > 0) {
 			$review = $list[0];
 		}
-		
+
 		return $review;
 	}
-	
+
 	/**
 	 * Get condition to compare date with date salary review was created.
 	 */
@@ -353,12 +353,12 @@ class SalaryReview {
 		if (CommonFunctions::isInt($value)) {
 			$condition = " YEAR(a." . self::DB_FIELD_CREATED_TIME . ") = '{$value}' ";
 		} else {
-			$date = LocaleUtil::getInstance()->convertToStandardDateFormat($value);				
+			$date = LocaleUtil::getInstance()->convertToStandardDateFormat($value);
 			$condition = " DATE(a." . self::DB_FIELD_CREATED_TIME . ") = '{$date}' ";
 		}
-		return $condition;		
+		return $condition;
 	}
-	
+
 	/**
 	 * Get list of Salary Reviews in a format suitable for view.php
 	 * TODO: To be implemented
@@ -375,18 +375,18 @@ class SalaryReview {
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
 		$escapedVal = mysql_real_escape_string($searchStr);
-		
+
 		switch ($searchFieldNo) {
 			case self::SORT_FIELD_REVIEW_DATE:
-	
-				$selectCondition[] = self::_getDateComparisionCondition($escapedVal);		
+
+				$selectCondition[] = self::_getDateComparisionCondition($escapedVal);
 				break;
 			case self::SORT_FIELD_EMPLOYEE_NAME:
 				// TODO: Fix. This doesn't match when searching for full name. Eg: "John Adams"'
 				$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
 										"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
-										"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
-				break;				
+										"b.`emp_middle_name` LIKE '{$escapedVal}%') ";
+				break;
 		}
 
 		if (!empty($supervisorEmpNum)) {
@@ -396,17 +396,17 @@ class SalaryReview {
 			foreach ($subordinates as $subordinate) {
 				$subordinateIds[] = $subordinate[0];
 			}
-			
+
 			if (!empty($subordinateIds)) {
 				$selectCondition[] = "a.emp_number IN (" . implode(',', $subordinateIds). ")";
 			}
-		}	
-			
+		}
+
 		$list = self::_getList($selectCondition);
-		
+
 		$i = 0;
 		$arrayDispList = null;
-		
+
 		foreach($list as $review) {
 			$arrayDispList[$i][0] = $review->getId();
 	    	$arrayDispList[$i][1] = $review->getEmployeeName();
@@ -420,9 +420,9 @@ class SalaryReview {
 
 	/**
 	 * Count Salary reviews with given search conditions
-	 * 
+	 *
 	 * TODO: To be implemented
-	 * 
+	 *
 	 * @param string $searchStr Search string
 	 * @param string $searchFieldNo Integer giving which field to search on
 	 */
@@ -431,16 +431,16 @@ class SalaryReview {
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
 		$escapedVal = mysql_real_escape_string($searchStr);
-				
+
 		switch ($searchFieldNo) {
 			case self::SORT_FIELD_REVIEW_DATE:
-				$selectCondition[] = self::_getDateComparisionCondition($escapedVal);			
+				$selectCondition[] = self::_getDateComparisionCondition($escapedVal);
 				break;
 			case self::SORT_FIELD_EMPLOYEE_NAME:
 				$selectCondition[] = "b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
 								     "b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
-									 "b.`emp_middle_name` LIKE '{$escapedVal}%' "; 			
-				break;				
+									 "b.`emp_middle_name` LIKE '{$escapedVal}%' ";
+				break;
 		}
 
 		if (!empty($supervisorEmpNum)) {
@@ -450,19 +450,19 @@ class SalaryReview {
 			foreach ($subordinates as $subordinate) {
 				$subordinateIds[] = $subordinate[0];
 			}
-			
+
 			if (!empty($subordinateIds)) {
 				$selectCondition[] = "a.emp_number IN (" . implode(',', $subordinateIds). ")";
 			}
-		}	
+		}
 
-		$count = 0;		
+		$count = 0;
 		$sql = sprintf('SELECT count(*) FROM %s a, %s b WHERE a.emp_number = b.emp_number', self::TABLE_NAME, 'hs_hr_employee');
 
 		if (!empty($selectCondition)) {
 			$where = "";
 			foreach ($selectCondition as $condition) {
-				$where .= ' AND ( ' . $condition . ' )'; 
+				$where .= ' AND ( ' . $condition . ' )';
 			}
 			$sql .= $where;
 		}
@@ -476,7 +476,7 @@ class SalaryReview {
 
 	    return $count;
 	}
-		
+
 	/**
 	 * Get a list of salary reviews with the given conditions.
 	 *
@@ -497,7 +497,7 @@ class SalaryReview {
         $fields[9] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::FIELD_EMP_NAME;
         $fields[10] = "c.user_name AS " . self::FIELD_CREATED_BY_NAME;
 		$fields[11] = "d.user_name AS " . self::FIELD_APPROVED_BY_NAME;
-			
+
         $tables[0] = self::TABLE_NAME . ' a';
         $tables[1] = 'hs_hr_employee b';
         $tables[2] = 'hs_hr_users c';
@@ -506,6 +506,9 @@ class SalaryReview {
         $joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
 		$joinConditions[2] = 'a.' . self::DB_FIELD_CREATED_BY . ' = c.id';
 		$joinConditions[3] = 'a.' . self::DB_FIELD_CREATED_BY . ' = d.id';
+
+		//Restrict ess user from changing status  his own salary review
+		$selectCondition[]="a.emp_number !='".$_SESSION['empID']."'";
 
         $orderBy = 'a.' . self::DB_FIELD_ID;
         $order = 'ASC';
@@ -532,40 +535,40 @@ class SalaryReview {
 	private function _insert() {
 
 		$this->id = UniqueIDGenerator::getInstance()->getNextID(self::TABLE_NAME, self::DB_FIELD_ID);
-		
+
 	    $fields[] = self::DB_FIELD_ID;
 	    $values[] = $this->id;
-	    
+
 	    $fields[] = self::DB_FIELD_EMP_NUMBER;
 	    $values[] = $this->empNumber;
-	    
+
 	    $fields[] = self::DB_FIELD_INCREASE;
 	    $values[] = $this->increase;
-	    
-    
+
+
     	$fields[] = self::DB_FIELD_STATUS;
     	$values[] = $this->status;
-	    	    
-	    if (!empty($this->createdBy)) {	    
+
+	    if (!empty($this->createdBy)) {
 		    $fields[] = self::DB_FIELD_CREATED_BY;
 		    $values[] = $this->createdBy;
 	    }
-	    	    
-	    if (!empty($this->approvedBy)) {	    
+
+	    if (!empty($this->approvedBy)) {
 		    $fields[] = self::DB_FIELD_APPROVED_BY;
 		    $values[] = $this->approvedBy;
 	    }
-	    	    	    
-	    if (!empty($this->createdTime)) {	    	    
+
+	    if (!empty($this->createdTime)) {
 		    $fields[] = self::DB_FIELD_CREATED_TIME;
 			$values[] = $this->createdTime;
 	    }
-	    	    
-	    if (!empty($this->approvedTime)) {	    
+
+	    if (!empty($this->approvedTime)) {
 		    $fields[] = self::DB_FIELD_APPROVED_TIME;
 		    $values[] = $this->approvedTime;
 	    }
-	    	        
+
 	    $fields[] = self::DB_FIELD_DESCRIPTION;
 	    $values[] = $this->description;
 
@@ -594,37 +597,37 @@ class SalaryReview {
 
 	    $fields[] = self::DB_FIELD_ID;
 	    $values[] = $this->id;
-	    
+
 	    $fields[] = self::DB_FIELD_EMP_NUMBER;
 	    $values[] = $this->empNumber;
-	    
+
 	    $fields[] = self::DB_FIELD_INCREASE;
 	    $values[] = $this->increase;
-	    
-    
+
+
     	$fields[] = self::DB_FIELD_STATUS;
     	$values[] = $this->status;
-	    	    
-	    if (!empty($this->createdBy)) {	    
+
+	    if (!empty($this->createdBy)) {
 		    $fields[] = self::DB_FIELD_CREATED_BY;
 		    $values[] = $this->createdBy;
 	    }
-	    	    
-	    if (!empty($this->approvedBy)) {	    
+
+	    if (!empty($this->approvedBy)) {
 		    $fields[] = self::DB_FIELD_APPROVED_BY;
 		    $values[] = $this->approvedBy;
 	    }
-	    	    	    
-	    if (!empty($this->createdTime)) {	    	    
+
+	    if (!empty($this->createdTime)) {
 		    $fields[] = self::DB_FIELD_CREATED_TIME;
 			$values[] = $this->createdTime;
 	    }
-	    	    
-	    if (!empty($this->approvedTime)) {	    
+
+	    if (!empty($this->approvedTime)) {
 		    $fields[] = self::DB_FIELD_APPROVED_TIME;
 		    $values[] = $this->approvedTime;
 	    }
-	    	        
+
 	    $fields[] = self::DB_FIELD_DESCRIPTION;
 	    $values[] = $this->description;
 
@@ -643,7 +646,7 @@ class SalaryReview {
 		// without any changes.
 		if (!$result) {
 			throw new SalaryReviewException("Update failed. SQL=$sql", SalaryReviewException::DB_ERROR);
-		}	
+		}
 		return $this->id;
 	}
 
@@ -673,7 +676,7 @@ class SalaryReview {
 	    if (isset($row[self::FIELD_APPROVED_BY_NAME])) {
 	    	$review->setApprovedByName($row[self::FIELD_APPROVED_BY_NAME]);
 	    }
-		
+
 	    return $review;
     }
 }

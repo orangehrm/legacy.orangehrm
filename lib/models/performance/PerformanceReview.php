@@ -29,12 +29,12 @@ require_once ROOT_PATH . '/lib/models/eimadmin/EmployStat.php';
 require_once ROOT_PATH . '/lib/confs/sysConf.php';
 
 class PerformanceReview {
-	
+
 	const TABLE_NAME = 'hs_hr_perf_review';
 	const REVIEW_MEASURE_TABLE_NAME = 'hs_hr_perf_review_measure';
 
 	const DEFAULT_REVIEW_PERIOD = 3;
-	
+
 	/** Database fields */
 	const DB_FIELD_ID = 'id';
 	const DB_FIELD_EMP_NUMBER = 'emp_number';
@@ -46,13 +46,13 @@ class PerformanceReview {
 	const DB_FIELD_REVIEW_ID = 'review_id';
 	const DB_FIELD_PERF_MEASURE_ID = 'perf_measure_id';
 	const DB_FIELD_SCORE = 'score';
-	
+
 	const FIELD_EMPLOYEE_NAME = 'emp_name';
 
 	/** Field order */
 	const SORT_FIELD_NONE = -1;
 	const SORT_FIELD_ID = 0;
-	const SORT_FIELD_EMPLOYEE_NAME = 1;	
+	const SORT_FIELD_EMPLOYEE_NAME = 1;
 	const SORT_FIELD_REVIEW_YEAR = 2;
 	const SORT_FIELD_REVIEW_STATUS = 3;
 
@@ -60,11 +60,11 @@ class PerformanceReview {
 	const STATUS_SCHEDULED = 0;
 	const STATUS_COMPLETED = 1;
 	const STATUS_SUBMITTED_FOR_APPROVAL = 2;
-	const STATUS_APPROVED = 3;	
-		
+	const STATUS_APPROVED = 3;
+
 	const NOTIFICATION_NOT_SENT = 0;
 	const NOTIFICATION_SENT = 1;
-	
+
 	private $id;
 	private $empNumber;
 	private $reviewDate;
@@ -104,7 +104,7 @@ class PerformanceReview {
 	public function setReviewNotes($reviewNotes) {
 		$this->reviewNotes = $reviewNotes;
 	}
-	
+
 	public function setPerformanceMeasures($performanceMeasures) {
 		$this->performanceMeasures = $performanceMeasures;
 	}
@@ -120,7 +120,7 @@ class PerformanceReview {
 	public function getEmpNumber() {
 	    return $this->empNumber;
 	}
-	
+
 	public function getReviewDate() {
 		return $this->reviewDate;
 	}
@@ -144,11 +144,11 @@ class PerformanceReview {
 	public function isNotificationSent() {
 		return $this->notificationSent;
 	}
-	
+
 	public function setNotificationSent() {
 		$this->notificationSent = self::NOTIFICATION_SENT;
 	}
-	
+
 	/**
 	 * Save Performance Review object to database
 	 * @return int Returns the ID of the object
@@ -191,15 +191,15 @@ class PerformanceReview {
 		}
 		return $count;
 	}
-	
+
 	public static function getReviewsPendingNotification() {
-		
+
 		$selectCondition[] = self::DB_FIELD_NOTIFICATION_SENT . " = " . self::NOTIFICATION_NOT_SENT;
 		$selectCondition[] = self::DB_FIELD_STATUS . " = " . self::STATUS_SCHEDULED;
 		$selectCondition[] = "(DATEDIFF(". self::DB_FIELD_REVIEW_DATE . ", CURDATE()) BETWEEN 0 AND 7)";
 
 		$list = self::_getList($selectCondition, null, null, null, false);
-		return $list;		
+		return $list;
 	}
 
 	/**
@@ -224,16 +224,16 @@ class PerformanceReview {
 
 		$selectCondition[] = self::DB_FIELD_ID . " = $id";
 		$list = self::_getList($selectCondition);
-		
+
 		$review = null;
 		if (count($list) > 0) {
 			$review = $list[0];
 			$review->setPerformanceMeasures(self::_fetchPerformanceMeasures($id));
 		}
-		
+
 		return $review;
 	}
-	
+
 	/**
 	 * Get list of Performance Reviews in a format suitable for view.php
 	 * TODO: To be implemented
@@ -250,12 +250,12 @@ class PerformanceReview {
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
 		$includeTerminatedEmployees = false;
-				
+
 		for ($i = 0; $i < count($searchStr); $i++) {
-			
+
 			if (!empty($searchStr[$i])) {
 				$escapedVal = mysql_real_escape_string($searchStr[$i]);
-		
+
 				switch ($searchFieldNo[$i]) {
 					case self::SORT_FIELD_ID:
 						$includeTerminatedEmployees = true;
@@ -263,17 +263,17 @@ class PerformanceReview {
 						break;
 					case self::SORT_FIELD_REVIEW_STATUS:
 						$selectCondition[] = self::DB_FIELD_STATUS . " = '{$escapedVal}' ";
-						break;				
-					
+						break;
+
 					case self::SORT_FIELD_REVIEW_YEAR:
 						$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
 						break;
 					case self::SORT_FIELD_EMPLOYEE_NAME:
-						$includeTerminatedEmployees = true;					
+						$includeTerminatedEmployees = true;
 						$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
 												"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
-												"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
-						break;				
+												"b.`emp_middle_name` LIKE '{$escapedVal}%') ";
+						break;
 				}
 			}
 		}
@@ -285,12 +285,12 @@ class PerformanceReview {
 			foreach ($subordinates as $subordinate) {
 				$subordinateIds[] = $subordinate[0];
 			}
-			
+
 			if (!empty($subordinateIds)) {
 				$selectCondition[] = "a.emp_number IN (" . implode(',', $subordinateIds). ")";
 			}
-		}	
-			
+		}
+
 		$sysConst = new sysConf();
 		$limit = null;
 		if ($pageNO > 0) {
@@ -307,20 +307,20 @@ class PerformanceReview {
 				break;
 			case self::SORT_FIELD_EMPLOYEE_NAME:
 				$sortBy = self::FIELD_EMPLOYEE_NAME;
-				break;	
+				break;
 			case self::SORT_FIELD_REVIEW_YEAR:
 				$sortBy =  self::DB_FIELD_REVIEW_DATE;
 				break;
 			case self::SORT_FIELD_REVIEW_STATUS:
 				$sortBy =  self::DB_FIELD_STATUS;
-				break;	
+				break;
 		}
-				
+
 		$list = self::_getList($selectCondition, $sortBy, $sortOrder, $limit, $includeTerminatedEmployees);
-		
+
 		$i = 0;
 		$arrayDispList = null;
-		
+
 		foreach($list as $review) {
 			$arrayDispList[$i][0] = $review->getId();
 	    	$arrayDispList[$i][1] = $review->getEmployeeName();
@@ -334,9 +334,9 @@ class PerformanceReview {
 
 	/**
 	 * Count performance reviews with given search conditions
-	 * 
+	 *
 	 * TODO: To be implemented
-	 * 
+	 *
 	 * @param string $searchStr Search string
 	 * @param string $searchFieldNo Integer giving which field to search on
 	 */
@@ -345,12 +345,12 @@ class PerformanceReview {
 		$selectCondition = null;
 		$dbConnection = new DMLFunctions();
 		$includeTerminatedEmployees = false;
-		
+
 		for ($i = 0; $i < count($searchStr); $i++) {
-			
+
 			if (!empty($searchStr[$i])) {
 				$escapedVal = mysql_real_escape_string($searchStr[$i]);
-		
+
 				switch ($searchFieldNo[$i]) {
 					case self::SORT_FIELD_ID:
 						$selectCondition[] = self::DB_FIELD_ID . " = '{$escapedVal}' ";
@@ -358,8 +358,8 @@ class PerformanceReview {
 						break;
 					case self::SORT_FIELD_REVIEW_STATUS:
 						$selectCondition[] = self::DB_FIELD_STATUS . " = '{$escapedVal}' ";
-						break;				
-					
+						break;
+
 					case self::SORT_FIELD_REVIEW_YEAR:
 						$selectCondition[] = "YEAR(a." . self::DB_FIELD_REVIEW_DATE . ") = '{$escapedVal}' ";
 						break;
@@ -367,12 +367,12 @@ class PerformanceReview {
 						$includeTerminatedEmployees = true;
 						$selectCondition[] = "( b.`emp_firstname` LIKE '{$escapedVal}%' OR " .
 												"b.`emp_lastname` LIKE '{$escapedVal}%' OR " .
-												"b.`emp_middle_name` LIKE '{$escapedVal}%') "; 			
-						break;				
+												"b.`emp_middle_name` LIKE '{$escapedVal}%') ";
+						break;
 				}
 			}
 		}
-		
+
 		if (!empty($supervisorEmpNum)) {
 			$repObj = new EmpRepTo();
 			$subordinates = $repObj->getEmpSubDetails($_SESSION['empID']);
@@ -380,23 +380,23 @@ class PerformanceReview {
 			foreach ($subordinates as $subordinate) {
 				$subordinateIds[] = $subordinate[0];
 			}
-			
+
 			if (!empty($subordinateIds)) {
 				$selectCondition[] = "a.emp_number IN (" . implode(',', $subordinateIds). ")";
 			}
 		}
-			
+
 		if (!$includeTerminatedEmployees) {
 			$selectCondition[] = "(b.`emp_status` != '" . EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED . "' OR b.`emp_status` IS NULL)";
-		}		
+		}
 
-		$count = 0;		
+		$count = 0;
 		$sql = sprintf('SELECT count(*) FROM %s a, %s b WHERE a.emp_number = b.emp_number', self::TABLE_NAME, 'hs_hr_employee');
 
 		if (!empty($selectCondition)) {
 			$where = "";
 			foreach ($selectCondition as $condition) {
-				$where .= ' AND ( ' . $condition . ' )'; 
+				$where .= ' AND ( ' . $condition . ' )';
 			}
 			$sql .= $where;
 		}
@@ -410,7 +410,7 @@ class PerformanceReview {
 
 	    return $count;
 	}
-		
+
 	/**
 	 * Get list of performance measures assigned to this performance review
 	 */
@@ -426,7 +426,7 @@ class PerformanceReview {
 		$joinConditions[1] = 'a.' . self::DB_FIELD_PERF_MEASURE_ID . ' = b.' . PerformanceMeasure::DB_FIELD_ID;
 
 		$selectCondition[] = "a." . self::DB_FIELD_REVIEW_ID . " = " . $performanceReviewId;
-		
+
 		$sqlBuilder = new SQLQBuilder();
 		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
 
@@ -440,88 +440,88 @@ class PerformanceReview {
 			$perfScore->setId($row[self::DB_FIELD_PERF_MEASURE_ID]);
 			$perfScore->setName($row[PerformanceMeasure::DB_FIELD_NAME]);
 			$score = $row[self::DB_FIELD_SCORE];
-			
+
 			if (!is_null($score)) {
 				$perfScore->setScore($score);
 			}
-			
+
 			$measures[$perfScore->getId()] = $perfScore;
 		}
 
-		return $measures;	
+		return $measures;
 	}
-	
+
 	/**
 	 * Save performance measures assigned to this performance review
 	 */
 	private function _savePerformanceMeasures() {
-		
-				
-		// Delete existing job title assignments		
+
+
+		// Delete existing job title assignments
 		$sql = sprintf("DELETE FROM %s WHERE %s = %s", self::REVIEW_MEASURE_TABLE_NAME,
 		                self::DB_FIELD_REVIEW_ID, $this->id);
-		  
-		// Extra condition              
+
+		// Extra condition
 		if (!empty($this->performanceMeasures) && count($this->performanceMeasures) > 0) {
-			
+
 			$assignedMeasureIds = array();
 			foreach ($this->performanceMeasures as $measure) {
 				$assignedMeasureIds[] = $measure->getId();
 			}
-			
-			$idStr = implode(',', $assignedMeasureIds); 
+
+			$idStr = implode(',', $assignedMeasureIds);
 			$extraCondition = sprintf(" AND %s not in (%s)", self::DB_FIELD_PERF_MEASURE_ID, $idStr);
 			$sql .= $extraCondition;
 		}
-				                
+
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
-				
+
 		// Assign new performance reviews
 		if (!empty($this->performanceMeasures)) {
-			
+
 			$scoresAvailable = $this->performanceMeasures[0] instanceof PerformanceScore;
-			
+
 			if ($scoresAvailable) {
-				$sql = sprintf("INSERT INTO %s (%s, %s, %s) VALUES " , self::REVIEW_MEASURE_TABLE_NAME, 
+				$sql = sprintf("INSERT INTO %s (%s, %s, %s) VALUES " , self::REVIEW_MEASURE_TABLE_NAME,
 					self::DB_FIELD_REVIEW_ID, self::DB_FIELD_PERF_MEASURE_ID, self::DB_FIELD_SCORE);
 
 			} else {
-				$sql = sprintf("INSERT IGNORE INTO %s (%s, %s) VALUES " , self::REVIEW_MEASURE_TABLE_NAME, 
+				$sql = sprintf("INSERT IGNORE INTO %s (%s, %s) VALUES " , self::REVIEW_MEASURE_TABLE_NAME,
 					self::DB_FIELD_REVIEW_ID, self::DB_FIELD_PERF_MEASURE_ID);
 			}
-			
-			
+
+
 			$valueSql = "";
 			foreach ($this->performanceMeasures as $measure) {
-				
+
 				if (!empty($valueSql)) {
 					$valueSql .= ', ';
 				}
 
-				if ($scoresAvailable) {				
-					$score = $measure->getScore(); 
+				if ($scoresAvailable) {
+					$score = $measure->getScore();
 					if (is_null($score)) {
 						$scoreStr = 'null';
 					} else {
 						$scoreStr = sprintf('%f', $score);
-					}					
+					}
 					$valueSql .= sprintf("(%d, %d, %s)", $this->id, $measure->getId(), $scoreStr);
 				} else {
 					$valueSql .= sprintf("(%d, %d)", $this->id, $measure->getId());
-				}				
+				}
 			}
-			
+
 			$sql .= $valueSql;
 			if ($scoresAvailable) {
 				$sql .= sprintf(' ON DUPLICATE KEY UPDATE %s = VALUES(%s)', self::DB_FIELD_SCORE, self::DB_FIELD_SCORE);
 			}
-			
+
 			$result = $conn->executeQuery($sql);
 			if (!$result) {
 				throw new PerformanceReviewException("Save Performance measures failed. SQL=$sql", PerformanceReviewException::DB_ERROR);
-			}			
-		}		
+			}
+		}
 	}
 
 
@@ -545,11 +545,14 @@ class PerformanceReview {
 		$tables[1] = 'hs_hr_employee b';
 
 		$joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
-		
+
 		if (!$includeTerminatedEmployees) {
 			$selectCondition[] = "(b.`emp_status` != '" . EmploymentStatus::EMPLOYMENT_STATUS_ID_TERMINATED . "' OR b.`emp_status` IS NULL)";
 		}
-		
+
+		//Restrict ess user from changing status  his own performance review
+		array_push($selectCondition,"a.emp_number !='".$_SESSION['empID']."'");
+
 		$sqlBuilder = new SQLQBuilder();
 		$sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, $sortBy, $sortOrder, $limit);
 
@@ -562,7 +565,7 @@ class PerformanceReview {
 			$actList[] = self::_createFromRow($row);
 		}
 
-		return $actList;	
+		return $actList;
 	}
 
 	/**
@@ -571,7 +574,7 @@ class PerformanceReview {
 	private function _insert() {
 
 		$this->id = UniqueIDGenerator::getInstance()->getNextID(self::TABLE_NAME, self::DB_FIELD_ID);
-		
+
 		$fields[0] = self::DB_FIELD_ID;
 		$fields[1] = self::DB_FIELD_EMP_NUMBER;
 		$fields[2] = self::DB_FIELD_REVIEW_DATE;
@@ -585,7 +588,7 @@ class PerformanceReview {
 		$values[3] = $this->status;
 		$values[4] = "'{$this->reviewNotes}'";
 		$values[5] = $this->notificationSent;
-		
+
 		$sqlBuilder = new SQLQBuilder();
 		$sqlBuilder->table_name = self::TABLE_NAME;
 		$sqlBuilder->flg_insert = 'true';
@@ -639,7 +642,7 @@ class PerformanceReview {
 		if (!$result) {
 			throw new PerformanceReviewException("Update failed. SQL=$sql", PerformanceReviewException::DB_ERROR);
 		}
-		$this->_savePerformanceMeasures();		
+		$this->_savePerformanceMeasures();
 		return $this->id;
 	}
 
@@ -657,9 +660,9 @@ class PerformanceReview {
 		$fields[3] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::FIELD_EMPLOYEE_NAME;
 		$fields[4] = "a. " . self::DB_FIELD_STATUS;
 		$fields[5] = "a. " . self::DB_FIELD_REVIEW_NOTES;
-		
+
     	$review = new PerformanceReview($row[self::DB_FIELD_ID]);
-    	
+
 		$review->setId($row[self::DB_FIELD_ID]);
 		$review->setEmpNumber($row[self::DB_FIELD_EMP_NUMBER]);
 		$review->setReviewDate($row[self::DB_FIELD_REVIEW_DATE]);
@@ -669,57 +672,57 @@ class PerformanceReview {
 		$review->setNotificationSent($row[self::DB_FIELD_NOTIFICATION_SENT]);
 	    return $review;
     }
-    
+
     /**
      * Get the completed performance reviews of an employee
-     * 
+     *
      * @param employee id .
      * @return array of complted performance reviews.
      */
-    public function getCompltedPerformanceReviews(){    	   	
+    public function getCompltedPerformanceReviews(){
     	$sqlQBuilder=new SQLQBuilder();
-    	
+
     	$fields[0] = "a. " . self::DB_FIELD_ID;
     	$fields[1] = 'f.`jobtit_name`';
     	$fields[2] = "a. " . self::DB_FIELD_REVIEW_DATE;
         $fields[3] = "a. " . self::DB_FIELD_STATUS;
         $fields[4] = "a. " . self::DB_FIELD_REVIEW_NOTES;
-        $fields[5] = "d.name" ; 
-        $fields[6] = "c. " . self::DB_FIELD_SCORE;  	
-    	    	
-    	$tables[0] = self::TABLE_NAME . ' a'; 
-    	$tables[1] = 'hs_hr_employee b'; 
+        $fields[5] = "d.name" ;
+        $fields[6] = "c. " . self::DB_FIELD_SCORE;
+
+    	$tables[0] = self::TABLE_NAME . ' a';
+    	$tables[1] = 'hs_hr_employee b';
     	$tables[2] = 'hs_hr_perf_review_measure c';
-    	$tables[3] = 'hs_hr_perf_measure d';  
+    	$tables[3] = 'hs_hr_perf_measure d';
     	$tables[4] = 'hs_hr_perf_measure_jobtitle e';
-        $tables[5] = 'hs_hr_job_title f';  	
-             
-        $joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';       
+        $tables[5] = 'hs_hr_job_title f';
+
+        $joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
         $joinConditions[2]= "a ." .self::DB_FIELD_ID . '= c .review_id';
         $joinConditions[3]= "d .id = c . perf_measure_id";
         $joinConditions[4]= "e . perf_measure_id = d. id";
         $joinConditions[5]= "f . jobtit_code = e. jobtit_code";
-               
+
         $selectConditions[0] = "a.status = '" . self:: STATUS_COMPLETED . "'";
         $selectConditions[1] = "a .". self::DB_FIELD_EMP_NUMBER ." = '". $this->getEmpNumber() . "'";
-        
+
         $sqlQBuilder->flg_select = true;
 
         $sql = $sqlQBuilder->selectFromMultipleTable($fields, $tables, $joinConditions,$selectConditions, null,$fields[0], "ASC");
-       
+
         $arrPerformanceReviews = array();
 
         $conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
-        
+
         $cnt = 0;
         while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
            $arrPerformanceReviews[$cnt++] = $row;
         }
-        
-        return $arrPerformanceReviews;    
-        
-            	
+
+        return $arrPerformanceReviews;
+
+
     }
 
 }

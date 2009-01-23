@@ -141,9 +141,11 @@ class LeaveSummaryTest extends PHPUnit_Framework_TestCase {
     public function testFetchAllEmployeeLeaveSummaryAccuracy() {
 
         $res = $this->leaveSummary->fetchAllEmployeeLeaveSummary("012", date('Y', time()+3600*24));
+		
+		$count=count($res);
 
         $this->assertNotNull($res, "No records returned");
-        $this->assertEquals(count($res), 2, "Returned invalid numner of records");
+        $this->assertEquals($count, 2, "Returned invalid numner of records");
 
         $expected[] = array("Medical", 10, 5, 5);
         $expected[] = array("Casual", 20, 30, -10);
