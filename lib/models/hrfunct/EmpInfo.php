@@ -1062,12 +1062,12 @@ class EmpInfo {
 
             $empJobTitleHistory = new JobTitleHistory();
             if (!empty($this->empJobTitle)) {
-                $empJobTitleHistory->updateHistory($this->getEmpId(), $this->empJobTitle);
+                $empJobTitleHistory->updateHistory($this->getEmpId(), $this->empJobTitle, $this->getEmpJoinedDate());
             }
 
             $empDivisionHistory = new SubDivisionHistory();
             if (!empty($this->empLocation)) {
-                $empDivisionHistory->updateHistory($this->getEmpId(), $this->empLocation);
+                $empDivisionHistory->updateHistory($this->getEmpId(), $this->empLocation, '');
             }
 
         }

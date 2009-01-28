@@ -123,7 +123,7 @@ class SubDivisionHistoryTest extends PHPUnit_Framework_TestCase {
 
         // invalid emp number
         try {
-            $history->updateHistory('ab1', 3);
+            $history->updateHistory('ab1', 3,'');
             $this->fail("Exception expected");
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::INVALID_PARAMETER, $e->getCode());
@@ -131,7 +131,7 @@ class SubDivisionHistoryTest extends PHPUnit_Framework_TestCase {
 
         // invalid sub division code
         try {
-            $history->updateHistory(11, 'JOBA003');
+            $history->updateHistory(11, 'JOBA003','');
             $this->fail("Exception expected");
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::INVALID_PARAMETER, $e->getCode());
@@ -140,7 +140,7 @@ class SubDivisionHistoryTest extends PHPUnit_Framework_TestCase {
         // No change
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = '3' AND end_date IS NULL"));
         $before = $this->_getNumRows();
-        $result = $history->updateHistory(12, 3);
+        $result = $history->updateHistory(12, 3,'');
         $this->assertFalse($result);
         $this->assertEquals($before, $this->_getNumRows());
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = '3' AND end_date IS NULL"));
@@ -149,14 +149,14 @@ class SubDivisionHistoryTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery('UPDATE hs_hr_emp_subdivision_history SET end_date = null WHERE id=' . $this->subDivisionHistory[3]->getId());
 
         try {
-            $result = $history->updateHistory(11, 1);
+            $result = $history->updateHistory(11, 1,'');
             $this->fail('Exception expected');
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::MULTIPLE_CURRENT_ITEMS_NOT_ALLOWED, $e->getCode());
         }
 
         // Change sub division
-        $result = $history->updateHistory(12, 1);
+        $result = $history->updateHistory(12, 1,'');
         $this->assertTrue($result);
         $this->assertEquals($before + 1, $this->_getNumRows());
         $this->assertEquals(0, $this->_getNumRows("emp_number = 12 AND code = '2' AND end_date IS NULL"));
@@ -192,7 +192,7 @@ class SubDivisionHistoryTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery('DELETE from hs_hr_emp_subdivision_history');
 
         $this->assertEquals(0, $this->_getNumRows());
-        $result = $history->updateHistory(12, 3);
+        $result = $history->updateHistory(12, 3,'26/1/2009');
         $this->assertTrue($result);
         $this->assertEquals(1, $this->_getNumRows());
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = '3' AND end_date IS NULL"));

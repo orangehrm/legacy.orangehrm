@@ -105,7 +105,7 @@ class JobTitleHistoryTest extends PHPUnit_Framework_TestCase {
 
         // invalid emp number
         try {
-            $history->updateHistory('ab1', 'JOB003');
+            $history->updateHistory('ab1', 'JOB003','01/01/2009');
             $this->fail("Exception expected");
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::INVALID_PARAMETER, $e->getCode());
@@ -113,7 +113,7 @@ class JobTitleHistoryTest extends PHPUnit_Framework_TestCase {
 
         // invalid job title code
         try {
-            $history->updateHistory(11, 'JOBA003');
+            $history->updateHistory(11, 'JOBA003','01/01/2009');
             $this->fail("Exception expected");
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::INVALID_PARAMETER, $e->getCode());
@@ -122,7 +122,7 @@ class JobTitleHistoryTest extends PHPUnit_Framework_TestCase {
         // No change
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = 'JOB003' AND end_date IS NULL"));
         $before = $this->_getNumRows();
-        $result = $history->updateHistory(12, 'JOB003');
+        $result = $history->updateHistory(12, 'JOB003','01/01/2009');
         $this->assertFalse($result);
         $this->assertEquals($before, $this->_getNumRows());
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = 'JOB003' AND end_date IS NULL"));
@@ -131,14 +131,14 @@ class JobTitleHistoryTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery('UPDATE hs_hr_emp_jobtitle_history SET end_date = null WHERE id=' . $this->jobtitleHistory[3]->getId());
 
         try {
-            $result = $history->updateHistory(11, 'JOB001');
+            $result = $history->updateHistory(11, 'JOB001','01/01/2009');
             $this->fail('Exception expected');
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::MULTIPLE_CURRENT_ITEMS_NOT_ALLOWED, $e->getCode());
         }
 
         // Change job title
-        $result = $history->updateHistory(12, 'JOB001');
+        $result = $history->updateHistory(12, 'JOB001','01/01/2009');
         $this->assertTrue($result);
         $this->assertEquals($before + 1, $this->_getNumRows());
         $this->assertEquals(0, $this->_getNumRows("emp_number = 12 AND code = 'JOB002' AND end_date IS NULL"));
@@ -174,7 +174,7 @@ class JobTitleHistoryTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery('DELETE from hs_hr_emp_jobtitle_history');
 
         $this->assertEquals(0, $this->_getNumRows());
-        $result = $history->updateHistory(12, 'JOB003');
+        $result = $history->updateHistory(12, 'JOB003','01/01/2009');
         $this->assertTrue($result);
         $this->assertEquals(1, $this->_getNumRows());
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = 'JOB003' AND end_date IS NULL"));

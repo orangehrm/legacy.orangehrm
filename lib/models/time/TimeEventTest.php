@@ -240,7 +240,7 @@ class TimeEventTest extends PHPUnit_Framework_TestCase {
     public function testEditTimeEvent() {
 		$eventObj = $this->classTimeEvent;
 
-		$expected[0] = array(11, 10, 10, 10, 10, date('Y-m-d 13:00', time()-3600), date('Y-m-d 13:00', time()-3600*0.5), date('Y-m-d'), 30, "Testing12");
+		$expected[0] = array(11, 10, 10, 10, 10, date('Y-m-d 04:00', time()-3600), date('Y-m-d 04:00', time()-3600*0.5), date('Y-m-d'), 30, "Testing12");
 
 		$eventObj->setTimeEventId($expected[0][0]);
 		$eventObj->setProjectId($expected[0][1]);

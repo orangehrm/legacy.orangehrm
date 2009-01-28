@@ -169,7 +169,7 @@ abstract class AbstractEmpHistory {
      *
      * @return boolean true if history updated, false if not
      */
-    public function updateHistory($empNum, $code, $remove = false) {
+    public function updateHistory($empNum, $code, $joinedDate,$remove = false) {
 
         if (!CommonFunctions::isValidId($empNum)) {
             throw new EmpHistoryException("Invalid emp number", EmpHistoryException::INVALID_PARAMETER);
@@ -202,16 +202,24 @@ abstract class AbstractEmpHistory {
         }
 
         // if not found, add end time to existing current item (only if there is on)
-        if (!$found) {
 
             $now = date(LocaleUtil::STANDARD_TIMESTAMP_FORMAT);
+
+			if (!$found) {
+			   $d=null;
+			   	//check whether this is the first record in Job title history list.
+			      if(count($currentItems) == 0){
+				     $d=isset($joinedDate)?$joinedDate:$now;
+			      }else {
+				      $d=$now;
+			      }
 
             // add this item as current
             $className = get_class($this);
             $empHistory = new $className;
             $empHistory->setEmpNumber($empNum);
             $empHistory->setCode($code);
-            $empHistory->setStartDate($now);
+            $empHistory->setStartDate($d);
             $empHistory->save($now);
 
             $added = true;

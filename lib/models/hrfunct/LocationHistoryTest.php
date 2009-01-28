@@ -106,7 +106,7 @@ class LocationHistoryTest extends PHPUnit_Framework_TestCase {
 
         // invalid emp number
         try {
-            $history->updateHistory('ab1', 'LOC003');
+            $history->updateHistory('ab1', 'LOC003','26/1/2009');
             $this->fail("Exception expected");
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::INVALID_PARAMETER, $e->getCode());
@@ -114,7 +114,7 @@ class LocationHistoryTest extends PHPUnit_Framework_TestCase {
 
         // invalid location code
         try {
-            $history->updateHistory(11, 'JOBA003');
+            $history->updateHistory(11, 'JOBA003','26/1/2009');
             $this->fail("Exception expected");
         } catch (EmpHistoryException $e) {
             $this->assertEquals(EmpHistoryException::INVALID_PARAMETER, $e->getCode());
@@ -123,7 +123,7 @@ class LocationHistoryTest extends PHPUnit_Framework_TestCase {
         // No change
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = 'LOC003' AND end_date IS NULL"));
         $before = $this->_getNumRows();
-        $result = $history->updateHistory(12, 'LOC003');
+        $result = $history->updateHistory(12, 'LOC003','26/1/2009');
         $this->assertFalse($result);
         $this->assertEquals($before, $this->_getNumRows());
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = 'LOC003' AND end_date IS NULL"));
@@ -135,21 +135,21 @@ class LocationHistoryTest extends PHPUnit_Framework_TestCase {
         $before = $this->_getNumRows();
 
         // Update location already one of the current location - no change expected
-        $result = $history->updateHistory(11, 'LOC001');
+        $result = $history->updateHistory(11, 'LOC001','26/1/2009');
         $this->assertFalse($result);
         $this->assertEquals(2, $this->_getNumRows("emp_number = 11 AND end_date IS NULL"));
         $this->assertEquals($before, $this->_getNumRows());
 
         // Update new location, should be added to list of current locations
         $before = $this->_getNumRows();
-        $result = $history->updateHistory(11, 'LOC003');
+        $result = $history->updateHistory(11, 'LOC003','26/1/2009');
         $this->assertTrue($result);
         $this->assertEquals(3, $this->_getNumRows("emp_number = 11 AND end_date IS NULL"));
         $this->assertEquals($before + 1, $this->_getNumRows());
 
         // Change location
         $before = $this->_getNumRows();
-        $result = $history->updateHistory(12, 'LOC001');
+        $result = $history->updateHistory(12, 'LOC001','26/1/2009');
         $this->assertTrue($result);
         $this->assertEquals($before + 1, $this->_getNumRows());
 
@@ -180,7 +180,7 @@ class LocationHistoryTest extends PHPUnit_Framework_TestCase {
         $this->_runQuery('DELETE from hs_hr_emp_location_history');
 
         $this->assertEquals(0, $this->_getNumRows());
-        $result = $history->updateHistory(12, 'LOC003');
+        $result = $history->updateHistory(12, 'LOC003','26/1/2009');
         $this->assertTrue($result);
         $this->assertEquals(1, $this->_getNumRows());
         $this->assertEquals(1, $this->_getNumRows("emp_number = 12 AND code = 'LOC003' AND end_date IS NULL"));
