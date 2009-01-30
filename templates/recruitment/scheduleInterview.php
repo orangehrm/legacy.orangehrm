@@ -123,6 +123,15 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 			msg += "\t- <?php echo $lang_Recruit_JobApplication_PleaseSpecifyInterviewer; ?>\n";
         }
 
+        var attach1Name = $('fileAttachment1').value;
+        var attach2Name = $('fileAttachment2').value;        
+        if ( ((attach1Name != '') && !checkExtension(attach1Name)) ||
+                ((attach2Name != '') && !checkExtension(attach2Name)) ) {
+            err = true;
+            msg += "\t- <?php echo $lang_Recruit_JobApplication_AttachementDocOrDocx; ?>\n";            
+        }
+
+
 		if (err) {
 			alert(msg);
 			return false;
@@ -131,6 +140,16 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 		}
 	}
 
+    function checkExtension(fileName) {
+    
+          fileName = fileName.toLowerCase();
+          var ext = fileName.substring(fileName.length-4, fileName.length);
+          if ( (ext == '.doc') || ((ext == 'docx') && (fileName.charAt(fileName.length - 5) == '.')) ) {
+              return true;
+          }
+          return false;
+    }
+    
     function save() {
 
 		if (validate()) {
@@ -278,7 +297,7 @@ $applicantName = $application->getFirstName() . ' ' . $application->getLastName(
 	<?php }	?>
   <div class="roundbox">
 
-  <form name="frmInterview" id="frmInterview" method="post" action="<?php echo $formAction;?>">
+  <form enctype="multipart/form-data" name="frmInterview" id="frmInterview" method="post" action="<?php echo $formAction;?>">
 		<input type="hidden" id="txtId" name="txtId" value="<?php echo $application->getId();?>"/><br/>
 
         <label for="txtDate"><span class="error">*</span> <?php echo $lang_Recruit_JobApplication_Schedule_Date; ?></label>
@@ -316,7 +335,21 @@ $applicantName = $application->getFirstName() . ' ' . $application->getLastName(
 		?>
 		<label for="txtNotes">&nbsp;<?php echo $lang_Recruit_JobApplication_Schedule_Notes; ?></label>
         <textarea id="txtNotes" name="txtNotes" tabindex="4"></textarea><br/>
+        
+        <?php if ($num == 2) {
+            // Attachments named 1 and 2 to keep this generic, instead of using specific names like NEO 
+        ?>
+            
+            <label for="fileAttachment1">&nbsp;<?php echo $lang_Recruit_JobApplication_ScheduleInterview2_Attachment1; ?></label>
+            <input type="file" id="fileAttachment1" name="fileAttachment1" tabindex="5" /><br/>
+
+            <label for="fileAttachment2">&nbsp;<?php echo $lang_Recruit_JobApplication_ScheduleInterview2_Attachment2; ?></label>
+            <input type="file" id="fileAttachment2" name="fileAttachment2" tabindex="6" /><br/>            
+            <div class="formHint" style="padding-left:10px;"><?php echo $lang_Recruit_JobApplication_ScheduleInterview2_AttachmentDescription; ?></div>
+            
+        <?php } ?>        
 		<br/><br/>
+
 
         <div align="left">
             <img onClick="save();" id="saveBtn"

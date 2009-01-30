@@ -42,10 +42,12 @@ class JobApplicationEvent {
 	const DB_FIELD_EVENT_TYPE = 'event_type';
 	const DB_FIELD_STATUS = 'status';
 	const DB_FIELD_NOTES = 'notes';
-
-    private static $dbFields = array(self::DB_FIELD_ID, self::DB_FIELD_APPLICATION_ID, self::DB_FIELD_CREATED_TIME,
-        self::DB_FIELD_CREATED_BY, self::DB_FIELD_OWNER, self::DB_FIELD_EVENT_TIME, self::DB_FIELD_EVENT_TYPE, self::DB_FIELD_STATUS,
-        self::DB_FIELD_NOTES);
+    const DB_FIELD_ATTACH1_NAME = 'attach1_name';
+    const DB_FIELD_ATTACH1_TYPE = 'attach1_type';
+    const DB_FIELD_ATTACH1_DATA = 'attach1_data';
+    const DB_FIELD_ATTACH2_NAME = 'attach2_name';
+    const DB_FIELD_ATTACH2_TYPE = 'attach2_type';
+    const DB_FIELD_ATTACH2_DATA = 'attach2_data';
 
     /** Fields retrieved from other tables */
     const OWNER_NAME = 'owner_name';
@@ -67,6 +69,11 @@ class JobApplicationEvent {
     const STATUS_INTERVIEW_SCHEDULED = 0;
     const STATUS_INTERVIEW_FINISHED = 1;
 
+    /** Attachments */
+    const ATTACHMENT_NONE = 0;
+    const ATTACHMENT1 = 1;
+    const ATTACHMENT2 = 2;
+    
 	private $id;
 	private $applicationId;
 	private $createdTime;
@@ -76,7 +83,16 @@ class JobApplicationEvent {
 	private $status;
 	private $notes;
     private $ownerName;
+    
+    private $attachment1Name;
+    private $attachment1Type;
+    private $attachment1Data;
 
+    private $attachment2Name;
+    private $attachment2Type;
+    private $attachment2Data;
+    
+   
     /**
      * Creator details, lazily fetched on first call of get method
      */
@@ -244,6 +260,54 @@ class JobApplicationEvent {
         return $this->ownerName;
     }
 
+    public function setAttachment1Name($name) {
+        $this->attachment1Name = $name;
+    }
+
+    public function setAttachment1Type($type) {
+        $this->attachment1Type = $type;
+    }
+    
+    public function setAttachment1Data($data) {
+        $this->attachment1Data = $data;
+    }
+
+    public function setAttachment2Name($name) {
+        $this->attachment2Name = $name;
+    }
+
+    public function setAttachment2Type($type) {
+        $this->attachment2Type = $type;
+    }
+    
+    public function setAttachment2Data($data) {
+        $this->attachment2Data = $data;
+    }
+
+    public function getAttachment1Name() {
+        return $this->attachment1Name;
+    }
+
+    public function getAttachment1Type() {
+        return $this->attachment1Type;
+    }
+    
+    public function getAttachment1Data() {
+        return $this->attachment1Data;
+    }
+
+    public function getAttachment2Name() {
+        return $this->attachment2Name;
+    }
+
+    public function getAttachment2Type() {
+        return $this->attachment2Type;
+    }
+    
+    public function getAttachment2Data() {
+        return $this->attachment2Data;
+    }
+    
     /**
      * Retrieves name of creator. (Logged in user who initiated this event)
      * If the user has a corresponding employee, the name from the employee is fetched.
@@ -320,11 +384,16 @@ class JobApplicationEvent {
 	 */
     public function save() {
 
+        if ( (!empty($this->attachment1Name) && empty($this->attachment1Data)) ||
+                (!empty($this->attachment1Name) && empty($this->attachment1Data)) ) {
+            throw new JobApplicationEventException("Attachment data not found", JobApplicationEventException::ATTACHMENT_FAILURE);                                 
+        }
 		if (isset($this->id)) {
 
 			if (!CommonFunctions::isValidId($this->id)) {
 			    throw new JobApplicationEventException("Invalid id", JobApplicationEventException::INVALID_PARAMETER);
 			}
+                        
 			return $this->_update();
 		} else {
 			return $this->_insert();
@@ -346,9 +415,9 @@ class JobApplicationEvent {
 		$sqlBuilder->table_name = self::TABLE_NAME;
 		$sqlBuilder->flg_insert = 'true';
 		$sqlBuilder->arr_insert = $this->_getFieldValuesAsArray();
-		$sqlBuilder->arr_insertfield = self::$dbFields;
+		$sqlBuilder->arr_insertfield = $this->_getFields();
 
-		$sql = $sqlBuilder->addNewRecordFeature2();
+		$sql = $sqlBuilder->addNewRecordFeature2(false);
 
 		$conn = new DMLFunctions();
 
@@ -365,14 +434,13 @@ class JobApplicationEvent {
 	 */
 	private function _update() {
 
-		$values = $this->_getFieldValuesAsArray();
 		$sqlBuilder = new SQLQBuilder();
 		$sqlBuilder->table_name = self::TABLE_NAME;
 		$sqlBuilder->flg_update = 'true';
-		$sqlBuilder->arr_update = self::$dbFields;
+		$sqlBuilder->arr_update = $this->_getFields();
 		$sqlBuilder->arr_updateRecList = $this->_getFieldValuesAsArray();
 
-		$sql = $sqlBuilder->addUpdateRecord1(0);
+		$sql = $sqlBuilder->addUpdateRecord1(0, false);
 
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
@@ -394,17 +462,60 @@ class JobApplicationEvent {
 
 		$values[0] = $this->id;
 		$values[1] = $this->applicationId;
-		$values[2] = $this->createdTime;
-		$values[3] = isset($this->createdBy) ? $this->createdBy : 'null';
+		$values[2] = $this->_escapeField($this->createdTime);
+		$values[3] = isset($this->createdBy) ? $this->_escapeField($this->createdBy) : 'null';
 		$values[4] = isset($this->owner) ? $this->owner : 'null';
-        $values[5] = isset($this->eventTime) ? $this->eventTime : 'null';
+        $values[5] = isset($this->eventTime) ? $this->_escapeField($this->eventTime) : 'null';
 		$values[6] = isset($this->eventType) ? $this->eventType : 'null';
 		$values[7] = isset($this->status) ? $this->status : 'null';
-		$values[8] = isset($this->notes) ? $this->notes : 'null';
-
+		$values[8] = isset($this->notes) ? $this->_escapeField($this->notes) : 'null';
+                                      
+        if (!empty($this->attachment1Data)) {
+            $values[] = isset($this->attachment1Name) ? $this->_escapeField($this->attachment1Name) : 'null';
+            $values[] = isset($this->attachment1Type) ? $this->_escapeField($this->attachment1Type) : 'null';                
+            $values[] = isset($this->attachment1Data) ? $this->_prepareAttachmentData($this->attachment1Data) : 'null';
+        }
+        if (!empty($this->attachment2Data)) {
+            $values[] = isset($this->attachment2Name) ? $this->_escapeField($this->attachment2Name) : 'null';
+            $values[] = isset($this->attachment2Type) ? $this->_escapeField($this->attachment2Type) : 'null';                
+            $values[] = isset($this->attachment2Data) ? $this->_prepareAttachmentData($this->attachment2Data) : 'null';
+        }        
 		return $values;
 	}
 
+    private function _getFields() {
+        
+        $fields = array(self::DB_FIELD_ID, self::DB_FIELD_APPLICATION_ID, self::DB_FIELD_CREATED_TIME,
+                self::DB_FIELD_CREATED_BY, self::DB_FIELD_OWNER, self::DB_FIELD_EVENT_TIME, self::DB_FIELD_EVENT_TYPE, 
+                self::DB_FIELD_STATUS, self::DB_FIELD_NOTES);
+                
+        if (!empty($this->attachment1Data)) {
+            $fields[] = self::DB_FIELD_ATTACH1_NAME;
+            $fields[] = self::DB_FIELD_ATTACH1_TYPE;
+            $fields[] = self::DB_FIELD_ATTACH1_DATA;          
+        }
+        
+        if (!empty($this->attachment2Data)) {
+            $fields[] = self::DB_FIELD_ATTACH2_NAME;
+            $fields[] = self::DB_FIELD_ATTACH2_TYPE;
+            $fields[] = self::DB_FIELD_ATTACH2_DATA;
+        }
+        return $fields;
+    }
+    
+    private function _escapeField($value) {
+
+        if (get_magic_quotes_gpc()) {
+            $value = stripslashes($value);
+        }    
+        $value = mysql_real_escape_string($value);   
+        return "'" . $value . "'";        
+    }
+    
+    private function _prepareAttachmentData($value) {
+        return "'" . addslashes($value) . "'";    
+    }
+    
     /**
      * Get events for given Job Application
      *
@@ -426,16 +537,20 @@ class JobApplicationEvent {
      * Get job application Event with given id
      *
      * @param int $id Job Application Event ID
+     * @param int $attachmentToFetch Attachment number to fetch. 
+     *            0 (ATTACHMENT_NONE) to fetch none, 
+     *            1 (ATTACHMENT1) fetch first attachment, 
+     *            2 (ATTACHMENT2) fetch second attachment. 
      * @return JobApplicationEvent JobApplicationEvent object
      */
-    public static function getJobApplicationEvent($id) {
+    public static function getJobApplicationEvent($id, $attachmentToFetch = 0) {
 
         if (!CommonFunctions::isValidId($id)) {
             throw new JobApplicationEventException("Invalid id", JobApplicationEventException::INVALID_PARAMETER);
         }
 
         $conditions[] = self::DB_FIELD_ID . ' = ' . $id;
-        $list = self::_getList($conditions);
+        $list = self::_getList($conditions, $attachmentToFetch);
         $application = (count($list) == 1) ? $list[0] : null;
 
         return $application;
@@ -445,9 +560,13 @@ class JobApplicationEvent {
      * Get a list of jobs applications with the given conditions.
      *
      * @param array   $selectCondition Array of select conditions to use.
+     * @param int $attachmentToFetch Attachment number to fetch. 
+     *            0 (ATTACHMENT_NONE) to fetch none, 
+     *            1 (ATTACHMENT1) fetch first attachment, 
+     *            2 (ATTACHMENT2) fetch second attachment. 
      * @return array  Array of JobApplicationEvent objects. Returns an empty (length zero) array if none found.
      */
-    private static function _getList($selectCondition = null) {
+    private static function _getList($selectCondition = null, $attachmentToFetch = 0) {
 
         $fields[0] = 'a.' . self::DB_FIELD_ID;
         $fields[1] = 'a.' . self::DB_FIELD_APPLICATION_ID;
@@ -458,7 +577,17 @@ class JobApplicationEvent {
         $fields[6] = 'a.' . self::DB_FIELD_EVENT_TYPE;
         $fields[7] = 'a.' . self::DB_FIELD_STATUS;
         $fields[8] = 'a.' . self::DB_FIELD_NOTES;
-        $fields[9] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::OWNER_NAME;
+        $fields[9] = 'a.' . self::DB_FIELD_ATTACH1_NAME;
+        $fields[10] = 'a.' . self::DB_FIELD_ATTACH1_TYPE;
+        $fields[11] = 'a.' . self::DB_FIELD_ATTACH2_NAME;
+        $fields[12] = 'a.' . self::DB_FIELD_ATTACH2_TYPE;                
+        $fields[13] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::OWNER_NAME;
+        
+        if ($attachmentToFetch == self::ATTACHMENT1) {
+            $fields[14] = 'a.' . self::DB_FIELD_ATTACH1_DATA;
+        } else if ($attachmentToFetch == self::ATTACHMENT2) {
+            $fields[14] = 'a.' . self::DB_FIELD_ATTACH2_DATA;
+        }
 
         $tables[0] = self::TABLE_NAME . ' a';
         $tables[1] = 'hs_hr_employee b';
@@ -483,7 +612,6 @@ class JobApplicationEvent {
         return $actList;
     }
 
-
     /**
      * Creates a JobApplicationEvent object from a resultset row
      *
@@ -501,7 +629,19 @@ class JobApplicationEvent {
         $event->setEventType($row[self::DB_FIELD_EVENT_TYPE]);
         $event->setStatus($row[self::DB_FIELD_STATUS]);
         $event->setNotes($row[self::DB_FIELD_NOTES]);
+        $event->setAttachment1Name($row[self::DB_FIELD_ATTACH1_NAME]);
+        $event->setAttachment1Type($row[self::DB_FIELD_ATTACH1_TYPE]);        
+        $event->setAttachment2Name($row[self::DB_FIELD_ATTACH2_NAME]);
+        $event->setAttachment2Type($row[self::DB_FIELD_ATTACH2_TYPE]);
 
+        if (isset($row[self::DB_FIELD_ATTACH1_DATA])) {
+            $event->setAttachment1Data($row[self::DB_FIELD_ATTACH1_DATA]);    
+        }
+
+        if (isset($row[self::DB_FIELD_ATTACH2_DATA])) {
+            $event->setAttachment2Data($row[self::DB_FIELD_ATTACH2_DATA]);    
+        }
+        
         if (isset($row[self::OWNER_NAME])) {
             $event->setOwnerName($row[self::OWNER_NAME]);
         }
@@ -515,6 +655,7 @@ class JobApplicationEventException extends Exception {
 	const INVALID_PARAMETER = 0;
 	const MISSING_PARAMETERS = 1;
 	const DB_ERROR = 2;
+    const ATTACHMENT_FAILURE = 3;
 }
 
 ?>

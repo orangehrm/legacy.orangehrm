@@ -189,12 +189,18 @@ class RecruitmentController {
                     case 'ViewDetails' :
                         $this->_viewApplicationDetails($id);
                         break;
-                   case 'DownloadCv' :
+                    case 'DownloadCv' :
                         $this->_downloadCv($id);
                         break;
                     case 'ViewHistory' :
                         $this->_viewApplicationHistory($id);
                         break;
+                    case 'DownloadEventAttach1' :
+                        $this->_downloadEventAttach($id, 1);
+                        break;
+                    case 'DownloadEventAttach2' :
+                        $this->_downloadEventAttach($id, 2);
+                        break;                         
                     case 'EditEvent' :
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $object = $eventExtractor->parseUpdateData($_POST);
@@ -669,6 +675,50 @@ class RecruitmentController {
     }
 
     /**
+     * Download attachments from event.
+     * Currently used only for 2nd interview.
+     * @param int $id Interview Event ID
+     * @param int $attachmentNo Attachment number - one of 1 or 2
+     */
+    private function _downloadEventAttach($id, $attachmentNo) {
+        
+        if (($attachmentNo == 1) || ($attachmentNo == 2)) {
+            $event = JobApplicationEvent::getJobApplicationEvent($id, $attachmentNo);
+            
+            if ($attachmentNo == 1) {
+                $name = $event->getAttachment1Name();
+                $type = $event->getAttachment1Type();
+                $data = $event->getAttachment1Data();                     
+            } else if ($attachmentNo == 2) {
+                $name = $event->getAttachment2Name();
+                $type = $event->getAttachment2Type();
+                $data = $event->getAttachment2Data();                                     
+            }
+            
+            $size = strlen($data);
+            if ($size > 0) {
+                $this->_download($name, $type, $size, $data);
+            }
+        }
+    }
+    
+    /**
+     * Download given attachment 
+     */
+    private function _download($name, $contentType, $size, $data) {
+        @ob_clean();
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private", false);
+        header("Content-type: $contentType");
+        header("Content-Disposition: attachment; filename=\"".$name."\";");
+        header("Content-Transfer-Encoding: binary");
+        header("Content-length: $size");
+        echo $data;        
+    }
+    
+    /**
      * View application history
      * @param int $id Application ID
      */
@@ -1053,7 +1103,15 @@ class RecruitmentController {
             $jobApplicationEvent->save();
             $message = 'UPDATE_SUCCESS';
         } catch (JobApplicationEventException $e) {
-            $message = 'UPDATE_FAILURE';
+            
+            switch ($e->getCode()) {
+                case JobApplicationEventException::ATTACHMENT_FAILURE:
+                    $message = 'UPLOAD_FAILURE';
+                    break;
+                default:
+                    $message = 'UPDATE_FAILURE';
+                    break;
+            }
         }
         $this->redirect($message);
     }
@@ -1094,6 +1152,8 @@ class RecruitmentController {
         $empInfo->setEmpStatus(0);
         $empInfo->setEmpEEOCat(0);
         $result = $empInfo->updateEmpJobInfo();
+        
+        // Copy interview attachments
 
         return $empInfo->getEmpId();
     }

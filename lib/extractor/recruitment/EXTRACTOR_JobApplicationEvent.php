@@ -39,6 +39,18 @@
             $notes = $postArr['txtNotes'];
             $event->setNotes($notes);
         }
+        
+        if (isset($_FILES['fileAttachment1'])) {
+            $event->setAttachment1Name($_FILES['fileAttachment1']['name']);
+            $event->setAttachment1Type($_FILES['fileAttachment1']['type']);
+            $event->setAttachment1Data($this->_getUploadedFile('fileAttachment1'));
+        }
+        
+        if (isset($_FILES['fileAttachment2'])) {
+            $event->setAttachment2Name($_FILES['fileAttachment2']['name']);
+            $event->setAttachment2Type($_FILES['fileAttachment2']['type']);
+            $event->setAttachment2Data($this->_getUploadedFile('fileAttachment2'));
+        }        
         return $event;
 	}
 
@@ -86,6 +98,11 @@
         }
         return $event;
     }
-
+    
+    private function _getUploadedFile($name) {
+        $tmpName  = $_FILES[$name]['tmp_name'];
+        $contents = file_get_contents($tmpName);       
+        return $contents;
+    }
 }
 ?>

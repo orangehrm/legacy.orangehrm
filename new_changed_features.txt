@@ -14,6 +14,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.3
     Change "Basic Salary" to "Base Salary"
     Change "Joined Date" to "Start Date"
     Completed performance details in PIM  
+    Attach interview questions and NEO results for second interview
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
 	

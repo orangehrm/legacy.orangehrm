@@ -287,6 +287,7 @@
 	$lang_Common_DELETE_FAILURE 			= "Failed to Delete";
 	$lang_Common_DUPLICATE_NAME_FAILURE     = "Name is already in use";
 	$lang_Common_UNKNOWN_FAILURE            = "Operation Failed";
+    $lang_Common_UPLOAD_FAILURE             = "File upload failed. Please check that files exist and do not exceed maximum allowed size.";
 
 	$lang_Leave_Common_Weekend 				= "Weekend";
 
@@ -1459,6 +1460,8 @@
     $lang_Recruit_JobApplicationHistory_Notes = 'Notes';
     $lang_Recruit_JobApplicationHistory_StatusInterviewScheduled = 'Scheduled';
     $lang_Recruit_JobApplicationHistory_StatusFinished = 'Finished';
+    $lang_Recruit_JobApplicationHistory_Download = 'Download';
+    $lang_Recruit_JobApplicationHistory_Change = 'Change';
     $lang_Recruit_JobApplication_ScheduleFirstInterview = 'Schedule 1st Interview for';
     $lang_Recruit_JobApplication_ScheduleSecondInterview = 'Schedule 2nd Interview for';
     $lang_Recruit_JobApplication_Schedule_Date = 'Date';
@@ -1472,6 +1475,7 @@
     $lang_Recruit_JobApplication_PleaseSpecifyValidDate = 'Date should be in the format: ';
     $lang_Recruit_JobApplication_PleaseSpecifyValidTime = 'Time should be in the format: ';
     $lang_Recruit_JobApplication_SecondInterviewShouldBeAfterFirst = 'Second interview date should be after the first interview date ';
+    $lang_Recruit_JobApplication_AttachementDocOrDocx = 'Attachment should have .doc or .docx extension';
 
     $lang_Recruit_JobApplicationConfirm_Heading = 'Confirm Action: ';
     $lang_Recruit_JobApplicationConfirm_ApplicantName = 'Applicant Name';
@@ -1530,6 +1534,9 @@
 	$lang_Recruit_DuplicateSecondInterview = 'You Attempted to schedule a duplicate second interview for application';
 	$lang_Recruit_InvalidStatusError = '#action action is not allowed for job application in the status #status';
 	$lang_Recruit_SeeBelowForApplicationDetails = 'See below for application details';
+    $lang_Recruit_JobApplication_ScheduleInterview2_Attachment1 = 'Interview Questions';
+    $lang_Recruit_JobApplication_ScheduleInterview2_Attachment2 = 'NEO Results';
+    $lang_Recruit_JobApplication_ScheduleInterview2_AttachmentDescription = 'Size should be less than 1MB and only .doc, .docx files are allowed';
 
 	// Performance review module
 	$lang_Performance_Measure_ID = 'ID';
