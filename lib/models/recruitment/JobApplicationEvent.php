@@ -73,6 +73,7 @@ class JobApplicationEvent {
     const ATTACHMENT_NONE = 0;
     const ATTACHMENT1 = 1;
     const ATTACHMENT2 = 2;
+    const ATTACHMENT_BOTH = 3;
     
 	private $id;
 	private $applicationId;
@@ -540,7 +541,8 @@ class JobApplicationEvent {
      * @param int $attachmentToFetch Attachment number to fetch. 
      *            0 (ATTACHMENT_NONE) to fetch none, 
      *            1 (ATTACHMENT1) fetch first attachment, 
-     *            2 (ATTACHMENT2) fetch second attachment. 
+     *            2 (ATTACHMENT2) fetch second attachment.
+     *            3 (ATTACHMENT_BOTH) fetch both attachments 
      * @return JobApplicationEvent JobApplicationEvent object
      */
     public static function getJobApplicationEvent($id, $attachmentToFetch = 0) {
@@ -564,6 +566,7 @@ class JobApplicationEvent {
      *            0 (ATTACHMENT_NONE) to fetch none, 
      *            1 (ATTACHMENT1) fetch first attachment, 
      *            2 (ATTACHMENT2) fetch second attachment. 
+     *            3 (ATTACHMENT_BOTH) fetch both attachments 
      * @return array  Array of JobApplicationEvent objects. Returns an empty (length zero) array if none found.
      */
     private static function _getList($selectCondition = null, $attachmentToFetch = 0) {
@@ -587,6 +590,9 @@ class JobApplicationEvent {
             $fields[14] = 'a.' . self::DB_FIELD_ATTACH1_DATA;
         } else if ($attachmentToFetch == self::ATTACHMENT2) {
             $fields[14] = 'a.' . self::DB_FIELD_ATTACH2_DATA;
+        } else if ($attachmentToFetch == self::ATTACHMENT_BOTH) {
+            $fields[14] = 'a.' . self::DB_FIELD_ATTACH1_DATA;
+            $fields[15] = 'a.' . self::DB_FIELD_ATTACH2_DATA;
         }
 
         $tables[0] = self::TABLE_NAME . ' a';

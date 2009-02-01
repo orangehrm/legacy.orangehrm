@@ -1153,9 +1153,48 @@ class RecruitmentController {
         $empInfo->setEmpEEOCat(0);
         $result = $empInfo->updateEmpJobInfo();
         
+        $empNumber = $empInfo->getEmpId();
         // Copy interview attachments
+        $events = $jobApplication->getEvents();
+        foreach ($events as $event) {
+            if ($event->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW) {
 
-        return $empInfo->getEmpId();
+                // Get event attachments                
+                $eventWithAttachments = JobApplicationEvent::getJobApplicationEvent($event->getId(), JobApplicationEvent::ATTACHMENT_BOTH);
+                                                
+                // save as employee attachments
+                $attach1Name = $eventWithAttachments->getAttachment1Name();
+                $attach1Type = $eventWithAttachments->getAttachment1Type();
+                $attach1Data = $eventWithAttachments->getAttachment1Data();                        
+                if (!empty($attach1Name) && !empty($attach1Data) && !empty($attach1Type)) {
+                    $this->_saveEmployeeAttachment($empNumber, $attach1Name, $attach1Type, $attach1Data, 'Interview Questions');
+                }             
+                
+                $attach2Name = $eventWithAttachments->getAttachment2Name();
+                $attach2Type = $eventWithAttachments->getAttachment2Type();
+                $attach2Data = $eventWithAttachments->getAttachment2Data();                                     
+                if (!empty($attach2Name) && !empty($attach2Data) && !empty($attach2Type)) {
+                    $this->_saveEmployeeAttachment($empNumber, $attach2Name, $attach2Type, $attach2Data, 'NEO Results');
+                }             
+            }
+        }
+
+        return $empNumber;
+    }
+    
+    private function _saveEmployeeAttachment($empNum, $fileName, $type, $data, $description) {
+        
+        $empAttachment = new EmpAttach();        
+        $empAttachment->setEmpId($empNum);               
+        $empAttachment->setEmpAttFilename($fileName);        
+        $size = strlen($data);
+        $empAttachment->setEmpAttSize($size);
+        $empAttachment->setEmpAttachment(addslashes($data));
+        $empAttachment->setEmpAttType($type);
+        $empAttachment->setEmpAttId($empAttachment->getLastRecord($empNum));     
+        $empAttachment->setEmpAttDesc($description);
+                    
+        $empAttachment->addEmpAtt();                        
     }
 
 	/**
