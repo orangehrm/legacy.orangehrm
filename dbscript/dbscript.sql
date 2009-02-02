@@ -743,6 +743,7 @@ create table `hs_hr_job_application_events` (
   `event_type` smallint(2) default null,
   `status` smallint(2) default 0,
   `notes` text,
+  `notification_status` smallint(2) default 0,
   `attach1_name` varchar(100) default null,
   `attach1_type` varchar(100) default null,
   `attach1_data` mediumblob default null,

@@ -471,5 +471,25 @@ class CommonFunctions {
         }
         return $value;
     }
+    
+    /**
+     * Return top level URI to the OrangeHRM Server
+     */
+    public static function getServerURI() {
+        $url = '';
+        
+        if (isset($_SERVER['SERVER_NAME'])) {
+            $url = (empty($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] === 'off') ? 'http://' : 'https://';
+            $url .= $_SERVER['SERVER_NAME'];
+            if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80')) {
+                $url .= ':' . $_SERVER['SERVER_PORT'];
+            }        
+        }
+        
+        if (isset($_SESSION['WPATH'])) {
+            $url .= $_SESSION['WPATH'];
+        }
+        return $url;        
+    }
 }
 ?>

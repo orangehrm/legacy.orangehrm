@@ -130,6 +130,10 @@ class RecruitmentController {
                     case 'List' :
                         $this->_viewApplicationList();
                         break;
+                    case 'ConfirmShortList':
+                        // No confirmation screen shown for short list
+                        $this->_shortList($id);
+                        break;
                     case 'ConfirmReject' :
                         $this->_confirmAction($id, JobApplication::ACTION_REJECT);
                         break;
@@ -784,7 +788,7 @@ class RecruitmentController {
 
             // Validate if in correct status.
             $currentStatus = $application->getStatus();
-            if ($currentStatus != JobApplication::STATUS_SUBMITTED) {
+            if ($currentStatus != JobApplication::STATUS_SHORTLISTED) {
             	$attemptedAction = isset($_GET['action']) ? $_GET['action'] : '';
             	$this->_showInvalidStatusError($applicationId, $attemptedAction);
 				return;
@@ -942,6 +946,44 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
+    
+    /**
+     * Short list given application
+     */
+    private function _shortList($id) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+
+            // TODO: Validate if Hiring manager or interview manager and in correct status
+            $application = JobApplication::getJobApplication($id);
+
+            // Validate if in correct status.
+            $currentStatus = $application->getStatus();
+
+            if ($currentStatus != JobApplication::STATUS_SUBMITTED) {
+                $attemptedAction = JobApplication::ACTION_SHORTLIST;
+                $this->_showInvalidStatusError($event->getApplicationId(), $attemptedAction);
+                return;
+            }
+
+            $application->setStatus(JobApplication::STATUS_SHORTLISTED);
+
+            $event = new JobApplicationEvent();
+            $event->setApplicationId($id);
+        
+            try {
+                $application->save();
+                $this->_saveApplicationEvent($event, JobApplicationEvent::EVENT_SHORTLIST);
+                $message = 'UPDATE_SUCCESS';
+            } catch (Exception $e) {
+                $message = 'UPDATE_FAILURE';
+            }
+
+            $this->redirect($message, '?recruitcode=Application&action=List');
+        } else {
+            $this->_notAuthorized();
+        }
+    }
+        
     private function _markDeclined($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
 
@@ -1118,6 +1160,35 @@ class RecruitmentController {
         }
         $this->redirect($message);
     }
+    
+    /**
+     * Checks short listed applicants and sends reminders to Hiring Managers
+     * after 1 week if not yet scheduled for an interview
+     */
+    public static function checkShortListedApplicants() {
+
+        try {
+            $applications = JobApplication::getPendingShortListedApplications();
+            if (!empty($applications)) {
+                $notifier = new RecruitmentMailNotifier();
+    
+                foreach ($applications as $application) {    
+
+                    $result = $notifier->sendShortListReminderToManager($application);     
+                    if ($result) {
+                        $shortListEvent = $application->getEventOfType(JobApplicationEvent::EVENT_SHORTLIST);
+                        if ($shortListEvent) {
+                            $shortListEvent->setNotificationStatus(JobApplicationEvent::NOTIFICATION_STATUS_REMINDER_SENT);
+                            $shortListEvent->save();
+                        }
+                    }       
+                } 
+            }
+        } catch (Exception $e) {
+            $log = new LogFileWriter();
+            $log->writeLogDB('Error sending emails on shortlisted applicants:' . $e->getTraceAsString());            
+        }
+    }
 
     /**
      * Create an employee based on a job application.
@@ -1250,4 +1321,3 @@ class RecruitmentController {
         trigger_error("Not Authorized!", E_USER_NOTICE);
     }
 }
-?>

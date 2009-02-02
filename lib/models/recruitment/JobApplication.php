@@ -59,18 +59,20 @@ class JobApplication {
      * Job application status
      */
     const STATUS_SUBMITTED = 0;
-    const STATUS_FIRST_INTERVIEW_SCHEDULED = 1;
-    const STATUS_SECOND_INTERVIEW_SCHEDULED = 2;
-    const STATUS_JOB_OFFERED = 3;
-    const STATUS_OFFER_DECLINED = 4;
-    const STATUS_PENDING_APPROVAL = 5;
-    const STATUS_HIRED = 6;
-    const STATUS_REJECTED = 7;
+    const STATUS_SHORTLISTED = 1;    
+    const STATUS_FIRST_INTERVIEW_SCHEDULED = 2;
+    const STATUS_SECOND_INTERVIEW_SCHEDULED = 3;
+    const STATUS_JOB_OFFERED = 4;
+    const STATUS_OFFER_DECLINED = 5;
+    const STATUS_PENDING_APPROVAL = 6;
+    const STATUS_HIRED = 7;
+    const STATUS_REJECTED = 8;
 
     /**
      * Actions that can be performed on Job Application
      */
     const ACTION_REJECT = 'Reject';
+    const ACTION_SHORTLIST = 'ShortList';
     const ACTION_SCHEDULE_FIRST_INTERVIEW = 'FirstInterview';
     const ACTION_SCHEDULE_SECOND_INTERVIEW = 'SecondInterview';
     const ACTION_OFFER_JOB = 'OfferJob';
@@ -462,6 +464,65 @@ class JobApplication {
 
         return self::_getList(null, $managerEmpNum, $sortField, $sortOrder);
     }
+    
+    /**
+     * Get list of short listed applications that are pending
+     */
+    public static function getPendingShortListedApplications() {
+        
+        $fields[0] = 'a.' . self::DB_FIELD_ID;
+        $fields[1] = 'a.' . self::DB_FIELD_VACANCY_ID;
+        $fields[2] = 'a.' . self::DB_FIELD_FIRSTNAME;
+        $fields[3] = 'a.' . self::DB_FIELD_MIDDLENAME;
+        $fields[4] = 'a.' . self::DB_FIELD_LASTNAME;
+        $fields[5] = 'a.' . self::DB_FIELD_STREET1;
+        $fields[6] = 'a.' . self::DB_FIELD_STREET2;
+        $fields[7] = 'a.' . self::DB_FIELD_CITY;
+        $fields[8] = 'a.' . self::DB_FIELD_COUNTRY_CODE;
+        $fields[9] = 'a.' . self::DB_FIELD_PROVINCE;
+        $fields[10] = 'a.' . self::DB_FIELD_ZIP;
+        $fields[11] = 'a.' . self::DB_FIELD_PHONE;
+        $fields[12] = 'a.' . self::DB_FIELD_MOBILE;
+        $fields[13] = 'a.' . self::DB_FIELD_EMAIL;
+        $fields[14] = 'a.' . self::DB_FIELD_QUALIFICATIONS;
+        $fields[15] = 'a.' . self::DB_FIELD_STATUS;
+        $fields[16] = 'a.' . self::DB_FIELD_APPLIED_DATETIME;
+        $fields[17] = 'a.' . self::DB_FIELD_EMP_NUMBER;
+        $fields[18] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
+        $fields[19] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
+        $fields[20] = 'a.' . self::CV_TYPE;
+      
+
+        $tables[0] = self::TABLE_NAME . ' a';
+        $tables[1] = JobVacancy::TABLE_NAME .' b';
+        $tables[2] = 'hs_hr_job_title c';
+        $tables[3] = 'hs_hr_employee d';
+        $tables[4] = JobApplicationEvent::TABLE_NAME . ' e';
+
+        $joinConditions[1] = 'a.' . self::DB_FIELD_VACANCY_ID . ' = b.' . JobVacancy::DB_FIELD_VACANCY_ID;
+        $joinConditions[2] = 'b.jobtit_code = c.jobtit_code';
+        $joinConditions[3] = 'b.' . JobVacancy::DB_FIELD_MANAGER_ID . ' = d.emp_number';
+        $joinConditions[4] = 'a.' . self::DB_FIELD_ID . ' = e.' . JobApplicationEvent::DB_FIELD_APPLICATION_ID;
+
+
+        $selectCondition[] = '((a.' . self::DB_FIELD_STATUS . ' = ' . self::STATUS_SHORTLISTED . ') AND ' .
+                '(e.' . JobApplicationEvent::DB_FIELD_EVENT_TYPE . ' = ' . JobApplicationEvent::EVENT_SHORTLIST.') AND ' .
+                '(e.' . JobApplicationEvent::DB_FIELD_NOTIFICATION_STATUS . ' = ' . JobApplicationEvent::NOTIFICATION_STATUS_NONE.') AND ' .
+                '(datediff(now(), e.' . JobApplicationEvent::DB_FIELD_CREATED_TIME . ') >= 7 ))' ;
+
+        $sqlBuilder = new SQLQBuilder();
+        $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
+
+        $conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+        $actList = array();
+        
+        while ($result && ($row = mysql_fetch_assoc($result))) {
+            $actList[] = self::_createFromRow($row);
+        }
+
+        return $actList;       
+    }
 
 	/**
 	 * Insert new object to database
@@ -745,6 +806,4 @@ class JobApplicationException extends Exception {
 	const DB_ERROR = 2;
     const INVALID_STATUS = 3;
 }
-
-?>
 

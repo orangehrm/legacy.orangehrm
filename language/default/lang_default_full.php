@@ -1422,6 +1422,7 @@
     $lang_Recruit_JobApplicationList_NoApplications = 'No Applicants found';
 
     $lang_Recruit_JobApplicationStatus_Submitted = 'Application Submitted';
+    $lang_Recruit_JobApplicationStatus_ShortListed = 'Short Listed';
     $lang_Recruit_JobApplicationStatus_FirstInterview = '1st Interview';
     $lang_Recruit_JobApplicationStatus_SecondInterview = '2nd Interview';
     $lang_Recruit_JobApplicationStatus_JobOffered = 'Job Offered';
@@ -1432,6 +1433,7 @@
 
     $lang_Recruit_JobApplicationAction_Reject = 'Reject';
     $lang_Recruit_JobApplicationAction_FirstInterview = 'Schedule 1st Interview';
+    $lang_Recruit_JobApplicationAction_ShortList = 'Short List';
     $lang_Recruit_JobApplicationAction_SecondInterview = 'Schedule 2nd Interview';
     $lang_Recruit_JobApplicationAction_OfferJob = 'Offer Job';
     $lang_Recruit_JobApplicationAction_MarkDeclined = 'Mark Offer Declined';
@@ -1452,6 +1454,7 @@
     $lang_Recruit_JobApplicationHistory_OfferMarkedAsDeclined = 'Offer marked as declined';
     $lang_Recruit_JobApplicationHistory_SeekApproval = 'Seek Approval';
     $lang_Recruit_JobApplicationHistory_Approved = 'Approved';
+    $lang_Recruit_JobApplicationHistory_ShortListed = 'Short Listed';
     $lang_Recruit_JobApplicationHistory_By = 'By';
     $lang_Recruit_JobApplicationHistory_ScheduledBy = 'Scheduled By';
     $lang_Recruit_JobApplicationHistory_At = 'At';

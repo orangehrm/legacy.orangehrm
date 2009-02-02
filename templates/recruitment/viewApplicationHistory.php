@@ -25,6 +25,7 @@ $editEventURL = $baseURL . '&action=EditEvent';
 
 $statusList = array(
     JobApplication::STATUS_SUBMITTED => $lang_Recruit_JobApplicationStatus_Submitted,
+    JobApplication::STATUS_SHORTLISTED => $lang_Recruit_JobApplicationStatus_ShortListed,
     JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED => $lang_Recruit_JobApplicationStatus_FirstInterview,
     JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED => $lang_Recruit_JobApplicationStatus_SecondInterview,
     JobApplication::STATUS_JOB_OFFERED => $lang_Recruit_JobApplicationStatus_JobOffered,
@@ -40,15 +41,16 @@ $eventStatusList = array(
 );
 
 $actionList = array(
-	'FirstInterview' => $lang_Recruit_JobApplicationAction_FirstInterview,
-	'SecondInterview' => $lang_Recruit_JobApplicationAction_SecondInterview,
-	'Reject' => $lang_Recruit_JobApplicationAction_Reject,
-	'OfferJob' => $lang_Recruit_JobApplicationAction_OfferJob,
-	'MarkDeclined' => $lang_Recruit_JobApplicationAction_MarkDeclined,
-	'SeekApproval' => $lang_Recruit_JobApplicationAction_SeekApproval,
-	'Approve' => $lang_Recruit_JobApplicationAction_Approve
+	JobApplication::ACTION_SCHEDULE_FIRST_INTERVIEW => $lang_Recruit_JobApplicationAction_FirstInterview,
+    JobApplication::ACTION_SHORTLIST => $lang_Recruit_JobApplicationAction_ShortList,
+	JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW => $lang_Recruit_JobApplicationAction_SecondInterview,
+	JobApplication::ACTION_REJECT => $lang_Recruit_JobApplicationAction_Reject,
+	JobApplication::ACTION_OFFER_JOB => $lang_Recruit_JobApplicationAction_OfferJob,
+	JobApplication::ACTION_MARK_OFFER_DECLINED => $lang_Recruit_JobApplicationAction_MarkDeclined,
+	JobApplication::ACTION_SEEK_APPROVAL => $lang_Recruit_JobApplicationAction_SeekApproval,
+	JobApplication::ACTION_APPROVE => $lang_Recruit_JobApplicationAction_Approve
 );
-
+    
 $eventTitles = array(
     JobApplicationEvent::EVENT_REJECT => $lang_Recruit_JobApplicationHistory_Rejected,
     JobApplicationEvent::EVENT_SCHEDULE_FIRST_INTERVIEW => $lang_Recruit_JobApplicationHistory_FirstInterview,
@@ -57,6 +59,7 @@ $eventTitles = array(
     JobApplicationEvent::EVENT_MARK_OFFER_DECLINED => $lang_Recruit_JobApplicationHistory_OfferMarkedAsDeclined,
     JobApplicationEvent::EVENT_SEEK_APPROVAL => $lang_Recruit_JobApplicationHistory_SeekApproval,
     JobApplicationEvent::EVENT_APPROVE => $lang_Recruit_JobApplicationHistory_Approved,
+    JobApplicationEvent::EVENT_SHORTLIST => $lang_Recruit_JobApplicationHistory_ShortListed,
 );
 
 $picDir = "../../themes/{$styleSheet}/pictures/";

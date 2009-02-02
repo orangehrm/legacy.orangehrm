@@ -42,6 +42,7 @@ class JobApplicationEvent {
 	const DB_FIELD_EVENT_TYPE = 'event_type';
 	const DB_FIELD_STATUS = 'status';
 	const DB_FIELD_NOTES = 'notes';
+    const DB_FIELD_NOTIFICATION_STATUS = 'notification_status';
     const DB_FIELD_ATTACH1_NAME = 'attach1_name';
     const DB_FIELD_ATTACH1_TYPE = 'attach1_type';
     const DB_FIELD_ATTACH1_DATA = 'attach1_data';
@@ -62,6 +63,7 @@ class JobApplicationEvent {
     const EVENT_MARK_OFFER_DECLINED = 4;
     const EVENT_SEEK_APPROVAL = 5;
     const EVENT_APPROVE = 6;
+    const EVENT_SHORTLIST = 7;
 
     /**
      * Event Status list
@@ -69,6 +71,10 @@ class JobApplicationEvent {
     const STATUS_INTERVIEW_SCHEDULED = 0;
     const STATUS_INTERVIEW_FINISHED = 1;
 
+    /** Notification Status list */
+    const NOTIFICATION_STATUS_NONE = 0;
+    const NOTIFICATION_STATUS_REMINDER_SENT = 1;
+    
     /** Attachments */
     const ATTACHMENT_NONE = 0;
     const ATTACHMENT1 = 1;
@@ -83,6 +89,7 @@ class JobApplicationEvent {
 	private $eventType;
 	private $status;
 	private $notes;
+    private $notificationStatus;
     private $ownerName;
     
     private $attachment1Name;
@@ -253,6 +260,22 @@ class JobApplicationEvent {
         $this->notes = $notes;
     }
 
+    /**
+     * Retrieves the value of notification status.
+     * @return notes
+     */
+    public function getNotificationStatus() {
+        return $this->notificationStatus;
+    }
+
+    /**
+     * Sets the value of notification status.
+     * @param notes
+     */
+    public function setNotificationStatus($notificationStatus) {
+        $this->notificationStatus = $notificationStatus;
+    }
+    
     public function setOwnerName($ownerName) {
         $this->ownerName = $ownerName;
     }
@@ -470,6 +493,7 @@ class JobApplicationEvent {
 		$values[6] = isset($this->eventType) ? $this->eventType : 'null';
 		$values[7] = isset($this->status) ? $this->status : 'null';
 		$values[8] = isset($this->notes) ? $this->_escapeField($this->notes) : 'null';
+        $values[9] = isset($this->notificationStatus) ? $this->notificationStatus : 'null';
                                       
         if (!empty($this->attachment1Data)) {
             $values[] = isset($this->attachment1Name) ? $this->_escapeField($this->attachment1Name) : 'null';
@@ -488,7 +512,7 @@ class JobApplicationEvent {
         
         $fields = array(self::DB_FIELD_ID, self::DB_FIELD_APPLICATION_ID, self::DB_FIELD_CREATED_TIME,
                 self::DB_FIELD_CREATED_BY, self::DB_FIELD_OWNER, self::DB_FIELD_EVENT_TIME, self::DB_FIELD_EVENT_TYPE, 
-                self::DB_FIELD_STATUS, self::DB_FIELD_NOTES);
+                self::DB_FIELD_STATUS, self::DB_FIELD_NOTES, self::DB_FIELD_NOTIFICATION_STATUS);
                 
         if (!empty($this->attachment1Data)) {
             $fields[] = self::DB_FIELD_ATTACH1_NAME;
@@ -580,19 +604,20 @@ class JobApplicationEvent {
         $fields[6] = 'a.' . self::DB_FIELD_EVENT_TYPE;
         $fields[7] = 'a.' . self::DB_FIELD_STATUS;
         $fields[8] = 'a.' . self::DB_FIELD_NOTES;
-        $fields[9] = 'a.' . self::DB_FIELD_ATTACH1_NAME;
-        $fields[10] = 'a.' . self::DB_FIELD_ATTACH1_TYPE;
-        $fields[11] = 'a.' . self::DB_FIELD_ATTACH2_NAME;
-        $fields[12] = 'a.' . self::DB_FIELD_ATTACH2_TYPE;                
-        $fields[13] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::OWNER_NAME;
+        $fields[9] = 'a.' . self::DB_FIELD_NOTIFICATION_STATUS;
+        $fields[10] = 'a.' . self::DB_FIELD_ATTACH1_NAME;
+        $fields[11] = 'a.' . self::DB_FIELD_ATTACH1_TYPE;
+        $fields[12] = 'a.' . self::DB_FIELD_ATTACH2_NAME;
+        $fields[13] = 'a.' . self::DB_FIELD_ATTACH2_TYPE;                
+        $fields[14] = "CONCAT(b.`emp_firstname`, ' ', b.`emp_lastname`) AS " . self::OWNER_NAME;
         
         if ($attachmentToFetch == self::ATTACHMENT1) {
-            $fields[14] = 'a.' . self::DB_FIELD_ATTACH1_DATA;
+            $fields[15] = 'a.' . self::DB_FIELD_ATTACH1_DATA;
         } else if ($attachmentToFetch == self::ATTACHMENT2) {
-            $fields[14] = 'a.' . self::DB_FIELD_ATTACH2_DATA;
-        } else if ($attachmentToFetch == self::ATTACHMENT_BOTH) {
-            $fields[14] = 'a.' . self::DB_FIELD_ATTACH1_DATA;
             $fields[15] = 'a.' . self::DB_FIELD_ATTACH2_DATA;
+        } else if ($attachmentToFetch == self::ATTACHMENT_BOTH) {
+            $fields[15] = 'a.' . self::DB_FIELD_ATTACH1_DATA;
+            $fields[16] = 'a.' . self::DB_FIELD_ATTACH2_DATA;
         }
 
         $tables[0] = self::TABLE_NAME . ' a';
@@ -635,6 +660,7 @@ class JobApplicationEvent {
         $event->setEventType($row[self::DB_FIELD_EVENT_TYPE]);
         $event->setStatus($row[self::DB_FIELD_STATUS]);
         $event->setNotes($row[self::DB_FIELD_NOTES]);
+        $event->setNotificationStatus($row[self::DB_FIELD_NOTIFICATION_STATUS]);        
         $event->setAttachment1Name($row[self::DB_FIELD_ATTACH1_NAME]);
         $event->setAttachment1Type($row[self::DB_FIELD_ATTACH1_TYPE]);        
         $event->setAttachment2Name($row[self::DB_FIELD_ATTACH2_NAME]);

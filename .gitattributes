@@ -133,6 +133,7 @@ lib/common/JobTitleConfig.php -text
 lib/common/Language.php -text
 lib/common/LocaleUtil.php -text
 lib/common/LocaleUtilTest.php -text
+lib/common/Scheduler.php -text
 lib/common/SearchObject.php -text
 lib/common/TemplateMerger.php -text
 lib/common/UniqueIDGenerator.php -text
@@ -638,6 +639,8 @@ templates/recruitment/mails/interview-manager-task-subject.txt -text
 templates/recruitment/mails/interview-manager-task.txt -text
 templates/recruitment/mails/seek-approval-director-subject.txt -text
 templates/recruitment/mails/seek-approval-director.txt -text
+templates/recruitment/mails/shortlist-reminder-subject.txt -text
+templates/recruitment/mails/shortlist-reminder.txt -text
 templates/recruitment/scheduleInterview.php -text
 templates/recruitment/seekApproval.php -text
 templates/recruitment/view.php -text

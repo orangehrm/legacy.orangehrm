@@ -30,6 +30,8 @@ if(!isset($_SESSION['fname'])) {
 	exit();
 }
 
+
+                
 set_magic_quotes_runtime(0); // Turning off magic quotes runtime
 
 define('ROOT_PATH', $_SESSION['path']);
@@ -39,6 +41,7 @@ require_once ROOT_PATH . '/lib/exception/ExceptionHandler.php';
 require_once ROOT_PATH . '/lib/common/Language.php';
 require_once ROOT_PATH . '/lib/common/LocaleUtil.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
+require_once ROOT_PATH . '/lib/common/Scheduler.php';
 
 require_once ROOT_PATH . '/lib/controllers/ViewController.php';
 require_once ROOT_PATH . '/lib/controllers/MTViewController.php';
@@ -125,6 +128,12 @@ require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_Timesheet.php';
 require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_TimeEvent.php';
 require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_TimesheetSubmissionPeriod.php';
 require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_Workshift.php';
+
+// Run scheduled events at login
+if (!isset($_SESSION['scheduler.login'])) {
+    Scheduler::getInstance()->runEventsAtLogin();
+    $_SESSION['scheduler.login'] = true;
+}
 
 //leave modules extractorss go here
 

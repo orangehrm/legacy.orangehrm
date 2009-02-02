@@ -22,6 +22,7 @@ $historyURL = $baseURL . '&id=' . $application->getId() .  '&action=ViewHistory'
 
 $statusList = array(
     JobApplication::STATUS_SUBMITTED => $lang_Recruit_JobApplicationStatus_Submitted,
+    JobApplication::STATUS_SHORTLISTED => $lang_Recruit_JobApplicationStatus_ShortListed,    
     JobApplication::STATUS_FIRST_INTERVIEW_SCHEDULED => $lang_Recruit_JobApplicationStatus_FirstInterview,
     JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED => $lang_Recruit_JobApplicationStatus_SecondInterview,
     JobApplication::STATUS_JOB_OFFERED => $lang_Recruit_JobApplicationStatus_JobOffered,
