@@ -123,14 +123,15 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 			msg += "\t- <?php echo $lang_Recruit_JobApplication_PleaseSpecifyInterviewer; ?>\n";
         }
 
-        var attach1Name = $('fileAttachment1').value;
-        var attach2Name = $('fileAttachment2').value;        
-        if ( ((attach1Name != '') && !checkExtension(attach1Name)) ||
-                ((attach2Name != '') && !checkExtension(attach2Name)) ) {
-            err = true;
-            msg += "\t- <?php echo $lang_Recruit_JobApplication_AttachementDocOrDocx; ?>\n";            
+        if ($('fileAttachment1') && $('fileAttachment2')) {
+            var attach1Name = $('fileAttachment1').value;
+            var attach2Name = $('fileAttachment2').value;        
+            if ( ((attach1Name != '') && !checkExtension(attach1Name)) ||
+                    ((attach2Name != '') && !checkExtension(attach2Name)) ) {
+                err = true;
+                msg += "\t- <?php echo $lang_Recruit_JobApplication_AttachementDocOrDocx; ?>\n";            
+            }
         }
-
 
 		if (err) {
 			alert(msg);
