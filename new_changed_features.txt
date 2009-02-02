@@ -1,8 +1,8 @@
-New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.4
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 
     New features
     ------------
-    2.9 Short list an applicant
+    Short list an applicant
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.4
 
