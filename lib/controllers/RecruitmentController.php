@@ -633,7 +633,10 @@ class RecruitmentController {
 
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector()) {
             $managerId = $this->authorizeObj->isAdmin()? null : $this->authorizeObj->getEmployeeId();
-            $applications = JobApplication::getList($managerId);
+            
+            $sortField = isset($_GET['sortField']) ? $_GET['sortField']: 0;
+            $sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder']: 'ASC';
+            $applications = JobApplication::getList($managerId, $sortField, $sortOrder);
 
             $path = '/templates/recruitment/applicationList.php';
             $objs['applications'] = $applications;
@@ -661,7 +664,7 @@ class RecruitmentController {
     	$applicaton=$applicaton->fetchCvDataObject();
     	$size=strlen($applicaton->getCvData());
     	$contentType=$applicaton->getCvType();
-    	$name="cv_applicatoin_id_".$applicaton->getId().".".$applicaton->getCvExtention();
+    	$name="cv_application_id_".$applicaton->getId().".".$applicaton->getCvExtention();
 		@ob_clean();
 		header("Pragma: public");
 		header("Expires: 0");

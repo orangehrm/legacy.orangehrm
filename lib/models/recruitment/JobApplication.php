@@ -454,13 +454,13 @@ class JobApplication {
      * @param int $managerEmpNum Employee number of manager.
      * @return Array Array of JobApplication objects.
      */
-    public static function getList($managerEmpNum = null) {
+    public static function getList($managerEmpNum = null, $sortField = 0, $sortOrder = 'ASC') {
 
         if (!empty($managerEmpNum) && !CommonFunctions::isValidId($managerEmpNum)) {
             throw new JobApplicationException("Invalid id", JobApplicationException::INVALID_PARAMETER);
         }
 
-        return self::_getList(null, $managerEmpNum);
+        return self::_getList(null, $managerEmpNum, $sortField, $sortOrder);
     }
 
 	/**
@@ -522,7 +522,7 @@ class JobApplication {
      * @param String $filterForManagerId Filter by the given manager
      * @return array Array of JobApplication objects. Returns an empty (length zero) array if none found.
      */
-    private static function _getList($selectCondition = null, $filterForManagerId = null) {
+    private static function _getList($selectCondition = null, $filterForManagerId = null, $sortField = 0, $sortOrder = 'ASC') {
 
         $fields[0] = 'a.' . self::DB_FIELD_ID;
         $fields[1] = 'a.' . self::DB_FIELD_VACANCY_ID;
@@ -568,8 +568,11 @@ class JobApplication {
 
         $sqlBuilder = new SQLQBuilder();
         $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, null, null, null, $groupBy);
-
-        $actList = array();
+        
+        $orderBy = self::_getOrderBy($sortField, $sortOrder);
+        if (!empty($orderBy)) {
+            $sql .= ' ' . $orderBy; 
+        }
 
         $conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
@@ -581,6 +584,46 @@ class JobApplication {
         return $actList;
     }
 
+    /**
+     * Return ORDER BY SQL clause
+     */
+    private function _getOrderBy($sortField, $sortOrder) {
+
+        if (($sortOrder !== 'ASC') && ($sortOrder !== 'DESC')) {
+            $sortOrder = 'ASC';
+        } 
+    
+        // default: sort by applicant name            
+        $orderBy = 'a.' . self::DB_FIELD_FIRSTNAME . ' ' . $sortOrder . ', ' .
+            'a.' . self::DB_FIELD_LASTNAME . ' ' . $sortOrder;
+               
+        switch ($sortField) {
+            
+            case 0:
+                // applicant name: default
+                break;
+                
+            case 1:
+                // position applied
+                $orderBy = self::JOB_TITLE_NAME . ' ' . $sortOrder;
+                break;                
+                
+            case 2:
+                // Hiring Manager name
+                $orderBy = self::HIRING_MANAGER_NAME . ' ' . $sortOrder;
+                break;
+                
+            case 3:
+                // Application status
+                $orderBy = 'a.' .self::DB_FIELD_STATUS . ' ' . $sortOrder;
+                break;                
+                
+            default:
+                break;
+        }
+        return 'ORDER BY ' . $orderBy;        
+    }
+    
 	/**
 	 * Returns the db field values as an array
 	 *

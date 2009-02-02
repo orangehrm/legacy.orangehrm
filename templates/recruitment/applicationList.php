@@ -16,10 +16,32 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
+function getNextSortOrder($curSortOrder) {
+    switch ($curSortOrder) {
+        case 'null' :
+            return 'ASC';
+            break;
+        case 'ASC' :
+            return 'DESC';
+            break;
+        case 'DESC' :
+            return 'ASC';
+            break;
+    }
+}
+
+$GLOBALS['lang_Common_SortAscending'] = $lang_Common_SortAscending;
+$GLOBALS['lang_Common_SortDescending'] = $lang_Common_SortDescending;
+
+function nextSortOrderInWords($sortOrder) {
+    return $sortOrder == 'ASC' ? $GLOBALS['lang_Common_SortDescending'] : $GLOBALS['lang_Common_SortAscending'];
+}
 
 $baseURL = "{$_SERVER['PHP_SELF']}?recruitcode={$_GET['recruitcode']}";
 $detailsURL = $baseURL . '&action=ViewDetails';
 $historyURL = $baseURL . '&action=ViewHistory';
+$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'ASC';
+$sortField = isset($_GET['sortField']) ? $_GET['sortField'] : 0; 
 
 $applications = $records['applications'];
 
@@ -33,7 +55,11 @@ $statusList = array(
     JobApplication::STATUS_HIRED => $lang_Recruit_JobApplicationStatus_Hired,
     JobApplication::STATUS_REJECTED => $lang_Recruit_JobApplicationStatus_Rejected
     );
-
+    
+$headings = array($lang_Recruit_JobApplicationList_Name, 
+    $lang_Recruit_JobApplicationList_PositionApplied,
+    $lang_Recruit_HiringManager,
+    $lang_Recruit_VacancyStatus);
 ?>
 <html>
 <head>
@@ -62,6 +88,17 @@ $statusList = array(
     }
     -->
 </style>
+<script type="text/javascript">
+//<![CDATA[
+
+    function sortAndSearch(fieldNum, sortOrder) {
+        var url = '<?php echo $baseURL;?>&action=<?php echo $_GET['action'];?>';
+        url = url + '&sortField=' + fieldNum + '&sortOrder=' + sortOrder;
+        location.href = url;
+    }
+//]]>
+</script>
+    
 </head>
 <body>
 	<p>
@@ -91,11 +128,27 @@ $statusList = array(
     <?php } else { ?>
     <table width="520" class="simpleList" >
         <thead>
-            <tr>
-            <th width><?php echo $lang_Recruit_JobApplicationList_Name; ?></th>
-            <th><?php echo $lang_Recruit_JobApplicationList_PositionApplied; ?></th>
-            <th><?php echo $lang_Recruit_HiringManager; ?></th>
-            <th><?php echo $lang_Recruit_VacancyStatus; ?></th>
+            <tr>                                
+<?php
+
+                    
+    foreach ($headings as $index=>$heading) {
+
+        $fieldSortOrder = ($index == $sortField) ? $sortOrder : 'null';
+        $nextSortOrder = getNextSortOrder($fieldSortOrder);
+        $nextSortInWords = nextSortOrderInWords($fieldSortOrder);        
+?>
+            <th>
+                <a  href="#" class="<?php echo $fieldSortOrder;?>"
+                    onclick="sortAndSearch(<?php echo $index;?>, '<?php echo $nextSortOrder;?>');"
+                    title="<?php echo $nextSortInWords; ?>">
+                        <?php echo $heading;?>
+                </a>
+            </th>
+<?php        
+    }
+?>        
+
             <th><?php echo $lang_Recruit_JobApplicationList_Actions; ?></th>
             <th><?php echo $lang_Recruit_JobApplicationList_MoreDetails; ?></th>
             </tr>

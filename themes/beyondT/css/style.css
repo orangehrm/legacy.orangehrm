@@ -779,3 +779,17 @@ table.simpleList td {
 	color: #D8D8D8;
 }
 
+table.simpleList thead th a.null {
+    background: url(../icons/null.png) no-repeat right center;
+    padding-right: 10px;
+}
+
+table.simpleList thead th a.ASC {
+    background: url(../icons/ASC.png) no-repeat right center;
+    padding-right: 10px;
+}
+table.simpleList thead th a.DESC {
+    background: url(../icons/DESC.png) no-repeat right center;
+    padding-right: 10px;
+}
+

@@ -260,7 +260,8 @@
     $lang_Common_Delete = "Delete";
     $lang_Common_Search = "Search";
     $lang_Common_Clear = "Clear";
-
+    $lang_Common_SortAscending = "Sort in ascending order";
+    $lang_Common_SortDescending = "Sort in descending order";
 	$lang_Common_Time = "Time";
 	$lang_Common_Note = "Note";
 

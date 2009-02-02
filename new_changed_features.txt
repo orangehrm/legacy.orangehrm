@@ -15,6 +15,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.3
     Change "Joined Date" to "Start Date"
     Completed performance details in PIM  
     Attach interview questions and NEO results for second interview
+    Sort Applicants in the applicants list
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
 	
