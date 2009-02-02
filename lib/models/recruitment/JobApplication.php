@@ -576,7 +576,8 @@ class JobApplication {
 
         $conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
-
+        $actList = array();
+        
         while ($result && ($row = mysql_fetch_assoc($result))) {
             $actList[] = self::_createFromRow($row);
         }

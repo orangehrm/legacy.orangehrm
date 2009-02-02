@@ -652,7 +652,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        <label for="form_language_language"><?php echo "Language  " ?></label> 
 	         <select id="form_language_language" name="form_language_language">
 	        <option value="-1" selected="selected">-select-</option>
-	        <?php	if(sizeof($languages)>0){ 
+	        <?php	if(!empty($languages)){ 
 	        			foreach ($languages as $language){?>
 	        				<option value="<?php echo $language[0] ?>"><?php echo $language[1] ?></option>
 	        <?php 		}
