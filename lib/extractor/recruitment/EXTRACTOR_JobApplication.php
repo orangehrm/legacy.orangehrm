@@ -85,8 +85,12 @@
 		if(isset($_FILES['cv']) && $_FILES['cv']['size'] > 0){
 			$data=file_get_contents($_FILES['cv']['tmp_name']);
 			$type=$_FILES['cv']['type'];			
-			$fileName=explode(".",$_FILES['cv']['name']);
-			$extension=$fileName[1];
+			$parts=explode(".",$_FILES['cv']['name']);
+            if (count($parts) > 1) {
+                $extension = $parts[count($parts)-1];
+            } else {
+                $extension = '';    
+            }			
 			$data=addslashes($data);
 			
 			$application->setCvData($data);
