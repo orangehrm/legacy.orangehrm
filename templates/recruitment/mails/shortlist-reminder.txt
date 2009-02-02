@@ -1,7 +1,5 @@
 Dear #to#,
 
-To (Hiring Manager),
-
 Please note that the application of #firstname# #middlename# #lastname# for the vacancy #jobtitle# was short listed on #shortlist-date# (1 week ago) and not scheduled an interview yet.
 Please take the necessary steps to schedule an interview soon.
 Update OrangeHRM with the details by logging to the system at #orangeurl#

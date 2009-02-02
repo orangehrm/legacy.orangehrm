@@ -493,7 +493,7 @@ class JobApplicationEvent {
 		$values[6] = isset($this->eventType) ? $this->eventType : 'null';
 		$values[7] = isset($this->status) ? $this->status : 'null';
 		$values[8] = isset($this->notes) ? $this->_escapeField($this->notes) : 'null';
-        $values[9] = isset($this->notificationStatus) ? $this->notificationStatus : 'null';
+        $values[9] = isset($this->notificationStatus) ? $this->notificationStatus : self::NOTIFICATION_STATUS_NONE;
                                       
         if (!empty($this->attachment1Data)) {
             $values[] = isset($this->attachment1Name) ? $this->_escapeField($this->attachment1Name) : 'null';
