@@ -204,7 +204,7 @@ class RecruitmentController {
                         break;
                     case 'DownloadEventAttach2' :
                         $this->_downloadEventAttach($id, 2);
-                        break;                         
+                        break;
                     case 'EditEvent' :
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $object = $eventExtractor->parseUpdateData($_POST);
@@ -635,9 +635,9 @@ class RecruitmentController {
      */
     private function _viewApplicationList() {
 
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector()|| $this->authorizeObj->isAcceptor() || $this->authorizeObj->isOfferer()) {
             $managerId = $this->authorizeObj->isAdmin()? null : $this->authorizeObj->getEmployeeId();
-            
+
             $sortField = isset($_GET['sortField']) ? $_GET['sortField']: 0;
             $sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder']: 'ASC';
             $applications = JobApplication::getList($managerId, $sortField, $sortOrder);
@@ -688,29 +688,29 @@ class RecruitmentController {
      * @param int $attachmentNo Attachment number - one of 1 or 2
      */
     private function _downloadEventAttach($id, $attachmentNo) {
-        
+
         if (($attachmentNo == 1) || ($attachmentNo == 2)) {
             $event = JobApplicationEvent::getJobApplicationEvent($id, $attachmentNo);
-            
+
             if ($attachmentNo == 1) {
                 $name = $event->getAttachment1Name();
                 $type = $event->getAttachment1Type();
-                $data = $event->getAttachment1Data();                     
+                $data = $event->getAttachment1Data();
             } else if ($attachmentNo == 2) {
                 $name = $event->getAttachment2Name();
                 $type = $event->getAttachment2Type();
-                $data = $event->getAttachment2Data();                                     
+                $data = $event->getAttachment2Data();
             }
-            
+
             $size = strlen($data);
             if ($size > 0) {
                 $this->_download($name, $type, $size, $data);
             }
         }
     }
-    
+
     /**
-     * Download given attachment 
+     * Download given attachment
      */
     private function _download($name, $contentType, $size, $data) {
         @ob_clean();
@@ -722,9 +722,9 @@ class RecruitmentController {
         header("Content-Disposition: attachment; filename=\"".$name."\";");
         header("Content-Transfer-Encoding: binary");
         header("Content-length: $size");
-        echo $data;        
+        echo $data;
     }
-    
+
     /**
      * View application history
      * @param int $id Application ID
@@ -742,7 +742,7 @@ class RecruitmentController {
      * @param JobApplicationEvent Job Application event with the details
      */
     private function _rejectApplication($event) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isDirector() || $this->authorizeObj->isAcceptor() || $this->authorizeObj->isOfferer()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
@@ -779,7 +779,7 @@ class RecruitmentController {
     }
 
     private function _saveFirstInterview($event) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isOfferer()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
 
@@ -829,7 +829,7 @@ class RecruitmentController {
     }
 
     private function _saveSecondInterview($event) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isOfferer()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $applicationId = $event->getApplicationId();
@@ -887,7 +887,7 @@ class RecruitmentController {
     }
 
     private function _scheduleFirstInterview($id) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isOfferer()) {
             $this->_scheduleInterview($id, 1);
         } else {
             $this->_notAuthorized();
@@ -895,7 +895,7 @@ class RecruitmentController {
     }
 
     private function _scheduleSecondInterview($id) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isOfferer()) {
             $this->_scheduleInterview($id, 2);
         } else {
             $this->_notAuthorized();
@@ -916,7 +916,7 @@ class RecruitmentController {
     }
 
     private function _offerJob($event) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isOfferer()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
@@ -946,12 +946,12 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
-    
+
     /**
      * Short list given application
      */
     private function _shortList($id) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()|| $this->authorizeObj->isOfferer()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($id);
@@ -969,7 +969,7 @@ class RecruitmentController {
 
             $event = new JobApplicationEvent();
             $event->setApplicationId($id);
-        
+
             try {
                 $application->save();
                 $this->_saveApplicationEvent($event, JobApplicationEvent::EVENT_SHORTLIST);
@@ -983,7 +983,7 @@ class RecruitmentController {
             $this->_notAuthorized();
         }
     }
-        
+
     private function _markDeclined($event) {
         if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
 
@@ -1036,7 +1036,7 @@ class RecruitmentController {
     }
 
     private function _seekApproval($event) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager()) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isManager() || $this->authorizeObj->isOfferer()) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
@@ -1074,7 +1074,7 @@ class RecruitmentController {
         }
     }
     private function _approve($event) {
-        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isDirector() ) {
+        if ($this->authorizeObj->isAdmin() || $this->authorizeObj->isDirector()|| $this->authorizeObj->isAcceptor() ) {
 
             // TODO: Validate if Hiring manager or interview manager and in correct status
             $application = JobApplication::getJobApplication($event->getApplicationId());
@@ -1148,7 +1148,7 @@ class RecruitmentController {
             $jobApplicationEvent->save();
             $message = 'UPDATE_SUCCESS';
         } catch (JobApplicationEventException $e) {
-            
+
             switch ($e->getCode()) {
                 case JobApplicationEventException::ATTACHMENT_FAILURE:
                     $message = 'UPLOAD_FAILURE';
@@ -1160,7 +1160,7 @@ class RecruitmentController {
         }
         $this->redirect($message);
     }
-    
+
     /**
      * Checks short listed applicants and sends reminders to Hiring Managers
      * after 1 week if not yet scheduled for an interview
@@ -1171,22 +1171,22 @@ class RecruitmentController {
             $applications = JobApplication::getPendingShortListedApplications();
             if (!empty($applications)) {
                 $notifier = new RecruitmentMailNotifier();
-    
-                foreach ($applications as $application) {    
 
-                    $result = $notifier->sendShortListReminderToManager($application);     
+                foreach ($applications as $application) {
+
+                    $result = $notifier->sendShortListReminderToManager($application);
                     if ($result) {
                         $shortListEvent = $application->getEventOfType(JobApplicationEvent::EVENT_SHORTLIST);
                         if ($shortListEvent) {
                             $shortListEvent->setNotificationStatus(JobApplicationEvent::NOTIFICATION_STATUS_REMINDER_SENT);
                             $shortListEvent->save();
                         }
-                    }       
-                } 
+                    }
+                }
             }
         } catch (Exception $e) {
             $log = new LogFileWriter();
-            $log->writeLogDB('Error sending emails on shortlisted applicants:' . $e->getTraceAsString());            
+            $log->writeLogDB('Error sending emails on shortlisted applicants:' . $e->getTraceAsString());
         }
     }
 
@@ -1226,49 +1226,49 @@ class RecruitmentController {
         $empInfo->setEmpStatus(0);
         $empInfo->setEmpEEOCat(0);
         $result = $empInfo->updateEmpJobInfo();
-        
+
         $empNumber = $empInfo->getEmpId();
         // Copy interview attachments
         $events = $jobApplication->getEvents();
         foreach ($events as $event) {
             if ($event->getEventType() == JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW) {
 
-                // Get event attachments                
+                // Get event attachments
                 $eventWithAttachments = JobApplicationEvent::getJobApplicationEvent($event->getId(), JobApplicationEvent::ATTACHMENT_BOTH);
-                                                
+
                 // save as employee attachments
                 $attach1Name = $eventWithAttachments->getAttachment1Name();
                 $attach1Type = $eventWithAttachments->getAttachment1Type();
-                $attach1Data = $eventWithAttachments->getAttachment1Data();                        
+                $attach1Data = $eventWithAttachments->getAttachment1Data();
                 if (!empty($attach1Name) && !empty($attach1Data) && !empty($attach1Type)) {
                     $this->_saveEmployeeAttachment($empNumber, $attach1Name, $attach1Type, $attach1Data, 'Interview Questions');
-                }             
-                
+                }
+
                 $attach2Name = $eventWithAttachments->getAttachment2Name();
                 $attach2Type = $eventWithAttachments->getAttachment2Type();
-                $attach2Data = $eventWithAttachments->getAttachment2Data();                                     
+                $attach2Data = $eventWithAttachments->getAttachment2Data();
                 if (!empty($attach2Name) && !empty($attach2Data) && !empty($attach2Type)) {
                     $this->_saveEmployeeAttachment($empNumber, $attach2Name, $attach2Type, $attach2Data, 'NEO Results');
-                }             
+                }
             }
         }
 
         return $empNumber;
     }
-    
+
     private function _saveEmployeeAttachment($empNum, $fileName, $type, $data, $description) {
-        
-        $empAttachment = new EmpAttach();        
-        $empAttachment->setEmpId($empNum);               
-        $empAttachment->setEmpAttFilename($fileName);        
+
+        $empAttachment = new EmpAttach();
+        $empAttachment->setEmpId($empNum);
+        $empAttachment->setEmpAttFilename($fileName);
         $size = strlen($data);
         $empAttachment->setEmpAttSize($size);
         $empAttachment->setEmpAttachment(addslashes($data));
         $empAttachment->setEmpAttType($type);
-        $empAttachment->setEmpAttId($empAttachment->getLastRecord($empNum));     
+        $empAttachment->setEmpAttId($empAttachment->getLastRecord($empNum));
         $empAttachment->setEmpAttDesc($description);
-                    
-        $empAttachment->addEmpAtt();                        
+
+        $empAttachment->addEmpAtt();
     }
 
 	/**

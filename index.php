@@ -99,7 +99,7 @@ if($_SESSION['isAdmin']=='Yes') {
     /*
      * Assign Manager's access to recruitment module
      */
-    if ($_SESSION['isManager'] || $_SESSION['isDirector']) {
+    if ($_SESSION['isManager'] || $_SESSION['isDirector'] || (isset($_SESSION['isAcceptor'])  && $_SESSION['isAcceptor']) ||  (isset($_SESSION['isOfferer']) && $_SESSION['isOfferer'])) {
             $arrAllRights[Recruit]=array('add'=> false , 'edit'=> true , 'delete'=> false, 'view'=> true);
     }
 
@@ -240,7 +240,7 @@ if ($authorizeObj->isESS()) {
 
 if ($authorizeObj->isAdmin()) {
     $recruitHomePage = 'lib/controllers/CentralController.php?recruitcode=Vacancy&action=List';
-} else if ($authorizeObj->isManager() || $authorizeObj->isDirector()) {
+} else if ($authorizeObj->isManager() || $authorizeObj->isDirector() || $authorizeObj->isAcceptor() || $authorizeObj->isOfferer()) {
     $recruitHomePage = 'lib/controllers/CentralController.php?recruitcode=Application&action=List';
 }
 
@@ -627,7 +627,7 @@ function preloadAllImages() {
                         <td class="tabSpace"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <?php }                  
+                  <?php }
                   if($_SESSION['isAdmin']=='Yes') {
 						if ((isset($_GET['menu_no_top'])) && ($_GET['menu_no_top']=="rep") && $arrAllRights[Report]['view']) {
 					?>
@@ -943,7 +943,7 @@ function preloadAllImages() {
                         <a href="lib/controllers/CentralController.php?healthcode=Injuries&action=List" target="rightMenu">
                             <?php echo $lang_Menu_HealthAndSafety_Injuries; ?>
                         </a>
-                    </li>                    
+                    </li>
 <?php                 } ?>
                 </ul>
             </TD>
@@ -958,7 +958,7 @@ function preloadAllImages() {
                             <?php echo $lang_Menu_Training_List; ?>
                         </a>
                     </li>
-                    <?php if ($authorizeObj->isSupervisor()) { ?>                    
+                    <?php if ($authorizeObj->isSupervisor()) { ?>
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?trainingcode=Training&action=ViewAdd" target="rightMenu">
                             <?php echo $lang_Menu_Training_Request; ?>
@@ -973,19 +973,19 @@ function preloadAllImages() {
             <TD width=158>
                 <ul id="menu">
                     <?php if ( (($_SESSION['isAdmin']=='Yes') || $_SESSION['isBudgetApprover']) && ($arrAllRights[Budget]['view']) ) { ?>
-                    	
+
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?budgetcode=Budgets&action=List" target="rightMenu">
                             <?php echo $lang_Menu_Budget_BudgetList; ?>
                         </a>
                     </li>
-<?php                 } ?>                    
+<?php                 } ?>
                     <?php if ( ($_SESSION['isAdmin']=='Yes') && ($arrAllRights[Budget]['view']) ) { ?>
                     <li id="jobVacancies">
                         <a href="lib/controllers/CentralController.php?budgetcode=JobTitleConfig&action=View" target="rightMenu">
                             <?php echo $lang_Menu_Performance_ConfigureJobTitles; ?>
                         </a>
-                    </li>                    
+                    </li>
 <?php                 } ?>
                 </ul>
             </TD>
