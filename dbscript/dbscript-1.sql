@@ -1053,7 +1053,7 @@ CREATE TABLE `hs_hr_job_application_field_value` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE `hs_hr_fluency` (
-  `fluency_code` int(11) NOT NULL,
+  `fluency_code` varchar(15) NOT NULL,
   `description` varchar(255) default NULL,
   PRIMARY KEY  (`fluency_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
