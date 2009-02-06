@@ -96,7 +96,10 @@ require_once ROOT_PATH . '/lib/confs/sysConf.php';
 	  * @return date formatted according to configured format
 	  */
 	 public function formatDate($date, $customFormat=null) {
-
+		
+	 	if($date==0){
+	 		return $date;
+	 	}
 	 	 if (empty($date) || ($date == "0000-00-00")) {
 	 	 	return "";
 	 	 }
