@@ -208,52 +208,33 @@ return $objResponse->getXML();
 <?php $objAjax->printJavascript(); ?>
 <script language="JavaScript">
 
+    function validate() {
+        
+        if(document.frmJobTitle.txtJobTitleName.value == '') {
+            alert ('<?php echo $lang_jobtitle_NameShouldBeSpecified; ?>');
+            document.frmJobTitle.txtJobTitleName.focus();
+            return false;
+        }
 
+        if(document.frmJobTitle.txtJobTitleDesc.value == '') {
+            alert ('<?php echo $lang_jobtitle_DescriptionShouldBeSpecified; ?>');
+            document.frmJobTitle.txtJobTitleDesc.focus();
+            return false;
+        }
+
+        if(document.frmJobTitle.cmbPayGrade.value == '0') {
+            alert ('<?php echo $lang_jobtitle_PayGradeNotSelected; ?>');
+            document.frmJobTitle.cmbPayGrade.focus();
+            return false;
+        }        
+        
+        return true;
+    }
 
 	function addSave() {
-
-
-
-		if(document.frmJobTitle.txtJobTitleName.value == '') {
-
-			alert ('<?php echo $lang_jobtitle_NameShouldBeSpecified; ?>');
-
-			document.frmJobTitle.txtJobTitleName.focus();
-
-			return;
-
-			}
-
-
-
-		if(document.frmJobTitle.txtJobTitleDesc.value == '') {
-
-			alert ('<?php echo $lang_jobtitle_DescriptionShouldBeSpecified; ?>');
-
-			document.frmJobTitle.txtJobTitleDesc.focus();
-
-			return;
-
-			}
-
-
-
-		if(document.frmJobTitle.cmbPayGrade.value == '0') {
-
-			alert ('<?php echo $lang_jobtitle_PayGradeNotSelected; ?>');
-
-			document.frmJobTitle.cmbPayGrade.focus();
-
-			return;
-
-			}
-
-
-
-		document.frmJobTitle.sqlState.value = "NewRecord";
-
-		document.frmJobTitle.submit();
-
+        if (validate()) {
+            document.frmJobTitle.submit();    
+        }
 	}
 
 
@@ -299,75 +280,22 @@ function mover() {
 function edit() {
 
 	if(document.Edit.title=='Save') {
-
-		addUpdate();
-
+		if (validate()) {
+            document.frmJobTitle.submit();    
+		}
 		return;
-
 	}
-
-
 
 	var frm=document.frmJobTitle;
-
-
-	for (var i=0; i < frm.elements.length; i++)
-
+	for (var i=0; i < frm.elements.length; i++) {
 		frm.elements[i].disabled = false;
-
+    }
+    
 	frm.txtEmpStatDesc.disabled=true;
-
 	document.Edit.src="../../themes/beyondT/pictures/btn_save.gif";
-
 	document.Edit.title="Save";
-
 }
 
-
-
-	function addUpdate() {
-
-		if(document.frmJobTitle.txtJobTitleName.value == '') {
-
-			alert ('<?php echo $lang_jobtitle_NameShouldBeSpecified; ?>');
-
-			document.frmJobTitle.txtJobTitleName.focus();
-
-			return;
-
-			}
-
-
-
-		if(document.frmJobTitle.txtJobTitleDesc.value == '') {
-
-			alert ('<?php echo $lang_jobtitle_DescriptionShouldBeSpecified; ?>');
-
-			document.frmJobTitle.txtJobTitleDesc.focus();
-
-			return;
-
-			}
-
-
-
-		if(document.frmJobTitle.cmbPayGrade.value == '0') {
-
-			alert ('<?php echo $lang_jobtitle_PayGradeNotSelected; ?>');
-
-			document.frmJobTitle.cmbPayGrade.focus();
-
-			return;
-
-			}
-
-
-
-		document.frmJobTitle.sqlState.value = "UpdateRecord";
-
-		document.frmJobTitle.submit();
-
-	}
 
 
 
@@ -650,9 +578,9 @@ function clearAll() {
 
 <br>
 
-		<form id="frmJobTitle" name="frmJobTitle" method="POST" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>">
+		<form id="frmJobTitle" name="frmJobTitle" method="POST" onsubmit="return validate();" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>">
 
-		<input type="hidden" name="sqlState">
+		<input type="hidden" name="sqlState" value="NewRecord">
 
            <table border="0" cellpadding="0" cellspacing="0">
 
@@ -814,9 +742,9 @@ function clearAll() {
 
                 <tr>
 
-                	<form id="frmJobTitle" name="frmJobTitle" method="POST" action="<?php echo $_SERVER['PHP_SELF']?>?id=<?php echo $this->getArr['id']?>&uniqcode=<?php echo $this->getArr['uniqcode']?>&capturemode=updatemode">
+                	<form id="frmJobTitle" name="frmJobTitle" method="POST" onsubmit="return validate();" action="<?php echo $_SERVER['PHP_SELF']?>?id=<?php echo $this->getArr['id']?>&uniqcode=<?php echo $this->getArr['uniqcode']?>&capturemode=updatemode">
 
-						<input type="hidden" name="sqlState">
+						<input type="hidden" name="sqlState" value="UpdateRecord">
 
 						<br>
 

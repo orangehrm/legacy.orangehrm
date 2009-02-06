@@ -1,8 +1,19 @@
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
+
+	Bug fixes
+	---------
+    2542594-Lead to notice page when adding job title - (partly done-skills & job titles. remove this when completed)
+
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 
     New features
     ------------
     Short list an applicant
+
+	Bug fixes
+	---------
+    2542471 - click apply button in job appln, "foreach" error 
+    2542589 - click the apply button in appl frm leads to notice
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.4
 
@@ -10,6 +21,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.4
     ------------
     Attach interview questions and NEO results for second interview
     Sort Applicants in the applicants list
+
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.3
     
