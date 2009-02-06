@@ -79,7 +79,7 @@ body {
 ?>
 <div class="roundbox">
 <div class="jobTitle"><?php echo htmlspecialchars($vacancy->getJobTitleName()); ?></div>
-<div class="jobDescription"><?php echo nl2br(htmlspecialchars($vacancy->getDescription())); ?></div>
+<div class="jobDescription"><?php echo html_entity_decode($vacancy->getDescription()); ?></div>
 <?php
 	$iconDir = "../../themes/{$styleSheet}/icons/";
 	$applyIcon = $iconDir . 'apply.gif';
