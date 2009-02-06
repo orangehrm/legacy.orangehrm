@@ -37,17 +37,21 @@ require_once($lan->getLangPath("full.php"));
 	function goBack() {
 		location.href = "./CentralController.php?uniqcode=<?php echo $this->getArr['uniqcode']?>&VIEW=MAIN";
 	}
+    
+    function validate() {
+        if (document.frmFluecny.txtFluencyName.value == '') {
+                alert("<?php echo 'Flueny name is incorrect' ?>");
+            return false;
+        }
+        return true;
+    }
 
 	function addSave() {
-
-		if (document.frmFluecny.txtFluencyName.value == '') {
-		        alert("<?php echo 'Flueny name is incorrect' ?>");
-			return false;
-		}
-
-		document.frmFluecny.sqlState.value = "NewRecord";
-		document.frmFluecny.submit();
-		return true;
+        if (validate()) {
+            document.frmFluecny.submit();
+            return true;    
+        }
+        return false;
 	}
 
 	function clearAll() {
@@ -68,11 +72,11 @@ require_once($lan->getLangPath("full.php"));
 <p>
 <p>
 <table width="431" border="0" cellspacing="0" cellpadding="0" ><td width="177">
-<form name="frmFluecny" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>" onSubmit="return addSave()">
+<form name="frmFluecny" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>" onsubmit="return validate()">
 
   <tr>
     <td height="27" valign='top'> <p> <img title="Back" onMouseOut="this.src='../../themes/beyondT/pictures/btn_back.gif';" onMouseOver="this.src='../../themes/beyondT/pictures/btn_back_02.gif';"  src="../../themes/beyondT/pictures/btn_back.gif" onClick="goBack();">
-        <input type="hidden" name="sqlState" value="">
+        <input type="hidden" name="sqlState" value="NewRecord">
       </p></td>
     <td width="254" align='left' valign='bottom'>
       <?php
@@ -207,7 +211,9 @@ function mover() {
 function edit()
 {
 	if(document.Edit.title=='Save') {
-		addUpdate();
+		if (validate()) {
+            document.frmFluency.submit();    
+		}
 		return;
 	}
 
@@ -219,16 +225,13 @@ function edit()
 	document.Edit.title="Save";
 }
 
-	function addUpdate() {
-
-		if (document.frmFluency.txtFluencyName.value == '') {
-		        alert("<?php echo $lang_Admin_Skill_Errors_NameCannotBeBlank; ?>");
-			return false;
-		}
-
-		document.frmFluency.sqlState.value = "UpdateRecord";
-		document.frmFluency.submit();
-	}
+function validate() {
+    if (document.frmFluency.txtFluencyName.value == '') {
+            alert("<?php echo $lang_Admin_Skill_Errors_NameCannotBeBlank; ?>");
+        return false;
+    }
+    return true;    
+}
 
 	function clearAll() {
 		if(document.Edit.title!='Save')
@@ -251,11 +254,11 @@ function edit()
 <p>
 <p>
 <table width="431" border="0" cellspacing="0" cellpadding="0" ><td width="177">
-<form name="frmFluency" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>&id=<?php echo $this->getArr['id']?>">
+<form name="frmFluency" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>&id=<?php echo $this->getArr['id']?>" onsubmit="return validate()">
 
   <tr>
     <td height="27" valign='top'> <p> <img title="Back" onMouseOut="this.src='../../themes/beyondT/pictures/btn_back.gif';" onMouseOver="this.src='../../themes/beyondT/pictures/btn_back_02.gif';" src="../../themes/beyondT/pictures/btn_back.gif" onClick="goBack();">
-        <input type="hidden" name="sqlState" value="">
+        <input type="hidden" name="sqlState" value="UpdateRecord">
       </p></td>
     <td width="254" align='left' valign='bottom'> <font color="red" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;
       <?php

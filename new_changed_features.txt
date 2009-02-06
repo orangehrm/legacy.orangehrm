@@ -2,7 +2,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
 
 	Bug fixes
 	---------
-    2542594-Lead to notice page when adding job title - (partly done-skills & job titles. remove this when completed)
+    2542594 - Lead to notice page when adding job title
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 
