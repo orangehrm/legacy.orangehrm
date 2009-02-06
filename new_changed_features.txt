@@ -3,6 +3,9 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
 	Bug fixes
 	---------
     2542594 - Lead to notice page when adding job title
+    2545016 - [ors-b3]"Fluency id" label is misspelled
+    2542908 - (ors-b3)Cannot add more than one fluency type-lead notice pa
+    2549130 - ors-b3Recruitment module is invisible for hiring manager
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 
@@ -12,7 +15,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 
 	Bug fixes
 	---------
-    2542471 - click apply button in job appln, "foreach" error 
+    2542471 - click apply button in job appln, "foreach" error
     2542589 - click the apply button in appl frm leads to notice
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.4
@@ -24,7 +27,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.4
 
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.3
-    
+
     New features
     ------------
     Branding of Job Vacancies page
@@ -40,13 +43,13 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.3
     Change "Joined Date" to "Start Date"
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
-	
+
 	Bug fixes
 	---------
 	2067151 - Leave:Ess Apply leave,doesnt filter properly
 
    Bug Fixes
-   1992788 - ORS:Sal Review:Give offset error->search by review date:Time	
+   1992788 - ORS:Sal Review:Give offset error->search by review date:Time
    2008737 - Training: "Search By: Supervisor" will give a SQL Error
    1990698 - Define Specific Holidays : > gives an error page
    2008703 - Training:Add/Remove Button positions are invalid
@@ -57,7 +60,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
    2008726 - Training:Supervisor should not be able to add training(s)
    2008721 - Training:Unnecessary back button in Training Request
    1994187 - Can schedule 1st interview multiple times for same applicant
-	
+
 
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.1
@@ -87,7 +90,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 alpha.11
 
 	BugId     Name
     1990699   ORS: Terminated employee names shown in Performance Review
-    1990751   ORS: Salary review can’t search by Review date 
+    1990751   ORS: Salary review can’t search by Review date
 
     Bug fixes merged from trunk
 

@@ -130,7 +130,7 @@
 	$lang_Menu_Admin_Job_PayGrades 				= "Pay Grades";
 	$lang_Menu_Admin_Job_EmpStatus 				= "Employment Status";
 	$lang_Menu_Admin_Job_EEO 					= "EEO Job Categories";
-	
+
 
 	$lang_Menu_Admin_Quali 						= "Qualification";
 	$lang_Menu_Admin_Quali_Education 			= "Education";
@@ -139,9 +139,9 @@
 	$lang_Menu_Admin_Skills 					= "Skills";
 	$lang_Menu_Admin_Skills_Skills 				= "Skills";
 	$lang_Menu_Admin_Skills_Languages 			= "Languages";
-	
+
 	$lang_Menu_Admin_fluency 					= 	"Fluency";
-	$lang_view_FluencyId						=	"Flecny Id";
+	$lang_view_FluencyId						=	"Fluecny Id";
 	$lang_view_FlencyDescripton					=	"Name";
 	$lang_Admin_Flency_Errors_NameCannotBeBlank	=	"Fluency Name Canot be blank";
 
@@ -1411,7 +1411,7 @@
 	$lang_Recruit_AllowedValuesAre = 'Allowed Values are: ';
 	$lang_Recruit_NoManagersNotice = 'No managers found. You need to create a job title named \'Manager\' and assign to employees who are managers.';
 	$lang_Recruit_Applicaton_configure	= "Configure Application";
-	
+
     $lang_Recruit_JobApplicationList_Heading = 'Applicants';
     $lang_Recruit_JobApplicationList_Name = 'Name';
     $lang_Recruit_JobApplicationList_PositionApplied = 'Position Applied';
