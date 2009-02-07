@@ -1,5 +1,5 @@
-You have been requested to approve the salary review of #employee# done on #reviewdate#.
-Please login to OrangeHRM http:// #url# and approve/reject the salary review.
+You have been requested to approve the salary review of #employee# done on #reviewdate# by #createdBy#.
+Please login to OrangeHRM  #url# and approve/reject the salary review.
 
 If you would like assistance or more information please contact the Human Resources.
 

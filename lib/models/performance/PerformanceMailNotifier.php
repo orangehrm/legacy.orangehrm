@@ -64,7 +64,7 @@ class PerformanceMailNotifier {
     const VARIABLE_EMPLOYEE = '#employee#';
     const VARIABLE_REVIEW_DATE = '#reviewdate#';
     const VARIABLE_URL='#url#';
-
+	const VARIABLE_CREATED_BY='#createdBy#';
 	/*
 	 * Class atributes
 	 **/
@@ -203,13 +203,16 @@ class PerformanceMailNotifier {
 			return true;
 		}
 
-		$url_salary_review= 'http://'.$_SERVER['HTTP_HOST'].$_SESSION['WPATH'];
+		$url_salary_review = 'http://'.$_SERVER['HTTP_HOST'].$_SESSION['WPATH'];
+
+		//get the created name
+		$createdBy = $review->getCreatedByName();
 
 		$subject = $this->_getTemplate(self::SUBJECT_REVIEW_NOTIFICATION);
 		$body = $this->_getTemplate(self::TEMPLATE_REVIEW_NOTIFICATION);
 
-		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE,self::VARIABLE_URL);
-		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewDate,$url_salary_review);
+		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE,self::VARIABLE_URL,self::VARIABLE_CREATED_BY);
+		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewDate,$url_salary_review, $createdBy);
 
 		$subject = str_replace($search, $replace, $subject);
 		$body = str_replace($search, $replace, $body);
@@ -229,7 +232,8 @@ class PerformanceMailNotifier {
 		$empNum = $review->getEmpNumber();
 		$empName = $this->_getEmpName($empNum);
 		$reviewTime = LocaleUtil::getInstance()->formatDateTime($review->getCreatedTime());
-
+		//get the created name
+		$createdBy = $review->getCreatedByName();
 		$emails = null;
 
 		foreach($receipients as $receipient) {
@@ -249,8 +253,8 @@ class PerformanceMailNotifier {
 		$subject = $this->_getTemplate(self::SUBJECT_SALARY_REVIEW_APPROVAL);
 		$body = $this->_getTemplate(self::TEMPLATE_SALARY_REVIEW_APPROVAL);
 
-		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE,self::VARIABLE_URL);
-		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewTime,$url_salary_review);
+		$search = array(self::VARIABLE_EMPLOYEE, self::VARIABLE_REVIEW_DATE,self::VARIABLE_URL, self::VARIABLE_CREATED_BY);
+		$replace = array($empName['first'] . ' ' . $empName['last'], $reviewTime,$url_salary_review,$createdBy);
 
 		$subject = str_replace($search, $replace, $subject);
 		$body = str_replace($search, $replace, $body);
