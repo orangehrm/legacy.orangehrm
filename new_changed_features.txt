@@ -6,6 +6,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
     2545016 - [ors-b3]"Fluency id" label is misspelled
     2542908 - (ors-b3)Cannot add more than one fluency type-lead notice pa
     2549130 - ors-b3Recruitment module is invisible for hiring manager
+	2542630-  Required fields should be validated in job applin form
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 

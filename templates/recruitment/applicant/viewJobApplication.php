@@ -95,9 +95,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         location.href = "<?php echo "{$_SERVER['PHP_SELF']}?recruitcode=ApplicantViewJobs"; ?>";
     }
 
-	function validate() {
-		return true;
-		exit;
+	function validate() {		
 		err = false;
 
 		var msg = '<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
@@ -121,7 +119,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		var errors = new Array();
 		var fields = new Array("txtFirstName", "txtMiddleName", "txtLastName", "txtStreet1",
 						"txtStreet2", "txtCity", "txtCountry", "txtProvince", "txtZip", "txtPhone",
-						"txtMobile", "txtEmail", "txtQualifications");
+						"txtMobile", "txtEmail");
 
 		var fieldNames = new Array('<?php echo $lang_Recruit_ApplicationForm_FirstName;?>',
 						'<?php echo $lang_Recruit_ApplicationForm_MiddleName;?>',
@@ -138,12 +136,12 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 						'<?php echo $lang_Recruit_ApplicationForm_Qualifications;?>');
 
 		// compulsary fields
-		var compFields = new Array(0, 2, 3, 6, 7, 8, 11, 12);
+		var compFields = new Array(0, 2, 3, 6, 7, 8, 9, 10, 11);
 		var emailFields = new Array();
 		emailFields[0] = 11;
 		var phoneFields = new Array();
 		phoneFields[0] = 9;
-		phoneFields[0] = 10;
+		phoneFields[1] = 10;
 
 		// validate compulsary fields
 		var numCompFields = compFields.length;
@@ -297,13 +295,22 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 value=elm.value;
 			 text= elm.options[elm.selectedIndex].text;
 			 if(value< 0){
-			 	err=true; msg='Please select a Skill';
+			 	//err=true; msg='Please select a Skill';
+				 if(value< 0){					
+					alert('Please select a skill');
+					exit;
+				}
 			 }
 			 td.innerHTML="<input type='hidden' id='skill[]' name='skill[]' value='"+value+"' />"+text;
 			 tableRow.appendChild(td);
 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_skill_years_of_experience').value;
+			 if(!numeric(document.getElementById('form_skill_years_of_experience'))|| value==''){					
+					alert('Please enter a numeric vlaue for the year');
+					document.getElementById('form_skill_years_of_experience').focus();
+					exit;
+			 }
 			 td.innerHTML="<input type='hidden' id='skill_years_of_experience[]' name='skill_years_of_experience[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);
 
@@ -328,7 +335,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 value=elm.value;
 			 text= elm.options[elm.selectedIndex].text;
 			 if(value< 0){
-			 	err=true; msg='Please select a License type a skill';
+			 	err=true; msg='Please select a license type';
 			 }
 			 td.innerHTML="<input type='hidden' id='license_type[]' name='license_type[]' value='"+value+"' />"+text;
 			 tableRow.appendChild(td);
@@ -390,11 +397,21 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_education_year').value;
+			 if(!numeric(document.getElementById('form_education_year'))|| value==''){					
+					alert('Please enter a numeric vlaue for the year');
+					document.getElementById('form_education_year').focus();
+					exit;
+			 }
 			 td.innerHTML="<input type='hidden' id='education_year[]' name='education_year[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);
 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_education_score').value;
+			 if(!numeric(document.getElementById('form_education_score'))|| value==''){					
+					alert('Please enter a numeric vlaue for the average score ');
+					document.getElementById('form_education_score').focus();
+					exit;
+			 }
 			 td.innerHTML="<input type='hidden' id='education_score[]' name='education_score[]' value='"+value+"' />"+value;
 			 tableRow.appendChild(td);
 
