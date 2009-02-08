@@ -558,12 +558,17 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 		<label for="txtFirstName"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_FirstName; ?></label>
         <input type="text" id="txtFirstName" name="txtFirstName" tabindex="1" >
-
+		
 		<label for="txtMiddleName"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_MiddleName; ?></label>
-        <input type="text" id="txtMiddleName" name="txtMiddleName" tabindex="2" ><br/>
+		<input type="text" id="txtMiddleName" name="txtMiddleName" tabindex="2" >
+		<br/>        
 
 		<label for="txtLastName"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_LastName; ?></label>
-        <input type="text" id="txtLastName" name="txtLastName" tabindex="3" ><br/>
+        <input type="text" id="txtLastName" name="txtLastName" tabindex="3" >
+        
+        <label for="date_of_birth"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_DateOfBirth; ?></label>
+        <input type="text" id="date_of_birth" name="date_of_birth" readonly onchange="fillToDate();" onfocus="fillToDate();" >
+        <input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"/><br/>
 
 		<label for="txtStreet1"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Street1; ?></label>
         <input type="text" id="txtStreet1" name="txtStreet1" tabindex="4" >
@@ -598,7 +603,31 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         <input type="text" id="txtMobile" name="txtMobile" tabindex="11" ><br/>
 
 		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Email; ?></label>
-        <input type="text" id="txtEmail" name="txtEmail" tabindex="12" ><br/>
+        <input type="text" id="txtEmail" name="txtEmail" tabindex="12" >
+        
+        <label for="salary_expected"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Salary_Expected; ?></label>
+        <input type="text" id="salary_expected" name="salary_expected" ><br/>
+        
+        <label for="it_experience"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_It_Experience; ?></label>
+        <input type="text" id="it_experience" name="it_experience" >
+        
+        <label for="availability_to_start"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Availability_To_Start; ?></label>
+        <input type="text" id="availability_to_start" name="availability_to_star" readonly onchange="fillToDate();" onfocus="fillToDate();" >
+        <input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"/><br/>
+        
+        <label for="basis_of_employeement"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Basis_Of_Employement; ?></label>
+        <input type="text" id="basis_of_employeement" name="basis_of_employeement" >
+        
+        <label for="do_u_have_a_car"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Do_You_Have_A_Car; ?></label>
+        Yes&nbsp;&nbsp;<input type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="y" checked="checked" style="margin-right: 20px;">
+        No<input type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="n" >
+        <br/>
+        
+        <label for="gender"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Gender; ?></label>
+        Male&nbsp;&nbsp;<input type="radio" id="gender" name="gender" value="m" checked="checked" style="margin-right: 20px;">
+        Female<input type="radio" id="gender" name="gender" value="f" >
+        <br/>
+        
 
         <!-- Employment Information----------------------------------------->
         <label for="txtEmail"><?php echo "Employment Information" ?></label><br/>
@@ -708,11 +737,18 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</table>
 		</div>
 		 <label for="form_upload_cv"><?php echo "Upload CV" ?></label> <input type="file" id="cv" name="cv" /><br/>
-		<?php foreach ($applicationFields as $field){ ?>
-		<label for="<?php echo $field->getLable() ?>"><span class="error"><?php echo ($field->getRequired())?"*":""?></span><?php echo $field->getLable(); ?></label>
+		<?php if(sizeof($applicationFields)>0){ ?>
+				<strong style="margin-left: 10px;">Questions for the applicant</strong><br/>
+		<?php } ?>
+		 <table border="0">
+		 <?php foreach ($applicationFields as $field){ ?>
+		 	<tr>	 				 	
+		 	<td><span class="error"><?php echo ($field->getRequired())?"*":""?></span><?php echo $field->getLable(); ?></td>
+		 	<td>
 			<?php
-				echo $field->drawElement()."<br/>";
+				echo $field->drawElement()."</td></tr>";
 			 } ?>
+		 </table>
         <input type="hidden" id="txtQualifications" name="txtQualifications" tabindex="13" />
 		<br/><br/>
         <div align="left">

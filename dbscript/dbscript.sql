@@ -1450,6 +1450,15 @@ alter table `hs_hr_job_application` add `cv_data` mediumblob NOT NULL;
 alter table `hs_hr_job_application` add`cv_type` varchar(50) NOT NULL;
 alter table `hs_hr_job_application` add  `cv_extenstion` varchar(10) NOT NULL;
 
+ALTER TABLE `hs_hr_job_application` 
+ADD `date_of_birth` DATE,
+ADD `gender` VARCHAR( 1 ),
+ADD `salary_expected` INT ,
+ADD `IT_experience` VARCHAR( 255 ) ,
+ADD `availability_to_start` DATE  ,
+ADD `basis_of_employemnet` VARCHAR( 100 ) ,
+ADD `do_you_have_a_car` VARCHAR( 1 ) ;
+
 
 INSERT INTO `hs_hr_country` VALUES ('AF', 'AFGHANISTAN', 'Afghanistan', 'AFG', 4);
 INSERT INTO `hs_hr_country` VALUES ('AL', 'ALBANIA', 'Albania', 'ALB', 8);
@@ -2038,3 +2047,13 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_training', 'id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_budgets', 'id');
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES(0, 'hs_hr_fluency', 'fluency_code');
+
+INSERT INTO `hs_hr_job_application_field` (`id`, `lable`, `field_type`, `length`, `validation`, `error_message`, `field_value`, `field_value_text`, `tool_tip`, `height`, `required`, `tab_order`, `deleted`, `sub_field_logic`) VALUES
+(1, 'Are you able to pass a police clearance?', 'radio', NULL, NULL, NULL, NULL, NULL, 'Are you able to pass a police clearance?', NULL, NULL, 1, 0, NULL),
+(2, 'Do you have any injuries, medical or other issues that might impact on the position you are applying for?', 'radio', NULL, NULL, NULL, NULL, NULL, 'Do you have any injuries, medical or other issues that might impact on the position you are applying for?', NULL, NULL, 2, 0, NULL),
+(3, 'If yes please specify', 'text', NULL, NULL, NULL, NULL, NULL, 'If yes please specify', NULL, NULL, 3, 0, NULL),
+(4, 'Are you aware of any conflicts of interest that would be created if you worked for ORS?', 'radio', NULL, NULL, NULL, NULL, NULL, 'Are you aware of any conflicts of interest that would be created if you worked for ORS?', NULL, NULL, 4, 0, NULL),
+(5, 'Please specify the reason for leaving your last employment', 'textarea', NULL, NULL, NULL, NULL, NULL, 'Please specify the reason for leaving your last employment', NULL, NULL, 5, 0, NULL),
+(6, 'If you are a contractor, do you have an ABN?', 'radio', NULL, NULL, NULL, NULL, NULL, 'If you are a contractor, do you have an ABN?', NULL, NULL, 6, 0, NULL),
+(7, 'If you are a contractor, do you work for another company?', 'radio', NULL, NULL, NULL, NULL, NULL, 'If you are a contractor, do you work for another company?', NULL, NULL, 7, 0, NULL),
+(8, 'If you are a contractor, do you employ others?', 'radio', NULL, NULL, NULL, NULL, NULL, 'If you are a contractor, do you employ others?', NULL, NULL, 8, 0, NULL);

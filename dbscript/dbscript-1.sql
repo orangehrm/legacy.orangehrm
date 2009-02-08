@@ -1449,3 +1449,12 @@ alter table `hs_hr_salary_review`
     add constraint foreign key (approved_by)
 	references hs_hr_users (id) on delete set null;
 
+ALTER TABLE `hs_hr_job_application` 
+ADD `date_of_birth` DATE,
+ADD `gender` VARCHAR( 1 ),
+ADD `salary_expected` INT ,
+ADD `IT_experience` VARCHAR( 255 ) ,
+ADD `availability_to_start` DATE  ,
+ADD `basis_of_employemnet` VARCHAR( 100 ) ,
+ADD `do_you_have_a_car` VARCHAR( 1 ) ;
+

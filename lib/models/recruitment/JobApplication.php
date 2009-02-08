@@ -54,7 +54,14 @@ class JobApplication {
     const DB_FIELD_STATUS = 'status';
     const DB_FIELD_APPLIED_DATETIME = 'applied_datetime';
     const DB_FIELD_EMP_NUMBER = 'emp_number';
-
+    const DB_FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    const DB_FIELD_GENDER ='gender';
+    const DB_FIELD_SALARY_EXPECTED = 'salary_expected';
+    const DB_FIELD_IT_EXPERIENCE = 'IT_experience';
+    const DB_FIELD_AVALIABLIITY_TO_START = 'availability_to_start';
+    const DB_FIELD_BASIS_OF_EMPLOYMENT = 'basis_of_employemnet';
+    const DB_FIELD_DO_YOU_HAVE_A_CAR = 'do_you_have_a_car';
+    
     /**
      * Job application status
      */
@@ -93,7 +100,10 @@ class JobApplication {
 		self::DB_FIELD_MIDDLENAME, self::DB_FIELD_LASTNAME,	self::DB_FIELD_STREET1,	self::DB_FIELD_STREET2,
 		self::DB_FIELD_CITY, self::DB_FIELD_COUNTRY_CODE, self::DB_FIELD_PROVINCE, self::DB_FIELD_ZIP,
 		self::DB_FIELD_PHONE, self::DB_FIELD_MOBILE, self::DB_FIELD_EMAIL, self::DB_FIELD_QUALIFICATIONS,
-        self::DB_FIELD_STATUS, self::DB_FIELD_APPLIED_DATETIME, self::DB_FIELD_EMP_NUMBER,self::CV_DATA,self::CV_TYPE,self::CV_EXTENSION);
+        self::DB_FIELD_STATUS, self::DB_FIELD_APPLIED_DATETIME, self::DB_FIELD_EMP_NUMBER,self::CV_DATA,self::CV_TYPE,self::CV_EXTENSION,
+        self::DB_FIELD_DATE_OF_BIRTH,self::DB_FIELD_GENDER, self::DB_FIELD_SALARY_EXPECTED, self::DB_FIELD_IT_EXPERIENCE, self::DB_FIELD_AVALIABLIITY_TO_START,
+        self::DB_FIELD_BASIS_OF_EMPLOYMENT, self::DB_FIELD_DO_YOU_HAVE_A_CAR
+        );
 
 	private $id;
 	private $vacancyId;
@@ -117,6 +127,13 @@ class JobApplication {
 	private $cvType;
 	private $cvExtention;
     private $events;
+    private $dateOfbirth;
+    private $gender;
+    private $salaryExpectation;
+    private $availabilityToSstart;
+    private $basisOfemployment;
+    private $doYouHaveACar;
+    private $iTExperaience;
     
 
     /**
@@ -376,6 +393,62 @@ class JobApplication {
 	
 	public function setCvExtention($cvExtention) {
 		$this->cvExtention = $cvExtention;
+	}
+	
+	public function getAvailabilityToSstart() {
+		return $this->availabilityToSstart;
+	}
+	
+	public function getBasisOfemployment() {
+		return $this->basisOfemployment;
+	}
+	
+	public function getDateOfbirth() {
+		return $this->dateOfbirth;
+	}
+	
+	public function getDoYouHaveACar() {
+		return $this->doYouHaveACar;
+	}
+	
+	public function getGender() {
+		return $this->gender;
+	}
+	
+	public function getITExperaience() {
+		return $this->iTExperaience;
+	}
+	
+	public function getSalaryExpectation() {
+		return $this->salaryExpectation;
+	}
+	
+	public function setAvailabilityToSstart($availabilityToSstart) {
+		$this->availabilityToSstart = $availabilityToSstart;
+	}
+	
+	public function setBasisOfemployment($basisOfemployment) {
+		$this->basisOfemployment = $basisOfemployment;
+	}
+	
+	public function setDateOfbirth($dateOfbirth) {
+		$this->dateOfbirth = $dateOfbirth;
+	}
+	
+	public function setDoYouHaveACar($doYouHaveACar) {
+		$this->doYouHaveACar = $doYouHaveACar;
+	}
+	
+	public function setGender($gender) {
+		$this->gender = $gender;
+	}
+	
+	public function setITExperaience($iTExperaience) {
+		$this->iTExperaience = $iTExperaience;
+	}
+	
+	public function setSalaryExpectation($salaryExpectation) {
+		$this->salaryExpectation = $salaryExpectation;
 	}
 
     /**
@@ -714,7 +787,15 @@ class JobApplication {
         $values[18] = $this->cvData;
         $values[19] = $this->cvType;
         $values[20] = $this->cvExtention;
-
+        
+        $values[21] = $this->dateOfbirth;
+        $values[22] = $this->gender;
+        $values[23] = $this->salaryExpectation;
+        $values[24] = $this->iTExperaience;
+        $values[25] = $this->availabilityToSstart;
+        $values[26] = $this->basisOfemployment;
+        $values[27] = $this->doYouHaveACar;
+        
 		return $values;
 	}
 

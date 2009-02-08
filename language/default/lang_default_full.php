@@ -1522,6 +1522,14 @@
 	$lang_Recruit_ApplicationForm_Phone = 'Phone';
 	$lang_Recruit_ApplicationForm_Mobile = 'Mobile';
 	$lang_Recruit_ApplicationForm_Email = 'Email';
+	$lang_Recruit_ApplicationForm_Gender = 'Gender';
+	$lang_Recruit_ApplicationForm_DateOfBirth="Date Of Birth";
+	$lang_Recruit_ApplicationForm_Salary_Expected= 'Salary Expectation';
+	$lang_Recruit_ApplicationForm_It_Experience = 'IT Experience';
+	$lang_Recruit_ApplicationForm_Availability_To_Start ='Availability To Start';
+	$lang_Recruit_ApplicationForm_Basis_Of_Employement = 'Basis Of Employeement';
+	$lang_Recruit_ApplicationForm_Do_You_Have_A_Car = 'Do you have a reliable car';	
+
 	$lang_Recruit_ApplicationForm_Qualifications = 'Qualifications and Experience';
 
 	$lang_Recruit_ApplicationForm_PleaseSpecify = 'Please Specify ';

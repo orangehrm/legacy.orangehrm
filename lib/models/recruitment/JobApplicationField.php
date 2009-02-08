@@ -58,7 +58,7 @@ class JobApplicationField extends FormFieldBase {
 	
 	
 	public function getFieldTypes(){
-		return array(1=>'text',2=>'datefield',3=>'textarea',4=>'checkbox');
+		return array(1=>'text',2=>'datefield',3=>'textarea',4=>'radio');
 	}
 	
 	public function getApplication() {

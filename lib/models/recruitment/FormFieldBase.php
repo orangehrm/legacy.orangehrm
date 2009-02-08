@@ -195,9 +195,9 @@ class FormFieldBase {
 			break;
 			case 'radio':
 				$selected=''; 
-				if($this->getFieldValue()==1) $selected="selected='selected";					
-				$str="Yes <input type=\"radio\" value=\"1\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  ".$selected." title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." />";
-				$str.="No <input style=\"margin-left: 8px;\" type=\"radio\" value=\"0\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  ".$selected." title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." />";
+				$selected="checked";					
+				$str="Yes&nbsp;&nbsp; <input type=\"radio\" value=\"1\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  ".$selected." title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." />";
+				$str.="No <input style=\"margin-left: 8px;\" type=\"radio\" value=\"0\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." />";
 				if($this->getSubFieldLogic()!=null){
 					$str.="<input style=\"margin-left: 8px;\" type=\"text\"  value=\"".$this->getFiledValueText()."\" id=\"".$this->getId()."_dynamic_sub\" name=\"".$this->getId()."_dynamic_sub\" title=\"".$this->getToolTip()."\"  ".$enable."/>";
 				}

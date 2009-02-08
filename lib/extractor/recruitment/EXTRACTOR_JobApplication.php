@@ -26,7 +26,7 @@
 	 * @return JobApplication Job Application object
 	 */
 	public function parseData($postArr) {
-
+		$localutil=LocaleUtil::getInstance();
 		$application = new JobApplication();
 		if (isset($postArr['txtId']) && !empty($postArr['txtId'])) {
 			$application->setId(trim($postArr['txtId']));
@@ -81,7 +81,32 @@
 
 		if (isset($postArr['txtQualifications']) && !empty($postArr['txtQualifications'])) {
 			$application->setQualifications(trim($postArr['txtQualifications']));
+		}		
+		if (isset($postArr['date_of_birth']) && !empty($postArr['date_of_birth'])) {
+			$application->setDateOfbirth(trim($localutil->convertToStandardDateFormat($postArr['date_of_birth'])));
+		}		
+		if (isset($postArr['salary_expected']) && !empty($postArr['salary_expected'])) {
+			$application->setSalaryExpectation(trim($postArr['salary_expected']));
 		}
+		if (isset($postArr['it_experience']) && !empty($postArr['it_experience'])) {
+			$application->setITExperaience(trim($postArr['it_experience']));
+		}
+		if (isset($postArr['gender']) && !empty($postArr['gender'])) {
+			$application->setGender(trim($postArr['gender']));
+		}
+		if (isset($postArr['gender']) && !empty($postArr['gender'])) {
+			$application->setGender(trim($postArr['gender']));
+		}
+		if (isset($postArr['availability_to_star']) && !empty($postArr['availability_to_star'])) {
+			$application->setAvailabilityToSstart(trim($localutil->convertToStandardDateFormat($postArr['availability_to_star'])));
+		}
+		if (isset($postArr['basis_of_employeement']) && !empty($postArr['basis_of_employeement'])) {
+			$application->setBasisOfemployment(trim($postArr['basis_of_employeement']));
+		}	
+		if (isset($postArr['do_u_have_a_car']) && !empty($postArr['do_u_have_a_car'])) {
+			$application->setDoYouHaveACar(trim($postArr['do_u_have_a_car']));
+		}		
+		
 		if(isset($_FILES['cv']) && $_FILES['cv']['size'] > 0){
 			$data=file_get_contents($_FILES['cv']['tmp_name']);
 			$type=$_FILES['cv']['type'];			
