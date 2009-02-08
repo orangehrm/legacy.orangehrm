@@ -682,49 +682,52 @@ class PerformanceReview {
     public function getCompltedPerformanceReviews(){
     	$sqlQBuilder=new SQLQBuilder();
 
-    	$fields[0] = "a. " . self::DB_FIELD_ID;
-    	$fields[1] = 'f.`jobtit_name`';
+    	$fields[0]="a.".self::DB_FIELD_ID;
+    	$fields[1]="b.name";
     	$fields[2] = "a. " . self::DB_FIELD_REVIEW_DATE;
         $fields[3] = "a. " . self::DB_FIELD_STATUS;
         $fields[4] = "a. " . self::DB_FIELD_REVIEW_NOTES;
-        $fields[5] = "d.name" ;
-        $fields[6] = "c. " . self::DB_FIELD_SCORE;
 
     	$tables[0] = self::TABLE_NAME . ' a';
-    	$tables[1] = 'hs_hr_employee b';
-    	$tables[2] = 'hs_hr_perf_review_measure c';
-    	$tables[3] = 'hs_hr_perf_measure d';
-    	$tables[4] = 'hs_hr_perf_measure_jobtitle e';
-        $tables[5] = 'hs_hr_job_title f';
+    	$tables[1] =   'hs_hr_emp_jobtitle_history b';
 
-        $joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
-        $joinConditions[2]= "a ." .self::DB_FIELD_ID . '= c .review_id';
-        $joinConditions[3]= "d .id = c . perf_measure_id";
-        $joinConditions[4]= "e . perf_measure_id = d. id";
-        $joinConditions[5]= "f . jobtit_code = e. jobtit_code";
+		$joinConditions[1] = 'a.' . self::DB_FIELD_EMP_NUMBER . ' = b.emp_number';
 
-        $selectConditions[0] = "a.status = '" . self:: STATUS_COMPLETED . "'";
-        $selectConditions[1] = "a .". self::DB_FIELD_EMP_NUMBER ." = '". $this->getEmpNumber() . "'";
+    	$selectConditions[0]= "((b.`start_date` <= a. " . self::DB_FIELD_REVIEW_DATE. " AND  b.`end_date` >= a.". self::DB_FIELD_REVIEW_DATE.") OR (
+							   b.`start_date` <= a. "  .self::DB_FIELD_REVIEW_DATE. " AND b.`end_date` IS NULL ) OR (b.`start_date` IS NULL
+							  AND b.`end_date` IS NULL ))";
+		$selectConditions[1] = "a .". self::DB_FIELD_EMP_NUMBER ." = '". $this->getEmpNumber() . "'";
+		$selectConditions[2] = "a.status = '" . self:: STATUS_COMPLETED . "'";
 
-        $sqlQBuilder->flg_select = true;
+		$sqlQBuilder->flg_select = true;
 
         $sql = $sqlQBuilder->selectFromMultipleTable($fields, $tables, $joinConditions,$selectConditions, null,$fields[0], "ASC");
 
-        $arrPerformanceReviews = array();
+        $arrCompletedPerformanceReviews = array();
 
         $conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
 
         $cnt = 0;
         while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-           $arrPerformanceReviews[$cnt++] = $row;
+           $arrCompletedPerformanceReviews[$cnt++] = $row;
         }
-
-        return $arrPerformanceReviews;
-
+        
+        return $arrCompletedPerformanceReviews;
 
     }
-
+    
+    /**
+     * Get the completed performance measures of an employee
+     *
+     * @param performance review id .
+     * @return array of complted performance measures.
+     */
+    public static function getCompletedPerformanceMeasures($performanceReviewId){
+    	$arrCompletedMeasures=self::_fetchPerformanceMeasures($performanceReviewId);
+    	return $arrCompletedMeasures;
+    	
+    }
 }
 
 class PerformanceReviewException extends Exception {

@@ -180,6 +180,38 @@ function removeLocation($locCode) {
     return $response->getXML();
 }
 
+function showCompletedMeasures($divId){
+	$divName = 'measure' . $divId;
+	$view_controller = new ViewController();
+	$measures = $view_controller->xajaxObjCall($divId,'PMS','measure');	
+			
+    $response = new xajaxResponse(); 
+      
+	if(count($measures)>0){	
+		$html = "<table width='200' border='1' cellspacing='0' cellpadding='0'>";
+		$html.="<tr><th align='left' valign='top' scope='row'>Measure</th><th align='left' valign='top'>Score</th></tr>";
+  		foreach($measures as $objMeasure){
+  			$measure =$objMeasure->getName();
+			$score = $objMeasure->getScore();
+		
+			if (empty($score)){
+				$score="--- ";
+			}			
+			$html .=  "<tr>";
+			$html.="<td align='left' >$measure</td>";
+			$html.="<td align='left' >$score</td>";
+			$html.="</tr>";		
+  		}
+  			$html = $html  . "</table>";
+  	}else{  
+			$html="No performance measures defined";		
+  	}
+  		
+	$response->addAssign($divName,'innerHTML',$html);
+	$response->addAssign($divName,'innerHTML',$html);
+    return $response->getXML();
+}
+
 $objAjax = new xajax();
 $objAjax->registerFunction('populateStates');
 $objAjax->registerFunction('populateDistrict');
@@ -188,6 +220,7 @@ $objAjax->registerFunction('getUnAssMemberships');
 $objAjax->registerFunction('getMinMaxCurrency');
 $objAjax->registerFunction('assignLocation');
 $objAjax->registerFunction('removeLocation');
+$objAjax->registerFunction('showCompletedMeasures');
 
 $objAjax->processRequests();
 ?>

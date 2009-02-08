@@ -24,14 +24,15 @@ if(isset($this->popArr['perfReview'])){
 ?>
 <script language="javascript">
     function displayPerformanceMeasures(id){
-        elementID="measure"+id;    
-        measureTbl= document.getElementById(elementID);   
+    	xajax_showCompletedMeasures(id);
+       // elementID="measure"+id;    
+        //measureTbl= document.getElementById(elementID);   
    
-        if (measureTbl.style.display == 'none' ) {
-            measureTbl.style.display = 'block';           
-        } else {
-            measureTbl.style.display = 'none';            
-        }
+       // if (measureTbl.style.display == 'none' ) {
+           // measureTbl.style.display = 'block';           
+        //} else {
+           // measureTbl.style.display = 'none';            
+        //}
     }
 </script>
 
@@ -56,27 +57,20 @@ if(isset($this->popArr['perfReview'])){
         if(!empty($reviewRow[3]) && $reviewRow[3]=='1'){ 	   
     ?>
       <tr>
-        <td align="center"><a href="javascript:displayPerformanceMeasures(<?php echo $reviewRow[0]; ?>);"><?php echo $reviewRow[0] ?></a></td>
+        <td align="center"><a href="#" onclick="displayPerformanceMeasures('<?php echo $reviewRow[0]; ?>')"><?php echo $reviewRow[0] ?></a></td>
         <td align="center"><?php echo $reviewRow[1]; ?></td>
         <td align="center"><?php echo $reviewRow[2]; ?></td>
         <td align="center"><?php echo $lang_Performance_Review_Completed ?></td>
-        <td align="center"><?php echo $reviewRow[4]; ?></td>          
+        <td align="center"><?php echo $reviewRow[4]; ?></td>   
+            
       </tr>
-     
-     <tr >
-      <td colspan="5">
-         <table border="0" id="measure<?php echo $reviewRow[0]; ?>" style="display:none;" >
-            <tr>
-                <td><?php echo $lang_Menu_Performance_Measures; ?></td>
-                <td align="center"><strong><?php echo $reviewRow[5]; ?></strong></td>
-            </tr>
-            <tr>
-                <td><?php echo $lang_Performance_Review_MeasureScores;?></td>
-                <td align="center"><strong><?php echo $reviewRow[6]; ?></strong></td>
-             </tr>
-        </table>
-       </td>
-    </tr>  
+     <tr> <td colspan="5"></td></tr>
+     <tr>
+        <td colspan="5" align="left" valign="top"><div id="measure<?php echo $reviewRow[0];?>">
+        
+        </div>
+        </td>
+      </tr>
     <tr>
         <td colspan="5"><hr/></td>
     </tr>    

@@ -171,6 +171,12 @@ class ViewController {
 							}
 
 							break;
+			case 'PMS' :
+							if($cntrl == 'measure') {
+
+								 return PerformanceReview::getCompletedPerformanceMeasures($value);
+							}
+							break;
 		}
 	}
 
