@@ -133,16 +133,21 @@ class CompProperty {
 /*
  * Returns two dimentional array of list of properties
  */
-    public function getPropertyList($pageNo=null)
+    public function getPropertyList($pageNo = null, $sortField = 0, $sortOrder = 'ASC')
     {
         $dbConnection = new DMLFunctions();
 
+        $sql = "SELECT a.prop_id, a.prop_name, a.emp_id, " .
+               "CONCAT(b.`emp_firstname`, ' ', b.`emp_middle_name`, ' ', b.`emp_lastname`) AS emp_name " .
+               "FROM ".$this->TABLE_NAME . " a LEFT JOIN hs_hr_employee b ON a.emp_id = b.emp_number";
+        
+        $sql .= ' ' . $this->_getOrderBy($sortField, $sortOrder);
+
         if (isset($pageNo)) {
 	        $selectLimit = ($pageNo*10-10).",".(10);
-	        $sql = "SELECT * FROM ".$this->TABLE_NAME." LIMIT $selectLimit";
-        } else {
-            $sql = "SELECT * FROM ".$this->TABLE_NAME;
+	        $sql .= " LIMIT $selectLimit";
         }
+        
 
         $res = $dbConnection->executeQuery($sql);
 
@@ -203,4 +208,34 @@ class CompProperty {
 
         return $message2;
     }
+    
+    /**
+     * Return ORDER BY SQL clause
+     */
+    private function _getOrderBy($sortField, $sortOrder) {
+
+        if (($sortOrder !== 'ASC') && ($sortOrder !== 'DESC')) {
+            $sortOrder = 'ASC';
+        } 
+    
+        // default: sort by property id            
+        $orderBy = 'a.prop_name ' . $sortOrder;
+               
+        switch ($sortField) {
+            
+            case 0:
+                // property name: default
+                break;
+                
+            case 1:
+                // Employee name
+                $orderBy = 'emp_name ' . $sortOrder;
+                break;
+                
+            default:
+                break;
+        }
+        return 'ORDER BY ' . $orderBy;        
+    }
+        
 }

@@ -2633,7 +2633,10 @@ class ViewController {
                                 $pageNo = ceil($propertyCount/10);
                             }
 
-                            $form_creator->popArr['properties'] = $compProp->getPropertyList($pageNo);
+                            $sortField = isset($_GET['sortField']) ? $_GET['sortField']: 0;
+                            $sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder']: 'ASC';
+
+                            $form_creator->popArr['properties'] = $compProp->getPropertyList($pageNo, $sortField, $sortOrder);
                             $form_creator->popArr['allProperties'] = $compProp->getPropertyList();
                             $form_creator->popArr['pageNo'] = $pageNo;
                             $form_creator->popArr['recordCount'] = $propertyCount;

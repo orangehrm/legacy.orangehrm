@@ -1,7 +1,32 @@
 <?php
 $addBtnAction = 'add()';
 $delBtnAction = 'deleteProperties()';
-$saveBtnAction = 'saveList()'
+$saveBtnAction = 'saveList()';
+
+function getNextSortOrder($curSortOrder) {
+    switch ($curSortOrder) {
+        case 'null' :
+            return 'ASC';
+            break;
+        case 'ASC' :
+            return 'DESC';
+            break;
+        case 'DESC' :
+            return 'ASC';
+            break;
+    }
+}
+
+$GLOBALS['lang_Common_SortAscending'] = $lang_Common_SortAscending;
+$GLOBALS['lang_Common_SortDescending'] = $lang_Common_SortDescending;
+
+function nextSortOrderInWords($sortOrder) {
+    return $sortOrder == 'ASC' ? $GLOBALS['lang_Common_SortDescending'] : $GLOBALS['lang_Common_SortAscending'];
+}
+$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'ASC';
+$sortField = isset($_GET['sortField']) ? $_GET['sortField'] : 0; 
+$baseURL = "./CentralController.php?uniqcode=TCP&VIEW=MAIN&pageNo=1";
+$headings = array($lang_Admin_Property_Name, $lang_Admin_Prop_Emp_Name);
 ?>
 
 <html>
@@ -232,6 +257,12 @@ function chgPage(pNo) {
 	document.propertyList.submit();
 }
 
+
+function sortAndSearch(fieldNum, sortOrder) {
+    var url = '<?php echo $baseURL;?>';
+    url = url + '&sortField=' + fieldNum + '&sortOrder=' + sortOrder;
+    location.href = url;
+}
 </script>
 
 
@@ -309,18 +340,17 @@ if (!isset($this->getArr['action']))
 ?>
 
         </table>
-        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
+        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="propertylist">
         <thead>
         <tr>
 
           <td class="r1_c1" width="12"></td>
           <td class="tableTopMiddle" width="50"></td>
-                    <td width="200" class="tableTopMiddle"></td>
-                    <td width="200" class="tableTopMiddle"></td>
+                    <td width="300" class="tableTopMiddle"></td>
+                    <td width="300" class="tableTopMiddle"></td>
 
           <td class="tableTopRight"></td>
          </tr>
-         </thead>
             <tr nowrap>
                 <td class="r2_c1"><img name="table_r2_c1" src="../../themes/beyondT/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
                 <td width="50" NOWRAP class="listViewThS1" scope="col">
@@ -328,21 +358,32 @@ if (!isset($this->getArr['action']))
                                     <input type='checkbox' class='checkbox' name='allCheck' value='' onClick="doHandleAll();">
 <?php } ?>
                                 </td>
-                                <td scope="col" width="250" class="listViewThS1"><?php echo $lang_Admin_Property_Name ; ?> </td>
-                                <td scope="col" width="250" class="listViewThS1"><?php echo $lang_Admin_Prop_Emp_Name; ?>  </td>
+<?php        
+    foreach ($headings as $index=>$heading) {
 
-
-
-                    <td class="r2_c3"><img src="../../themes/beyondT/pictures/spacer.gif" width="13" height="1" border="0" alt=""></td>
+        $fieldSortOrder = ($index == $sortField) ? $sortOrder : 'null';
+        $nextSortOrder = getNextSortOrder($fieldSortOrder);
+        $nextSortInWords = nextSortOrderInWords($fieldSortOrder);        
+?>
+            <td scope="col" width="300" class="listViewThS1">
+                <a  href="#" class="<?php echo $fieldSortOrder;?>"
+                    onclick="sortAndSearch(<?php echo $index;?>, '<?php echo $nextSortOrder;?>');"
+                    title="<?php echo $nextSortInWords; ?>">
+                        <?php echo $heading;?>
+                </a>
+            </td>
+<?php        
+    }
+?>                                 
+            <td class="r2_c3"><img src="../../themes/beyondT/pictures/spacer.gif" width="13" height="1" border="0" alt=""></td>
             </tr>
-
+         </thead>
 
             <?php
 
             if(sizeof($properties)!=0)
             {
             $classBg = 'odd';
-
 
             foreach ($properties as $property)
             {
@@ -353,7 +394,7 @@ if (!isset($this->getArr['action']))
             <td class="r2_c1"><img name="table_r2_c1" src="../../themes/beyondT/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
 
                         <td class="<?php echo $classBg ?>" width="50"> <input type='checkbox' class='checkbox' name='chkPropId[]' value='<?php echo $property['prop_id']?>' onchange='checkIfAllChecked()' /></td>
-                        <td class="<?php echo $classBg ?>" width="250"><a href="./CentralController.php?id=<?php echo $property['prop_id']?>&name=<?php echo $property['prop_name']?>&uniqcode=TCP&action=edit&pageNo=<?php echo (isset($this->popArr['pageNo']))?$this->popArr['pageNo']:'1' ?>" class="listViewTdLinkS1"><?php echo $property['prop_name']?></a></td>
+                        <td class="<?php echo $classBg ?>" width="300"><a href="./CentralController.php?id=<?php echo $property['prop_id']?>&name=<?php echo $property['prop_name']?>&uniqcode=TCP&action=edit&pageNo=<?php echo (isset($this->popArr['pageNo']))?$this->popArr['pageNo']:'1' ?>" class="listViewTdLinkS1"><?php echo $property['prop_name']?></a></td>
                         <td class="<?php echo $classBg ?>" width="400" nowrap="nowrap">
                         <input readonly="readonly" name="propId[]" type="hidden" value='<?php echo $property['prop_id']==0?'':$property['prop_id']?>'>
                         <select name='cmbUserEmpID[]'>
@@ -403,8 +444,8 @@ if (!isset($this->getArr['action']))
        <tr>
           <td class="r3_c1" height="16"></td>
           <td class="r3_c2" height="16"></td>
-                    <td width="250" class="r3_c2" height="16"</td>
-                    <td width="250" class="r3_c2" height="16"</td>
+                    <td width="300" class="r3_c2" height="16"</td>
+                    <td width="300" class="r3_c2" height="16"</td>
           <td class="r3_c3" height="16"></td>
          </tr>
 

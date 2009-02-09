@@ -793,3 +793,18 @@ table.simpleList thead th a.DESC {
     padding-right: 10px;
 }
 
+table.propertylist thead td a.null {
+    background: url(../icons/null.png) no-repeat right center;
+    padding-right: 10px;
+}
+
+table.propertylist thead td.listViewThS1 a.ASC {
+    background: url(../icons/ASC.png) no-repeat right center;
+    padding-right: 10px;
+}
+table.propertylist thead td.listViewThS1 a.DESC {
+    background: url(../icons/DESC.png) no-repeat right center;
+    padding-right: 10px;
+}
+
+

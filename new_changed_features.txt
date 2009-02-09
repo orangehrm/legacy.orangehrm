@@ -11,6 +11,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
     2556897 - blank page comes when add performance measures
     2548839 - doc types files become empty & unusable after download
     2567194 - upload more than 1MB in second interview ==> XML error
+    2504269 - Sorting feature has not implemented (company property)
 	
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 
