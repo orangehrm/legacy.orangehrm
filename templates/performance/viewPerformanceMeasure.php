@@ -73,27 +73,37 @@ function goBack() {
 	location.href = "./CentralController.php?perfcode=PerfMeasure&action=List";
 }
 
+function validate() {
+    err=false;
+    msg='<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
+
+    name = $('txtName').value.trim(); 
+    if (name == '') {
+        err=true;
+        msg+="\t- <?php echo $lang_Performance_Measure_Error_SpecifyPerfMeasureName; ?>\n";
+    } else if (isNameInUse(name)) {
+        err = true;
+        msg += "\t- <?php echo $lang_Performance_Measure_NameInUse_Error; ?>\n";
+    }   
+
+    if (err) {
+        alert(msg);
+        return false;
+    } else {
+        selectAllOptions($('cmbAssignedJobTitles'));
+        $('frmPerfMeasure').action=baseUrl+'Update';
+        return true;
+    }    
+}
+
 function update() {
-	err=false;
-	msg='<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
 
-	name = $('txtName').value.trim(); 
-	if (name == '') {
-		err=true;
-		msg+="\t- <?php echo $lang_Performance_Measure_Error_SpecifyPerfMeasureName; ?>\n";
-	} else if (isNameInUse(name)) {
-		err = true;
-		msg += "\t- <?php echo $lang_Performance_Measure_NameInUse_Error; ?>\n";
-	}	
-
-	if (err) {
-		alert(msg);
-		return false;
-	}
-
-	selectAllOptions($('cmbAssignedJobTitles'));
-	$('frmPerfMeasure').action=baseUrl+'Update';
-	$('frmPerfMeasure').submit();
+    if (validate()) {        
+        $('frmPerfMeasure').submit();
+        return true;        
+    } else {
+        return false;
+    }
 }
 
 function assignJobTitle() {
@@ -145,7 +155,8 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 <?php }	?>
 </div>
 <div id="editPanel">
-	<form name="frmPerfMeasure" id="frmPerfMeasure" method="post" action="?perfcode=PerfMeasure&action=">
+	<form name="frmPerfMeasure" id="frmPerfMeasure" method="post" action="?perfcode=PerfMeasure&action=" 
+            onsubmit="return validate();">
 		<div class="roundbox">
 			<label for="txtName"><span class="error">*</span> <?php echo $lang_Performance_Measure_Name; ?></label>
 	        <input type="text" id="txtName" name="txtName" tabindex="1" value="<?php echo $perfMeasure->getName(); ?>"
