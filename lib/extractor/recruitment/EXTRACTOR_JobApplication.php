@@ -89,7 +89,7 @@
 			$application->setSalaryExpectation(trim($postArr['salary_expected']));
 		}
 		if (isset($postArr['it_experience']) && !empty($postArr['it_experience'])) {
-			$application->setITExperaience(trim($postArr['it_experience']));
+			$application->setITExperience(trim($postArr['it_experience']));
 		}
 		if (isset($postArr['gender']) && !empty($postArr['gender'])) {
 			$application->setGender(trim($postArr['gender']));
@@ -98,7 +98,7 @@
 			$application->setGender(trim($postArr['gender']));
 		}
 		if (isset($postArr['availability_to_star']) && !empty($postArr['availability_to_star'])) {
-			$application->setAvailabilityToSstart(trim($localutil->convertToStandardDateFormat($postArr['availability_to_star'])));
+			$application->setAvailabilityToStart(trim($localutil->convertToStandardDateFormat($postArr['availability_to_star'])));
 		}
 		if (isset($postArr['basis_of_employeement']) && !empty($postArr['basis_of_employeement'])) {
 			$application->setBasisOfemployment(trim($postArr['basis_of_employeement']));
@@ -115,8 +115,7 @@
                 $extension = $parts[count($parts)-1];
             } else {
                 $extension = '';    
-            }			
-			$data=addslashes($data);
+            }
 			
 			$application->setCvData($data);
 			$application->setCvType($type);

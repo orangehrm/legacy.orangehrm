@@ -130,10 +130,10 @@ class JobApplication {
     private $dateOfbirth;
     private $gender;
     private $salaryExpectation;
-    private $availabilityToSstart;
+    private $availabilityToStart;
     private $basisOfemployment;
     private $doYouHaveACar;
-    private $iTExperaience;
+    private $iTExperience;
     
 
     /**
@@ -395,8 +395,8 @@ class JobApplication {
 		$this->cvExtention = $cvExtention;
 	}
 	
-	public function getAvailabilityToSstart() {
-		return $this->availabilityToSstart;
+	public function getAvailabilityToStart() {
+		return $this->availabilityToStart;
 	}
 	
 	public function getBasisOfemployment() {
@@ -415,16 +415,16 @@ class JobApplication {
 		return $this->gender;
 	}
 	
-	public function getITExperaience() {
-		return $this->iTExperaience;
+	public function getITExperience() {
+		return $this->iTExperience;
 	}
 	
 	public function getSalaryExpectation() {
 		return $this->salaryExpectation;
 	}
 	
-	public function setAvailabilityToSstart($availabilityToSstart) {
-		$this->availabilityToSstart = $availabilityToSstart;
+	public function setAvailabilityToStart($availabilityToStart) {
+		$this->availabilityToStart = $availabilityToStart;
 	}
 	
 	public function setBasisOfemployment($basisOfemployment) {
@@ -443,8 +443,8 @@ class JobApplication {
 		$this->gender = $gender;
 	}
 	
-	public function setITExperaience($iTExperaience) {
-		$this->iTExperaience = $iTExperaience;
+	public function setITExperience($iTExperience) {
+		$this->iTExperience = $iTExperience;
 	}
 	
 	public function setSalaryExpectation($salaryExpectation) {
@@ -613,7 +613,7 @@ class JobApplication {
 		$sqlBuilder->arr_insert = $this->_getFieldValuesAsArray();
 		$sqlBuilder->arr_insertfield = $this->dbFields;
 
-		$sql = $sqlBuilder->addNewRecordFeature2();		
+		$sql = $sqlBuilder->addNewRecordFeature2(false);		
 		$conn = new DMLFunctions();
 
 		$result = $conn->executeQuery($sql);
@@ -629,14 +629,13 @@ class JobApplication {
 	 */
 	private function _update() {
 
-		$values = $this->_getFieldValuesAsArray();
 		$sqlBuilder = new SQLQBuilder();
 		$sqlBuilder->table_name = self::TABLE_NAME;
 		$sqlBuilder->flg_update = 'true';
 		$sqlBuilder->arr_update = $this->dbFields;
 		$sqlBuilder->arr_updateRecList = $this->_getFieldValuesAsArray();
 
-		$sql = $sqlBuilder->addUpdateRecord1(0);
+		$sql = $sqlBuilder->addUpdateRecord1(0, false);
 
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
@@ -766,38 +765,51 @@ class JobApplication {
 	 */
 	private function _getFieldValuesAsArray() {
 
-		$values[0] = $this->id;
-		$values[1] = $this->vacancyId;
-		$values[2] = $this->firstName;
-		$values[3] = $this->middleName;
-		$values[4] = $this->lastName;
-		$values[5] = $this->street1;
-		$values[6] = $this->street2;
-		$values[7] = $this->city;
-		$values[8] = $this->country;
-		$values[9] = $this->province;
-		$values[10] = $this->zip;
-		$values[11] = $this->phone;
-		$values[12] = $this->mobile;
-		$values[13] = $this->email;
-		$values[14] = $this->qualifications;
-        $values[15] = is_null($this->status) ? self::STATUS_SUBMITTED : $this->status;
-        $values[16] = is_null($this->appliedDateTime) ? 'null' : $this->appliedDateTime;
-        $values[17] = empty($this->empNumber) ? 'null' : $this->empNumber;
-        $values[18] = $this->cvData;
-        $values[19] = $this->cvType;
-        $values[20] = $this->cvExtention;
+		$values[0] = $this->_escapeField($this->id);
+		$values[1] = $this->_escapeField($this->vacancyId);
+		$values[2] = $this->_escapeField($this->firstName);
+		$values[3] = $this->_escapeField($this->middleName);
+		$values[4] = $this->_escapeField($this->lastName);
+		$values[5] = $this->_escapeField($this->street1);
+		$values[6] = $this->_escapeField($this->street2);
+		$values[7] = $this->_escapeField($this->city);
+		$values[8] = $this->_escapeField($this->country);
+		$values[9] = $this->_escapeField($this->province);
+		$values[10] = $this->_escapeField($this->zip);
+		$values[11] = $this->_escapeField($this->phone);
+		$values[12] = $this->_escapeField($this->mobile);
+		$values[13] = $this->_escapeField($this->email);
+		$values[14] = $this->_escapeField($this->qualifications);
+        $values[15] = is_null($this->status) ? self::STATUS_SUBMITTED : $this->_escapeField($this->status);
+        $values[16] = is_null($this->appliedDateTime) ? 'null' : $this->_escapeField($this->appliedDateTime);
+        $values[17] = empty($this->empNumber) ? 'null' : $this->_escapeField($this->empNumber);
+        $values[18] = $this->_prepareAttachmentData($this->cvData);
+        $values[19] = $this->_escapeField($this->cvType);
+        $values[20] = $this->_escapeField($this->cvExtention);
         
-        $values[21] = $this->dateOfbirth;
-        $values[22] = $this->gender;
-        $values[23] = $this->salaryExpectation;
-        $values[24] = $this->iTExperaience;
-        $values[25] = $this->availabilityToSstart;
-        $values[26] = $this->basisOfemployment;
-        $values[27] = $this->doYouHaveACar;
+        $values[21] = $this->_escapeField($this->dateOfbirth);
+        $values[22] = $this->_escapeField($this->gender);
+        $values[23] = $this->_escapeField($this->salaryExpectation);
+        $values[24] = $this->_escapeField($this->iTExperience);
+        $values[25] = $this->_escapeField($this->availabilityToStart);
+        $values[26] = $this->_escapeField($this->basisOfemployment);
+        $values[27] = $this->_escapeField($this->doYouHaveACar);
         
 		return $values;
 	}
+    
+    private function _escapeField($value) {
+
+        if (get_magic_quotes_gpc()) {
+            $value = stripslashes($value);
+        }    
+        $value = mysql_real_escape_string($value);   
+        return "'" . $value . "'";        
+    }
+    
+    private function _prepareAttachmentData($value) {
+        return "'" . addslashes($value) . "'";    
+    }    
 
     /**
      * Creates a JobApplication object from a resultset row
