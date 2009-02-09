@@ -30,5 +30,5 @@
 <script type="text/javascript" src="<?php echo $_SESSION['WPATH']; ?>/scripts/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="<?php echo $_SESSION['WPATH']; ?>/scripts/yui/element/element-beta-min.js"></script>
 
-<script type="text/javascript" src="<?php echo $_SESSION['WPATH']; ?>/scripts/yui/calendar/calendar-min.js"></script>
+<script type="text/javascript" src="<?php echo $_SESSION['WPATH']; ?>/scripts/yui/calendar/calendar.js"></script>
 <script type="text/javascript" src="<?php echo $_SESSION['WPATH']; ?>/scripts/yui/button/button-beta-min.js"></script>
