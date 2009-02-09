@@ -615,6 +615,11 @@ class JobApplication {
 
 		$sql = $sqlBuilder->addNewRecordFeature2(false);		
 		$conn = new DMLFunctions();
+        
+        $maxPacketSize = $conn->getMaxAllowedPacketSize();        
+        if (($maxPacketSize > 0) && (strlen($sql) > $maxPacketSize)) {
+            throw new JobApplicationException("File too large. Check MySQL max_allowed_packet configuration in my.ini", JobApplicationException::FILE_TOO_LARGE);
+        }
 
 		$result = $conn->executeQuery($sql);
 		if (!$result || (mysql_affected_rows() != 1)) {
@@ -639,6 +644,11 @@ class JobApplication {
 
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
+
+        $maxPacketSize = $conn->getMaxAllowedPacketSize();               
+        if (($maxPacketSize > 0) && (strlen($sql) > $maxPacketSize)) {
+            throw new JobApplicationException("File too large. Check MySQL max_allowed_packet configuration in my.ini", JobApplicationException::FILE_TOO_LARGE);
+        }
 
 		// Here we don't check mysql_affected_rows because update may be called
 		// without any changes.
@@ -898,5 +908,6 @@ class JobApplicationException extends Exception {
 	const MISSING_PARAMETERS = 1;
 	const DB_ERROR = 2;
     const INVALID_STATUS = 3;
+    const FILE_TOO_LARGE = 4;
 }
 

@@ -24,6 +24,7 @@ class DMLFunctions {
 
 	var $dbObject; // var to connection
 	var $conf;
+    var $maxAllowedPacketSize = -1;
 
 	/**
 	 * Constructor for the DMLFunctions Class
@@ -50,5 +51,24 @@ class DMLFunctions {
 
 		return false;
 	}
+    
+    function getMaxAllowedPacketSize() {
+        
+        if ($this->maxAllowedPacketSize == -1) {
+            try {
+                $result = $this->dbObject->sqlQuery("show variables like 'max_allowed_packet'");
+                if ($result && mysql_num_rows($result) == 1) {
+                    $dataRow = mysql_fetch_array($result);
+                    if (isset($dataRow[1])) {
+                        $this->maxAllowedPacketSize = $dataRow[1];        
+                    }
+                }
+            } catch (Exception $e) {
+                // ignore if cannot get max_allowed_packet.                
+            }
+        }
+        
+        return $this->maxAllowedPacketSize;
+    } 
 }
 ?>

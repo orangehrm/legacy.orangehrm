@@ -20,6 +20,24 @@
 require_once ROOT_PATH . '/lib/confs/Conf.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
 
+/**
+ * Escape the passed value so that it's suitable for inserting into CDATA section.
+ * Mainly checks for existance of the string "]]>" and replaces it with 
+ */
+function escapeCDATASection($value) {
+    $strArray = str_split($value);
+    $len = count($strArray);
+    $buffer = '';
+    for ($i=0; $i<$len; $i++) {
+        $char = $strArray[$i];
+        
+        if (ord($char) > 31 && ord($char) < 127) {
+            $buffer .= $char;
+        }
+    }
+    return $buffer;    
+}
+
 function notifyUser($errlevel, $errstr, $errfile='', $errline='', $errcontext=''){
 
 	$errMsg = "\n".$errstr.' in '.$errfile.' on line '.$errline."\n";
@@ -86,7 +104,7 @@ function notifyUser($errlevel, $errstr, $errfile='', $errline='', $errcontext=''
 	
 		$errstr = strip_tags($errstr);
 	
-		$message .= "	<message><![CDATA[$errstr]]></message>\n";
+		$message .= "	<message><![CDATA[" . escapeCDATASection($errstr) . "]]></message>\n";
 	
 		$message .= "	<root>".ROOT_PATH."</root>\n";
 		$message .= "	<Wroot>".$_SESSION['WPATH']."</Wroot>\n";
@@ -111,7 +129,7 @@ function notifyUser($errlevel, $errstr, $errfile='', $errline='', $errcontext=''
 		} else {
 	
 			$message .= "	<cause>\n";
-			$message .= "		<message><![CDATA[".mysql_error()."]]></message>\n";
+			$message .= "		<message><![CDATA[". escapeCDATASection(mysql_error()). "]]></message>\n";
 			$message .= "	</cause>\n";
 	
 			$message .= "	<cause>\n";
@@ -132,7 +150,7 @@ function notifyUser($errlevel, $errstr, $errfile='', $errline='', $errcontext=''
 		$message .= "		<info type='session.gc_maxlifetime' description='Maximum session lifetime' ><![CDATA[".ini_get('session.gc_maxlifetime')."]]></info>\n";
 		$message .= "	</environment>\n";
 	
-		$message .= "	<cmd n='js'><![CDATA[alert('$errMsgEsc');]]></cmd>\n";
+		$message .= "	<cmd n='js'><![CDATA[alert('" . escapeCDATASection($errMsgEsc) . "');]]></cmd>\n";
 		$message .= "</report>\n";
 	
 		header("Content-type: application/xml; charset=UTF-8");

@@ -444,7 +444,11 @@ class JobApplicationEvent {
 		$sql = $sqlBuilder->addNewRecordFeature2(false);
 
 		$conn = new DMLFunctions();
-
+        $maxPacketSize = $conn->getMaxAllowedPacketSize();        
+        if (($maxPacketSize > 0) && (strlen($sql) > $maxPacketSize)) {
+            throw new JobApplicationEventException("File too large. Check MySQL max_allowed_packet configuration in my.ini", JobApplicationEventException::ATTACHMENT_FAILURE);
+        }
+        
 		$result = $conn->executeQuery($sql);
 		if (!$result || (mysql_affected_rows() != 1)) {
 			throw new JobApplicationEventException("Insert failed. ", JobApplicationEventException::DB_ERROR);
@@ -467,6 +471,11 @@ class JobApplicationEvent {
 		$sql = $sqlBuilder->addUpdateRecord1(0, false);
 
 		$conn = new DMLFunctions();
+        $maxPacketSize = $conn->getMaxAllowedPacketSize();        
+        if (($maxPacketSize > 0) && (strlen($sql) > $maxPacketSize)) {
+            throw new JobApplicationEventException("File too large. Check MySQL max_allowed_packet configuration in my.ini", JobApplicationEventException::ATTACHMENT_FAILURE);
+        }
+                
 		$result = $conn->executeQuery($sql);
 
 		// Here we don't check mysql_affected_rows because update may be called

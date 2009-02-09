@@ -526,6 +526,8 @@ class RecruitmentController {
 		$dynamicFields=$field->filterDynamicFields($_REQUEST);
 		$extractor = new EXTRACTOR_JobApplication();
 		$jobApplication = $extractor->parseData($_POST);
+        $attachmentError = false;
+        
 		try {
 		    $jobApplication->save();
 				    /* saving employeement info */
@@ -600,21 +602,29 @@ class RecruitmentController {
 		    }
 		    $result = true;
 		} catch (JobApplicationException $e) {
+            if ($e->getCode() == JobApplicationException::FILE_TOO_LARGE) {
+                $attachmentError = true;
+            }
 			$result = false;
 		}
 
 		// Send mail notifications
-		$notifier = new RecruitmentMailNotifier();
-		$notifier->sendApplicationReceivedEmailToManager($jobApplication);
-
-		// We only need to display result of email sent to applicant
-		$mailResult = $notifier->sendApplicationReceivedEmailToApplicant($jobApplication);
+        if ($result) {
+    		$notifier = new RecruitmentMailNotifier();
+    		$notifier->sendApplicationReceivedEmailToManager($jobApplication);
+    
+    		// We only need to display result of email sent to applicant
+    		$mailResult = $notifier->sendApplicationReceivedEmailToApplicant($jobApplication);
+        } else {
+            $mailResult = false;
+        }
 
 		$path = '/templates/recruitment/applicant/jobApplicationStatus.php';
 		$objs['application'] = $jobApplication;
 		$objs['vacancy'] = JobVacancy::getJobVacancy($jobApplication->getVacancyId());
 		$objs['result'] = $result;
-		$objs['mailResult'] = $mailResult;
+        $objs['attachmentError'] = $attachmentError;
+		$objs['mailResult'] = $mailResult;        
 		$template = new TemplateMerger($objs, $path);
 		$template->display();
 	}
@@ -846,18 +856,24 @@ class RecruitmentController {
             $application->setStatus(JobApplication::STATUS_SECOND_INTERVIEW_SCHEDULED);
 
             try {
-                $application->save();
                 $event->setEventType(JobApplicationEvent::EVENT_SCHEDULE_SECOND_INTERVIEW);
                 $event->setStatus(JobApplicationEvent::STATUS_INTERVIEW_SCHEDULED);
                 $event->setCreatedBy($_SESSION['user']);
 
                 $event->save();
-
+                $application->save();
+                
                 // Send notification to Interviewer
                 $notifier = new RecruitmentMailNotifier();
                 $notifier->sendInterviewTaskToManager($event);
 
                 $message = 'UPDATE_SUCCESS';
+            } catch (JobApplicationEventException $e) {
+                if ($e->getCode() == JobApplicationEventException::ATTACHMENT_FAILURE) {
+                    $message = 'UPLOAD_FAILURE';
+                } else {
+                    $message = 'UPDATE_FAILURE';
+                }                               
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
             }

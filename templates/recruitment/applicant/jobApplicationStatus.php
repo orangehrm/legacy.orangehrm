@@ -20,6 +20,7 @@
 $application = $records['application'];
 $vacancy = $records['vacancy'];
 $result = $records['result'];
+$attachmentError = $records['attachmentError'];
 
 if ($result) {
     $message = $lang_Recruit_ApplySuccess;
@@ -28,7 +29,9 @@ if ($result) {
     $message = $lang_Recruit_ApplyFailure;
 	$heading = $lang_Recruit_ApplicationStatus_FailureHeading;
 }
-$message = $result ? $lang_Recruit_ApplySuccess : $lang_Recruit_ApplyFailure;
+if ($attachmentError) {
+    $message .= ' ' . $lang_Common_UPLOAD_FAILURE;
+}
 $message = str_replace('#email#', $application->getEmail(), $message);
 $message = str_replace('#jobtitle#', $vacancy->getJobTitleName(), $message);
 
