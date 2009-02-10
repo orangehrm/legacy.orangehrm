@@ -41,7 +41,7 @@ class Conf {
 		$this->smtphost = 'localhost';
 
 		$this->version = '2.2.2.2';
-		$this->customVersion = 'ors 0.1-beta.5';
+		$this->customVersion = 'ors 0.1-beta.6';
 
 		$this->emailConfiguration = dirname(__FILE__).'mailConf.php';
 		$this->logPath =  realpath(dirname(__FILE__).'/../logs/').'/';

@@ -12,6 +12,19 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
     2548839 - doc types files become empty & unusable after download
     2567194 - upload more than 1MB in second interview ==> XML error
     2504269 - Sorting feature has not implemented (company property)
+    2548650 - deletd employes & job titles not appear in job vacancies
+    2556924 - browser get hang when define performance reviews
+    
+    Notes
+    -----
+    As part of bug fix: (2556924 browser get hang when define performance reviews) reminders for 
+    shortlisted applicants are no longer sent at login time. Instead it has to be scheduled using cron.
+    Eg:
+    Run "crontab -e" on server and enter
+    50 * * * * wget http://localhost/dev/orangehrm-ors/lib/common/Scheduler.php
+
+    To check for short listed applications every hour at :50 minutes pass the hour.
+    This can be changed as needed.
 	
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 

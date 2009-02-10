@@ -166,7 +166,7 @@ $headings = array($lang_Recruit_JobApplicationList_Name,
                 $applicantName = $app->getFirstName() . ' ' . $app->getLastName();
                 $applicationId = $app->getId();
                 $status = $statusList[$app->getStatus()];
-
+                
                 $statusDate = '';
 
                 $latestEvent = $app->getLatestEvent();
@@ -181,11 +181,21 @@ $headings = array($lang_Recruit_JobApplicationList_Name,
                         }
                     }
                 }
+                
+                $jobTitleName = $app->getJobTitleName();
+                $hiringManagerName = $app->getHiringManagerName();
+                if (empty($jobTitleName)) {
+                    $jobTitleName = '--' . $lang_Common_Deleted . '--';
+                }
+                if (empty($hiringManagerName)) {
+                    $hiringManagerName = '--' . $lang_Common_Deleted . '--';
+                }
+                
         ?>
         <tr>
             <td class="<?php echo $cssClass?>"><?php echo CommonFunctions::escapeHtml($applicantName); ?></td>
-            <td class="<?php echo $cssClass?>"><?php echo CommonFunctions::escapeHtml($app->getJobTitleName()); ?></td>
-            <td class="<?php echo $cssClass?>"><?php echo CommonFunctions::escapeHtml($app->getHiringManagerName()); ?></td>
+            <td class="<?php echo $cssClass?>"><?php echo CommonFunctions::escapeHtml($jobTitleName); ?></td>
+            <td class="<?php echo $cssClass?>"><?php echo CommonFunctions::escapeHtml($hiringManagerName); ?></td>
             <td class="<?php echo $cssClass?>"><?php echo $status; ?>
             <?php if (!empty($statusDate)) { ?>
                 <div class="eventDate">(<?php echo $statusDate; ?>)</div>

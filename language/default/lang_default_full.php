@@ -264,6 +264,7 @@
     $lang_Common_SortDescending = "Sort in descending order";
 	$lang_Common_Time = "Time";
 	$lang_Common_Note = "Note";
+    $lang_Common_Deleted = "Deleted";
 
 	$lang_Common_AccessDenied = "Access Denied";
 

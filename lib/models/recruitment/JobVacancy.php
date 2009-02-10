@@ -147,6 +147,7 @@ class JobVacancy {
 	 */
 	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = self::SORT_FIELD_NONE, $sortField = self::SORT_FIELD_VACANCY_ID, $sortOrder = 'ASC') {
 
+        self::_fixEntriesWithDeletedValues();
 		$count = 0;
 		$fields[0] = "a." . self::DB_FIELD_VACANCY_ID;
 		$fields[1] = "c.jobtit_name";
@@ -320,6 +321,12 @@ class JobVacancy {
 		return $obj;
 	}
 
+    private static function _fixEntriesWithDeletedValues() {
+        $conn = new DMLFunctions();
+        $sql = 'UPDATE ' . self::TABLE_NAME . ' SET ' . self::DB_FIELD_ACTIVE . ' = ' . self::STATUS_INACTIVE .
+               ' WHERE ' . self::DB_FIELD_JOBTITLE_CODE . ' IS NULL OR ' . self::DB_FIELD_MANAGER_ID . ' IS NULL';
+        $result = $conn->executeQuery($sql);        
+    }
 
 	/**
 	 * Get a list of jobs vacancies with the given conditions.
@@ -328,7 +335,7 @@ class JobVacancy {
 	 * @return array  Array of JobVacancy objects. Returns an empty (length zero) array if none found.
 	 */
 	private static function _getList($selectCondition = null) {
-
+        self::_fixEntriesWithDeletedValues();
 		$fields[0] = "a. " . self::DB_FIELD_VACANCY_ID;
 		$fields[1] = "a. " . self::DB_FIELD_JOBTITLE_CODE;
 		$fields[2] = "c.jobtit_name AS " . self::FIELD_JOB_TITLE_NAME;

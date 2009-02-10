@@ -285,7 +285,7 @@ class RecruitmentController {
     private function _viewVacancies($searchObject) {
 
 		if ($this->authorizeObj->isAdmin()) {
-        	$list = JobVacancy::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
+        	$list = JobVacancy::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());            
         	$count = Jobvacancy::getCount($searchObject->getSearchString(), $searchObject->getSearchField());
         	$this->_viewList($searchObject->getPageNumber(), $count, $list);
 		} else {

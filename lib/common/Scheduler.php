@@ -17,7 +17,16 @@
  * Boston, MA  02110-1301, USA
  *
  */
+ 
+if (!defined("ROOT_PATH")) {
+    define("ROOT_PATH", "../../");
+} 
 require_once ROOT_PATH . '/lib/controllers/RecruitmentController.php';
+
+// Call Scheduler::main() if this source file is executed directly.
+if (!defined("ORANGEHRM_Scheduler_MAIN_METHOD")) {
+    define("ORANGEHRM_Scheduler_MAIN_METHOD", "Scheduler::main");
+}
 
 /**
  * Class to handle scheduled tasks run at different times.
@@ -53,4 +62,14 @@ require_once ROOT_PATH . '/lib/controllers/RecruitmentController.php';
         // TODO: Improve this to reduce scheduled runs, eg: keep last run time saved. 
         RecruitmentController::checkShortListedApplicants();
      }
+     
+     public static function main() {
+         $scheduler = Scheduler::getInstance();
+         $scheduler->runEventsAtLogin();
+     }
+}
+
+// Call Scheduler::main() if this source file is executed directly.
+if (ORANGEHRM_Scheduler_MAIN_METHOD == "Scheduler::main") {
+    Scheduler::main();
 }

@@ -47,7 +47,7 @@ switch ($_GET['recruitcode']) {
 
 			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_Recruit_VacancyID , $lang_Recruit_JobTitleName, $lang_Recruit_HiringManager, $lang_Recruit_VacancyStatus);
 			$headings = array($lang_Recruit_VacancyID, $lang_Recruit_JobTitleName, $lang_Recruit_HiringManager, $lang_Recruit_VacancyStatus);
-			$valueMap = array(null, null, null, array(JobVacancy::STATUS_ACTIVE => $lang_Recruit_JobVacancy_Active, JobVacancy::STATUS_INACTIVE => $lang_Recruit_JobVacancy_InActive));
+			$valueMap = array(null, array(""=>'--' . $lang_Common_Deleted . '--'), array(""=>'--' . $lang_Common_Deleted . '--'), array(JobVacancy::STATUS_ACTIVE => $lang_Recruit_JobVacancy_Active, JobVacancy::STATUS_INACTIVE => $lang_Recruit_JobVacancy_InActive));
 			$title = $lang_Recruit_JobVacancyListHeading;
 			$deletePrompt = $lang_Recruit_JobVacancyDeletionMessage;
 			break;

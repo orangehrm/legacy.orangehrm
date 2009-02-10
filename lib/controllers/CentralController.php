@@ -129,12 +129,6 @@ require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_TimeEvent.php';
 require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_TimesheetSubmissionPeriod.php';
 require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_Workshift.php';
 
-// Run scheduled events at login
-if (!isset($_SESSION['scheduler.login'])) {
-    Scheduler::getInstance()->runEventsAtLogin();
-    $_SESSION['scheduler.login'] = true;
-}
-
 //leave modules extractorss go here
 
 if(isset($_GET['uniqcode'])) {
