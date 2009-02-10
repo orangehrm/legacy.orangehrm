@@ -101,7 +101,14 @@ if($_SESSION['isAdmin']=='Yes') {
      */
     if ($_SESSION['isManager'] || $_SESSION['isDirector'] || (isset($_SESSION['isAcceptor'])  && $_SESSION['isAcceptor']) ||  (isset($_SESSION['isOfferer']) && $_SESSION['isOfferer'])) {
             $arrAllRights[Recruit]=array('add'=> false , 'edit'=> true , 'delete'=> false, 'view'=> true);
+//            echo "<pre>Stupid<br><br>";
+//            print_r($arrAllRights);exit;
+
     }
+//    if($_SESSION['isManager']) echo "I'm Manager<br>";
+//	if($_SESSION['isDirector']) echo "I'm Director<br>";
+//	if($_SESSION['isAcceptor']) echo "I'm Acceptor<br>";
+//	if($_SESSION['isOfferer']) echo "I'm Offerer<br>";exit;
 
     /*
      * Assign supervisors access to the performance module
@@ -530,7 +537,8 @@ function preloadAllImages() {
                         <td class="tabSpace"><img src="" width="1" height="1" border="0" alt=""></td>
                       </tr>
                   </table></td>
-                  <?php } else if ($arrAllRights[Recruit]['view']) { ?>
+                  <?php } else if ($arrAllRights[Recruit]['view']) {?>
+
                   <td><table cellspacing="0" cellpadding="0" border="0" class="tabContainer"">
                       <tr height="20">
                         <td class="otherTabLeft" ><img src="" width="8" height="1" border="0" alt=""></td>
@@ -869,7 +877,7 @@ function preloadAllImages() {
 	            		</a>
 	            	</li>
                     <?php }
-                    if ($_SESSION['isAdmin']=='Yes' || $_SESSION['isManager'] || $_SESSION['isDirector']) {
+                    if ($_SESSION['isAdmin']=='Yes' || $_SESSION['isManager'] || $_SESSION['isDirector'] || $authorizeObj->isAcceptor() || $authorizeObj->isOfferer()) {
                     ?>
 	            	<li id="jobApplicants">
 	            		<a href="lib/controllers/CentralController.php?recruitcode=Application&action=List" target="rightMenu">
