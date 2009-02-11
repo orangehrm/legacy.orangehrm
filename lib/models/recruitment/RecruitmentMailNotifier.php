@@ -731,7 +731,11 @@ EOT;
 	 * @param String $message Message to log
 	 */
 	 private function _log($message) {
-		error_log($message . "\r\n", 3, $this->logFile);
+        try {
+		  @error_log($message . "\r\n", 3, $this->logFile);
+        } catch (Exception $e) {
+            // don't have write permission to email log
+        }
 	 }
 
      /**
