@@ -137,7 +137,7 @@
 	$lang_Menu_Admin_Quali_Licenses 			= "Licenses";
 
 	$lang_Menu_Admin_Skills 					= "Skills";
-	$lang_Menu_Admin_Skills_Skills 				= "Skills";
+	$lang_Menu_Admin_Skills_Skills 				= "Skill";
 	$lang_Menu_Admin_Skills_Languages 			= "Languages";
 
 	$lang_Menu_Admin_fluency 					= 	"Fluency";
@@ -1528,8 +1528,20 @@
 	$lang_Recruit_ApplicationForm_Salary_Expected= 'Salary Expectation';
 	$lang_Recruit_ApplicationForm_It_Experience = 'IT Experience';
 	$lang_Recruit_ApplicationForm_Availability_To_Start ='Availability To Start';
-	$lang_Recruit_ApplicationForm_Basis_Of_Employement = 'Basis Of Employeement';
-	$lang_Recruit_ApplicationForm_Do_You_Have_A_Car = 'Do you have a reliable car';	
+	$lang_Recruit_ApplicationForm_Basis_Of_Employement = 'Basis Of Employment';
+	$lang_Recruit_ApplicationForm_Do_You_Have_A_Car = 'Do you have a reliable car';
+
+	$lang_Menu_Recruit_ApplicationForm_Employment_Infomation ="Employment Information";
+	$lang_Menu_Recruit_ApplicationForm_Years_of_experience="Years of experience";
+	$lang_Menu_Recruit_ApplicationForm_Skill_Comments="Comments";
+	$lang_Menu_Recruit_ApplicationForm_License_Information="License Information";
+	$lang_Menu_Recruit_ApplicationForm_License_Expiry_Date="Expiry Date";
+	$lang_Menu_Recruit_ApplicationForm_Language_Information="Language Information";
+	$lang_Menu_Recruit_ApplicationForm__Language="Language";
+	$lang_Menu_Recruit_ApplicationForm__Fluency="Fluency";
+	$lang_Menu_Recruit_ApplicationForm__Education_Information="Education Information";
+
+
 
 	$lang_Recruit_ApplicationForm_Qualifications = 'Qualifications and Experience';
 

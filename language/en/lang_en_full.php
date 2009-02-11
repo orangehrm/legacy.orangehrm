@@ -185,6 +185,13 @@
 	$lang_Menu_Time_PersonalTimesheet = "My timesheet";
 	$lang_Menu_Time_EmployeeTimesheets = "Employee timesheets";
 
+	// Recruitment module
+	$lang_Menu_Recruit = "Recruitment";
+	$lang_Menu_Recruit_JobVacancies = "Job Vacancies";
+	$lang_Menu_Recruit_JobApplicants = "Applicants";
+	$lang_Menu_Recruit_Job_Employment_Infomation ="Employment Information";
+
+
 	/**
 	 * Common
 	 */
@@ -537,7 +544,7 @@
 
 	$lang_hremp_ShowEmployeeContracts 			= "Show employee contracts";
 	$lang_hremp_HideEmployeeContracts 			= "Hide employee contracts";
-	
+
 	$lang_hremp_ShowEmployeePerformanceReview     = "Show employee performance review";
     $lang_hremp_HideEmployeePerformanceReview    = "Hide employee performance review";
     $lang_hremp_Completed_PerformanceReview ="Completed Performance Reviews";
