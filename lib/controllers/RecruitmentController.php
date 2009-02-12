@@ -40,7 +40,7 @@ require_once ROOT_PATH . '/lib/models/recruitment/JobApplication.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/models/recruitment/RecruitmentMailNotifier.php';
 require_once ROOT_PATH . '/lib/models/recruitment/RecruitmentAuthManager.php';
-require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEmployementInfo.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEmploymentInfo.php';
 require_once ROOT_PATH . '/lib/models/recruitment/ApplicantSkills.php';
 require_once ROOT_PATH . '/lib/models/recruitment/ApplicantLicenseInformation.php';
 require_once ROOT_PATH . '/lib/models/recruitment/AppicantLanguageInformation.php';
@@ -285,7 +285,7 @@ class RecruitmentController {
     private function _viewVacancies($searchObject) {
 
 		if ($this->authorizeObj->isAdmin()) {
-        	$list = JobVacancy::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());            
+        	$list = JobVacancy::getListForView($searchObject->getPageNumber(), $searchObject->getSearchString(), $searchObject->getSearchField(), $searchObject->getSortField(), $searchObject->getSortOrder());
         	$count = Jobvacancy::getCount($searchObject->getSearchString(), $searchObject->getSearchField());
         	$this->_viewList($searchObject->getPageNumber(), $count, $list);
 		} else {
@@ -527,7 +527,7 @@ class RecruitmentController {
 		$extractor = new EXTRACTOR_JobApplication();
 		$jobApplication = $extractor->parseData($_POST);
         $attachmentError = false;
-        
+
 		try {
 		    $jobApplication->save();
 				    /* saving employeement info */
@@ -612,7 +612,7 @@ class RecruitmentController {
         if ($result) {
     		$notifier = new RecruitmentMailNotifier();
     		$notifier->sendApplicationReceivedEmailToManager($jobApplication);
-    
+
     		// We only need to display result of email sent to applicant
     		$mailResult = $notifier->sendApplicationReceivedEmailToApplicant($jobApplication);
         } else {
@@ -624,7 +624,7 @@ class RecruitmentController {
 		$objs['vacancy'] = JobVacancy::getJobVacancy($jobApplication->getVacancyId());
 		$objs['result'] = $result;
         $objs['attachmentError'] = $attachmentError;
-		$objs['mailResult'] = $mailResult;        
+		$objs['mailResult'] = $mailResult;
 		$template = new TemplateMerger($objs, $path);
 		$template->display();
 	}
@@ -669,6 +669,9 @@ class RecruitmentController {
         $path = '/templates/recruitment/viewApplicationDetails.php';
 
         $objs['application'] = JobApplication::getJobApplication($id);
+//        echo "<pre>";
+//        print_r($objs);
+//        exit;
 
         $template = new TemplateMerger($objs, $path);
         $template->display();
@@ -862,7 +865,7 @@ class RecruitmentController {
 
                 $event->save();
                 $application->save();
-                
+
                 // Send notification to Interviewer
                 $notifier = new RecruitmentMailNotifier();
                 $notifier->sendInterviewTaskToManager($event);
@@ -873,7 +876,7 @@ class RecruitmentController {
                     $message = 'UPLOAD_FAILURE';
                 } else {
                     $message = 'UPDATE_FAILURE';
-                }                               
+                }
             } catch (Exception $e) {
                 $message = 'UPDATE_FAILURE';
             }

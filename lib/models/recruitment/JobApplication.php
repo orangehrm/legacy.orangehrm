@@ -27,6 +27,8 @@ require_once ROOT_PATH . '/lib/common/SearchObject.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobVacancy.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationField.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEducationInfo.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEmploymentInfo.php';
 
 /**
  * Class representing a Job Application
@@ -61,12 +63,12 @@ class JobApplication {
     const DB_FIELD_AVALIABLIITY_TO_START = 'availability_to_start';
     const DB_FIELD_BASIS_OF_EMPLOYMENT = 'basis_of_employemnet';
     const DB_FIELD_DO_YOU_HAVE_A_CAR = 'do_you_have_a_car';
-    
+
     /**
      * Job application status
      */
     const STATUS_SUBMITTED = 0;
-    const STATUS_SHORTLISTED = 1;    
+    const STATUS_SHORTLISTED = 1;
     const STATUS_FIRST_INTERVIEW_SCHEDULED = 2;
     const STATUS_SECOND_INTERVIEW_SCHEDULED = 3;
     const STATUS_JOB_OFFERED = 4;
@@ -90,7 +92,7 @@ class JobApplication {
     /** Fields retrieved from other tables */
     const JOB_TITLE_NAME = 'job_title_name';
     const HIRING_MANAGER_NAME = 'hiring_manager_name';
-    
+
     /* Cv fields */
     const CV_DATA = 'cv_data';
     const CV_TYPE = 'cv_type';
@@ -134,7 +136,7 @@ class JobApplication {
     private $basisOfemployment;
     private $doYouHaveACar;
     private $iTExperience;
-    
+
 
     /**
      * Attributes retrieved from other objects
@@ -370,83 +372,83 @@ class JobApplication {
 
         return $latestEvent;
     }
-	
+
 	public function getCvData() {
 		return $this->cvData;
 	}
-	
+
 	public function setCvData($cvData) {
 		$this->cvData = $cvData;
 	}
-	
+
 	public function getCvType() {
 		return $this->cvType;
 	}
-	
+
 	public function setCvType($cvType) {
 		$this->cvType = $cvType;
 	}
-	
+
 	public function getCvExtention() {
 		return $this->cvExtention;
 	}
-	
+
 	public function setCvExtention($cvExtention) {
 		$this->cvExtention = $cvExtention;
 	}
-	
+
 	public function getAvailabilityToStart() {
 		return $this->availabilityToStart;
 	}
-	
+
 	public function getBasisOfemployment() {
 		return $this->basisOfemployment;
 	}
-	
+
 	public function getDateOfbirth() {
 		return $this->dateOfbirth;
 	}
-	
+
 	public function getDoYouHaveACar() {
 		return $this->doYouHaveACar;
 	}
-	
+
 	public function getGender() {
 		return $this->gender;
 	}
-	
+
 	public function getITExperience() {
 		return $this->iTExperience;
 	}
-	
+
 	public function getSalaryExpectation() {
 		return $this->salaryExpectation;
 	}
-	
+
 	public function setAvailabilityToStart($availabilityToStart) {
 		$this->availabilityToStart = $availabilityToStart;
 	}
-	
+
 	public function setBasisOfemployment($basisOfemployment) {
 		$this->basisOfemployment = $basisOfemployment;
 	}
-	
+
 	public function setDateOfbirth($dateOfbirth) {
 		$this->dateOfbirth = $dateOfbirth;
 	}
-	
+
 	public function setDoYouHaveACar($doYouHaveACar) {
 		$this->doYouHaveACar = $doYouHaveACar;
 	}
-	
+
 	public function setGender($gender) {
 		$this->gender = $gender;
 	}
-	
+
 	public function setITExperience($iTExperience) {
 		$this->iTExperience = $iTExperience;
 	}
-	
+
 	public function setSalaryExpectation($salaryExpectation) {
 		$this->salaryExpectation = $salaryExpectation;
 	}
@@ -514,9 +516,31 @@ class JobApplication {
             throw new JobApplicationException("Invalid id", JobApplicationException::INVALID_PARAMETER);
         }
 
+
+//following three secions retrieve the education, employment and license information of the applicant
+//Following have to be implemented.
+		$eduInfoArray = ApplicantEducationInfo::getApplicantEducationInfo($id);
+//		echo "<pre>";
+//        print_r($eduInfoArray);
+
+		$employmentInfoArray = ApplicantEmployementInfo::getApplicantEmploymentInfo($id);
+//		echo "<pre>";
+//        print_r($employmentInfoArray);
+
+        $licenseInfoArray = ApplicantLicenseInformation::getApplicantLicensesInformation($id);
+//		echo "<pre>";
+//        print_r($licenseInfoArray);
+
+
+
+
         $conditions[] = 'a.' . self::DB_FIELD_ID . ' = ' . $id;
         $list = self::_getList($conditions);
         $application = (count($list) == 1) ? $list[0] : null;
+
+//echo "<pre>";
+//        print_r($application);
+//        exit;
 
         return $application;
     }
@@ -537,12 +561,12 @@ class JobApplication {
 
         return self::_getList(null, $managerEmpNum, $sortField, $sortOrder);
     }
-    
+
     /**
      * Get list of short listed applications that are pending
      */
     public static function getPendingShortListedApplications() {
-        
+
         $fields[0] = 'a.' . self::DB_FIELD_ID;
         $fields[1] = 'a.' . self::DB_FIELD_VACANCY_ID;
         $fields[2] = 'a.' . self::DB_FIELD_FIRSTNAME;
@@ -564,7 +588,7 @@ class JobApplication {
         $fields[18] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
         $fields[19] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
         $fields[20] = 'a.' . self::CV_TYPE;
-      
+
 
         $tables[0] = self::TABLE_NAME . ' a';
         $tables[1] = JobVacancy::TABLE_NAME .' b';
@@ -589,12 +613,12 @@ class JobApplication {
         $conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
         $actList = array();
-        
+
         while ($result && ($row = mysql_fetch_assoc($result))) {
             $actList[] = self::_createFromRow($row);
         }
 
-        return $actList;       
+        return $actList;
     }
 
 	/**
@@ -613,10 +637,10 @@ class JobApplication {
 		$sqlBuilder->arr_insert = $this->_getFieldValuesAsArray();
 		$sqlBuilder->arr_insertfield = $this->dbFields;
 
-		$sql = $sqlBuilder->addNewRecordFeature2(false);		
+		$sql = $sqlBuilder->addNewRecordFeature2(false);
 		$conn = new DMLFunctions();
-        
-        $maxPacketSize = $conn->getMaxAllowedPacketSize();        
+
+        $maxPacketSize = $conn->getMaxAllowedPacketSize();
         if (($maxPacketSize > 0) && (strlen($sql) > $maxPacketSize)) {
             throw new JobApplicationException("File too large. Check MySQL max_allowed_packet configuration in my.ini", JobApplicationException::FILE_TOO_LARGE);
         }
@@ -645,7 +669,7 @@ class JobApplication {
 		$conn = new DMLFunctions();
 		$result = $conn->executeQuery($sql);
 
-        $maxPacketSize = $conn->getMaxAllowedPacketSize();               
+        $maxPacketSize = $conn->getMaxAllowedPacketSize();
         if (($maxPacketSize > 0) && (strlen($sql) > $maxPacketSize)) {
             throw new JobApplicationException("File too large. Check MySQL max_allowed_packet configuration in my.ini", JobApplicationException::FILE_TOO_LARGE);
         }
@@ -688,7 +712,7 @@ class JobApplication {
         $fields[18] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
         $fields[19] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
         $fields[20] = 'a.' . self::CV_TYPE;
-      
+
 
         $tables[0] = self::TABLE_NAME . ' a';
         $tables[1] = JobVacancy::TABLE_NAME .' b';
@@ -711,16 +735,16 @@ class JobApplication {
 
         $sqlBuilder = new SQLQBuilder();
         $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, null, null, null, $groupBy);
-        
+
         $orderBy = self::_getOrderBy($sortField, $sortOrder);
         if (!empty($orderBy)) {
-            $sql .= ' ' . $orderBy; 
+            $sql .= ' ' . $orderBy;
         }
 
         $conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
         $actList = array();
-        
+
         while ($result && ($row = mysql_fetch_assoc($result))) {
             $actList[] = self::_createFromRow($row);
         }
@@ -735,39 +759,39 @@ class JobApplication {
 
         if (($sortOrder !== 'ASC') && ($sortOrder !== 'DESC')) {
             $sortOrder = 'ASC';
-        } 
-    
-        // default: sort by applicant name            
+        }
+
+        // default: sort by applicant name
         $orderBy = 'a.' . self::DB_FIELD_FIRSTNAME . ' ' . $sortOrder . ', ' .
             'a.' . self::DB_FIELD_LASTNAME . ' ' . $sortOrder;
-               
+
         switch ($sortField) {
-            
+
             case 0:
                 // applicant name: default
                 break;
-                
+
             case 1:
                 // position applied
                 $orderBy = self::JOB_TITLE_NAME . ' ' . $sortOrder;
-                break;                
-                
+                break;
+
             case 2:
                 // Hiring Manager name
                 $orderBy = self::HIRING_MANAGER_NAME . ' ' . $sortOrder;
                 break;
-                
+
             case 3:
                 // Application status
                 $orderBy = 'a.' .self::DB_FIELD_STATUS . ' ' . $sortOrder;
-                break;                
-                
+                break;
+
             default:
                 break;
         }
-        return 'ORDER BY ' . $orderBy;        
+        return 'ORDER BY ' . $orderBy;
     }
-    
+
 	/**
 	 * Returns the db field values as an array
 	 *
@@ -796,7 +820,7 @@ class JobApplication {
         $values[18] = $this->_prepareAttachmentData($this->cvData);
         $values[19] = $this->_escapeField($this->cvType);
         $values[20] = $this->_escapeField($this->cvExtention);
-        
+
         $values[21] = $this->_escapeField($this->dateOfbirth);
         $values[22] = $this->_escapeField($this->gender);
         $values[23] = $this->_escapeField($this->salaryExpectation);
@@ -804,22 +828,22 @@ class JobApplication {
         $values[25] = $this->_escapeField($this->availabilityToStart);
         $values[26] = $this->_escapeField($this->basisOfemployment);
         $values[27] = $this->_escapeField($this->doYouHaveACar);
-        
+
 		return $values;
 	}
-    
+
     private function _escapeField($value) {
 
         if (get_magic_quotes_gpc()) {
             $value = stripslashes($value);
-        }    
-        $value = mysql_real_escape_string($value);   
-        return "'" . $value . "'";        
+        }
+        $value = mysql_real_escape_string($value);
+        return "'" . $value . "'";
     }
-    
+
     private function _prepareAttachmentData($value) {
-        return "'" . addslashes($value) . "'";    
-    }    
+        return "'" . addslashes($value) . "'";
+    }
 
     /**
      * Creates a JobApplication object from a resultset row
@@ -863,40 +887,40 @@ class JobApplication {
     	$sqlBuilder=new SQLQBuilder();
     	$fields[]=self::DB_FIELD_ID;
     	$fields[]=self::CV_TYPE;
-    	$fields[]=self::CV_DATA; 
-    	$fields[]=self::CV_EXTENSION; 
-    	
+    	$fields[]=self::CV_DATA;
+    	$fields[]=self::CV_EXTENSION;
+
     	$condition[]=self::DB_FIELD_ID."='".$this->getId()."'";
-    	
+
     	$sql=$sqlBuilder->simpleSelect(self::TABLE_NAME,$fields,$condition);
     	$conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
-    	
-     	while ($result && ($row = mysql_fetch_assoc($result))) {        	
+
+     	while ($result && ($row = mysql_fetch_assoc($result))) {
         	$obj=new JobApplication();
         	$obj->setId($row[self::DB_FIELD_ID]);
         	$obj->setCvType($row[self::CV_TYPE]);
         	$obj->setCvData($row[self::CV_DATA]);
         	$obj->setCvExtention($row[self::CV_EXTENSION]);
-        	break;   	            
+        	break;
         }
         return $obj;
     }
-    
+
     public function fetchApplicationData(){
     	$sqlBuilder=new SQLQBuilder();
-    	$fields[]='*';    	
-    	$sql=$sqlBuilder->simpleSelect(JobApplicationField::TABLE_FIELD_DATA,$fields);    	
+    	$fields[]='*';
+    	$sql=$sqlBuilder->simpleSelect(JobApplicationField::TABLE_FIELD_DATA,$fields);
     	$conn = new DMLFunctions();
         $result = $conn->executeQuery($sql);
-		
+
         $objectArray=array();
-        while ($result && ($row = mysql_fetch_assoc($result))) {        	
+        while ($result && ($row = mysql_fetch_assoc($result))) {
         	$obj=new JobApplicationField();
         	$obj->setApplicationId($row[JobApplicationField::applicationDataFieldApplicationId]);
         	$obj->setId($row[JobApplicationField::applicationDataFieldId]);
         	$obj->setFieldValue($row[JobApplicationField::applicationDataFieldValue]);
-        	$obj->setFiledValueText($row[JobApplicationField::applicationDataFieldSubValues]);        	
+        	$obj->setFiledValueText($row[JobApplicationField::applicationDataFieldSubValues]);
             $objectArray[]=$obj;
         }
         return $objectArray;
