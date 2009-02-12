@@ -29,6 +29,8 @@ require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationField.php';
 require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEducationInfo.php';
 require_once ROOT_PATH . '/lib/models/recruitment/ApplicantEmploymentInfo.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantSkills.php';
+require_once ROOT_PATH . '/lib/models/recruitment/ApplicantLicenseInformation.php';
 
 /**
  * Class representing a Job Application
@@ -517,7 +519,7 @@ class JobApplication {
         }
 
 
-//following three secions retrieve the education, employment and license information of the applicant
+//following four secions retrieve the education, employment, license and skills information of the applicant
 //Following have to be implemented.
 		$eduInfoArray = ApplicantEducationInfo::getApplicantEducationInfo($id);
 //		echo "<pre>";
@@ -531,6 +533,13 @@ class JobApplication {
 //		echo "<pre>";
 //        print_r($licenseInfoArray);
 
+		$skillInfoArray = ApplicantSkills::getApplicantSkills($id);
+//		echo "<pre>";
+//        print_r($skillInfoArray);
+
+		$langInfoArray = AppicantLanguageInformation::getAppicantLanguageInformation($id);
+//		echo "<pre>";
+//        print_r($langInfoArray);
 
 
 
