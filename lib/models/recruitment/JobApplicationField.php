@@ -21,9 +21,9 @@ require_once ROOT_PATH . '/lib/models/recruitment/JobApplicationEvent.php';
 require_once ROOT_PATH . '/lib/models/recruitment/FormFieldBase.php';
 
 class JobApplicationField extends FormFieldBase {
-	
+
 	private $applicationId;
-	
+
 	const TABLE_FIELD = 'hs_hr_job_application_field';
 	const id = 'id';
 	const lable = 'lable';
@@ -40,54 +40,54 @@ class JobApplicationField extends FormFieldBase {
 	const tabOrder = "tab_order";
 	const subFieldLogic = "sub_field_logic";
 	const deleted=	"deleted";
-	
+
 	private $fieldTypes;
-	
+
 	/* this constant for the field data table many to many table relationship*/
 	const TABLE_FIELD_DATA = 'hs_hr_job_application_data';
 	const applicationDataFieldValue = 'field_value';
 	const applicationDataFieldId = 'application_field_id';
 	const applicationDataFieldApplicationId = 'application_Id';
 	const applicationDataFieldSubValues = 'field_sub_value';
-	
-	// @dbva jointable(JobApplication_JobApplicationField) fk(JobApplicationFieldid) inversefk(JobApplicationapplication_Id) 
+
+	// @dbva jointable(JobApplication_JobApplicationField) fk(JobApplicationFieldid) inversefk(JobApplicationapplication_Id)
 	private $application;
-	
+
 	//@orm has many ApplicationFieldValue inverse(field)
-	
-	
-	
+
+
+
 	public function getFieldTypes(){
 		return array(1=>'text',2=>'datefield',3=>'textarea',4=>'radio');
 	}
-	
+
 	public function getApplication() {
 		return $this->application;
 	}
-	
+
 	public function setApplication($application) {
 		$this->application = $application;
 	}
 	public function getApplicationId() {
 		return $this->applicationId;
 	}
-	
+
 	public function setApplicationId($applicationId) {
 		$this->applicationId = $applicationId;
 	}
-	
+
 	public function fetchApplicationFields($deleted=false) {
 		$sqlBuilder = new SQLQBuilder ( );
-		$fields [] = '*';		
+		$fields [] = '*';
 		if(!$deleted) $conditions[]=self::deleted."=0";
 		$sql = $sqlBuilder->simpleSelect ( self::TABLE_FIELD, $fields, $conditions, JobApplicationField::tabOrder, "ASC" );
-		
+
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		$objectArray = $this->_buildObjArr ( $result );
 		return $objectArray;
 	}
-	
+
 	public function fetchApplicationField() {
 		$sqlBuilder = new SQLQBuilder ( );
 		$fields [] = '*';
@@ -98,7 +98,7 @@ class JobApplicationField extends FormFieldBase {
 		$objectArray = $this->_buildObjArr ( $result );
 		return $objectArray;
 	}
-	
+
 	public function saveFieldData() {
 		$sqlBuilder = new SQLQBuilder ( );
 		$insetFields [] = self::applicationDataFieldId;
@@ -109,51 +109,51 @@ class JobApplicationField extends FormFieldBase {
 		$values [] = $this->getApplicationId ();
 		$values [] = $this->getFieldValue ();
 		$values [] = $this->getFiledValueText ();
-		
-		$sql = $sqlBuilder->simpleInsert ( self::TABLE_FIELD_DATA, $values, $insetFields );		
+
+		$sql = $sqlBuilder->simpleInsert ( self::TABLE_FIELD_DATA, $values, $insetFields );
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		return $result;
 	}
-	
+
 	public function saveField(){
-		$sqlBuilder = new SQLQBuilder ( );		
+		$sqlBuilder = new SQLQBuilder ( );
 		$insetFields [] = self::lable;
 		$insetFields [] = self::fieldType;
 		$insetFields [] = self::toolTip;
 		$insetFields [] = self::tabOrder;
-		
-		
+
+
 		$values [] = $this->getLable();
 		$values [] = $this->getFieldType();
 		$values [] = $this->getToolTip();
 		$values [] = $this->getTabOrder();
-		
-		$sql = $sqlBuilder->simpleInsert ( self::TABLE_FIELD, $values, $insetFields );		
+
+		$sql = $sqlBuilder->simpleInsert ( self::TABLE_FIELD, $values, $insetFields );
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		return $result;
 	}
 	public function updateField(){
-		$sqlBuilder = new SQLQBuilder ( );		
+		$sqlBuilder = new SQLQBuilder ( );
 		$changeFields [] = self::lable;
 		$changeFields [] = self::fieldType;
 		$changeFields [] = self::toolTip;
 		$changeFields [] = self::tabOrder;
-		
-		$conditions[]=self::id."='".$this->getId()."'";		
-		
+
+		$conditions[]=self::id."='".$this->getId()."'";
+
 		$values [] = $this->getLable();
 		$values [] = $this->getFieldType();
 		$values [] = $this->getToolTip();
 		$values [] = $this->getTabOrder();
-		
-		$sql = $sqlBuilder->simpleUpdate(self::TABLE_FIELD, $changeFields, $values,$conditions);			
+
+		$sql = $sqlBuilder->simpleUpdate(self::TABLE_FIELD, $changeFields, $values,$conditions);
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		return $result;
 	}
-	
+
 	public function filterDynamicFields($requests) {
 		$dynamicData = array ();
 		/*check wether it is a dynamic field by a postfix defined*/
@@ -175,8 +175,8 @@ class JobApplicationField extends FormFieldBase {
 		}
 		return $dynamicData;
 	}
-	
-	public static function delete($ids) {		
+
+	public static function delete($ids) {
 		if (!empty($ids)) {
 			$sql = sprintf("DELETE FROM %s WHERE %s IN (%s)", self::TABLE_FIELD,
 			                self::id, implode(",", $ids));
@@ -188,20 +188,20 @@ class JobApplicationField extends FormFieldBase {
 		}
 		return $count;
 	}
-	public static function deleteStateChage($ids) {		
-		$sqlBuilder = new SQLQBuilder ( );		
-		$changeFields [] = self::deleted;	
-		
-		$conditions[]=self::id." IN (".implode(",", $ids).")";		
-		
-		$values [] = 1;		
-		$sql = $sqlBuilder->simpleUpdate(self::TABLE_FIELD, $changeFields, $values,$conditions);			
+	public static function deleteStateChage($ids) {
+		$sqlBuilder = new SQLQBuilder ( );
+		$changeFields [] = self::deleted;
+
+		$conditions[]=self::id." IN (".implode(",", $ids).")";
+
+		$values [] = 1;
+		$sql = $sqlBuilder->simpleUpdate(self::TABLE_FIELD, $changeFields, $values,$conditions);
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		return $result;
-		
+
 	}
-	
+
 	protected function _buildObjArr($result) {
 		$objectArray = array ();
 		while ( $result && ($row = mysql_fetch_assoc ( $result )) ) {
@@ -230,9 +230,9 @@ class JobApplicationField extends FormFieldBase {
 		$fields[1] = self::lable;
 		$fields[2] = self::fieldType;
 		$fields[3] = self::tabOrder;
-		
+
 		$conditions[]=self::deleted."=0";
-		
+
 		$sqlBuilder = new SQLQBuilder();
 		$sqlQString = $sqlBuilder->simpleSelect(self::TABLE_FIELD,$fields,$conditions);
 
@@ -245,7 +245,7 @@ class JobApplicationField extends FormFieldBase {
 			$arrayDispList[$i][0] = $line[self::id];
 	    	$arrayDispList[$i][1] = $line[self::lable];
 	    	$arrayDispList[$i][2] = $line[self::fieldType];
-	    	$arrayDispList[$i][3] = $line[self::tabOrder];	    	
+	    	$arrayDispList[$i][3] = $line[self::tabOrder];
 	    	$i++;
 	     }
 

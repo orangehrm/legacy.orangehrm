@@ -95,26 +95,22 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         location.href = "<?php echo "{$_SERVER['PHP_SELF']}?recruitcode=ApplicantViewJobs"; ?>";
     }
 
+	function checkNumericFields(strVal){
+		txtVal=strVal
+		if (txtVal.match(/(^\d{1,10}$)|(^$)|(^\d{1,10}\.$)|(^\d{1,10}\.\d{1,10}$)/ ) )
+    	{
+        	return true;
+   		}
+    	else
+   		{
+        	return false;
+    	}
+	}
+
 	function validate() {
 		err = false;
 
 		var msg = '<?php echo $lang_Error_PleaseCorrectTheFollowing; ?>\n\n';
-
-		if(emplyeeinfoCount==0){
-			msg+='Please enter employeement information \n'; err=true;
-		}
-		if(skillCount==0){
-			msg+='Please enter Skills information \n'; err=true;
-		}
-		if(licenseInfoCount==0){
-			msg+='Please enter Licenses information \n'; err=true;
-		}
-		if(languageInfoCount==0){
-			msg+='Please enter Language information \n'; err=true;
-		}
-		if(educationInfoCount==0){
-			msg+='Please enter Educational information \n'; err=true;
-		}
 
 		var errors = new Array();
 		var fields = new Array("txtFirstName", "txtMiddleName", "txtLastName", "txtStreet1",
@@ -136,7 +132,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 						'<?php echo $lang_Recruit_ApplicationForm_Qualifications;?>');
 
 		// compulsary fields
-		var compFields = new Array(0, 2, 3, 6, 7, 8, 9, 10, 11);
+		var compFields = new Array(0, 2, 3, 6, 7, 8, 11);
 		var emailFields = new Array();
 		emailFields[0] = 11;
 		var phoneFields = new Array();
@@ -165,9 +161,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			msg += "\t- <?php echo $lang_Recruit_ApplicationForm_PleaseSelect . $lang_Recruit_ApplicationForm_StateProvince ?>\n";
 		}
 
-		//
 		// Only check validation if all compulsary fields have been specified
-		//
+
 		if (err == false) {
 
 			// validate email fields
@@ -295,9 +290,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 value=elm.value;
 			 text= elm.options[elm.selectedIndex].text;
 			 if(value< 0){
-			 	//err=true; msg='Please select a Skill';
 				 if(value< 0){
-					alert('Please select a skill');
+					alert('<?php echo $lang_Recruit_ApplicationForm_PleaseSelect_Skill; ?>');
 					exit;
 				}
 			 }
@@ -306,8 +300,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_skill_years_of_experience').value;
-			 if(!numeric(document.getElementById('form_skill_years_of_experience'))|| value==''){
-					alert('Please enter a numeric vlaue for the year');
+			 if(!checkNumericFields(document.getElementById('form_skill_years_of_experience').value)|| value==''){
+					alert('<?php echo $lang_Recruit_ApplicationForm_Please_Enter_Numeric_Value; ?>');
 					document.getElementById('form_skill_years_of_experience').focus();
 					exit;
 			 }
@@ -335,7 +329,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 value=elm.value;
 			 text= elm.options[elm.selectedIndex].text;
 			 if(value< 0){
-			 	err=true; msg='Please select a license type';
+			 	err=true; msg='<?php echo $lang_Recruit_ApplicationForm_PleaseSelect_License_Type; ?>';
 			 }
 			 td.innerHTML="<input type='hidden' id='license_type[]' name='license_type[]' value='"+value+"' />"+text;
 			 tableRow.appendChild(td);
@@ -360,7 +354,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 value=elm.value;
 			 text= elm.options[elm.selectedIndex].text;
 			 if(value< 0){
-			 	err=true; msg='Please select a Language';
+			 	err=true; msg='<?php echo $lang_Recruit_ApplicationForm_PleaseSelect_Language; ?>';
 			 }
 			 td.innerHTML="<input type='hidden' id='language_language[]' name='language_language[]' value='"+value+"' />"+text;
 			 tableRow.appendChild(td);
@@ -370,7 +364,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 value=elm.value;
 			 text= elm.options[elm.selectedIndex].text;
 			 if(value< 0){
-			 	err=true; msg='Please select a Fluency';
+			 	err=true; msg='<?php echo $lang_Recruit_ApplicationForm_PleaseSelect_Fluency;?>';
 			 }
 			 td.innerHTML="<input type='hidden' id='language_fluency[]' name='language_fluency[]' value='"+value+"' />"+text;
 			 tableRow.appendChild(td);
@@ -397,8 +391,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_education_year').value;
-			 if(!numeric(document.getElementById('form_education_year'))|| value==''){
-					alert('Please enter a numeric vlaue for the year');
+			 if(!checkNumericFields(document.getElementById('form_education_year').value)|| value==''){
+					alert('<?php echo $lang_Recruit_ApplicationForm_Please_Enter_Numeric_Value; ?>');
 					document.getElementById('form_education_year').focus();
 					exit;
 			 }
@@ -407,8 +401,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 			 td=document.createElement('td');
 			 value=document.getElementById('form_education_score').value;
-			 if(!numeric(document.getElementById('form_education_score'))|| value==''){
-					alert('Please enter a numeric vlaue for the average score ');
+			 if(!checkNumericFields(document.getElementById('form_education_score').value)|| value==''){
+					alert('<?php echo $lang_Recruit_ApplicationForm_Please_Enter_Numeric_Value_For_Average; ?> ');
 					document.getElementById('form_education_score').focus();
 					exit;
 			 }
@@ -420,7 +414,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 			 tableRow.appendChild(td);
 		}
 		if(value< 0){
-			 	err=true; msg='Please select a Fluency';
+			 	err=true; msg='<?php echo $lang_Recruit_ApplicationForm_PleaseSelect_Fluency;?>';
 			 }
 			 if(err){
 			 	alert(msg);
@@ -559,7 +553,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		<label for="txtFirstName"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_FirstName; ?></label>
         <input type="text" id="txtFirstName" name="txtFirstName" tabindex="1" >
 
-		<label for="txtMiddleName"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_MiddleName; ?></label>
+		<label for="txtMiddleName"><?php echo $lang_Recruit_ApplicationForm_MiddleName; ?></label>
 		<input type="text" id="txtMiddleName" name="txtMiddleName" tabindex="2" >
 		<br/>
 
@@ -567,20 +561,20 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         <input type="text" id="txtLastName" name="txtLastName" tabindex="3" >
 
         <label for="date_of_birth"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_DateOfBirth; ?></label>
-        <input type="text" id="date_of_birth" name="date_of_birth" readonly onchange="fillToDate();" onfocus="fillToDate();" >
+        <input type="text" id="date_of_birth" name="date_of_birth" readonly onchange="fillToDate();" onfocus="fillToDate();" tabindex="4" >
         <input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"/><br/>
 
 		<label for="txtStreet1"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Street1; ?></label>
-        <input type="text" id="txtStreet1" name="txtStreet1" tabindex="4" >
+        <input type="text" id="txtStreet1" name="txtStreet1" tabindex="5" >
 
-		<label for="txtStreet2"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Street2; ?></label>
-        <input type="text" id="txtStreet2" name="txtStreet2" tabindex="5"><br/>
+		<label for="txtStreet2"> <?php echo $lang_Recruit_ApplicationForm_Street2; ?></label>
+        <input type="text" id="txtStreet2" name="txtStreet2" tabindex="6"><br/>
 
 		<label for="txtCity"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_City; ?></label>
-        <input type="text" id="txtCity" name="txtCity" tabindex="6" >
+        <input type="text" id="txtCity" name="txtCity" tabindex="7" >
 
 		<label for="txtCountry"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Country; ?></label>
-		<select  id="txtCountry" name="txtCountry" tabindex="7"
+		<select  id="txtCountry" name="txtCountry" tabindex="8"
 			onChange="getProvinceList(this.value);">
 	  		<option value="0">-- <?php echo $lang_districtinformation_selectcounlist?> --</option>
 			<?php
@@ -591,58 +585,54 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		 </select><br/>
 
 		<label for="txtProvince"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_StateProvince; ?></label>
-        <div id="state"><input type="text" id="txtProvince" name="txtProvince" tabindex="8" ></div>
+        <div id="state"><input type="text" id="txtProvince" name="txtProvince" tabindex="9" ></div>
 
 		<label for="txtZip"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Zip; ?></label>
-        <input type="text" id="txtZip" name="txtZip" tabindex="9" ></br>
+        <input type="text" id="txtZip" name="txtZip" tabindex="10" ></br>
 
-		<label for="txtPhone"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Phone; ?></label>
-        <input type="text" id="txtPhone" name="txtPhone" tabindex="10" >
+		<label for="txtPhone"> <?php echo $lang_Recruit_ApplicationForm_Phone; ?></label>
+        <input type="text" id="txtPhone" name="txtPhone" tabindex="11" >
 
-		<label for="txtMobile"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Mobile; ?></label>
-        <input type="text" id="txtMobile" name="txtMobile" tabindex="11" ><br/>
+		<label for="txtMobile"><?php echo $lang_Recruit_ApplicationForm_Mobile; ?></label>
+        <input type="text" id="txtMobile" name="txtMobile" tabindex="12" ><br/>
 
 		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Email; ?></label>
-        <input type="text" id="txtEmail" name="txtEmail" tabindex="12" >
+        <input type="text" id="txtEmail" name="txtEmail" tabindex="13" >
 
-        <label for="salary_expected"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Salary_Expected; ?></label>
-        <input type="text" id="salary_expected" name="salary_expected" ><br/>
+        <label for="salary_expected"><?php echo $lang_Recruit_ApplicationForm_Salary_Expected; ?></label>
+        <input type="text" id="salary_expected" name="salary_expected" tabindex="14"><br/>
 
-        <label for="it_experience"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_It_Experience; ?></label>
-        <input type="text" id="it_experience" name="it_experience" >
+        <label for="it_experience"><?php echo $lang_Recruit_ApplicationForm_It_Experience; ?></label>
+        <input type="text" id="it_experience" name="it_experience" tabindex="15" >
 
-        <label for="availability_to_start"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Availability_To_Start; ?></label>
-        <input type="text" id="availability_to_start" name="availability_to_star" readonly onchange="fillToDate();" onfocus="fillToDate();" >
+        <label for="availability_to_start"><?php echo $lang_Recruit_ApplicationForm_Availability_To_Start; ?></label>
+        <input type="text" id="availability_to_start" name="availability_to_star" readonly onchange="fillToDate();" onfocus="fillToDate();" tabindex="16" >
         <input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"/><br/>
 
-        <label for="basis_of_employeement"><span class="error">&nbsp;</span> <?php echo $lang_Recruit_ApplicationForm_Basis_Of_Employement; ?></label>
-        <input type="text" id="basis_of_employeement" name="basis_of_employeement" >
+        <label for="basis_of_employeement"><?php echo $lang_Recruit_ApplicationForm_Basis_Of_Employement; ?></label>
+        <input type="text" id="basis_of_employeement" name="basis_of_employeement" tabindex="17" ><br/>
 
         <label for="do_u_have_a_car"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Do_You_Have_A_Car; ?></label>
-       	<table style="width: 50px;"><tr>
-       		<td>Yes<input style='width: 10px;' type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="y" checked="checked" style="margin-right: 20px;"></td>
-        	<td>No<input style='width: 10px;' type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="n" ></td>
-        	</tr>
-        </table>
-        
+        <?php echo $lang_Common_Yes; ?>&nbsp;&nbsp;<input type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="y" checked="checked" style="margin-right: 20px;" tabindex="18">
+        <?php echo $lang_Common_No; ?><input type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="n" >
+        <br/>
         <label for="gender"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Gender; ?></label>
-        <table style="width: 50px;"><tr>
-        	<td>Male&nbsp;&nbsp;<input style='width: 10px;' type="radio" id="gender" name="gender" value="m" checked="checked" style="margin-right: 20px;"></td>
-        	<td>Female<input style='width: 10px;' type="radio" id="gender" name="gender" value="f" ></td>
-        </tr></table>
-        
+
+        <?php echo $lang_Common_Male ; ?>&nbsp;&nbsp;<input type="radio" id="gender" name="gender" value="m" checked="checked" style="margin-right: 20px;" tabindex="19">
+        <?php echo $lang_Common_Female ; ?><input type="radio" id="gender" name="gender" value="f" >
+        <br/>
 
         <!-- Employment Information----------------------------------------->
-        <label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Employment_Infomation; ?></label><br/>
+        <label for="txtEmail"><?php echo $lang_Recruit_ApplicationForm_Employment_Infomation; ?></label><br/>
         <div style="margin-left: 20px;">
-	        <label for="employer"><?php echo $lang_hrEmpMain_employer; ?></label> <input type="text" id="form_employer" name="form_employer" >
-	        <label for="job_title"><?php echo $lang_empview_JobTitle; ?></label> <input type="text" id="form_job_title" name="form_job_title" ><br/>
-	        <label for="start_date"><?php echo $lang_hrEmpMain_startdate; ?></label> <input type="text" readonly id="form_start_date" name="form_start_date"  onchange="fillToDate();" onfocus="fillToDate();" >
-	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"  />
-	        <label for="end_date"><?php echo $lang_hrEmpMain_enddate; ?></label> <input type="text" readonly id="form_end_date" name="form_end_date"  onchange="fillToDate();" onfocus="fillToDate();" >
-	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"/><br/>
-	        <label for="duties"><?php echo $lang_jobspec_duties ; ?></label> <textarea type="text" id="form_duties" name="form_duties"></textarea><br/>
-		<img onClick="addMore('employeement_info');" id="saveBtn"	src="<?php echo $addImg;?>">
+	        <label for="employer"><?php echo $lang_hrEmpMain_employer; ?></label> <input type="text" id="form_employer" name="form_employer" tabindex="20" >
+	        <label for="job_title"><?php echo $lang_empview_JobTitle; ?></label> <input type="text" id="form_job_title" name="form_job_title" tabindex="21" ><br/>
+	        <label for="start_date"><?php echo $lang_hrEmpMain_startdate; ?></label> <input type="text" readonly id="form_start_date" name="form_start_date"  onchange="fillToDate();" onfocus="fillToDate();" tabindex="22" >
+	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;" tabindex="23"  />
+	        <label for="end_date"><?php echo $lang_hrEmpMain_enddate; ?></label> <input type="text" readonly id="form_end_date" name="form_end_date"  onchange="fillToDate();" onfocus="fillToDate();" tabindex="24" >
+	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;" tabindex="25" /><br/>
+	        <label for="duties"><?php echo $lang_jobspec_duties ; ?></label> <textarea type="text" id="form_duties" name="form_duties" tabindex="26"></textarea><br/>
+		<img onClick="addMore('employeement_info');" id="saveBtn"	src="<?php echo $addImg;?>" tabindex="27">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="employeement_info" >
 
@@ -651,10 +641,10 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</div>
 
 		<!-- Skills ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Skills; ?></label><br/>
+		<label for="txtEmail"> <?php echo $lang_Recruit_ApplicationForm_Skills; ?></label><br/>
         <div style="margin-left: 20px;">
 	        <label for="skill"><?php echo $lang_Recruit_ApplicationForm_Skills; ?></label>
-	        <select id="form_skill" name="form_skill">
+	        <select id="form_skill" name="form_skill" tabindex="28">
 	        <option value="-1" selected="selected">-select-</option>
 	        <?php	if(sizeof($skills)>0){
 	        			foreach ($skills as $skill){?>
@@ -662,9 +652,9 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        <?php 		}
 	       			}  ?>
 	        </select>
-	        <label for="form_skill_years_of_experience"><?php echo $lang_Recruit_ApplicationForm_Years_of_experience; ?></label> <input type="text" id="form_skill_years_of_experience" name="form_skill_years_of_experience" ><br/>
-	        <label for="skill_comments"><?php echo $lang_Recruit_ApplicationForm_Skill_Comments; ?></label> <textarea type="text" id="form_skill_comments" name="form_skill_comments"></textarea><br/>
-		<img onClick="addMore('skill_info');" id="saveBtn"	src="<?php echo $addImg;?>">
+	        <label for="form_skill_years_of_experience"><?php echo $lang_Recruit_ApplicationForm_Years_of_experience; ?></label> <input type="text" id="form_skill_years_of_experience" name="form_skill_years_of_experience" tabindex="29" ><br/>
+	        <label for="skill_comments"><?php echo $lang_Recruit_ApplicationForm_Skill_Comments; ?></label> <textarea type="text" id="form_skill_comments" name="form_skill_comments" tabindex="30"></textarea><br/>
+		<img onClick="addMore('skill_info');" id="saveBtn"	src="<?php echo $addImg;?>" tabindex="31">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="skill_info" >
 
@@ -673,10 +663,10 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</div>
 
 		<!-- License Information ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_License_Information; ?></label><br/>
+		<label for="txtEmail"> <?php echo $lang_Recruit_ApplicationForm_License_Information; ?></label><br/>
         <div style="margin-left: 20px;">
 	        <label for="form_license_type"><?php echo $lang_hremplicenses_licentype; ?></label>
-	        <select id="form_license_type" name="form_license_type">
+	        <select id="form_license_type" name="form_license_type" tabindex="32">
 	        <option value="-1" selected="selected">-select-</option>
 	        <?php	if(sizeof($licenses)>0){
 	        			foreach ($licenses as $license){?>
@@ -684,9 +674,9 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        <?php 		}
 	       			}  ?>
 	        </select>
-	        <label for="form_licens_exp_date"><?php echo $lang_Recruit_ApplicationForm_License_Expiry_Date; ?></label> <input type="text" readonly id="form_licens_exp_date" name="form_licens_exp_date"  onchange="fillToDate();" onfocus="fillToDate();" >
+	        <label for="form_licens_exp_date"><?php echo $lang_Recruit_ApplicationForm_License_Expiry_Date; ?></label> <input type="text" readonly id="form_licens_exp_date" name="form_licens_exp_date"  onchange="fillToDate();" onfocus="fillToDate();" tabindex="33">
 	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"  /><br/>
-		<img onClick="addMore('license_info');" id="saveBtn"	src="<?php echo $addImg;?>">
+		<img onClick="addMore('license_info');" id="saveBtn"	src="<?php echo $addImg;?>" tabindex="34">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="license_info" >
 
@@ -696,10 +686,10 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 
 		<!--Language Information ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Language_Information; ?></label><br/>
+		<label for="txtEmail"> <?php echo $lang_Recruit_ApplicationForm_Language_Information; ?></label><br/>
         <div style="margin-left: 20px;">
 	        <label for="form_language_language"><?php echo $lang_Recruit_ApplicationForm_Language; ?></label>
-	         <select id="form_language_language" name="form_language_language">
+	         <select id="form_language_language" name="form_language_language" tabindex="35">
 	        <option value="-1" selected="selected">-select-</option>
 	        <?php	if(!empty($languages)){
 	        			foreach ($languages as $language){?>
@@ -709,7 +699,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        </select>
 
 	        <label for="form_language_fluency"><?php echo $lang_Recruit_ApplicationForm_Fluency; ?></label>
-	        <select id="form_language_fluency" name="form_language_fluency">
+	        <select id="form_language_fluency" name="form_language_fluency" tabindex="36">
 	        <option value="-1" selected="selected">-select-</option>
 	        <?php	if(sizeof($flencies)>0){
 	        			foreach ($flencies as $flency){?>
@@ -717,7 +707,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        <?php 		}
 	       			}  ?>
 	        </select><br/>
-		<img onClick="addMore('language_info');" id="saveBtn"	src="<?php echo $addImg;?>"><br/>
+		<img onClick="addMore('language_info');" id="saveBtn"	src="<?php echo $addImg;?>" tabindex="37"><br/>
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="language_info" >
 
@@ -726,20 +716,20 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</div>
 
 		<!--Education Information ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Education_Information; ?></label><br/>
+		<label for="txtEmail"> <?php echo $lang_Recruit_ApplicationForm_Education_Information; ?></label><br/>
         <div style="margin-left: 20px;">
-	        <label for="form_education_education"><?php echo $lang_Recruit_ApplicationForm_Education; ?></label> <input type="text" id="form_education_education" name="form_education_education" />
-	        <label for="form_education_major"><?php echo $lang_hrEmpMain_major; ?></label> <input type="text" id="form_education_major" name="form_education_major" /><br/>
-	         <label for="form_education_year"><?php echo $lang_Recruit_ApplicationForm_YearCompleted; ?></label> <input type="text" id="form_education_year" name="form_education_year" />
-	        <label for="form_education_score"><?php echo $lang_Recruit_ApplicationForm_AverageScore; ?></label> <input type="text" id="form_education_score" name="form_education_score" /><br/>
-		<img onClick="addMore('education_info');" id="saveBtn"	src="<?php echo $addImg;?>">
+	        <label for="form_education_education"><?php echo $lang_Recruit_ApplicationForm_Education; ?></label> <input type="text" id="form_education_education" name="form_education_education" tabindex="38" />
+	        <label for="form_education_major"><?php echo $lang_hrEmpMain_major; ?></label> <input type="text" id="form_education_major" name="form_education_major" tabindex="39" /><br/>
+	         <label for="form_education_year"><?php echo $lang_Recruit_ApplicationForm_YearCompleted; ?></label> <input type="text" id="form_education_year" name="form_education_year" tabindex="40" />
+	        <label for="form_education_score"><?php echo $lang_Recruit_ApplicationForm_AverageScore; ?></label> <input type="text" id="form_education_score" name="form_education_score" tabindex="41" /><br/>
+		<img onClick="addMore('education_info');" id="saveBtn"	src="<?php echo $addImg;?>" tabindex="42">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="education_info" >
 
 		</tbody>
 		</table>
 		</div>
-		 <label for="form_upload_cv"><?php echo $lang_Recruit_ApplicationForm_UploadCV; ?></label> <input type="file" id="cv" name="cv" /><br/>
+		 <label for="form_upload_cv"><?php echo $lang_Recruit_ApplicationForm_UploadCV; ?></label> <input type="file" id="cv" name="cv" tabindex="43"/><br/>
 		<?php if(sizeof($applicationFields)>0){ ?>
 				<strong style="margin-left: 10px;"><?php echo $lang_Recruit_ApplicationForm_QuestionsForApplicant;?></strong><br/>
 		<?php } ?>

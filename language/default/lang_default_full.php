@@ -1528,7 +1528,7 @@
 	$lang_Recruit_ApplicationForm_Salary_Expected= 'Salary Expectation';
 	$lang_Recruit_ApplicationForm_It_Experience = 'IT Experience';
 	$lang_Recruit_ApplicationForm_Availability_To_Start ='Availability To Start';
-	$lang_Recruit_ApplicationForm_Basis_Of_Employement = 'Basis Of Employment';
+	$lang_Recruit_ApplicationForm_Basis_Of_Employement = 'Basis of Employment';
 	$lang_Recruit_ApplicationForm_Do_You_Have_A_Car = 'Do you have a reliable car';
 
 	$lang_Recruit_ApplicationForm_Employment_Infomation ="Employment Information";
@@ -1550,8 +1550,19 @@
 	$lang_Recruit_ApplicationForm_Qualifications = 'Qualifications and Experience';
 
 	$lang_Recruit_ApplicationForm_PleaseSpecify = 'Please Specify ';
-	$lang_Recruit_ApplicationForm_PleaseSpecifyValidEmail = 'Please Specify valid email address for ';
-	$lang_Recruit_ApplicationForm_PleaseSpecifyValidPhone = 'Please Specify valid phone number for ';
+	$lang_Recruit_ApplicationForm_PleaseSpecifyValidEmail = 'Please specify valid email address for ';
+	$lang_Recruit_ApplicationForm_PleaseSpecifyValidPhone = 'Please specify valid phone number for ';
+	$lang_Recruit_ApplicationForm_PleaseSpecify_Employment_Information= "Please Specify Employment Information";
+	$lang_Recruit_ApplicationForm_PleaseSpecify_Skills_Information = "Please Specify Skills Information";
+	$lang_Recruit_ApplicationForm_PleaseSpecify_License_Information = "Please Specify License Information";
+	$lang_Recruit_ApplicationForm_PleaseSpecify_Language_Information = "Please Specify Language Information";
+	$lang_Recruit_ApplicationForm_PleaseSpecify_Education_Information = "Please Specify Education Information";
+	$lang_Recruit_ApplicationForm_PleaseSelect_Skill= "Please select a Skill";
+	$lang_Recruit_ApplicationForm_PleaseSelect_License_Type= "Please select a license type";
+	$lang_Recruit_ApplicationForm_PleaseSelect_Language= "Please select a Language";
+	$lang_Recruit_ApplicationForm_PleaseSelect_Fluency= "Please select a Fluency";
+	$lang_Recruit_ApplicationForm_Please_Enter_Numeric_Value= "Please enter a numeric vlaue for the year";
+	$lang_Recruit_ApplicationForm_Please_Enter_Numeric_Value_For_Average= "Please enter a numeric vlaue for the average score";
 	$lang_Recruit_ApplicationForm_PleaseSelect = 'Please Select ';
 
 	$lang_Recruit_ApplicationStatus_SuccessHeading = 'Job Application Received';

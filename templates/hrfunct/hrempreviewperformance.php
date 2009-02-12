@@ -25,14 +25,6 @@ if(isset($this->popArr['perfReview'])){
 <script language="javascript">
     function displayPerformanceMeasures(id){
     	xajax_showCompletedMeasures(id);
-       // elementID="measure"+id;    
-        //measureTbl= document.getElementById(elementID);   
-   
-       // if (measureTbl.style.display == 'none' ) {
-           // measureTbl.style.display = 'block';           
-        //} else {
-           // measureTbl.style.display = 'none';            
-        //}
     }
 </script>
 
@@ -42,43 +34,43 @@ if(isset($this->popArr['perfReview'])){
 </script>
     <h3><?php echo $lang_hremp_Completed_PerformanceReview; ?></h3><br/>
     <?php
-    if(count($completedPerformanceReviews)>0){    	
-    ?> 	
+    if(count($completedPerformanceReviews)>0){
+    ?>
     <table width="100%" border="0" cellpadding="0" cellspacing="0" >
     <thead>
       <th align="left" valign="top"><?php echo $lang_Performance_review_ID; ?></th>
       <th align="left" valign="top"><?php echo $lang_jobtitle_jobtitname ; ?></th>
       <th align="left" valign="top"><?php echo $lang_Performance_review_ReviewDate; ?></th>
       <th align="left" valign="top"><?php echo $lang_Performance_review_ReviewStatus; ?></th>
-      <th align="left" valign="top"><?php echo $lang_Performance_Review_Notes; ?></th>     
+      <th align="left" valign="top"><?php echo $lang_Performance_Review_Notes; ?></th>
    </thead>
     <?php
      foreach($completedPerformanceReviews as $reviewRow){
-        if(!empty($reviewRow[3]) && $reviewRow[3]=='1'){ 	   
+        if(!empty($reviewRow[3]) && $reviewRow[3]=='1'){
     ?>
       <tr>
         <td align="center"><a href="#" onclick="displayPerformanceMeasures('<?php echo $reviewRow[0]; ?>')"><?php echo $reviewRow[0] ?></a></td>
         <td align="center"><?php echo $reviewRow[1]; ?></td>
         <td align="center"><?php echo $reviewRow[2]; ?></td>
         <td align="center"><?php echo $lang_Performance_Review_Completed ?></td>
-        <td align="center"><?php echo $reviewRow[4]; ?></td>   
-            
+        <td align="center"><?php echo $reviewRow[4]; ?></td>
+
       </tr>
      <tr> <td colspan="5"></td></tr>
      <tr>
         <td colspan="5" align="left" valign="top"><div id="measure<?php echo $reviewRow[0];?>">
-        
+
         </div>
         </td>
       </tr>
     <tr>
         <td colspan="5"><hr/></td>
-    </tr>    
+    </tr>
     <?php
         }
      }
-    ?> 
-    </table>   
+    ?>
+    </table>
 <?php
     }else{
     	echo $lang_Error_NoRecordsFound;
