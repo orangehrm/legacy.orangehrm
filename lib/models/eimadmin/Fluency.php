@@ -1,12 +1,22 @@
 <?php
 /*
- * Licensee: Anonymous
- * License Type: Purchased
- */
+// OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+// all the essential functionalities required for any enterprise.
+// Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
 
-/**
- * @orm Fluency
- */
+// OrangeHRM is free software; you can redistribute it and/or modify it under the terms of
+// the GNU General Public License as published by the Free Software Foundation; either
+// version 2 of the License, or (at your option) any later version.
+
+// OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+// without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License along with this program;
+// if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA  02110-1301, USA
+*/
+
 class Fluency {
 
 	const TABLE='hs_hr_fluency';
@@ -200,6 +210,29 @@ class Fluency {
 		$message2 = $dbConnection -> executeQuery($sqlQString); //Calling the addData() function
 
 		return $message2;
+	}
+	
+	function countFluency($schStr,$mode) {
+
+		$tableName = self::TABLE;
+		$arrFieldList[0] = self::FLUENCY_CODE;
+		$arrFieldList[1] = self::DESCRIPTION;		
+
+		$sql_builder = new SQLQBuilder();
+
+		$sql_builder->table_name = $tableName;
+		$sql_builder->flg_select = 'true';
+		$sql_builder->arr_select = $arrFieldList;
+
+		$sqlQString = $sql_builder->countResultset($schStr,$mode);
+
+		//echo $sqlQString;
+		$dbConnection = new DMLFunctions();
+		$message2 = $dbConnection -> executeQuery($sqlQString); //Calling the addData() function
+
+		$line = mysql_fetch_array($message2, MYSQL_NUM);
+
+	    return $line[0];
 	}
 
 }

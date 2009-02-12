@@ -196,8 +196,11 @@ class FormFieldBase {
 			case 'radio':
 				$selected=''; 
 				$selected="checked";					
-				$str="Yes&nbsp;&nbsp; <input type=\"radio\" value=\"1\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  ".$selected." title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." />";
-				$str.="No <input style=\"margin-left: 8px;\" type=\"radio\" value=\"0\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." />";
+				$str="<table style='width: 50px;'>
+					<tr>
+						<td>Yes<input style='width: 10px;' type=\"radio\" value=\"1\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  ".$selected." title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." /></td>";
+				$str.="<td>No <input style='width: 10px;' type=\"radio\" value=\"0\" id=\"".$this->getId()."_dynamic\" name=\"".$this->getId()."_dynamic\"  title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." /></td>
+						</tr></table>";
 				if($this->getSubFieldLogic()!=null){
 					$str.="<input style=\"margin-left: 8px;\" type=\"text\"  value=\"".$this->getFiledValueText()."\" id=\"".$this->getId()."_dynamic_sub\" name=\"".$this->getId()."_dynamic_sub\" title=\"".$this->getToolTip()."\"  ".$enable."/>";
 				}
@@ -207,7 +210,7 @@ class FormFieldBase {
 						$this->getFieldValue().
 					"</select>";				
 			case 'textarea': 
-				$str="<textarea name=\"".$this->getId()."_dynamic\" id=\"".$this->getId()."_dynamic\" row=\"".$this->getHeight()."\" col=\"".$this->getLength()."\"   title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." >".$this->getFieldValue()."</textarea>";
+				$str="<textarea style='width: 300px;' name=\"".$this->getId()."_dynamic\" id=\"".$this->getId()."_dynamic\" row=\"".$this->getHeight()."\" col=\"".$this->getLength()."\"   title=\"".$this->getToolTip()."\" tabindex=\"".$this->getTabOrder()."\" ".$enable." >".$this->getFieldValue()."</textarea>";
 			break;
 				default:						
 				break;

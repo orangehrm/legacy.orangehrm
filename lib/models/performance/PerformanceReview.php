@@ -70,7 +70,7 @@ class PerformanceReview {
 	private $reviewDate;
 	private $status = self::STATUS_SCHEDULED;
 	private $reviewNotes;
-	private $performanceMeasures;
+	public $performanceMeasures;
 	private $employeeName;
 	private $notificationSent;
 
@@ -643,6 +643,26 @@ class PerformanceReview {
 			throw new PerformanceReviewException("Update failed. SQL=$sql", PerformanceReviewException::DB_ERROR);
 		}
 		$this->_savePerformanceMeasures();
+		return $this->id;
+	}
+
+	
+	public function saveNotificationSentStatus(){
+		$fields[0] = self::DB_FIELD_ID;		
+		$fields[1] = self::DB_FIELD_NOTIFICATION_SENT;
+
+		$values[0] = $this->id;		
+		$values[1] = $this->notificationSent;
+
+		$sqlBuilder = new SQLQBuilder();
+		$sqlBuilder->table_name = self::TABLE_NAME;
+		$sqlBuilder->flg_update = 'true';
+		$sqlBuilder->arr_update = $fields;
+		$sqlBuilder->arr_updateRecList = $values;
+
+		$sql = $sqlBuilder->addUpdateRecord1(0);
+		$conn = new DMLFunctions();
+		$result = $conn->executeQuery($sql);		
 		return $this->id;
 	}
 

@@ -437,7 +437,7 @@ class PerformanceController {
     			$mailNotifier->sendPerformanceReviewReminder($review);
     			$review->setNotificationSent();
 				try {
-    				$review->save();
+    				$review->saveNotificationSentStatus();
 				} catch (PerformanceReviewException $e) {
 					continue;
 				}

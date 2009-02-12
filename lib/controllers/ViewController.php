@@ -646,6 +646,11 @@ class ViewController {
 			$this-> skills = new Skills();
 			$message = $this-> skills -> countSkills($schStr,$mode);
 			return $message;
+			
+		case 'FLU' :
+			$this->fluency = new Fluency();
+			$message = $this-> fluency -> countFluency($schStr,$mode);
+			return $message;
 
 		case 'ETH' :
 

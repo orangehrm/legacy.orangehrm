@@ -619,15 +619,18 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
         <input type="text" id="basis_of_employeement" name="basis_of_employeement" >
 
         <label for="do_u_have_a_car"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Do_You_Have_A_Car; ?></label>
-        Yes&nbsp;&nbsp;<input type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="y" checked="checked" style="margin-right: 20px;">
-        No<input type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="n" >
-        <br/>
-
+       	<table style="width: 50px;"><tr>
+       		<td>Yes<input style='width: 10px;' type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="y" checked="checked" style="margin-right: 20px;"></td>
+        	<td>No<input style='width: 10px;' type="radio" id="do_u_have_a_car" name="do_u_have_a_car" value="n" ></td>
+        	</tr>
+        </table>
+        
         <label for="gender"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Gender; ?></label>
-        Male&nbsp;&nbsp;<input type="radio" id="gender" name="gender" value="m" checked="checked" style="margin-right: 20px;">
-        Female<input type="radio" id="gender" name="gender" value="f" >
-        <br/>
-
+        <table style="width: 50px;"><tr>
+        	<td>Male&nbsp;&nbsp;<input style='width: 10px;' type="radio" id="gender" name="gender" value="m" checked="checked" style="margin-right: 20px;"></td>
+        	<td>Female<input style='width: 10px;' type="radio" id="gender" name="gender" value="f" ></td>
+        </tr></table>
+        
 
         <!-- Employment Information----------------------------------------->
         <label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Employment_Infomation; ?></label><br/>
