@@ -46,7 +46,7 @@ switch ($_GET['recruitcode']) {
 		case 'Application_Config' :
 
 			$srchlist = array( "-$lang_Leave_Common_Select-" , $lang_Recruit_VacancyID , $lang_Recruit_JobTitleName, $lang_Recruit_HiringManager, $lang_Recruit_VacancyStatus);
-			$headings = array("ID", "Quession","Type","Order");
+			$headings = array("ID", "Question","Type","Order");
 			$valueMap = array(null, null, null,null);
 			$title = 'Configure Application form';
 			$deletePrompt = "Are you sure you wont to delete";

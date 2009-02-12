@@ -112,7 +112,7 @@ $themeDir = '../../themes/' . $styleSheet;
 		document.standardView.submit();
 	}
 
-	function returnAdd() {	
+	function returnAdd() {
 		location.href = '<?php echo $baseURL;?>&action=ViewAdd';
 	}
 
@@ -295,18 +295,22 @@ echo $pageStr;
 						$nextSortOrder = getNextSortOrder($this->getArr['sortOrder'.$j]);
 						$nextSortInWords = getSortOrderInWords($nextSortOrder);
 				?>
-				
+
 				<td scope="col" width="250" class="listViewThS1">
 					<?php echo $headings[$j]?>
 					</td>
 				<?php } ?>
       		<td class="listViewThS1"><img name="table_r2_c3" src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
       		<td class="r2_c3"><img src="<?php echo $themeDir;?>/pictures/spacer.gif" width="13" height="1" border="0" alt=""></td>
-    		</tr>    		
+    		</tr>
     		<?php
-    		
+
 				if ((isset($list)) && ($list !='')) {
-					for ($j=0; $j < count($list);$j++) {
+
+                    $lwLimit = $this->postArr['pageNO']?($this->postArr['pageNO']-1)*10:0;
+                    $upLimit = $lwLimit + 10;
+                    if(count($list)<$upLimit)$upLimit=count($list);
+                    for ($j = $lwLimit; $j < $upLimit; $j++) {
 	 		?>
     		<tr>
        		<td class="r2_c1"><img name="table_r2_c1" src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
