@@ -951,8 +951,8 @@ create table `hs_hr_budgets` (
 
 CREATE TABLE `hs_hr_appicant_language_information` (
   `ID` int(11) NOT NULL auto_increment,
-  `lang_code` int(11) NOT NULL,
-  `fluency_code` int(11) NOT NULL,
+  `lang_code` varchar(13) not null default '',
+  `fluency_code` varchar(15) NOT NULL,
   `application_id` int(11) default NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
@@ -968,7 +968,7 @@ CREATE TABLE `hs_hr_applicant_education_info` (
   `year_completed` int(11) NOT NULL,
   `average_score` double NOT NULL,
   `ID` int(11) NOT NULL auto_increment,
-  `edu_code` int(11) NOT NULL,
+  `edu_code` varchar(13) not null default '',
   `application_id` int(11) default NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
@@ -982,8 +982,8 @@ CREATE TABLE `hs_hr_applicant_education_info` (
 CREATE TABLE `hs_hr_applicant_employement_info` (
   `employer` varchar(255) default NULL,
   `job_title` varchar(255) default NULL,
-  `start_date` varchar(255) default NULL,
-  `end_date` varchar(255) default NULL,
+  `start_date` date default NULL,
+  `end_date` date default NULL,
   `duties` varchar(255) default NULL,
   `ID` int(11) NOT NULL auto_increment,
   `application_id` int(11) NOT NULL,
@@ -999,7 +999,7 @@ CREATE TABLE `hs_hr_applicant_employement_info` (
 CREATE TABLE `hs_hr_applicant_license_information` (
   `expiry_date` date default NULL,
   `ID` int(11) NOT NULL auto_increment,
-  `license_code` int(11) NOT NULL,
+  `license_code` varchar(13) not null default '',
   `application_id` int(11) default NULL,
   PRIMARY KEY  (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
@@ -1015,7 +1015,7 @@ CREATE TABLE `hs_hr_applicant_skills` (
   `comments` varchar(255) default NULL,
   `ID` int(11) NOT NULL auto_increment,
   `application_id` int(11) default NULL,
-  `skill_code` int(11) NOT NULL,
+  `skill_code` varchar(13) not null default '',
   PRIMARY KEY  (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 

@@ -137,11 +137,13 @@ class ApplicantEducationInfo {
 		$insetFields [] = self::AVERAGE_SCORE;
 		$insetFields [] = self::EDU_CODE;		
 		$insetFields [] = self::YEAR_COMPLEATED;
+        $insetFields [] = self::MAJOR_SPECISLIZATION;
 		
 		$values [] = $this->getApplicationId ();
 		$values [] = $this->getAverageScore ();
 		$values [] = $this->getEduCode ();
 		$values [] = $this->getYearCompleted ();
+        $values [] = $this->getMajorSpecialization ();
 		
 		$sql = $sqlBuilder->simpleInsert ( self::TABLE, $values, $insetFields );
 		$conn = new DMLFunctions ( );

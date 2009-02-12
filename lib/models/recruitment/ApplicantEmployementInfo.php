@@ -3,7 +3,7 @@
 /**
  * Licensee: Anonymous
  */
-
+require_once ROOT_PATH . '/lib/common/LocaleUtil.php';
 /**
  * @orm EmployementInfo
  */
@@ -132,10 +132,10 @@ class ApplicantEmployementInfo {
 		$values [] = $this->getApplicationId();
 		$values [] = $this->getDuties();
 		$values [] = $this->getEmployer();
-		$values [] = $this->getEndDate();
+		$values [] = LocaleUtil::getInstance()->convertToStandardDateFormat($this->getEndDate());
 		//$values [] = $this->getID();
 		$values [] = $this->getJobTitle();
-		$values [] = $this->getStartDate();		
+		$values [] = LocaleUtil::getInstance()->convertToStandardDateFormat($this->getStartDate());		
 		
 		$sql = $sqlBuilder->simpleInsert ( self::TABLE, $values, $insetFields );
 		$conn = new DMLFunctions ( );

@@ -1,5 +1,5 @@
 <?php
-
+require_once ROOT_PATH . '/lib/common/LocaleUtil.php';
 /**
  * @orm ApplicantLicenseInformation
  */
@@ -105,9 +105,10 @@ class ApplicantLicenseInformation {
 		
 		if(strlen( $this->getExpiryDate ()>0)){
 			$insetFields [] = self::EXPIRY_DATE;
-			$values [] = $this->getExpiryDate ();
+			$values [] = LocaleUtil::getInstance()->convertToStandardDateFormat($this->getExpiryDate ());
 		}		
 		$sql = $sqlBuilder->simpleInsert ( self::TABLE, $values, $insetFields );
+               
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
 		return $result;
