@@ -630,7 +630,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 
         <!-- Employment Information----------------------------------------->
-        <label for="txtEmail"><span class="error">*</span> <?php echo $lang_Menu_Recruit_ApplicationForm_Employment_Infomation; ?></label><br/>
+        <label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Employment_Infomation; ?></label><br/>
         <div style="margin-left: 20px;">
 	        <label for="employer"><?php echo $lang_hrEmpMain_employer; ?></label> <input type="text" id="form_employer" name="form_employer" >
 	        <label for="job_title"><?php echo $lang_empview_JobTitle; ?></label> <input type="text" id="form_job_title" name="form_job_title" ><br/>
@@ -648,9 +648,9 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</div>
 
 		<!-- Skills ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Menu_Admin_Skills; ?></label><br/>
+		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Skills; ?></label><br/>
         <div style="margin-left: 20px;">
-	        <label for="skill"><?php echo $lang_Menu_Admin_Skills_Skills; ?></label>
+	        <label for="skill"><?php echo $lang_Recruit_ApplicationForm_Skills; ?></label>
 	        <select id="form_skill" name="form_skill">
 	        <option value="-1" selected="selected">-select-</option>
 	        <?php	if(sizeof($skills)>0){
@@ -659,8 +659,8 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        <?php 		}
 	       			}  ?>
 	        </select>
-	        <label for="form_skill_years_of_experience"><?php echo $lang_Menu_Recruit_ApplicationForm_Years_of_experience; ?></label> <input type="text" id="form_skill_years_of_experience" name="form_skill_years_of_experience" ><br/>
-	        <label for="skill_comments"><?php echo $lang_Menu_Recruit_ApplicationForm_Skill_Comments; ?></label> <textarea type="text" id="form_skill_comments" name="form_skill_comments"></textarea><br/>
+	        <label for="form_skill_years_of_experience"><?php echo $lang_Recruit_ApplicationForm_Years_of_experience; ?></label> <input type="text" id="form_skill_years_of_experience" name="form_skill_years_of_experience" ><br/>
+	        <label for="skill_comments"><?php echo $lang_Recruit_ApplicationForm_Skill_Comments; ?></label> <textarea type="text" id="form_skill_comments" name="form_skill_comments"></textarea><br/>
 		<img onClick="addMore('skill_info');" id="saveBtn"	src="<?php echo $addImg;?>">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="skill_info" >
@@ -670,7 +670,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</div>
 
 		<!-- License Information ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Menu_Recruit_ApplicationForm_License_Information; ?></label><br/>
+		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_License_Information; ?></label><br/>
         <div style="margin-left: 20px;">
 	        <label for="form_license_type"><?php echo $lang_hremplicenses_licentype; ?></label>
 	        <select id="form_license_type" name="form_license_type">
@@ -681,7 +681,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        <?php 		}
 	       			}  ?>
 	        </select>
-	        <label for="form_licens_exp_date"><?php echo $lang_Menu_Recruit_Job_License_Expiry_Date; ?></label> <input type="text" readonly id="form_licens_exp_date" name="form_licens_exp_date"  onchange="fillToDate();" onfocus="fillToDate();" >
+	        <label for="form_licens_exp_date"><?php echo $lang_Recruit_ApplicationForm_License_Expiry_Date; ?></label> <input type="text" readonly id="form_licens_exp_date" name="form_licens_exp_date"  onchange="fillToDate();" onfocus="fillToDate();" >
 	        	<input type="button" name="Submit" value="" class="calendarBtn" style="width:20px;"  /><br/>
 		<img onClick="addMore('license_info');" id="saveBtn"	src="<?php echo $addImg;?>">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
@@ -693,9 +693,9 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 
 		<!--Language Information ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Menu_Recruit_Job_Language_Information; ?></label><br/>
+		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Language_Information; ?></label><br/>
         <div style="margin-left: 20px;">
-	        <label for="form_language_language"><?php echo $lang_Menu_Recruit_Job__Language; ?></label>
+	        <label for="form_language_language"><?php echo $lang_Recruit_ApplicationForm_Language; ?></label>
 	         <select id="form_language_language" name="form_language_language">
 	        <option value="-1" selected="selected">-select-</option>
 	        <?php	if(!empty($languages)){
@@ -705,7 +705,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	       			}  ?>
 	        </select>
 
-	        <label for="form_language_fluency"><?php echo $lang_Menu_Recruit_Job__Fluency; ?></label>
+	        <label for="form_language_fluency"><?php echo $lang_Recruit_ApplicationForm_Fluency; ?></label>
 	        <select id="form_language_fluency" name="form_language_fluency">
 	        <option value="-1" selected="selected">-select-</option>
 	        <?php	if(sizeof($flencies)>0){
@@ -723,12 +723,12 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</div>
 
 		<!--Education Information ----------------------------------------->
-		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Menu_Recruit_Job__Education_Information; ?></label><br/>
+		<label for="txtEmail"><span class="error">*</span> <?php echo $lang_Recruit_ApplicationForm_Education_Information; ?></label><br/>
         <div style="margin-left: 20px;">
-	        <label for="form_education_education"><?php echo $lang_Menu_Admin_Quali_Education; ?></label> <input type="text" id="form_education_education" name="form_education_education" />
+	        <label for="form_education_education"><?php echo $lang_Recruit_ApplicationForm_Education; ?></label> <input type="text" id="form_education_education" name="form_education_education" />
 	        <label for="form_education_major"><?php echo $lang_hrEmpMain_major; ?></label> <input type="text" id="form_education_major" name="form_education_major" /><br/>
-	         <label for="form_education_year"><?php echo "Year completed (Year) " ?></label> <input type="text" id="form_education_year" name="form_education_year" />
-	        <label for="form_education_score"><?php echo "Average score " ?></label> <input type="text" id="form_education_score" name="form_education_score" /><br/>
+	         <label for="form_education_year"><?php echo $lang_Recruit_ApplicationForm_YearCompleted; ?></label> <input type="text" id="form_education_year" name="form_education_year" />
+	        <label for="form_education_score"><?php $lang_Recruit_ApplicationForm_AverageScore; ?></label> <input type="text" id="form_education_score" name="form_education_score" /><br/>
 		<img onClick="addMore('education_info');" id="saveBtn"	src="<?php echo $addImg;?>">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="education_info" >
@@ -736,9 +736,9 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 		</tbody>
 		</table>
 		</div>
-		 <label for="form_upload_cv"><?php echo "Upload CV" ?></label> <input type="file" id="cv" name="cv" /><br/>
+		 <label for="form_upload_cv"><?php echo $lang_Recruit_ApplicationForm_UploadCV; ?></label> <input type="file" id="cv" name="cv" /><br/>
 		<?php if(sizeof($applicationFields)>0){ ?>
-				<strong style="margin-left: 10px;">Questions for the applicant</strong><br/>
+				<strong style="margin-left: 10px;"><?php echo $lang_Recruit_ApplicationForm_QuestionsForApplicant;?></strong><br/>
 		<?php } ?>
 		 <table border="0">
 		 <?php foreach ($applicationFields as $field){ ?>
