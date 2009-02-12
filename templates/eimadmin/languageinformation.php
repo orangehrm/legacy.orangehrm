@@ -155,7 +155,7 @@ return flag;
 
 						  <tr>
 						    <td nowrap valign="top"><span class="error">*</span> <?php echo $lang_Commn_name; ?></td>
-						    <td><textarea name='txtLanguageInfoDesc' rows="3" cols="30"></textarea></td></td>
+						    <td><input type='text' name='txtLanguageInfoDesc' ></td></td>
 						  </tr>
 
 

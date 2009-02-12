@@ -124,7 +124,7 @@ function goBack() {
                   <td><table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
 							  <tr>
 							    <td nowrap valign="top"><span class="error">*</span> <?php echo $lang_Commn_description; ?></td>
-							    <td> <textarea name='txtLicensesDesc' rows="3" tabindex='3' cols="30"></textarea></td>
+							    <td> <input type='text' name='txtLicensesDesc' tabindex='3'></td>
 							  </tr>
 
 					  <tr><td></td><td align="right" width="100%"><img onClick="addSave();" onMouseOut="this.src='../../themes/beyondT/pictures/btn_save.gif';" onMouseOver="this.src='../../themes/beyondT/pictures/btn_save_02.gif';" src="../../themes/beyondT/pictures/btn_save.gif">
