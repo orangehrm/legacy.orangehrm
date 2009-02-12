@@ -1412,6 +1412,8 @@
 	$lang_Recruit_AllowedValuesAre = 'Allowed Values are: ';
 	$lang_Recruit_NoManagersNotice = 'No managers found. You need to create a job title named \'Manager\' and assign to employees who are managers.';
 	$lang_Recruit_Applicaton_configure	= "Configure Application";
+	$lang_Recruit_Applicaton_configure_Add_Heading = "Add Question";
+	$lang_Recruit_Applicaton_configure_Question = "Question";
 
     $lang_Recruit_JobApplicationList_Heading = 'Applicants';
     $lang_Recruit_JobApplicationList_Name = 'Name';

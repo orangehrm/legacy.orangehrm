@@ -23,7 +23,7 @@ $action = $_GET['action'];
 if ($action == 'ViewAdd') {
 	$new = true;
 	$btnAction="addSave()";
-	$heading = $lang_Recruit_JobVacancy_Add_Heading;
+	$heading = $lang_Recruit_Applicaton_configure_Add_Heading;
 	$formAction = "{$baseURL}&action=Add";
 	$disabled = '';
 } else {
@@ -51,15 +51,15 @@ $locRights=$_SESSION['localRights'];
         location.href = "<?php echo $baseURL; ?>&action=List";
     }
 
-    function save() { 
+    function save() {
     var msg='';
     var err=false;
-     	if(document.getElementById('cmbType').selectedIndex==0){     	
+     	if(document.getElementById('cmbType').selectedIndex==0){
      		msg+='<?php echo 'Plese select a type'?> \n';
      		err=true;
      	}
-     	var value = trim(document.getElementById('txtLable').value);		
-     	if(value==''){     	
+     	var value = trim(document.getElementById('txtLable').value);
+     	if(value==''){
      		msg+='<?php echo 'Label canot be blank'?> \n';
      		err=true;
      	}
@@ -68,7 +68,7 @@ $locRights=$_SESSION['localRights'];
      	}else{
        		$('frmFormField').submit();
        	}
-       			
+
     }
 
 	function edit()	{
@@ -80,7 +80,7 @@ $locRights=$_SESSION['localRights'];
 		}
 		editMode = true;
 		var frm = $('frmFormField');
-		
+
 		for (var i=0; i < frm.elements.length; i++) {
 			frm.elements[i].disabled = false;
 		}
@@ -213,31 +213,31 @@ $locRights=$_SESSION['localRights'];
   <div class="roundbox">
   <form name="frmFormField" id="frmFormField" method="post" action="<?php echo $formAction;?>">
 		<input type="hidden" id="txtId" name="txtId" value="<?php echo $applicationField->getId();?>"/><br/>
-		<label for="cmbJobLable"><span class="error">*</span> <?php echo 'Lable'; ?></label>
+		<label for="cmbJobLable"><span class="error">*</span> <?php echo $lang_Recruit_Applicaton_configure_Question; ?></label>
 			<input type="text" id="txtLable" name="txtLable" value="<?php echo $applicationField->getLable();?>"/><br/>
 		<label><span class="error">*</span> <?php echo 'Type'?></label>
         <select id="cmbType" name="cmbType" tabindex="1" <?php echo (!$new)?"disabled='disabled'":''?>>
 	        <option value="-1">-- <?php echo "--select--"?> --</option>
                 <?php
-                	foreach ($fieldTypes as $key=>$type){ 
+                	foreach ($fieldTypes as $key=>$type){
                 		$selected='';
                 		if($applicationField->getFieldType()==$type) $selected="selected='selected'";
-                		?>             			
-             				<option value="<?php echo $type; ?>"  <?php echo $selected ?>><?php echo $type; ?></option>             			
+                		?>
+             				<option value="<?php echo $type; ?>"  <?php echo $selected ?>><?php echo $type; ?></option>
                 	<?php 	} ?>
         </select>
         <br/>
 		<label><span class="error"></span> <?php echo 'Tool Tip'; ?></label>
-			<input type="text" id="txtTooltip" name="txtTooltip" value="<?php echo $applicationField->getToolTip();?>"/><br/> 
+			<input type="text" id="txtTooltip" name="txtTooltip" value="<?php echo $applicationField->getToolTip();?>"/><br/>
 		<label><span class="error"></span> <?php echo 'Order'; ?></label>
-			<input type="text" id="txtTabOrder" name="txtTabOrder" value="<?php echo $applicationField->getTabOrder();?>"/><br/>        
+			<input type="text" id="txtTabOrder" name="txtTabOrder" value="<?php echo $applicationField->getTabOrder();?>"/><br/>
 
         <div align="left">
         <?php if($new){ ?>
-        		 <img onClick="save();" id="editBtn" src="../../themes/<?php echo $styleSheet;?>/pictures/<?php echo 'btn_save.gif'?>">        
+        		 <img onClick="save();" id="editBtn" src="../../themes/<?php echo $styleSheet;?>/pictures/<?php echo 'btn_save.gif'?>">
         <?php }else{ ?>
         		<img onClick="edit();" id="editBtn" src="../../themes/<?php echo $styleSheet;?>/pictures/<?php echo 'btn_save.gif'?>">
-       	<?php } ?>  			
+       	<?php } ?>
         </div>
 	</form>
     </div>
