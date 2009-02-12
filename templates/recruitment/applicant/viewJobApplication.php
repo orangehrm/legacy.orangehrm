@@ -728,7 +728,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 	        <label for="form_education_education"><?php echo $lang_Recruit_ApplicationForm_Education; ?></label> <input type="text" id="form_education_education" name="form_education_education" />
 	        <label for="form_education_major"><?php echo $lang_hrEmpMain_major; ?></label> <input type="text" id="form_education_major" name="form_education_major" /><br/>
 	         <label for="form_education_year"><?php echo $lang_Recruit_ApplicationForm_YearCompleted; ?></label> <input type="text" id="form_education_year" name="form_education_year" />
-	        <label for="form_education_score"><?php $lang_Recruit_ApplicationForm_AverageScore; ?></label> <input type="text" id="form_education_score" name="form_education_score" /><br/>
+	        <label for="form_education_score"><?php echo $lang_Recruit_ApplicationForm_AverageScore; ?></label> <input type="text" id="form_education_score" name="form_education_score" /><br/>
 		<img onClick="addMore('education_info');" id="saveBtn"	src="<?php echo $addImg;?>">
 		<table border="1" cellpadding="4" style="vertical-align: top; border-style: solid;border-color: gray;border-collapse: collapse">
 		<tbody id="education_info" >
