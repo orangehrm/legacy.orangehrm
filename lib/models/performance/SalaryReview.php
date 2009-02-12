@@ -402,7 +402,7 @@ class SalaryReview {
 			}
 		}
 
-		$list = self::_getList($selectCondition);
+		$list = self::_getList($selectCondition, $sortOrder);
 
 		$i = 0;
 		$arrayDispList = null;
@@ -483,7 +483,7 @@ class SalaryReview {
 	 * @param array   $selectCondition Array of select conditions to use.				const  = 'hs_hr_perf_measure_jobtitle';
 	 * @return array  Array of Salary Review objects. Returns an empty (length zero) array if none found.
 	 */
-	private static function _getList($selectCondition = null) {
+	private static function _getList($selectCondition = null, $order) {
 
 	    $fields[0] = 'a.' . self::DB_FIELD_ID;
 	    $fields[1] = 'a.' . self::DB_FIELD_EMP_NUMBER;
@@ -511,7 +511,6 @@ class SalaryReview {
 		$selectCondition[]="a.emp_number !='".$_SESSION['empID']."'";
 
         $orderBy = 'a.' . self::DB_FIELD_ID;
-        $order = 'ASC';
 
         $sqlBuilder = new SQLQBuilder();
         $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition, null, $orderBy, $order);
