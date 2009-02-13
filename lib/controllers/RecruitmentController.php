@@ -589,7 +589,7 @@ class RecruitmentController {
 					foreach ($eduInfo as $key=>$edu){
 						$applicantEduInfo->setApplicationId($jobApplication->getId());
 						$applicantEduInfo->setAverageScore($_REQUEST['education_score'][$key]);
-						$applicantEduInfo->setEducation($_REQUEST['education_education'][$key]);
+						$applicantEduInfo->setEduCode($_REQUEST['education_education'][$key]);
 						$applicantEduInfo->setMajorSpecialization($_REQUEST['education_major'][$key]);
 						$applicantEduInfo->setYearCompleted($_REQUEST['education_year'][$key]);
 						$applicantEduInfo->save();

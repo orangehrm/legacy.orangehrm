@@ -126,6 +126,10 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
     .eventDate {
         font-style: italic;
     }
+    table.simpleList th {
+        text-align:left;
+    }
+    
     -->
 </style>
 </head>
@@ -229,6 +233,130 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
         }        
 ?>                
         <br />
+<?php
+    $educationInfoArray = $application->getEducationInfo();
+    $employmentInfoArray = $application->getEmploymentInfo();
+    $licenseInfoArray = $application->getLicenseInfo();
+    $skillInfoArray = $application->getSkillInfo();        
+    $languageInfoArray = $application->getLanguageInfo();
+    
+
+?>
+
+    <table width="520" class="simpleList" >
+        <thead><tr>
+            <th><?php echo $lang_hrEmpMain_employer;?></th>
+            <th><?php echo $lang_empview_JobTitle;?></th>
+            <th><?php echo $lang_hrEmpMain_startdate;?></th>
+            <th><?php echo $lang_hrEmpMain_enddate;?></th>
+            <th><?php echo $lang_jobspec_duties;?></th>
+        </tr></thead>
+        <tbody>
+            
+<?php    
+    
+    foreach ($employmentInfoArray as $employment) {
+?>               
+     <tr>
+        <td><?php echo CommonFunctions::escapeHtml($employment->getEmployer());?></td>
+        <td><?php echo CommonFunctions::escapeHtml($employment->getJobTitle());?></td>
+        <td><?php echo LocaleUtil::getInstance()->formatDate($employment->getStartDate());?></td>
+        <td><?php echo LocaleUtil::getInstance()->formatDate($employment->getEndDate());?></td>
+        <td><?php echo nl2br(wordwrap(trim(CommonFunctions::escapeHtml($employment->getDuties())), 65));?></td>
+    </tr>
+<?php 
+    }
+?>
+        </tbody>
+    </table> 
+    <br />
+    <table width="520" class="simpleList" >
+        <thead><tr>
+            <th><?php echo $lang_Recruit_ApplicationForm_Skills;?></th>
+            <th><?php echo $lang_Recruit_ApplicationForm_Years_of_experience;?></th>
+            <th><?php echo $lang_Recruit_ApplicationForm_Skill_Comments;?></th>
+        </tr></thead>
+        <tbody>
+            
+<?php    
+    foreach ($skillInfoArray as $skill) {
+?>               
+     <tr><td><?php echo CommonFunctions::escapeHtml($skill->getSkill());?></td>
+        <td><?php echo $skill->getYearsOfExperience();?></td>
+        <td><?php echo nl2br(wordwrap(trim(CommonFunctions::escapeHtml($skill->getComments())), 65));?></td>
+     </tr>
+<?php         
+    }
+?>
+        </tbody>
+    </table> 
+    <br />
+
+    <table width="520" class="simpleList" >
+        <thead><tr>
+            <th><?php echo $lang_hremplicenses_licentype;?></th>
+            <th><?php echo $lang_Recruit_ApplicationForm_License_Expiry_Date;?></th>
+        </tr></thead>
+        <tbody>
+            
+<?php            
+    foreach ($licenseInfoArray as $license) {
+?>               
+     <tr>
+        <td><?php echo CommonFunctions::escapeHtml($license->getLicense());?></td>
+        <td><?php echo LocaleUtil::getInstance()->formatDate($license->getExpiryDate());?></td>
+     </tr>
+<?php         
+    }
+?>
+        </tbody>
+    </table> 
+    <br />
+
+    <table width="520" class="simpleList" >
+        <thead><tr>
+            <th><?php echo $lang_Recruit_ApplicationForm_Language;?></th>
+            <th><?php echo $lang_Recruit_ApplicationForm_Fluency;?></th>
+        </tr></thead>
+        <tbody>
+            
+<?php
+    foreach ($languageInfoArray as $language) {
+?>               
+     <tr>
+        <td><?php echo CommonFunctions::escapeHtml($language->getLangName());?></td>
+        <td><?php echo CommonFunctions::escapeHtml($language->getFluencyName());?></td>
+     </tr>
+<?php         
+    }    
+?>
+        </tbody>
+    </table> 
+    <br />
+
+    <table width="520" class="simpleList" >
+        <thead><tr>
+            <th><?php echo $lang_Recruit_ApplicationForm_Education;?></th>
+            <th><?php echo $lang_hrEmpMain_major;?></th>
+            <th><?php echo $lang_Recruit_ApplicationForm_YearCompleted;?></th>
+            <th><?php echo $lang_Recruit_ApplicationForm_AverageScore;?></th>
+        </tr></thead>
+        <tbody>
+            
+<?php    
+    foreach ($educationInfoArray as $education) {
+?>               
+     <tr><td><?php echo CommonFunctions::escapeHtml($education->getEduCode());?></td>
+        <td><?php echo CommonFunctions::escapeHtml($education->getMajorSpecialization());?></td>
+        <td><?php echo $education->getYearCompleted();?></td>
+        <td><?php echo $education->getAverageScore();?></td>
+    </tr>
+<?php         
+    }            
+?>       
+        </tbody>
+    </table> 
+    <br />
         
         <div class="txtName"><?php echo $lang_Recruit_JobApplicationDetails_Status; ?></div>
         <div class="txtValue" style="white-space:nowrap;">

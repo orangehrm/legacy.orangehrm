@@ -13,6 +13,8 @@ require_once ROOT_PATH . '/lib/dao/SQLQBuilder.php';
 require_once ROOT_PATH . '/lib/common/CommonFunctions.php';
 require_once ROOT_PATH . '/lib/common/LocaleUtil.php';
 require_once ROOT_PATH . '/lib/common/UniqueIDGenerator.php';
+require_once ROOT_PATH . '/lib/models/eimadmin/Fluency.php';
+
 /**
  * Licensee: Anonymous
  * License Type: Purchased
@@ -50,6 +52,13 @@ class AppicantLanguageInformation {
 	const APPLICATION_ID = 'application_id';
 	private $applicationId;
 	private $application;
+
+
+    /**
+     * Values retrieved from other tables.
+     */
+    private $langName;
+    private $fluencyName;
 
 	public function getID() {
 		return $this->iD;
@@ -106,6 +115,22 @@ class AppicantLanguageInformation {
 	public function setLangCode($langCode) {
 		$this->langCode = $langCode;
 	}
+    
+    public function getLangName() {
+        return $this->langName;
+    }
+
+    public function setLangName($langName) {
+        $this->langName = $langName;
+    }    
+
+    public function getFluencyName() {
+        return $this->fluencyName;
+    }
+
+    public function setFluencyName($fluencyName) {
+        $this->fluencyName = $fluencyName;
+    }    
 
 	public function save() {
 		$sqlBuilder = new SQLQBuilder ( );
@@ -124,16 +149,29 @@ class AppicantLanguageInformation {
 	}
 
 	public static function getAppicantLanguageInformation($appId) {
-		$sqlBuilder = new SQLQBuilder ( );
-		$selectFields [] = " * ";
-		$selectConditions [] = self::APPLICATION_ID . "=" . $appId;
-		$sql = $sqlBuilder->simpleSelect ( self::TABLE, $selectFields, $selectConditions );
-		$conn = new DMLFunctions ( );
-		$result = $conn->executeQuery ( $sql );
-		$tempObj = new AppicantLanguageInformation();
-		$objArray = $tempObj->_buildObjArr ( $result );
-		//echo "<pre>"; print_r($objArray);exit;
-		return $objArray;
+        
+        $fields[] = 'a.' . self::ID;
+        $fields[] = 'a.' . self::APPLICATION_ID;
+        $fields[] = 'a.' . self::LANG_CODE;
+        $fields[] = 'a.' . self::FLUENCY_CODE;
+        $fields[] = 'b.lang_name';
+        $fields[] = 'c.' . Fluency::DESCRIPTION;
+        
+        $tables[0] = self::TABLE . ' a';
+        $tables[1] = 'hs_hr_language b';
+        $tables[2] = Fluency::TABLE . ' c';
+
+        $joinConditions[1] = 'a.' . self::LANG_CODE . ' = b.lang_code';
+        $joinConditions[2] = 'a.' . self::FLUENCY_CODE . ' = c.' . Fluency::FLUENCY_CODE;
+
+        $selectCondition[] = 'a.' . self::APPLICATION_ID . ' = ' . $appId;
+        
+        $sqlBuilder = new SQLQBuilder();
+        $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
+
+        $conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+		return self::_buildObjArr($result);
 	}
 
 	public function delete() {
@@ -149,14 +187,16 @@ class AppicantLanguageInformation {
 		//TODO: Implement Method
 	}
 
-	private function _buildObjArr($result) {
+	private static function _buildObjArr($result) {
 		$objectArray = array ();
 		while ( $row = mysql_fetch_assoc ( $result ) ) {
 			$obj = new AppicantLanguageInformation ( );
+            $obj->setID ( $row [self::ID] );
 			$obj->setApplicationId ( $row [self::APPLICATION_ID] );
 			$obj->setFluencyCode ( $row [self::FLUENCY_CODE] );
-			$obj->setID ( $row [self::ID] );
 			$obj->setLangCode ( $row [self::LANG_CODE] );
+            $obj->setLangName ( $row ['lang_name'] );
+            $obj->setFluencyName ( $row [Fluency::DESCRIPTION] );
 			$objectArray [] = $obj;
 		}
 		return $objectArray;

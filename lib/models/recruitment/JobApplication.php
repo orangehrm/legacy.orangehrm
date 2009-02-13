@@ -455,6 +455,46 @@ class JobApplication {
 		$this->salaryExpectation = $salaryExpectation;
 	}
 
+    public function setEducationInfo($educationInfo) {
+        $this->educationInfo = $educationInfo;
+    }
+
+    public function getEducationInfo() {
+        return $this->educationInfo;
+    }
+               
+    public function setEmploymentInfo($employmentInfo) {
+        $this->employmentInfo = $employmentInfo;
+    }
+
+    public function getEmploymentInfo() {
+        return $this->employmentInfo;
+    }
+            
+    public function setLicenseInfo($licenseInfo) {
+        $this->licenseInfo = $licenseInfo;
+    }
+
+    public function getLicenseInfo() {
+        return $this->licenseInfo;
+    }
+            
+    public function setSkillInfo($skillInfo) {
+        $this->skillInfo = $skillInfo;
+    }
+
+    public function getSkillInfo() {
+        return $this->skillInfo;
+    }
+            
+    public function setLanguageInfo($langInfo) {
+        $this->langInfo = $langInfo;
+    }
+            
+    public function getLanguageInfo() {
+        return $this->langInfo;
+    }
+
     /**
      * Returns event of given type
      * @param $eventType The event type
@@ -518,38 +558,28 @@ class JobApplication {
             throw new JobApplicationException("Invalid id", JobApplicationException::INVALID_PARAMETER);
         }
 
-
-//following four secions retrieve the education, employment, license and skills information of the applicant
-//Following have to be implemented.
-		$eduInfoArray = ApplicantEducationInfo::getApplicantEducationInfo($id);
-//		echo "<pre>";
-//        print_r($eduInfoArray);
-
-		$employmentInfoArray = ApplicantEmployementInfo::getApplicantEmploymentInfo($id);
-//		echo "<pre>";
-//        print_r($employmentInfoArray);
-
-        $licenseInfoArray = ApplicantLicenseInformation::getApplicantLicensesInformation($id);
-//		echo "<pre>";
-//        print_r($licenseInfoArray);
-
-		$skillInfoArray = ApplicantSkills::getApplicantSkills($id);
-//		echo "<pre>";
-//        print_r($skillInfoArray);
-
-		$langInfoArray = AppicantLanguageInformation::getAppicantLanguageInformation($id);
-//		echo "<pre>";
-//        print_r($langInfoArray);
-
-
-
         $conditions[] = 'a.' . self::DB_FIELD_ID . ' = ' . $id;
         $list = self::_getList($conditions);
+        
+        if (count($list) == 1) {
+            $application = $list[0];
+            
+            $eduInfoArray = ApplicantEducationInfo::getApplicantEducationInfo($id);
+            $application->setEducationInfo($eduInfoArray);
+            
+            $employmentInfoArray = ApplicantEmployementInfo::getApplicantEmploymentInfo($id);    
+            $application->setEmploymentInfo($employmentInfoArray);
+            
+            $licenseInfoArray = ApplicantLicenseInformation::getApplicantLicensesInformation($id);
+            $application->setLicenseInfo($licenseInfoArray);
+            
+            $skillInfoArray = ApplicantSkills::getApplicantSkills($id);
+            $application->setSkillInfo($skillInfoArray);
+            
+            $langInfoArray = AppicantLanguageInformation::getAppicantLanguageInformation($id);
+            $application->setLanguageInfo($langInfoArray);
+        }
         $application = (count($list) == 1) ? $list[0] : null;
-
-//echo "<pre>";
-//        print_r($application);
-//        exit;
 
         return $application;
     }

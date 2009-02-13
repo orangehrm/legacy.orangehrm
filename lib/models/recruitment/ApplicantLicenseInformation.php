@@ -94,19 +94,26 @@ class ApplicantLicenseInformation {
 		return $objArray;
 	}
 
-		public static function getApplicantLicensesInformation($appId){
-		$sqlBuilder = new SQLQBuilder ( );
-		$selectFields [] = " * ";
-		$selectConditions [] = self::APPLICATION_ID . "=" . $appId;
-		$sql = $sqlBuilder->simpleSelect ( self::TABLE, $selectFields, $selectConditions );
-		//echo $sql;
-		$conn = new DMLFunctions ( );
-		$result = $conn->executeQuery ( $sql );
-		$tempObj = new ApplicantLicenseInformation();
-		$objArray = $tempObj->_buildObjArr ( $result );
-		//echo "<pre>"; print_r($objArray);exit;
-		return $objArray;
+    public static function getApplicantLicensesInformation($appId){
+        
+        $fields[] = 'a.' . self::ID;
+        $fields[] = 'a.' . self::LICENSE_CODE;
+        $fields[] = 'a.' . self::EXPIRY_DATE;
+        $fields[] = 'a.' . self::APPLICATION_ID;
+        $fields[] = 'b.licenses_desc';
+        
+        $tables[0] = self::TABLE . ' a';
+        $tables[1] = 'hs_hr_licenses b';
 
+        $joinConditions[1] = 'a.' . self::LICENSE_CODE . ' = b.licenses_code';
+        $selectCondition[] = 'a.' . self::APPLICATION_ID . ' = ' . $appId;
+        
+        $sqlBuilder = new SQLQBuilder();
+        $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
+
+        $conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+        return self::_buildObjArr($result);
 	}
 
 	public function save() {
@@ -150,6 +157,8 @@ class ApplicantLicenseInformation {
 			$obj->setExpiryDate ( $row [self::EXPIRY_DATE] );
 			$obj->setID ( $row [self::ID] );
 			$obj->setLecenseCode ( $row [self::LICENSE_CODE] );
+            $obj->setLicense ( $row ['licenses_desc'] );
+            
 			$objectArray [] = $obj;
 		}
 		return $objectArray;

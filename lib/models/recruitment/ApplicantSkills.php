@@ -100,16 +100,26 @@ class ApplicantSkills {
 	}
 
 	public static function getApplicantSkills($appId) {
-		$sqlBuilder = new SQLQBuilder ( );
-		$selectFields [] = " * ";
-		$selectConditions [] = self::APPLICATION_ID . "=" . $appId;
-		$sql = $sqlBuilder->simpleSelect ( self::TABLE, $selectFields, $selectConditions );
-		$conn = new DMLFunctions ( );
-		$result = $conn->executeQuery ( $sql );
-		$tempObj = new ApplicantSkills();
-		$objArray = $tempObj->_buildObjArr ( $result );
-		//echo "<pre>"; print_r($objArray);exit;
-		return $objArray;
+            
+        $fields[] = 'a.' . self::ID;
+        $fields[] = 'a.' . self::APPLICATION_ID;
+        $fields[] = 'a.' . self::YEARS_OF_EXP;
+        $fields[] = 'a.' . self::COMMENTS;        
+        $fields[] = 'a.' . self::SKILL_CODE;
+        $fields[] = 'b.skill_name';
+        
+        $tables[0] = self::TABLE . ' a';
+        $tables[1] = 'hs_hr_skill b';
+
+        $joinConditions[1] = 'a.' . self::SKILL_CODE . ' = b.skill_code';
+        $selectCondition[] = 'a.' . self::APPLICATION_ID . ' = ' . $appId;
+        
+        $sqlBuilder = new SQLQBuilder();
+        $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectCondition);
+
+        $conn = new DMLFunctions();
+        $result = $conn->executeQuery($sql);
+        return self::_buildObjArr($result);
 	}
 
 	public function save() {
@@ -154,6 +164,7 @@ class ApplicantSkills {
 			$obj->setID ( $row [self::ID] );
 			$obj->setSkillCode ( $row [self::SKILL_CODE] );
 			$obj->setYearsOfExperience ( $row [self::YEARS_OF_EXP] );
+            $obj->setSkill($row ['skill_name'] );
 			$objectArray [] = $obj;
 		}
 		return $objectArray;
