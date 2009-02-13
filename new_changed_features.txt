@@ -2,7 +2,31 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.7
 
 	Bug fixes
 	---------
-    2544957 - Newly added fields in job appli should view forAdmin
+    2544957 Newly added fields in job appli should view forAdmin
+    2588628-One field has to be added in job application form
+    585622-orsb6-tab order incorrect in job application page
+    2588403-ors-Misspelled "Basis of employment" label in job appl form
+    2542471-(ors-b3)click apply button in job appln, "foreach" error
+    2542589-(ors-b3)click the apply button in appl frm leads to notice
+    2548839-ors-doc types files become empty & unusable after download
+    2556897-[ors-b3]blank page comes when add performance measures
+    2584598-Cant assign Performance measures,When creating Perf. Review
+    2585049-It is possible to view first 10 fluency only
+    2545077-[ors-b3]some additional fields has not implemented,appl form
+    2568667-Blank page shown for admin in all modules with short list
+    2585227-Applicants menu invisible for hiring manager
+    2585587-orsb6-Name fields no need to be text area
+    2587976-orsb6 -paginantion not done properly in Salary Reviews
+    2588494-Pagination not working properly in "Configure Application"
+    2588689-Field validation issues in job application form.
+    2542886-(ors-b3)delete button is not 100% visible in applin form
+    2556951-[ors-b3]performance review types status become blank
+    2584623-Option Buttons are not aligned properly in Job Application
+    2588024-orsb6-Sorting not properly done in salary reviews
+    2593651-orsb6-Page Heading wrong in configure application page
+    2504269-ORS-Sorting feature has not implemented (company property)
+    2593698-orsb6-Inconsistent Page Heading in configure application pg
+
 
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
 
@@ -20,10 +44,11 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
     2504269 - Sorting feature has not implemented (company property)
     2548650 - deletd employes & job titles not appear in job vacancies
     2556924 - browser get hang when define performance reviews
-    
+    2544921-[ors-b3]Calender control doesn't have arrow to skip a year
+
     Notes
     -----
-    As part of bug fix: (2556924 browser get hang when define performance reviews) reminders for 
+    As part of bug fix: (2556924 browser get hang when define performance reviews) reminders for
     shortlisted applicants are no longer sent at login time. Instead it has to be scheduled using cron.
     Eg:
     Run "crontab -e" on server and enter
@@ -31,7 +56,7 @@ New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
 
     To check for short listed applications every hour at :50 minutes pass the hour.
     This can be changed as needed.
-	
+
 New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.5
 
     New features
