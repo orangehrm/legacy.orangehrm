@@ -73,7 +73,7 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
     }
 
     .txtValue {
-        width: 300px;
+        width: 150px;
     }
 
     .txtName, .txtBox {
@@ -140,27 +140,66 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
 	</div>
 	<?php }	?>
   <div class="roundbox" style="width: 680px;">
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Position; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getJobTitleName()); ?></div>
         <div class="txtName"><?php echo $lang_Recruit_JobApplicationHistory_DateApplied; ?></div>
-        <div class="txtValue"><?php echo LocaleUtil::getInstance()->formatDate($application->getAppliedDateTime()); ?></div><br/>
-  		<div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Position; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getJobTitleName()); ?></div><br/>
-    	<div class="txtName"><?php echo $lang_Recruit_ApplicationForm_FirstName; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getFirstName()); ?></div><br />
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_MiddleName; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getMiddleName()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_LastName; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getLastName()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Street1; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getStreet1()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Street2; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getStreet2()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_City; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getCity()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Country; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getCountry()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_StateProvince; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getProvince()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Zip; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getZip()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Phone; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getPhone()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Mobile; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getMobile()); ?></div><br/>
+            <div class="txtValue"><?php echo LocaleUtil::getInstance()->formatDate($application->getAppliedDateTime()); ?></div>
+
+    	<div class="txtName"><?php echo $lang_Recruit_ApplicationForm_FirstName; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getFirstName()); ?></div>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_MiddleName; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getMiddleName()); ?></div>
+
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_LastName; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getLastName()); ?></div>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_DateOfBirth; ?></div>
+            <div class="txtValue"><?php echo LocaleUtil::getInstance()->formatDate($application->getDateOfbirth()); ?></div><br/>
+
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Gender; ?></div>
+            <div class="txtValue"><?php echo $application->getGender() == "m" ? $lang_Common_Male : $lang_Common_Female; ?></div>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Do_You_Have_A_Car; ?></div>
+            <div class="txtValue"><?php echo $application->getDoYouHaveACar() == "n" ? $lang_Common_No : $lang_Common_Yes; ?></div><br/>
+
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Street1; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getStreet1()); ?></div><br/>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Street2; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getStreet2()); ?></div><br/>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_City; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getCity()); ?></div>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_StateProvince; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getProvince()); ?></div><br/>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Zip; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getZip()); ?></div>               
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Country; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getCountry()); ?></div><br/>
+
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Phone; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getPhone()); ?></div>
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Mobile; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getMobile()); ?></div><br/>
+            
         <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Email; ?></div><div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getEmail()); ?></div><br/>
-        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Qualifications; ?></div><div class="txtBox"><pre style="font-family: Arial, Helvetica, sans-serif"><?php echo nl2br(wordwrap(trim(CommonFunctions::escapeHtml($application->getQualifications())), 65)); ?></pre></div><br/>
+
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_It_Experience; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getITExperience()); ?></div>            
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Salary_Expected; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getSalaryExpectation()); ?></div><br/>
+
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Basis_Of_Employement; ?></div>
+            <div class="txtValue"><?php echo CommonFunctions::escapeHtml($application->getBasisOfemployment()); ?></div>            
+        <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Availability_To_Start; ?></div>
+            <div class="txtValue"><?php echo LocaleUtil::getInstance()->formatDate($application->getAvailabilityToStart()); ?></div><br/>            
+
+
+            
+            
+        <!-- <div class="txtName"><?php echo $lang_Recruit_ApplicationForm_Qualifications; ?></div><div class="txtBox"><pre style="font-family: Arial, Helvetica, sans-serif"><?php echo nl2br(wordwrap(trim(CommonFunctions::escapeHtml($application->getQualifications())), 65)); ?></pre></div><br/> -->
         <?php 
         //$applicatione=new JobApplication();
        
         if(strlen($application->getCvType())>0){ ?>
-        	 <div class="txtName"><?php echo 'Applicant CV'; ?></div><a href="<?php echo $baseURL."&action=DownloadCv&id=".$application->getId() ?>">Download Cv</a><br/>       
+        	 <div class="txtName"><?php echo 'Applicant CV'; ?></div>
+                <div class="txtValue"><a href="<?php echo $baseURL."&action=DownloadCv&id=".$application->getId() ?>">Download Cv</a></div><br/>       
   <?php } ?>
         <br />
 

@@ -721,8 +721,15 @@ class JobApplication {
         $fields[18] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
         $fields[19] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
         $fields[20] = 'a.' . self::CV_TYPE;
-
-
+        
+        $fields[21] = 'a.' . self::DB_FIELD_DATE_OF_BIRTH;
+        $fields[22] = 'a.' . self::DB_FIELD_GENDER;
+        $fields[23] = 'a.' . self::DB_FIELD_SALARY_EXPECTED;
+        $fields[24] = 'a.' . self::DB_FIELD_IT_EXPERIENCE;
+        $fields[25] = 'a.' . self::DB_FIELD_AVALIABLIITY_TO_START;
+        $fields[26] = 'a.' . self::DB_FIELD_BASIS_OF_EMPLOYMENT;
+        $fields[27] = 'a.' . self::DB_FIELD_DO_YOU_HAVE_A_CAR;
+        
         $tables[0] = self::TABLE_NAME . ' a';
         $tables[1] = JobVacancy::TABLE_NAME .' b';
         $tables[2] = 'hs_hr_job_title c';
@@ -881,6 +888,14 @@ class JobApplication {
         $application->setAppliedDateTime($row[self::DB_FIELD_APPLIED_DATETIME]);
         $application->setEmpNumber($row[self::DB_FIELD_EMP_NUMBER]);
         $application->setCvType($row[self::CV_TYPE]);
+        
+        $application->setDateOfbirth($row[self::DB_FIELD_DATE_OF_BIRTH]);
+        $application->setGender($row[self::DB_FIELD_GENDER]);
+        $application->setSalaryExpectation($row[self::DB_FIELD_SALARY_EXPECTED]);
+        $application->setAvailabilityToStart($row[self::DB_FIELD_AVALIABLIITY_TO_START]);
+        $application->setBasisOfemployment($row[self::DB_FIELD_BASIS_OF_EMPLOYMENT]);
+        $application->setITExperience($row[self::DB_FIELD_IT_EXPERIENCE]);
+        $application->setDoYouHaveACar($row[self::DB_FIELD_DO_YOU_HAVE_A_CAR]);      
 
         if (isset($row[self::JOB_TITLE_NAME])) {
             $application->setJobTitleName($row[self::JOB_TITLE_NAME]);
