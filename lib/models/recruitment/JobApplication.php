@@ -931,24 +931,6 @@ class JobApplication {
         return $obj;
     }
 
-    public function fetchApplicationData(){
-    	$sqlBuilder=new SQLQBuilder();
-    	$fields[]='*';
-    	$sql=$sqlBuilder->simpleSelect(JobApplicationField::TABLE_FIELD_DATA,$fields);
-    	$conn = new DMLFunctions();
-        $result = $conn->executeQuery($sql);
-
-        $objectArray=array();
-        while ($result && ($row = mysql_fetch_assoc($result))) {
-        	$obj=new JobApplicationField();
-        	$obj->setApplicationId($row[JobApplicationField::applicationDataFieldApplicationId]);
-        	$obj->setId($row[JobApplicationField::applicationDataFieldId]);
-        	$obj->setFieldValue($row[JobApplicationField::applicationDataFieldValue]);
-        	$obj->setFiledValueText($row[JobApplicationField::applicationDataFieldSubValues]);
-            $objectArray[]=$obj;
-        }
-        return $objectArray;
-    }
 }
 
 class JobApplicationException extends Exception {

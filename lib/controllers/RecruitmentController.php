@@ -495,7 +495,7 @@ class RecruitmentController {
 	 */
 	public function showJobApplication($id) {
 		$path = '/templates/recruitment/applicant/viewJobApplication.php';
-		$fieldsData=JobApplication::fetchApplicationData();
+
 		$field=new JobApplicationField();
 		$fields=$field->fetchApplicationFields();
 
@@ -507,7 +507,7 @@ class RecruitmentController {
 		$objs['fluency'] = Fluency::filterFluencyCodes();
 
 		$objs['applicationFields']=$fields;
-		$objs['applicationData']=$fieldsData;
+
 		$countryinfo = new CountryInfo();
 		$objs['countryList'] = $countryinfo->getCountryCodes();
 

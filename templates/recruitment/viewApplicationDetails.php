@@ -75,11 +75,19 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
     .txtValue {
         width: 150px;
     }
-
+    
     .txtName, .txtBox {
         margin-left: 10x;
         padding-left: 4px;
         padding-right: 4px;
+    }
+
+    .longName {
+        width: 300px;
+    }
+
+    .longValue {
+        width: 300px;
     }
 
     .txtBox {
@@ -203,6 +211,25 @@ $backImgPressed = $picDir . 'btn_back_02.gif';
   <?php } ?>
         <br />
 
+        <br />
+        <br />
+<?php 
+        $extraFields = JobApplicationField::getApplicationData($application->getId());
+        foreach ($extraFields as $field) {
+            
+            if ($field->getFieldType() == 'radio') {
+                $value = ($field->getFieldValue() == 0) ? $lang_Common_No : $lang_Common_Yes;
+            } else {
+                $value = CommonFunctions::escapeHtml($field->getFieldValue());
+            }
+?>
+            <div class="txtName longName"><?php echo $field->getLable();?></div>
+            <div class="txtValue longValue"><?php echo $value;?></div><br />    
+<?php            
+        }        
+?>                
+        <br />
+        
         <div class="txtName"><?php echo $lang_Recruit_JobApplicationDetails_Status; ?></div>
         <div class="txtValue" style="white-space:nowrap;">
             <?php

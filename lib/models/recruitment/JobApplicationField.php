@@ -84,7 +84,7 @@ class JobApplicationField extends FormFieldBase {
 
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
-		$objectArray = $this->_buildObjArr ( $result );
+		$objectArray = self::_buildObjArr ( $result );
 		return $objectArray;
 	}
 
@@ -95,7 +95,7 @@ class JobApplicationField extends FormFieldBase {
 		$sql = $sqlBuilder->simpleSelect ( self::TABLE_FIELD, $fields, $conditions, JobApplicationField::tabOrder, "ASC" );
 		$conn = new DMLFunctions ( );
 		$result = $conn->executeQuery ( $sql );
-		$objectArray = $this->_buildObjArr ( $result );
+		$objectArray = self::_buildObjArr ( $result );
 		return $objectArray;
 	}
 
@@ -202,7 +202,7 @@ class JobApplicationField extends FormFieldBase {
 
 	}
 
-	protected function _buildObjArr($result) {
+	protected static function _buildObjArr($result) {
 		$objectArray = array ();
 		while ( $result && ($row = mysql_fetch_assoc ( $result )) ) {
 			$obj = new JobApplicationField ( );
@@ -219,10 +219,17 @@ class JobApplicationField extends FormFieldBase {
 			$obj->setRequired ( $row [JobApplicationField::required] );
 			$obj->setTabOrder ( $row [JobApplicationField::tabOrder] );
 			$obj->setSubFieldLogic ( $row [JobApplicationField::subFieldLogic] );
+            
+            if (isset($row[self::applicationDataFieldId])) {
+                $obj->setApplicationId($row[self::applicationDataFieldApplicationId]);
+                $obj->setFieldValue($row[self::applicationDataFieldValue]);
+                $obj->setFiledValueText($row[self::applicationDataFieldSubValues]);                
+            }
+            
 			$objectArray [] = $obj;
 		}
 		return $objectArray;
-	}
+	}   
 
 	public static function getListForView($pageNO = 0, $searchStr = '', $searchFieldNo = -1, $sortField = 0, $sortOrder = 'ASC') {
 		$count = 0;
@@ -251,6 +258,41 @@ class JobApplicationField extends FormFieldBase {
 
 		return $arrayDispList;
 	}
+    
+    public static function getApplicationData($applicationId) {
+        
+        $fields[] = 'b.' . self::id;
+        $fields[] = 'b.' . self::lable;
+        $fields[] = 'b.' . self::fieldType;
+        $fields[] = 'b.' . self::length;
+        $fields[] = 'b.' . self::validation;
+        $fields[] = 'b.' . self::errorMessage;
+        $fields[] = 'b.' . self::filedValueText;
+        $fields[] = 'b.' . self::toolTip;
+        $fields[] = 'b.' . self::height;
+        $fields[] = 'b.' . self::required;
+        $fields[] = 'b.' . self::tabOrder;
+        $fields[] = 'b.' . self::subFieldLogic;
+        $fields[] = 'b.' . self::deleted;
+        $fields[] = 'a.' . self::applicationDataFieldValue;
+        $fields[] = 'a.' . self::applicationDataFieldId;
+        $fields[] = 'a.' . self::applicationDataFieldApplicationId;
+        $fields[] = 'a.' . self::applicationDataFieldSubValues;
+
+        $tables[1] = self::TABLE_FIELD_DATA .' a';                
+        $tables[0] = self::TABLE_FIELD . ' b';
+
+        $joinConditions[1] = 'a.' . self::applicationDataFieldId . ' = b.' . self::id;
+        $selectConditions[] = 'a.' . self::applicationDataFieldApplicationId . ' = ' . $applicationId;
+
+        $sqlBuilder = new SQLQBuilder(); 
+        $sql = $sqlBuilder->selectFromMultipleTable($fields, $tables, $joinConditions, $selectConditions, null, 'b.' . self::tabOrder, 'ASC');
+        
+        $conn = new DMLFunctions();
+        $results = $conn->executeQuery($sql);
+        $objectArray = self::_buildObjArr($results);
+        return $objectArray;
+    }
 
 }
 
