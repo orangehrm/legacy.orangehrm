@@ -96,21 +96,18 @@ function resizeFrame(frameId){
 <div id="wrapper_r">
 <div id="header">
 <div id="header_l">
-<div id="header_r">
-<div id="logo"></div>
-<p></p>
-<table style="width: 285px; height: 104px;" border="0">
-	<tbody>
-		<tr>
-			<td><a
+<div id="" style="text-align: left; float: left; margin-left: 20px; margin-top: 18px;">
+<a
 				href="<?php
 				echo PARENT_SITE?>/index.php?option=com_content&amp;view=frontpage&amp;Itemid=1"><img
 				src="<?php
-				echo PARENT_SITE?>/images/stories/logo.bmp"
-				align="right" border="0" height="87" width="263"></a>&nbsp;</td>
-		</tr>
-	</tbody>
-</table>
+				echo PARENT_SITE?>/templates/at_manastiri/images/logo.png"
+				border="0" height="87" width="263"></a>
+</div>
+<div id="header_r">
+
+<p></p>
+
 &nbsp;&nbsp;&nbsp;&nbsp;</div>
 </div>
 </div>
@@ -178,7 +175,7 @@ function resizeFrame(frameId){
 <div id="whitebox_tr"></div>
 </div>
 </div>
-<div class="componentheading">Home</div>					
+<div class="componentheading" style="margin-left: 30px;">Home</div>					
 	<div class="contentheading" style="margin-left: 150px;"><?php echo $lang_Recruit_ApplicantVacancyList_Title ?></div>						
 	<iframe style="width: 100%; margin-left: 5px;" src="<?php echo $url; ?>" id="vacanyFrame"	name="vacanyFrame" frameborder="0" onload="javascript: resizeFrame('vacanyFrame')"></iframe>
 <div id="footerspacer"></div>

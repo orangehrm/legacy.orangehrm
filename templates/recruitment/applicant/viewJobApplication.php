@@ -208,6 +208,11 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 
 	function reset() {
 		$('fromJobApplication').reset();
+		$('employeement_info').innerHTML='';
+		$('skill_info').innerHTML='';
+		$('license_info').innerHTML='';
+		$('language_info').innerHTML='';
+		$('education_info').innerHTML='';
 	}
 
 	/*
@@ -749,7 +754,7 @@ $clearImgPressed = $picDir . 'btn_clear_02.gif';
 				onMouseOut="this.src='<?php echo $saveImg;?>';"
             	onMouseOver="this.src='<?php echo $saveImgPressed;?>';"
             	src="<?php echo $saveImg;?>">
-			<img onClick="reset(); id="resetBtn"
+			<img onClick="reset();" id="resetBtn"
 				onMouseOut="this.src='<?php echo $clearImg;?>';"
             	onMouseOver="this.src='<?php echo $clearImgPressed;?>';"
             	src="<?php echo $clearImg;?>">
