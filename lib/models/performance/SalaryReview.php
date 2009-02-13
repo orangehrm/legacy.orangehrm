@@ -483,7 +483,7 @@ class SalaryReview {
 	 * @param array   $selectCondition Array of select conditions to use.				const  = 'hs_hr_perf_measure_jobtitle';
 	 * @return array  Array of Salary Review objects. Returns an empty (length zero) array if none found.
 	 */
-	private static function _getList($selectCondition = null, $order) {
+	private static function _getList($selectCondition = null, $order=null) {
 
 	    $fields[0] = 'a.' . self::DB_FIELD_ID;
 	    $fields[1] = 'a.' . self::DB_FIELD_EMP_NUMBER;
