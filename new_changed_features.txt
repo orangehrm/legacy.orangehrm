@@ -1,4 +1,4 @@
-New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.6
+New & Changed Features for OrangeHRM ver 2.2.2.2 for ORS 0.1 beta.7
 
 	Bug fixes
 	---------
