@@ -627,6 +627,14 @@ class JobApplication {
         $fields[18] = 'c.jobtit_name AS ' . self::JOB_TITLE_NAME;
         $fields[19] = "CONCAT(d.`emp_firstname`, ' ', d.`emp_lastname`) AS " . self::HIRING_MANAGER_NAME;
         $fields[20] = 'a.' . self::CV_TYPE;
+        
+        $fields[21] = 'a.' . self::DB_FIELD_DATE_OF_BIRTH;
+        $fields[22] = 'a.' . self::DB_FIELD_GENDER;
+        $fields[23] = 'a.' . self::DB_FIELD_SALARY_EXPECTED;
+        $fields[24] = 'a.' . self::DB_FIELD_IT_EXPERIENCE;
+        $fields[25] = 'a.' . self::DB_FIELD_AVALIABLIITY_TO_START;
+        $fields[26] = 'a.' . self::DB_FIELD_BASIS_OF_EMPLOYMENT;
+        $fields[27] = 'a.' . self::DB_FIELD_DO_YOU_HAVE_A_CAR;
 
 
         $tables[0] = self::TABLE_NAME . ' a';
