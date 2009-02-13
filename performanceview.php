@@ -526,12 +526,8 @@ echo $pageStr;
       		<td class="r2_c3"><img src="<?php echo $themeDir;?>/pictures/spacer.gif" width="13" height="1" border="0" alt=""></td>
     		</tr>
     		<?php
-				if ((isset($list)) && ($list !='')) {
-
-					$lwLimit = $this->postArr['pageNO']?($this->postArr['pageNO']-1)*10:0;
-                    $upLimit = $lwLimit + 10;
-                    if(count($list)<$upLimit)$upLimit=count($list);
-                    for ($j = $lwLimit; $j < $upLimit; $j++) {
+    		if ((isset($list)) && ($list !='')) {
+					for ($j=0; $j < count($list);$j++) {
 	 		?>
     		<tr>
        		<td class="r2_c1"><img name="table_r2_c1" src="<?php echo $themeDir;?>/pictures/spacer.gif" width="1" height="1" border="0" alt=""></td>
