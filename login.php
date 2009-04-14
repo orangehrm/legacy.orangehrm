@@ -283,7 +283,7 @@ body {
               <td align="right" class="bodyTXT"><?php echo $lang_login_LoginName; ?> : </td>
               <td>
 <?php		if(isset($_POST['txtUserName'])) {?>
-              <input name="txtUserName" type="text" class="loginTXT" size="10" value="<?php echo $_POST['txtUserName']?>">
+              <input name="txtUserName" type="text" class="loginTXT" size="10" value="<?php echo CommonFunctions::escapeHtml($_POST['txtUserName']); ?>">
 <?php		} else { ?>
               <input name="txtUserName" type="text" class="loginTXT" size="10" >
 <?php		} ?>
