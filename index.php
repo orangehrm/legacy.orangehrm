@@ -1032,7 +1032,14 @@ function preloadAllImages() {
                     ?>
                       <TR>
                         <TD onMouseOver="ypSlideOutMenu.showMenu('menu16')" onMouseOut="ypSlideOutMenu.hideMenu('menu16')" onClick="ypSlideOutMenu.hideMenu('menu16')" vAlign=center align=left width=142 height=17>
-                        	<A class=rollmenu href="lib/controllers/CentralController.php?timecode=Time&action=View_Current_Timesheet&clientTimezoneOffset=" target="rightMenu"><?php echo $lang_Menu_Time_PersonalTimesheet; ?></A>
+
+<?php
+
+$timesheetLink = 'javascript: location.href = \'' . $_SESSION['WPATH'] . '/lib/controllers/CentralController.php?timecode=Time&action=View_Current_Timesheet&clientTimezoneOffset=\' + escape((new Date()).getTimezoneOffset() * -1);';
+
+?>
+				
+                        	<A class=rollmenu href="<?php echo $timesheetLink; ?>" target="rightMenu"><?php echo $lang_Menu_Time_PersonalTimesheet; ?></A>
                         </TD>
 					 </TR>
 					<?php
