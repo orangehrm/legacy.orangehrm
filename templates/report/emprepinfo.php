@@ -647,7 +647,7 @@ function disableJoiDatField() {
                   <td><table width="100%" border="0" cellpadding="5" cellspacing="0" class="">
     				 <tr>
  					  <td><?php echo $lang_repview_ReportName; ?></td>
-						<td ><input type="text"  name="txtRepName" value="<?php echo (isset($this->postArr['txtRepName'])  ? $this->postArr['txtRepName'] : '') ?>"  ></td>
+						<td ><input type="text"  name="txtRepName" value="<?php echo (isset($this->postArr['txtRepName'])  ? CommonFunctions::escapeHtml($this->postArr['txtRepName']) : '') ?>"  ></td>
 					</tr>
 
                   </table></td>
