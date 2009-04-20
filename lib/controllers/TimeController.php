@@ -500,15 +500,14 @@ class TimeController {
 
 	public function viewSelectEmployee() {
 
+		if ($_SESSION['isAdmin'] == 'No' && !$_SESSION['isSupervisor']) {
+		    die('You are not authorized to view this page');
+		}
 
 		$path = "/templates/time/selectEmployee.php";
 
 		$roles = array(authorize::AUTHORIZE_ROLE_ADMIN, authorize::AUTHORIZE_ROLE_SUPERVISOR);
 		$role = $this->authorizeObj->firstRole($roles);
-
-		if (!$role) {
-			$this->redirect('UNAUTHORIZED_FAILURE', '?timecode=Time&action=View_Timesheet');
-		}
 
 		$employees = null;
 		$pendingTimesheets = null;
@@ -1091,7 +1090,7 @@ class TimeController {
 			$gw = new ProjectAdminGateway();
 			$projectList = $gw->getProjectsForAdmin($_SESSION['empID'] , TRUE);
 		} else {
-			$this->redirect('UNAUTHORIZED_FAILURE', '?timecode=Time&action=View_Timesheet');
+			die('You are not authorized to view this page');
 		}
 
 
@@ -1136,6 +1135,11 @@ class TimeController {
 	}
 
 	public function viewSelectTimesheet() {
+		
+		if ($_SESSION['isAdmin'] == 'No' && !$_SESSION['isSupervisor']) {
+		    die('You are not authorized to view this page');
+		}
+		
 		$path="/templates/time/selectTimesheets.php";
 
 		$dataArr = null;
@@ -1515,6 +1519,11 @@ class TimeController {
 	}
 
 	public function viewShifts() {
+		
+		if ($_SESSION['isAdmin'] == 'No') {
+		    die('You are not authorized to view this page');
+		}
+		
 		$path = "/templates/time/workShifts.php";
 
 		$objs[] = Workshift::getWorkshifts();
