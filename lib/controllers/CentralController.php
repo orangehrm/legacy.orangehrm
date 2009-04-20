@@ -787,6 +787,10 @@ switch ($moduletype) {
 						}
 
 						if(isset($_GET['VIEW']) && $_GET['VIEW'] == 'MAIN' && $locRights['view']) {
+							
+							if ($_SESSION['isAdmin'] == 'No' && !$_SESSION['isSupervisor']) {
+							    die('You are not authorized to view this page');
+							}
 
 							$view_controller ->viewList($_GET,$_POST);
 							break;
