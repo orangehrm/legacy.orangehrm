@@ -1,6 +1,6 @@
 <h2>Database Value Changes</h2>
 
-<p id="message">OrangeHRM version 2.4.1 contains following database value changes. You can select or skip these changes.</p>
+<p id="message">OrangeHRM version 2.4.2 contains following database value changes. You can select or skip these changes.</p>
 
 <form name="frmDbValueChanges" method="post" action="./">
 <table width="400" border="0" cellspacing="5" cellpadding="5" align="center">

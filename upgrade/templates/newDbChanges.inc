@@ -1,6 +1,6 @@
 <h2>New Database Schema Changes</h2>
 
-<p id="message">Upgrader is now applying database schema changes introduced by version 2.4.1</p>
+<p id="message">Upgrader is now applying database schema changes introduced by version 2.4.2</p>
 
 <table width="400" border="0" cellspacing="5" cellpadding="5" align="center">
   <tr>

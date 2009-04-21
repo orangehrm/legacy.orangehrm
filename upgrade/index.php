@@ -53,25 +53,31 @@ if ($oldVersion == '2.2.2.2') {
 	$screenArr = array('welcome'=>0, 'versionCheck'=>1, 'dbInfo'=>2, 'dataImport'=>3, 'dbChanges'=>4, 'valueChanges'=>5, 'confFiles'=>6);
 	$oldTablesSqlPath = 'sql/2222tables.sql';
     $oldConstraintsSqlPath = 'sql/2222constraints.sql';
-    $newTablesSqlPath = 'sql/2222to241newTables.sql';
-    $newAlterSqlPath = 'sql/2222to241alterations.sql';
-    $newDefaultDataSqlPath = 'sql/2222to241defaultData.sql';
-    $upgrader = new Upgrade2222To241($oldConfObj);
+    $newTablesSqlPath = 'sql/2222to242newTables.sql';
+    $newAlterSqlPath = 'sql/2222to242alterations.sql';
+    $newDefaultDataSqlPath = 'sql/2222to242defaultData.sql';
+    $upgrader = new Upgrade2222To242($oldConfObj);
 } elseif ($oldVersion == '2.3') {
 	$steps = array('welcome', 'version check', 'database information', 'data import', 'database changes', 'configuration files');
 	$screenArr = array('welcome'=>0, 'versionCheck'=>1, 'dbInfo'=>2, 'dataImport'=>3, 'dbChanges'=>4, 'confFiles'=>5);
     $oldTablesSqlPath = 'sql/23tables.sql';
     $oldConstraintsSqlPath = 'sql/23constraints.sql';
-    $newTablesSqlPath = 'sql/23to241newTables.sql';
-    $newAlterSqlPath = 'sql/23to241alterations.sql';
-    $newDefaultDataSqlPath = 'sql/23to241defaultData.sql';
-    $upgrader = new Upgrade23To241($oldConfObj);
-} elseif ($oldVersion == '2.4') {
+    $newTablesSqlPath = 'sql/23to242newTables.sql';
+    $newAlterSqlPath = 'sql/23to242alterations.sql';
+    $newDefaultDataSqlPath = 'sql/23to242defaultData.sql';
+    $upgrader = new Upgrade23To242($oldConfObj);
+} elseif ($oldVersion == '2.4' || $oldVersion == '2.4.0.1') {
 	$steps = array('welcome', 'version check', 'database information', 'data import', 'configuration files');
 	$screenArr = array('welcome'=>0, 'versionCheck'=>1, 'dbInfo'=>2, 'dataImport'=>3, 'confFiles'=>4);
 	$oldTablesSqlPath = 'sql/24tables.sql';
     $oldConstraintsSqlPath = 'sql/24constraints.sql';
-    $upgrader = new Upgrade24To241($oldConfObj);
+    $upgrader = new Upgrade24To242($oldConfObj);
+} elseif ($oldVersion == '2.4.1') {
+	$steps = array('welcome', 'version check', 'database information', 'data import', 'configuration files');
+	$screenArr = array('welcome'=>0, 'versionCheck'=>1, 'dbInfo'=>2, 'dataImport'=>3, 'confFiles'=>4);
+	$oldTablesSqlPath = 'sql/24tables.sql';
+    $oldConstraintsSqlPath = 'sql/24constraints.sql';
+    $upgrader = new Upgrade241To242($oldConfObj);
 }
 
 /* Variables used for Ajax calls */
@@ -81,7 +87,7 @@ $confFilesAjax = 'No';
 
 /* Checking whether upgrader support curret version */
 $versionSupport = false;
-if ($oldVersion == '2.2.2.2' || $oldVersion == '2.3' || $oldVersion == '2.4') {
+if ($oldVersion == '2.2.2.2' || $oldVersion == '2.3' || $oldVersion == '2.4' || $oldVersion == '2.4.0.1' || $oldVersion == '2.4.1') {
     $versionSupport = true;
 }
 
@@ -131,18 +137,24 @@ if (!isset($_REQUEST['hdnState'])) {
 
 		case 'dataImport':
 			$tableName = $_REQUEST['table'];
+			$logHandle = fopen('upgraderLog.log', 'a');
 			if ($upgrader->importDataFromTable($tableName, $oldConfObj->dbname, $_SESSION['newDb'])) {
 			    echo 'Yes-'.$tableName;
+			    $logMessage = "Importing from ".$tableName." succeeded \n\n";
+			    fwrite($logHandle, $logMessage);
 			} else {
 				echo 'No-'.$tableName;
+			    $logMessage = "Importing from ".$tableName." failed \n Reason: ".mysql_error()."\n\n";
+			    fwrite($logHandle, $logMessage);
 			}
+			fclose($logHandle);
 			break;
 
 		case 'oldConstraints':
 			$dbName = $_SESSION['newDb'];
 			if ($upgrader->applyConstraints($oldConstraintsSqlPath, $dbName)) {
 				$dbChangesAjax = 'Yes';
-				if ($oldVersion == '2.4') {
+				if ($oldVersion == '2.4' || $oldVersion == '2.4.0.1' || $oldVersion == '2.4.1') {
 					$confFilesAjax = 'Yes';
 				    $currScreen = $screenArr['confFiles']; $currPage = 'templates/copyConfFiles.inc';
 				} else {

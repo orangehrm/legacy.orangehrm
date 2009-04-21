@@ -19,11 +19,11 @@
 
 require_once 'Upgrader.php';
 
-class Upgrade23To241 extends Upgrader {
+class Upgrade23To242 extends Upgrader {
 
 	public function isDataCompatible() {
 
-	/* By 2.4.1, hs_hr_empreport.rep_name and hs_pr_salary_grade.sal_grd_name were made unique */
+	/* By 2.4.2, hs_hr_empreport.rep_name and hs_pr_salary_grade.sal_grd_name were made unique */
 		$flag = true;
 		$errorArray = array();
 		// This query check whether there are duplicate report names
@@ -151,7 +151,7 @@ class Conf {
 		\$this->dbname	= '$dbName';
 		\$this->dbuser	= '$dbUser';
 		\$this->dbpass	= '$dbPassword';
-		\$this->version = '2.4.1';
+		\$this->version = '2.4.2';
 
 		\$this->emailConfiguration = dirname(__FILE__).'/mailConf.php';
 		\$this->errorLog =  realpath(dirname(__FILE__).'/../logs/').'/';
@@ -181,7 +181,7 @@ CONFCONT;
 		}
     $confContent = <<< CONFCONT
 <?php
-/* Upgraded from version 2.3 to 2.4.1 */
+/* Upgraded from version 2.3 to 2.4.2 */
 ?>
 CONFCONT;
 

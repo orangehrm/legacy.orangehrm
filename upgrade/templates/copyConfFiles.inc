@@ -11,7 +11,7 @@
     <td>Copying mailConf.php</td>
     <td><div id="mail"></div></td>
   </tr>
- <?php if($oldVersion == '2.3' || $oldVersion == '2.4') { ?>
+ <?php if($oldVersion == '2.3' || $oldVersion == '2.4' || $oldVersion == '2.4.0.1' || $oldVersion == '2.4.1') { ?>
   <tr>
     <td>Copying key.ohrm</td>
     <td><div id="enckey"></div></td>
@@ -30,7 +30,7 @@
 
 <script language="javascript" type="text/javascript">
 var actions = new Array();
-<?php if($oldVersion == '2.3' || $oldVersion == '2.4') { ?>
+<?php if($oldVersion == '2.3' || $oldVersion == '2.4' || $oldVersion == '2.4.0.1' || $oldVersion == '2.4.1') { ?>
 	actions[0] = "conf";
 	actions[1] = "mail";
 	actions[2] = "enckey";

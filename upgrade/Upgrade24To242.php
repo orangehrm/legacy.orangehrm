@@ -19,7 +19,7 @@
 
 require_once 'Upgrader.php';
 
-class Upgrade24To241 extends Upgrader {
+class Upgrade24To242 extends Upgrader {
 
 	public function isDataCompatible() {
 	    return true;
@@ -77,7 +77,7 @@ class Conf {
 		\$this->dbname	= '$dbName';
 		\$this->dbuser	= '$dbUser';
 		\$this->dbpass	= '$dbPassword';
-		\$this->version = '2.4.1';
+		\$this->version = '2.4.2';
 
 		\$this->emailConfiguration = dirname(__FILE__).'/mailConf.php';
 		\$this->errorLog =  realpath(dirname(__FILE__).'/../logs/').'/';
@@ -108,7 +108,7 @@ CONFCONT;
 		}
     $confContent = <<< CONFCONT
 <?php
-/* Upgraded from version 2.4 to 2.4.1 */
+/* Upgraded from version 2.4 to 2.4.2 */
 ?>
 CONFCONT;
 

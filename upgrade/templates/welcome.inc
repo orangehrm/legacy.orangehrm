@@ -1,4 +1,4 @@
-<h2>Welcome to OrangeHRM 2.4.1 Upgrader</h2>
+<h2>Welcome to OrangeHRM 2.4.2 Upgrader</h2>
 
 <p>Please enter your admin login details to proceed with the upgrader</p>
 

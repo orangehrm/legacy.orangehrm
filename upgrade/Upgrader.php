@@ -57,7 +57,8 @@ abstract class Upgrader {
 		$errorArray = array();
 
 		if(!mysql_select_db($dbName)) {
-		    $errorArray[] = "Cannot connect to the database";
+		    $errorArray[] = "Cannot connect to given database. Check whether the database exists and accessible.";
+		    $this->errorArray = $errorArray;
 		    return false;
 		}
 
@@ -65,12 +66,11 @@ abstract class Upgrader {
 		$result = mysql_query("SHOW TABLES");
 
 		if (mysql_num_rows($result) > 0) {
-		    $errorArray[] = "Given database is not empty";
+		    $errorArray[] = "Given database is not empty.";
+		    $this->errorArray = $errorArray;
 		    return false;
 		}
-
-		$this->errorArray = $errorArray;
-
+		
 		return true;
 
 	}
