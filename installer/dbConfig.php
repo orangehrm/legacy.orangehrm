@@ -88,8 +88,42 @@ function submitDBInfo() {
 document.frmInstall.actionResponse.value  = 'DBINFO';
 document.frmInstall.submit();
 }
+
+function showCreateMethod() {
+	
+	var createMethod = document.getElementById('dbCreateMethod').value;
+	
+	if (createMethod == "existing") {
+    
+		document.getElementById('pUname').style.display = "table-row"; 
+		document.getElementById('pPword').style.display = "table-row";
+		document.getElementById('useSameUser').style.display = "table-row";    
+		document.getElementById('pDescription').style.display = "block";
+		document.getElementById('dbMethod').innerHTML = "Do you want to use an existing empty database?";
+		document.getElementById('dbCreateMethod').value = "new";
+    
+	} else if (createMethod == "new") {
+
+		document.getElementById('pUname').style.display = "none"; 
+		document.getElementById('pPword').style.display = "none";
+		document.getElementById('useSameUser').style.display = "none";    
+		document.getElementById('pDescription').style.display = "none";
+		document.getElementById('dbMethod').innerHTML = "Do you want OrangeHRM to create the database and user for you?";
+		document.getElementById('dbCreateMethod').value = "existing";
+	    
+	}
+    
+}
+
 </script>
+
 <link href="style.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+#pUname, #pPword, #useSameUser, #pDescription, #dbCreateMethod {
+    display: none;
+}
+</style>
 
 <div id="content">
 	<h2>Step 2: Database Configuration</h2>
@@ -156,16 +190,15 @@ document.frmInstall.submit();
 	<td class="tdComponent">Database Name</td>
 	<td class="tdValues"><input type="text" name="dbName" value="<?php echo  isset($_SESSION['dbInfo']['dbName']) ? $_SESSION['dbInfo']['dbName'] : 'hr_mysql'?>" tabindex="3"></td>
 </tr>
-<tr>
+<tr id="pUname">
 	<td class="tdComponent">Priviledged Database Username</td>
 	<td class="tdValues"><input type="text" name="dbUserName" value="<?php echo  isset($_SESSION['dbInfo']['dbUserName']) ? $_SESSION['dbInfo']['dbUserName'] : 'root'?>" tabindex="4"> *</td>
 </tr>
-<tr>
+<tr id="pPword">
 	<td class="tdComponent">Priviledged Database User Password</td>
 	<td class="tdValues"><input type="password" name="dbPassword" value="<?php echo  isset($_SESSION['dbInfo']['dbPassword']) ? $_SESSION['dbInfo']['dbPassword'] : ''?>" tabindex="5" > *</td>
 </tr>
-
-<tr>
+<tr id="useSameUser">
 	<td class="tdComponent">Use the same Database User for OrangeHRM</td>
 	<td class="tdValues"><input type="checkbox" onclick="disableFields()" <?php echo isset($_POST['chkSameUser']) ? 'checked' : '' ?> name="chkSameUser" value="1" tabindex="6"></td>
 </tr>
@@ -183,13 +216,21 @@ document.frmInstall.submit();
 </tr>
 </table>
 <br />
+<div>
+<a href="javascript:showCreateMethod()" id="dbMethod">Do you want OrangeHRM to create the database and user for you?</a>
+</div>
+<br />
 <input class="button" type="button" value="Back" onclick="back();" tabindex="11"/>
 <input type="button" value="Next" onclick="submitDBInfo()" tabindex="10"/>
-
+<input type="hidden" id="dbCreateMethod" name="dbCreateMethod" value="existing" />
 <br /><br />
-<div>
+
+<div id="pDescription">
 <font size="1">* Priviledged Database User should have the rights to create databases, create tables, insert data into table, alter table structure and to create database users.</font>
-<br />
+</div>
+<div id="oDescription">
 <font size="1"># OrangeHRM database user should have the rights to insert data into table, update data in a table, delete data in a table.</font>
 </div>
+
+
 </div>
