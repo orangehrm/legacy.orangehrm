@@ -1,4 +1,21 @@
 New & Changed Features for OrangeHRM ver 2.4.2
+
+	New features
+	------------
+	Upgraders for upgrading to 2.4.2 from 2.2.2.2, 2.3, 2.4, 2.4.0.1, 2.4.1
+	
+    Bug fixes
+	---------
+	2760750 - XSS - Session Can Be Retrieved via a JavaScrip Cookie
+	2051051 - XSS vulnerability issue: In the report name
+	2081826 - Security: Ess can view or edit Time Mod info
+	2081819 - Security: Ess can view or edit Benefits Mod info
+	2081814 - Security: Ess can view or edit Leave Mod info
+	2081793 - Security: Ess can view or edit PIM Mod info
+	2081781 - Security: Ess can view or edit Admin Mod info
+	
+	2721087 - timesheet start from 1969-12-31
+	2613464 - Can't install if the user or database already created
     
 New & Changed Features for OrangeHRM ver 2.4.1
 
