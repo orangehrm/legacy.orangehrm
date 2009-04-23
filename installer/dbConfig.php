@@ -100,6 +100,7 @@ function showCreateMethod() {
 		document.getElementById('useSameUser').style.display = "table-row";    
 		document.getElementById('pDescription').style.display = "block";
 		document.getElementById('dbMethod').innerHTML = "Do you want to use an existing empty database?";
+		document.getElementById('dbMethod').style.fontWeight = "bold";
 		document.getElementById('dbCreateMethod').value = "new";
     
 	} else if (createMethod == "new") {
@@ -109,6 +110,7 @@ function showCreateMethod() {
 		document.getElementById('useSameUser').style.display = "none";    
 		document.getElementById('pDescription').style.display = "none";
 		document.getElementById('dbMethod').innerHTML = "Do you want OrangeHRM to create the database and user for you?";
+		document.getElementById('dbMethod').style.fontWeight = "bold";
 		document.getElementById('dbCreateMethod').value = "existing";
 	    
 	}
@@ -216,9 +218,24 @@ function showCreateMethod() {
 </tr>
 </table>
 <br />
-<div>
-<a href="javascript:showCreateMethod()" id="dbMethod">Do you want OrangeHRM to create the database and user for you?</a>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table">
+<tr>
+<td>
+<div id="dbMethod" style="padding:15px 10px 15px 2px">
+<b>
+Do you want OrangeHRM to create the database and user for you?
+</b>
 </div>
+</td>
+<td>
+<form>
+<input type="button" onclick="showCreateMethod()" value="Yes" style="margin:15px 0px 15px 10px" />
+</form>
+</td>
+</tr>
+</table>
+
 <br />
 <input class="button" type="button" value="Back" onclick="back();" tabindex="11"/>
 <input type="button" value="Next" onclick="submitDBInfo()" tabindex="10"/>
