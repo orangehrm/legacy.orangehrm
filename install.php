@@ -95,6 +95,14 @@ if (isset($_SESSION['error'])) {
 	unset($_SESSION['error']);
 }
 
+/* This $_SESSION['cMethod'] is used to determine wheter to use an existing database or a new one */
+
+$_SESSION['cMethod'] = 'existing';
+
+if (isset($_POST['cMethod'])) {
+	$_SESSION['cMethod'] = $_POST['cMethod'];
+} 
+
 if(isset($_POST['actionResponse']))
 	switch($_POST['actionResponse']) {
 

@@ -17,6 +17,7 @@
  * Boston, MA  02110-1301, USA
  *
  */
+
 ?>
 <script language="JavaScript">
 
@@ -74,58 +75,30 @@ function submitDBInfo() {
 		}
 	}
 
+<?php if ($_SESSION['cMethod'] == 'new') { ?>
+
 	if(frm.dbUserName.value == '') {
 		alert('DB User-name left Empty');
 		frm.dbUserName.focus();
 		return;
 	}
 
+
 	if(document.frmInstall.chkSameUser.checked && frm.dbOHRMUserName.value == '') {
 		alert('OrangeHRM DB User-name left Empty');
 		frm.dbOHRMUserName.focus();
 		return;
 	}
+
+<?php } ?>
+
 document.frmInstall.actionResponse.value  = 'DBINFO';
 document.frmInstall.submit();
-}
-
-function showCreateMethod() {
-	
-	var createMethod = document.getElementById('dbCreateMethod').value;
-	
-	if (createMethod == "existing") {
-    
-		document.getElementById('pUname').style.display = "table-row"; 
-		document.getElementById('pPword').style.display = "table-row";
-		document.getElementById('useSameUser').style.display = "table-row";    
-		document.getElementById('pDescription').style.display = "block";
-		document.getElementById('dbMethod').innerHTML = "Do you want to use an existing empty database?";
-		document.getElementById('dbMethod').style.fontWeight = "bold";
-		document.getElementById('dbCreateMethod').value = "new";
-    
-	} else if (createMethod == "new") {
-
-		document.getElementById('pUname').style.display = "none"; 
-		document.getElementById('pPword').style.display = "none";
-		document.getElementById('useSameUser').style.display = "none";    
-		document.getElementById('pDescription').style.display = "none";
-		document.getElementById('dbMethod').innerHTML = "Do you want OrangeHRM to create the database and user for you?";
-		document.getElementById('dbMethod').style.fontWeight = "bold";
-		document.getElementById('dbCreateMethod').value = "existing";
-	    
-	}
-    
 }
 
 </script>
 
 <link href="style.css" rel="stylesheet" type="text/css" />
-
-<style type="text/css">
-#pUname, #pPword, #useSameUser, #pDescription, #dbCreateMethod {
-    display: none;
-}
-</style>
 
 <div id="content">
 	<h2>Step 2: Database Configuration</h2>
@@ -192,18 +165,20 @@ function showCreateMethod() {
 	<td class="tdComponent">Database Name</td>
 	<td class="tdValues"><input type="text" name="dbName" value="<?php echo  isset($_SESSION['dbInfo']['dbName']) ? $_SESSION['dbInfo']['dbName'] : 'hr_mysql'?>" tabindex="3"></td>
 </tr>
-<tr id="pUname">
+<?php if ($_SESSION['cMethod'] == 'new') { // Couldn't use JavaScript since IE didn't support 'table-row' display property in CSS ?>
+<tr>
 	<td class="tdComponent">Priviledged Database Username</td>
 	<td class="tdValues"><input type="text" name="dbUserName" value="<?php echo  isset($_SESSION['dbInfo']['dbUserName']) ? $_SESSION['dbInfo']['dbUserName'] : 'root'?>" tabindex="4"> *</td>
 </tr>
-<tr id="pPword">
+<tr>
 	<td class="tdComponent">Priviledged Database User Password</td>
 	<td class="tdValues"><input type="password" name="dbPassword" value="<?php echo  isset($_SESSION['dbInfo']['dbPassword']) ? $_SESSION['dbInfo']['dbPassword'] : ''?>" tabindex="5" > *</td>
 </tr>
-<tr id="useSameUser">
+<tr>
 	<td class="tdComponent">Use the same Database User for OrangeHRM</td>
 	<td class="tdValues"><input type="checkbox" onclick="disableFields()" <?php echo isset($_POST['chkSameUser']) ? 'checked' : '' ?> name="chkSameUser" value="1" tabindex="6"></td>
 </tr>
+<?php } ?>
 <tr>
 	<td class="tdComponent">OrangeHRM Database Username</td>
 	<td class="tdValues"><input type="text" name="dbOHRMUserName" <?php echo isset($_POST['chkSameUser']) ? 'disabled' : '' ?> value="<?php echo  isset($_SESSION['dbInfo']['dbOHRMUserName']) ? $_SESSION['dbInfo']['dbOHRMUserName'] : 'orangehrm'?>" tabindex="7"> #</td>
@@ -217,6 +192,7 @@ function showCreateMethod() {
 	<td class="tdValues"><input type="checkbox" name="chkEncryption" tabindex="9"></td>
 </tr>
 </table>
+
 <br />
 
 <table cellpadding="0" cellspacing="0" border="0" class="table">
@@ -224,22 +200,28 @@ function showCreateMethod() {
 <td>
 <div id="dbMethod" style="padding:15px 10px 15px 2px">
 <b>
-Do you want OrangeHRM to create the database and user for you?
+<?php
+if ($_SESSION['cMethod'] == 'existing') {
+    echo 'Do you want OrangeHRM to create the database and user for you?';
+} else {
+    echo 'Do you want to use an existing empty database?';
+}
+
+?>
 </b>
 </div>
 </td>
 <td>
-<form>
-<input type="button" onclick="showCreateMethod()" value="Yes" style="margin:15px 0px 15px 10px" />
-</form>
+<input type="hidden" name="cMethod" value="<?php echo $_SESSION['cMethod'] == 'existing'?'new':'existing'; ?>" />
+<input type="submit" name="Yes" value="Yes" style="margin:15px 0px 15px 10px" />
 </td>
 </tr>
 </table>
 
 <br />
+<input type="hidden" id="dbCreateMethod" name="dbCreateMethod" value="<?php echo $_SESSION['cMethod'] == 'existing'?'existing':'new'; ?>" />
 <input class="button" type="button" value="Back" onclick="back();" tabindex="11"/>
 <input type="button" value="Next" onclick="submitDBInfo()" tabindex="10"/>
-<input type="hidden" id="dbCreateMethod" name="dbCreateMethod" value="existing" />
 <br /><br />
 
 <div id="pDescription">
@@ -248,6 +230,5 @@ Do you want OrangeHRM to create the database and user for you?
 <div id="oDescription">
 <font size="1"># OrangeHRM database user should have the rights to insert data into table, update data in a table, delete data in a table.</font>
 </div>
-
 
 </div>
