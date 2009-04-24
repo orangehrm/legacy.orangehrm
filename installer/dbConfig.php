@@ -67,12 +67,6 @@ function submitDBInfo() {
 		alert('DB Name left Empty!');
 		frm.dbName.focus();
 		return;
-	} else {
-		if (frm.dbName.value.indexOf('-') != -1) {
-			alert('DB Name cannot include hyphens!');
-			frm.dbName.focus();
-			return;
-		}
 	}
 
 <?php if ($_SESSION['cMethod'] == 'new') { ?>
