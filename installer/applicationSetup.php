@@ -52,7 +52,8 @@ function createDB() {
 	} elseif ($_SESSION['dbCreateMethod'] == 'new') { // If the user wants OrangeHRM to create the database for him
 
 		connectDB();
-		mysql_query("CREATE DATABASE " . $_SESSION['dbInfo']['dbName']);
+		$dbName = '`'.$_SESSION['dbInfo']['dbName'].'`';
+		mysql_query("CREATE DATABASE " . $dbName);
 
 		if(!@mysql_select_db($_SESSION['dbInfo']['dbName'])) {
 			$mysqlErrNo = mysql_errno();
