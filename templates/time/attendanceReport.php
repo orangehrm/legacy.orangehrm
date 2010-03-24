@@ -257,6 +257,9 @@ $count = count($recordsArr);
    margin-right: 10px;
 }
 
+.hasPunch {
+	color : gray;
+}
 </style>
 
 <div class="outerbox">
@@ -371,31 +374,43 @@ echo '</div>';
   <tbody>
 
 <?php 
-    for ($i=0; $i<$count; $i++) { 
 
-	$className="odd";
-	if (($i%2) == 0) {
-		$className="even";
-	}
+	$i = 0;
+	foreach ($recordsArr as $attendanceRow) {
+
+		$className="odd";
+		if (($i%2) == 0) {
+			$className="even";
+		}
+		
+		$hasPunchedStyleClass = "";
+		if($attendanceRow->duration == 0) {
+			$hasPunchedStyleClass = "hasPunch";
+		}
 
 ?>
-
     <tr class="<?php echo $className; ?>">
-        <td><?php echo $recordsArr[$i]->employeeName;?></td>
-        <td><?php echo $recordsArr[$i]->inTime; ?></td>
-        <td style="text-align:right;padding-right:80px">
+    <?php if($attendanceRow->employeeName == null) {?>
+    			 <td class="<?php echo $hasPunchedStyleClass;?>"><?php echo $records['empName'];?></td>
+    <?php } else { ?>
+    			 <td class="<?php echo $hasPunchedStyleClass;?>"><?php echo $attendanceRow->employeeName;?></td>
+    <?php }?>
+       
+        <td class="<?php echo $hasPunchedStyleClass;?>"><?php echo $attendanceRow->inTime; ?></td>
+        <td class="<?php echo $hasPunchedStyleClass;?>" style="text-align:right;padding-right:80px">
         <?php
-        if ($recordsArr[$i]->duration > 0) {
-        	echo "<a href=\"javascript:showDetailedReport('{$recordsArr[$i]->getPunchInTime()}',{$recordsArr[$i]->employeeId},'".addcslashes($recordsArr[$i]->employeeName,"'")."')\" style=\"text-decoration:underline\">{$recordsArr[$i]->duration}</a>";
+        if ($attendanceRow->duration > 0) {
+        	echo "<a href=\"javascript:showDetailedReport('{$attendanceRow->inTime}',{$attendanceRow->employeeId},'".addcslashes($attendanceRow->employeeName,"'")."')\" class='".$hasPunchedStyleClass."'  style=\"text-decoration:underline\">{$attendanceRow->duration}</a>";
         } else {
-        	echo $recordsArr[$i]->duration;
+        	echo $attendanceRow->duration;
         }
 
         ?>
         </td>
     </tr>
 
-<?php } ?>
+<?php $i++;
+	 } ?>
 
  </tbody>
 </table>
