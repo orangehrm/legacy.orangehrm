@@ -545,7 +545,10 @@ foreach ($grid as $key => $value) { // Grid iteration: Begins
   		durationInput.id = 'txtDuration-' + rowNo + '-' + <?php echo $i; ?>;
   		durationInput.maxLength = 5;
   		durationCell.appendChild(durationInput);
-		
+
+  		var extBr = document.createElement('br');
+  		durationCell.appendChild(extBr);
+  		
 		/* Adding text area */
 		var durationComment = document.createElement('textarea');
 		var durationCommentName = 'txtComment-' + rowNo + '-' + <?php echo $i; ?>;
@@ -559,6 +562,7 @@ foreach ($grid as $key => $value) { // Grid iteration: Begins
 		} else {
 		    durationComment.setAttribute("style","display:block");
 		}
+
 		durationCell.appendChild(durationComment);
 		
 		row.appendChild(durationCell);
