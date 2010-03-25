@@ -15,6 +15,7 @@ New & Changed Features for OrangeHRM ver 2.5.0.4
 	2973135 - character % is showing strange behaviour in activity list
 	2976312 - Textbox displayed incorrectly for special chars in Customers
 	2975814 - Create customer with (') leads stopper in windows
+	2976380 -  Activity ddr-additional character shows against special char
 
 New & Changed Features for OrangeHRM ver 2.5.0.3
 
