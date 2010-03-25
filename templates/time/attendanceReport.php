@@ -556,8 +556,7 @@ echo '</div>';
         <td><?php echo $outDate ;?></td>
         <td><?php echo $outTime ;?></td>
         <td class="note-td"><?php echo $recordsArr[$i]->getOutNote() ;?></td>
-        <td></td>
-        <td></td>
+        <td><?php echo $recordsArr[$i]->getDuration(); ?></td>       
     </tr>
 
 	<?php } } // Records array: Ends ?>
