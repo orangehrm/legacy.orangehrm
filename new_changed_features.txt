@@ -13,6 +13,8 @@ New & Changed Features for OrangeHRM ver 2.5.0.4
 	2973046 - Some special chars are displayed outside the textbox
 	2973051 - Hide/Add Comments button's caption is not displayed fully
 	2973135 - character % is showing strange behaviour in activity list
+	2976312 - Textbox displayed incorrectly for special chars in Customers
+	2975814 - Create customer with (') leads stopper in windows
 
 New & Changed Features for OrangeHRM ver 2.5.0.3
 
