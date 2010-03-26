@@ -723,6 +723,9 @@ if ($_SESSION['isAdmin']!='Yes') {
 	$menu[] = $menuItem;
 }
 
+$menuItem = new MenuItem("bug", "Payroll", "javascript: f = function(){ window.open('./payrollOpener.php','Payroll','width=600,height=600,scrollbars=yes'); }; f();");
+$menu[] = $menuItem;
+
 /* Start bug tracker menu */
 $menuItem = new MenuItem("bug", "Bug Tracker", "./index.php?menu_no_top=bug");
 $menuItem->setCurrent($_GET['menu_no_top']=="bug");

@@ -498,6 +498,8 @@ license/LICENSE.TXT -text
 /mtview.php -text
 /new_changed_features.txt -text
 /orangehrm-quick-start-guide.html -text
+/payroll.php -text
+/payrollOpener.php -text
 plugins/AbstractPluginCommon.php -text
 plugins/AllTests.php -text
 plugins/InterfacePluginCommon.php -text
