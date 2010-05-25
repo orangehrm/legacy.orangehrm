@@ -1,3 +1,9 @@
+New & Changed Features for OrangeHRM ver 2.5.0.5
+
+	Bug Fixes
+	---------
+	3000555 - sanitize the input data in jobs.php
+
 New & Changed Features for OrangeHRM ver 2.5.0.4
 
 	Bug Fixes
