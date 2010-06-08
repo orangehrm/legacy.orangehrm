@@ -293,9 +293,14 @@ class RepViewController {
 			trigger_error("Unauthorized access", E_USER_NOTICE);
 		}
 
+      $screenParam = array('repcode' => $_GET['repcode'], 'capturemode' => $_GET['capturemode']);
+      $tokenGenerator = CSRFTokenGenerator::getInstance();
+      $tokenGenerator->setKeyGenerationInput($screenParam);
+      $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+      
 		switch ($getArr['repcode']) {
 
-			case 'EMPDEF' : //if ()
+			case 'EMPDEF' : 
 							$form_creator ->formPath = '/templates/report/emprepinfo.php';
 
 							$form_creator->popArr['arrAgeSim'] = array ('Less Than' => '>','Greater Than' =>'<','Range' =>'range');
@@ -318,7 +323,7 @@ class RepViewController {
 							$form_creator->popArr['arrEmpType'] = $empstat ->getEmpStat();
 							$form_creator->popArr['languageList'] = $langObj->getLang();
 							$form_creator->popArr['skillList'] = $skillObj->getSkillCodes();
-
+                     $form_creator->popArr['token'] = $token;
 
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $edit = $report->filterReport($getArr['id']);

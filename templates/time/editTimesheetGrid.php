@@ -25,6 +25,9 @@ $projectsCount = count($projectsList);
 $startDateStamp = $records['startDateStamp'];
 $endDateStamp = $records['endDateStamp'];
 
+$token = $records['token'];
+unset($records['token']);
+
 if (isset($records['message'])) {
 
 	$message = '';
@@ -121,6 +124,7 @@ td {
 </div>
 
 <form id="frmTimegrid" name="frmTimegrid" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?timecode=Time&action=Update_Timeesheet_Grid">
+   <input type="hidden" value="<?php echo $token; ?>" name="token" />
 <table border="0" cellpadding="0" cellspacing="0" width="100%" id="tblTimegrid">
 	<thead>
 

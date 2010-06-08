@@ -238,7 +238,6 @@ $locRights['repDef'] = ($ugDet !== null && $ugDet[0][2] == '1') ? true : false;
 $_SESSION['localRights'] = $locRights;
 
 
-
 switch ($moduletype) {
 
 	case 'admin' 	:  // beg. admin module
