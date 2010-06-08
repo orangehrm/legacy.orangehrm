@@ -1046,7 +1046,7 @@ tableDisplayStyle = "table";
 <?php
     $escapedPane = isset($this->postArr['pane']) ? CommonFunctions::escapeHtml($this->postArr['pane']) : '';
 ?>
-
+<input type="hidden" name="empToken" value="<?php  echo isset($this->popArr['empToken'])?$this->popArr['empToken']:'';?>" />
 <input type="hidden" name="sqlState" />
 <input type="hidden" name="pane" value="<?php echo (isset($escapedPane) && $escapedPane!='')?$escapedPane:''?>" />
 <input type="hidden" name="txtShowAddPane" />
