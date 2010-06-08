@@ -481,6 +481,7 @@ lib/models/time/WorkshiftTest.php -text
 lib/observers/CustomFieldsDeletionObserver.php -text
 lib/test.bat -text
 lib/utils/AllTests.php -text
+lib/utils/CSRFTokenGenerator.php -text
 lib/utils/ConstraintHandler.php -text
 lib/utils/ConstraintHandlerTest.php -text
 lib/utils/InstallUtilTest.php -text
