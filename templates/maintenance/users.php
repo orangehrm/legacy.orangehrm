@@ -350,8 +350,13 @@ $formAction .= "&amp;isAdmin={$adminUser}";
 			$i = 0;
 
 			foreach ($employeeSearchList as $record) {
+          ?>
+                var empItem = new Array();
+          <?php
+                foreach ($record as $item)
+                $line = CommonFunctions::escapeForJavascript(implode("', '", $record));
 		?>
-			employeeSearchList[<?php echo $i++; ?>] = new Array('<?php echo implode("', '", $record); ?>');
+			employeeSearchList[<?php echo $i++; ?>] = new Array('<?php echo $line; ?>');
 		<?php
 			}
 		?>
