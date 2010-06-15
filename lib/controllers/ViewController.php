@@ -229,6 +229,12 @@ class ViewController {
 						$this->reDirect($getArr);
 						break;
 			default:
+
+                  $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => $_GET['VIEW']);
+                  $tokenGenerator = CSRFTokenGenerator::getInstance();
+                  $tokenGenerator->setKeyGenerationInput($screenParam);
+                  $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                  
 						$form_creator = new FormCreator($getArr,$postArr);
 						$form_creator ->formPath ='/view.php';
 
@@ -250,7 +256,7 @@ class ViewController {
 						} else {
 							$form_creator ->popArr['temp'] = $this->countList(trim($getArr['uniqcode']), '', -1, $esp);
 						}
-
+                  $form_creator ->popArr['token'] = $token;
 						$form_creator->display();
 
 						break;
@@ -258,6 +264,10 @@ class ViewController {
 	}
 
     function delParser($indexCode,$arrList) {
+         $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+         $tokenGenerator = CSRFTokenGenerator::getInstance();
+         $tokenGenerator->setKeyGenerationInput($screenParam);
+         $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
         $this->indexCode=$indexCode;
 
         switch ($this->indexCode)  {
@@ -298,45 +308,62 @@ class ViewController {
 	            break;
 
         	case 'LOC' :
-
 	            $this->location = new models_eimadmin_Location();
-	            $res = $this->location->delLocation($arrList);
+               $res = false;
+               if($token == $_POST['token']) {
+                  $res = $this->location->delLocation($arrList);
+               }
 	            break;
 
 			case 'SKI' :
-
-				$this-> skills = new Skills();
-				$res = $this-> skills -> delSkills($arrList);
+               $this-> skills = new Skills();
+               $res = false;
+               if($token == $_POST['token']) {
+                  $res = $this-> skills -> delSkills($arrList);
+               }
 				break;
 
 			case 'ETH' :
 
 				$this-> ethnicrace = new EthnicRace();
-				$res = $this-> ethnicrace -> delEthnicRace($arrList);
+            $res = false;
+            if($token == $_POST['token']) {
+               $res = $this-> ethnicrace -> delEthnicRace($arrList);
+            }
 				break;
 
 			case 'MEM' :
-
 				$this-> membershiptype = new MembershipType();
-				$res = $this-> membershiptype -> delMembershipType($arrList);
+            $res = false;
+            if($token == $_POST['token']) {
+               $res = $this-> membershiptype -> delMembershipType($arrList);
+            }
 				break;
 
 		case 'NAT' :
 
 			$this-> nationalityinfo = new NationalityInfo();
-			$res = $this-> nationalityinfo -> delNationalityInfo($arrList);
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this-> nationalityinfo -> delNationalityInfo($arrList);
+         }
 			break;
 
 		case 'LAN':
-
+         $res = false;
 			$this-> languageinfo = new LanguageInfo();
-			$res = $this-> languageinfo -> delLanguageInfo($arrList);
+         if($token == $_POST['token']) {
+            $res = $this-> languageinfo -> delLanguageInfo($arrList);
+         }
+
 			break;
 
 		case 'MME':
-
 			$this-> membershipinformation = new MembershipInfo();
-			$res = $this-> membershipinformation -> delMembershipInfo($arrList);
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this-> membershipinformation -> delMembershipInfo($arrList);
+         }
 			break;
 
 		case 'SGR':
@@ -346,9 +373,15 @@ class ViewController {
 			break;
 
     	case 'EDU':
-
-			$this-> qual = new Education();
-			$res = $this-> qual -> delEducation($arrList);
+         $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+         $tokenGenerator = CSRFTokenGenerator::getInstance();
+         $tokenGenerator->setKeyGenerationInput($screenParam);
+         $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+         $res = false;
+         if($token == $_POST['token']) {
+            $this-> qual = new Education();
+            $res = $this-> qual -> delEducation($arrList);
+         }
 			break;
 
 		case 'EEC':
@@ -358,9 +391,16 @@ class ViewController {
 			break;
 
         case 'LIC':
-
+         $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+         $tokenGenerator = CSRFTokenGenerator::getInstance();
+         $tokenGenerator->setKeyGenerationInput($screenParam);
+         $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 			$this-> Licenses = new Licenses();
-			$res = $this-> Licenses -> delLicenses($arrList);
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this-> Licenses -> delLicenses($arrList);
+         }
 			break;
 
 		case 'CUS':
@@ -437,7 +477,11 @@ class ViewController {
 		case 'USR':
 
 			$this-> users = new Users();
-			$res = $this-> users -> delUsers($arrList);
+         $res = false;
+          if($token == $_POST['token']) {
+            $res = $this-> users -> delUsers($arrList);
+          }
+			
 			break;
 
 		case 'USG':
@@ -1263,9 +1307,17 @@ class ViewController {
 									break;
 
 				case 'CST'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
 									$compstruct = new CompStruct();
 									$compstruct = $object;
-									$res = $compstruct -> addCompStruct();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $compstruct -> addCompStruct();
+                           }
 									break;
 
 				case 'BNK'  :		$bankinfo = new BankInfo();
@@ -1338,24 +1390,54 @@ class ViewController {
 									$res = $jdcat -> addJDCategory();
 									break;
 
-				case 'LOC'  :		$loc = new models_eimadmin_Location();
-									$loc = $object;
-									$res = $loc -> addLocation();
+				case 'LOC'  :	$loc = new models_eimadmin_Location();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $loc = $object;
+                              $res = $loc -> addLocation();
+                           }
 									break;
 
-                case 'TCP'  :       $tcp = new CompProperty();
-                                    $tcp = $object;
-                                    $res = $tcp -> addProperty();
-                                    break;
+          case 'TCP'  :
+                              $screenParam = array('uniqcode' => $_GET['uniqcode'], 'action' => 'add');
+                              $tokenGenerator = CSRFTokenGenerator::getInstance();
+                              $tokenGenerator->setKeyGenerationInput($screenParam);
+                              $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                              $res = false;
+                              if($token == $_POST['token']) {
+                                 $tcp = new CompProperty();
+                                 $tcp = $object;
+                                 $res = $tcp -> addProperty();
+                              }
+                              break;
 
-				case 'MEM'  :		$memtype = new MembershipType();
+				case 'MEM'  :
+                              $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                              $tokenGenerator = CSRFTokenGenerator::getInstance();
+                              $tokenGenerator->setKeyGenerationInput($screenParam);
+                              $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $memtype = new MembershipType();
 									$memtype = $object;
-									$res = $memtype -> addMembershipType();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $memtype -> addMembershipType();
+                           }
 									break;
 
 				case 'NAT'  :		$natinfo = new NationalityInfo();
 									$natinfo = $object;
-									$res = $natinfo -> addNationalityInfo();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $natinfo -> addNationalityInfo();
+                           }
 									break;
 
 				case 'NCB'  :		$noncashben = new NonCashBen();
@@ -1397,13 +1479,29 @@ class ViewController {
 									break;
 
 				case 'SKI'  :		$skill = new Skills();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
 									$skill = $object;
-									$res = $skill -> addSkills();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $skill -> addSkills();
+                           }
 									break;
 
 				case 'ETH'  :		$ethnicrace = new EthnicRace();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
 									$ethnicrace = $object;
-									$res = $ethnicrace -> addEthnicRace();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $ethnicrace -> addEthnicRace();
+                           }
 									break;
 
 				case 'EXA'  :		$extcainfo = new ExtraCurActInfo();
@@ -1413,7 +1511,14 @@ class ViewController {
 
 				case 'MME'  :		$membinfo = new MembershipInfo();
 									$membinfo = $object;
-									$res = $membinfo -> addMembershipInfo();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $membinfo -> addMembershipInfo();
+                           }
 									break;
 
 				case 'JDK'  :		$jdkr = new JDKra();
@@ -1423,7 +1528,14 @@ class ViewController {
 
 				case 'LAN'  :		$laninfo = new LanguageInfo();
 									$laninfo  = $object;
-									$res = $laninfo -> addLanguageInfo();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $laninfo -> addLanguageInfo();
+                           }
 									break;
 
 				case 'RLG'  :		$relinfo = new ReligionInfo();
@@ -1446,9 +1558,18 @@ class ViewController {
 									$res = $excurac -> addExtraCurActInfo();
 									break;
 
-				case 'EDU'  :		$edu = new Education();
+				case 'EDU'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+                           $edu = new Education();
 									$edu = $object;
-									$res = $edu -> addEducation();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $edu -> addEducation();
+                           }
 									break;
 
 				case 'SSK'  :		$subsk = new SubSkillInfo();
@@ -1496,9 +1617,17 @@ class ViewController {
 									$res = $eeojobcat -> addEEOJobCat();
 									break;
 
-				case 'LIC'  :		$licenses = new Licenses();
+				case 'LIC'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $licenses = new Licenses();
 									$licenses = $object;
-									$res = $licenses -> addLicenses();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $licenses -> addLicenses();
+                           }
 									break;
 
 
@@ -1608,14 +1737,32 @@ class ViewController {
 
 									break;
 
-				case 'USR'  :		$users = new Users();
+				case 'USR'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode', 'isAdmin' => $_GET['isAdmin']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $users = new Users();
 									$users = $object;
-									$res = $users -> addUsers();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $users -> addUsers();
+                           }
 									break;
 
-				case 'USG'  :		$usergroups = new UserGroups();
+				case 'USG'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $usergroups = new UserGroups();
 									$usergroups = $object;
-									$res = $usergroups -> addUserGroups();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $usergroups -> addUserGroups();
+                           }
 									$id = $usergroups ->getUserGroupID();
 									break;
 
@@ -1840,19 +1987,42 @@ class ViewController {
 									$res = $jdcat -> updateJDCategory();
 									break;
 
-				case 'LOC'  :		$loc = new models_eimadmin_Location();
+				case 'LOC'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $loc = new models_eimadmin_Location();
 									$loc = $object;
-									$res = $loc -> updateLocation();
+                           $res =  false;
+                           if($token == $_POST['token']) {
+                              $res = $loc -> updateLocation();
+                           }
 									break;
 
-				case 'MEM'  :		$memtype = new MembershipType();
+				case 'MEM'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode', 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $memtype = new MembershipType();
 									$memtype = $object;
-									$res = $memtype -> updateMembershipType();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $memtype -> updateMembershipType();
+                           }
 									break;
 
 				case 'NAT'  :		$natinfo = new NationalityInfo();
 									$natinfo = $object;
-									$res = $natinfo -> updateNationalityInfo();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode', 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $natinfo -> updateNationalityInfo();
+                           }
 									break;
 
 				case 'NCB'  :		$noncashben = new NonCashBen();
@@ -1881,13 +2051,33 @@ class ViewController {
 									break;
 
 				case 'SKI'  :		$skill = new Skills();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 									$skill = $object;
-									$res = $skill -> updateSkills();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $skill -> updateSkills();
+                           }
 									break;
 
 				case 'ETH'  :		$ethnicrace = new EthnicRace();
 									$ethnicrace = $object;
-									$res = $ethnicrace -> updateEthnicRace();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $ethnicrace -> updateEthnicRace();
+                           }
 									break;
 
 				case 'EXA'  :		$extcainfo = new ExtraCurActInfo();
@@ -1896,8 +2086,18 @@ class ViewController {
 									break;
 
 				case 'MME'  :		$membinfo = new MembershipInfo();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 									$membinfo = $object;
-									$res = $membinfo -> updateMembershipInfo();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $membinfo -> updateMembershipInfo();
+                           }
 									break;
 
 				case 'JDK'  :		$jdkr = new JDKra();
@@ -1907,7 +2107,18 @@ class ViewController {
 
 				case 'LAN'  :		$laninfo = new LanguageInfo();
 									$laninfo  = $object;
-									$res = $laninfo -> updateLanguageInfo();
+
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $laninfo -> updateLanguageInfo();
+                           }
 									break;
 
 				case 'RLG'  :		$relinfo = new ReligionInfo();
@@ -1930,9 +2141,17 @@ class ViewController {
 									$res = $excurac -> updateExtraCurActInfo();
 									break;
 
-				case 'EDU'  :		$edu = new Education();
+				case 'EDU'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode'], 'id' => $_GET['id']);
+                           $edu = new Education();
 									$edu = $object;
-									$res = $edu -> updateEducation();
+                           $res = false;
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           if($token == $_POST['token']) {
+                              $res = $edu -> updateEducation();
+                           }
 									break;
 
 				case 'JDT'  :		$jdt = new JDType();
@@ -1981,9 +2200,18 @@ class ViewController {
 									break;
 
 
-				case 'LIC'  :		$licenses = new Licenses();
+				case 'LIC'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode'], 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $licenses = new Licenses();
 									$licenses = $object;
-									$res = $licenses -> updateLicenses();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $licenses -> updateLicenses();
+                           }
 									break;
 
 				case 'CUS'  :		$customers = new Customer();
@@ -2034,14 +2262,25 @@ class ViewController {
 									$res = $projects->updateProject();
 									break;
 
-                case 'TCP'  :       $property = new CompProperty();
-                                    $property = $object;
+                case 'TCP'  : 
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                           if(isset($_GET['capturemode'])) {
+                              unset($screenParam['VIEW']);
+                              $screenParam['action'] = "edit";
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $property = new CompProperty();
+                              $property = $object;
 
-                                    if($property->getEditPropFlag()==false)
-                                        $res = $property->editPropertyList();
-                                    else
-                                        $res = $property->editProperty($id);
-
+                              if($property->getEditPropFlag()==false)
+                                  $res = $property->editPropertyList();
+                              else
+                                  $res = $property->editProperty($id);
+                           }
 									break;
 
 				case 'PAC'  :		$projectActivity = $object;
@@ -2062,7 +2301,18 @@ class ViewController {
 
 				case 'USR'  :		$users = new Users();
 									$users = $object;
-									$res = $users -> updateUsers();
+
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode'], 'isAdmin' => $_GET['isAdmin']);
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $users -> updateUsers();
+                           }
 									break;
 
 				case 'USG'  :		$usergroups = new UserGroups();
@@ -2248,10 +2498,16 @@ class ViewController {
 
 			switch ($index) {
 
-				case 'GEN'  :		$geninfo = new GenInfo();
-									$geninfo = $object;
-									$geninfo->updateGenInfo();
-
+				case 'GEN'  :
+                           $screenParam = array('uniqcode' => $index, 'VIEW' => 'MAIN');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           if($token == $_POST['token']) {
+                              $geninfo = new GenInfo();
+                              $geninfo = $object;
+                              $geninfo->updateGenInfo();
+                           }
 									break;
 
 				case 'JEM'  :		$jobtit_empstat = new JobTitEmpStat();
@@ -2260,7 +2516,7 @@ class ViewController {
 
 									break;
 
-				case 'CST'  :		$comphier = new CompHierachy();
+				case 'CST'  :  $comphier = new CompHierachy();
 									$comphier = $object;
 									if($action == 'ADD')
 										$comphier->addCompHierachy();
@@ -2333,9 +2589,18 @@ class ViewController {
 						$compstruct = $object;
 						$res = $compstruct -> deleteCompStruct();
 						break;
-            case 'TCP': $compProperty = new CompProperty();
-                        $compProperty = $object;
-                        $res = $compProperty->deleteProperties();
+            case 'TCP':
+                  $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                  $tokenGenerator = CSRFTokenGenerator::getInstance();
+                  $tokenGenerator->setKeyGenerationInput($screenParam);
+                  $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                  
+               $compProperty = new CompProperty();
+               $compProperty = $object;
+               $res = false;
+               if($token == $_POST['token']) {
+                  $res = $compProperty->deleteProperties();
+               }
 
 		}
 	}
@@ -2418,9 +2683,7 @@ class ViewController {
 	function reDirect($getArr,$object = null) {
 
 		$form_creator = new FormCreator($getArr);
-
 		switch ($getArr['uniqcode']) {
-
 			case 'BNK' :	$form_creator ->formPath = '/templates/eimadmin/bankinformation.php';
 							$bankinfo = new BankInfo();
 
@@ -2619,10 +2882,16 @@ class ViewController {
 							break;
 
 			case 'LOC' :	$form_creator ->formPath = '/templates/eimadmin/locations.php';
+         
+                        $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                        $tokenGenerator = CSRFTokenGenerator::getInstance();
+                        $tokenGenerator->setKeyGenerationInput($screenParam);
+                        $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 							$loc = new models_eimadmin_Location();
 							$country = new CountryInfo();
 
 							$form_creator->popArr['cntlist'] = $country->getCountryCodes();
+                     $form_creator->popArr['token'] = $token;
 
 							if($getArr['capturemode'] == 'updatemode') {
 
@@ -2649,11 +2918,18 @@ class ViewController {
 
 			case 'MEM' :	$form_creator ->formPath = '/templates/eimadmin/membershiptypes.php';
 							$memtype = new MembershipType();
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $memtype ->filterMembershipType($getArr['id']);
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 			case 'EMX' :	$form_creator ->formPath = '/templates/eimadmin/emailConfiguration.php';
 							$emailConfigObj = new EmailConfiguration();
@@ -2682,11 +2958,17 @@ class ViewController {
 							break;
 			case 'NAT' :	$form_creator ->formPath = '/templates/eimadmin/nationalityinformation.php';
 							$natinfo = new NationalityInfo();
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $natinfo ->filterNationalityInfo($getArr['id']);
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'NCB' :	$form_creator ->formPath = '/templates/eimadmin/noncashben.php';
@@ -2754,22 +3036,35 @@ class ViewController {
 							break;
 
 			case 'SKI' :	$form_creator ->formPath = '/templates/eimadmin/skills.php';
+                     
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 							$skill = new Skills();
 
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $skill ->filterSkills($getArr['id']);
 							}
-
+                     $form_creator->popArr['token'] = $token;
 							break;
 
 			case 'ETH' :	$form_creator ->formPath = '/templates/eimadmin/ethnicrace.php';
 							$ethnicrace = new EthnicRace();
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $ethnicrace ->filterEthnicRace($getArr['id']);
-
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'EXA' :	$form_creator ->formPath = '/templates/eimadmin/extracurractinfo.php';
@@ -2789,6 +3084,14 @@ class ViewController {
 			case 'MME' :	$form_creator ->formPath = '/templates/eimadmin/membershipinformation.php';
 							$meminfo = new MembershipInfo();
 							$memtype = new  MembershipType();
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     $form_creator ->popArr['token'] = $token;
 
 							if($getArr['capturemode'] == 'addmode') {
 								$form_creator ->popArr['getResultSet'] = $memtype ->getMembershipTypeCodes();
@@ -2818,10 +3121,16 @@ class ViewController {
 
 			case 'LAN' :	$form_creator ->formPath = '/templates/eimadmin/languageinformation.php';
 							$laninfo = new LanguageInfo();
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     $form_creator ->popArr['token'] = $token;
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] =$laninfo  ->filterLanguageInfo($getArr['id']);
-
 							}
 
 							break;
@@ -2873,8 +3182,16 @@ class ViewController {
 							break;
 
 		case 'EDU' :	$form_creator ->formPath = '/templates/eimadmin/qualifications.php';
+      
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     $form_creator ->popArr['token'] = $token;
 							$edu = new Education();
-
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $edu ->filterEducation($getArr['id']);
 							}
@@ -3109,10 +3426,18 @@ class ViewController {
 			case 'LIC' :	$form_creator ->formPath = '/templates/eimadmin/licenses.php';
 							$licenses = new Licenses();
 
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $licenses->filterLicenses($getArr['id']);
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'CST' :	$form_creator->formPath = '/templates/eimadmin/compstruct.php';
@@ -3125,16 +3450,31 @@ class ViewController {
 							$form_creator->popArr['compstruct'] = $comphier ->getAssCompHier(1,'');
 							$form_creator->popArr['unAssCompStruct'] = $compstruct->getUnAssCompStruct('',1);
 							*/
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							$locations = new models_eimadmin_Location();
 							$countries = new CountryInfo();
 
+                     $form_creator->popArr['token']     = $token;
 							$form_creator->popArr['locations'] = $locations->getLocCodes();
 							$form_creator->popArr['countries'] = $countries->getCountryCodes ();
 
 							break;
 
-            case 'TCP' :    $form_creator->formPath = '/templates/eimadmin/companyProperty.php';
+            case 'TCP' : $form_creator->formPath = '/templates/eimadmin/companyProperty.php';
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+
+                     //this is for add modify screens
+                     if(isset($_GET['action'])) {
+                        $screenParam['action'] = $_GET['action'];
+                        unset($screenParam['VIEW']);
+                     } 
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 
             				$authorizeObj = new authorize($_SESSION['empID'], $_SESSION['isAdmin']);
 
@@ -3178,7 +3518,7 @@ class ViewController {
                             $form_creator->popArr['pageNo'] = $pageNo;
                             $form_creator->popArr['recordCount'] = $propertyCount;
                             $form_creator->popArr['authObj'] = $authorizeObj;
-
+                            $form_creator->popArr['token'] = $token;
                             break;
 
 			case 'JOB' :	$form_creator->formPath = '/templates/eimadmin/jobtitle.php';
@@ -3222,6 +3562,11 @@ class ViewController {
 
 			case 'GEN' :	$form_creator->formPath = '/templates/eimadmin/geninfo.php';
 
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							$geninfo = new GenInfo();
 							$country = new CountryInfo();
 							$province = new ProvinceInfo();
@@ -3237,7 +3582,8 @@ class ViewController {
 
 							$form_creator->popArr['editArr'] = $editArr;
 							$form_creator->popArr['cntlist'] = $country->getCountryCodes();
-
+                     $form_creator->popArr['token'] = $token;
+                     
 							if(isset($editArr['COUNTRY']))
 								$form_creator ->popArr['provlist'] = $province->getProvinceCodes($editArr['COUNTRY']);
 
@@ -3387,7 +3733,14 @@ class ViewController {
 
 			case 'USR' :	$form_creator ->formPath = '/templates/maintenance/users.php';
 							$user= new Users();
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode'], 'isAdmin' => $_GET['isAdmin']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							if($getArr['capturemode'] == 'addmode') {
 								$form_creator ->popArr['emplist'] = $user->getEmployeeCodes();
 								$form_creator ->popArr['uglist'] = $user->getUserGroupCodes();
@@ -3399,16 +3752,22 @@ class ViewController {
 							}
 
                             $form_creator->popArr['employeeSearchList'] = EmpInfo::getEmployeeSearchList();
-
+                     $form_creator->popArr['token'] = $token;
 							break;
 			case 'USG'  :	$form_creator ->formPath = '/templates/maintenance/usergroups.php';
 							$usrgrp = new UserGroups();
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $usrgrp->filterUserGroups($getArr['id']);
-
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'UGR' :	$form_creator ->formPath = '/templates/maintenance/ugrights.php';
