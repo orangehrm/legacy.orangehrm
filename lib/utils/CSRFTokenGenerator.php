@@ -16,7 +16,7 @@ class CSRFTokenGenerator {
     * Class Constructor
     */
    private function __construct() {
-      $filePath = ROOT_PATH . "/lib/confs/cryptokeys/key.ohrm";
+      $filePath = ROOT_PATH . "/lib/confs/cryptokeys/key.csrf";
       if(file_exists($filePath)) {
          $file = fopen($filePath, "r");
          $this->cryptoKey = fread($file, filesize($filePath));
