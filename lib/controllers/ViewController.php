@@ -406,7 +406,10 @@ class ViewController {
 		case 'CUS':
 
 			$this-> customers = new Customer();
-			$res = $this->customers->deletewrapperCustomer($arrList);
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this->customers->deletewrapperCustomer($arrList);
+         }
 			break;
 
 		case 'CTM':		$this->customFields = new CustomFields();
@@ -429,8 +432,11 @@ class ViewController {
 						break;
 		case 'CEX':		if (isset($arrList[0])) {
 							try {
-								CustomExport::deleteExports($arrList[0]);
-								$res = true;
+                        $res = false;
+                        if($token == $_POST['token']) {
+                           CustomExport::deleteExports($arrList[0]);
+                           $res = true;
+                        }
 							} catch (CustomExportException $e) {
 								$res = false;
 							}
@@ -441,8 +447,11 @@ class ViewController {
 
 		case 'CIM':		if (isset($arrList[0])) {
 							try {
-								CustomImport::deleteImports($arrList[0]);
-								$res = true;
+                        $res = false;
+                        if($token == $_POST['token']) {
+                           CustomImport::deleteImports($arrList[0]);
+                           $res = true;
+                        }
 							} catch (CustomImportException $e) {
 								$res = false;
 							}
@@ -454,7 +463,10 @@ class ViewController {
 		case 'PRJ':
 
 			$this-> Projects = new Projects();
-			$res = $this->Projects->deletewrapperProjects($arrList) ;
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this->Projects->deletewrapperProjects($arrList) ;
+         }
 			break;
 
 		case 'PAD': // Project admins
@@ -487,7 +499,10 @@ class ViewController {
 		case 'USG':
 
 			$this-> usergroups = new UserGroups();
-			$res = $this-> usergroups -> delUserGroups($arrList);
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this-> usergroups -> delUserGroups($arrList);
+         }
 			break;
 
         }
@@ -1633,7 +1648,14 @@ class ViewController {
 
 				case 'CUS'  :		$customer = new Customer();
 									$customer = $object;
-									$res= $customer->addCustomer();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res= $customer->addCustomer();
+                           }
 									$id= $customer->getCustomerId();
 
 									break;
@@ -1650,9 +1672,17 @@ class ViewController {
 									break;
 
 				case 'CEX'  :		$customExport = $object;
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
 									try {
-										$customExport->save();
-										$res = true;
+                              $res = false;
+                              if($token == $_POST['token']) {
+                                 $customExport->save();
+                                 $res = true;
+                              }
 									} catch (CustomExportException $e) {
 										if ($e->getCode() == CustomExportException::DUPLICATE_EXPORT_NAME){
 											$showMsg = "DUPLICATE_NAME_FAILURE";
@@ -1663,9 +1693,17 @@ class ViewController {
 									break;
 
 				case 'CIM'  :		$customImport = $object;
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 									try {
-										$customImport->save();
-										$res = true;
+                              $res = false;
+                              if($token == $_POST['token']) {
+                                 $customImport->save();
+                                 $res = true;
+                              }
 									} catch (CustomImportException $e) {
 										if ($e->getCode() == CustomImportException::DUPLICATE_IMPORT_NAME){
 											$showMsg = "DUPLICATE_NAME_FAILURE";
@@ -1716,8 +1754,17 @@ class ViewController {
 
 									break;
 
-				case 'PRJ'  :		$project = $object;
-									$res= $project->addProject();
+				case 'PRJ'  :	
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
+                           $project = $object;
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res= $project->addProject();
+                           }
 									$id= $project->getProjectId();
 									break;
 
@@ -2214,9 +2261,18 @@ class ViewController {
                            }
 									break;
 
-				case 'CUS'  :		$customers = new Customer();
+				case 'CUS'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode'], 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $customers = new Customer();
 									$customers = $object;
-									$res = $customers->updateCustomer();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $customers->updateCustomer();
+                           }
 									break;
 
 				case 'CTM'  :		$customField = $object;
@@ -2230,10 +2286,19 @@ class ViewController {
 
 				case 'CHD'  :	    // Fall through to 'CEX' below
 
-				case 'CEX'  :		$customExport = $object;
+				case 'CEX'  :
+                           $screenParam = array('uniqcode' => $index, 'id' => $_GET['id']);
+                           if(isset($_GET['capturemode'])) {
+                              $screenParam['capturemode'] = 'updatemode';
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+                           $customExport = $object;
 									try {
-										$customExport->save();
-										$res = true;
+                              $customExport->save();
+                              $res = true;
 									} catch (CustomExportException $e) {
 										if ($e->getCode() == CustomExportException::DUPLICATE_EXPORT_NAME){
 											$showMsg = "DUPLICATE_NAME_FAILURE";
@@ -2243,9 +2308,21 @@ class ViewController {
 									break;
 
 				case 'CIM'  :		$customImport = $object;
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode');
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
 									try {
-										$customImport->save();
-										$res = true;
+                              $res = false;
+                              if($token == $_POST['token']) {
+                                 $customImport->save();
+                                 $res = true;
+                              }
 									} catch (CustomImportException $e) {
 										if ($e->getCode() == CustomImportException::DUPLICATE_IMPORT_NAME){
 											$showMsg = "DUPLICATE_NAME_FAILURE";
@@ -2257,9 +2334,18 @@ class ViewController {
 									}
 									break;
 
-				case 'PRJ'  :		$projects = new Projects();
+				case 'PRJ'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode'], 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $projects = new Projects();
 									$projects = $object;
-									$res = $projects->updateProject();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $projects->updateProject();
+                           }
 									break;
 
                 case 'TCP'  : 
@@ -2315,23 +2401,51 @@ class ViewController {
                            }
 									break;
 
-				case 'USG'  :		$usergroups = new UserGroups();
+				case 'USG'  :  $usergroups = new UserGroups();
 									$usergroups = $object;
-									$res = $usergroups -> updateUserGroups();
+                           
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $usergroups->updateUserGroups();
+                           }
 									break;
 
-				case 'EMX'  :		$emailConfig = new EmailConfiguration();
-									$emailConfig = $object;
-									$res = (bool) $emailConfig->reWriteConf();
-									$testEmail = $emailConfig->getTestEmail();
-									$testEmailType = $emailConfig->getTestEmailType();
-
+				case 'EMX'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $emailConfig = new EmailConfiguration();
+                              $emailConfig = $object;
+                              $res = (bool) $emailConfig->reWriteConf();
+                              $testEmail = $emailConfig->getTestEmail();
+                              $testEmailType = $emailConfig->getTestEmailType();
+                           }
 									break;
-				case 'ENS'  :		$emailNotifacationConfigs = new EmailNotificationConfiguration($_SESSION['user']);
+				case 'ENS'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+                           $emailNotifacationConfigs = new EmailNotificationConfiguration($_SESSION['user']);
 									$emailNotifacationConfigs = $object;
 									$res = true;
 									foreach ($emailNotifacationConfigs as $emailNotifacationConfig) {
-										$resp = $emailNotifacationConfig->updateNotificationStatus();
+                              $resp = false;
+                              if($token == $_POST['token']) {
+                                 $resp = $emailNotifacationConfig->updateNotificationStatus();
+                              }
 										if (!$resp) {
 											$res = $resp;
 										}
@@ -2572,12 +2686,20 @@ class ViewController {
 										$ratgrd->updateRatGrd();
 									break;
 
-				case 'UGR'  :		$ugrights = new Rights();
+				case 'UGR'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $ugrights = new Rights();
 									$ugrights = $object;
-									if($action == 'ADD')
-										$ugrights->addRights();
-									elseif($action == 'EDIT')
-										$ugrights->updateRights();
+                           if($token == $_POST['token']) {
+                              if($action == 'ADD')
+                                 $ugrights->addRights();
+                              elseif($action == 'EDIT')
+                                 $ugrights->updateRights();
+                           }
 									break;
 			}
 	}
@@ -2674,9 +2796,14 @@ class ViewController {
 
 				case 'UGR'  :
 									$urights = new Rights();
-
-								    $urights->clearRights($getArr['id']);
-								    break;
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           if($token == $_POST['token']) {
+                              $urights->clearRights($getArr['id']);
+                           }
+								   break;
 			}
 	}
 
@@ -2931,9 +3058,16 @@ class ViewController {
 							}
                      $form_creator ->popArr['token'] = $token;
 							break;
-			case 'EMX' :	$form_creator ->formPath = '/templates/eimadmin/emailConfiguration.php';
+			case 'EMX' ://print_r($_GET);die();
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
+                     $form_creator ->formPath = '/templates/eimadmin/emailConfiguration.php';
 							$emailConfigObj = new EmailConfiguration();
 							$form_creator ->popArr['editArr'] = $emailConfigObj;
+                     $form_creator ->popArr['token'] = $token;
 							break;
 			case 'CSE' :	$form_creator ->formPath = '/templates/eimadmin/dataExport.php';
 							$csvExport = new CSVExport();
@@ -2952,9 +3086,16 @@ class ViewController {
 							}
 							break;
 
-			case 'ENS' :	$form_creator->formPath = '/templates/eimadmin/emailNotificationConfiguration.php';
+			case 'ENS' :
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'VIEW' => 'MAIN');
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+                     $form_creator->formPath = '/templates/eimadmin/emailNotificationConfiguration.php';
 							$emailNotificationConfObj = new EmailNotificationConfiguration($_SESSION['user']);
 							$form_creator ->popArr['editArr'] =$emailNotificationConfObj->fetchNotifcationStatus();
+                     $form_creator ->popArr['token'] = $token;
 							break;
 			case 'NAT' :	$form_creator ->formPath = '/templates/eimadmin/nationalityinformation.php';
 							$natinfo = new NationalityInfo();
@@ -3598,12 +3739,20 @@ class ViewController {
 
 			case 'CUS' :	$form_creator->formPath = '/templates/eimadmin/customer.php';
 							$customer = new Customer();
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $customer->fetchCustomer($getArr['id']);
 							} else {
 							    $form_creator ->popArr['editArr'] = new Customer();
 							}
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'CTM' :	$form_creator->formPath = '/templates/eimadmin/customFields.php';
@@ -3617,6 +3766,14 @@ class ViewController {
 							break;
 
 			case 'CEX' :	$form_creator->formPath = '/templates/eimadmin/customExportDefine.php';
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 
 							$form_creator ->popArr['customExportList'] = CustomExport::getCustomExportList();
 							if($getArr['capturemode'] == 'updatemode') {
@@ -3634,10 +3791,20 @@ class ViewController {
 								$form_creator ->popArr['exportName'] = null;
 								$form_creator ->popArr['id'] = null;
 							}
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'CIM' :	$form_creator->formPath = '/templates/eimadmin/customImportDefine.php';
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     $form_creator ->popArr['token'] = $token;
+                     
 							$form_creator ->popArr['customImportList'] = CustomImport::getCustomImportList();
 							if($getArr['capturemode'] == 'updatemode') {
 								$customImport = CustomImport::getCustomImport($getArr['id']);
@@ -3665,6 +3832,10 @@ class ViewController {
 							break;
 
 			case 'CHD' :	$form_creator->formPath = '/templates/eimadmin/customExportHeadingDefine.php';
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'id' => $_GET['id']);
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 
 							$customExport = CustomExport::getCustomExport($getArr['id']);
 
@@ -3673,12 +3844,22 @@ class ViewController {
 							$form_creator ->popArr['assigned'] = $customExport->getAssignedFields();
 							$form_creator ->popArr['exportName'] = $customExport->getName();
 							$form_creator ->popArr['id'] = $customExport->getId();
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'PAD' :    // Project Admin. Fall through to PRJ case below.
 							$form_creator->getArr['uniqcode'] = "PRJ";
 
 			case 'PRJ' : 	$form_creator->formPath = '/templates/eimadmin/project.php';
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
 							$project = new Projects();
 							$customer = new Customer ();
 							$form_creator->popArr['cusid'] = $customer->fetchCustomers();
@@ -3689,6 +3870,7 @@ class ViewController {
 								$gw = new ProjectAdminGateway();
 								$form_creator ->popArr['admins'] = $gw->getAdmins($getArr['id']);
 							}
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'PAC' : 	$form_creator->formPath = '/templates/eimadmin/projectActivity.php';
@@ -3771,12 +3953,17 @@ class ViewController {
 							break;
 
 			case 'UGR' :	$form_creator ->formPath = '/templates/maintenance/ugrights.php';
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'id' => $_GET['id']);
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							$urights = new Rights();
 							$usergroup = new UserGroups();
 
 							$form_creator->popArr['ugDet'] = $usergroup->filterUserGroups($getArr['id']);
 							$form_creator->popArr['modlist'] = $urights->getAllModules();
+                     $form_creator->popArr['token'] = $token;
 
 							if(isset($getArr['editID'])) {
 								    $arr[0]=$getArr['id'];

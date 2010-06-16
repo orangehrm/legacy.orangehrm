@@ -189,7 +189,7 @@ $token = $this->popArr['token'];
 <div class="outerbox">
 <form name="standardView" method="post" action="<?php echo $_SERVER['PHP_SELF']?>?uniqcode=<?php echo $this->getArr['uniqcode']?>&amp;VIEW=MAIN&amp;sortField=<?php echo $this->getArr['sortField']?>&amp;sortOrder<?php echo $this->getArr['sortField']?>=<?php echo $this->getArr['sortOrder'.$this->getArr['sortField']].$esp?>">
 	<div class="mainHeading"><h2><?php echo $headingInfo[3]; ?></h2></div>
-   <input type="text" value="<?php echo $token;?>" name="token" />
+   <input type="hidden" value="<?php echo $token;?>" name="token" />
     <input type="hidden" name="captureState" value="<?php echo isset($this->postArr['captureState'])?$this->postArr['captureState']:''?>" />
     <input type="hidden" name="delState" value="" />
     <input type="hidden" name="pageNO" value="<?php echo isset($this->postArr['pageNO'])?$this->postArr['pageNO']:'1'?>" />

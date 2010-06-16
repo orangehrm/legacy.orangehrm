@@ -132,7 +132,7 @@ $token = $this->popArr['token'];
         <?php } ?>
      
             <form name="frmUserGroup" id="frmUserGroup" method="post" onsubmit="return validate()" action="<?php echo $formAction;?>">                    
-               <input type="text" value="<?php echo $token;?>" name="token" />
+               <input type="hidden" value="<?php echo $token;?>" name="token" />
                 <input type="hidden" name="sqlState" value="<?php echo $new ? 'NewRecord' : 'UpdateRecord'; ?>"/>  
 
                 <?php if (!$new) { ?>
