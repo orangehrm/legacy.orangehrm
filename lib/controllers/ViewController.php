@@ -275,7 +275,10 @@ class ViewController {
         	case 'EST' :
 
         		$this->empstat = new EmploymentStatus();
-        		$res = $this->empstat->delEmpStat($arrList);
+            $res = false;
+            if($token == $_POST['token']) {
+               $res = $this->empstat->delEmpStat($arrList);
+            }
         		break;
 
         	case 'JEM' :
@@ -287,14 +290,20 @@ class ViewController {
         	case 'JOB' :
 
         		$this->jobtit = new JobTitle();
-        		$res = $this->jobtit ->delJobTitles($arrList);
+            $res = false;
+            if($token == $_POST['token']) {
+               $res = $this->jobtit ->delJobTitles($arrList);
+            }
         		break;
 
         	case 'SPC' :
 
 				if (isset($arrList[0])) {
 					try {
-        				$res = JobSpec::delete($arrList[0]);
+                  $res = false;
+                  if($token == $_POST['token']) {
+                     $res = JobSpec::delete($arrList[0]);
+                  }
 					} catch (JobSpecException $e) {
 						$res = false;
 					}
@@ -369,7 +378,10 @@ class ViewController {
 		case 'SGR':
 
 			$this-> salarygrade = new SalaryGrades();
-			$res = $this-> salarygrade -> delSalaryGrades($arrList);
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this-> salarygrade -> delSalaryGrades($arrList);
+         }
 			break;
 
     	case 'EDU':
@@ -387,7 +399,10 @@ class ViewController {
 		case 'EEC':
 
 			$this-> EEOJobCat = new EEOJobCat();
-			$res = $this-> EEOJobCat -> delEEOJobCat($arrList);
+         $res = false;
+         if($token == $_POST['token']) {
+            $res = $this-> EEOJobCat -> delEEOJobCat($arrList);
+         }
 			break;
 
         case 'LIC':
@@ -415,9 +430,11 @@ class ViewController {
 		case 'CTM':		$this->customFields = new CustomFields();
 						if (isset($arrList[0])) {
 							try {
-								$this->customFields->deleteFields($arrList[0]);
-								$res = true;
-								
+                        $res = false;
+                        if($token == $_POST['token']) {
+                           $this->customFields->deleteFields($arrList[0]);
+                           $res = true;
+                        }
 							    if (is_array($arrList) && count($arrList) > 0) {
 						            $mediator = EventMediator::instance();
 						            $mediator->notify(EventMediator::POST_CUSTOM_FIELD_DELETE_EVENT, array('customFieldIds' => $arrList[0]));
@@ -1297,9 +1314,18 @@ class ViewController {
 		try {
 			switch ($index) {
 
-				case 'EST'  :		$empstat = new EmploymentStatus();
+				case 'EST'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $empstat = new EmploymentStatus();
 									$empstat = $object;
-									$res = $empstat ->addEmpStat();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $empstat ->addEmpStat();
+                           }
 									break;
 
 				case 'JEM'  :		$jobtit_empstat = new JobTitEmpStat();
@@ -1307,15 +1333,31 @@ class ViewController {
 									$res = $jobtit_empstat ->addJobTitEmpStat();
 									break;
 
-				case 'JOB'  :		$jobtit = new JobTitle();
+				case 'JOB'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $jobtit = new JobTitle();
 									$jobtit = $object;
-									$res = $jobtit ->addJobTitles();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $jobtit ->addJobTitles();
+                           }
 									$id = $jobtit->getJobId();
 									break;
 
 				case 'SPC'  :		$jobSpec = $object;
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
 									try {
-										$res = $jobSpec->save();
+                              if($token == $_POST['token']) {
+                                 $res = $jobSpec->save();
+                              }
 									} catch(JobSpecException $e) {
 										$res = false;
 									}
@@ -1478,10 +1520,17 @@ class ViewController {
 
 				case 'SGR'  :		$salgread = new SalaryGrades();
 									$salgread = $object;
-
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
 									try {
-										$salgread -> addSalaryGrades();
-										$res = true;
+                              $res = false;
+                              if($token == $_POST['token']) {
+                                 $salgread -> addSalaryGrades();
+                                 $res = true;
+                              }
 									} catch (SalaryGradesException $e) {
 										if ($e->getCode() == SalaryGradesException::DUPLICATE_SALARY_GRADE){
 											$showMsg = "DUPLICATE_NAME_FAILURE";
@@ -1628,8 +1677,16 @@ class ViewController {
 									break;
 
 				case 'EEC'  :		$eeojobcat = new EEOJobCat();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 									$eeojobcat = $object;
-									$res = $eeojobcat -> addEEOJobCat();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $eeojobcat -> addEEOJobCat();
+                           }
 									break;
 
 				case 'LIC'  :	
@@ -1660,10 +1717,19 @@ class ViewController {
 
 									break;
 
-				case 'CTM'  :		$customField = $object;
+				case 'CTM'  :
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'addmode');
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           $customField = $object;
+                           
 									try {
-										$customField->addCustomField();
-										$res = true;
+                              if($token == $_POST['token']) {
+                                 $customField->addCustomField();
+                                 $res = true;
+                              }
 									} catch (CustomFieldsException $e) {
 										$res = false;
 									}
@@ -1941,19 +2007,45 @@ class ViewController {
 
 			switch ($index) {
 
-				case 'EST'  :		$empstat = new EmploymentStatus();
+				case 'EST'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode', 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $empstat = new EmploymentStatus();
 									$empstat = $object;
-									$res = $empstat -> updateEmpStat();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $empstat -> updateEmpStat();
+                           }
 									break;
 
-				case 'JOB'  :		$jobtit = new JobTitle();
+				case 'JOB'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode', 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+                           $jobtit = new JobTitle();
 									$jobtit = $object;
-									$res = $jobtit -> updateJobTitles();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $jobtit -> updateJobTitles();
+                           }
 									break;
 
 				case 'SPC'  :		$jobSpec = $object;
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode', 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
 									try {
-										$res = $jobSpec->save();
+                              $res = false;
+                              if($token == $_POST['token']) {
+                                 $res = $jobSpec->save();
+                              }
 									} catch(JobSpecException $e) {
 										$res = false;
 									}
@@ -2094,7 +2186,17 @@ class ViewController {
 
 				case 'SGR'  :		$salgread = new SalaryGrades();
 									$salgread = $object;
-									$res = $salgread -> updateSalaryGrades();
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode');
+                           if(isset($_GET['id'])) {
+                              $screenParam['id'] = $_GET['id'];
+                           }
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $salgread -> updateSalaryGrades();
+                           }
 									break;
 
 				case 'SKI'  :		$skill = new Skills();
@@ -2241,9 +2343,18 @@ class ViewController {
 									$res = $disinfo -> updateDistrictInfo();
 									break;
 
-				case 'EEC'  :		$eeojobcat = new EEOJobCat();
+				case 'EEC'  :	
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode', 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           
+                           $eeojobcat = new EEOJobCat();
 									$eeojobcat = $object;
-									$res = $eeojobcat -> updateEEOJobCat();
+                           $res = false;
+                           if($token == $_POST['token']) {
+                              $res = $eeojobcat -> updateEEOJobCat();
+                           }
 									break;
 
 
@@ -2276,9 +2387,17 @@ class ViewController {
 									break;
 
 				case 'CTM'  :		$customField = $object;
+                           $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => 'updatemode', 'id' => $_GET['id']);
+                           $tokenGenerator = CSRFTokenGenerator::getInstance();
+                           $tokenGenerator->setKeyGenerationInput($screenParam);
+                           $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                           $res = false;
+                           
 									try {
-										$customField->updateCustomField();
-										$res = true;
+                              if($token == $_POST['token']) {
+                                 $customField->updateCustomField();
+                                 $res = true;
+                              }
 									} catch (CustomFieldsException $e) {
 										$res = false;
 									}
@@ -3157,9 +3276,18 @@ class ViewController {
 							break;
 
 			case 'SGR' :	$form_creator ->formPath = '/templates/eimadmin/salarygrades.php';
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							$salgrade = new SalaryGrades();
 							$salcurdet = new SalCurDet();
-
+                     $form_creator ->popArr['token'] = $token;
+                     
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $salgrade ->filterSalaryGrades($getArr['id']);
 								$form_creator ->popArr['assCurrency'] = $salcurdet->getAssSalCurDet($getArr['id']);
@@ -3173,7 +3301,6 @@ class ViewController {
 									$form_creator ->popArr['editAssCurrency'] = $salcurdet->filterSalCurDet($arr);
 								}
 							}
-
 							break;
 
 			case 'SKI' :	$form_creator ->formPath = '/templates/eimadmin/skills.php';
@@ -3557,11 +3684,20 @@ class ViewController {
 
 			case 'EEC' :	$form_creator ->formPath = '/templates/eimadmin/eeojobcat.php';
 							$eeojobcat = new EEOJobCat();
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+
+                     //this is for add modify screens
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $eeojobcat->filterEEOJobCat($getArr['id']);
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'LIC' :	$form_creator ->formPath = '/templates/eimadmin/licenses.php';
@@ -3663,6 +3799,14 @@ class ViewController {
                             break;
 
 			case 'JOB' :	$form_creator->formPath = '/templates/eimadmin/jobtitle.php';
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							$jobtitle = new JobTitle();
 							$paygrade = new SalaryGrades();
 							$jobtit_empstat = new JobTitEmpStat();
@@ -3675,11 +3819,18 @@ class ViewController {
 								$form_creator ->popArr['assEmploymentStat'] = $jobtit_empstat->getAssEmpStat($getArr['id']);
 								$form_creator ->popArr['unAssEmploymentStat'] = $jobtit_empstat->getUnAssEmpStat($getArr['id']);
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'SPC' :	$form_creator->formPath = '/templates/eimadmin/jobSpec.php';
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							// Here we fetch all job specs for easier validation of duplicate names
 							// Assuming it's unlikely that very large number of job specs will be defined.
 							$form_creator->popArr['jobSpecList'] = JobSpec::getAll();
@@ -3688,17 +3839,24 @@ class ViewController {
 							} else {
 								$form_creator->popArr['jobSpec'] = new JobSpec();
 							}
-
+                     $form_creator->popArr['token'] = $token;
 							break;
 
 			case 'EST' :	$form_creator->formPath = '/templates/eimadmin/empstat.php';
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							$empstat = new EmploymentStatus();
 
 							if($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = $empstat->filterEmpStat($getArr['id']);
 							}
-
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'GEN' :	$form_creator->formPath = '/templates/eimadmin/geninfo.php';
@@ -3756,13 +3914,21 @@ class ViewController {
 							break;
 
 			case 'CTM' :	$form_creator->formPath = '/templates/eimadmin/customFields.php';
-
+                     $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+                     if(isset($_GET['id'])) {
+                        $screenParam['id'] = $_GET['id'];
+                     }
+                     $tokenGenerator = CSRFTokenGenerator::getInstance();
+                     $tokenGenerator->setKeyGenerationInput($screenParam);
+                     $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                     
 							$form_creator ->popArr['available'] = CustomFields::getAvailableFieldNumbers();
 							if ($getArr['capturemode'] == 'updatemode') {
 								$form_creator ->popArr['editArr'] = CustomFields::getCustomField($getArr['id']);
 							} else {
 							    $form_creator ->popArr['editArr'] = new CustomFields();
 							}
+                     $form_creator ->popArr['token'] = $token;
 							break;
 
 			case 'CEX' :	$form_creator->formPath = '/templates/eimadmin/customExportDefine.php';
