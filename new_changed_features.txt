@@ -1,3 +1,11 @@
+New & Changed Features for OrangeHRM ver 2.5.0.6
+
+	Bug Fixes
+	---------
+	3009783 - Possible CSRF  vulnerability in OrangeHRM
+    3009782 - Possible PHP code injection in mail configuration
+    3003361 - Not sanitized ajax responses leads to XSS vulnerability
+
 New & Changed Features for OrangeHRM ver 2.5.0.5
 
 	Bug Fixes
