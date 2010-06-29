@@ -1937,7 +1937,8 @@ switch ($moduletype) {
 																					$timeController->setObjTime($obj);
 																					$timeController->viewActivityReport();
 																					break;
-													case 'Select_Timesheets_View':	if (isset($_GET['cache'])) {
+													case 'Select_Timesheets_View':
+                                                               if (isset($_GET['cache'])) {
 																						$_SESSION['posted'] = true;
 																					}
 																					$timeController->viewSelectTimesheet();
@@ -1959,7 +1960,14 @@ switch ($moduletype) {
 
 																					$obj = $timesheetExtractor->parseViewData($_POST);
 																					$timeController->setObjTime($obj);
-																					$timeController->viewTimesheetPrintPreview($filterValues);
+                                                               $screenParam = array('timecode' => $_GET['timecode'], 'action' => 'Select_Timesheets_View');
+                                                               $tokenGenerator = CSRFTokenGenerator::getInstance();
+                                                               $tokenGenerator->setKeyGenerationInput($screenParam);
+                                                               $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+                                                               if($token == $_POST['token']) {
+                                                                  $timeController->viewTimesheetPrintPreview($filterValues);
+                                                               }
 																					break;
 													case 'Print_Timesheet_Get_Page':$filterValues = array($_POST['txtEmpID'],
 																										  $_POST['txtLocation'],
