@@ -5,6 +5,9 @@ New & Changed Features for OrangeHRM ver 2.5.0.6
 	3009783 - Possible CSRF  vulnerability in OrangeHRM
     3009782 - Possible PHP code injection in mail configuration
     3003361 - Not sanitized ajax responses leads to XSS vulnerability
+    3019981 - Admin/supervisor: Assigned leave cannot cancel or reject 
+    3019986 - Admin press back btn in leave list lead to my leave list
+    3022297 - Click on  list of taken leave will lead to fatal error 
 
 New & Changed Features for OrangeHRM ver 2.5.0.5
 
