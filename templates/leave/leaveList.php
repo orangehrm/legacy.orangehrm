@@ -37,6 +37,8 @@ if(isset($modifier['actionFlag'])) {
    $actionFlag = $modifier['actionFlag'];
    unset($modifier['actionFlag']);
 }
+
+$modifier = $modifier[0];
  if (isset($modifier) && ($modifier == "Taken")) {
 
  	$empInfo = $records[count($records)-1][0];
