@@ -126,7 +126,10 @@ class RecruitmentController {
                     case 'Reject' :
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $event = $eventExtractor->parseAddData($_POST);
-                        $this->_rejectApplication($event);
+                        $screenParam = array('recruitcode' => 'Application', 'action' => 'ConfirmReject', 'id' => $event->getApplicationId());
+                        if($_POST['token'] == $this->_getCsrfTokenForJobs($screenParam)) {
+                           $this->_rejectApplication($event);
+                        }
                         break;
                     case 'ConfirmFirstInterview' :
                         $this->_scheduleFirstInterview($id);
@@ -153,7 +156,10 @@ class RecruitmentController {
                     case 'OfferJob' :
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $event = $eventExtractor->parseAddData($_POST);
-                        $this->_offerJob($event);
+                        $screenParam    = array('recruitcode' => 'Application', 'action' => 'ConfirmOfferJob', 'id' => $event->getApplicationId());
+                        if($_POST['token'] == $this->_getCsrfTokenForJobs($screenParam)) {
+                           $this->_offerJob($event);
+                        }
                         break;
                     case 'ConfirmMarkDeclined' :
                         $this->_confirmAction($id, JobApplication::ACTION_MARK_OFFER_DECLINED);
@@ -161,7 +167,10 @@ class RecruitmentController {
                     case 'MarkDeclined' :
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $event = $eventExtractor->parseAddData($_POST);
-                        $this->_markDeclined($event);
+                        $screenParam    = array('recruitcode' => 'Application', 'action' => 'ConfirmMarkDeclined', 'id' => $event->getApplicationId());
+                        if($_POST['token'] == $this->_getCsrfTokenForJobs($screenParam)) {
+                           $this->_markDeclined($event);
+                        }
                         break;
                     case 'ConfirmSeekApproval' :
                         $this->_confirmSeekApproval($id);
@@ -169,7 +178,10 @@ class RecruitmentController {
                     case 'SeekApproval' :
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $event = $eventExtractor->parseSeekApprovalData($_POST);
-                        $this->_seekApproval($event);
+                        $screenParam    = array('recruitcode' => 'Application', 'action' => 'ConfirmSeekApproval', 'id' => $event->getApplicationId());
+                        if($_POST['token'] == $this->_getCsrfTokenForJobs($screenParam)) {
+                           $this->_seekApproval($event);
+                        }
                         break;
                     case 'ConfirmApprove' :
                         $this->_confirmAction($id, JobApplication::ACTION_APPROVE);
@@ -177,7 +189,10 @@ class RecruitmentController {
                     case 'Approve' :
                         $eventExtractor = new EXTRACTOR_JobApplicationEvent();
                         $event = $eventExtractor->parseAddData($_POST);
-                        $this->_approve($event);
+                        $screenParam    = array('recruitcode' => 'Application', 'action' => 'ConfirmApprove', 'id' => $event->getApplicationId());
+                        if($_POST['token'] == $this->_getCsrfTokenForJobs($screenParam)) {
+                           $this->_approve($event);
+                        }    
                         break;
                     case 'ViewDetails' :
                         $this->_viewApplicationDetails($id);
@@ -758,7 +773,9 @@ class RecruitmentController {
 
         $objs['application'] = JobApplication::getJobApplication($id);
         $objs['action'] = $action;
-
+        
+        $screenParam    = array('recruitcode' => $_GET['recruitcode'], 'action' => $_GET['action'], 'id' => $_GET['id']);
+        $objs['token']  = $this->_getCsrfTokenForJobs($screenParam);
         $template = new TemplateMerger($objs, $path);
         $template->display();
     }
@@ -854,6 +871,9 @@ class RecruitmentController {
         $empInfo = new EmpInfo();
         $objs['employeeSearchList'] = $this->_getEmployeeSearchList();
         $objs['application'] = JobApplication::getJobApplication($id);
+
+        $screenParam = array('recruitcode' => $_GET['recruitcode'], 'action' => $_GET['action'], 'id' =>  $_GET['id']);
+        $objs['token'] = $this->_getCsrfTokenForJobs($screenParam);
 
         $template = new TemplateMerger($objs, $path);
         $template->display();
