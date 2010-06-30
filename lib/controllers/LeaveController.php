@@ -236,13 +236,11 @@ class LeaveController {
 	private function _viewLeavesEmployee($details) {
 		$tmpObj = $this->getObjLeave();
       $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => $_GET['action']);
-      if(isset($_GET['id'])) {
-         $screenParam['id'] = $_GET['id'];
-      }
+
       $tokenGenerator = CSRFTokenGenerator::getInstance();
       $tokenGenerator->setKeyGenerationInput($screenParam);
       $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
-      
+
 		if (!$details) {
 			$tmpObj = $tmpObj->retriveLeaveRequestsEmployee($this->getId());
 			$path = "/templates/leave/leaveRequestList.php";
@@ -390,9 +388,7 @@ class LeaveController {
 		}
 
       $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => $_GET['action']);
-      if(isset($_GET['id'])) {
-         $screenParam['id'] = $_GET['id'];
-      }
+
       $tokenGenerator = CSRFTokenGenerator::getInstance();
       $tokenGenerator->setKeyGenerationInput($screenParam);
       $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
@@ -491,9 +487,7 @@ class LeaveController {
 		$_SESSION['leaveStatusFilters'] = $leaveStatuses;
 
       $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => $_GET['action']);
-      if(isset($_GET['id'])) {
-         $screenParam['id'] = $_GET['id'];
-      }
+
       $tokenGenerator = CSRFTokenGenerator::getInstance();
       $tokenGenerator->setKeyGenerationInput($screenParam);
       $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));

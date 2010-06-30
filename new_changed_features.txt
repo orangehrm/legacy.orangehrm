@@ -8,6 +8,7 @@ New & Changed Features for OrangeHRM ver 2.5.0.6
     3019981 - Admin/supervisor: Assigned leave cannot cancel or reject 
     3019986 - Admin press back btn in leave list lead to my leave list
     3022297 - Click on  list of taken leave will lead to fatal error 
+    3022677 - Click on save btn in my leave end up with Undefined index
 
 New & Changed Features for OrangeHRM ver 2.5.0.5
 

@@ -390,6 +390,7 @@ label.subLabel {
 	action="<?php echo $_SERVER['PHP_SELF']; ?>?leavecode=Leave&amp;action=<?php echo $action; ?>"
 	onsubmit="return validateLeaveRequestList()"><?php   if ($modifier !== "Taken") { ?>
    <input type="hidden" value="<?php echo $token;?>" name="token" />
+   <input type="hidden" value="<?php echo CommonFunctions::escapeHtml($_GET['action']);?>" name="srcAction"/>
 <div class="actionbar">
 <div class="actionbuttons"><?php   if (is_array($records) && (count($records) > 0)) { ?>
 <input type="submit" class="plainbtn" name="Save"

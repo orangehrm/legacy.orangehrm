@@ -1454,21 +1454,23 @@ switch ($moduletype) {
 																						$objs = $leaveExtractor->parseEditData($_POST);
 																						$objx=false;
 																						$numChanged = 0;
-                                                                  $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => "Leave_FetchDetailsEmployee", 'id' => $_POST['txtEmployeeId'][0]);
-                                                                  
-                                                                  switch ($_GET['actionFlag']) {
-                                                                     case "admin":
-                                                                        $screenParam['action'] = "Leave_FetchDetailsAdmin";
-                                                                        break;
-                                                                     case "supervisor":
-                                                                        $screenParam['action'] = "Leave_FetchDetailsSupervisor";
-                                                                        break;
+                                                                  $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => "Leave_FetchDetailsEmployee");
+
+                                                                  if (isset($_GET['actionFlag'])) {                                                                                         
+                                                                      switch ($_GET['actionFlag']) {
+                                                                         case "admin":
+                                                                            $screenParam['action'] = "Leave_FetchDetailsAdmin";
+                                                                            break;
+                                                                         case "supervisor":
+                                                                            $screenParam['action'] = "Leave_FetchDetailsSupervisor";
+                                                                            break;
+                                                                      }
                                                                   }
 
                                                                   $tokenGenerator = CSRFTokenGenerator::getInstance();
                                                                   $tokenGenerator->setKeyGenerationInput($screenParam);
                                                                   $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
-                                                                  
+
 																						if (isset($objs) && $token == $_POST['token']) {
 																							foreach ($objs as $obj) {
                                                                         if($token == $_POST['token']) {
@@ -1494,7 +1496,12 @@ switch ($moduletype) {
 													case 'Leave_Request_ChangeStatus':
 																						$objs = $leaveRequestsExtractor->parseEditData($_POST);
 																						$numChanged = 0;
-                                                                  $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => 'Leave_FetchLeaveAdmin');
+                                                                                        $srcAction = 'Leave_FetchLeaveAdmin';
+                                                                                        if (isset($_POST['srcAction'])) {
+                                                                                            $srcAction = $_POST['srcAction'];
+                                                                                        }
+                                                                                        
+                                                                  $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => $srcAction);
                                                                   $tokenGenerator = CSRFTokenGenerator::getInstance();
                                                                   $tokenGenerator->setKeyGenerationInput($screenParam);
                                                                   $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
