@@ -1309,8 +1309,15 @@ class ViewController {
 		}
 	}
 
-   
-	function addData($index,$object,$noRedirect = false) {
+    /**
+     * @param  $index
+     * @param  $object
+     * @param bool $noRedirect
+     * @param bool $tokenAlreadyVerified - Used to skip token verification. Used in Ajax calls where token is
+     *                                     verified in the ajax function in template, not here.
+     * @return void
+     */
+	function addData($index,$object,$noRedirect = false, $tokenAlreadyVerified = false) {
 		try {
 			switch ($index) {
 
@@ -1323,7 +1330,8 @@ class ViewController {
                            $empstat = new EmploymentStatus();
 									$empstat = $object;
                            $res = false;
-                           if($token == $_POST['token']) {
+
+                           if ($tokenAlreadyVerified || ($token == $_POST['token'])) {
                               $res = $empstat ->addEmpStat();
                            }
 									break;
@@ -2001,7 +2009,16 @@ class ViewController {
 		      $desdis -> delJDKPI($arr);
     }
 
-	function updateData($index,$id,$object,$noRedirect = false) {
+    /**
+     * @param  $index
+     * @param  $id
+     * @param  $object
+     * @param bool $noRedirect
+     * @param bool $tokenAlreadyVerified - Used to skip token verification. Used in Ajax calls where token is
+     *                                     verified in the ajax function in template, not here.
+     * @return void
+     */
+	function updateData($index,$id,$object,$noRedirect = false, $tokenAlreadyVerified = false) {
 		try {
 			$extraParams = "";
 
@@ -2016,7 +2033,7 @@ class ViewController {
                            $empstat = new EmploymentStatus();
 									$empstat = $object;
                            $res = false;
-                           if($token == $_POST['token']) {
+                           if($tokenAlreadyVerified || ($token == $_POST['token'])) {
                               $res = $empstat -> updateEmpStat();
                            }
 									break;

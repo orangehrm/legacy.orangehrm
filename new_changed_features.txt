@@ -9,6 +9,7 @@ New & Changed Features for OrangeHRM ver 2.5.0.6
     3019986 - Admin press back btn in leave list lead to my leave list
     3022297 - Click on  list of taken leave will lead to fatal error 
     3022677 - Click on save btn in my leave end up with Undefined index
+    3020707 - Cannot add an employee status through Job Titles
 
 New & Changed Features for OrangeHRM ver 2.5.0.5
 

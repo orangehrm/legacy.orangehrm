@@ -110,10 +110,22 @@ function addExt($arrElements) {
 	$ext_empstat = new EXTRACTOR_EmployStat();
 
 	$objEmpStat = $ext_empstat->parseAddData($arrElements);
-	$view_controller -> addData('EST',$objEmpStat,true);
 
-	$view_controller = new ViewController();
-	$unAssEmpStat = $view_controller->xajaxObjCall($arrElements['txtJobTitleID'],'JOB','unAssigned');
+    // Generate and verify token here
+    $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+    if(isset($_GET['id'])) {
+       $screenParam['id'] = $_GET['id'];
+    }
+    $tokenGenerator = CSRFTokenGenerator::getInstance();
+    $tokenGenerator->setKeyGenerationInput($screenParam);
+    $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+
+    if ($token == $arrElements['token']) {    
+	    $view_controller -> addData('EST',$objEmpStat,true, true);
+
+	    $view_controller = new ViewController();
+	    $unAssEmpStat = $view_controller->xajaxObjCall($arrElements['txtJobTitleID'],'JOB','unAssigned');
+    }
 
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
@@ -134,11 +146,24 @@ function editExt($arrElements) {
 	$ext_empstat = new EXTRACTOR_EmployStat();
 
 	$objEmpStat = $ext_empstat -> parseEditData($arrElements);
-	$view_controller->updateData('EST',$arrElements['txtEmpStatID'],$objEmpStat,true);
 
-	$view_controller = new ViewController();
-	$unAssEmpStat = $view_controller->xajaxObjCall($arrElements['txtJobTitleID'],'JOB','unAssigned');
+    // Generate and verify token here
+    $screenParam = array('uniqcode' => $_GET['uniqcode'], 'capturemode' => $_GET['capturemode']);
+    if(isset($_GET['id'])) {
+       $screenParam['id'] = $_GET['id'];
+    }
+    $tokenGenerator = CSRFTokenGenerator::getInstance();
+    $tokenGenerator->setKeyGenerationInput($screenParam);
+    $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
 
+    if ($token == $arrElements['token']) {
+
+        $view_controller->updateData('EST',$arrElements['txtEmpStatID'],$objEmpStat,true, true);
+
+        $view_controller = new ViewController();
+        $unAssEmpStat = $view_controller->xajaxObjCall($arrElements['txtJobTitleID'],'JOB','unAssigned');
+    }
+    
 	$objResponse = new xajaxResponse();
 	$xajaxFiller = new xajaxElementFiller();
 	$xajaxFiller->setDefaultOptionName($GLOBALS['lang_Common_Select']);
