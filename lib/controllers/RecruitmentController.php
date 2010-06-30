@@ -134,7 +134,10 @@ class RecruitmentController {
                     case 'FirstInterview' :
                         $interviewExtractor = new EXTRACTOR_ScheduleInterview();
                         $event = $interviewExtractor->parseAddData($_POST);
-                        $this->_saveFirstInterview($event);
+                        $screenParam = array('recruitcode' => 'Application', 'action' => 'ConfirmFirstInterview', 'id' => $_POST['txtId']);
+                        if($_POST['token'] == $this->_getCsrfTokenForJobs($screenParam)) {
+                           $this->_saveFirstInterview($event);
+                        }
                         break;
                     case 'ConfirmSecondInterview' :
                         $this->_scheduleSecondInterview($id);
@@ -785,6 +788,8 @@ class RecruitmentController {
         $objs['application'] = JobApplication::getJobApplication($id);
         $objs['interview'] = $num;
 
+        $screenParam = array('recruitcode' => $_GET['recruitcode'], 'action' => $_GET['action'], 'id' =>  $_GET['id']);
+        $objs['token'] = $this->_getCsrfTokenForJobs($screenParam);
         $template = new TemplateMerger($objs, $path);
         $template->display();
     }

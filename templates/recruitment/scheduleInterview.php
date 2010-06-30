@@ -27,6 +27,10 @@ $baseURL = "{$_SERVER['PHP_SELF']}?recruitcode={$_GET['recruitcode']}";
 $action = ($num == 1) ? JobApplication::ACTION_SCHEDULE_FIRST_INTERVIEW : JobApplication::ACTION_SCHEDULE_SECOND_INTERVIEW;
 $formAction = $baseURL . '&amp;action=' . $action;
 
+$token = "";
+if(isset($records['token'])) {
+   $token = $records['token'];
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -256,6 +260,7 @@ $applicantName = $application->getFirstName() . ' ' . $application->getLastName(
 ?>
 
 			<form name="frmInterview" id="frmInterview" method="post" action="<?php echo $formAction;?>">
+            <input type="hidden" value="<?php echo $token;?>" name="token" />
 				<input type="hidden" id="txtId" name="txtId" value="<?php echo $application->getId();?>"/><br/>
 				<input type="hidden" name="cmbInterviewer" id="cmbInterviewer" value="<?php echo $prevEmpNum ?>" />
 
