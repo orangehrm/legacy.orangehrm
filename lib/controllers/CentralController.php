@@ -1388,7 +1388,7 @@ switch ($moduletype) {
 																						$mes = "Empty record";
 
                                                                   //we introduce token for the form here
-                                                                  $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => 'Leave_Edit_Summary');
+                                                                  $screenParam = array('leavecode' => $_GET['leavecode'], 'action' => 'Leave_Summary');
                                                                   $tokenGenerator = CSRFTokenGenerator::getInstance();
                                                                   $tokenGenerator->setKeyGenerationInput($screenParam);
                                                                   $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
@@ -1767,13 +1767,9 @@ switch ($moduletype) {
 																						$obj->setTimesheetId($_GET['id']);
 																					}
 																					$timeController->setObjTime($obj);
-                                                               $screenParam = array('timecode' => $_GET['timecode'], 'action' => 'View_Select_Employee');
-                                                               $tokenGenerator = CSRFTokenGenerator::getInstance();
-                                                               $tokenGenerator->setKeyGenerationInput($screenParam);
-                                                               $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
-                                                               if($token == $_POST['token']) {
-                                                                  $timeController->viewTimesheet($current);
-                                                               }
+
+                                                                     $timeController->viewTimesheet($current);
+
 																					break;
 													case 'View_Edit_Timesheet' :	$obj = $timesheetExtractor->parseViewData($_POST);
 																					if (isset($_GET['id']) && !empty($_GET['id'])) {
@@ -1959,6 +1955,7 @@ switch ($moduletype) {
                                                                $tokenGenerator = CSRFTokenGenerator::getInstance();
                                                                $tokenGenerator->setKeyGenerationInput($screenParam);
                                                                $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));
+                                                               
                                                                if($token == $_POST['token']) {
                                                                   $timeController->viewProjectReport();
                                                                }
