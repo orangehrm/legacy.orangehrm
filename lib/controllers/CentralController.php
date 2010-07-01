@@ -1345,7 +1345,7 @@ switch ($moduletype) {
                                                                   $tokenGenerator->setKeyGenerationInput($screenParam);
                                                                   $token = $tokenGenerator->getCSRFToken(array_keys($screenParam));             
 
-                                                                  if($token == $_POST['token']) {
+                                                                  if(!isset($_POST['token']) || $token == $_POST['token']) {
                                                                      $leaveController->viewLeaves("summary", $year, $searchBy, $sortBy, $sortOrder, $pageNO);
                                                                   }
                                                                   break;
