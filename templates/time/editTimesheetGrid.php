@@ -683,9 +683,23 @@ foreach ($grid as $key => $value) { // Grid iteration: Begins
 	        return false;
 	    }
 
+            /* inArray function */
+
+            function inArray(string, array) {
+
+                for (var i=0; i<array.length; i++) {
+                    if(array[i] == string) {
+                        return true;
+                    }
+                }
+
+                return false;
+
+            }
+
 	    /* Checking for duplicate rows */
 
-		var duplicateFlag = true;
+            var duplicateFlag = true;
 	    var activities = new Array();
 	    var duplicates = new Array();
 
@@ -696,30 +710,26 @@ foreach ($grid as $key => $value) { // Grid iteration: Begins
 
 	    	if (projectId > -1 && activityId > -1) { // Checking whether projectId and activityId are not negative
 
-	    		var value = projectId+'-'+activityId;
+                    var value = projectId+'-'+activityId;
 
-		    	if (activities.length > 0) {
+                    if (activities.length > 0) {
 
-		    	    for (var j=0; j<i; j++) {
+                        if (inArray(value, activities)) {
+                            duplicates[duplicates.length] = value;
+                        } else {
+                            activities[activities.length] = value;
+                        }
 
-		    	        if (activities[j] == value) {
-		    	        	duplicates[duplicates.length] = value;
-		    	        } else {
-		    	            activities[activities.length] = value;
-		    	        }
-
-		    	    }
-
-		    	} else {
-		    	    activities[activities.length] = value;
-		    	}
+                    } else {
+                        activities[activities.length] = value;
+                    }
 
 	    	}
 
 	    }
 
 		if (duplicates.length > 0) {
-		    alert('<?php echo $lang_Time_Errors_DUPLICATE_ROWS; ?>');
+ 		    alert('<?php echo $lang_Time_Errors_DUPLICATE_ROWS; ?>');
 		    return false;
 		}
 
