@@ -1,0 +1,16 @@
+.right{
+    text-align: right;
+}
+
+.left{
+    text-align: left;
+}
+
+.center{
+    text-align: center;
+}
+
+.headerCell {
+    color: #444444;
+    font-size: 11px;
+}
