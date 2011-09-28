@@ -1,3 +1,8 @@
+New & Changed Features for OrangeHRM ver 2.6.8.1
+	Bug Fixes
+	---------
+	Bug fixes on candidate search of recruitment module
+
 New & Changed Features for OrangeHRM ver 2.6.8 
 
 	New Features
