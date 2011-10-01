@@ -4046,6 +4046,7 @@ symfony/plugins/orangehrmRecruitmentPlugin/lib/service/VacancyService.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/addCandidateAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/addJobVacancyAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/attachmentsComponent.class.php -text
+symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/baseRecruitmentAction.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/changeCandidateVacancyStatusAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/deleteAttachmentsAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/deleteCandidateVacanciesAction.class.php -text
