@@ -1897,4 +1897,5 @@ class EmployeeServiceTest extends PHPUnit_Framework_TestCase {
         $result = $this->employeeService->getEmailList();
         $this->assertEquals($list, $result);
     }
+
 }

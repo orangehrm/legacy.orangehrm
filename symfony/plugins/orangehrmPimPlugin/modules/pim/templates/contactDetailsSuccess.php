@@ -22,7 +22,7 @@
     var emails = <?php echo json_encode($form->getEmailList()); ?>;
     var emailList =eval(emails);
     var lang_emailExistmsg = "<?php echo __("This email already exists"); ?>";
-    
+
     <?php if (isset($empNumber)) { ?>
                     var empNumber = '<?php echo $empNumber; ?>';
     <?php } else { ?>
