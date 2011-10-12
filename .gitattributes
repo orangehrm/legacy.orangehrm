@@ -4238,6 +4238,7 @@ symfony/test/RecruitmentModuleAllTests.php -text
 symfony/test/actions/PerformanceActionsTest.php -text
 symfony/test/config/EmailConfigurationTest.php -text
 symfony/test/fixtures/admin/dao/ProjectDao.yml -text
+symfony/test/fixtures/auth/credentials.yml -text
 symfony/test/fixtures/config/EmailConfiguration.yml -text
 symfony/test/fixtures/core/idgen.yml -text
 symfony/test/fixtures/performance/kpi.yml -text
@@ -4250,6 +4251,8 @@ symfony/test/model/admin/dao/CustomFieldsDaoTest.php -text
 symfony/test/model/admin/dao/ProjectDaoTest.php -text
 symfony/test/model/admin/service/CompanyServiceTest.php -text
 symfony/test/model/admin/service/CustomFieldsServiceTest.php -text
+symfony/test/model/auth/dao/AuthenticationDaoTest.php -text
+symfony/test/model/auth/service/AuthenticationServiceTest.php -text
 symfony/test/model/core/service/EmailServiceTest.php -text
 symfony/test/model/core/service/IDGeneratorServiceTest.php -text
 symfony/test/model/performance/dao/KpiDaoTest.php -text
