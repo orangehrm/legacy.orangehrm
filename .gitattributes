@@ -776,6 +776,13 @@ symfony/apps/orangehrm/modules/admin/templates/updateSkillSuccess.php -text
 symfony/apps/orangehrm/modules/admin/templates/updateUserGroupSuccess.php -text
 symfony/apps/orangehrm/modules/admin/templates/updateUserSuccess.php -text
 symfony/apps/orangehrm/modules/auth/actions/actions.class.php -text
+symfony/apps/orangehrm/modules/auth/actions/loginAction.class.php -text
+symfony/apps/orangehrm/modules/auth/actions/logoutAction.class.php -text
+symfony/apps/orangehrm/modules/auth/actions/retryLoginAction.class.php -text
+symfony/apps/orangehrm/modules/auth/actions/unauthorizedAction.class.php -text
+symfony/apps/orangehrm/modules/auth/actions/validateCredentialsAction.class.php -text
+symfony/apps/orangehrm/modules/auth/config/security.yml -text
+symfony/apps/orangehrm/modules/auth/templates/loginSuccess.php -text
 symfony/apps/orangehrm/modules/default/actions/actions.class.php -text
 symfony/apps/orangehrm/modules/default/templates/error404Success.php -text
 symfony/apps/orangehrm/modules/default/templates/indexSuccess.php -text
