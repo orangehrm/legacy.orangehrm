@@ -40,6 +40,14 @@ class EmailService extends BaseService {
     private $messageBody;
     private $messageCc;
     private $messageBcc;
+    
+    /**
+     *
+     * @return EmailConfiguration 
+     */
+    public function getEmailConfig() {
+        return $this->emailConfig;
+    }
 
     public function setMessageSubject($messageSubject) {
         $this->messageSubject = $messageSubject;

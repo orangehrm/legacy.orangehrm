@@ -630,6 +630,7 @@ symfony/apps/orangehrm/lib/form/validator/ohrmDateValidator.php -text
 symfony/apps/orangehrm/lib/form/widget/ohrmWidgetButton.php -text
 symfony/apps/orangehrm/lib/form/widget/ohrmWidgetCheckbox.php -text
 symfony/apps/orangehrm/lib/form/widget/ohrmWidgetDatePicker.php -text
+symfony/apps/orangehrm/lib/form/widget/sfWidgetFormSchemaFormatterBreakTags.php -text
 symfony/apps/orangehrm/lib/helper/OrangeActionHelper.php -text
 symfony/apps/orangehrm/lib/helper/OrangeDateHelper.php -text
 symfony/apps/orangehrm/lib/helper/OrangeHelper.php -text
@@ -660,6 +661,9 @@ symfony/apps/orangehrm/lib/model/admin/service/NationalityService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/ProjectService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/SkillService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/UserService.php -text
+symfony/apps/orangehrm/lib/model/auth/dao/AuthenticationDao.php -text
+symfony/apps/orangehrm/lib/model/auth/service/AuthenticationService.php -text
+symfony/apps/orangehrm/lib/model/auth/service/AuthenticationServiceException.php -text
 symfony/apps/orangehrm/lib/model/core/Service/AuthorizeService.php -text
 symfony/apps/orangehrm/lib/model/core/Service/BaseService.php -text
 symfony/apps/orangehrm/lib/model/core/Service/EmailService.php -text
@@ -695,6 +699,7 @@ symfony/apps/orangehrm/lib/ohrmWidgets/ohrmWidgetProjectList.php -text
 symfony/apps/orangehrm/lib/ohrmWidgets/ohrmWidgetProjectListWithAllOption.php -text
 symfony/apps/orangehrm/lib/ohrmWidgets/ohrmWidgetSubDivisionList.php -text
 symfony/apps/orangehrm/lib/utility/Auth.php -text
+symfony/apps/orangehrm/lib/utility/CookieManager.php -text
 symfony/apps/orangehrm/lib/utility/Cryptographer.php -text
 symfony/apps/orangehrm/lib/utility/DateRange.php -text
 symfony/apps/orangehrm/lib/utility/EncryptionListener.php -text
