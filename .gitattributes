@@ -3801,6 +3801,7 @@ symfony/plugins/orangehrmCorePlugin/lib/utility/PluginUIManager.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/actions.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmListComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmPluginPannelComponent.class.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/templates/_footer.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmList.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmPluginPannel.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
