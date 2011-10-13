@@ -1,15 +1,6 @@
 <?php
 $styleSheet = 'orange';
 $imagePath = public_path("../../themes/{$styleSheet}/images/login");
-
-$browser = $_SERVER['HTTP_USER_AGENT'];
-if (strstr($browser, 'MSIE 8.0')) {
-    $footerStyle = 'width: 700px';
-    $socialNetworkDivStyle = 'padding-left: 600px; padding-top: 121px;';
-} else {
-    $footerStyle = 'width: 475px';
-    $socialNetworkDivStyle = 'padding-left: 700px; padding-top: 131px;';
-}
 ?>
 <style type="text/css">
     <!--
@@ -39,10 +30,9 @@ if (strstr($browser, 'MSIE 8.0')) {
     }
 
     #divLogin {
-        background-image: url(<?php echo "{$imagePath}/login.png"; ?>);
-        background-repeat: no-repeat;
-        height: 700px;
-        width: 1000px;
+        background: transparent url(<?php echo "{$imagePath}/login.png"; ?>) no-repeat center top;
+        height: 520px;
+        width: 100%;
         border-style: hidden;
         margin: auto;
         padding-left: 10px;
@@ -50,12 +40,12 @@ if (strstr($browser, 'MSIE 8.0')) {
 
     #divUsername {
         padding-top: 153px;
-        padding-left: 504px;
+        padding-left: 50%;
     }
 
     #divPassword {
         padding-top: 35px;
-        padding-left: 504px;
+        padding-left: 50%;
     }
 
     #txtUsername {
@@ -86,12 +76,12 @@ if (strstr($browser, 'MSIE 8.0')) {
         margin-top: 12px;
         margin-right: 0px;
         margin-bottom: 0px;
-        margin-left: 512px;
+        margin-left: 50%;
     }
 
     #divLoginButton {
         padding-top: 2px;
-        padding-left: 506px;
+        padding-left: 50%;
         float: left;
         width: 280px;
     }
@@ -153,26 +143,9 @@ if (strstr($browser, 'MSIE 8.0')) {
         </div>
     </form>
 
-    <div id="divFooter" >
-        <div id="divLink" style="<?php echo $footerStyle ?>">
-            <lable>
-                <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> 
-                ver 2.6.7-auth-conversion &copy; OrangeHRM Inc. 2005 - 2011 All rights reserved.
-            </lable>
-        </div>
-        <div id="socialNetwork" style="<?php echo $socialNetworkDivStyle ?>">
-            <a href="http://www.linkedin.com/groups?home=&gid=891077" target="_blank">
-                <img src="<?php echo "{$imagePath}/linkedin.png"; ?>" /></a>&nbsp;
-            <a href="http://www.facebook.com/OrangeHRM" target="_blank">
-                <img src="<?php echo "{$imagePath}/facebook.png"; ?>" /></a>&nbsp;
-            <a href="http://twitter.com/orangehrm" target="_blank">
-                <img src="<?php echo "{$imagePath}/twiter.png"; ?>" /></a>&nbsp;
-            <a href="http://www.youtube.com/results?search_query=orangehrm&search_type=" target="_blank">
-                <img src="<?php echo "{$imagePath}/youtube.png"; ?>" /></a>&nbsp;
-        </div>
-    </div>
-
 </div>
+
+<?php include_partial('core/footer'); ?>
 
 <script type="text/javascript">
     
