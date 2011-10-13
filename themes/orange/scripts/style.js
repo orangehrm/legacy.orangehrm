@@ -24,11 +24,12 @@
  */
 function roundBorder(className) {
 	var innerClass = 'maincontent';
+        var divContent = '';
     var elements = document.getElementsByTagName('div');
 	for (i=0;i<elements.length;i++) {
 		div = elements[i];
         if (div.className == className) {
-
+                
 			divContent = div.innerHTML;
 			div.innerHTML = "";
 			
