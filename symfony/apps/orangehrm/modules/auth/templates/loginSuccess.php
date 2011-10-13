@@ -120,7 +120,7 @@ $imagePath = public_path("../../themes/{$styleSheet}/images/login");
         <img src="<?php echo "{$imagePath}/logo.png"; ?>" />
     </div>
 
-    <form method="post" action="<?php echo url_for('auth/validateCredentials'); ?>">
+    <form id="frmLogin" method="post" action="<?php echo url_for('auth/validateCredentials'); ?>">
         <input type="hidden" name="actionID"/>
         <input type="hidden" name="hdnUserTimeZoneOffset" id="hdnUserTimeZoneOffset" value="0" />
 
@@ -165,6 +165,32 @@ $imagePath = public_path("../../themes/{$styleSheet}/images/login");
         inputObject.css('background', '');
     }
     
+    function showMessage(message) {
+        if ($('#spanMessage').size() == 0) {
+            $('<span id="spanMessage"></span>').insertAfter('#btnLogin');
+        }
+
+        $('#spanMessage').html(message);
+    }
+    
+    function validateLogin() {
+        var isEmptyPasswordAllowed = false;
+        
+        if ($('#txtUsername').val() == '') {
+            showMessage('<?php echo __('Username cannot be empty'); ?>');
+            return false;
+        }
+        
+        if (!isEmptyPasswordAllowed) {
+            if ($('#txtPassword').val() == '') {
+                showMessage('<?php echo __('Password cannot be empty'); ?>');
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     $(document).ready(function() {
         
         addHint($('#txtUsername'), '<?php echo "{$imagePath}/username-hint.png"; ?>');
@@ -181,5 +207,7 @@ $imagePath = public_path("../../themes/{$styleSheet}/images/login");
         });
         
         $('#hdnUserTimeZoneOffset').val(calculateUserTimeZoneOffset().toString());
+        
+        $('#frmLogin').submit(validateLogin);
     });
 </script>
