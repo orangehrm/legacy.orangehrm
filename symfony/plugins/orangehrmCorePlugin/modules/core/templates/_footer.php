@@ -16,6 +16,7 @@ $copyrightYear = '2011';
     
     #spanSocialMedia a img {
         margin-bottom: -8px;
+		border: none;
     }
 
 </style>
