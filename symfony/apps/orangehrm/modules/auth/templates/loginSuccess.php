@@ -101,7 +101,7 @@ $imagePath = public_path("../../themes/{$styleSheet}/images/login");
     }
 
     #divLogo {
-        padding-left: 230px;
+        padding-left: 30%;
         padding-top: 70px;
     }
 
