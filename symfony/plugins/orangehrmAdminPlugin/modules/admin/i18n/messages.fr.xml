@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+    <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2009-12-08T13:58:35Z" product-name="messages">
+        <header/>
+        <body>
+            <trans-unit id="1">
+                <source>Localization</source>
+                <target>FR_Localization</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Date Format</source>
+                <target>FR_Date Format</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Use browser language if set</source>
+                <target>FR_Use browser language if set</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Language Details Successfully Saved</source>
+                <target>FR_Language Details Successfully Saved</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Ok</source>
+                <target>FR_Ok</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Supported Languages</source>
+                <target>FR_Supported Languages</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Following languages are supported by OrangeHRM</source>
+                <target>FR_Following languages are supported by OrangeHRM</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Customer</source>
+                <target>FR_Customer</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>CSV Data Import</source>
+                <target>FR_CSV Data Import</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Column order should not be changed</source>
+                <target>FR_Column order should not be changed</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>First Name and Last Name is compulsory</source>
+                <target>FR_First Name and Last Name is compulsory</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>All date fields should be in YYYY-mm-dd format</source>
+                <target>FR_All date fields should be in YYYY-mm-dd format</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Upload</source>
+                <target>FR_Upload</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Sample csv file </source>
+                <target>FR_Sample csv file </target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Download</source>
+                <target>FR_Download</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>File Required</source>
+                <target>FR_File Required</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>Employee Record(s) Imported Successfully</source>
+                <target>FR_Employee Record(s) Imported Successfully</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Failed. File Size Exceeded 1MB</source>
+                <target>FR_Failed. File Size Exceeded 1MB</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Error Occurred - Invalid File Type</source>
+                <target>FR_Error Occurred - Invalid File Type</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>If gender is specified, value should be either %male or %female</source>
+                <target>FR_If gender is specified, value should be either %male or %female</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Include not more than 100 records in the file</source>
+                <target>FR_Include not more than 100 records in the file</target>
+            </trans-unit>            
+        </body>
+    </file>
+</xliff>
