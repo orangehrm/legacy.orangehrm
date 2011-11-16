@@ -106,25 +106,20 @@ class EmployeeReportToForm extends BaseForm {
         $jsonArray = array();
         $employeeService = $this->getEmployeeService();
 
-        //if ($this->userType == 'Admin') {
         $employeeList = $employeeService->getEmployeeList();
-        // } elseif ($this->userType == 'Supervisor') {
-        //$employeeList = $employeeService->getSupervisorEmployeeChain($this->loggedInUserId);
-        // }
-        
+
         // Get supervisosubordinates of current employee
         $employeeUnique = array();
-        
-        //
+
         // Skip supervisors and subordinates already assigned
-        //
+
         $supervisors = $employeeService->getSupervisorListForEmployee($this->empNumber);
         $subordinates = $employeeService->getSubordinateListForEmployee($this->empNumber);
-        
-        foreach($subordinates as $subordinate) {
+
+        foreach ($subordinates as $subordinate) {
             $employeeUnique[$subordinate->getSubordinateId()] = true;
         }
-        foreach($supervisors as $supervisor) {
+        foreach ($supervisors as $supervisor) {
             $employeeUnique[$supervisor->getSupervisorId()] = true;
         }
 
@@ -162,21 +157,6 @@ class EmployeeReportToForm extends BaseForm {
         $selectedEmployee = $this->getValue('selectedEmployee');
         $previousRecord = $this->getValue('previousRecord');
 
-//        echo 'empNumber = ' . $empNumber . '<br>';
-//        echo 'supOrSub = ' . $supOrSub . '<br>';
-//        echo 'name = ' . $name . '<br>';
-//        echo 'reportingType = ' . $reportingType . '<br>';
-//        echo 'reportingMethod = ' . $reportingMethod . '<br>';
-//        echo 'selectedEmployee = ' . $selectedEmployee . '<br>';
-//        echo 'previousRecord = ' . $previousRecord . '<br>';
-//        die('L161');
-
-        if($previousRecord != null){
-            $tempList = array($previousRecord);
-            $this->getEmployeeService()->deleteReportToObject($tempList);
-            $updated = true;
-        }
-
         if ($reportingMethod != null) {
 
             $newReportingMethod = new ReportingMethod();
@@ -186,7 +166,7 @@ class EmployeeReportToForm extends BaseForm {
         }
 
         if ($supOrSub == ReportTo::SUPERVISOR) {
-            $existingReportToObject = $this->getEmployeeService()->getReportToObject($selectedEmployee, $empNumber, $reportingType);
+            $existingReportToObject = $this->getEmployeeService()->getReportToObject($selectedEmployee, $empNumber);
 
             if ($existingReportToObject != null) {
                 $existingReportToObject->setReportingMethodId($reportingType);
@@ -201,7 +181,7 @@ class EmployeeReportToForm extends BaseForm {
         }
 
         if ($supOrSub == ReportTo::SUBORDINATE) {
-            $existingReportToObject = $this->getEmployeeService()->getReportToObject($empNumber, $selectedEmployee, $reportingType);
+            $existingReportToObject = $this->getEmployeeService()->getReportToObject($empNumber, $selectedEmployee);
 
             if ($existingReportToObject != null) {
                 $existingReportToObject->setReportingMethod($reportingType);
