@@ -22,8 +22,8 @@ $width = 450 + $noOfColumns * 75;
 ?>
 <?php echo stylesheet_tag('../orangehrmTimePlugin/css/editTimesheetSuccess'); ?>
 <?php echo stylesheet_tag('../orangehrmTimePlugin/css/time'); ?>
-<?php echo javascript_include_tag('editTimesheet'); ?>
-<?php echo javascript_include_tag('editTimesheetPartial'); ?>
+<?php echo javascript_include_tag('../orangehrmTimePlugin/js/editTimesheet'); ?>
+<?php echo javascript_include_tag('../orangehrmTimePlugin/js/editTimesheetPartial'); ?>
 <?php
 use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
 use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
@@ -143,7 +143,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 <!-- end of comment dialog-->
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
-    var rows = <?php print_r($timesheetForm['initialRows']->count() + 1) ?>;
+    var rows = <?php echo $timesheetForm['initialRows']->count() + 1 ?>;
     var link = "<?php echo url_for('time/addRow') ?>";
     var commentlink = "<?php echo url_for('time/updateTimesheetItemComment') ?>";
     var projectsForAutoComplete=<?php echo $timesheetForm->getProjectListAsJson(); ?>;

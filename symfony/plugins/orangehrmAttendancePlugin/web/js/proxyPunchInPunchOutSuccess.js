@@ -1,26 +1,25 @@
 $(document).ready(function()
     {
-      
-        var d = new Date()
-        var gmtHours = -d.getTimezoneOffset()*60;
 
         dateTimeFormat= 'yyyy-MM-dd HH:mm';
 
-        $(".date").val(currentDate);
         $(".time").val(currentTime);
 
-
         $(".punchInbutton").click(function(){
+            
+            
+            var timezoneArray= getTimezoneArray();
+            var  timezone=  timezoneArray[$(".timezone").val()];
+            if(timezone == 'GMT'){
+                timeZone=0;
+            }
+            var  timeZone=timezone*3600;
             if((validateNote())){
-
                 if((validate())) {
-
                     if((validateForpunchInOverLapping()==1)) {
-                        var d = new Date()
-                        var gmtHours = -d.getTimezoneOffset()*60;
+                       
                         $('form#punchTimeForm').attr({
-
-                            action:linkForPunchIn+"?timeZone="+gmtHours
+                            action:linkForProxyPunchAction+"?timeZone="+timeZone+"&path="+true+"&employeeId="+employeeId+"&date="+selectedDate
                         });
                         $('form#punchTimeForm').submit();
                
@@ -31,17 +30,21 @@ $(document).ready(function()
         });
 
         $(".punchOutbutton").click(function(){
-
+            var timezoneArray= getTimezoneArray();
+            var  timezone=  timezoneArray[$(".timezone").val()];
+             if(timeZone == 'GMT'){
+                        timeZone=0;
+                        
+                    }
+            var  timeZone= timezone*3600;
             if((validateNote())){
                 if((validate())) {
    
                     if(validatePunchOutOverLapping()==1){
-                        var d = new Date()
-                        var gmtHours = -d.getTimezoneOffset()*60;
-
+  
                         $('form#punchTimeForm').attr({
 
-                            action:linkForPunchOut+"?timeZone="+gmtHours
+                            action:linkForProxyPunchAction+"?timeZone="+timeZone+"&path="+true+"&employeeId="+employeeId+"&date="+selectedDate
                         });
                         $('form#punchTimeForm').submit();
 
@@ -51,32 +54,6 @@ $(document).ready(function()
             }
 
         });
-
-        //Load default Mask if empty
-        var rDate = trim($("#attendance_date").val());
-        if (rDate == '') {
-            $("#attendance_date").val(datepickerDateFormat);
-        }
-
-        //Bind date picker
-        daymarker.bindElement("#attendance_date",
-        {
-            onSelect: function(date){
-
-
-                $("#attendance_date").trigger('change');
-            },
-            dateFormat:datepickerDateFormat
-        });
-
-        $('#DateBtn').click(function(){
-
-
-            daymarker.show("#attendance_date");
-
-
-        });
-
 
         function strToTime(str, format) {
 
@@ -138,7 +115,7 @@ $(document).ready(function()
 
         $("#attendance_date").change(function() {
 
-            if(actionPunchOut){
+            if(punchOut){
 
                 var flag = validate();
 
@@ -209,7 +186,7 @@ $(document).ready(function()
 
 
         $(".time").change(function() {
-            if(actionPunchOut){
+            if(punchOut){
 
                 var flag = validate();
 
@@ -307,10 +284,10 @@ $(document).ready(function()
             $('#validationMsg').html("");
 
             var errorStyle = "background-color:#FFDFDF;";
-        
+ 
             var date=$(".date").val();
             var timeArray=$(".time").val().split(':')
-    
+
             //implement the when - is not there this breaks
 
             if(!validateDate(date, datepickerDateFormat)){
@@ -324,10 +301,11 @@ $(document).ready(function()
             }
 
             else{
-                var formtedFullDate=convertDateToYMDFormat(date);
+                var parsedDate = $.datepicker.parseDate(datepickerDateFormat, date);
+                var formtedFullDate=$.datepicker.formatDate("yy-mm-dd", parsedDate);
+
    
             }
-
 
             if((timeArray[0]>24)||(timeArray[0]<0)||(timeArray[1]>59)||(timeArray[1]<0)){
 
@@ -400,16 +378,23 @@ $(document).ready(function()
                     maxTimestamp = strToTime(formtedFullDate+" 24:00", dateTimeFormat);
 
                     if (punchedTimestamp >= maxTimestamp) {
-                        $('#validationMsg').html(errorForInvalidFormat);
+                        alert("Invalid Max Time");
                         errFlag = true;
                     }
 
 
                     var inTime = strToTime(punchInUtcTime, dateTimeFormat);
                     var outTimeTemp = strToTime(formtedFullDate+" "+formtdFullTime, dateTimeFormat);
-
-                    var outTime=outTimeTemp-gmtHours*1000;
-      
+                    var timezoneArray= getTimezoneArray();
+                
+                    var  timeZone=  timezoneArray[$(".timezone").val()];
+                    if(timeZone == 'GMT'){
+                        timeZone=0;
+                    }
+                     
+           
+                    var outTime=outTimeTemp-timeZone*3600*1000;
+                   
 
                     if (inTime > outTime) {
 
@@ -420,12 +405,12 @@ $(document).ready(function()
                         $("#attendance_date").attr('style', errorStyle);
                         errFlag = true;
                     }
-
                 }
             }
 
             return !errFlag ;
         }
+
 
 
 
@@ -435,20 +420,26 @@ $(document).ready(function()
             $(".messageBalloon_success").remove();
             $('#validationMsg').removeAttr('class');
             $('#validationMsg').html("");
-
-            var inTime=punchInTime;
-            var timezone=gmtHours;
+            var timezoneArray= getTimezoneArray();
+            var  timeZone=  timezoneArray[$(".timezone").val()];
+              if(timeZone == 'GMT'){
+                        timeZone=0;
+                        
+                    }
+            var inTime=punchInUtcTime;
+            var timezone=timeZone*3600;
+ 
             var outTime =convertDateToYMDFormat($(".date").val())+" "+$(".time").val();
+
             var r = $.ajax({
                 type: 'POST',
                 url: linkForOverLappingValidation,
-                data: "punchInTime="+inTime+"&punchOutTime="+outTime+"&employeeId="+employeeId+"&timezone="+timezone+"&recordId="+recordId,
+                data: "punchInTime="+inTime+"&punchOutTime="+outTime+"&employeeId="+employeeId+"&timezone="+timezone,
                 async: false,
 
                 success: function(msg){
 
                     isValid = msg;
-                   
          
                 }
             });
@@ -467,23 +458,25 @@ $(document).ready(function()
             }
 
             return isValid;
-
-
-
         }
 
+
+
         function validateForpunchInOverLapping(){
-
-
-
             $(".messageBalloon_success").remove();
             $('#validationMsg').removeAttr('class');
             $('#validationMsg').html("");
 
-
             var inTime =convertDateToYMDFormat($(".date").val())+" "+$(".time").val();
-            var timezone=gmtHours;
-
+            var timezoneArray= getTimezoneArray();
+            var  timeZone=  timezoneArray[$(".timezone").val()];
+             if(timeZone == 'GMT'){
+                        timeZone=0;
+                     
+                    }
+            
+            var  timezone=timeZone*3600;
+    
             var r = $.ajax({
                 type: 'POST',
                 url: linkForPunchInOverlappingValidation,
@@ -510,34 +503,56 @@ $(document).ready(function()
 
             return isValid;
         }
+
+        function getCurrentTime(){
+          var r = $.ajax({
+                type: 'POST',
+                url: getCurrentTimeLink,
+                async: false,
+
+                success: function(msg){
+                    isValid = msg[0];
+
+            
+
+                }
+            });
+
+        }
     });
-    
-    
-function validateNote(){
 
-    errFlag1 = false;
+function getTimezoneArray() {
 
-    // $(".messageBalloon_success").remove();
-    $('.punchOutbutton').removeAttr('disabled');
-    $('.punchInbutton').removeAttr('disabled');
-    $(".note").removeAttr('style');
-    $('#validationMsg').removeAttr('class');
-    $('#validationMsg').html("");
+    var timezoneArray=new Array();
+    timezoneArray[0] = 'GMT';
+    timezoneArray[1] = '1.0';
+    timezoneArray[2] = '2.0';
+    timezoneArray[3] = '3.0';
+    timezoneArray[4] = '4.0';
+    timezoneArray[5] = '5.0';
+    timezoneArray[6] = '5.5';
+    timezoneArray[7] = '6.0';
+    timezoneArray[8] = '7.0';
+    timezoneArray[9] = '8.0';
+    timezoneArray[10] = '9.0';
+    timezoneArray[11] = '9.5';
+    timezoneArray[12] = '+10.00';
+    timezoneArray[13] = '+11.00';
+    timezoneArray[14] = '+12.00';
+    timezoneArray[15] = '-11.00';
+    timezoneArray[16] = '-10.00';
+    timezoneArray[17] = '-9.00';
+    timezoneArray[18] = '-8.00';
+    timezoneArray[19] = '-7.00';
+    timezoneArray[20] = '-6.00';
+    timezoneArray[21] = '-5.00';
+    timezoneArray[22] = '-4.00';
+    timezoneArray[23] = '-3.50';
+    timezoneArray[24] = '-3.00';
+    timezoneArray[25] = '-2.00';
+    timezoneArray[26] = '-1.00';
 
-    var errorStyle = "background-color:#FFDFDF;";
-
-    if ($(".note").val().length > 250) {
-        $('.punchOutbutton').attr('disabled', 'disabled');
-        $('.punchInbutton').attr('disabled', 'disabled');
-        $('#validationMsg').attr('class', "messageBalloon_failure");
-        $('#validationMsg').html(errorForInvalidNote);
-        $(".note").attr('style', errorStyle);
-                  
-        errFlag1 = true;
-    }
-
-    return !errFlag1;
-
+    return timezoneArray;
 }
 
 function convertDateToYMDFormat(date){
@@ -545,8 +560,28 @@ function convertDateToYMDFormat(date){
     return $.datepicker.formatDate("yy-mm-dd", parsedDate);
 }
 
+        function validateNote(){
 
+            errFlag1 = false;
 
+            // $(".messageBalloon_success").remove();
+            $('#validationMsg').removeAttr('class');
+            $('#validationMsg').html("");
 
+            var errorStyle = "background-color:#FFDFDF;";
+
+            if ($(".note").val().length > 250) {
+                $('.punchOutbutton').attr('disabled', 'disabled');
+                $('.punchInbutton').attr('disabled', 'disabled');
+                $('#validationMsg').attr('class', "messageBalloon_failure");
+                $('#validationMsg').html(errorForInvalidNote);
+                $(".note").attr('style', errorStyle);
+                  
+                errFlag1 = true;
+            }
+
+            return !errFlag1;
+
+        }
 
 
