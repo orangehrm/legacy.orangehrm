@@ -126,6 +126,14 @@ foreach ($varsToClean as $var) {
     }
 }
 
+/** Clean $_SERVER['PHP_SELF'] */
+$selfUrl = $_SERVER['PHP_SELF'];
+
+$urlPos = stripos($selfUrl, 'CentralController.php');
+if ( $urlPos !== FALSE) {
+    $_SERVER['PHP_SELF'] = substr($selfUrl, 0, $urlPos + strlen('CentralController.php'));
+}
+
 //leave modules extractorss go here
 
 if(isset($_GET['uniqcode'])) {
