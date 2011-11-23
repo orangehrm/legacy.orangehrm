@@ -115,6 +115,17 @@ require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_TimeEvent.php';
 require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_TimesheetSubmissionPeriod.php';
 require_once ROOT_PATH . '/lib/extractor/time/EXTRACTOR_Workshift.php';
 
+/** Clean Get variables that are used in page */
+$varsToClean = array('uniqcode', 'repcode', 'reqcode', 'mtcode', 'repcode', 
+    'leavecode', 'timecode', 'benefitcode', 'recruitcode', 'VIEW', 'action',
+    'menu_no_top', 'isAdmin', 'pageNo', 'id', 'capturemode');
+
+foreach ($varsToClean as $var) {
+    if (isset($_GET[$var])) {
+        $_GET[$var] = CommonFunctions::cleanAlphaNumericIdField($_GET[$var]);
+    }
+}
+
 //leave modules extractorss go here
 
 if(isset($_GET['uniqcode'])) {
