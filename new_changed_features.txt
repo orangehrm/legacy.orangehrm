@@ -1,3 +1,9 @@
+New & Changed Features for OrangeHRM ver 2.6.11.3
+
+     New Features
+     ------------
+     Did modification to make compatible with CSV extractor plugins
+
 New & Changed Features for OrangeHRM ver 2.6.11.2
 
      Bug Fixes
