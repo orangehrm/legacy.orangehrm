@@ -26,5 +26,7 @@ symfony/plugins/.registry
 symfony/plugins/orangehrmCorePlugin/lib/service/.SampleService.php.swp
 symfony/plugins/orangehrmPimPlugin/lib/dao/.EmployeeDao.php.swp
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/._leftmenu.php.swp
+symfony/test/.PluginAllTests.php.swp
+symfony/test/.TimesheetCsvExtractorAllTests.php.swp
 symfony/web/orangehrm*Plugin
 symfony/web/sf

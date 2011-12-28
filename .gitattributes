@@ -4305,6 +4305,7 @@ symfony/test/AdminModuleAllTests.php -text
 symfony/test/AllTests.php -text
 symfony/test/PluginAllTests.php -text
 symfony/test/RecruitmentModuleAllTests.php -text
+symfony/test/TimesheetCsvExtractorAllTests.php -text
 symfony/test/actions/PerformanceActionsTest.php -text
 symfony/test/config/EmailConfigurationTest.php -text
 symfony/test/fixtures/admin/dao/ProjectDao.yml -text
