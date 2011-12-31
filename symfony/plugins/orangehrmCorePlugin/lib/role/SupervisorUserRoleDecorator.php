@@ -139,7 +139,7 @@ class SupervisorUserRoleDecorator extends UserRoleDecorator {
         
         if ($this->isPluginAvailable('orangehrmAttendanceDataExtractorPlugin')){
             $topMenuItem = new TopMenuItem();
-            $topMenuItem->setDisplayName(__("Export Employee Records"));
+            $topMenuItem->setDisplayName(__("Export To CSV"));
             $topMenuItem->setLink(AdminUserRoleDecorator::CSV_ATTENDANCE_EXPORT);
          }
 
