@@ -475,7 +475,7 @@ class AttendanceDao {
                  ->select("e.emp_number, e.emp_firstname, e.emp_middle_name, e.emp_lastname, a.punch_in_user_time as in_date_time, a.punch_out_user_time as out_date_time, punch_in_note, punch_out_note, TIMESTAMPDIFF(HOUR, a.punch_in_user_time, a.punch_out_user_time) as duration")
                 ->from("AttendanceRecord a")
                 ->leftJoin("a.Employee e")
-                ->groupBy('a.punch_in_utc_time DESC');
+                ->groupBy('a.punch_in_user_time DESC');
 
         if( $employeeId != null){
             $q->andWhere(" e.emp_number = ?", $employeeId);
@@ -490,11 +490,11 @@ class AttendanceDao {
         }
         
         if( $dateFrom != null){            
-            $q->andWhere("i.punch_in_user_time >=?", $dateFrom);
+            $q->andWhere("a.punch_in_user_time >=?", $dateFrom);
         }
         
         if( $dateTo != null){
-            $q->andWhere("i.punch_out_user_time <=?", $dateTo);
+            $q->andWhere("a.punch_out_user_time <=?", $dateTo);
         }
               
         $result = $q->execute(array(), Doctrine::HYDRATE_SCALAR);
