@@ -403,5 +403,26 @@ class CompanyService extends BaseService {
       }
 
    }
+     
+	
+	/**
+    * Get subdivision tree based on given $startNode node.
+    *
+    * The tree depth is set to the member variable $depth
+    * 
+    * see CompanyDao->getSubdivisionTree() comments for more information.
+    *
+    * @return array of subdivision objects with depth properly set and ordered in
+    *         correct hierachiachal order.
+    */ 
+   public function getSubdivisionTreeByNodeId($startNode = null) {
+
+      try {
+         return $this->companyDao->getSubdivisionTreeByNodeId($startNode);
+      } catch(Exception $e) {
+         throw new AdminServiceException($e->getMessage());
+      }
+
+   }
 
 }

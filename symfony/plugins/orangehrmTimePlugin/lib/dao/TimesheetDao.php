@@ -758,10 +758,20 @@ class TimesheetDao {
 
         if ($employeementStatus != null) {
             $q->andWhere("e.emp_status = ?", $employeementStatus);
+        } else {
+           $q->andWhere("(e.emp_status != '".Employee::EMPLOYEE_STATUS_TERMINATED."' OR  e.emp_status IS Null)");
         }
 
         if ($subDivision != null) {
-            $q->andWhere("e.work_station = ?", $subDivision);
+            $companyDao = new CompanyDao();
+            $subDivisions = $companyDao->getSubdivisionTreeByNodeId($subDivision);
+            
+            $subDivision = array();
+            foreach ($subDivisions as $subDivisoin){                
+                $subDivision [] = $subDivisoin->getId();
+            }
+                         
+            $q->andWhereIn("e.work_station", $subDivision);
         }
 
         if ($dateFrom != null) {
