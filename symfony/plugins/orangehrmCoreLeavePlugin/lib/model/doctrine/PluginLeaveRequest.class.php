@@ -196,4 +196,11 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
             return false;
         }
     }
+
+    public function getLeaveItems() {
+
+        $leaveRequestDao = new LeaveRequestDao();
+        return $leaveRequestDao->fetchLeave($this->getLeaveRequestId());
+    }
+
 }
