@@ -720,5 +720,24 @@ class LeaveRequestService extends BaseService {
         return $this->getLeaveRequestDao()->getTotalLeaveDuration($employeeId, $date);
     }
 
+     /**
+     *
+     * @param ParameterObject $searchParameters
+     * @param array $statuses
+     * @return array
+     */
+    public function searchLeaveRequestsSummaryHydrateMode($searchParameters) {
+        return $this->leaveRequestDao->searchLeaveRequestsSummaryHydrateMode($searchParameters);
+    }
+    
+     /**
+     *
+     * @param ParameterObject $searchParameters
+     * @param array $statuses
+     * @return array
+     */
+    public function searchLeaveRequestsDetailedHydrateMode($searchParameters) {
+        return $this->leaveRequestDao->searchLeaveRequestsDetailedHydrateMode($searchParameters);
+    }
 
 }

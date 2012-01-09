@@ -69,6 +69,7 @@
     <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
     <input type="button" name="btnSearch" id="btnSearch" value="<?php echo __('Search') ?>" class="savebutton" />
     <input type="reset" id="btnReset" value="<?php echo __('Reset') ?>" class="savebutton" />
+    <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_1')); ?>
         </div>
 <?php } elseif ($form->userType == 'ESS') { ?>
     <table id="tblSearchCriteria" border="0">
