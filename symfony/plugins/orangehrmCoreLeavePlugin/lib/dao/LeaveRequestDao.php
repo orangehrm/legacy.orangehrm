@@ -501,7 +501,7 @@ class LeaveRequestDao extends BaseDao {
         $list = array();
 
         $q = Doctrine_Query::create()
-                ->select('lr.*, em.*, l.*, sum(l.leave_length_hours) leave_length_hours_total, sum(l.leave_length_days) as total_leave_length_days' .
+                ->select('lr.date_applied, lr.leave_type_name, lr.leave_comments, sum(l.leave_length_hours) leave_length_hours_total, sum(l.leave_length_days) as total_leave_length_days,em.firstName, em.middleName, em.lastName' .
                          ', sum(IF(l.leave_status = 2, 1, 0)) as scheduled, ' . 
                          ', sum(IF(l.leave_status = 0, 1, 0)) as cancelled, ' .
                          ', sum(IF(l.leave_status = 3, 1, 0)) as taken, ' . 
@@ -574,7 +574,7 @@ class LeaveRequestDao extends BaseDao {
        
     }
     
-        /**
+     /**
      *
      * @param DateRange $dateRange
      * @param array $status
@@ -587,7 +587,7 @@ class LeaveRequestDao extends BaseDao {
         $list = array();
 
         $q = Doctrine_Query::create()
-                ->select('lr.*, em.*, l.*')
+                ->select('l.leave_date, lr.leave_type_name, l.leave_length_hours, l.leave_status,l.leave_comments, em.firstName, em.middleName, em.lastName ')
                 ->from('LeaveRequest lr')
                 ->leftJoin('lr.LeaveType lt')
                 ->leftJoin('lr.Leave l')                

@@ -63,7 +63,7 @@ $searchActionButtons = $form->getSearchActionButtons();
                 <label class="mainLabel"><?php echo __('With Terminated Employees'); ?></label><?php echo $form['cmbWithTerminated']->render(); ?>
 <?php } ?>
             <br class="clear" />
-            <div class="buttonWrapper">
+            <div class="formbuttons">
                 <?php
                 foreach ($searchActionButtons as $id => $button) {
                     echo $button->render($id), "\n";

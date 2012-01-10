@@ -102,6 +102,7 @@
                                value="<?php echo __("Search"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
                         <input type="button" class="resetbutton" name="btnSrch" id="btnRst"
                                value="<?php echo __("Reset"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
+                        <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_2')); ?>
                     </div>
                     <br class="clear"/>
                 </div>
@@ -145,7 +146,8 @@
                 //<![CDATA[
                 var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
                 var lang_validDateMsg = '<?php echo __("Please enter a valid date in %format% format", array('%format%' => get_datepicker_date_format($sf_user->getDateFormat()))) ?>'
-                var candidates = <?php echo str_replace('&#039;', "'", $form->getCandidateListAsJson()) ?> ;
+                //var candidates = <?php echo str_replace('&#039;', "'", $form->getCandidateListAsJson()) ?> ;
+                var candidates = <?php echo "[]" ?> ;
                 var vacancyListUrl = '<?php echo url_for('recruitment/getVacancyListForJobTitleJson?jobTitle='); ?>';
                 var hiringManagerListUrlForJobTitle = '<?php echo url_for('recruitment/getHiringManagerListJson?jobTitle='); ?>';
                 var hiringManagerListUrlForVacancyId = '<?php echo url_for('recruitment/getHiringManagerListJson?vacancyId='); ?>';
