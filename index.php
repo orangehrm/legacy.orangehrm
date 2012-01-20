@@ -94,6 +94,26 @@ if (isset($_GET['ACT']) && $_GET['ACT'] == 'logout') {
     exit();
 }
 
+/* Loading disabled modules: Begins */
+
+require_once ROOT_PATH . '/lib/common/ModuleManager.php';
+
+$disabledModules = array();
+
+if (isset($_SESSION['admin.disabledModules'])) {
+    
+    $disabledModules = $_SESSION['admin.disabledModules'];
+    
+} else {
+    
+    $moduleManager = new ModuleManager();    
+    $disabledModules = $moduleManager->getDisabledModuleList();
+    $_SESSION['admin.disabledModules'] = $disabledModules;    
+    
+}
+
+/* Loading disabled modules: Ends */
+
 define('Admin', 'MOD001');
 define('PIM', 'MOD002');
 define('MT', 'MOD003');
@@ -377,6 +397,7 @@ if ($_SESSION['isAdmin'] == 'Yes' || $arrAllRights[Admin]['view']) {
     $sub = new MenuItem("configuration", "Configuration", "#");
     $subsubs = array();
     $subsubs[] = new MenuItem("configuration", "Localization", "./symfony/web/index.php/admin/localization");
+    $subsubs[] = new MenuItem("configuration", "Modules", "./symfony/web/index.php/admin/viewModules");
     $sub->setSubMenuItems($subsubs);
     $subs[] = $sub;
 
@@ -593,64 +614,6 @@ if (($_SESSION['empID'] != null) || $arrAllRights[TimeM]['view']) {
     $menu[] = $menuItem;
 }
 
-/* Start benefits menu */
-if (($_SESSION['empID'] != null) || $arrAllRights[Benefits]['view']) {
-    $menuItem = new MenuItem("benefits", $lang_Menu_Benefits, "./index.php?menu_no_top=benefits");
-    $menuItem->setCurrent($_GET['menu_no_top'] == "benefits");
-
-    $subs = array();
-
-    /* TODO: clean up this part based on requirements */
-    if ($_SESSION['isAdmin'] == "Yes" && $arrAllRights[Benefits]['view']) {
-        $yearVal = date('Y');
-        $sub = new MenuItem("hsp", $lang_Menu_Benefits_HealthSavingsPlan, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Summary&year={$yearVal}");
-        $subsubs = array();
-        $subsubs[] = new MenuItem("hsp", $lang_Menu_Benefits_Define_Health_savings_plans, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Define_Health_Savings_Plans");
-        $subsubs[] = new MenuItem("hsp", $lang_Menu_Benefits_EmployeeHspSummary, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Summary&year={$yearVal}");
-        $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspPaymentsDue, "lib/controllers/CentralController.php?benefitcode=Benefits&action=List_Hsp_Due");
-        $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspExpenditures, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Expenditures_Select_Year_And_Employee");
-        $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspUsed, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Used_Select_Year&year={$yearVal}");
-        $sub->setSubMenuItems($subsubs);
-        $subs[] = $sub;
-    } else {
-
-        if (Config::getHspCurrentPlan() > 0) {
-            $sub = new MenuItem("hsp", $lang_Menu_Benefits_HealthSavingsPlan, $personalHspSummary);
-        } else {
-            $sub = new MenuItem("hsp", $lang_Menu_Benefits_HealthSavingsPlan, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Not_Defined");
-        }
-        $subsubs = array();
-
-        if ($authorizeObj->isESS()) {
-            $yearVal = date('Y');
-            $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspExpenditures, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Expenditures&year={$yearVal}&employeeId={$_SESSION['empID']}");
-
-            if (Config::getHspCurrentPlan() > 0) { // Show only when Admin has defined a HSP plan
-                $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspRequest, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Request_Add_View");
-                $subsubs[] = new MenuItem("hsp", $lang_Menu_Benefits_PersonalHspSummary, $personalHspSummary);
-            }
-        }
-        $sub->setSubMenuItems($subsubs);
-        $subs[] = $sub;
-    }
-
-    if ($_SESSION['isAdmin'] == "Yes" && $arrAllRights[Benefits]['view']) {
-        $sub = new MenuItem("payrollschedule", $lang_Menu_Benefits_PayrollSchedule, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Benefits_Schedule_Select_Year");
-
-        $subsubs = array();
-        $subsubs[] = new MenuItem("payrollschedule", $lang_Benefits_ViewPayrollSchedule, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Benefits_Schedule_Select_Year");
-        if ($arrAllRights[Benefits]['add']) {
-            $subsubs[] = new MenuItem("payrollschedule", $lang_Benefits_AddPayPeriod, "lib/controllers/CentralController.php?benefitcode=Benefits&action=View_Add_Pay_Period");
-        }
-        $sub->setSubMenuItems($subsubs);
-
-        $subs[] = $sub;
-    }
-
-    $menuItem->setSubMenuItems($subs);
-    $menu[] = $menuItem;
-}
-
 /* Start recruitment menu */
 
 if ($arrAllRights[Recruit]['view']) {
@@ -750,6 +713,63 @@ if ($_SESSION['isAdmin'] != 'Yes') {
     $menu[] = $menuItem;
 }
 
+/* Start benefits menu */
+if (($_SESSION['empID'] != null) || $arrAllRights[Benefits]['view']) {
+    $menuItem = new MenuItem("benefits", $lang_Menu_Benefits, "./index.php?menu_no_top=benefits");
+    $menuItem->setCurrent($_GET['menu_no_top'] == "benefits");
+
+    $subs = array();
+
+    /* TODO: clean up this part based on requirements */
+    if ($_SESSION['isAdmin'] == "Yes" && $arrAllRights[Benefits]['view']) {
+        $yearVal = date('Y');
+        $sub = new MenuItem("hsp", $lang_Menu_Benefits_HealthSavingsPlan, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Summary&year={$yearVal}");
+        $subsubs = array();
+        $subsubs[] = new MenuItem("hsp", $lang_Menu_Benefits_Define_Health_savings_plans, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Define_Health_Savings_Plans");
+        $subsubs[] = new MenuItem("hsp", $lang_Menu_Benefits_EmployeeHspSummary, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Summary&year={$yearVal}");
+        $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspPaymentsDue, "lib/controllers/CentralController.php?benefitcode=Benefits&action=List_Hsp_Due");
+        $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspExpenditures, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Expenditures_Select_Year_And_Employee");
+        $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspUsed, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Used_Select_Year&year={$yearVal}");
+        $sub->setSubMenuItems($subsubs);
+        $subs[] = $sub;
+    } else {
+
+        if (Config::getHspCurrentPlan() > 0) {
+            $sub = new MenuItem("hsp", $lang_Menu_Benefits_HealthSavingsPlan, $personalHspSummary);
+        } else {
+            $sub = new MenuItem("hsp", $lang_Menu_Benefits_HealthSavingsPlan, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Not_Defined");
+        }
+        $subsubs = array();
+
+        if ($authorizeObj->isESS()) {
+            $yearVal = date('Y');
+            $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspExpenditures, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Expenditures&year={$yearVal}&employeeId={$_SESSION['empID']}");
+
+            if (Config::getHspCurrentPlan() > 0) { // Show only when Admin has defined a HSP plan
+                $subsubs[] = new MenuItem("hsp", $lang_Benefits_HspRequest, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Hsp_Request_Add_View");
+                $subsubs[] = new MenuItem("hsp", $lang_Menu_Benefits_PersonalHspSummary, $personalHspSummary);
+            }
+        }
+        $sub->setSubMenuItems($subsubs);
+        $subs[] = $sub;
+    }
+
+    if ($_SESSION['isAdmin'] == "Yes" && $arrAllRights[Benefits]['view']) {
+        $sub = new MenuItem("payrollschedule", $lang_Menu_Benefits_PayrollSchedule, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Benefits_Schedule_Select_Year");
+
+        $subsubs = array();
+        $subsubs[] = new MenuItem("payrollschedule", $lang_Benefits_ViewPayrollSchedule, "lib/controllers/CentralController.php?benefitcode=Benefits&action=Benefits_Schedule_Select_Year");
+        if ($arrAllRights[Benefits]['add']) {
+            $subsubs[] = new MenuItem("payrollschedule", $lang_Benefits_AddPayPeriod, "lib/controllers/CentralController.php?benefitcode=Benefits&action=View_Add_Pay_Period");
+        }
+        $sub->setSubMenuItems($subsubs);
+
+        $subs[] = $sub;
+    }
+
+    $menuItem->setSubMenuItems($subs);
+    $menu[] = $menuItem;
+}
 
 /* Start help menu */
 $menuItem = new MenuItem("help", $lang_Menu_Help, '#');
@@ -765,6 +785,20 @@ $subs[] = new MenuItem("bug", "Bug Tracker", "http://sourceforge.net/tracker/?gr
 $menuItem->setSubMenuItems($subs);
 $menu[] = $menuItem;
 /* End of main menu definition */
+
+/* Checking for disabled modules: Begins */
+
+$count = count($menu);
+
+for ($i=0; $i<$count; $i++) {
+
+    if (in_array(strtolower($menu[$i]->getMenuText()), $disabledModules)) {
+        unset($menu[$i]);
+    }
+    
+}
+
+/* Checking for disabled modules: Ends */
 
 $welcomeMessage = preg_replace('/#username/', ((isset($_SESSION['fname'])) ? $_SESSION['fname'] : ''), $lang_index_WelcomeMes);
 

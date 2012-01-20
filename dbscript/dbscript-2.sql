@@ -1260,3 +1260,15 @@ INSERT INTO `ohrm_email_notification` (`id`, `name`, `is_enable`) VALUES
 (5, 'Leave Rejections', 0),
 #(6, 'HSP Notifications', 0),
 (7, 'Performance Review Submissions', 0);
+
+INSERT INTO `ohrm_module` (`name`, `status`) VALUES
+('core', 1),
+('admin', 1),
+('pim', 1),
+('leave', 1),
+('time', 1),
+('attendance', 1),
+('recruitment', 1),
+('recruitmentApply', 1),
+('performance', 1),
+('benefits', 0);
