@@ -214,7 +214,7 @@
                                                             <?php } ?>
                                                         </td>
                                                             
-                                                        <td><?php echo $payPeriodName; ?></td>
+                                                        <td><?php echo __($payPeriodName); ?></td>
                                                         <td class="currency"><?php echo $currencyName; ?></td>
                                                         <td class="amount"><?php echo $amount; ?></td>
                                                         <td class="comments"><?php echo $comments; ?></td>

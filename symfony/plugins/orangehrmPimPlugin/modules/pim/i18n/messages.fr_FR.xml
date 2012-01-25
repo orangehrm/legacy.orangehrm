@@ -1275,7 +1275,15 @@
             <trans-unit id="324">
                 <source>To date should be after From date</source>
                 <target>FR_To date should be after From date</target>
-            </trans-unit>           
+            </trans-unit>
+            <trans-unit id="325">
+                <source>Text or Number</source>
+                <target>FR_Text or Number</target>
+            </trans-unit>
+            <trans-unit id="326">
+                <source>Drop Down</source>
+                <target>FR_Drop Down</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>
