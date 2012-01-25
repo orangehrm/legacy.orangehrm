@@ -185,7 +185,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                         <?php 
                         $lastName = $employee->getLastName();
                         $terminationId = $employee->getTerminationId();
-                        $nameTerminated = (!empty($terminationId)) ? $lastName." (Past Employee)" : $lastName;
+                        $nameTerminated = (!empty($terminationId)) ? $lastName." (" . __('Past Employee') . ")" : $lastName;
                         echo link_to($nameTerminated, "pim/viewPersonalDetails?empNumber=" . $employee->getEmpNumber()); ?>
                         </td>
                         <td><?php

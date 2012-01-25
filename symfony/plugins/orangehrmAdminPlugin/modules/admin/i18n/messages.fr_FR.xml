@@ -45,8 +45,8 @@
                 <target>FR_Column order should not be changed</target>
             </trans-unit>
             <trans-unit id="11">
-                <source>First Name and Last Name is compulsory</source>
-                <target>FR_First Name and Last Name is compulsory</target>
+                <source>First Name and Last Name are compulsory</source>
+                <target>FR_First Name and Last Name are compulsory</target>
             </trans-unit>
             <trans-unit id="12">
                 <source>All date fields should be in YYYY-mm-dd format</source>
@@ -81,8 +81,8 @@
                 <target>FR_Error Occurred - Invalid File Type</target>
             </trans-unit>
             <trans-unit id="20">
-                <source>If gender is specified, value should be either %male or %female</source>
-                <target>FR_If gender is specified, value should be either %male or %female</target>
+                <source>If gender is specified, value should be either</source>
+                <target>FR_If gender is specified, value should be either</target>
             </trans-unit>
             <trans-unit id="21">
                 <source>Include not more than 100 records in the file</source>
@@ -896,10 +896,6 @@
                 <source>Level is required</source>
                 <target>FR_Level is required</target>
             </trans-unit>         
-            <trans-unit id="223">
-                <source>Level</source>
-                <target>FR_Level</target>
-            </trans-unit>               
             <trans-unit id="224">
                 <source>Work Shifts</source>
                 <target>FR_Work Shifts</target>
@@ -1071,6 +1067,14 @@
             <trans-unit id="266">
                 <source>Module Configuration Saved Successfully</source>
                 <target>FR_Module Configuration Saved Successfully</target>
+            </trans-unit>
+            <trans-unit id="267">
+                <source>Each import file should be configured for 100 records or less</source>
+                <target>FR_Each import file should be configured for 100 records or less</target>
+            </trans-unit>
+            <trans-unit id="268">
+                <source>Multiple import files may be required</source>
+                <target>FR_Multiple import files may be required</target>
             </trans-unit>            
         </body>
     </file>

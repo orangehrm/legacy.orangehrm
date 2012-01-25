@@ -308,7 +308,7 @@
     var lang_currencyRequired = "<?php echo __("Currency is required"); ?>";
     var lang_componentRequired = "<?php echo __("Component is required"); ?>";
     var lang_amountRequired = "<?php echo __("Amount is required"); ?>";
-    var lang_invalidAmount = "<?php echo __("Amount should be within Man/Max values"); ?>";
+    var lang_invalidAmount = "<?php echo __("Amount should be within Min/Max values"); ?>";
     var lang_negativeAmount = "<?php echo __("Amount should be a positive number"); ?>";
     var lang_tooLargeAmount = "<?php echo __("Amount should be less than 999999999.99"); ?>";
     var lang_amountShouldBeNumber = "<?php echo __("Amount should be a number"); ?>";

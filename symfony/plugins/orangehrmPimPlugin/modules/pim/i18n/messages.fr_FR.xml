@@ -1224,18 +1224,58 @@
                 <source>Termination Reason(s) in Use</source>
                 <target>FR_Termination Reason(s) in Use</target>
             </trans-unit>
-            <trans-unit id="309">
-                <source>Each import file should be configured for 100 records or less</source>
-                <target>FR_Each import file should be configured for 100 records or less</target>
-            </trans-unit>
-            <trans-unit id="310">
-                <source>Multiple import files may be required</source>
-                <target>FR_Multiple import files may be required</target>
-            </trans-unit>
             <trans-unit id="311">
                 <source>Employee Id Exists</source>
                 <target>FR_Employee Id Exists</target>
             </trans-unit>
+            <trans-unit id="312">
+                <source>Custom Fields</source>
+                <target>FR_Custom Fields</target>
+            </trans-unit>  
+            <trans-unit id="313">
+                <source>Custom Fields Updated Successfully</source>
+                <target>FR_Custom Fields Updated Successfully</target>
+            </trans-unit>
+            <trans-unit id="314">
+                <source>Renewal date should be after the commence date</source>
+                <target>FR_Renewal date should be after the commence date</target>
+            </trans-unit>       
+            <trans-unit id="315">
+                <source>Expiry date should be after the issued date</source>
+                <target>FR_Expiry date should be after the issued date</target>
+            </trans-unit>   
+            <trans-unit id="316">
+                <source>End date should be after the start date</source>
+                <target>FR_End date should be after the start date</target>
+            </trans-unit>
+            <trans-unit id="317">
+                <source>Contract Details File Size Exceeded</source>
+                <target>FR_Contract Details File Size Exceeded</target>
+            </trans-unit>
+            <trans-unit id="318">
+                <source>Comments cannot exceed 255 characters in length</source>
+                <target>FR_Comments cannot exceed 255 characters in length</target>
+            </trans-unit>
+            <trans-unit id="319">
+                <source>Amount should be within Min/Max values</source>
+                <target>FR_Amount should be within Min/Max values</target>
+            </trans-unit>
+            <trans-unit id="320">
+                <source>Min</source>
+                <target>FR_Min</target>
+            </trans-unit>
+            <trans-unit id="321">
+                <source>Max</source>
+                <target>FR_Max</target>
+            </trans-unit>
+            <trans-unit id="323">
+                <source>N/A</source>
+                <target>FR_N/A</target>
+            </trans-unit>
+            <trans-unit id="324">
+                <source>To date should be after From date</source>
+                <target>FR_To date should be after From date</target>
+            </trans-unit>           
         </body>
     </file>
 </xliff>

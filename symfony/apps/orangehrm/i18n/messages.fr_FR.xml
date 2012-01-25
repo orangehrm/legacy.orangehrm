@@ -796,6 +796,34 @@
                 <source>Name exists</source>
                 <target>FR_Name exists</target>
             </trans-unit>
+            <trans-unit id="228">
+                <source>Admin</source>
+                <target>FR_Admin</target>
+            </trans-unit>
+            <trans-unit id="229">
+                <source>Level</source>
+                <target>FR_Level</target>
+            </trans-unit>
+            <trans-unit id="230">
+                <source>Past Employee</source>
+                <target>FR_Past Employee</target>
+            </trans-unit>
+            <trans-unit id="231">
+                <source>or</source>
+                <target>FR_or</target>
+            </trans-unit>
+            <trans-unit id="232">
+                <source>Please specify select options</source>
+                <target>FR_Please specify select options</target>
+            </trans-unit>
+            <trans-unit id="233">
+                <source>Sort in Ascending Order</source>
+                <target>FR_Sort in Ascending Order</target>
+            </trans-unit>
+            <trans-unit id="234">
+                <source>Sort in Descending Order</source>
+                <target>FR_Sort in Descending Order</target>
+            </trans-unit>            
         </body>
     </file>
 </xliff>
