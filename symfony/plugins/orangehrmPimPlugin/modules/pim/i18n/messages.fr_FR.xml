@@ -1252,10 +1252,6 @@
                 <source>Contract Details File Size Exceeded</source>
                 <target>FR_Contract Details File Size Exceeded</target>
             </trans-unit>
-            <trans-unit id="318">
-                <source>Comments cannot exceed 255 characters in length</source>
-                <target>FR_Comments cannot exceed 255 characters in length</target>
-            </trans-unit>
             <trans-unit id="319">
                 <source>Amount should be within Min/Max values</source>
                 <target>FR_Amount should be within Min/Max values</target>

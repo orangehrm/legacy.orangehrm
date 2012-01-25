@@ -734,7 +734,7 @@
             </trans-unit>
             <trans-unit id="212">
                 <source>Comments cannot exceed 255 characters in length</source>
-                <target>Comments cannot exceed 255 characters in length</target>
+                <target>FR_Comments cannot exceed 255 characters in length</target>
             </trans-unit>
             <trans-unit id="213">
                 <source>No records to display</source>
@@ -3680,6 +3680,915 @@
 
             <target>FR_Zimbabwean</target>
             <note>A nationality name</note>
+            </trans-unit>
+            <trans-unit id="739">
+            <source>Afghanistan Afghani</source>
+            <target>FR_Afghanistan Afghani</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="740">
+            <source>Albanian Lek</source>
+            <target>FR_Albanian Lek</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="741">
+            <source>Algerian Dinar</source>
+            <target>FR_Algerian Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="742">
+            <source>Angolan New Kwanza</source>
+
+            <target>FR_Angolan New Kwanza</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="743">
+            <source>Argentina Pesos</source>
+            <target>FR_Argentina Pesos</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="744">
+            <source>Argentine Peso</source>
+            <target>FR_Argentine Peso</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="745">
+
+            <source>Aruban Florin</source>
+            <target>FR_Aruban Florin</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="746">
+            <source>Australian Dollar</source>
+            <target>FR_Australian Dollar</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="747">
+            <source>Bahamian Dollar</source>
+            <target>FR_Bahamian Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="748">
+            <source>Bahraini Dinar</source>
+            <target>FR_Bahraini Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="749">
+            <source>Bangladeshi Taka</source>
+
+            <target>FR_Bangladeshi Taka</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="750">
+            <source>Barbados Dollar</source>
+            <target>FR_Barbados Dollar</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="751">
+            <source>Belize Dollar</source>
+            <target>FR_Belize Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="752">
+
+            <source>Bermudian Dollar</source>
+            <target>FR_Bermudian Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="753">
+            <source>Bhutan Ngultrum</source>
+            <target>FR_Bhutan Ngultrum</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="754">
+            <source>Bolivian Boliviano</source>
+            <target>FR_Bolivian Boliviano</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="755">
+            <source>Botswana Pula</source>
+            <target>FR_Botswana Pula</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="756">
+            <source>Brazilian Real</source>
+
+            <target>FR_Brazilian Real</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="757">
+            <source>Brunei Dollar</source>
+            <target>FR_Brunei Dollar</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="758">
+            <source>Bulgarian Lev</source>
+            <target>FR_Bulgarian Lev</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="759">
+
+            <source>Burundi Franc</source>
+            <target>FR_Burundi Franc</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="760">
+            <source>Canadian Dollar</source>
+            <target>FR_Canadian Dollar</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="761">
+            <source>Cape Verde Escudo</source>
+            <target>FR_Cape Verde Escudo</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="762">
+            <source>Cayman Islands Dollar</source>
+            <target>FR_Cayman Islands Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="763">
+            <source>CFA Franc BCEAO</source>
+
+            <target>FR_CFA Franc BCEAO</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="764">
+            <source>CFA Franc BEAC</source>
+            <target>FR_CFA Franc BEAC</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="765">
+            <source>Chilean Peso</source>
+            <target>FR_Chilean Peso</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="766">
+
+            <source>Chinese Yuan Renminbi</source>
+            <target>FR_Chinese Yuan Renminbi</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="767">
+            <source>Colombian Peso</source>
+            <target>FR_Colombian Peso</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="768">
+            <source>Comoros Franc</source>
+            <target>FR_Comoros Franc</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="769">
+            <source>Costa Rican Colon</source>
+            <target>FR_Costa Rican Colon</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="770">
+            <source>Croatian Kuna</source>
+
+            <target>FR_Croatian Kuna</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="771">
+            <source>Cuban Peso</source>
+            <target>FR_Cuban Peso</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="772">
+            <source>Cyprus Pound</source>
+            <target>FR_Cyprus Pound</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="773">
+
+            <source>Czech Koruna</source>
+            <target>FR_Czech Koruna</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="774">
+            <source>Danish Krona</source>
+            <target>FR_Danish Krona</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="775">
+            <source>Djibouti Franc</source>
+            <target>FR_Djibouti Franc</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="776">
+            <source>Dominican Peso</source>
+            <target>FR_Dominican Peso</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="777">
+            <source>Eastern Caribbean Dollars</source>
+
+            <target>FR_Eastern Caribbean Dollars</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="778">
+            <source>Ecuador Sucre</source>
+            <target>FR_Ecuador Sucre</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="779">
+            <source>Egyptian Pound</source>
+            <target>FR_Egyptian Pound</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="780">
+
+            <source>El Salvador Colon</source>
+            <target>FR_El Salvador Colon</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="781">
+            <source>Estonian Krona</source>
+            <target>FR_Estonian Krona</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="782">
+            <source>Ethiopian Birr</source>
+            <target>FR_Ethiopian Birr</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="783">
+            <source>Euro</source>
+            <target>FR_Euro</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="784">
+            <source>Falkland Islands Pound</source>
+
+            <target>FR_Falkland Islands Pound</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="785">
+            <source>Fiji Dollar</source>
+            <target>FR_Fiji Dollar</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="786">
+            <source>Franc des Comptoirs franÃƒÂ§ais du Pacifique</source>
+            <target>FR_Franc des Comptoirs franÃƒÂ§ais du Pacifique</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="787">
+
+            <source>Gambian Dalasi</source>
+            <target>FR_Gambian Dalasi</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="788">
+            <source>Ghanaian Cedi</source>
+            <target>FR_Ghanaian Cedi</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="789">
+            <source>Gibraltar Pound</source>
+            <target>FR_Gibraltar Pound</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="790">
+            <source>Gold (oz.)</source>
+            <target>FR_Gold (oz.)</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="791">
+            <source>Guatemalan Quetzal</source>
+
+            <target>FR_Guatemalan Quetzal</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="792">
+            <source>Guinea Franc</source>
+            <target>FR_Guinea Franc</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="793">
+            <source>Guyanan Dollar</source>
+            <target>FR_Guyanan Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="794">
+
+            <source>Haitian Gourde</source>
+            <target>FR_Haitian Gourde</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="795">
+            <source>Honduran Lempira</source>
+            <target>FR_Honduran Lempira</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="796">
+            <source>Hong Kong Dollar</source>
+            <target>FR_Hong Kong Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="797">
+            <source>Hungarian Forint</source>
+            <target>FR_Hungarian Forint</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="798">
+            <source>Iceland Krona</source>
+
+            <target>FR_Iceland Krona</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="799">
+            <source>IMF Special Drawing Right</source>
+            <target>FR_IMF Special Drawing Right</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="800">
+            <source>Indian Rupee</source>
+            <target>FR_Indian Rupee</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="801">
+
+            <source>Indonesian Rupiah</source>
+            <target>FR_Indonesian Rupiah</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="802">
+            <source>Iranian Rial</source>
+            <target>FR_Iranian Rial</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="803">
+            <source>Iraqi Dinar</source>
+            <target>FR_Iraqi Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="804">
+            <source>Israeli New Shekel</source>
+            <target>FR_Israeli New Shekel</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="805">
+            <source>Jamaican Dollar</source>
+
+            <target>FR_Jamaican Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="806">
+            <source>Japanese Yen</source>
+            <target>FR_Japanese Yen</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="807">
+            <source>Jordanian Dinar</source>
+            <target>FR_Jordanian Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="808">
+
+            <source>Kampuchean Riel</source>
+            <target>FR_Kampuchean Riel</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="809">
+            <source>Kazakhstan Tenge</source>
+            <target>FR_Kazakhstan Tenge</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="810">
+            <source>Kenyan Shilling</source>
+            <target>FR_Kenyan Shilling</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="811">
+            <source>Korean Won</source>
+            <target>FR_Korean Won</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="812">
+            <source>Kuwaiti Dinar</source>
+
+            <target>FR_Kuwaiti Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="813">
+            <source>Lao Kip</source>
+            <target>FR_Lao Kip</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="814">
+            <source>Latvian Lats</source>
+            <target>FR_Latvian Lats</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="815">
+
+            <source>Lebanese Pound</source>
+            <target>FR_Lebanese Pound</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="816">
+            <source>Lesotho Loti</source>
+            <target>FR_Lesotho Loti</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="817">
+            <source>Liberian Dollar</source>
+            <target>FR_Liberian Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="818">
+            <source>Libyan Dinar</source>
+            <target>FR_Libyan Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="819">
+            <source>Lithuanian Litas</source>
+
+            <target>FR_Lithuanian Litas</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="820">
+            <source>Macau Pataca</source>
+            <target>FR_Macau Pataca</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="821">
+            <source>Malagasy Franc</source>
+            <target>FR_Malagasy Franc</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="822">
+
+            <source>Malawi Kwacha</source>
+            <target>FR_Malawi Kwacha</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="823">
+            <source>Malaysian Ringgit</source>
+            <target>FR_Malaysian Ringgit</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="824">
+            <source>Maldive Rufiyaa</source>
+            <target>FR_Maldive Rufiyaa</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="825">
+            <source>Maltese Lira</source>
+            <target>FR_Maltese Lira</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="826">
+            <source>Mauritanian Ouguiya</source>
+
+            <target>FR_Mauritanian Ouguiya</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="827">
+            <source>Mauritius Rupee</source>
+            <target>FR_Mauritius Rupee</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="828">
+            <source>Mexican New Peso</source>
+            <target>FR_Mexican New Peso</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="829">
+
+            <source>Mexican Peso</source>
+            <target>FR_Mexican Peso</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="830">
+            <source>Mongolian Tugrik</source>
+            <target>FR_Mongolian Tugrik</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="831">
+            <source>Moroccan Dirham</source>
+            <target>FR_Moroccan Dirham</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="832">
+            <source>Mozambique Metical</source>
+            <target>FR_Mozambique Metical</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="833">
+            <source>Myanmar Kyat</source>
+
+            <target>FR_Myanmar Kyat</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="834">
+            <source>Namibia Dollar</source>
+            <target>FR_Namibia Dollar</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="835">
+            <source>Nepalese Rupee</source>
+            <target>FR_Nepalese Rupee</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="836">
+
+            <source>New Zaire</source>
+            <target>FR_New Zaire</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="837">
+            <source>New Zealand Dollar</source>
+            <target>FR_New Zealand Dollar</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="838">
+            <source>Nicaraguan Cordoba Oro</source>
+            <target>FR_Nicaraguan Cordoba Oro</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="839">
+            <source>Nigerian Naira</source>
+            <target>FR_Nigerian Naira</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="840">
+            <source>NL Antillian Guilder</source>
+
+            <target>FR_NL Antillian Guilder</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="841">
+            <source>North Korean Won</source>
+            <target>FR_North Korean Won</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="842">
+            <source>Norwegian Krona</source>
+            <target>FR_Norwegian Krona</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="843">
+
+            <source>Omani Rial</source>
+            <target>FR_Omani Rial</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="844">
+            <source>Pakistan Rupee</source>
+            <target>FR_Pakistan Rupee</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="845">
+            <source>Palladium (oz.)</source>
+            <target>FR_Palladium (oz.)</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="846">
+            <source>Panamanian Balboa</source>
+            <target>FR_Panamanian Balboa</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="847">
+            <source>Papua New Guinea Kina</source>
+
+            <target>FR_Papua New Guinea Kina</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="848">
+            <source>Paraguay Guarani</source>
+            <target>FR_Paraguay Guarani</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="849">
+            <source>Peruvian Nuevo Sol</source>
+            <target>FR_Peruvian Nuevo Sol</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="850">
+
+            <source>Philippine Peso</source>
+            <target>FR_Philippine Peso</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="851">
+            <source>Platinum (oz.)</source>
+            <target>FR_Platinum (oz.)</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="852">
+            <source>Polish Zloty</source>
+            <target>FR_Polish Zloty</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="853">
+            <source>Pound Sterling</source>
+            <target>FR_Pound Sterling</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="854">
+            <source>Qatari Rial</source>
+
+            <target>FR_Qatari Rial</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="855">
+            <source>Romanian Leu</source>
+            <target>FR_Romanian Leu</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="856">
+            <source>Russia Rubles</source>
+            <target>FR_Russia Rubles</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="857">
+
+            <source>Russian Rouble</source>
+            <target>FR_Russian Rouble</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="858">
+            <source>Samoan Tala</source>
+            <target>FR_Samoan Tala</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="859">
+            <source>Sao Tome/Principe Dobra</source>
+            <target>FR_Sao Tome/Principe Dobra</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="860">
+            <source>Saudi Arabia Riyal</source>
+            <target>FR_Saudi Arabia Riyal</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="861">
+            <source>Seychelles Rupee</source>
+
+            <target>FR_Seychelles Rupee</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="862">
+            <source>Sierra Leone Leone</source>
+            <target>FR_Sierra Leone Leone</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="863">
+            <source>Silver (oz.)</source>
+            <target>FR_Silver (oz.)</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="864">
+
+            <source>Singapore Dollar</source>
+            <target>FR_Singapore Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="865">
+            <source>Slovak Koruna</source>
+            <target>FR_Slovak Koruna</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="866">
+            <source>Solomon Islands Dollar</source>
+            <target>FR_Solomon Islands Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="867">
+            <source>Somali Shilling</source>
+            <target>FR_Somali Shilling</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="868">
+            <source>South African Rand</source>
+
+            <target>FR_South African Rand</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="869">
+            <source>Sri Lanka Rupee</source>
+            <target>FR_Sri Lanka Rupee</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="870">
+            <source>St. Helena Pound</source>
+            <target>FR_St. Helena Pound</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="871">
+
+            <source>Sudanese Dinar</source>
+            <target>FR_Sudanese Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="872">
+            <source>Sudanese Pound</source>
+            <target>FR_Sudanese Pound</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="873">
+            <source>Surinamese Dollar</source>
+            <target>FR_Surinamese Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="874">
+            <source>Swaziland Lilangeni</source>
+            <target>FR_Swaziland Lilangeni</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="875">
+            <source>Swedish Krona</source>
+
+            <target>FR_Swedish Krona</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="876">
+            <source>Swiss Franc</source>
+            <target>FR_Swiss Franc</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="877">
+            <source>Syrian Pound</source>
+            <target>FR_Syrian Pound</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="878">
+
+            <source>Taiwan Dollar</source>
+            <target>FR_Taiwan Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="879">
+            <source>Tanzanian Shilling</source>
+            <target>FR_Tanzanian Shilling</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="880">
+            <source>Thai Baht</source>
+            <target>FR_Thai Baht</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="881">
+            <source>Tongan Pa'anga</source>
+            <target>FR_Tongan Pa'anga</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="882">
+            <source>Trinidad/Tobago Dollar</source>
+
+            <target>FR_Trinidad/Tobago Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="883">
+            <source>Tunisian Dinar</source>
+            <target>FR_Tunisian Dinar</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="884">
+            <source>Turkish Lira</source>
+            <target>FR_Turkish Lira</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="885">
+
+            <source>Uganda Shilling</source>
+            <target>FR_Uganda Shilling</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="886">
+            <source>Ukraine Hryvnia</source>
+            <target>FR_Ukraine Hryvnia</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="887">
+            <source>United States Dollar</source>
+            <target>FR_United States Dollar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="888">
+            <source>Uruguayan Peso</source>
+            <target>FR_Uruguayan Peso</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="889">
+            <source>Utd. Arab Emir. Dirham</source>
+
+            <target>FR_Utd. Arab Emir. Dirham</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="890">
+            <source>Vanuatu Vatu</source>
+            <target>FR_Vanuatu Vatu</target>
+            <note>A currency name</note>
+
+            </trans-unit>
+            <trans-unit id="891">
+            <source>Venezuelan Bolivar</source>
+            <target>FR_Venezuelan Bolivar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="892">
+
+            <source>Vietnamese Dong</source>
+            <target>FR_Vietnamese Dong</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="893">
+            <source>Yemeni Riyal</source>
+            <target>FR_Yemeni Riyal</target>
+
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="894">
+            <source>Yugoslav Dinar</source>
+            <target>FR_Yugoslav Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+
+            <trans-unit id="895">
+            <source>Yugoslavian Dinar</source>
+            <target>FR_Yugoslavian Dinar</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="896">
+            <source>Zambian Kwacha</source>
+
+            <target>FR_Zambian Kwacha</target>
+            <note>A currency name</note>
+            </trans-unit>
+            <trans-unit id="897">
+            <source>Zimbabwe Dollar</source>
+            <target>FR_Zimbabwe Dollar</target>
+            <note>A currency name</note>
+
             </trans-unit>            
         </body>
     </file>
