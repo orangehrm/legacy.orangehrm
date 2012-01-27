@@ -49,8 +49,8 @@
                 <target>FR_Fields marked with an asterisk</target>
             </trans-unit>
             <trans-unit id="10">
-                <source>are required.</source>
-                <target>FR_are required.</target>
+                <source>are required</source>
+                <target>FR_are required</target>
             </trans-unit>
             <trans-unit id="173">
                 <source>Full Time Contract</source>
@@ -4589,6 +4589,350 @@
             <target>FR_Zimbabwe Dollar</target>
             <note>A currency name</note>
 
+            </trans-unit>
+            <trans-unit id="898">
+                <source>Employee Reports</source>
+                <target>FR_Employee Reports</target>
+            </trans-unit>
+            <trans-unit id="899">
+                <source>Report Name</source>
+                <target>FR_Report Name</target>
+            </trans-unit>
+            <trans-unit id="900">
+                <source>Run</source>
+                <target>FR_Run</target>
+            </trans-unit>
+            <trans-unit id="901">
+                <source>Define Report</source>
+                <target>FR_Define Report</target>
+            </trans-unit>
+            <trans-unit id="902">
+                <source>Selection Criteria</source>
+                <target>FR_Selection Criteria</target>
+            </trans-unit>
+            <trans-unit id="903">
+                <source>Selected Criteria</source>
+                <target>FR_Selected Criteria</target>
+            </trans-unit>
+            <trans-unit id="904">
+                <source>Display Field Groups</source>
+                <target>FR_Display Field Groups</target>
+            </trans-unit>
+            <trans-unit id="905">
+                <source>Work Experience</source>
+                <target>FR_Work Experience</target>
+            </trans-unit>
+            <trans-unit id="906">
+                <source>Defined Custom Fields</source>
+                <target>FR_Defined Custom Fields</target>
+            </trans-unit>
+            <trans-unit id="907">
+                <source>Custom Fields</source>
+                <target>FR_Custom Fields</target>
+            </trans-unit> 
+            <trans-unit id="908">
+                <source>Duration</source>
+                <target>FR_Duration</target>
+            </trans-unit>
+            <trans-unit id="908">
+                <source>Display Fields</source>
+                <target>FR_Display Fields</target>
+            </trans-unit>
+            <trans-unit id="909">
+                <source>Personal</source>
+                <target>FR_Personal</target>
+            </trans-unit>
+            <trans-unit id="910">
+                <source>Include Header</source>
+                <target>FR_Include Header</target>
+            </trans-unit>
+            <trans-unit id="911">
+                <source>Employee Id</source>
+                <target>FR_Employee Id</target>
+            </trans-unit>
+            <trans-unit id="912">
+                <source>Employee Last Name</source>
+                <target>FR_Employee Last Name</target>
+            </trans-unit>
+            <trans-unit id="913">
+                <source>Employee First Name</source>
+                <target>FR_Employee First Name</target>
+            </trans-unit>
+            <trans-unit id="914">
+                <source>Employee Middle Name</source>
+                <target>FR_Employee Middle Name</target>
+            </trans-unit>
+            <trans-unit id="915">
+                <source>Date of Birth</source>
+                <target>FR_Date of Birth</target>
+            </trans-unit>
+            <trans-unit id="916">
+                <source>Nationality</source>
+                <target>FR_Nationality</target>
+            </trans-unit>
+            <trans-unit id="917">
+                <source>Gender</source>
+                <target>FR_Gender</target>
+            </trans-unit>
+            <trans-unit id="918">
+                <source>Marital Status</source>
+                <target>FR_Marital Status</target>
+            </trans-unit>
+            <trans-unit id="919">
+                <source>License Expiry Date</source>
+                <target>FR_License Expiry Date</target>
+            </trans-unit>
+            <trans-unit id="920">
+                <source>Other Id</source>
+                <target>FR_Other Id</target>
+            </trans-unit> 
+            <trans-unit id="921">
+                <source>Contact Details</source>
+                <target>FR_Contact Details</target>
+            </trans-unit>
+            <trans-unit id="922">
+                <source>Address</source>
+                <target>FR_Address</target>
+            </trans-unit>
+            <trans-unit id="923">
+                <source>Home Telephone</source>
+                <target>FR_Home Telephone</target>
+            </trans-unit>
+            <trans-unit id="924">
+                <source>Mobile</source>
+                <target>FR_Mobile</target>
+            </trans-unit>
+            <trans-unit id="925">
+                <source>Work Telephone</source>
+                <target>FR_Work Telephone</target>
+            </trans-unit>
+            <trans-unit id="926">
+                <source>Work Email</source>
+                <target>FR_Work Email</target>
+            </trans-unit>
+            <trans-unit id="927">
+                <source>Other Email</source>
+                <target>FR_Other Email</target>
+            </trans-unit>
+            <trans-unit id="928">
+                <source>Emergency Contacts</source>
+                <target>FR_Emergency Contacts</target>
+            </trans-unit>
+            <trans-unit id="929">
+                <source>Relationship</source>
+                <target>FR_Relationship</target>
+            </trans-unit>
+            <trans-unit id="930">
+                <source>Dependents</source>
+                <target>FR_Dependents</target>
+            </trans-unit>
+            <trans-unit id="931">
+                <source>Memberships</source>
+                <target>FR_Memberships</target>
+            </trans-unit>
+            <trans-unit id="932">
+                <source>Membership</source>
+                <target>FR_Membership</target>
+            </trans-unit>
+            <trans-unit id="933">
+                <source>Subscription Paid By</source>
+                <target>FR_Subscription Paid By</target>
+            </trans-unit>
+            <trans-unit id="934">
+                <source>Subscription Amount</source>
+                <target>FR_Subscription Amount</target>
+            </trans-unit>
+            <trans-unit id="935">
+                <source>Currency</source>
+                <target>FR_Currency</target>
+            </trans-unit>
+            <trans-unit id="936">
+                <source>Subscription Commence Date</source>
+                <target>FR_Subscription Commence Date</target>
+            </trans-unit>
+            <trans-unit id="937">
+                <source>Subscription Renewal Date</source>
+                <target>FR_Subscription Renewal Date</target>
+            </trans-unit>
+            <trans-unit id="938">
+                <source>Company</source>
+                <target>FR_Company</target>
+            </trans-unit>
+            <trans-unit id="939">
+                <source>Comment</source>
+                <target>FR_Comment</target>
+            </trans-unit>
+            <trans-unit id="940">
+                <source>Score</source>
+                <target>FR_Score</target>
+            </trans-unit>
+            <trans-unit id="941">
+                <source>Skills</source>
+                <target>FR_Skills</target>
+            </trans-unit>
+            <trans-unit id="942">
+                <source>Languages</source>
+                <target>FR_Languages</target>
+            </trans-unit>
+            <trans-unit id="943">
+                <source>License</source>
+                <target>FR_License</target>
+            </trans-unit>
+            <trans-unit id="944">
+                <source>Issued Date</source>
+                <target>FR_Issued Date</target>
+            </trans-unit>
+            <trans-unit id="955">
+                <source>Expiry Date</source>
+                <target>FR_Expiry Date</target>
+            </trans-unit>
+            <trans-unit id="956">
+                <source>Driver's License Number</source>
+                <target>FR_Driver's License Number</target>
+            </trans-unit>
+            <trans-unit id="957">
+                <source>Supervisors</source>
+                <target>FR_Supervisors</target>
+            </trans-unit>
+            <trans-unit id="958">
+                <source>First Name</source>
+                <target>FR_First Name</target>
+            </trans-unit>
+            <trans-unit id="959">
+                <source>Middle Name</source>
+                <target>FR_Middle Name</target>
+            </trans-unit>
+            <trans-unit id="960">
+                <source>Last Name</source>
+                <target>FR_Last Name</target>
+            </trans-unit>
+            <trans-unit id="961">
+                <source>Reporting Method</source>
+                <target>FR_Reporting Method</target>
+            </trans-unit>
+            <trans-unit id="962">
+                <source>Subordinates</source>
+                <target>FR_Subordinates</target>
+            </trans-unit>
+            <trans-unit id="963">
+                <source>Salary</source>
+                <target>FR_Salary</target>
+            </trans-unit>
+            <trans-unit id="964">
+                <source>Pay Grade</source>
+                <target>FR_Pay Grade</target>
+            </trans-unit>
+            <trans-unit id="965">
+                <source>Salary Component</source>
+                <target>FR_Salary Component</target>
+            </trans-unit>
+            <trans-unit id="966">
+                <source>Direct Deposit Account Number</source>
+                <target>FR_Direct Deposit Account Number</target>
+            </trans-unit>
+            <trans-unit id="967">
+                <source>Direct Deposit Routing Number</source>
+                <target>FR_Direct Deposit Routing Number</target>
+            </trans-unit>
+            <trans-unit id="968">
+                <source>Direct Deposit Amount</source>
+                <target>FR_Direct Deposit Amount</target>
+            </trans-unit>
+            <trans-unit id="969">
+                <source>Job</source>
+                <target>FR_Job</target>
+            </trans-unit>
+            <trans-unit id="970">
+                <source>Contract Start Date</source>
+                <target>FR_Contract Start Date</target>
+            </trans-unit>
+            <trans-unit id="971">
+                <source>Contract End Date</source>
+                <target>FR_Contract End Date</target>
+            </trans-unit>
+            <trans-unit id="972">
+                <source>Immigration</source>
+                <target>FR_Immigration</target>
+            </trans-unit>
+            <trans-unit id="973">
+                <source>Direct Deposit Account Type</source>
+                <target>FR_Direct Deposit Account Type</target>
+            </trans-unit>
+            <trans-unit id="974">
+                <source>Number</source>
+                <target>FR_Number</target>
+            </trans-unit>
+            <trans-unit id="975">
+                <source>Eligible Review Date</source>
+                <target>FR_Eligible Review Date</target>
+            </trans-unit>
+            <trans-unit id="976">
+                <source>Eligible Status</source>
+                <target>FR_Eligible Status</target>
+            </trans-unit>
+            <trans-unit id="977">
+                <source>Issued By</source>
+                <target>FR_Issued By</target>
+            </trans-unit>
+            <trans-unit id="978">
+                <source>Issued By</source>
+                <target>FR_Issued By</target>
+            </trans-unit>
+            <trans-unit id="979">
+                <source>Document Type</source>
+                <target>FR_Document Type</target>
+            </trans-unit>
+            <trans-unit id="980">
+                <source>Education</source>
+                <target>FR_Education</target>
+            </trans-unit>
+            <trans-unit id="981">
+                <source>Service Period</source>
+                <target>FR_Service Period</target>
+            </trans-unit>
+            <trans-unit id="982">
+                <source>Age Group</source>
+                <target>FR_Age Group</target>
+            </trans-unit>
+            <trans-unit id="983">
+                <source>Select Salary Grade</source>
+                <target>FR_Select Salary Grade</target>
+            </trans-unit>
+            <trans-unit id="984">
+                <source>Please Correct The Following Errors</source>
+                <target>FR_Please Correct The Following Errors</target>
+            </trans-unit>
+            <trans-unit id="985">
+                <source>Please select an employee</source>
+                <target>FR_Please select an employee</target>
+            </trans-unit>
+            <trans-unit id="986">
+                <source>Pay grade is required</source>
+                <target>FR_Pay grade is required</target>
+            </trans-unit>
+            <trans-unit id="987">
+                <source>Education is required</source>
+                <target>FR_Education is required</target>
+            </trans-unit>
+            <trans-unit id="988">
+                <source>Less Than</source>
+                <target>FR_Less Than</target>
+            </trans-unit>
+            <trans-unit id="989">
+                <source>Greater Than</source>
+                <target>FR_Greater Than</target>
+            </trans-unit>
+            <trans-unit id="990">
+                <source>Range</source>
+                <target>FR_Range</target>
+            </trans-unit>
+            <trans-unit id="991">
+                <source>Select Comparison</source>
+                <target>FR_Select Comparison</target>
+            </trans-unit>
+            <trans-unit id="992">
+                <source>Please select comparison</source>
+                <target>FR_Please select comparison</target>
             </trans-unit>            
         </body>
     </file>

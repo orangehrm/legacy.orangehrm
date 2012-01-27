@@ -516,10 +516,6 @@
                 <source>Job Title already exists</source>
                 <target>FR_Job Title already exists</target>
             </trans-unit>
-            <trans-unit id="127">
-                <source>Skills</source>
-                <target>FR_Skills</target>
-            </trans-unit>   
             <trans-unit id="128">
                 <source>Add Skill</source>
                 <target>FR_Add Skill</target>
@@ -544,10 +540,7 @@
                 <source>Skill(s) Deleted Successfully</source>
                 <target>FR_Skill(s) Deleted Successfully</target>
             </trans-unit>  
-            <trans-unit id="134">
-                <source>Memberships</source>
-                <target>FR_Memberships</target>
-            </trans-unit>
+
             <trans-unit id="135">
                 <source>Add Membership</source>
                 <target>FR_Add Membership</target>
@@ -571,10 +564,6 @@
             <trans-unit id="140">
                 <source>Pay Grades</source>
                 <target>FR_Pay Grades</target>
-            </trans-unit>
-            <trans-unit id="141">
-                <source>Pay Grade</source>
-                <target>FR_Pay Grade</target>
             </trans-unit>
             <trans-unit id="142">
                 <source>Currency</source>
@@ -696,10 +685,6 @@
                 <source>Add Job Category</source>
                 <target>FR_Add Job Category</target>
             </trans-unit>
-            <trans-unit id="172">
-                <source>Languages</source>
-                <target>FR_Languages</target>
-            </trans-unit>   
             <trans-unit id="173">
                 <source>Add Language</source>
                 <target>FR_Add Language</target>
@@ -868,10 +853,6 @@
                 <source>Email address should contain at least one '.' and one '@' Example:user@example.com</source>
                 <target>FR_Email address should contain at least one '.' and one '@' Example:user@example.com</target>
             </trans-unit>
-            <trans-unit id="216">
-                <source>Education</source>
-                <target>FR_Education</target>
-            </trans-unit>   
             <trans-unit id="217">
                 <source>Add Education</source>
                 <target>FR_Add Education</target>
