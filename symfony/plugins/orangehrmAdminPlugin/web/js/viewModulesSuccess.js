@@ -12,8 +12,10 @@ function executeLoadtimeActions() {
        $(this).attr('disabled', 'disabled');
    });
    
-   if (reloadParent) {
-       parent.location.reload();
+   if (reloadParent) {   
+       window.setTimeout(function() {
+           parent.location.reload();
+           }, 500);
    }
     
 }
