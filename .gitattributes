@@ -3504,7 +3504,6 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/i18n/messages.ja_JP.xml -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/addCustomerSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/changeUserPasswordSuccess.php -text
-symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/companygeninfoSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/employmentStatusSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/getActivitiesRelatedToAProjectAjaxSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/indexSuccess.php -text
