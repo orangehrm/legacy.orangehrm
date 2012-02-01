@@ -626,6 +626,7 @@ symfony/apps/orangehrm/modules/default/templates/indexSuccess.php -text
 symfony/apps/orangehrm/modules/default/templates/secureSuccess.php -text
 symfony/apps/orangehrm/modules/performance/actions/actions.class.php -text
 symfony/apps/orangehrm/modules/performance/config/security.yml -text
+symfony/apps/orangehrm/modules/performance/i18n/messages.fr_FR.xml -text
 symfony/apps/orangehrm/modules/performance/templates/copyKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/email/add-review.txt -text
 symfony/apps/orangehrm/modules/performance/templates/listDefineKpiSuccess.php -text
