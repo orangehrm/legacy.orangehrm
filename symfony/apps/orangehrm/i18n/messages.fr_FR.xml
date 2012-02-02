@@ -4933,7 +4933,269 @@
             <trans-unit id="992">
                 <source>Please select comparison</source>
                 <target>FR_Please select comparison</target>
-            </trans-unit>            
+            </trans-unit>
+            <trans-unit id="993">
+                <source>Organization</source>
+                <target>FR_Organization</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>General Information</source>
+                <target>FR_General Information</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Locations</source>
+                <target>FR_Locations</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Structure</source>
+                <target>FR_Structure</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>Job Titles</source>
+                <target>FR_Job Titles</target>
+            </trans-unit>
+            <trans-unit id="140">
+                <source>Pay Grades</source>
+                <target>FR_Pay Grades</target>
+            </trans-unit>
+            <trans-unit id="140">
+                <source>Job Categories</source>
+                <target>FR_Job Categories</target>
+            </trans-unit> 
+            <trans-unit id="224">
+                <source>Work Shifts</source>
+                <target>FR_Work Shifts</target>
+            </trans-unit>      
+            <trans-unit id="224">
+                <source>Qualification</source>
+                <target>FR_Qualification</target>
+            </trans-unit>
+            <trans-unit id="196">
+                <source>Licenses</source>
+                <target>FR_Licenses</target>
+            </trans-unit>
+            <trans-unit id="160">
+                <source>Nationalities</source>
+                <target>FR_Nationalities</target>
+            </trans-unit>
+           <trans-unit id="178">
+                <source>Users</source>
+                <target>FR_Users</target>
+            </trans-unit> 
+           <trans-unit id="178">
+                <source>Configure Security Authentication</source>
+                <target>FR_Configure Security Authentication</target>
+            </trans-unit> 
+           <trans-unit id="178">
+                <source>Email Notifications</source>
+                <target>FR_Email Notifications</target>
+            </trans-unit>
+           <trans-unit id="178">
+                <source>Configuration</source>
+                <target>FR_Configuration</target>
+            </trans-unit> 
+            <trans-unit id="204">
+                <source>Subscribe</source>
+                <target>FR_Subscribe</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Project Info</source>
+                <target>FR_Project Info</target>
+            </trans-unit> 
+            <trans-unit id="22">
+                <source>Customers</source>
+                <target>FR_Customers</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>Projects</source>
+                <target>FR_Projects</target>
+            </trans-unit>
+            <trans-unit id="1">
+                <source>Localization</source>
+                <target>FR_Localization</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Modules</source>
+                <target>FR_Modules</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Audit Trail</source>
+                <target>FR_Audit Trail</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Audit Trail</source>
+                <target>FR_Audit Trail</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Audit Trail</source>
+                <target>FR_Audit Trail</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>PIM</source>
+                <target>FR_PIM</target>
+            </trans-unit> 
+            <trans-unit id="204">
+                <source>Optional Fields</source>
+                <target>FR_Optional Fields</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Data Import</source>
+                <target>FR_Data Import</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Reporting Methods</source>
+                <target>FR_Reporting Methods</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>Termination Reasons</source>
+                <target>FR_Termination Reasons</target>
+            </trans-unit>
+            <trans-unit id="326">
+                <source>Employee List</source>
+                <target>FR_Employee List</target>
+            </trans-unit> 
+            <trans-unit id="136">
+                <source>Add Employee</source>
+                <target>FR_Add Employee</target>
+            </trans-unit>
+            <trans-unit id="136">
+                <source>Reports</source>
+                <target>FR_Reports</target>
+            </trans-unit>
+          <trans-unit id="76">
+            <source>Leave</source>
+            <target>FR_Leave</target>
+          </trans-unit>
+          <trans-unit id="76">
+            <source>Configure</source>
+            <target>FR_Configure</target>
+          </trans-unit>
+          <trans-unit id="1">
+            <source>Leave Period</source>
+            <target>FR_Leave Period</target>
+          </trans-unit>
+      <trans-unit id="213">
+        <source>Leave Types</source>
+        <target>FR_Leave Types</target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>Work Week</source>
+        <target>FR_Work Week</target>
+      </trans-unit>
+      <trans-unit id="40">
+        <source>Holidays</source>
+        <target>FR_Holidays</target>
+      </trans-unit>
+      <trans-unit id="60">
+        <source>Leave Summary</source>
+        <target>FR_Leave Summary</target>
+      </trans-unit>
+      <trans-unit id="87">
+        <source>Leave List</source>
+        <target>FR_Leave List</target>
+      </trans-unit>
+      <trans-unit id="119">
+        <source>Assign Leave</source>
+        <target>FR_Assign Leave</target>
+      </trans-unit> 
+      <trans-unit id="87">
+        <source>My Leave</source>
+        <target>FR_My Leave</target>
+      </trans-unit>
+      <trans-unit id="151">
+        <source>Apply</source>
+        <target>FR_Apply</target>
+      </trans-unit> 
+      <trans-unit id="151">
+        <source>Leave Calendar</source>
+        <target>FR_Leave Calendar</target>
+      </trans-unit>
+      <trans-unit id="151">
+        <source>Timesheets</source>
+        <target>FR_Timesheets</target>
+      </trans-unit>
+      <trans-unit id="151">
+        <source>Employee Timesheets</source>
+        <target>FR_Employee Timesheets</target>
+      </trans-unit> 
+      <trans-unit id="151">
+        <source>Attendance</source>
+        <target>FR_Attendance</target>
+      </trans-unit> 
+      <trans-unit id="151">
+        <source>Employee Records</source>
+        <target>FR_Employee Records</target>
+      </trans-unit> 
+            <trans-unit id="1">
+                <source>Candidates</source>
+                <target>FR_Candidates</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Vacancies</source>
+                <target>FR_Vacancies</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Performance</source>
+                <target>FR_Performance</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>KPI List</source>
+                <target>FR_KPI List</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Add KPI</source>
+                <target>FR_Add KPI</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Copy KPI</source>
+                <target>FR_Copy KPI</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Add Review</source>
+                <target>FR_Add Review</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Reviews</source>
+                <target>FR_Reviews</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Recruitment</source>
+                <target>FR_Recruitment</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Help</source>
+                <target>FR_Help</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Support</source>
+                <target>FR_Support</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Forum</source>
+                <target>FR_Forum</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Blog</source>
+                <target>FR_Blog</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Training</source>
+                <target>FR_Training</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Add-Ons</source>
+                <target>FR_Add-Ons</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Customizations</source>
+                <target>FR_Customizations</target>
+            </trans-unit> 
+            <trans-unit id="63">
+                <source>Bug Tracker</source>
+                <target>FR_Bug Tracker</target>
+            </trans-unit> 
+ 
+
         </body>
     </file>
 </xliff>

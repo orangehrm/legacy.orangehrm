@@ -404,10 +404,7 @@
                 <source>Adding Employee Failed. User Name Already Exists</source>
                 <target>FR_Adding Employee Failed. User Name Already Exists</target>
             </trans-unit>
-            <trans-unit id="136">
-                <source>Add Employee</source>
-                <target>FR_Add Employee</target>
-            </trans-unit>
+
             <trans-unit id="137">
                 <source>Employee Photograph Uploaded Successfully</source>
                 <target>FR_Employee Photograph Uploaded Successfully</target>
@@ -991,10 +988,6 @@
                 <source>Institute cannot exceed 100 characters in length</source>
                 <target>FR_Institute cannot exceed 100 characters in length</target>
             </trans-unit>
-            <trans-unit id="294">
-                <source>Reporting Methods</source>
-                <target>FR_Reporting Methods</target>
-            </trans-unit>
             <trans-unit id="295">
                 <source>Add Reporting Method</source>
                 <target>FR_Add Reporting Method</target>
@@ -1019,10 +1012,7 @@
                 <source>Reporting Method Name Exists</source>
                 <target>FR_Reporting Method Name Exists</target>
             </trans-unit>            
-            <trans-unit id="301">
-                <source>Termination Reasons</source>
-                <target>FR_Termination Reasons</target>
-            </trans-unit>
+
             <trans-unit id="302">
                 <source>Add Termination Reason</source>
                 <target>FR_Add Termination Reason</target>

@@ -4,10 +4,7 @@
     <file source-language="en_US" target-language="fr_FR" datatype="plaintext" original="messages" date="2009-12-08T13:58:35Z" product-name="messages">
         <header/>
         <body>
-            <trans-unit id="1">
-                <source>Localization</source>
-                <target>FR_Localization</target>
-            </trans-unit>
+
             <trans-unit id="2">
                 <source>Date Format</source>
                 <target>FR_Date Format</target>
@@ -88,10 +85,7 @@
                 <source>Include not more than 100 records in the file</source>
                 <target>FR_Include not more than 100 records in the file</target>
             </trans-unit>            
-            <trans-unit id="22">
-                <source>Customers</source>
-                <target>FR_Customers</target>
-            </trans-unit>            
+            
             <trans-unit id="23">
                 <source>Customer name is required</source>
                 <target>FR_Customer name is required</target>
@@ -156,10 +150,7 @@
                 <source>Note</source>
                 <target>FR_Note</target>
             </trans-unit>
-            <trans-unit id="39">
-                <source>General Information</source>
-                <target>FR_General Information</target>
-            </trans-unit>
+
             <trans-unit id="40">
                 <source>State/Province</source>
                 <target>FR_State/Province</target>
@@ -356,10 +347,7 @@
                 <source>Subunit Name Cannot be Duplicated</source>
                 <target>FR_Subunit Name Cannot be Duplicated</target>
             </trans-unit>
-            <trans-unit id="89">
-                <source>Projects</source>
-                <target>FR_Projects</target>
-            </trans-unit>
+
             <trans-unit id="90">
                 <source>Activities</source>
                 <target>FR_Activities</target>
@@ -388,10 +376,7 @@
                 <source>Job Description</source>
                 <target>FR_Job Description</target>
             </trans-unit>
-            <trans-unit id="97">
-                <source>Job Titles</source>
-                <target>FR_Job Titles</target>
-            </trans-unit>
+
             <trans-unit id="98">
                 <source>Job Title Updated Successfully</source>
                 <target>FR_Job Title Updated Successfully</target>
@@ -436,10 +421,7 @@
                 <source>Cannot exceed 400 charactors</source>
                 <target>FR_Cannot exceed 400 charactors</target>
             </trans-unit>
-            <trans-unit id="109">
-                <source>Locations</source>
-                <target>FR_Locations</target>
-            </trans-unit>
+
             <trans-unit id="110">
                 <source>Location Name</source>
                 <target>FR_Location Name</target>
@@ -561,10 +543,7 @@
                 <source>Selected Membership(s) Deleted Successfully</source>
                 <target>FR_Selected Membership(s) Deleted Successfully</target>
             </trans-unit>
-            <trans-unit id="140">
-                <source>Pay Grades</source>
-                <target>FR_Pay Grades</target>
-            </trans-unit>
+
             <trans-unit id="142">
                 <source>Currency</source>
                 <target>FR_Currency</target>
@@ -637,10 +616,7 @@
                 <source>Name is already exist</source>
                 <target>FR_Name is already exist</target>
             </trans-unit>
-            <trans-unit id="160">
-                <source>Nationalities</source>
-                <target>FR_Nationalities</target>
-            </trans-unit>
+
             <trans-unit id="162">
                 <source>Nationality</source>
                 <target>FR_Nationality</target>
@@ -773,10 +749,7 @@
                 <source>Confirm Password</source>
                 <target>FR_Confirm Password</target>
           </trans-unit>				  
-            <trans-unit id="196">
-                <source>Licenses</source>
-                <target>FR_Licenses</target>
-            </trans-unit>   
+   
             <trans-unit id="197">
                 <source>Add License</source>
                 <target>FR_Add License</target>
@@ -877,10 +850,7 @@
                 <source>Level is required</source>
                 <target>FR_Level is required</target>
             </trans-unit>         
-            <trans-unit id="224">
-                <source>Work Shifts</source>
-                <target>FR_Work Shifts</target>
-            </trans-unit>
+
             <trans-unit id="225">
                 <source>Shift Name</source>
                 <target>FR_Shift Name</target>
