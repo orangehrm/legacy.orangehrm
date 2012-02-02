@@ -181,8 +181,8 @@
         <target>FR_Cancel</target>
       </trans-unit>
       <trans-unit id="104">
-        <source>deleted</source>
-        <target>FR_deletedl</target>
+        <source>Deleted</source>
+        <target>FR_Deleted</target>
       </trans-unit>
       <trans-unit id="105">
         <source>Leave Comment</source>
