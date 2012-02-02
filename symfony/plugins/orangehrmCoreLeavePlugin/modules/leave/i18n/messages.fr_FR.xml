@@ -476,6 +476,35 @@
         <source>No Leave Types with Leave Balance</source>
         <target>FR_No Leave Types with Leave Balance</target>
       </trans-unit>
+      <trans-unit id="225">
+        <source>Please enter a valid date in</source>
+        <target>FR_Please enter a valid date in</target>
+      </trans-unit>
+      <trans-unit id="226">
+        <source>format</source>
+        <target>FR_format</target>
+      </trans-unit>
+      <trans-unit id="227">
+        <source>Name should be less than</source>
+        <target>FR_Name should be less than</target>
+      </trans-unit>
+      <trans-unit id="228">
+        <source>characters</source>
+        <target>FR_characters</target>
+      </trans-unit>
+      <trans-unit id="229">
+        <source>Date format should be</source>
+        <target>FR_Date format should be</target>
+      </trans-unit>
+      <trans-unit id="230">
+        <source>Duration (hours)</source>
+        <target>FR_Duration (hours)</target>
+      </trans-unit>
+      <trans-unit id="231">
+        <source>Leave Successfully Changed</source>
+        <target>FR_Leave Successfully Changed</target>
+      </trans-unit>
+      
     </body>
   </file>
 </xliff>

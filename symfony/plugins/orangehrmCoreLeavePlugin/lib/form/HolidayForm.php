@@ -54,9 +54,9 @@ class HolidayForm extends sfForm
         $this->setValidators(array(
                 'hdnHolidayId' => new sfValidatorString(array('required' => false)),
                 'chkRecurring' => new sfValidatorString(array('required' => false)),
-                'txtDescription' => new sfValidatorString(array('required' => true, 'max_length'=>200),array('required'=>'Holiday Name is required', 'max_length'=>'Name of Holiday length exceeded')),
+                'txtDescription' => new sfValidatorString(array('required' => true, 'max_length'=>200),array('required'=>__('Holiday Name is required'), 'max_length'=>__('Name of Holiday length exceeded'))),
                 'txtDate' => new ohrmDateValidator(array('date_format'=>$inputDatePattern, 'required'=>true),
-                                                   array('required'=>'Date field is required', 'invalid'=>'Date format should be '.$inputDatePattern)),
+                                                   array('required'=>__('Date field is required'), 'bad_format'=>__('Date format should be').' '.$inputDatePattern)),
 
                 'selLength' => new sfValidatorChoice(array('choices' => array_keys($this->getDaysLengthList())))
         ));
@@ -181,7 +181,7 @@ class HolidayForm extends sfForm
         // Error will not return if the date if not in the correct format
         if(!$allowToAdd && !is_null($date))
         {
-            $error = new sfValidatorError($validator, 'Holiday date is in use' );
+            $error = new sfValidatorError($validator, __('Holiday date is in use') );
             throw new sfValidatorErrorSchema($validator, array('txtDate' => $error));
             
         }

@@ -97,7 +97,7 @@ class LeaveListForm extends sfForm {
             $title = __('My Leave Details');
             $replacements = null;
         } else {
-            $title = 'Leave List';
+            $title = __('Leave List');
             $replacements = null;
         }
 
