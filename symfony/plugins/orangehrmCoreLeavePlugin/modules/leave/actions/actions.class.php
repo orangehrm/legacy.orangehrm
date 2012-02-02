@@ -590,7 +590,7 @@ class leaveActions extends sfActions {
             $this->recordCount = $recordCount;
 
             if ($recordCount == 0 && $request->isMethod("post")) {
-                $message = 'No Records Found';
+                $message = __('No Records Found');
                 $messageType = 'notice';
             }
 

@@ -12,7 +12,7 @@
     <div class="outerbox" style="width:auto;">
 
         <div class="mainHeading">
-            <h2 class="paddingLeft"><span id="editStatus"><?php echo __('Add'); ?></span><?php echo __(' Leave Type'); ?></h2>
+            <h2 class="paddingLeft"><span id="editStatus"><?php echo __('Add'); ?></span><?php echo " ".__('Leave Type'); ?></h2>
         </div>
 
         <form name="frmLeaveType" id="frmLeaveType" action="defineLeaveType" method="post">

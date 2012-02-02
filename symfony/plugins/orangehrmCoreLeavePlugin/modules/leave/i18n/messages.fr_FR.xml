@@ -480,7 +480,18 @@
         <source>Leave Successfully Changed</source>
         <target>FR_Leave Successfully Changed</target>
       </trans-unit>
-      
+      <trans-unit id="5000">
+        <source>To date should be after the From date</source>
+        <target>FR_To date should be after the From date</target>
+      </trans-unit>
+      <trans-unit id="5001">
+        <source>No Records Found</source>
+        <target>FR_No Records Found</target>
+      </trans-unit>
+      <trans-unit id="5002">
+        <source>Will take no action</source>
+        <target>FR_Will take no action</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
