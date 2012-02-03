@@ -686,6 +686,14 @@
                 <source>No Actions</source>
                 <target>FR_No Actions</target>
             </trans-unit>
+            <trans-unit id="5002">
+                <source>removed</source>
+                <target>FR_removed</target>
+            </trans-unit>
+            <trans-unit id="5003">
+                <source>marked the offer as declined</source>
+                <target>FR_marked the offer as declined</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

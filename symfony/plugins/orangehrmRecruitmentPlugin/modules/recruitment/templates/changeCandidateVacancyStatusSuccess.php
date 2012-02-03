@@ -51,7 +51,7 @@
                 <label class="secondLabel"><?php echo __($form->performedActionName); ?></label>
                 <br class="clear" />
                 <label class="firstLabel"><?php echo __('Performed By'); ?></label>
-                <label class="secondLabel"><?php echo $form->performedBy; ?></label>
+                <label class="secondLabel"><?php echo __($form->performedBy); ?></label>
                 <br class="clear" />
                 <label class="firstLabel"><?php echo __('Performed Date'); ?></label>
                 <label class="secondLabel"><?php echo $form->performedDate; ?></label>
