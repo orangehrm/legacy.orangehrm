@@ -1155,6 +1155,14 @@
                 <source>User Updated Successfully</source>
                 <target>FR_User Updated Successfully</target>
             </trans-unit>
+            <trans-unit id="5031">
+                <source>Selected nationality record(s) will be deleted</source>
+                <target>FR_Selected nationality record(s) will be deleted</target>
+            </trans-unit>
+            <trans-unit id="5032">
+                <source>Selected Nationality Record(s) Deleted Successfully</source>
+                <target>FR_Selected Nationality Record(s) Deleted Successfully</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
