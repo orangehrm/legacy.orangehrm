@@ -1163,6 +1163,14 @@
                 <source>Selected Nationality Record(s) Deleted Successfully</source>
                 <target>FR_Selected Nationality Record(s) Deleted Successfully</target>
             </trans-unit>
+            <trans-unit id="5033">
+                <source>Selected job category record(s) will be deleted</source>
+                <target>FR_Selected job category record(s) will be deleted</target>
+            </trans-unit>
+            <trans-unit id="5033">
+                <source>Selected Job Category Record(s) Deleted Successfully</source>
+                <target>FR_Selected Job Category Record(s) Deleted Successfully</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
