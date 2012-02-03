@@ -1043,6 +1043,15 @@
                 <source>Currency already exists</source>
                 <target>FR_Currency already exists</target>
             </trans-unit>
+            <trans-unit id="5004">
+                <source>Not Allowed to Delete Customer(s) Which Have Time Logged Against</source>
+                <target>FR_Not Allowed to Delete Customer(s) Which Have Time Logged Against</target>
+            </trans-unit>
+            <trans-unit id="5004">
+                <source>Selected Customer(s) Deleted Successfully</source>
+                <target>FR_Selected Customer(s) Deleted Successfully</target>
+            </trans-unit>
+            
         </body>
     </file>
 </xliff>
