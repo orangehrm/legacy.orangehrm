@@ -1143,6 +1143,10 @@
                 <source>Performance Review Submissions</source>
                 <target>FR_Performance Review Submissions</target>
             </trans-unit>
+            <trans-unit id="5028">
+                <source>ESS</source>
+                <target>FR_ESS</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
