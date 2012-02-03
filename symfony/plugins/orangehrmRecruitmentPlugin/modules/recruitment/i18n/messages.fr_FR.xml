@@ -530,10 +530,6 @@
                 <source>on</source>
                 <target>FR_on</target>
             </trans-unit>
-            <trans-unit id="136">
-                <source>Application Initiated</source>
-                <target>FR_Application Initiated</target>
-            </trans-unit>
             <trans-unit id="137">
                 <source>marked</source>
                 <target>FR_marked</target>
@@ -670,17 +666,25 @@
                 <source>applied for the</source>
                 <target>FR_applied for the</target>
             </trans-unit>
-			<trans-unit id="169">
+            <trans-unit id="169">
                 <source>Shortlisted for</source>
                 <target>FR_Shortlisted for</target>
             </trans-unit>
-			<trans-unit id="170">
+            <trans-unit id="170">
                 <source>by</source>
                 <target>FR_by</target>
             </trans-unit>
-			<trans-unit id="171">
+            <trans-unit id="171">
                 <source>Admin removed</source>
                 <target>FR_Admin removed</target>
+            </trans-unit>
+            <trans-unit id="5000">
+                <source>Selected Vacancies Deleted Successfully</source>
+                <target>FR_Selected Vacancies Deleted Successfully</target>
+            </trans-unit>
+            <trans-unit id="5001">
+                <source>No Actions</source>
+                <target>FR_No Actions</target>
             </trans-unit>
         </body>
     </file>
