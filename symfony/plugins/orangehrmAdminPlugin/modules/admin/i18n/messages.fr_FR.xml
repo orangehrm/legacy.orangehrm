@@ -1051,7 +1051,14 @@
                 <source>Selected Customer(s) Deleted Successfully</source>
                 <target>FR_Selected Customer(s) Deleted Successfully</target>
             </trans-unit>
-            
+            <trans-unit id="5005">
+                <source>Cannot assign same employee twice</source>
+                <target>FR_Cannot assign same employee twice</target>
+            </trans-unit>
+            <trans-unit id="5006">
+                <source>Edit Project Activity</source>
+                <target>FR_Edit Project Activity</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
