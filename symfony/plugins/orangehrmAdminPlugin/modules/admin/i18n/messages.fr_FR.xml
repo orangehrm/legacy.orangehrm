@@ -1059,6 +1059,67 @@
                 <source>Edit Project Activity</source>
                 <target>FR_Edit Project Activity</target>
             </trans-unit>
+            <trans-unit id="5007">
+                <source>Not Allowed to Delete Project Activites Which Have Time Logged Against</source>
+                <target>FR_Not Allowed to Delete Project Activites Which Have Time Logged Against</target>
+            </trans-unit>
+            <trans-unit id="5008">
+                <source>Mail Configuration</source>
+                <target>FR_Mail Configuration</target>
+            </trans-unit>
+            <trans-unit id="5009">
+                <source>Mail Sent As</source>
+                <target>FR_Mail Sent As</target>
+            </trans-unit>
+            <trans-unit id="5010">
+                <source>Path to Sendmail</source>
+                <target>FR_Path to Sendmail</target>
+            </trans-unit>
+            <trans-unit id="5011">
+                <source>Send Test Email</source>
+                <target>FR_Send Test Email</target>
+            </trans-unit>
+            <trans-unit id="5012">
+                <source>Sending Method</source>
+                <target>FR_Sending Method</target>
+            </trans-unit>
+            <trans-unit id="5013">
+                <source>Test Email Address</source>
+                <target>FR_Test Email Address</target>
+            </trans-unit>
+            <trans-unit id="5014">
+                <source>E-mail is required</source>
+                <target>FR_E-mail is required</target>
+            </trans-unit>
+            <trans-unit id="5015">
+                <source>Use SMTP Authentication</source>
+                <target>FR_Use SMTP Authentication</target>
+            </trans-unit>
+            <trans-unit id="5016">
+                <source>SMTP User</source>
+                <target>FR_SMTP User</target>
+            </trans-unit>
+            <trans-unit id="5017">
+                <source>SMTP Port</source>
+                <target>FR_SMTP Port</target>
+            </trans-unit>
+            <trans-unit id="5018">
+                <source>SMTP Password</source>
+                <target>FR_SMTP Password</target>
+            </trans-unit>
+            <trans-unit id="5019">
+                <source>User Secure Connection</source>
+                <target>FR_User Secure Connection</target>
+            </trans-unit>
+            <trans-unit id="5020">
+                <source>SSL</source>
+                <target>FR_SSL</target>
+            </trans-unit>
+            <trans-unit id="5021">
+                <source>TLS</source>
+                <target>FR_TLS</target>
+            </trans-unit>
+            
         </body>
     </file>
 </xliff>
