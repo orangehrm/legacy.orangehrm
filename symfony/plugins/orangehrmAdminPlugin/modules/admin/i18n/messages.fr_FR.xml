@@ -1119,7 +1119,30 @@
                 <source>TLS</source>
                 <target>FR_TLS</target>
             </trans-unit>
-            
+            <trans-unit id="5022">
+                <source>Leave Applications</source>
+                <target>FR_Leave Applications</target>
+            </trans-unit>
+            <trans-unit id="5023">
+                <source>Leave Assignments</source>
+                <target>FR_Leave Assignments</target>
+            </trans-unit>
+            <trans-unit id="5024">
+                <source>Leave Approvals</source>
+                <target>FR_Leave Approvals</target>
+            </trans-unit>
+            <trans-unit id="5025">
+                <source>Leave Cancellations</source>
+                <target>FR_Leave Cancellations</target>
+            </trans-unit>
+            <trans-unit id="5026">
+                <source>Leave Rejections</source>
+                <target>FR_Leave Rejections</target>
+            </trans-unit>
+            <trans-unit id="5027">
+                <source>Performance Review Submissions</source>
+                <target>FR_Performance Review Submissions</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
