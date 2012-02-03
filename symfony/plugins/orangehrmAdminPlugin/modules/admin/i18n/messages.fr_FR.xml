@@ -1039,6 +1039,10 @@
                 <source>Organization</source>
                 <target>FR_Organization</target>
             </trans-unit>
+            <trans-unit id="5003">
+                <source>Currency already exists</source>
+                <target>FR_Currency already exists</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
