@@ -1167,9 +1167,13 @@
                 <source>Selected job category record(s) will be deleted</source>
                 <target>FR_Selected job category record(s) will be deleted</target>
             </trans-unit>
-            <trans-unit id="5033">
+            <trans-unit id="5034">
                 <source>Selected Job Category Record(s) Deleted Successfully</source>
                 <target>FR_Selected Job Category Record(s) Deleted Successfully</target>
+            </trans-unit>
+            <trans-unit id="5035">
+                <source>Value should be a positive number</source>
+                <target>FR_Value should be a positive number</target>
             </trans-unit>
         </body>
     </file>
