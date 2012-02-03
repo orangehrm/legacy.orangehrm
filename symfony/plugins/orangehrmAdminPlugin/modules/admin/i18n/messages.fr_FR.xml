@@ -1035,6 +1035,10 @@
                 <source>Selected locations(s) will be deleted</source>
                 <target>FR_Selected locations(s) will be deleted</target>
             </trans-unit>
+            <trans-unit id="5002">
+                <source>Organization</source>
+                <target>FR_Organization</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
