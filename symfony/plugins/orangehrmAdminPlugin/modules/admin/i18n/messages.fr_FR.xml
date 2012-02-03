@@ -1175,6 +1175,10 @@
                 <source>Value should be a positive number</source>
                 <target>FR_Value should be a positive number</target>
             </trans-unit>
+            <trans-unit id="5036">
+                <source>Supported languages</source>
+                <target>FR_Supported languages</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
