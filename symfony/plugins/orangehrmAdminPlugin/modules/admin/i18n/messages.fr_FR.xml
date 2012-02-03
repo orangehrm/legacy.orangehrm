@@ -1026,7 +1026,15 @@
             <trans-unit id="268">
                 <source>Multiple import files may be required</source>
                 <target>FR_Multiple import files may be required</target>
-            </trans-unit>            
+            </trans-unit>
+            <trans-unit id="5000">
+                <source>Phone can contain only space, numbers, "+", and "-"</source>
+                <target>FR_Phone can contain only space, numbers, "+", and "-"</target>
+            </trans-unit>
+            <trans-unit id="5001">
+                <source>Selected locations(s) will be deleted</source>
+                <target>FR_Selected locations(s) will be deleted</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
