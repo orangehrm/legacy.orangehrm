@@ -296,6 +296,10 @@
                 <source>Edit Timesheet for Month</source>
                 <target>FR_Edit Timesheet for Month</target>
             </trans-unit>
+            <trans-unit id="74">
+                <source>Time Sheet Records Duplicated</source>
+                <target>FR_Time Sheet Records Duplicated</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

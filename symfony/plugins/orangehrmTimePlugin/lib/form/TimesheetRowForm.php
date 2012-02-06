@@ -18,7 +18,7 @@ class TimesheetRowForm extends sfForm {
 	$noOfDays = $this->getOption('noOfDays');
 	$widgetArray = array(
 	    'toDelete' => new sfWidgetFormInputCheckbox(array(), array('class' => 'toDelete')),
-            'projectName' => new sfWidgetFormInputText(array(), array('align' => 'center', 'class' => 'project')),
+            'projectName' => new sfWidgetFormInputText(array(), array('align' => 'center', 'class' => 'project', 'value' =>  __('Type for hints...'))),
             'projectId' => new sfWidgetFormInputHidden(),
             'projectActivityName' => new sfWidgetFormSelect(array('choices' => array('-1' => __('Select an Activity...'))), array('class' => 'projectActivity')),
             'projectActivityId' => new sfWidgetFormInputHidden()
