@@ -536,13 +536,13 @@ if (($_SESSION['empID'] != null) || $arrAllRights[TimeM]['view']) {
         if ($accessibleTimeMenuItems != null) {
             foreach ($accessibleTimeMenuItems as $ttt) {
 
-                $sub = new MenuItem("timesheets", $ttt->getDisplayName(), $ttt->getLink(), 'rightMenu');
+                $sub = new MenuItem("timesheets", __($ttt->getDisplayName()), $ttt->getLink(), 'rightMenu');
 
                 if ($ttt->getDisplayName() == "Timesheets") {
 
                     foreach ($accessibleTimeSubMenuItems as $ctm) {
 
-                        $subsubs[] = new MenuItem("timesheets", $ctm->getDisplayName(), $ctm->getLink());
+                        $subsubs[] = new MenuItem("timesheets", __($ctm->getDisplayName()), $ctm->getLink());
                     }
 
                     $sub->setSubMenuItems($subsubs);
@@ -550,7 +550,7 @@ if (($_SESSION['empID'] != null) || $arrAllRights[TimeM]['view']) {
                 if ($ttt->getDisplayName() == "Attendance") {
 
                     foreach ($attendanceMenus as $ptm) {
-                        $subsubs0[] = new MenuItem("timesheets", $ptm->getDisplayName(), $ptm->getLink());
+                        $subsubs0[] = new MenuItem("timesheets", __($ptm->getDisplayName()), $ptm->getLink());
                     }
 
                     $sub->setSubMenuItems($subsubs0);
@@ -559,7 +559,7 @@ if (($_SESSION['empID'] != null) || $arrAllRights[TimeM]['view']) {
                 if ($ttt->getDisplayName() == "Reports") {
 
                     foreach ($reportsMenus as $ptm) {
-                        $subsubs1[] = new MenuItem("timesheets", $ptm->getDisplayName(), $ptm->getLink());
+                        $subsubs1[] = new MenuItem("timesheets", __($ptm->getDisplayName()), $ptm->getLink());
                     }
 
                     $sub->setSubMenuItems($subsubs1);
@@ -704,10 +704,12 @@ $menu[] = $menuItem;
 /* Checking for disabled modules: Begins */
 
 $count = count($menu);
-
+foreach ($disabledModules as $key => $module) {
+        $disabledModules[$key] = __(ucwords($module));
+}
 for ($i=0; $i<$count; $i++) {
 
-    if (in_array(strtolower($menu[$i]->getMenuText()), $disabledModules)) {
+    if (in_array($menu[$i]->getMenuText(), $disabledModules)) {
         unset($menu[$i]);
     }
     
