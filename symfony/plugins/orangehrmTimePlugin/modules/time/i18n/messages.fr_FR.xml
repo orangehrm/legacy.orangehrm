@@ -276,6 +276,26 @@
                 <source>There is no timesheet to view</source>
                 <target>FR_There is no timesheet to view</target>
             </trans-unit>
+            <trans-unit id="69">
+                <source>Edit Timesheet for</source>
+                <target>FR_Edit Timesheet for</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Edit Timesheet for Week</source>
+                <target>FR_Edit Timesheet for Week</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Edit Timesheet for</source>
+                <target>FR_Edit Timesheet for</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>for Month starting on</source>
+                <target>FR_for Month starting on</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Edit Timesheet for Month</source>
+                <target>FR_Edit Timesheet for Month</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
