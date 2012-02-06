@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     $(".project").click(function(){
         element = $(this)
-        if($(element).val() == 'Type for hints...'){
+        if($(element).val() == typeForHints){
             this.value = "";
             $(this).removeClass("inputFormatHint");
         }
@@ -35,7 +35,7 @@ $(document).ready(function() {
 
     $(".project").each(function(){
         element = $(this)
-        if($(element).val() == 'Type for hints...'){
+        if($(element).val() == typeForHints){
             $(element).addClass("inputFormatHint");
         }
 	$(element).val($(element).val().replace("##", ""));
