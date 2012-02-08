@@ -312,11 +312,14 @@
                 <source>Submitted</source>
                 <target>FR_Submitted</target>
             </trans-unit>
-            <trans-unit id="77">
+            <trans-unit id="78">
                 <source>Rejected</source>
                 <target>FR_Rejected</target>
             </trans-unit>
-            
+            <trans-unit id="79">
+                <source>Not Submitted</source>
+                <target>FR_Not Submitted</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
