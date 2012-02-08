@@ -190,7 +190,7 @@ function validateEmployee(){
         errorMsge = employeeSelect;
         return false;
     }else{
-        errorMsge = "Invalid Employee Name";
+        errorMsge = invalidEmpName;
         return false;
     }
 }
