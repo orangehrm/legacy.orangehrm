@@ -250,7 +250,7 @@ $formatData['newSeparater'] = '/';
                                    </td>
 
                                    <td class="">
-                                <?php echo $review->getTextStatus(); ?>
+                                <?php echo __($review->getTextStatus()); ?>
                                    </td>
 
                                    <td class="">
