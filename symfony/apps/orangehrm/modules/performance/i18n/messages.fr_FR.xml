@@ -264,7 +264,70 @@
                 <source>Not Available</source>
                 <target>FR_Not Available</target>
             </trans-unit>
-            
+            <trans-unit id="66">
+                <source>Performance Review</source>
+                <target>FR_Performance Review</target>
+            </trans-unit>
+            <trans-unit id="67">
+                <source>Scheduled</source>
+                <target>FR_Scheduled</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Being Reviewed</source>
+                <target>FR_Being Reviewed</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>Submitted</source>
+                <target>FR_Submitted</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Rejected</source>
+                <target>FR_Rejected</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Approved</source>
+                <target>FR_Approved</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>Rating</source>
+                <target>FR_Rating</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Reviewer Comments</source>
+                <target>FR_Reviewer Comments</target>
+            </trans-unit>
+            <trans-unit id="74">
+                <source>Note</source>
+                <target>FR_Note</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>Reject</source>
+                <target>FR_Reject</target>
+            </trans-unit>
+            <trans-unit id="76">
+                <source>Approve</source>
+                <target>FR_Approve</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>Comments length exceed</source>
+                <target>FR_Comments length exceed</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Please enter a numeric Key Performance I rating within the defined Minimum and Maximum value</source>
+                <target>FR_Please enter a numeric Key Performance I rating within the defined Minimum and Maximum value</target>
+            </trans-unit>
+            <trans-unit id="79">
+                <source>Please enter a numeric KPI rating within the defined Minimum and Maximum value</source>
+                <target>FR_Please enter a numeric KPI rating within the defined Minimum and Maximum value</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Please make sure that the comment contains less than 2000 characters</source>
+                <target>FR_Please make sure that the comment contains less than 2000 characters</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Submit</source>
+                <target>FR_Submit</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
