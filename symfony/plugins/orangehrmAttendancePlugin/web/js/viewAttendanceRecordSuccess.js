@@ -187,7 +187,7 @@ function validateEmployee(){
     if(temp){
         return true;
     }else if(empName == "" || empName == $.trim("Type for hints...").toLowerCase()){
-        errorMsge = "Please Select an Employee";
+        errorMsge = employeeSelect;
         return false;
     }else{
         errorMsge = "Invalid Employee Name";
