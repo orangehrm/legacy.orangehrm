@@ -1179,6 +1179,14 @@
                 <source>Supported languages</source>
                 <target>FR_Supported languages</target>
             </trans-unit>
+            <trans-unit id="5037">
+                <source>Email configuration was saved. Test email couldn't be sent</source>
+                <target>FR_Email configuration was saved. Test email couldn't be sent</target>
+            </trans-unit>
+            <trans-unit id="5038">
+                <source>Email configuration was saved. Test email was sent</source>
+                <target>FR_Email configuration was saved. Test email was sent</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
