@@ -164,6 +164,10 @@
                 <source>Add Attendance Records</source>
                 <target>FR_Add Attendance Records</target>
             </trans-unit>
+            <trans-unit id="41">
+                <source>No Employees Available in System</source>
+                <target>FR_No Employees Available in System</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
