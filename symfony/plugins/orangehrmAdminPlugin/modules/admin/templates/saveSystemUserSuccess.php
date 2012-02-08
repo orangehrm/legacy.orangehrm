@@ -97,7 +97,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     var user_edit                   = "<?php echo __("Edit"); ?>";
     var employees                   = <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?> ;
     var employeesArray              = eval(employees);
-    var user_typeForHints           = "Type for hints...";
+    var user_typeForHints           = "<?php echo __("Type for hints").'...';?>";
     var user_name_alrady_taken      =   "<?php echo __("Username already taken"); ?>";
     var isUniqueUserUrl             = '<?php echo url_for('admin/isUniqueUserJson'); ?>';
     var viewSystemUserUrl             = '<?php echo url_for('admin/viewSystemUsers'); ?>';

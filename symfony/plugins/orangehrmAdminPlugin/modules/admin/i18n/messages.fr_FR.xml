@@ -1187,6 +1187,10 @@
                 <source>Email configuration was saved. Test email was sent</source>
                 <target>FR_Email configuration was saved. Test email was sent</target>
             </trans-unit>
+            <trans-unit id="5039">
+                <source>Type for hints</source>
+                <target>FR_Type for hints</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
