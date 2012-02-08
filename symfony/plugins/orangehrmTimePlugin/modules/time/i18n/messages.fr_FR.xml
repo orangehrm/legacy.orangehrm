@@ -300,6 +300,10 @@
                 <source>Time Sheet Records Duplicated</source>
                 <target>FR_Time Sheet Records Duplicated</target>
             </trans-unit>
+            <trans-unit id="75">
+                <source>Invalid Date</source>
+                <target>FR_Invalid Date</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
