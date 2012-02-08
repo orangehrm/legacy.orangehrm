@@ -52,7 +52,7 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
         <tr>
 
             <?php if (isset($employeeName)): ?>
-                <td id="headingText"><?php echo __('Timesheet for ') . $employeeName . __(' for') . " " . $headingText . " ";
+                <td id="headingText"><?php echo __('Timesheet for')." " . $employeeName . " ".__('for') . " " . __($headingText) . " ";
         echo $dateForm['startDates']->render(array('onchange' => 'clicked(event)')); ?>
                     <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))): ?>
                         <input type="button" class="addTimesheetbutton" name="button" id="btnAddTimesheet"
@@ -62,7 +62,7 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
                 </td>
 
             <?php else: ?>
-                <td id="headingText"><?php echo __('Timesheet for ') . " " . $headingText . " ";
+                <td id="headingText"><?php echo __('Timesheet for') . " " . __($headingText) . " ";
         echo $dateForm['startDates']->render(array('onchange' => 'clicked(event)')); ?>
                     <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))): ?>
                         <input type="button" class="addTimesheetbutton" name="button" id="btnAddTimesheet"

@@ -45,8 +45,8 @@
                 <target>FR_Actions performed on the timesheet :</target>
             </trans-unit>
             <trans-unit id="11">
-                <source>Timesheet for </source>
-                <target>FR_Timesheet for </target>
+                <source>Timesheet for</source>
+                <target>FR_Timesheet for</target>
             </trans-unit>
             <trans-unit id="12">
                 <source>Total</source>
@@ -319,6 +319,14 @@
             <trans-unit id="79">
                 <source>Not Submitted</source>
                 <target>FR_Not Submitted</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>for</source>
+                <target>FR_for</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>Week</source>
+                <target>FR_Week</target>
             </trans-unit>
         </body>
     </file>
