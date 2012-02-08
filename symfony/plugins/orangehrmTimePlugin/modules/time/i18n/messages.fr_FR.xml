@@ -304,6 +304,19 @@
                 <source>Invalid Date</source>
                 <target>FR_Invalid Date</target>
             </trans-unit>
+            <trans-unit id="76">
+                <source>Approved</source>
+                <target>FR_Approved</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>Submitted</source>
+                <target>FR_Submitted</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>Rejected</source>
+                <target>FR_Rejected</target>
+            </trans-unit>
+            
         </body>
     </file>
 </xliff>
