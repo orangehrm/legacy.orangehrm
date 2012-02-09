@@ -182,7 +182,7 @@ class viewTimesheetAction extends sfAction {
     public function getStartDate($dateOptions) {
 
         $temp = $dateOptions[0];
-        $tempArray = explode(" to ", $temp);
+        $tempArray = explode(" ", $temp);
         return $tempArray[0];
     }
 
