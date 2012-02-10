@@ -1094,6 +1094,10 @@
                 <source>Drop Down</source>
                 <target>FR_Drop Down</target>
             </trans-unit>
+            <trans-unit id="5000">
+                <source>Deleted</source>
+                <target>FR_Deleted</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

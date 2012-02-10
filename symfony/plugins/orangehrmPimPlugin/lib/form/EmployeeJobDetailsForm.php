@@ -249,7 +249,7 @@ class EmployeeJobDetailsForm extends BaseForm {
 
         foreach ($jobTitleList as $job) {
             if (($job->getIsDeleted() == JobTitle::ACTIVE) || ($job->getId() == $jobTitleId)) {
-                $name = ($job->getIsDeleted() == JobTitle::DELETED) ? $job->getJobTitleName() . " (Deleted)" : $job->getJobTitleName();
+                $name = ($job->getIsDeleted() == JobTitle::DELETED) ? $job->getJobTitleName() . " (".__("Deleted").")" : $job->getJobTitleName();
                 $choices[$job->getId()] = $name;
             }
         }
