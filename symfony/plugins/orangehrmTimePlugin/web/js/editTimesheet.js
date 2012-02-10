@@ -241,8 +241,9 @@ $(document).ready(function() {
                 var temp=parseFloat($("#initialRows_"+j+"_"+id).val());
             
                 total=total+temp;
-            }
-            else{
+            } else if ($("#initialRows_"+j+"_"+id).val() == '') {
+            	total=total;
+            } else{
                 var temp = $("#initialRows_"+j+"_"+id).val().split(":");
                 temp[0]= parseFloat(temp[0]);
                 temp[1]= parseFloat(temp[1])
