@@ -32,7 +32,7 @@ class TimesheetRowForm extends sfForm {
         $this->widgetSchema->setNameFormat('time[%s]');
 
         $this->widgetSchema['projectName']->setAttribute('size', 35);
-        $this->setDefault('projectName', 'Type for hints...');
+        $this->setDefault('projectName', __('Type for hints...'));
         $this->widgetSchema['projectActivityName']->setAttribute('style', 'width:225px');
 	for ($i = 0; $i < $noOfDays; $i++) {
 		$this->widgetSchema[$i]->setAttribute('size', 2);
