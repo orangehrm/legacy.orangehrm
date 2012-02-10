@@ -103,5 +103,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     var viewSystemUserUrl             = '<?php echo url_for('admin/viewSystemUsers'); ?>';
     var user_UserNameLength         =   "<?php echo __("User Name should have at least 5 characters"); ?>";
     var user_UserPasswordLength     =   "<?php echo __("Password should have at least 4 characters"); ?>";
+    var password_user               =   "<?php echo __("Very Weak").",".__("Weak").",".__("Better").",".__("Medium").",".__("Strong").",".__("Strongest")?>";
 
 </script>
