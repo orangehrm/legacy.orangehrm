@@ -5214,6 +5214,10 @@
                 <source>Logout</source>
                 <target>FR_Logout</target>
             </trans-unit>
+            <trans-unit id="5023">
+                <source>ESS</source>
+                <target>FR_ESS</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
