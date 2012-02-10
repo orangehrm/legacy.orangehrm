@@ -175,7 +175,7 @@
                                                     $payPeriodCode = empty($period) ? '' : htmlspecialchars($period->getCode());
 
                                                     $currency = $salary->getCurrencyType();
-                                                    $currencyName = empty($currency) ? '' : htmlspecialchars($currency->getCurrencyName());
+                                                    $currencyName = empty($currency) ? '' : __(htmlspecialchars($currency->getCurrencyName()));
                                                     $currencyId = empty($currency) ? '' : htmlspecialchars($currency->getCurrencyId());
                                                     $amount = $salary->getBasicSalary();
                                                     $comments = htmlspecialchars($salary->getComments());
@@ -329,7 +329,7 @@
 //]]>
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript"><!--
 //<![CDATA[
     function clearMessageBar() {
         $("#messagebar").text("").attr('class', "");
@@ -399,9 +399,6 @@
 
             // If editing a currency, add that currency to list
             if (currencyId && currencyName) {
-                $('#salary_currency_id').append($("<option></option>").
-                    attr("value", currencyId).
-                    text(currencyName));
                 $('#salary_currency_id').val(currencyId);
                 getMinMax(payGrade, currencyId);
             } else {
@@ -760,4 +757,4 @@
     });
 });
 //]]>
-</script>
+--></script>
