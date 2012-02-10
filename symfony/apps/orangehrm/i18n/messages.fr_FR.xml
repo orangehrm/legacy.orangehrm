@@ -5194,30 +5194,6 @@
                 <source>Bug Tracker</source>
                 <target>FR_Bug Tracker</target>
             </trans-unit>
-            <trans-unit id="5000">
-                <source>Very Weak</source>
-                <target>FR_Very Weak</target>
-            </trans-unit>
-            <trans-unit id="5001">
-                <source>Weak</source>
-                <target>FR_Weak</target>
-            </trans-unit>
-            <trans-unit id="5002">
-                <source>Better</source>
-                <target>FR_Better</target>
-            </trans-unit>
-            <trans-unit id="5003">
-                <source>Medium</source>
-                <target>FR_Medium</target>
-            </trans-unit>
-            <trans-unit id="5004">
-                <source>Strong</source>
-                <target>FR_Strong</target>
-            </trans-unit>
-            <trans-unit id="5005">
-                <source>Strongest</source>
-                <target>FR_Strongest</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
