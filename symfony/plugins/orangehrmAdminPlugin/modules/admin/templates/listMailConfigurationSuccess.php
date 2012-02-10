@@ -1,4 +1,5 @@
 <script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.validate.js')?>"></script>
+<?php use_stylesheet('../orangehrmAdminPlugin/css/listMailConfiguration'); ?>
 <div class="formpage3col">
 
     <?php echo isset($templateMessage)?templateMessage($templateMessage):''; ?>
@@ -116,7 +117,22 @@
 		 		txtMailAddress: "<?php echo __("E-mail is required")?>"
 		 	 }
 		 });
-
+		$("#chkSendTestEmail").click(function() {
+			if($("#chkSendTestEmail").attr("checked")){
+				$("#txtTestEmail").rules("add", {
+		              required: true,
+		              email: true,
+		             messages: {
+					   required: "<?php echo __("Test e-mail address is required")?>",
+					   email: "<?php echo __("Email address should contain at least one '.' and one '@' Example:user@example.com");?>"
+		             }
+		         });
+	        } else {
+	        	$("#txtTestEmail").rules("remove", "required");
+	        	$("#txtTestEmail").rules("remove", "email");
+		    }
+		})
+		
 		//When click reset buton
 		$("#resetBtn").click(function() {
 			document.forms[0].reset('');

@@ -3601,6 +3601,7 @@ symfony/plugins/orangehrmAdminPlugin/web/css/changeUserPasswordSuccess.css -text
 symfony/plugins/orangehrmAdminPlugin/web/css/emailNotificationSuccess.css -text
 symfony/plugins/orangehrmAdminPlugin/web/css/employmentStatusSuccess.css -text
 symfony/plugins/orangehrmAdminPlugin/web/css/jobCategorySuccess.css -text
+symfony/plugins/orangehrmAdminPlugin/web/css/listMailConfiguration.css -text
 symfony/plugins/orangehrmAdminPlugin/web/css/localizationSuccess.css -text
 symfony/plugins/orangehrmAdminPlugin/web/css/locationSuccess.css -text
 symfony/plugins/orangehrmAdminPlugin/web/css/membershipSuccess.css -text

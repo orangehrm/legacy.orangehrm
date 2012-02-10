@@ -1215,6 +1215,10 @@
                 <source>Strongest</source>
                 <target>FR_Strongest</target>
             </trans-unit>
+            <trans-unit id="5046">
+                <source>Test e-mail address is required</source>
+                <target>FR_Test e-mail address is required</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
