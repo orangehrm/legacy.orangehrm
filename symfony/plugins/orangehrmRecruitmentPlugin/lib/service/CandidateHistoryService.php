@@ -160,7 +160,7 @@ class CandidateHistoryService {
     }
 
     public function getDescriptionForDeclineOffer($object) {
-        return $object->getPerformerName() . " " . __("marked the offer as declined")." ".__("for")." ".$object->getCandidateVacancyName();
+        return __($object->getPerformerName()) . " " . __("marked the offer as declined")." ".__("for")." ".$object->getCandidateVacancyName();
     }
 
     public function getDescriptionForHire($object) {
