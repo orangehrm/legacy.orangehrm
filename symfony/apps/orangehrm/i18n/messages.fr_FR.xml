@@ -5126,73 +5126,93 @@
         <source>Employee Records</source>
         <target>FR_Employee Records</target>
       </trans-unit> 
-            <trans-unit id="1">
+            <trans-unit id="5001">
                 <source>Candidates</source>
                 <target>FR_Candidates</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5002">
                 <source>Vacancies</source>
                 <target>FR_Vacancies</target>
             </trans-unit>
-            <trans-unit id="63">
+            <trans-unit id="5003">
                 <source>Performance</source>
                 <target>FR_Performance</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5004">
                 <source>KPI List</source>
                 <target>FR_KPI List</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5005">
                 <source>Add KPI</source>
                 <target>FR_Add KPI</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5006">
                 <source>Copy KPI</source>
                 <target>FR_Copy KPI</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5007">
                 <source>Add Review</source>
                 <target>FR_Add Review</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5008">
                 <source>Reviews</source>
                 <target>FR_Reviews</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5009">
                 <source>Recruitment</source>
                 <target>FR_Recruitment</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5010">
                 <source>Help</source>
                 <target>FR_Help</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5011">
                 <source>Support</source>
                 <target>FR_Support</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5012">
                 <source>Forum</source>
                 <target>FR_Forum</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5013">
                 <source>Blog</source>
                 <target>FR_Blog</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5014">
                 <source>Training</source>
                 <target>FR_Training</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5015">
                 <source>Add-Ons</source>
                 <target>FR_Add-Ons</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5016">
                 <source>Customizations</source>
                 <target>FR_Customizations</target>
             </trans-unit> 
-            <trans-unit id="63">
+            <trans-unit id="5017">
                 <source>Bug Tracker</source>
                 <target>FR_Bug Tracker</target>
+            </trans-unit>
+            <trans-unit id="5018">
+                <source>Join the OrangeHRM User Community</source>
+                <target>FR_Join the OrangeHRM User Community</target>
+            </trans-unit>
+            <trans-unit id="5019">
+                <source>Win Exciting OrangeHRM Goodies</source>
+                <target>FR_Win Exciting OrangeHRM Goodies</target>
+            </trans-unit>
+            <trans-unit id="5020">
+                <source>Change Password</source>
+                <target>FR_Change Password</target>
+            </trans-unit>
+            <trans-unit id="5021">
+                <source>Welcome #username</source>
+                <target>FR_Welcome #username</target>
+            </trans-unit>
+            <trans-unit id="5022">
+                <source>Logout</source>
+                <target>FR_Logout</target>
             </trans-unit>
         </body>
     </file>

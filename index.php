@@ -717,16 +717,16 @@ for ($i=0; $i<$count; $i++) {
 
 /* Checking for disabled modules: Ends */
 
-$welcomeMessage = preg_replace('/#username/', ((isset($_SESSION['fname'])) ? $_SESSION['fname'] : ''), $lang_index_WelcomeMes);
+$welcomeMessage = preg_replace('/#username/', ((isset($_SESSION['fname'])) ? $_SESSION['fname'] : ''), $i18n->__($lang_index_WelcomeMes));
 
 if (isset($_SESSION['ladpUser']) && $_SESSION['ladpUser'] && $_SESSION['isAdmin'] != "Yes") {
     $optionMenu = array();
 } else {
-    $optionMenu[] = new MenuItem("changepassword", $lang_index_ChangePassword,
+    $optionMenu[] = new MenuItem("changepassword", $i18n->__($lang_index_ChangePassword),
                     "./symfony/web/index.php/admin/changeUserPassword");
 }
 
-$optionMenu[] = new MenuItem("logout", $lang_index_Logout, './symfony/web/index.php/auth/logout', '_parent');
+$optionMenu[] = new MenuItem("logout", __($lang_index_Logout), './symfony/web/index.php/auth/logout', '_parent');
 
 // Decide on home page
 if (($_GET['menu_no_top'] == "eim") && ($arrRights['view'] || $allowAdminView)) {
@@ -817,8 +817,8 @@ if($xml = @simplexml_load_file("http://www.orangehrm.com/global_update/orangehrm
 		{
 			echo "<div style='width: auto; float:right; margin: 12px 2px 0px 0px;'>
 				<table border='0'>
-					<tr><td><a href='".$data[$i]."' target='_blank' style='text-decoration:none;'><font style='color:green; font-weight:bold; font-size:12px;'>".$data[$i+1]."</font>&nbsp;&nbsp;</td></tr>
-					<tr><td align='center'><a href='".$data[$i]."' target='_blank' style='text-decoration:none;'><font style='font-size:10px; font-weight:bold;'>".$data[$i+2]."</font></a></td></tr>
+					<tr><td><a href='".$data[$i]."' target='_blank' style='text-decoration:none;'><font style='color:green; font-weight:bold; font-size:12px;'>".$i18n->__($data[$i+1])."</font>&nbsp;&nbsp;</td></tr>
+					<tr><td align='center'><a href='".$data[$i]."' target='_blank' style='text-decoration:none;'><font style='font-size:10px; font-weight:bold;'>".$i18n->__($data[$i+2])."</font></a></td></tr>
 				</table>
 			      </div>";
 		}
