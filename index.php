@@ -71,7 +71,8 @@ if (file_exists('symfony/config/databases.yml')) {
         $recruitHomePage = './symfony/web/index.php/recruitment/viewCandidates';
         
         $i18n = $context->getI18N();
-        
+        $cultureElements = explode('_', $context->getUser()->getCulture()); // Used in <html> tag
+                
     }
 }
 
@@ -786,7 +787,7 @@ if (isset($_SESSION['load.admin.viewModules'])) {
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $cultureElements[0]; ?>" lang="<?php echo $cultureElements[0]; ?>">
     <head>
         <title>OrangeHRM</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
