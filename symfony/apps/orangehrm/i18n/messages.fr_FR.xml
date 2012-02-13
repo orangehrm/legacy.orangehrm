@@ -5250,6 +5250,18 @@
                 <source>To date should be after the from date</source>
                 <target>FR_To date should be after the from date</target>
             </trans-unit>
+            <trans-unit id="5032">
+                <source>My Timesheets</source>
+                <target>FR_My Timesheets</target>
+            </trans-unit>
+            <trans-unit id="5033">
+                <source>My Records</source>
+                <target>FR_My Records</target>
+            </trans-unit>
+            <trans-unit id="5034">
+                <source>Punch In/Out</source>
+                <target>FR_Punch In/Out</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
