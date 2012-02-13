@@ -344,6 +344,11 @@
                 <source>Employee is required</source>
                 <target>FR_Employee is required</target>
             </trans-unit>
+            <trans-unit id="86">
+                <source>Attendance Total Summary Report</source>
+                <target>FR_Attendance Total Summary Report</target>
+            </trans-unit>
+            
         </body>
     </file>
 </xliff>
