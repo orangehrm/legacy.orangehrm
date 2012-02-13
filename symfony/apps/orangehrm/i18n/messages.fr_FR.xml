@@ -5218,6 +5218,46 @@
                 <source>ESS</source>
                 <target>FR_ESS</target>
             </trans-unit>
+            <trans-unit id="5024">
+                <source>Project Reports</source>
+                <target>FR_Project Reports</target>
+            </trans-unit>
+            <trans-unit id="5025">
+                <source>Attendance Summary</source>
+                <target>FR_Attendance Summary</target>
+            </trans-unit>
+            <trans-unit id="5026">
+                <source>Select</source>
+                <target>FR_Select</target>
+            </trans-unit>
+            <trans-unit id="5027">
+                <source>No Projects</source>
+                <target>FR_No Projects</target>
+            </trans-unit>
+            <trans-unit id="5028">
+                <source>Project name is required</source>
+                <target>FR_Project name is required</target>
+            </trans-unit>
+            <trans-unit id="5029">
+                <source>Project Date Range</source>
+                <target>FR_Project Date Range</target>
+            </trans-unit>
+            <trans-unit id="5030">
+                <source>Only Inlclude Approved Timesheets</source>
+                <target>FR_Only Inlclude Approved Timesheets</target>
+            </trans-unit>
+            <trans-unit id="5031">
+                <source>To date should be after the from date</source>
+                <target>FR_To date should be after the from date</target>
+            </trans-unit>
+            <trans-unit id="5032">
+                <source>Time (hours)</source>
+                <target>FR_Time (hours)</target>
+            </trans-unit>
+            <trans-unit id="5033">
+                <source>Total</source>
+                <target>FR_Total</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
