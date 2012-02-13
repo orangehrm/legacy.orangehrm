@@ -328,6 +328,22 @@
                 <source>Week</source>
                 <target>FR_Week</target>
             </trans-unit>
+            <trans-unit id="82">
+                <source>Employee Report</source>
+                <target>FR_Employee Report</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>Time (hours)</source>
+                <target>FR_Time (hours)</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>Employee</source>
+                <target>FR_Employee</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Employee is required</source>
+                <target>FR_Employee is required</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

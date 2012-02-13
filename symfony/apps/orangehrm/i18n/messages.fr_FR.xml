@@ -5250,14 +5250,6 @@
                 <source>To date should be after the from date</source>
                 <target>FR_To date should be after the from date</target>
             </trans-unit>
-            <trans-unit id="5032">
-                <source>Time (hours)</source>
-                <target>FR_Time (hours)</target>
-            </trans-unit>
-            <trans-unit id="5033">
-                <source>Total</source>
-                <target>FR_Total</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
