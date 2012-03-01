@@ -29,7 +29,7 @@ class EmployeeSearchForm extends BaseForm {
     private $jobService;
     private $jobTitleService;
     private $empStatusService;
-    
+
     const WITHOUT_TERMINATED = 1;
     const WITH_TERMINATED = 2;
     const ONLY_TERMINATED = 3;
@@ -60,12 +60,6 @@ class EmployeeSearchForm extends BaseForm {
             'id' => new sfWidgetFormInputText(),
         ));
 
-        /* Setting job titles */
-        $this->_setJobTitleWidget();
-
-        /* Setting sub divisions */
-        $this->_setSubunitWidget();
-
         $this->_setEmployeeStatusWidget();
 
         $this->_setTerminatedEmployeeWidget();
@@ -73,11 +67,20 @@ class EmployeeSearchForm extends BaseForm {
         $this->setWidget('supervisor_name', new sfWidgetFormInputText());
         $this->setValidator('supervisor_name', new sfValidatorString(array('required' => false)));
 
+        /* Setting job titles */
+        $this->_setJobTitleWidget();
+
+        /* Setting sub divisions */
+        $this->_setSubunitWidget();
+
 
         $this->setValidator('employee_name', new sfValidatorString(array('required' => false)));
         $this->setValidator('id', new sfValidatorString(array('required' => false)));
 
         $this->widgetSchema->setNameFormat('empsearch[%s]');
+        $this->getWidgetSchema()->setLabels($this->getFormLabels());
+        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(4);
+        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
     }
 
     public function getEmployeeListAsJson() {
@@ -101,7 +104,6 @@ class EmployeeSearchForm extends BaseForm {
                 $name = $employee->getFullName();
                 $employeeUnique[$employee->getEmpNumber()] = $name;
                 $jsonArray[] = array('name' => $name, 'id' => $employee->getEmpNumber());
-                
             }
         }
 
@@ -202,7 +204,24 @@ class EmployeeSearchForm extends BaseForm {
         $terminateSelection = array(self::WITHOUT_TERMINATED => __('Current Employees Only'), self::WITH_TERMINATED => __('Current and Past Employees'), self::ONLY_TERMINATED => __('Past Employees Only'));
         $this->setWidget('termination', new sfWidgetFormChoice(array('choices' => $terminateSelection)));
         $this->setValidator('termination', new sfValidatorChoice(array('choices' => array_keys($terminateSelection))));
+    }
 
+    /**
+     *
+     * @return array
+     */
+    protected function getFormLabels() {
+
+        $labels = array(
+            'employee_name' => __('Employee Name'),
+            'id' => __('Id'),
+            'employee_status' => __('Employment Status'),
+            'termination' => __('Include'),
+            'supervisor_name' => __('Supervisor Name'),
+            'job_title' => __('Job Title'),
+            'sub_unit' => __('Sub Unit')
+        );
+        return $labels;
     }
 
 }

@@ -47,47 +47,25 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         <div class="searchbox">
             <form id="search_form" method="post" action="<?php echo url_for('@employee_list'); ?>">
                 <div id="formcontent">
-<?php
-    echo $form['_csrf_token'];
-    echo $form['employee_name']->renderLabel(__("Employee Name"));
-    echo $form['employee_name']->render();
+                        <br class="clear"/>
+                <?php echo $form->render(); ?>  
 
-    echo $form['id']->renderLabel(__("Id"));
-    echo $form['id']->render();
+                    <div class="actionbar">
+                        <div class="actionbuttons">
+                            <input
+                                type="button" class="plainbtn" id="searchBtn"
+                                onmouseover="this.className='plainbtn plainbtnhov'"
+                                onmouseout="this.className='plainbtn'" value="<?php echo __("Search") ?>" name="_search" />
+                            <input
+                                type="button" class="plainbtn"
+                                onmouseover="this.className='plainbtn plainbtnhov'" id="resetBtn"
+                                onmouseout="this.className='plainbtn'" value="<?php echo __("Reset") ?>" name="_reset" />
 
-    echo $form['employee_status']->renderLabel(__("Employment Status"));
-    echo $form['employee_status']->render();
-
-    echo $form['termination']->renderLabel(__("Include"));
-    echo $form['termination']->render();
-?>
-     <br class="clear"/>
-<?php
-    echo $form['supervisor_name']->renderLabel(__("Supervisor Name"));
-    echo $form['supervisor_name']->render();
-
-    echo $form['job_title']->renderLabel(__("Job Title"));
-    echo $form['job_title']->render();
-
-    echo $form['sub_unit']->renderLabel(__("Sub Unit"));
-    echo $form['sub_unit']->render();
-?>
-            </div>
-            <div class="actionbar">
-                <div class="actionbuttons">
-                    <input
-                        type="button" class="plainbtn" id="searchBtn"
-                        onmouseover="this.className='plainbtn plainbtnhov'"
-                        onmouseout="this.className='plainbtn'" value="<?php echo __("Search") ?>" name="_search" />
-                    <input
-                        type="button" class="plainbtn"
-                        onmouseover="this.className='plainbtn plainbtnhov'" id="resetBtn"
-                        onmouseout="this.className='plainbtn'" value="<?php echo __("Reset") ?>" name="_reset" />
-
+                        </div>
+                        <br class="clear" />
+                    </div>
+                    <br class="clear" />
                 </div>
-                <br class="clear" />
-            </div>
-            <br class="clear" />
         </form>
     </div>
 </div> <!-- outerbox -->
