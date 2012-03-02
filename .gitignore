@@ -20,6 +20,7 @@ symfony/apps/orangehrm/config/emailConfiguration.yml
 symfony/apps/orangehrm/config/parameters.yml
 symfony/cache/*
 symfony/config/databases.yml
+symfony/lib/model/doctrine/orangehrmRegionalAdminExecutivePlugin
 symfony/lib/vendor/symfony/lib/action/.sfComponent.class.php.swp
 symfony/log/*
 symfony/plugins/orangehrmCorePlugin/lib/service/.SampleService.php.swp
