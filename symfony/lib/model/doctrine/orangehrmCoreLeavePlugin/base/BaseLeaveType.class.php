@@ -9,7 +9,9 @@
  * @property string $leaveTypeName
  * @property integer $availableFlag
  * @property integer $operationalCountryId
+ * @property string $leaveRules
  * @property OperationalCountry $OperationalCountry
+ * @property Doctrine_Collection $EmployeeLeaveAccrual
  * @property Doctrine_Collection $EmployeeLeaveEntitlement
  * @property Doctrine_Collection $LeaveRequest
  * 
@@ -17,14 +19,18 @@
  * @method string              getLeaveTypeName()            Returns the current record's "leaveTypeName" value
  * @method integer             getAvailableFlag()            Returns the current record's "availableFlag" value
  * @method integer             getOperationalCountryId()     Returns the current record's "operationalCountryId" value
+ * @method string              getLeaveRules()               Returns the current record's "leaveRules" value
  * @method OperationalCountry  getOperationalCountry()       Returns the current record's "OperationalCountry" value
+ * @method Doctrine_Collection getEmployeeLeaveAccrual()     Returns the current record's "EmployeeLeaveAccrual" collection
  * @method Doctrine_Collection getEmployeeLeaveEntitlement() Returns the current record's "EmployeeLeaveEntitlement" collection
  * @method Doctrine_Collection getLeaveRequest()             Returns the current record's "LeaveRequest" collection
  * @method LeaveType           setLeaveTypeId()              Sets the current record's "leaveTypeId" value
  * @method LeaveType           setLeaveTypeName()            Sets the current record's "leaveTypeName" value
  * @method LeaveType           setAvailableFlag()            Sets the current record's "availableFlag" value
  * @method LeaveType           setOperationalCountryId()     Sets the current record's "operationalCountryId" value
+ * @method LeaveType           setLeaveRules()               Sets the current record's "leaveRules" value
  * @method LeaveType           setOperationalCountry()       Sets the current record's "OperationalCountry" value
+ * @method LeaveType           setEmployeeLeaveAccrual()     Sets the current record's "EmployeeLeaveAccrual" collection
  * @method LeaveType           setEmployeeLeaveEntitlement() Sets the current record's "EmployeeLeaveEntitlement" collection
  * @method LeaveType           setLeaveRequest()             Sets the current record's "LeaveRequest" collection
  * 
@@ -54,6 +60,9 @@ abstract class BaseLeaveType extends sfDoctrineRecord
         $this->hasColumn('operational_country_id as operationalCountryId', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('leave_rules as leaveRules', 'string', null, array(
+             'type' => 'string',
+             ));
     }
 
     public function setUp()
@@ -62,6 +71,10 @@ abstract class BaseLeaveType extends sfDoctrineRecord
         $this->hasOne('OperationalCountry', array(
              'local' => 'operational_country_id',
              'foreign' => 'id'));
+
+        $this->hasMany('EmployeeLeaveAccrual', array(
+             'local' => 'leaveTypeId',
+             'foreign' => 'leave_type_id'));
 
         $this->hasMany('EmployeeLeaveEntitlement', array(
              'local' => 'leaveTypeId',

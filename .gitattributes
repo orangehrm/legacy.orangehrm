@@ -588,6 +588,7 @@ symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetIncludedEmployeesD
 symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetJoinedDate.php -text
 symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetLanguageDropDown.php -text
 symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetLocationDropDown.php -text
+symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetOperationalCountryLocationDropDown.php -text
 symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetPayGradeDropDown.php -text
 symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetServicePeriod.php -text
 symfony/apps/orangehrm/lib/report/ohrmWidgets/ohrmReportWidgetSkillDropDown.php -text
@@ -843,6 +844,18 @@ symfony/lib/model/doctrine/orangehrmAdminPlugin/base/BaseProjectAdmin.class.php 
 symfony/lib/model/doctrine/orangehrmAdminPlugin/base/BaseSkill.class.php -text
 symfony/lib/model/doctrine/orangehrmAdminPlugin/base/BaseSubunit.class.php -text
 symfony/lib/model/doctrine/orangehrmAdminPlugin/base/BaseWorkShift.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/AdvancedLeaveType.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/AdvancedLeaveTypeTable.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/EmployeeLeaveAccrual.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/EmployeeLeaveAccrualTable.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/HolidayLocation.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/HolidayLocationTable.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/LeaveAccrualTimeSchedule.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/LeaveAccrualTimeScheduleTable.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/base/BaseAdvancedLeaveType.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/base/BaseEmployeeLeaveAccrual.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/base/BaseHolidayLocation.class.php -text
+symfony/lib/model/doctrine/orangehrmAdvancedLeavePlugin/base/BaseLeaveAccrualTimeSchedule.class.php -text
 symfony/lib/model/doctrine/orangehrmAttendancePlugin/AttendanceRecord.class.php -text
 symfony/lib/model/doctrine/orangehrmAttendancePlugin/AttendanceRecordTable.class.php -text
 symfony/lib/model/doctrine/orangehrmAttendancePlugin/base/BaseAttendanceRecord.class.php -text
