@@ -499,6 +499,7 @@ symfony/apps/orangehrm/config/security.yml -text
 symfony/apps/orangehrm/config/settings.yml -text
 symfony/apps/orangehrm/config/view.yml -text
 symfony/apps/orangehrm/i18n/messages.en.xml -text
+symfony/apps/orangehrm/i18n/messages.es_ES.xml -text
 symfony/apps/orangehrm/i18n/messages.fr_CA.xml -text
 symfony/apps/orangehrm/i18n/messages.fr_FR.xml -text
 symfony/apps/orangehrm/i18n/messages.ja_JP.xml -text
@@ -632,6 +633,7 @@ symfony/apps/orangehrm/modules/default/templates/indexSuccess.php -text
 symfony/apps/orangehrm/modules/default/templates/secureSuccess.php -text
 symfony/apps/orangehrm/modules/performance/actions/actions.class.php -text
 symfony/apps/orangehrm/modules/performance/config/security.yml -text
+symfony/apps/orangehrm/modules/performance/i18n/messages.es_ES.xml -text
 symfony/apps/orangehrm/modules/performance/i18n/messages.fr_FR.xml -text
 symfony/apps/orangehrm/modules/performance/i18n/messages.ja_JP.xml -text
 symfony/apps/orangehrm/modules/performance/templates/copyKpiSuccess.php -text
@@ -3526,6 +3528,7 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/viewProjectsAction.cl
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/viewSkillsAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/viewSystemUsersAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/workShiftAction.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/i18n/messages.fr_CA.xml -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/i18n/messages.ja_JP.xml -text
@@ -3707,6 +3710,7 @@ symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/punchInActi
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/punchOutAction.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/viewAttendanceRecordAction.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/viewMyAttendanceRecordAction.class.php -text
+symfony/plugins/orangehrmAttendancePlugin/modules/attendance/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/i18n/messages.fr_CA.xml -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/i18n/messages.ja_JP.xml -text
@@ -3844,6 +3848,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveListActi
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveRequestAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveSummaryAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewMyLeaveListAction.class.php -text
+symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.fr_CA.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.ja_JP.xml -text
@@ -4284,6 +4289,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewSalaryListAction.clas
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewTerminationReasonsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewUsTaxExemptionsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/config/security.yml -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/i18n/messages.fr_CA.xml -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/i18n/messages.ja_JP.xml -text
@@ -4417,6 +4423,7 @@ symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewAttac
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewCandidateAttachmentAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewCandidatesAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewJobVacancyAction.class.php -text
+symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/i18n/messages.fr_CA.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/i18n/messages.ja_JP.xml -text
@@ -4430,6 +4437,7 @@ symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/templates/viewJob
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/actions/applyVacancyAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/actions/viewJobsAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/config/security.yml -text
+symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/i18n/messages.fr_CA.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/i18n/messages.ja_JP.xml -text
@@ -4521,6 +4529,7 @@ symfony/plugins/orangehrmTimePlugin/modules/time/actions/saveTimesheetAction.php
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewEmployeeTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewMyTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewTimesheetAction.class.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.fr_CA.xml -text
 symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.ja_JP.xml -text

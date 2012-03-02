@@ -2,215 +2,215 @@
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
  <header/>
- <file source-language="en_US" target-language="fr_FR" datatype="plaintext" original="messages" date="2012-03-01T0:09:54Z" product-name="messages">
+ <file source-language="en_US" target-language="es_ES" datatype="plaintext" original="messages" date="2012-03-01T0:25:45Z" product-name="messages">
   <body>
    <trans-unit id="1">
     <source>Actions Performed on the Timesheet</source>
-    <target>FR_Actions Performed on the Timesheet</target>
+    <target>Acciones realizadas en la parte de horas</target>
    </trans-unit>
    <trans-unit id="2">
     <source>Add Row</source>
-    <target>FR_Add Row</target>
+    <target>Añadir fila</target>
    </trans-unit>
    <trans-unit id="3">
     <source>Add Timesheet</source>
-    <target>FR_Add Timesheet</target>
+    <target>Añadir parte de horas</target>
    </trans-unit>
    <trans-unit id="4">
     <source>Attendance Total Summary Report</source>
-    <target>FR_Attendance Total Summary Report</target>
+    <target>Informe resumido de asistencia total</target>
    </trans-unit>
    <trans-unit id="5">
     <source>Define Timesheet Period</source>
-    <target>FR_Define Timesheet Period</target>
+    <target>Definir período del parte de horas</target>
    </trans-unit>
    <trans-unit id="6">
     <source>Deleted project activities are not editable</source>
-    <target>FR_Deleted project activities are not editable</target>
+    <target>Eliminados actividades del proyecto no son editables</target>
    </trans-unit>
    <trans-unit id="7">
     <source>Deleted projects/activities are marked with an asterik</source>
-    <target>FR_Deleted projects/activities are marked with an asterik</target>
+    <target>Proyectos eliminados y actividades están marcados con un asterisco</target>
    </trans-unit>
    <trans-unit id="8">
     <source>Edit Timesheet for</source>
-    <target>FR_Edit Timesheet for</target>
+    <target>Editar parte de horas de</target>
    </trans-unit>
    <trans-unit id="9">
     <source>Edit Timesheet for Month</source>
-    <target>FR_Edit Timesheet for Month</target>
+    <target>Editar parte de horas para el Mes de</target>
    </trans-unit>
    <trans-unit id="10">
     <source>Edit Timesheet for Week</source>
-    <target>FR_Edit Timesheet for Week</target>
+    <target>Editar parte de horas para la semana</target>
    </trans-unit>
    <trans-unit id="11">
     <source>Edit timesheet for week starting</source>
-    <target>FR_Edit timesheet for week starting</target>
+    <target>Editar hoja de asistencia para la semana que comienza</target>
    </trans-unit>
    <trans-unit id="12">
     <source>Employee name</source>
-    <target>FR_Employee name</target>
+    <target>Nombre del empleado</target>
    </trans-unit>
    <trans-unit id="13">
     <source>Employee Report</source>
-    <target>FR_Employee Report</target>
+    <target>Informe del Empleado</target>
    </trans-unit>
    <trans-unit id="14">
     <source>Should Be Less Than 24 and in HH:MM or Decimal Format</source>
-    <target>FR_Should Be Less Than 24 and in HH:MM or Decimal Format</target>
+    <target>En caso de ser inferior a 24 y en HH: MM o decimal</target>
    </trans-unit>
    <trans-unit id="15">
     <source>Enter Employee Name</source>
-    <target>FR_Enter Employee Name</target>
+    <target>Ingrese el nombre del empleado</target>
    </trans-unit>
    <trans-unit id="16">
     <source>First Day of Week</source>
-    <target>FR_First Day of Week</target>
+    <target>Primer día de la Semana</target>
    </trans-unit>
    <trans-unit id="17">
     <source>for Month starting on</source>
-    <target>FR_for Month starting on</target>
+    <target>para el mes a partir del</target>
    </trans-unit>
    <trans-unit id="18">
     <source>for Week</source>
-    <target>FR_for Week</target>
+    <target>para la semana</target>
    </trans-unit>
    <trans-unit id="19">
     <source>Fri</source>
-    <target>FR_Fri</target>
+    <target>Vie</target>
    </trans-unit>
    <trans-unit id="20">
     <source>hours</source>
-    <target>FR_hours</target>
+    <target>horas</target>
    </trans-unit>
    <trans-unit id="21">
     <source>Failed to Create: Future Timesheets Not Allowed</source>
-    <target>FR_Failed to Create: Future Timesheets Not Allowed</target>
+    <target>No se ha podido crear: No se admiten futuras partes de horas</target>
    </trans-unit>
    <trans-unit id="22">
     <source>Mon</source>
-    <target>FR_Mon</target>
+    <target>Lun</target>
    </trans-unit>
    <trans-unit id="23">
     <source>No Accessible Timesheets</source>
-    <target>FR_No Accessible Timesheets</target>
+    <target>No hay partes de horas accesibles</target>
    </trans-unit>
    <trans-unit id="24">
     <source>Not Submitted</source>
-    <target>FR_Not Submitted</target>
+    <target>No Enviado</target>
    </trans-unit>
    <trans-unit id="25">
     <source>Proceed with Time Module</source>
-    <target>FR_Proceed with Time Module</target>
+    <target>Proceda con el módulo de Tiempo</target>
    </trans-unit>
    <trans-unit id="26">
     <source>Project Activity Details Report</source>
-    <target>FR_Project Activity Details Report</target>
+    <target>Detalles del proyecto de actividad Informe</target>
    </trans-unit>
    <trans-unit id="27">
     <source>Project Report</source>
-    <target>FR_Project Report</target>
+    <target>Informe del proyecto</target>
    </trans-unit>
    <trans-unit id="28">
     <source>Remove Rows</source>
-    <target>FR_Remove Rows</target>
+    <target>Quitar filas</target>
    </trans-unit>
    <trans-unit id="29">
     <source>Sat</source>
-    <target>FR_Sat</target>
+    <target>Sab</target>
    </trans-unit>
    <trans-unit id="30">
     <source>Select a Day to Create Timesheet</source>
-    <target>FR_Select a Day to Create Timesheet</target>
+    <target>Seleccione un día para crear partes de horas</target>
    </trans-unit>
    <trans-unit id="31">
     <source>Select Employee</source>
-    <target>FR_Select Employee</target>
+    <target>Seleccione Empleado</target>
    </trans-unit>
    <trans-unit id="32">
     <source>Status:</source>
-    <target>FR_Status:</target>
+    <target>Estado:</target>
    </trans-unit>
    <trans-unit id="33">
     <source>Sun</source>
-    <target>FR_Sun</target>
+    <target>Sol</target>
    </trans-unit>
    <trans-unit id="34">
     <source>Thu</source>
-    <target>FR_Thu</target>
+    <target>Jue</target>
    </trans-unit>
    <trans-unit id="35">
     <source>Duplicate Records Found</source>
-    <target>FR_Duplicate Records Found</target>
+    <target>Registros duplicados encontrados</target>
    </trans-unit>
    <trans-unit id="36">
     <source>Timesheet for</source>
-    <target>FR_Timesheet for</target>
+    <target>Parte de horas de</target>
    </trans-unit>
    <trans-unit id="37">
     <source>Timesheet Period</source>
-    <target>FR_Timesheet Period</target>
+    <target>Período de parte de horas</target>
    </trans-unit>
    <trans-unit id="38">
     <source>Timesheet period start day has been set</source>
-    <target>FR_Timesheet period start day has been set</target>
+    <target>Días de parte de horas de inicio del período se ha establecido</target>
    </trans-unit>
    <trans-unit id="39">
     <source>Timesheet period start day has not been defiend. Please contact HR Admin</source>
-    <target>FR_Timesheet period start day has not been defiend. Please contact HR Admin</target>
+    <target>Días de parte de horas de inicio del período no se ha defiend. Por favor, póngase en contacto con Recursos Humanos Administración</target>
    </trans-unit>
    <trans-unit id="40">
     <source>Timesheets Pending Action</source>
-    <target>FR_Timesheets Pending Action</target>
+    <target>En espera de partes de horas de acción</target>
    </trans-unit>
    <trans-unit id="41">
     <source>Tue</source>
-    <target>FR_Tue</target>
+    <target>Mar</target>
    </trans-unit>
    <trans-unit id="42">
     <source>Wed</source>
-    <target>FR_Wed</target>
+    <target>Casarse</target>
    </trans-unit>
    <trans-unit id="43">
     <source>Week</source>
-    <target>FR_Week</target>
+    <target>Semana</target>
    </trans-unit>
    <trans-unit id="44">
     <source>Select a Project and an Activity</source>
-    <target>FR_Select a Project and an Activity</target>
+    <target>Seleccione un proyecto y una actividad</target>
    </trans-unit>
    <trans-unit id="45">
     <source>Select Records to Remove</source>
-    <target>FR_Select Records to Remove</target>
+    <target>Seleccionar registros para quitar</target>
    </trans-unit>
    <trans-unit id="46">
     <source>Timesheet Already Exists</source>
-    <target>FR_Timesheet Already Exists</target>
+    <target>Parte de horas ya existe</target>
    </trans-unit>
    <trans-unit id="47">
     <source>Timesheet Submitted</source>
-    <target>FR_Timesheet Submitted</target>
+    <target>Parte de horas enviado</target>
    </trans-unit>
    <trans-unit id="48">
     <source>No Timesheets Found</source>
-    <target>FR_No Timesheets Found</target>
+    <target>No se han encontrado partes de horas</target>
    </trans-unit>
    <trans-unit id="49">
     <source>Timesheet Approved</source>
-    <target>FR_Timesheet Approved</target>
+    <target>Parte de horas Aprobado</target>
    </trans-unit>
    <trans-unit id="50">
     <source>Timesheet Rejected</source>
-    <target>FR_Timesheet Rejected</target>
+    <target>Rechazado parte de horas</target>
    </trans-unit>
    <trans-unit id="51">
     <source>No Changes to Delete</source>
-    <target>FR_No Changes to Delete</target>
+    <target>No hay cambios en Suprimir</target>
    </trans-unit>
    <trans-unit id="52">
     <source>Total Should Be Less Than 24 Hours</source>
-    <target>FR_Total Should Be Less Than 24 Hours</target>
+    <target>Total debe ser menos de 24 horas</target>
    </trans-unit>
   </body>
  </file>

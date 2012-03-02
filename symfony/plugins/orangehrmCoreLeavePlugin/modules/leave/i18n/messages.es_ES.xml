@@ -2,263 +2,263 @@
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
  <header/>
- <file source-language="en_US" target-language="fr_FR" datatype="plaintext" original="messages" date="2012-03-01T0:09:54Z" product-name="messages">
+ <file source-language="en_US" target-language="es_ES" datatype="plaintext" original="messages" date="2012-03-01T0:25:45Z" product-name="messages">
   <body>
    <trans-unit id="1">
     <source>A new leave type will be created with same name</source>
-    <target>FR_A new leave type will be created with same name</target>
+    <target>Un tipo de licencia se creará una nueva con el mismo nombre</target>
    </trans-unit>
    <trans-unit id="2">
     <source>Actions</source>
-    <target>FR_Actions</target>
+    <target>Acciones</target>
    </trans-unit>
    <trans-unit id="3">
     <source>Apply Leave</source>
-    <target>FR_Apply Leave</target>
+    <target>Aplicar Agregar</target>
    </trans-unit>
    <trans-unit id="4">
     <source>Assign</source>
-    <target>FR_Assign</target>
+    <target>Asignar</target>
    </trans-unit>
    <trans-unit id="5">
     <source>At Least One Day Should Be a Working Day</source>
-    <target>FR_At Least One Day Should Be a Working Day</target>
+    <target>Al menos un día debe ser un día de trabajo</target>
    </trans-unit>
    <trans-unit id="6">
     <source>Canceled</source>
-    <target>FR_Canceled</target>
+    <target>Cancelado</target>
    </trans-unit>
    <trans-unit id="7">
     <source>characters</source>
-    <target>FR_characters</target>
+    <target>personajes</target>
    </trans-unit>
    <trans-unit id="8">
     <source>Confirmation Required</source>
-    <target>FR_Confirmation Required</target>
+    <target>Se requiere confirmación de</target>
    </trans-unit>
    <trans-unit id="9">
     <source>Current Leave Period</source>
-    <target>FR_Current Leave Period</target>
+    <target>Período de licencia actual</target>
    </trans-unit>
    <trans-unit id="10">
     <source>Date format should be</source>
-    <target>FR_Date format should be</target>
+    <target>El formato de fecha debe ser</target>
    </trans-unit>
    <trans-unit id="11">
     <source>Define Leave Type</source>
-    <target>FR_Define Leave Type</target>
+    <target>Definir Deja Tipo</target>
    </trans-unit>
    <trans-unit id="12">
     <source>Duration (Hours)</source>
-    <target>FR_Duration (Hours)</target>
+    <target>Duración (horas)</target>
    </trans-unit>
    <trans-unit id="13">
     <source>Following Year</source>
-    <target>FR_Following Year</target>
+    <target>Año Después</target>
    </trans-unit>
    <trans-unit id="14">
     <source>For Leap Years</source>
-    <target>FR_For Leap Years</target>
+    <target>Para los años bisiestos</target>
    </trans-unit>
    <trans-unit id="15">
     <source>For Non-Leap Years</source>
-    <target>FR_For Non-Leap Years</target>
+    <target>Para los años bisiestos no</target>
    </trans-unit>
    <trans-unit id="16">
     <source>From Date</source>
-    <target>FR_From Date</target>
+    <target>Desde la fecha</target>
    </trans-unit>
    <trans-unit id="17">
     <source>From Time</source>
-    <target>FR_From Time</target>
+    <target>De Tiempo</target>
    </trans-unit>
    <trans-unit id="18">
     <source>From time should be lesser than To time</source>
-    <target>FR_From time should be lesser than To time</target>
+    <target>De vez debe ser menor que al tiempo</target>
    </trans-unit>
    <trans-unit id="19">
     <source>Full Day</source>
-    <target>FR_Full Day</target>
+    <target>Día completo</target>
    </trans-unit>
    <trans-unit id="20">
     <source>Go to Detailed View</source>
-    <target>FR_Go to Detailed View</target>
+    <target>Ir a la vista detallada</target>
    </trans-unit>
    <trans-unit id="21">
     <source>Half Day</source>
-    <target>FR_Half Day</target>
+    <target>Medio Día</target>
    </trans-unit>
    <trans-unit id="22">
     <source>Holiday</source>
-    <target>FR_Holiday</target>
+    <target>Fiesta</target>
    </trans-unit>
    <trans-unit id="23">
     <source>Leave Balance</source>
-    <target>FR_Leave Balance</target>
+    <target>Deja Saldo</target>
    </trans-unit>
    <trans-unit id="24">
     <source>Leave Comment</source>
-    <target>FR_Leave Comment</target>
+    <target>Deja un comentario!</target>
    </trans-unit>
    <trans-unit id="25">
     <source>Leave Entitled</source>
-    <target>FR_Leave Entitled</target>
+    <target>Deja el título</target>
    </trans-unit>
    <trans-unit id="26">
     <source>Leave Period Does Not Exist</source>
-    <target>FR_Leave Period Does Not Exist</target>
+    <target>Período de licencia no existe</target>
    </trans-unit>
    <trans-unit id="27">
     <source>Leave Request</source>
-    <target>FR_Leave Request</target>
+    <target>Deja Solicitud</target>
    </trans-unit>
    <trans-unit id="28">
     <source>Leave Scheduled</source>
-    <target>FR_Leave Scheduled</target>
+    <target>Deja programadas</target>
    </trans-unit>
    <trans-unit id="29">
     <source>Leave Taken</source>
-    <target>FR_Leave Taken</target>
+    <target>Deja la toma</target>
    </trans-unit>
    <trans-unit id="30">
     <source>Leave Type</source>
-    <target>FR_Leave Type</target>
+    <target>Deja Tipo</target>
    </trans-unit>
    <trans-unit id="31">
     <source>Leave type will be undeleted</source>
-    <target>FR_Leave type will be undeleted</target>
+    <target>Deja tipo se podría recuperar</target>
    </trans-unit>
    <trans-unit id="32">
     <source>My Leave Details</source>
-    <target>FR_My Leave Details</target>
+    <target>Dejar mis datos</target>
    </trans-unit>
    <trans-unit id="33">
     <source>My Leave List</source>
-    <target>FR_My Leave List</target>
+    <target>Mi lista de la licencia</target>
    </trans-unit>
    <trans-unit id="34">
     <source>Name of Holiday</source>
-    <target>FR_Name of Holiday</target>
+    <target>Nombre de vacaciones</target>
    </trans-unit>
    <trans-unit id="35">
     <source>No Leave Types with Leave Balance</source>
-    <target>FR_No Leave Types with Leave Balance</target>
+    <target>No hay tipos de licencia con balance de licencia</target>
    </trans-unit>
    <trans-unit id="36">
     <source>No of Hours</source>
-    <target>FR_No of Hours</target>
+    <target>N º de Horas</target>
    </trans-unit>
    <trans-unit id="37">
     <source>Non Working Day</source>
-    <target>FR_Non Working Day</target>
+    <target>Día no laborable</target>
    </trans-unit>
    <trans-unit id="38">
     <source>Non-working Day</source>
-    <target>FR_Non-working Day</target>
+    <target>Día no laborable</target>
    </trans-unit>
    <trans-unit id="39">
     <source>Number of Days</source>
-    <target>FR_Number of Days</target>
+    <target>Número de días</target>
    </trans-unit>
    <trans-unit id="40">
     <source>Pending Approval</source>
-    <target>FR_Pending Approval</target>
+    <target>Pendiente de aprobación</target>
    </trans-unit>
    <trans-unit id="41">
     <source>Repeats Annually</source>
-    <target>FR_Repeats Annually</target>
+    <target>Periodicidad anual</target>
    </trans-unit>
    <trans-unit id="42">
     <source>Show Leave with Status</source>
-    <target>FR_Show Leave with Status</target>
+    <target>Mostrar Agregar con estado</target>
    </trans-unit>
    <trans-unit id="43">
     <source>Taken</source>
-    <target>FR_Taken</target>
+    <target>Tomado</target>
    </trans-unit>
    <trans-unit id="44">
     <source>Overlapping Leave Request Found</source>
-    <target>FR_Overlapping Leave Request Found</target>
+    <target>Solicitud de licencia superposición encontrados</target>
    </trans-unit>
    <trans-unit id="45">
     <source>This is a deleted leave type. Reactivate it?</source>
-    <target>FR_This is a deleted leave type. Reactivate it?</target>
+    <target>Este es un tipo licencia eliminada. Vuelva a ella?</target>
    </trans-unit>
    <trans-unit id="46">
     <source>To Date</source>
-    <target>FR_To Date</target>
+    <target>Conocer</target>
    </trans-unit>
    <trans-unit id="47">
     <source>To Time</source>
-    <target>FR_To Time</target>
+    <target>Para Tiempo</target>
    </trans-unit>
    <trans-unit id="48">
     <source>Total Hours</source>
-    <target>FR_Total Hours</target>
+    <target>Total de horas</target>
    </trans-unit>
    <trans-unit id="49">
     <source>Total time is greater than the shift length</source>
-    <target>FR_Total time is greater than the shift length</target>
+    <target>El tiempo total es mayor que la longitud de desplazamiento</target>
    </trans-unit>
    <trans-unit id="50">
     <source>Will take no action</source>
-    <target>FR_Will take no action</target>
+    <target>No tomará ninguna acción</target>
    </trans-unit>
    <trans-unit id="51">
     <source>Failed to Submit: No Working Days Selected</source>
-    <target>FR_Failed to Submit: No Working Days Selected</target>
+    <target>Error al enviar: No Días de trabajo seleccionado</target>
    </trans-unit>
    <trans-unit id="52">
     <source>Successfully Undeleted</source>
-    <target>FR_Successfully Undeleted</target>
+    <target>Han recuperado con éxito</target>
    </trans-unit>
    <trans-unit id="53">
     <source>Failed to Save: Date Already Assigned</source>
-    <target>FR_Failed to Save: Date Already Assigned</target>
+    <target>Error al Guardar: fecha ya asignada</target>
    </trans-unit>
    <trans-unit id="54">
     <source>Failed to Assign: Work Shift Length Exceeded</source>
-    <target>FR_Failed to Assign: Work Shift Length Exceeded</target>
+    <target>No se pudo asignar: Trabajo Shift ha superado el</target>
    </trans-unit>
    <trans-unit id="55">
     <source>Failed to Submit: Work Shift Length Exceeded</source>
-    <target>FR_Failed to Submit: Work Shift Length Exceeded</target>
+    <target>Error al enviar: Trabajo Shift ha superado el</target>
    </trans-unit>
    <trans-unit id="56">
     <source>Failed to Submit: Leave Balance Exceeded</source>
-    <target>FR_Failed to Submit: Leave Balance Exceeded</target>
+    <target>Error al enviar: Deja de balance superó los</target>
    </trans-unit>
    <trans-unit id="57">
     <source>Should be less than work shift length</source>
-    <target>FR_Should be less than work shift length</target>
+    <target>En caso de ser menor que la longitud de trabajo por turnos</target>
    </trans-unit>
    <trans-unit id="58">
     <source>Leave Period Not Defined</source>
-    <target>FR_Leave Period Not Defined</target>
+    <target>Deja No hay periodos definidos</target>
    </trans-unit>
    <trans-unit id="59">
     <source>Full Day/Half Day</source>
-    <target>FR_Full Day/Half Day</target>
+    <target>Full Day / Día de la mitad</target>
    </trans-unit>
    <trans-unit id="60">
     <source>Leave Request (%date_range%) %name%</source>
-    <target>FR_Leave Request (%date_range%) %name%</target>
+    <target>Deja Solicitud (%% date_range)% name%</target>
    </trans-unit>
    <trans-unit id="61">
     <source>Failed to Assign</source>
-    <target>FR_Failed to Assign</target>
+    <target>No se ha podido asignar</target>
    </trans-unit>
    <trans-unit id="62">
     <source>Failed to Submit</source>
-    <target>FR_Failed to Submit</target>
+    <target>Error al enviar</target>
    </trans-unit>
    <trans-unit id="63">
     <source>Add Leave Type</source>
-    <target>FR_Add Leave Type</target>
+    <target>Añadir Deja Tipo</target>
    </trans-unit>
    <trans-unit id="64">
     <source>Edit Leave Type</source>
-    <target>FR_Edit Leave Type</target>
+    <target>Editar Deja Tipo</target>
    </trans-unit>
   </body>
  </file>

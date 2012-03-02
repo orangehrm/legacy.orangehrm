@@ -2,307 +2,307 @@
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
  <header/>
- <file source-language="en_US" target-language="fr_FR" datatype="plaintext" original="messages" date="2012-03-01T0:09:54Z" product-name="messages">
+ <file source-language="en_US" target-language="es_ES" datatype="plaintext" original="messages" date="2012-03-01T0:25:45Z" product-name="messages">
   <body>
    <trans-unit id="1">
     <source>Active</source>
-    <target>FR_Active</target>
+    <target>Activo</target>
    </trans-unit>
    <trans-unit id="2">
     <source>Add another</source>
-    <target>FR_Add another</target>
+    <target>Añade otra</target>
    </trans-unit>
    <trans-unit id="3">
     <source>Add Candidate</source>
-    <target>FR_Add Candidate</target>
+    <target>Añadir candidato</target>
    </trans-unit>
    <trans-unit id="4">
     <source>Add Job Vacancy</source>
-    <target>FR_Add Job Vacancy</target>
+    <target>Añadir una oferta de trabajo</target>
    </trans-unit>
    <trans-unit id="5">
     <source>Adding Candidate</source>
-    <target>FR_Adding Candidate</target>
+    <target>Adición de candidato</target>
    </trans-unit>
    <trans-unit id="6">
     <source>Application Initiated</source>
-    <target>FR_Application Initiated</target>
+    <target>Iniciada la aplicación</target>
    </trans-unit>
    <trans-unit id="7">
     <source>applied for the</source>
-    <target>FR_applied for the</target>
+    <target>aplicado para el</target>
    </trans-unit>
    <trans-unit id="8">
     <source>Archived</source>
-    <target>FR_Archived</target>
+    <target>Archivado</target>
    </trans-unit>
    <trans-unit id="9">
     <source>Are you sure you want to remove job vacancy of the candidate</source>
-    <target>FR_Are you sure you want to remove job vacancy of the candidate</target>
+    <target>¿Está seguro que desea eliminar puesto de trabajo vacante del candidato</target>
    </trans-unit>
    <trans-unit id="10">
     <source>as failed</source>
-    <target>FR_as failed</target>
+    <target>que no</target>
    </trans-unit>
    <trans-unit id="11">
     <source>as passed</source>
-    <target>FR_as passed</target>
+    <target>tal como fue aprobado</target>
    </trans-unit>
    <trans-unit id="12">
     <source>assigned the job vacancy</source>
-    <target>FR_assigned the job vacancy</target>
+    <target>asignado el puesto de trabajo vacante</target>
    </trans-unit>
    <trans-unit id="13">
     <source>by</source>
-    <target>FR_by</target>
+    <target>por</target>
    </trans-unit>
    <trans-unit id="14">
     <source>Candidate</source>
-    <target>FR_Candidate</target>
+    <target>Candidato</target>
    </trans-unit>
    <trans-unit id="15">
     <source>Candidate Name</source>
-    <target>FR_Candidate Name</target>
+    <target>Nombre del candidato</target>
    </trans-unit>
    <trans-unit id="16">
     <source>Candidate's History</source>
-    <target>FR_Candidate's History</target>
+    <target>El candidato de la Historia</target>
    </trans-unit>
    <trans-unit id="17">
     <source>candidateName</source>
-    <target>FR_candidateName</target>
+    <target>candidateName</target>
    </trans-unit>
    <trans-unit id="18">
     <source>Cannot assign same interviewer twice</source>
-    <target>FR_Cannot assign same interviewer twice</target>
+    <target>No se puede asignar dos veces el mismo entrevistador</target>
    </trans-unit>
    <trans-unit id="19">
     <source>Cannot assign same vacancy twice</source>
-    <target>FR_Cannot assign same vacancy twice</target>
+    <target>No se puede asignar vacantes dos veces el mismo</target>
    </trans-unit>
    <trans-unit id="20">
     <source>Click on a candidate to perform actions</source>
-    <target>FR_Click on a candidate to perform actions</target>
+    <target>Haga clic en un candidato para llevar a cabo acciones</target>
    </trans-unit>
    <trans-unit id="21">
     <source>Closed</source>
-    <target>FR_Closed</target>
+    <target>Cerrado</target>
    </trans-unit>
    <trans-unit id="22">
     <source>Continue</source>
-    <target>FR_Continue</target>
+    <target>Continuar</target>
    </trans-unit>
    <trans-unit id="23">
     <source>Date of Application</source>
-    <target>FR_Date of Application</target>
+    <target>Fecha de la solicitud</target>
    </trans-unit>
    <trans-unit id="24">
     <source>Should be less than current date</source>
-    <target>FR_Should be less than current date</target>
+    <target>Debe ser inferior a fecha actual</target>
    </trans-unit>
    <trans-unit id="25">
     <source>Decline Offer</source>
-    <target>FR_Decline Offer</target>
+    <target>Rechazar una oferta</target>
    </trans-unit>
    <trans-unit id="26">
     <source>Details</source>
-    <target>FR_Details</target>
+    <target>Detalles</target>
    </trans-unit>
    <trans-unit id="27">
     <source>Edit Candidate</source>
-    <target>FR_Edit Candidate</target>
+    <target>Editar Candidato</target>
    </trans-unit>
    <trans-unit id="28">
     <source>Edit Interview Details</source>
-    <target>FR_Edit Interview Details</target>
+    <target>Editar detalles de la entrevista</target>
    </trans-unit>
    <trans-unit id="29">
     <source>Edit Job Vacancy</source>
-    <target>FR_Edit Job Vacancy</target>
+    <target>Editar una oferta de trabajo</target>
    </trans-unit>
    <trans-unit id="30">
     <source>Editing Candidate</source>
-    <target>FR_Editing Candidate</target>
+    <target>Edición de candidato</target>
    </trans-unit>
    <trans-unit id="31">
     <source>from the</source>
-    <target>FR_from the</target>
+    <target>desde</target>
    </trans-unit>
    <trans-unit id="32">
     <source>Hire</source>
-    <target>FR_Hire</target>
+    <target>Contratar</target>
    </trans-unit>
    <trans-unit id="33">
     <source>Hired</source>
-    <target>FR_Hired</target>
+    <target>Contratado</target>
    </trans-unit>
    <trans-unit id="34">
     <source>hired</source>
-    <target>FR_hired</target>
+    <target>contratado</target>
    </trans-unit>
    <trans-unit id="35">
     <source>Hiring Manager</source>
-    <target>FR_Hiring Manager</target>
+    <target>La contratación de gerente</target>
    </trans-unit>
    <trans-unit id="36">
     <source>Interview Failed</source>
-    <target>FR_Interview Failed</target>
+    <target>Entrevista Error</target>
    </trans-unit>
    <trans-unit id="37">
     <source>Interview Passed</source>
-    <target>FR_Interview Passed</target>
+    <target>Entrevista Pasado</target>
    </trans-unit>
    <trans-unit id="38">
     <source>Interview Scheduled</source>
-    <target>FR_Interview Scheduled</target>
+    <target>Entrevista programada</target>
    </trans-unit>
    <trans-unit id="39">
     <source>Interview Title</source>
-    <target>FR_Interview Title</target>
+    <target>Entrevista Título</target>
    </trans-unit>
    <trans-unit id="40">
     <source>Interviewer Name</source>
-    <target>FR_Interviewer Name</target>
+    <target>Entrevistador Nombre</target>
    </trans-unit>
    <trans-unit id="41">
     <source>Job Offered</source>
-    <target>FR_Job Offered</target>
+    <target>Oferta de Empleo</target>
    </trans-unit>
    <trans-unit id="42">
     <source>Job Vacancy</source>
-    <target>FR_Job Vacancy</target>
+    <target>Puesto vacante</target>
    </trans-unit>
    <trans-unit id="43">
     <source>Manual</source>
-    <target>FR_Manual</target>
+    <target>Manual</target>
    </trans-unit>
    <trans-unit id="44">
     <source>Mark Interview Failed</source>
-    <target>FR_Mark Interview Failed</target>
+    <target>Entrevista Marcos Error</target>
    </trans-unit>
    <trans-unit id="45">
     <source>Mark Interview Passed</source>
-    <target>FR_Mark Interview Passed</target>
+    <target>Entrevista Marcos Pasado</target>
    </trans-unit>
    <trans-unit id="46">
     <source>marked</source>
-    <target>FR_marked</target>
+    <target>marcado</target>
    </trans-unit>
    <trans-unit id="47">
     <source>marked the offer as declined</source>
-    <target>FR_marked the offer as declined</target>
+    <target>marcó la oferta se redujo en</target>
    </trans-unit>
    <trans-unit id="48">
     <source>Method of Application</source>
-    <target>FR_Method of Application</target>
+    <target>Método de aplicación</target>
    </trans-unit>
    <trans-unit id="49">
     <source>No Actions</source>
-    <target>FR_No Actions</target>
+    <target>No hay ninguna acción</target>
    </trans-unit>
    <trans-unit id="50">
     <source>No active job vacancies to display</source>
-    <target>FR_No active job vacancies to display</target>
+    <target>No hay ofertas de trabajo activas para mostrar</target>
    </trans-unit>
    <trans-unit id="51">
     <source>Number of Positions</source>
-    <target>FR_Number of Positions</target>
+    <target>Número de posiciones</target>
    </trans-unit>
    <trans-unit id="52">
     <source>Offer Declined</source>
-    <target>FR_Offer Declined</target>
+    <target>Oferta Rehusó</target>
    </trans-unit>
    <trans-unit id="53">
     <source>Offer Job</source>
-    <target>FR_Offer Job</target>
+    <target>Oferta de Empleo</target>
    </trans-unit>
    <trans-unit id="54">
     <source>offred the job</source>
-    <target>FR_offred the job</target>
+    <target>offred el trabajo</target>
    </trans-unit>
    <trans-unit id="55">
     <source>on</source>
-    <target>FR_on</target>
+    <target>en</target>
    </trans-unit>
    <trans-unit id="56">
     <source>Online</source>
-    <target>FR_Online</target>
+    <target>En línea</target>
    </trans-unit>
    <trans-unit id="57">
     <source>Performed Action</source>
-    <target>FR_Performed Action</target>
+    <target>Acción realizada</target>
    </trans-unit>
    <trans-unit id="58">
     <source>Performed Date</source>
-    <target>FR_Performed Date</target>
+    <target>Fecha de realización</target>
    </trans-unit>
    <trans-unit id="59">
     <source>Publish in RSS feed(1) and web page(2)</source>
-    <target>FR_Publish in RSS feed(1) and web page(2)</target>
+    <target>Publicar en el RSS feed (1) y página web (2)</target>
    </trans-unit>
    <trans-unit id="60">
     <source>removed</source>
-    <target>FR_removed</target>
+    <target>eliminado</target>
    </trans-unit>
    <trans-unit id="61">
     <source>RSS Feed URL</source>
-    <target>FR_RSS Feed URL</target>
+    <target>URL del feed RSS</target>
    </trans-unit>
    <trans-unit id="62">
     <source>Schedule Interview</source>
-    <target>FR_Schedule Interview</target>
+    <target>Programa de entrevistas</target>
    </trans-unit>
    <trans-unit id="63">
     <source>scheduled</source>
-    <target>FR_scheduled</target>
+    <target>programado</target>
    </trans-unit>
    <trans-unit id="64">
     <source>Shortlist</source>
-    <target>FR_Shortlist</target>
+    <target>Lista</target>
    </trans-unit>
    <trans-unit id="65">
     <source>Shortlisted</source>
-    <target>FR_Shortlisted</target>
+    <target>Finalista</target>
    </trans-unit>
    <trans-unit id="66">
     <source>Shortlisted for</source>
-    <target>FR_Shortlisted for</target>
+    <target>Seleccionado para</target>
    </trans-unit>
    <trans-unit id="67">
     <source>Vacancy</source>
-    <target>FR_Vacancy</target>
+    <target>Vacante</target>
    </trans-unit>
    <trans-unit id="68">
     <source>Vacancy Name</source>
-    <target>FR_Vacancy Name</target>
+    <target>Vacante Nombre</target>
    </trans-unit>
    <trans-unit id="69">
     <source>View Action History</source>
-    <target>FR_View Action History</target>
+    <target>Ver el historial de Acción</target>
    </trans-unit>
    <trans-unit id="70">
     <source>View Interview Details</source>
-    <target>FR_View Interview Details</target>
+    <target>Ver Detalles de la entrevista</target>
    </trans-unit>
    <trans-unit id="71">
     <source>Web Page URL</source>
-    <target>FR_Web Page URL</target>
+    <target>Dirección de la Página Web</target>
    </trans-unit>
    <trans-unit id="72">
     <source>with</source>
-    <target>FR_with</target>
+    <target>con</target>
    </trans-unit>
    <trans-unit id="73">
     <source>Successfully Scheduled</source>
-    <target>FR_Successfully Scheduled</target>
+    <target>Programado correctamente</target>
    </trans-unit>
    <trans-unit id="74">
     <source>This action will remove previous vacancy</source>
-    <target>FR_This action will remove previous vacancy</target>
+    <target>Esta acción eliminará vacantes anterior</target>
    </trans-unit>
    <trans-unit id="75">
     <source>Remove?</source>
-    <target>FR_Remove?</target>
+    <target>Quitar?</target>
    </trans-unit>
   </body>
  </file>
