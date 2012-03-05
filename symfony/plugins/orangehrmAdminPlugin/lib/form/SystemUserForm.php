@@ -132,7 +132,7 @@ class SystemUserForm extends BaseForm {
         $user->setStatus($this->getValue('status'));
 
         
-        $this->getSystemUserService()->saveSystemUser($user, $changePasword);
+        return $this->getSystemUserService()->saveSystemUser($user, $changePasword);
         
     }
 

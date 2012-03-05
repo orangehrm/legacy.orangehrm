@@ -28,6 +28,14 @@ class saveSystemUserAction extends sfAction {
             $this->form = $form;
         }
     }
+    
+    /**
+     *
+     * @return sfForm 
+     */
+    public function getForm() {
+        return $this->form;
+    }
 
     public function preExecute() {
         $usrObj = $this->getUser()->getAttribute('user');
@@ -51,11 +59,15 @@ class saveSystemUserAction extends sfAction {
 
             $this->form->bind($request->getParameter($this->form->getName()));
             if ($this->form->isValid()) {
-                $this->form->save();
+                $savedUser = $this->form->save();
 
                 if ($this->form->edited) {
                     $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::UPDATE_SUCCESS)));
                 } else {
+                    if($savedUser instanceof SystemUser) { // sets flash values for admin/viewSystemUsers pre filter for further actions if needed
+                        $this->getUser()->setFlash("new.user.id", $savedUser->getId()); //
+                        $this->getUser()->setFlash("new.user.role.id", $savedUser->getUserRoleId()); //
+                    }
                     $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
                 }
                 $this->redirect('admin/viewSystemUsers');
@@ -64,5 +76,3 @@ class saveSystemUserAction extends sfAction {
     }
 
 }
-
-?>

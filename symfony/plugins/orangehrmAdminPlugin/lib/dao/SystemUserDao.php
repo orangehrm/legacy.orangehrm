@@ -29,6 +29,7 @@ class SystemUserDao extends BaseDao {
         try {
             $systemUser->clearRelated('Employee');
             $systemUser->save();
+            return $systemUser;
         } catch (Exception $e) {
             throw new DaoException($e->getMessage(), $e->getCode(), $e);
         }

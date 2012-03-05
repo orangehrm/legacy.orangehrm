@@ -60,7 +60,7 @@ class SystemUserService extends BaseService{
                 $systemUser->setUserPassword(md5($systemUser->getUserPassword()));
             }
 
-            $this->getSystemUserDao()->saveSystemUser($systemUser);
+            return $this->getSystemUserDao()->saveSystemUser($systemUser);
             
         } catch (Exception $e) {
             throw new ServiceException($e->getMessage(),$e->getCode(),$e);
