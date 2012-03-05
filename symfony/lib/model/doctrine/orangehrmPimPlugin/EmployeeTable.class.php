@@ -30,7 +30,8 @@ class EmployeeTable extends PluginEmployeeTable {
             'sub_unit' => 'cs.name',
             'supervisor_name' => 'concat_ws(\' \', s.emp_firstname,s.emp_middle_name,s.emp_lastname)',
             'supervisorId' => 's.emp_firstname',
-            'termination' => 'e.termination_id'
+            'termination' => 'e.termination_id',
+            'location' => 'l.location_id',
     );
 
     /**
@@ -220,6 +221,10 @@ class EmployeeTable extends PluginEmployeeTable {
                 '  LEFT JOIN ohrm_employment_status es on e.emp_status = es.id ' .
                 '  LEFT JOIN hs_hr_emp_reportto rt on e.emp_number = rt.erep_sub_emp_number ' .
                 '  LEFT JOIN hs_hr_employee s on s.emp_number = rt.erep_sup_emp_number ';
+        
+        if(!empty($filters['location']) && $filters['location'] != '-1'){
+            $query .= ' LEFT JOIN hs_hr_emp_locations l ON l.emp_number = e.emp_number ';
+        }
 
         /* search filters */
         $conditions = array();
@@ -272,6 +277,8 @@ class EmployeeTable extends PluginEmployeeTable {
                         // Replace multiple spaces in string with wildcards
                         $value = preg_replace('!\s+!', '%', $searchBy);
                         $bindParams[] = '%' . $value . '%';
+                    } elseif( $searchField == 'location' ){
+                        $conditions[] = ' l.location_id IN (' . $searchBy . ') ';
                     }
                     $filterCount++;
 

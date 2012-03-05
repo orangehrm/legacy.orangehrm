@@ -4095,6 +4095,7 @@ symfony/plugins/orangehrmCorePlugin/lib/utility/Exportable.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/MessageRegistry.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/PluginConfigurationManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/PluginExecutionManager.php -text
+symfony/plugins/orangehrmCorePlugin/lib/utility/PluginFormMergeManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/PluginQueryExtensionManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/PluginUIManager.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/actions.class.php -text

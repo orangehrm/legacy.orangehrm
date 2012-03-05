@@ -52,6 +52,8 @@ class EmployeeSearchForm extends BaseForm {
 
     public function configure() {
 
+        
+        
         $this->userType = $this->getOption('userType');
         $this->loggedInUserId = $this->getOption('loggedInUserId');
 
@@ -77,10 +79,15 @@ class EmployeeSearchForm extends BaseForm {
         $this->setValidator('employee_name', new sfValidatorString(array('required' => false)));
         $this->setValidator('id', new sfValidatorString(array('required' => false)));
 
+        $formExtension  =   PluginFormMergeManager::instance();
+        $formExtension->mergeForms( $this,'viewEmployeeList','EmployeeSearchForm');
+
+        
         $this->widgetSchema->setNameFormat('empsearch[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
         sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(4);
         $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+
     }
 
     public function getEmployeeListAsJson() {
