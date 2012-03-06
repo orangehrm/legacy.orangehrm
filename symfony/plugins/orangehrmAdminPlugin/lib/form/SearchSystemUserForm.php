@@ -29,26 +29,18 @@ class SearchSystemUserForm extends BaseForm {
 
     public function configure() {
 
-        $userRoleList = $this->getPreDefinedUserRoleList();
-        $statusList = $this->getStatusList();
+        $this->setWidgets($this->getFormWidgets());
+        $this->setValidators($this->getFormValidators());
+        
+        //merge location filter
+        $formExtension  =   PluginFormMergeManager::instance();
+        $formExtension->mergeForms($this,'viewSystemUsers','SearchSystemUserForm');
 
-        $this->setWidgets(array(
-            'userName' => new sfWidgetFormInputText(),
-            'userType' => new sfWidgetFormSelect(array('choices' => $userRoleList)),
-            'employeeName' => new sfWidgetFormInputText(),
-            'employeeId' => new sfWidgetFormInputHidden(),
-            'status' => new sfWidgetFormSelect(array('choices' => $statusList)),
-        ));
+        $this->getWidgetSchema()->setNameFormat('searchSystemUser[%s]');
+        $this->getWidgetSchema()->setLabels($this->getFormLabels());
 
-        $this->setValidators(array(
-            'userName' => new sfValidatorString(array('required' => false)),
-            'userType' => new sfValidatorString(array('required' => false)),
-            'employeeName' => new sfValidatorString(array('required' => false)),
-            'employeeId' => new sfValidatorString(array('required' => false)),
-            'status' => new sfValidatorString(array('required' => false)),
-        ));
-
-        $this->widgetSchema->setNameFormat('searchSystemUser[%s]');
+        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(3);
+        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
     }
 
     /**
@@ -109,5 +101,55 @@ class SearchSystemUserForm extends BaseForm {
         $this->setDefault('status', $searchClues['status']);
     }
 
-}
+    /**
+     *
+     * @return array
+     */
+    protected function getFormLabels() {
+        $labels = array(
+            'userName' => __('Username'),
+            'userType' => __('User Type'),
+            'employeeName' => __('Employee Name'),
+            'status' => __('Status')
+        );
 
+        return $labels;
+    }
+
+    /**
+     *
+     * @return array 
+     */
+    protected function getFormWidgets() {
+
+        $userRoleList = $this->getPreDefinedUserRoleList();
+        $statusList = $this->getStatusList();
+
+        $widgets = array();
+
+        $widgets['userName'] = new sfWidgetFormInputText();
+        $widgets['userType'] = new sfWidgetFormSelect(array('choices' => $userRoleList));
+        $widgets['employeeName'] = new sfWidgetFormInputText();
+        $widgets['employeeId'] = new sfWidgetFormInputHidden();
+        $widgets['status'] = new sfWidgetFormSelect(array('choices' => $statusList));
+
+        return $widgets;
+    }
+
+    /**
+     *
+     * @return array 
+     */
+    protected function getFormValidators() {
+        $validators = array();
+
+        $validators['userName'] = new sfValidatorString(array('required' => false));
+        $validators['userType'] = new sfValidatorString(array('required' => false));
+        $validators['employeeName'] = new sfValidatorString(array('required' => false));
+        $validators['employeeId'] = new sfValidatorString(array('required' => false));
+        $validators['status'] = new sfValidatorString(array('required' => false));
+        
+        return $validators;
+    }
+
+}
