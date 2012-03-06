@@ -121,7 +121,7 @@ class viewSystemUsersAction extends sfAction {
      */
     private function _setListComponent($systemUserList, $limit, $pageNumber, $recordCount) {
 
-        $configurationFactory = new SystemUserHeaderFactory();
+        $configurationFactory = $this->getSystemUserHeaderFactory();
 
         $configurationFactory->setRuntimeDefinitions(array(
             'hasSelectableRows' => true,
@@ -151,6 +151,10 @@ class viewSystemUsersAction extends sfAction {
 
         return $searchClues;
     }
+    
+    protected function getSystemUserHeaderFactory() {
+
+        return new SystemUserHeaderFactory();
+    }
 
 }
-
