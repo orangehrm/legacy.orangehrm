@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * all the essential functionalities required for any enterprise.
+ * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ *
+ * OrangeHRM is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA
+ */
+
+/**
+ * Description of UserRoleManagerFactoryTest
+ *
+ * @group Core
+ */
+class UserRoleManagerServiceTest extends PHPUnit_Framework_TestCase {
+    
+    /** @property UserRoleManagerService $service */
+    private $service;
+    
+    /**
+     * Set up method
+     */
+    protected function setUp() {
+        $this->service = new UserRoleManagerService();
+    }
+    
+    /**
+     * Test the getConfigDao() and setConfigDao() method
+     */
+    public function testGetUserRoleManagerClassName() {
+        $configDao = $this->getMock('ConfigDao', array('getValue'));
+        $configDao->expects($this->once())
+                ->method('getValue')
+                ->with(UserRoleManagerService::KEY_USER_ROLE_MANAGER_CLASS)
+                ->will($this->returnValue('TestUserRoleManager'));
+        
+        $this->service->setConfigDao($configDao);
+        $class = $this->service->getUserRoleManagerClassName();
+        $this->assertEquals('TestUserRoleManager', $class);
+    }
+    
+    public function testGetUserRoleManagerExistingClass() {
+        $configDao = $this->getMock('ConfigDao', array('getValue'));
+        $configDao->expects($this->once())
+                ->method('getValue')
+                ->with(UserRoleManagerService::KEY_USER_ROLE_MANAGER_CLASS)
+                ->will($this->returnValue('UnitTestUserRoleManager'));
+        
+        $this->service->setConfigDao($configDao);
+        $manager = $this->service->getUserRoleManager();
+        $this->assertNotNull($manager);
+        $this->assertTrue($manager instanceof AbstractUserRoleManager);
+        $this->assertTrue($manager instanceof UnitTestUserRoleManager);
+    }
+    
+    public function testGetUserRoleManagerInvalidClass() {
+        $configDao = $this->getMock('ConfigDao', array('getValue'));
+        $configDao->expects($this->once())
+                ->method('getValue')
+                ->with(UserRoleManagerService::KEY_USER_ROLE_MANAGER_CLASS)
+                ->will($this->returnValue('InvalidUserRoleManager'));
+        
+        $this->service->setConfigDao($configDao);
+        
+        try {
+            $manager = $this->service->getUserRoleManager();
+            $this->fail("Should throw exception if user role manager is invalid");
+        } catch (ServiceException $e) {
+            // expected
+        }
+    } 
+    
+    public function testGetUserRoleManagerNonExistingClass() {
+        $configDao = $this->getMock('ConfigDao', array('getValue'));
+        $configDao->expects($this->once())
+                ->method('getValue')
+                ->with(UserRoleManagerService::KEY_USER_ROLE_MANAGER_CLASS)
+                ->will($this->returnValue('xasdfasfdskfdaManager'));
+        
+        $this->service->setConfigDao($configDao);
+        
+        try {
+            $manager = $this->service->getUserRoleManager();
+            $this->fail("Should throw exception if user role manager class does not exist.");
+        } catch (ServiceException $e) {
+            // expected
+        }
+    }
+    
+}
+
+class InvalidUserRoleManager {
+   
+}
+
+class UnitTestUserRoleManager extends AbstractUserRoleManager {
+    public function getAccessibleEntities($entityType, $operation, $returnType) {
+        
+    }
+    
+    public function isEntityAccessible($entityType, $entityId, $operation, 
+                                                $preferredUserRoleOrder = null) {
+        
+    }
+    
+    public function getAccessibleModules() {
+        
+    }
+    
+    public function isModuleAccessible($module) {
+        
+    }
+    
+    public function isScreenAccessible($module, $screen, $field) {
+        
+    }
+    
+    public function isFieldAccessible($module, $screen, $field) {
+        
+    }
+    
+    protected function getUserRoles($user) {
+        
+    }    
+}

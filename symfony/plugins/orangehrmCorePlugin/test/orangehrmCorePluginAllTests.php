@@ -66,6 +66,9 @@ class orangehrmCorePluginAllTests {
         /* form validators */
         $suite->addTestFile(dirname(__FILE__) . '/form/validate/ohrmValidatorSchemaCompareTest.php');
 
+        /* Authorization */
+        $suite->addTestFile(dirname(__FILE__) . '/authorization/service/UserRoleManagerServiceTest.php');
+        
         return $suite;
     }
 
