@@ -278,7 +278,9 @@ class EmployeeTable extends PluginEmployeeTable {
                         $value = preg_replace('!\s+!', '%', $searchBy);
                         $bindParams[] = '%' . $value . '%';
                     } elseif( $searchField == 'location' ){
-                        $conditions[] = ' l.location_id IN (' . $searchBy . ') ';
+                        if(!empty($filters['location']) && $filters['location'] != '-1'){
+                            $conditions[] = ' l.location_id IN (' . $searchBy . ') ';
+                        }
                     }
                     $filterCount++;
 
