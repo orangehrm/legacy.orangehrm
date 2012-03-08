@@ -26,7 +26,9 @@ class UserRoleManagerService {
     
     const KEY_USER_ROLE_MANAGER_CLASS = "authorize_user_role_manager_class";
     
-    protected $configDao;
+    protected $configDao;    
+    protected $authenticationService;
+    protected $systemUserService;
     
     public function getConfigDao() {
         
@@ -40,6 +42,29 @@ class UserRoleManagerService {
         $this->configDao = $configDao;
     }
 
+    public function getAuthenticationService() {
+        if (empty($this->authenticationService)) {
+            $this->authenticationService = new AuthenticationService();
+        }        
+        return $this->authenticationService;
+    }
+
+    public function setAuthenticationService($authenticationService) {
+        $this->authenticationService = $authenticationService;
+    }
+
+    public function getSystemUserService() {
+        if (empty($this->systemUserService)) {
+            $this->systemUserService = new SystemUserService();
+        }          
+        return $this->systemUserService;
+    }
+
+    public function setSystemUserService($systemUserService) {
+        $this->systemUserService = $systemUserService;
+    }
+
+    
     public function getUserRoleManagerClassName() {
         return $this->getConfigDao()->getValue(self::KEY_USER_ROLE_MANAGER_CLASS);
     }
@@ -63,7 +88,15 @@ class UserRoleManagerService {
             throw new ServiceException('User Role Manager class ' . $class . ' is not a subclass of AbstractUserRoleManager');
         }
         
-        // Set System User object
+        // Set System User object in manager
+        $userId = $this->getAuthenticationService()->getLoggedInUserId();
+        $systemUser = $this->getSystemUserService()->getSystemUser($userId);  
+        
+        if ($systemUser instanceof SystemUser) {
+            $manager->setUser($systemUser);
+        } else {
+            throw new ServiceException('Logged in user does not have corresponding SystemUser record. UserId=' . $userId );
+        }
         
         return $manager;
     }

@@ -57,11 +57,29 @@ class UserRoleManagerServiceTest extends PHPUnit_Framework_TestCase {
                 ->with(UserRoleManagerService::KEY_USER_ROLE_MANAGER_CLASS)
                 ->will($this->returnValue('UnitTestUserRoleManager'));
         
+        $authenticationService = $this->getMock('AuthenticationService', array('getLoggedInUserId'));
+        $authenticationService->expects($this->once())
+                              ->method('getLoggedInUserId')
+                              ->will($this->returnValue(211));
+        
+        $systemUser = new SystemUser();
+        $systemUser->setId(211);
+        
+        $systemUserService = $this->getMock('SystemUserService', array('getSystemUser'));
+        $systemUserService->expects($this->once())
+                          ->method('getSystemUser')
+                          ->will($this->returnValue($systemUser));
+        
         $this->service->setConfigDao($configDao);
+        $this->service->setAuthenticationService($authenticationService);
+        $this->service->setSystemUserService($systemUserService);
+        
         $manager = $this->service->getUserRoleManager();
         $this->assertNotNull($manager);
         $this->assertTrue($manager instanceof AbstractUserRoleManager);
         $this->assertTrue($manager instanceof UnitTestUserRoleManager);
+        $user = $manager->getUser();
+        $this->assertEquals($systemUser, $user);
     }
     
     public function testGetUserRoleManagerInvalidClass() {
