@@ -120,6 +120,24 @@ class PluginFormMergeManager {
         }
         return $baseForm;
     }
+    
+    /**
+     * Save Plugin defined forms getting base form requests
+     * @param type $baseForm
+     * @param type $actionName
+     * @param type $formName 
+     */
+    public function saveMergeForms( $baseForm , $actionName = null, $formName = null ){
+        $mergeFormsParams     =   $this->getFormExtensions($actionName,$formName);
+            
+        foreach( $mergeFormsParams as $mergeFormParam){
+            
+            $mergeForm = new $mergeFormParam[0]['name'];
+            $mergeFormsParams->save( $baseForm );
+            
+        }
+
+    }
 
 }
 
