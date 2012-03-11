@@ -24,7 +24,8 @@
     <div class="mainHeading"><h2><?php echo __('Add Employee'); ?></h2></div>
     <div>
         <form id="frmAddEmp" method="post" action="<?php echo url_for('pim/addEmployee'); ?>" enctype="multipart/form-data">
-            <?php echo $form['_csrf_token']; ?> 
+            <?php echo $form->__toString(); ?>
+            <!--<?php echo $form['_csrf_token']; ?> 
             <?php echo $form['empNumber']->render(); ?>
             <table width="97%" border="0" align="center">
                 <tr>
@@ -57,7 +58,7 @@
             <div class="hrLine" id="lineSeperator"></div>
             
             <!-- create login section starts here -->
-            <table width="95%" border="0" id="loginSection" align="center">
+            <!--<table width="95%" border="0" id="loginSection" align="center">
                 <tr>
                     <td width="115"><?php echo __('User Name'); ?><span class="required">*</span></td>
                     <td><?php echo $form['user_name']->render(array("class" => "formInputText", "maxlength" => 20)); ?><br class="clear" /></td>
@@ -70,7 +71,7 @@
                     <td><?php echo __('Confirm Password'); ?><span class="required">*</span></td>
                     <td><?php echo $form['re_password']->render(array("class" => "formInputText", "maxlength" => 20)); ?><br class="clear" /></td> 
                 </tr>
-            </table>
+            </table>-->
             
 
             <div class="formbuttons">

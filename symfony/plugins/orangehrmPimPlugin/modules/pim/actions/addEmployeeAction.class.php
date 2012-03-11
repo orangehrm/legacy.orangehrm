@@ -124,11 +124,9 @@ class addEmployeeAction extends basePimAction {
                         
                     } else {
                         unset($_SESSION['addEmployeePost']);
-                        $empNumber = $this->saveEmployee($this->form);
+                        $this->form->createUserAccount = $this->createUserAccount;
+                        $empNumber = $this->form->save();
                         
-                        if ($this->createUserAccount) {
-                            $this->saveUser($this->form, $empNumber);
-                        }
                         $this->redirect('pim/viewPersonalDetails?empNumber='. $empNumber);
                     }
 
@@ -137,95 +135,8 @@ class addEmployeeAction extends basePimAction {
                 }
             }
         }
-    }
+    } 
 
-    private function saveEmployee(sfForm $form) {
-
-        $posts = $form->getValues();
-        $file = $posts['photofile'];
-//        print_r($file);die;
-        //saving employee
-        $employee = new Employee();
-        $employee->firstName = $posts['firstName'];
-        $employee->lastName = $posts['lastName'];
-        $employee->middleName = $posts['middleName'];
-        $employee->employeeId = $posts['employeeId'];
-
-        $employeeService = $this->getEmployeeService();
-        $employeeService->addEmployee($employee);
-
-        $empNumber = $employee->empNumber;
-
-        //saving emp picture
-        if(($file instanceof sfValidatedFile) && $file->getOriginalName() != "") {
-            $empPicture = new EmpPicture();
-            $empPicture->emp_number = $empNumber;
-            $tempName = $file->getTempName();
-
-            $empPicture->picture = file_get_contents($tempName);
-            ;
-            $empPicture->filename = $file->getOriginalName();
-            $empPicture->file_type = $file->getType();
-            $empPicture->size = $file->getSize();
-            list($width, $height) = getimagesize($file->getTempName());
-            $sizeArray = $this->pictureSizeAdjust($height, $width);
-            $empPicture->width = $sizeArray['width'];
-            $empPicture->height = $sizeArray['height'];
-            $empPicture->save();
-        }
-
-        return $empNumber;
-    }
-    
-    private function pictureSizeAdjust($imgHeight, $imgWidth) {
-
-        if ($imgHeight > 180 || $imgWidth > 150) {
-            $newHeight = 0;
-            $newWidth = 0;
-
-            $propHeight = floor(($imgHeight / $imgWidth) * 150);
-            $propWidth = floor(($imgWidth / $imgHeight) * 180);
-
-            if ($propHeight <= 180) {
-                $newHeight = $propHeight;
-                $newWidth = 150;
-            }
-
-            if ($propWidth <= 150) {
-                $newWidth = $propWidth;
-                $newHeight = 180;
-            }
-        } else {
-            if($imgHeight <= 180)
-                $newHeight = $imgHeight;
-            
-            if($imgWidth <= 150)
-                $newWidth = $imgWidth;
-        }
-        return array('width' => $newWidth, 'height' => $newHeight);
-    }
-
-    private function saveUser(sfForm $form, $empNumber) {
-
-        $posts = $form->getValues();
-
-        if(trim($posts['user_name']) != "") {
-            $userService = $this->getUserService();
-
-            if(trim($posts['user_password']) != "" && $posts['user_password'] == $posts['re_password']) {
-                $user = new SystemUser();
-                $user->setDateEntered(date('Y-m-d H:i:s'));
-                $user->setCreatedBy($this->getUser()->getAttribute('user')->getUserId());
-                $user->user_name = $posts['user_name'];
-                $user->user_password = md5($posts['user_password']);
-                $user->emp_number = $empNumber;
-                $user->setUserRoleId(2);
-                $userService->saveSystemUser($user);
-             
-               
-            }
-        }
-    }
 
     private function getUserService() {
 

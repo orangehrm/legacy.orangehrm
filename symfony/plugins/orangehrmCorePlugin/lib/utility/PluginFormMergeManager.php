@@ -131,14 +131,11 @@ class PluginFormMergeManager {
         $mergeFormsParams     =   $this->getFormExtensions($actionName,$formName);
             
         foreach( $mergeFormsParams as $mergeFormParam){
-            
-            $mergeForm = new $mergeFormParam[0]['name'];
-            $mergeFormsParams->save( $baseForm );
-            
-        }
 
+            $mergeForm = new $mergeFormParam[0]['name'];
+//            $mergeFormsParams->save( $baseForm );
+            $mergeForm->save( $baseForm );            
+        }
     }
 
 }
-
-?>
