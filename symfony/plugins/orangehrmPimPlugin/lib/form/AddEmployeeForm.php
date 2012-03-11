@@ -63,16 +63,19 @@ class AddEmployeeForm extends sfForm {
         $employeeId = str_pad($empNumber, 4, '0');
 
         $this->widgets = array(
-            'firstName' => new sfWidgetFormInputText(),
-            'middleName' => new sfWidgetFormInputText(),
-            'lastName' => new sfWidgetFormInputText(),
-            'employeeId' => new sfWidgetFormInputText(),
-            'photofile' => new sfWidgetFormInputFileEditable(array('edit_mode' => false, 'with_delete' => false, 'file_src' => '')),
-            'chkLogin' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1)),
-            'user_name' => new sfWidgetFormInputText(),
-            'status' => new sfWidgetFormSelect(array('choices' => $status)),
-            'user_password' => new sfWidgetFormInputPassword(),
-            're_password' => new sfWidgetFormInputPassword(),
+            'firstName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
+            'middleName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
+            'lastName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
+            'employeeId' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 10)),
+            'photofile' => new sfWidgetFormInputFileEditable(array('edit_mode' => false, 'with_delete' => false, 'file_src' => ''), array("class" => "duplexBox")),
+            'helpText' => new ohrmWidgetDiv(),
+            'chkLogin' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1), array("class" => "formInputText")),
+            'loginStart' => new ohrmWidgetDiv(array(), array("style" => "float:left")),
+            'user_name' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 20)),
+            'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText")),
+            'user_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText", "maxlength" => 20)),
+            're_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText", "maxlength" => 20)),
+            'loginEnd' => new ohrmWidgetDiv(array(), array("style" => "clear:both")),
             'empNumber' => new sfWidgetFormInputHidden(),
         );
 
@@ -127,15 +130,18 @@ class AddEmployeeForm extends sfForm {
     protected function getFormLabels() {
         $labels = array(
             'photofile' => __('Photograph'),
-            'firstName' => __('First Name'),
+            'firstName' => __('First Name'). '<span class="required">*</span>',
             'middleName' => __('Middle Name'),
-            'lastName' => __('Last Name'),
+            'lastName' => __('Last Name'). '<span class="required">*</span>',
             'employeeId' => __('Employee Id'),
             'chkLogin' => __('Create Login Details'),
-            'user_name' => __('User Name'),
-            'user_password' => __('Password'),
-            're_password' => __('Confirm Password'),
-            'status' => __('Status'),
+            'user_name' => __('User Name'). '<span class="required">*</span>',
+            'user_password' => __('Password'). '<span class="required">*</span>',
+            're_password' => __('Confirm Password'). '<span class="required">*</span>',
+            'status' => __('Status'). '<span class="required">*</span>',
+            'helpText' => '<div class="helpText" style="width:160px;padding-top:5px;">' . __(CommonMessages::FILE_LABEL_IMAGE) . '</div>',
+            'loginStart' => '<div id="loginSection">',
+            'loginEnd' => '</div>',
         );
 
         return $labels;
@@ -197,7 +203,7 @@ class AddEmployeeForm extends sfForm {
             if (trim($posts['user_password']) != "" && $posts['user_password'] == $posts['re_password']) {
                 $user = new SystemUser();
                 $user->setDateEntered(date('Y-m-d H:i:s'));
-                $user->setCreatedBy($this->getUser()->getAttribute('user')->getUserId());
+                $user->setCreatedBy(sfContext::getInstance()->getUser()->getAttribute('user')->getUserId());
                 $user->user_name = $posts['user_name'];
                 $user->user_password = md5($posts['user_password']);
                 $user->emp_number = $empNumber;

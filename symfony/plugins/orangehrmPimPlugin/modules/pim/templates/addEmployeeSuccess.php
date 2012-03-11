@@ -24,7 +24,7 @@
     <div class="mainHeading"><h2><?php echo __('Add Employee'); ?></h2></div>
     <div>
         <form id="frmAddEmp" method="post" action="<?php echo url_for('pim/addEmployee'); ?>" enctype="multipart/form-data">
-            <?php echo $form->__toString(); ?>
+            <?php echo $form->render(); ?>
             <!--<?php echo $form['_csrf_token']; ?> 
             <?php echo $form['empNumber']->render(); ?>
             <table width="97%" border="0" align="center">

@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
     $("#chkLogin").attr("checked", "checked");
+    var loginStyle = { 'width' : '100%', 'margin' : '0', 'padding' : '0' }
+    $('#chkLogin').next().css(loginStyle);
 
     if(createUserAccount == 0) {
         //hiding login section by default
