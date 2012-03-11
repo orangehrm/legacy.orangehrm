@@ -57,3 +57,11 @@ label {
 #chkLogin {
     margin-top: 5px;
 }
+
+br {
+    clear: both;
+}
+
+input {
+    float: left !important;
+}
