@@ -128,9 +128,9 @@ class SystemUserService extends BaseService{
      * 
      * @return Doctrine_Collection UserRoles 
      */
-    public function getPreDefinedUserRoles(){
+    public function getAssignableUserRoles(){
         try {
-           return $this->getSystemUserDao()->getPreDefinedUserRole();
+           return $this->getSystemUserDao()->getAssignableUserRoles();
         } catch (Exception $e) {
             throw new ServiceException($e->getMessage(),$e->getCode(),$e);
         }

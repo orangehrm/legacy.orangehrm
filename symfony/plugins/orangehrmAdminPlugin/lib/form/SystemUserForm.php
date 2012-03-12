@@ -35,7 +35,7 @@ class SystemUserForm extends BaseForm {
         if (!empty($this->userId)) {
             $this->edited = true;
         }
-        $userRoleList = $this->getPreDefinedUserRoleList();
+        $userRoleList = $this->getAssignableUserRoleList();
         $statusList = $this->getStatusList();
 
         $this->setWidgets(array(
@@ -87,9 +87,9 @@ class SystemUserForm extends BaseForm {
      * 
      * @return array
      */
-    private function getPreDefinedUserRoleList() {
+    private function getAssignableUserRoleList() {
         $list = array();
-        $userRoles = $this->getSystemUserService()->getPreDefinedUserRoles();
+        $userRoles = $this->getSystemUserService()->getAssignableUserRoles();
         foreach ($userRoles as $userRole) {
             $list[$userRole->getId()] = $userRole->getName();
         }

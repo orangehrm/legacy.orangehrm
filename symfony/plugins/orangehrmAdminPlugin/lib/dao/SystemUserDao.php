@@ -107,10 +107,10 @@ class SystemUserDao extends BaseDao {
      * 
      * @return Doctrine_Collection 
      */
-    public function getPreDefinedUserRole() {
+    public function getAssignableUserRoles() {
         try {
             $query = Doctrine_Query:: create()->from('UserRole ur')
-                    ->whereIn('ur.is_predefined', 1);
+                    ->whereIn('ur.is_assignable', 1);
 
             return $query->execute();
         } catch (Exception $e) {

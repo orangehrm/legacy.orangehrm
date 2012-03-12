@@ -48,10 +48,10 @@ class SearchSystemUserForm extends BaseForm {
      * 
      * @return array
      */
-    private function getPreDefinedUserRoleList() {
+    private function getAssignableUserRoleList() {
         $list = array();
         $list[] = __("All");
-        $userRoles = $this->getSystemUserService()->getPreDefinedUserRoles();
+        $userRoles = $this->getSystemUserService()->getAssignableUserRoles();
         foreach ($userRoles as $userRole) {
             $list[$userRole->getId()] = $userRole->getName();
         }
@@ -122,7 +122,7 @@ class SearchSystemUserForm extends BaseForm {
      */
     protected function getFormWidgets() {
 
-        $userRoleList = $this->getPreDefinedUserRoleList();
+        $userRoleList = $this->getAssignableUserRoleList();
         $statusList = $this->getStatusList();
 
         $widgets = array();

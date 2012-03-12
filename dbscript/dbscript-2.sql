@@ -513,7 +513,8 @@ INSERT INTO `hs_hr_config`(`key`, `value`) VALUES ('ldap_server', ''),
     ('timesheet_period_and_start_date', '<TimesheetPeriod><PeriodType>Weekly</PeriodType><ClassName>WeeklyTimesheetPeriod</ClassName><StartDate>1</StartDate><Heading>Week</Heading></TimesheetPeriod>'),
     ('admin.localization.default_language', 'en'),
     ('admin.localization.use_browser_language', 'No'),
-    ('admin.localization.default_date_format', 'Y-m-d');
+    ('admin.localization.default_date_format', 'Y-m-d'),
+    ('authorize_user_role_manager_class', 'BasicUserRoleManager');
 
 INSERT INTO `ohrm_emp_reporting_method`(`reporting_method_id`, `reporting_method_name`) VALUES(1, 'Direct'),
       (2, 'Indirect');
@@ -1049,14 +1050,14 @@ INSERT INTO `ohrm_emp_termination_reason` VALUES (1, 'Other'),
 (10, 'Dismissed');
 
 INSERT INTO `ohrm_user_role` (`id`, `name`, `is_assignable`, `is_predefined`) VALUES
-(1, 'Admin', 0, 1),
-(2, 'ESS', 0, 1),
-(3, 'Supervisor', 1, 0),
-(4, 'ProjectAdmin', 1, 0),
-(5, 'Interviewer', 1, 0),
-(6, 'Offerer', 1, 0),
-(7, 'Interviewer', 1, 0),
-(8, 'Offerer', 1, 0);
+(1, 'Admin', 1, 1),
+(2, 'ESS', 1, 1),
+(3, 'Supervisor', 0, 1),
+(4, 'ProjectAdmin', 0, 1),
+(5, 'Interviewer', 0, 1),
+(6, 'Offerer', 0, 1),
+(7, 'Interviewer', 0, 1),
+(8, 'Offerer', 0, 1);
 
 INSERT INTO `ohrm_nationality` (`id`, `name`) VALUES
 (1, 'Afghan'),
