@@ -119,7 +119,7 @@ class AddEmployeeForm extends sfForm {
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'addEmployee', 'AddEmployeeForm');
 
-        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(2);
+        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
         $this->getWidgetSchema()->setFormFormatterName('BreakTags');
     }
 

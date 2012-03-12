@@ -63,6 +63,8 @@ br {
     clear: both;
 }
 
-input {
-    float: left !important;
+label.error {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    width: 220px !important;
 }

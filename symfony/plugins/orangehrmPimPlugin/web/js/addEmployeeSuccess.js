@@ -2,7 +2,8 @@ $(document).ready(function() {
 
     $("#chkLogin").attr("checked", "checked");
     var loginStyle = { 'width' : '100%', 'margin' : '0', 'padding' : '0' }
-    $('#chkLogin').next().css(loginStyle);
+    $("label[for='loginStart']").css(loginStyle);
+    $("#photofile").next('br').remove();
 
     if(createUserAccount == 0) {
         //hiding login section by default
@@ -42,7 +43,8 @@ $(document).ready(function() {
             'user_name': { validateLoginName: true },
             'user_password': {validatePassword: true},
             're_password': {validateReCheckPassword: true},
-            'status': {validateStatusRequired: true }
+            'status': {validateStatusRequired: true },
+            'location': {required: true }
         },
         messages: {
             'firstName': { required: lang_firstNameRequired },
@@ -50,11 +52,8 @@ $(document).ready(function() {
             'user_name': { validateLoginName: lang_userNameRequired },
             'user_password': {validatePassword: lang_passwordRequired},
             're_password': {validateReCheckPassword: lang_unMatchingPassword},
-            'status': {validateStatusRequired: lang_statusRequired }
-        },
-        errorElement : 'div',
-        errorPlacement: function(error, element) {
-            error.insertAfter(element.next(".clear"));
+            'status': {validateStatusRequired: lang_statusRequired },
+            'location': {required: lang_locationRequired }
         }
     });
 
