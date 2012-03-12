@@ -62,7 +62,7 @@ class ohrmReportWidgetOperationalCountryLocationDropDown extends ohrmWidgetSelec
                         $addedLocationIds[] = $location->getId();
                         $locationChoices[$location->getId()] = $location->getName();
                     }
-                    array_multisort($locationChoices,SORT_ASC, SORT_STRING);
+                    asort($locationChoices);
                     $choices[$country->getCouName()] = $locationChoices;
                 }
             }
