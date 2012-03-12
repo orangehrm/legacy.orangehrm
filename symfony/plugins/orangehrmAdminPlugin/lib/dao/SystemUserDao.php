@@ -180,10 +180,10 @@ class SystemUserDao extends BaseDao {
             $query->addWhere('u.status = ?', $searchClues['status']);
         }
 
-        if ($searchClues['location'] && $searchClues['location'] != '-1') {
+        if ($searchClues['country'] && $searchClues['country'] != '') {
             $query->leftJoin('u.Employee e');
-            $query->leftJoin('e.EmpLocations l');
-            $query->whereIn('l.location_id', explode(',', $searchClues['location']));
+//            $query->leftJoin('e.EmpLocations l');
+            $query->addWhere('e.coun_code = ?', $searchClues['country']);
         }
 
         $query->addWhere('u.deleted=?', 0);
