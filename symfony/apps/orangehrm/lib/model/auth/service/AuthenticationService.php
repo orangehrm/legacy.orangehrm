@@ -99,6 +99,12 @@ class AuthenticationService extends BaseService {
         $cookieManager = new CookieManager();
         $cookieManager->destroyCookie('Loggedin', '/');
     }
+    
+    public function getLoggedInUserId() {
+        $sfUser = sfContext::getInstance()->getUser();
+        $userId = $sfUser->getAttribute('auth.userId');
+        return $userId;        
+    }
 
     /**
      *
