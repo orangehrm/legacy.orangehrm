@@ -66,7 +66,7 @@ class saveSystemUserAction extends sfAction {
                 } else {
                     if($savedUser instanceof SystemUser) { // sets flash values for admin/viewSystemUsers pre filter for further actions if needed
                         $this->getUser()->setFlash("new.user.id", $savedUser->getId()); //
-                        $this->getUser()->setFlash("new.user.role.id", $savedUser->getUserRoleId()); //
+                        $this->getUser()->setFlash("new.user.role.id", $savedUser->getUserRoleId());
                     }
                     $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
                 }

@@ -141,7 +141,7 @@ class viewSystemUsersAction extends sfAction {
             'userType' => $this->form->getValue('userType'),
             'employeeId' => $this->form->getValue('employeeId'),
             'status' => $this->form->getValue('status'),
-            'country' => $this->form->getValue('country'),
+            'location' => $this->form->getValue('location'),
             'sortField' => $sortField,
             'sortOrder' => $sortOrder,
             'offset' => $offset,
