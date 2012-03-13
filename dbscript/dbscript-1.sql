@@ -1134,6 +1134,7 @@ create table `ohrm_user`(
 create table `ohrm_user_role`(
 	`id` int(10) not null auto_increment,
 	`name` varchar(255) not null,
+	`display_name` varchar(255) not null,
 	`is_assignable` tinyint(1) default 0,
         `is_predefined` tinyint(1) default 0,
 	primary key (`id`)

@@ -562,6 +562,9 @@ UserRole:
     name:
       type: string(255)
       notnull: true
+    display_name:
+      type: string(255)
+      notnull: true
     is_assignable:
       type: int
       type: boolean

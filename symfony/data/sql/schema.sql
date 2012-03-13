@@ -41,6 +41,7 @@ CREATE TABLE hs_hr_emp_member_detail (emp_number INT, membship_code BIGINT, emem
 CREATE TABLE hs_hr_emp_skill (emp_number INT, skill_id BIGINT, years_of_exp DECIMAL(2, 2) DEFAULT 0 NOT NULL, comments VARCHAR(100) DEFAULT '' NOT NULL, PRIMARY KEY(emp_number, skill_id)) ENGINE = INNODB;
 CREATE TABLE ohrm_employee_work_shift (work_shift_id INT, emp_number INT, PRIMARY KEY(work_shift_id, emp_number)) ENGINE = INNODB;
 CREATE TABLE ohrm_employment_status (id BIGINT AUTO_INCREMENT, name VARCHAR(60), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE ohrm_executive_subunit (id INT AUTO_INCREMENT, subunit_id BIGINT, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE ohrm_filter_field (filter_field_id BIGINT, report_group_id BIGINT NOT NULL, name VARCHAR(255) NOT NULL, where_clause_part LONGTEXT NOT NULL, filter_field_widget VARCHAR(255), condition_no BIGINT NOT NULL, required VARCHAR(10), PRIMARY KEY(filter_field_id)) ENGINE = INNODB;
 CREATE TABLE ohrm_group_field (group_field_id BIGINT, name VARCHAR(255) NOT NULL, group_by_clause LONGTEXT NOT NULL, group_field_widget VARCHAR(255), PRIMARY KEY(group_field_id)) ENGINE = INNODB;
 CREATE TABLE ohrm_holiday (id INT AUTO_INCREMENT, recurring TINYINT DEFAULT '0', description TEXT, date DATE, length INT, operational_country_id INT, PRIMARY KEY(id)) ENGINE = INNODB;
@@ -98,9 +99,10 @@ CREATE TABLE ohrm_timesheet (timesheet_id BIGINT, employee_id BIGINT NOT NULL, s
 CREATE TABLE ohrm_timesheet_action_log (timesheet_action_log_id BIGINT, timesheet_id BIGINT, performed_by VARCHAR(255), action VARCHAR(255), comment VARCHAR(255), date_time DATE, PRIMARY KEY(timesheet_action_log_id)) ENGINE = INNODB;
 CREATE TABLE ohrm_timesheet_item (timesheet_item_id BIGINT AUTO_INCREMENT, timesheet_id BIGINT NOT NULL, employee_id BIGINT, project_id BIGINT, activity_id BIGINT, date DATE, duration BIGINT, comment VARCHAR(255), PRIMARY KEY(timesheet_item_id)) ENGINE = INNODB;
 CREATE TABLE hs_hr_unique_id (id INT AUTO_INCREMENT, last_id INT UNSIGNED NOT NULL, table_name VARCHAR(50) NOT NULL, field_name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE ohrm_user_role (id INT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, is_assignable TINYINT(1) NOT NULL, is_predefined TINYINT(1) NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE ohrm_user_role (id INT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, display_name VARCHAR(255) NOT NULL, is_assignable TINYINT(1) NOT NULL, is_predefined TINYINT(1) NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE ohrm_role_user_selection_rule (user_role_id INT, selection_rule_id INT, configurable_params TEXT NOT NULL, PRIMARY KEY(user_role_id, selection_rule_id)) ENGINE = INNODB;
 CREATE TABLE ohrm_user_selection_rule (id INT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, implementation_class VARCHAR(255) NOT NULL, rule_xml_data TEXT NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE ohrm_user_user_role (id BIGINT AUTO_INCREMENT, user_id BIGINT, user_role_id BIGINT, rule_xml TEXT, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE ohrm_work_shift (id BIGINT AUTO_INCREMENT, name TEXT NOT NULL, hours_per_day DECIMAL(4, 2) NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE ohrm_work_week (id INT, operational_country_id INT, mon INT NOT NULL, tue INT NOT NULL, wed INT NOT NULL, thu INT NOT NULL, fri INT NOT NULL, sat INT NOT NULL, sun INT NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE ohrm_workflow_state_machine (id BIGINT, workflow VARCHAR(255) NOT NULL, state VARCHAR(255) NOT NULL, role VARCHAR(255) NOT NULL, action VARCHAR(255) NOT NULL, resulting_state VARCHAR(255) NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
