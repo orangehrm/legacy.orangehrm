@@ -93,7 +93,6 @@ $(document).ready(function() {
     }); 
     
     $('#searchSystemUser_employeeName').keyup(function(){
-        alert('xxx');
         $('#searchSystemUser_employeeId').val('');
     });
 
