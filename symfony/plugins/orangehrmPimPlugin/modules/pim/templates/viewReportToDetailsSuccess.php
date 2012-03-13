@@ -77,7 +77,6 @@
 
                             <?php echo $form['_csrf_token']; ?>
                             <?php echo $form["empNumber"]->render(); ?>
-                            <?php echo $form["selectedEmployee"]->render(); ?>
                             <?php echo $form["previousRecord"]->render(); ?>
                             <div id="reportTo" class="reportTo">
                                 <?php echo $form['type_flag']->render(); ?>

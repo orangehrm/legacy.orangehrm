@@ -35,18 +35,6 @@ $(document).ready(function() {
         }
     });
     
-    //Auto complete
-    $("#reportto_name").autocomplete(employees, {
-        formatItem: function(item) {
-            return item.name;
-        },
-        matchContains:true
-    }).result(function(event, item) {
-        //$("#reportto_selectedEmployee").val(item.id);
-        $("label.error").hide();
-
-    });
-
     $('#btnSaveReportTo').click(function() {
         if(isValidForm()){
 
@@ -97,7 +85,7 @@ $(document).ready(function() {
     // Add a supervisor 
     $('#btnAddSupervisorDetail').click(function() {
 
-        $('#reportto_selectedEmployee').val("");
+        $('#reportto_name_id').val("");
         $("#reportto_previousRecord").val("");
         $('#reportto_type_flag_1').attr('checked', 'checked');
         $("#reportToHeading").text(addSupervisor);
@@ -118,7 +106,7 @@ $(document).ready(function() {
     // Add a subordinate
     $('#btnAddSubordinateDetail').click(function() {
 
-        $('#reportto_selectedEmployee').val("");
+        $('#reportto_name_id').val("");
         $("#reportto_previousRecord").val("");
         $('#reportto_type_flag_2').attr('checked', 'checked');
         $("#reportToHeading").text(addSubordinate);
@@ -183,7 +171,7 @@ $(document).ready(function() {
         var name = $(this).text();
         var reportingMethodType = row.find("td:nth-child(3)").text();
 
-        $("#reportto_selectedEmployee").val(tempArray[0]);
+        $("#reportto_name_id").val(tempArray[0]);
         $("#reportto_previousRecord").val(primarykey);
         $('#reportto_type_flag_1').attr('checked', 'checked');
         $('#reportto_name').val(name);
@@ -217,7 +205,7 @@ $(document).ready(function() {
         var name1 = $(this).text();
         var reportingMethodType = row.find("td:nth-child(3)").text();
 
-        $("#reportto_selectedEmployee").val(tempArray[1]);
+        $("#reportto_name_id").val(tempArray[1]);
         $("#reportto_previousRecord").val(primarykey);
         $('#reportto_type_flag_2').attr('checked', 'checked');
 
@@ -246,7 +234,7 @@ $(document).ready(function() {
 function isValidForm(){
     $.validator.addMethod("empNameValidation", function(value, element, params) {
         var temp = false;
-        if($('#reportto_selectedEmployee').val() > 0){
+        if($('#reportto_name_id').val() > 0){
             temp = true;
         }
 
@@ -260,7 +248,7 @@ function isValidForm(){
                 arrayName = employeesArray[i].name.toLowerCase();
 
                 if (empName == arrayName) {
-                    $('#reportto_selectedEmployee').val(employeesArray[i].id);
+                    $('#reportto_name_id').val(employeesArray[i].id);
                     temp = true
                     break;
                 }

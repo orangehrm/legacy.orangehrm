@@ -77,8 +77,7 @@ class EmployeeReportToForm extends BaseForm {
                     array('value' => $this->empNumber)),
             'type_flag' => new sfWidgetFormChoice(array('expanded' => true, 'choices' => array(
                     ReportTo::SUPERVISOR => __('Supervisor'), ReportTo::SUBORDINATE => __('Subordinate')), 'default' => ReportTo::SUPERVISOR)),
-            'name' => new sfWidgetFormInputText(),
-            'selectedEmployee' => new sfWidgetFormInputHidden(),
+            'name' => new ohrmWidgetEmployeeNameAutoFill(),
             'previousRecord' => new sfWidgetFormInputHidden(),
             'reportingMethodType' => new sfWidgetFormSelect(array('choices' => $reportingMethodType)),
             'reportingMethod' => new sfWidgetFormInputText()
@@ -91,7 +90,7 @@ class EmployeeReportToForm extends BaseForm {
             'type_flag' => new sfValidatorChoice(array('required' => true,
                 'choices' => array(ReportTo::SUPERVISOR, ReportTo::SUBORDINATE))),
             'name' => new sfValidatorString(array('required' => true), array('required' => 'Employee name required')),
-            'selectedEmployee' => new sfValidatorNumber(array('required' => true, 'min' => 0)),
+            'name_id' => new sfValidatorString(array('required' => false)),
             'previousRecord' => new sfValidatorString(array('required' => false)),
             'reportingMethodType' => new sfValidatorString(array('required' => true), array('required' => 'Select reporting method')),
             'reportingMethod' => new sfValidatorString(array('required' => false, 'max_length' => 80)),
@@ -169,7 +168,7 @@ class EmployeeReportToForm extends BaseForm {
         $name = $this->getValue('name');
         $reportingType = $this->getValue('reportingMethodType');
         $reportingMethod = $this->getValue('reportingMethod');
-        $selectedEmployee = $this->getValue('selectedEmployee');
+        $selectedEmployee = $this->getValue('name_id');
         $previousRecord = $this->getValue('previousRecord');
 
         if ($reportingMethod != null) {

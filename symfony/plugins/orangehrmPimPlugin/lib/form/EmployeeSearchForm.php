@@ -58,7 +58,7 @@ class EmployeeSearchForm extends BaseForm {
         $this->loggedInUserId = $this->getOption('loggedInUserId');
 
         $this->setWidgets(array(
-            'employee_name' => new sfWidgetFormInputText(),
+            'employee_name' => new ohrmWidgetEmployeeNameAutoFill(),
             'id' => new sfWidgetFormInputText(),
         ));
 
@@ -77,6 +77,7 @@ class EmployeeSearchForm extends BaseForm {
 
 
         $this->setValidator('employee_name', new sfValidatorString(array('required' => false)));
+        $this->setValidator('employee_name_id', new sfValidatorString(array('required' => false)));
         $this->setValidator('id', new sfValidatorString(array('required' => false)));
 
         $formExtension  =   PluginFormMergeManager::instance();
