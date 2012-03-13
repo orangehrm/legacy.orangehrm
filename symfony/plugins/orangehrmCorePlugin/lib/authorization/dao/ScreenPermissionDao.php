@@ -29,7 +29,7 @@ class ScreenPermissionDao {
      * @param string $actionUrl Action
      * @param array $roles Array of UserRole objects or user role names
      */
-    public function getScreenPermission($module, $actionUrl, $roles) {
+    public function getScreenPermissions($module, $actionUrl, $roles) {
         try {
             $roleNames = array();
             

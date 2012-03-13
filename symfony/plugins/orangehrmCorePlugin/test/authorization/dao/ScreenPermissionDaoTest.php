@@ -39,23 +39,23 @@ class ScreenPermissionDaoTest  extends PHPUnit_Framework_TestCase {
     }
     
     public function testGetScreenPermission() {
-        $permissions = $this->dao->getScreenPermission('pim', 'viewEmployeeList', array('Admin'));
+        $permissions = $this->dao->getScreenPermissions('pim', 'viewEmployeeList', array('Admin'));
         $this->assertNotNull($permissions);
         $this->assertEquals(1, count($permissions));
         $this->verifyPermissions($permissions[0], true, true, true, true);
        
         
-        $permissions = $this->dao->getScreenPermission('pim', 'viewEmployeeList', array('ESS'));
+        $permissions = $this->dao->getScreenPermissions('pim', 'viewEmployeeList', array('ESS'));
         $this->assertNotNull($permissions);
         $this->assertEquals(1, count($permissions));
         $this->verifyPermissions($permissions[0], false, false, false, false);
         
-        $permissions = $this->dao->getScreenPermission('pim', 'viewEmployeeList', array('Supervisor'));
+        $permissions = $this->dao->getScreenPermissions('pim', 'viewEmployeeList', array('Supervisor'));
         $this->assertNotNull($permissions);
         $this->assertEquals(1, count($permissions));
         $this->verifyPermissions($permissions[0], true, false, true, false);
         
-        $permissions = $this->dao->getScreenPermission('pim', 'viewEmployeeList', array('Admin', 'Supervisor', 'ESS'));
+        $permissions = $this->dao->getScreenPermissions('pim', 'viewEmployeeList', array('Admin', 'Supervisor', 'ESS'));
         $this->assertNotNull($permissions);
         $this->assertEquals(3, count($permissions));
         
@@ -74,6 +74,10 @@ class ScreenPermissionDaoTest  extends PHPUnit_Framework_TestCase {
                 $this->fail("Unexpected roleId=" . $roleId);
             }
         }
+        
+        $permissions = $this->dao->getScreenPermissions('pim', 'viewEmployeeListNoneExisting', array('Admin', 'Supervisor', 'ESS'));
+        $this->assertTrue($permissions instanceof Doctrine_Collection);
+        $this->assertEquals(0, count($permissions));
         
     }
     

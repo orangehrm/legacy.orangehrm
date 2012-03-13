@@ -23,6 +23,61 @@
  *
  */
 class ScreenPermissionService {
-    //put your code here
+    
+    private $screenPermissionDao;
+    
+    public function getScreenPermissionDao() {
+        if (empty($this->screenPermissionDao)) {
+            $this->screenPermissionDao = new ScreenPermissionDao();
+        }
+        return $this->screenPermissionDao;
+    }
+
+    public function setScreenPermissionDao($screenPermissionDao) {
+        $this->screenPermissionDao = $screenPermissionDao;
+    }
+
+        
+    
+    /**
+     * Get Screen Permissions for given module, action for the given roles
+     * @param string $module Module Name
+     * @param string $actionUrl Action Name
+     * @param string $roles Array of Role names or Array of UserRole objects
+     */
+    public function getScreenPermissions($module, $actionUrl, $roles) {
+        $screenPermissions = $this->getScreenPermissionDao()->getScreenPermissions($module, $actionUrl, $roles);
+        
+        $permission = null;
+        
+        // if empty, give all permissions
+        if (count($screenPermissions) == 0) {
+            $permission = new ResourcePermission(true, true, true, true);
+        } else {
+            $read = false;
+            $create = false;            
+            $update = false;
+            $delete = false;
+            
+            foreach ($screenPermissions as $screenPermission) {
+                if ($screenPermission->can_read) {
+                    $read = true;
+                }
+                if ($screenPermission->can_create) {
+                    $create = true;
+                }
+                if ($screenPermission->can_update) {
+                    $update = true;
+                }
+                if ($screenPermission->can_delete) {
+                    $delete = true;
+                }             
+            }
+            
+            $permission = new ResourcePermission($read, $create, $update, $delete);
+        }
+        
+        return $permission;
+    }
 }
 

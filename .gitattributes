@@ -3954,6 +3954,7 @@ symfony/plugins/orangehrmCorePlugin/lib/action/displayReportCriteriaAction.php -
 symfony/plugins/orangehrmCorePlugin/lib/action/ohrmExportableAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/orangehrmAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenPermissionDao.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/entity/ResourcePermission.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/AbstractUserRoleManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/BasicUserRoleManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/UserRoleManagerFactory.php -text
@@ -4122,6 +4123,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -tex
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenPermissionDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/manager/BasicUserRoleManagerTest.php -text
+symfony/plugins/orangehrmCorePlugin/test/authorization/service/ScreenPermissionServiceTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/service/UserRoleManagerServiceTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/ButtonTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/CellTest.php -text
