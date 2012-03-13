@@ -71,7 +71,6 @@
  * @property EmpTermination $EmpTermination
  * @property Nationality $Nationality
  * @property JobCategory $JobCategory
- * @property Doctrine_Collection $EmployeeLeaveAccrual
  * @property Doctrine_Collection $EmployeeLeaveEntitlement
  * @property Doctrine_Collection $LeaveRequest
  * @property Doctrine_Collection $SystemUser
@@ -160,7 +159,6 @@
  * @method EmpTermination      getEmpTermination()           Returns the current record's "EmpTermination" value
  * @method Nationality         getNationality()              Returns the current record's "Nationality" value
  * @method JobCategory         getJobCategory()              Returns the current record's "JobCategory" value
- * @method Doctrine_Collection getEmployeeLeaveAccrual()     Returns the current record's "EmployeeLeaveAccrual" collection
  * @method Doctrine_Collection getEmployeeLeaveEntitlement() Returns the current record's "EmployeeLeaveEntitlement" collection
  * @method Doctrine_Collection getLeaveRequest()             Returns the current record's "LeaveRequest" collection
  * @method Doctrine_Collection getSystemUser()               Returns the current record's "SystemUser" collection
@@ -248,7 +246,6 @@
  * @method Employee            setEmpTermination()           Sets the current record's "EmpTermination" value
  * @method Employee            setNationality()              Sets the current record's "Nationality" value
  * @method Employee            setJobCategory()              Sets the current record's "JobCategory" value
- * @method Employee            setEmployeeLeaveAccrual()     Sets the current record's "EmployeeLeaveAccrual" collection
  * @method Employee            setEmployeeLeaveEntitlement() Sets the current record's "EmployeeLeaveEntitlement" collection
  * @method Employee            setLeaveRequest()             Sets the current record's "LeaveRequest" collection
  * @method Employee            setSystemUser()               Sets the current record's "SystemUser" collection
@@ -569,10 +566,6 @@ abstract class BaseEmployee extends sfDoctrineRecord
         $this->hasOne('JobCategory', array(
              'local' => 'eeo_cat_code',
              'foreign' => 'id'));
-
-        $this->hasMany('EmployeeLeaveAccrual', array(
-             'local' => 'empNumber',
-             'foreign' => 'employee_id'));
 
         $this->hasMany('EmployeeLeaveEntitlement', array(
              'local' => 'empNumber',
