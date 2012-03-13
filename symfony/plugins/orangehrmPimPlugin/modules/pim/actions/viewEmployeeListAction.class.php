@@ -48,18 +48,23 @@ class viewEmployeeListAction extends basePimAction {
         if (!$this->adminMode && !$this->supervisorMode) {
             return $this->forward("pim", "unauthorized");
         }
+        
+        $this->mode = $mode = $this->getMode();
+        
+        $empNumber = $request->getParameter('empNumber');
+        $isPaging = $request->getParameter('pageNo');
 
-        $this->sorter = new ListSorter('emplist.sort', 'pim_module', $this->getUser(), array('lastName', ListSorter::ASCENDING));
-
-        // Sorting
-        if ($request->getParameter('sort')) {
-            $this->sorter->setSort(array($request->getParameter('sort'), $request->getParameter('order')));
+        $pageNumber = $isPaging;
+        if (!empty($empNumber) && $this->getUser()->hasAttribute('pageNumber')) {
+            $pageNumber = $this->getUser()->getAttribute('pageNumber');
         }
 
-        // Pager
-        if ($request->getParameter('page')) {
-            $this->setPage($request->getParameter('page'));
-        }
+        $sortField = $request->getParameter('sortField');
+        $sortOrder = $request->getParameter('sortOrder');
+
+        $noOfRecords = JobTitle::NO_OF_RECORDS_PER_PAGE;
+        $offset = ($pageNumber >= 1) ? (($pageNumber - 1) * $noOfRecords) : ($request->getParameter('pageNo', 1) - 1) * $noOfRecords;
+
          // Reset filters if requested to
         if ($request->hasParameter('reset')) {
             $this->setFilters(array());
@@ -81,7 +86,6 @@ class viewEmployeeListAction extends basePimAction {
             $this->setPage(1);
         }
 
-        $sort = $this->sorter->getSort();
         $filters = $this->getFilters();
         $filters['employee_name'] = str_replace(' (' . __('Past Employee') . ')', '', $filters['employee_name']);        
         
@@ -95,19 +99,11 @@ class viewEmployeeListAction extends basePimAction {
         $table = Doctrine::getTable('Employee');
         $count = $table->getEmployeeCount($filters);
 
-        $this->pager = new SimplePager('Employee', sfConfig::get('app_items_per_page'));
-
-        $this->pager->setPage($this->getPage('page'));
-        $this->pager->setNumResults($count);
-        $this->pager->init();
-
-        $offset = $this->pager->getOffset();
-        $limit = $this->pager->getMaxPerPage();
-
-        $this->employee_list = $table->getEmployeeList($sort[0], $sort[1], $filters, $offset, $limit);
+        $list = $table->getEmployeeList($sortField, $sortOrder, $filters, $offset, $noOfRecords);
+        $this->setListComponent($list, $count, $noOfRecords, $pageNumber);
 
         // Show message if list is empty, and we don't already have a message.
-        if (empty($this->message) && (count($this->employee_list) == 0)) {
+        if (empty($this->message) && (count($list) == 0)) {
 
             // Check to see if we have any employees in system
             $employeeCount = $this->getEmployeeService()->getEmployeeCount();
@@ -120,6 +116,37 @@ class viewEmployeeListAction extends basePimAction {
             }
 
         }
+    }
+    
+    protected function setListComponent($employeeList, $count, $noOfRecords, $page) {
+        
+        ohrmListComponent::setConfigurationFactory($this->getListConfigurationFactory());
+        ohrmListComponent::setActivePlugin('orangehrmPimPlugin');
+        ohrmListComponent::setListData($employeeList);
+//        ohrmListComponent::setItemsPerPage(sfConfig::get('app_items_per_page'));
+        ohrmListComponent::setItemsPerPage($noOfRecords);
+        ohrmListComponent::setNumberOfRecords($count);      
+        ohrmListComponent::setPageNumber($page);
+    }
+    
+    protected function getListConfigurationFactory() {
+        EmployeeListConfigurationFactory::setListMode($this->mode);
+        $configurationFactory = new EmployeeListConfigurationFactory();
+        
+        return $configurationFactory;
+    }
+    
+    
+    protected function getMode() {
+        $mode ='';
+        
+        if ($this->adminMode) {
+            $mode = 'adminMode';
+        } else if($this->supervisorMode) {
+            $mode = 'supervisorMode';
+        }
+        
+        return $mode;
     }
 
     /**
@@ -154,6 +181,15 @@ class viewEmployeeListAction extends basePimAction {
      */
     protected function getFilters() {
         return $this->getUser()->getAttribute('emplist.filters', null, 'pim_module');
+    }
+
+    protected function _getFilterValue($filters, $parameter, $default = null) {
+        $value = $default;
+        if (isset($filters[$parameter])) {
+            $value = $filters[$parameter];
+        }
+
+        return $value;
     }
 
 }

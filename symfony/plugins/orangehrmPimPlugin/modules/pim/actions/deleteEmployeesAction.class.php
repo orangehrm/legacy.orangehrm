@@ -35,7 +35,7 @@ class deleteEmployeesAction extends basePimAction {
             return $this->forward("pim", "unauthorized");
         }
 
-        $ids = $request->getParameter('ids');
+        $ids = $request->getParameter('chkSelectRow');
 
         $employeeService = $this->getEmployeeService();
         $count = $employeeService->deleteEmployee($ids);
