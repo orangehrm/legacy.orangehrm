@@ -91,7 +91,7 @@ class SystemUserForm extends BaseForm {
         $list = array();
         $userRoles = $this->getSystemUserService()->getAssignableUserRoles();
         foreach ($userRoles as $userRole) {
-            $list[$userRole->getId()] = $userRole->getName();
+            $list[$userRole->getId()] = $userRole->getDisplayName();
         }
         return $list;
     }
