@@ -136,6 +136,21 @@ class SystemUserService extends BaseService{
         }
     }
     
+    /**
+     * Get User role with given name
+     * 
+     * @param String $roleName Role Name
+     * @return Doctrine_Collection UserRoles 
+     */
+    public function getUserRole($roleName){
+        try {
+           return $this->getSystemUserDao()->getUserRole($roleName);
+        } catch (Exception $e) {
+            throw new ServiceException($e->getMessage(),$e->getCode(),$e);
+        }
+    }    
+    
+    
    /**
      * Get Count of Search Query 
      * 

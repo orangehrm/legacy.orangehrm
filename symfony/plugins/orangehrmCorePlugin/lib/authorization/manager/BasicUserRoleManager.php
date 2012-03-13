@@ -24,6 +24,33 @@
  */
 class BasicUserRoleManager extends AbstractUserRoleManager {
     
+    protected $employeeService;
+    protected $systemUserService;
+    
+    public function getSystemUserService() {
+        if (empty($this->systemUserService)) {
+            $this->systemUserService = new SystemUserService();
+        }        
+        return $this->systemUserService;
+    }
+
+    public function setSystemUserService($systemUserService) {
+        $this->systemUserService = $systemUserService;
+    }
+
+        public function getEmployeeService() {
+        
+        if (empty($this->employeeService)) {
+            $this->employeeService = new EmployeeService();
+        }
+        return $this->employeeService;
+    }
+
+    public function setEmployeeService($employeeService) {
+        $this->employeeService = $employeeService;
+    }
+
+        
     public function getAccessibleEntities($entityType, $operation, $returnType) {
         
     }
@@ -49,8 +76,25 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
     }
     
-    protected function getUserRoles($user) {
+    protected function getUserRoles(SystemUser $user) {
         
+        $user = $this->getSystemUserService()->getSystemUser($user->id);
+
+        $roles[] = $user->getUserRole();
+        
+        // Check for supervisor:
+        $empNumber = $user->getEmpNumber();
+        if (!empty($empNumber)) {
+            if ($this->getEmployeeService()->isSupervisor($empNumber)) {
+                $supervisorRole = $this->getSystemUserService()->getUserRole('Supervisor');
+                if (!empty($supervisorRole)) {
+                    $roles[] = $supervisorRole;
+                }
+            }
+        }
+        
+        
+        return $roles;
     }    
 }
 

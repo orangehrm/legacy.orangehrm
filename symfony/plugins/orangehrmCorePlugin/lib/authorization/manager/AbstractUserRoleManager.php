@@ -48,7 +48,7 @@ abstract class AbstractUserRoleManager {
     
     public abstract function isFieldAccessible($module, $screen, $field);
     
-    protected abstract function getUserRoles($user);
+    protected abstract function getUserRoles(SystemUser $user);    
     
 }
 

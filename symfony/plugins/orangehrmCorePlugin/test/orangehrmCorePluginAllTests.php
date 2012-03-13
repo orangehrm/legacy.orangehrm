@@ -68,6 +68,7 @@ class orangehrmCorePluginAllTests {
 
         /* Authorization */
         $suite->addTestFile(dirname(__FILE__) . '/authorization/service/UserRoleManagerServiceTest.php');
+        $suite->addTestFile(dirname(__FILE__) . '/authorization/manager/BasicUserRoleManagerTest.php');
         
         return $suite;
     }

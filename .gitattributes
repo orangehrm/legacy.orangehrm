@@ -4116,6 +4116,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/definePredefinedRepor
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedReportSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text
+symfony/plugins/orangehrmCorePlugin/test/authorization/manager/BasicUserRoleManagerTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/service/UserRoleManagerServiceTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/ButtonTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/CellTest.php -text
@@ -4133,6 +4134,7 @@ symfony/plugins/orangehrmCorePlugin/test/dao/ConfigDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/factory/SimpleUserRoleFactoryTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/AccessFlowStateMachineDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/AccessFlowStateMachineService.yml -text
+symfony/plugins/orangehrmCorePlugin/test/fixtures/BasicUserRoleManager.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ConfigDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportGeneratorService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableDao.yml -text

@@ -117,6 +117,17 @@ class SystemUserDao extends BaseDao {
             throw new DaoException($e->getMessage(), $e->getCode(), $e);
         }
     }
+    
+    public function getUserRole($roleName) {
+        try {
+            $query = Doctrine_Query:: create()->from('UserRole ur')
+                    ->where('ur.name = ?', $roleName);
+
+            return $query->fetchOne();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
 
     /**
      * Get Count of Search Query 
