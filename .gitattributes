@@ -4166,6 +4166,7 @@ symfony/plugins/orangehrmCorePlugin/web/css/ohrmWidgetSelectableGroupDropDown.cs
 symfony/plugins/orangehrmCorePlugin/web/js/_ohrmList.js -text
 symfony/plugins/orangehrmCorePlugin/web/js/nationality.js -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text
+symfony/plugins/orangehrmPimPlugin/config/list_component.yml -text
 symfony/plugins/orangehrmPimPlugin/config/routing.yml -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/CustomFieldsDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/EmployeeDao.php -text
