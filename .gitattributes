@@ -890,6 +890,10 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/Report.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ReportGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ReportGroupTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ReportTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/Screen.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/ScreenPermission.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/ScreenPermissionTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/ScreenTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/SelectedCompositeDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/SelectedCompositeDisplayFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/SelectedDisplayField.class.php -text
@@ -924,6 +928,8 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseFilterField.class.php -t
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseGroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseReport.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseReportGroup.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseScreen.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseScreenPermission.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseSelectedCompositeDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseSelectedDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseSelectedDisplayFieldGroup.class.php -text
@@ -4039,6 +4045,10 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReport.class.php -t
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReportGroup.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReportGroupTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReportTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginScreen.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginScreenPermission.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginScreenPermissionTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginScreenTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginSelectedCompositeDisplayField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginSelectedCompositeDisplayFieldTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginSelectedDisplayField.class.php -text
