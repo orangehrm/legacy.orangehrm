@@ -18,6 +18,10 @@ SystemUser:
   4: {id: 5, user_role_id: 2, emp_number: 5, user_name: 'Indiran', user_password: 'Indiran'}
   5: {id: 6, user_role_id: 1, user_name: 'Admin', user_password: 'Admin'}
 
+ReportingMethod:
+  0: {id: 1, name: 'Direct'}
+  1: {id: 2, name: 'Indirect'}
+      
 ReportTo:
   0: {supervisorId: 2, subordinateId: 3, reportingMethodId: 1}
   1: {supervisorId: 4, subordinateId: 3, reportingMethodId: 1}
