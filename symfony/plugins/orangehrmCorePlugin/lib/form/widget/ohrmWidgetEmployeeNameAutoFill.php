@@ -58,7 +58,6 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
                 $("#%s").autocomplete(employees, {
 
                         formatItem: function(item) {
-                            $("#%s").val('');
                             return item.name;
                         }
                         ,matchContains:true
@@ -79,7 +78,6 @@ EOF
                         $typeHint,
                         $this->getHtmlId($name),
                         $this->getHtmlId($name),
-                        $hiddenFieldId,
                         $hiddenFieldId);
 
         return "\n\n" . $html . "\n\n" . $this->getHiddenFieldHtml($name) . "\n\n" . $javaScript . "\n\n";

@@ -1,6 +1,6 @@
 $(document).ready(function() {
-   
     
+
     $('#btnSave').click(function() {
         
         if ($('#btnSave').val() == user_edit){
@@ -22,17 +22,6 @@ $(document).ready(function() {
         disableWidgets();
     }
     
-    $("#systemUser_employeeName").autocomplete(employees, {
-
-            formatItem: function(item) {
-                           return item.name;
-                    }
-                    ,matchContains:true
-            }).result(function(event, item) {
-                $('#systemUser_employeeId').val(item.id);
-            }
-	);
-            
      $("#systemUser_password").password({
 	           score: '.score' 
 	       });
@@ -47,6 +36,13 @@ $(document).ready(function() {
      $('#btnCancel').click(function() {
         window.location.replace(viewSystemUserUrl+'?userId='+userId);
     });
+    
+    /* Setting default employee ID */
+    
+    if ($('#systemUser_employeeId').val() != '') {
+        $('#systemUser_employeeName_id').val($('#systemUser_employeeId').val());
+    }        
+    
 });
 
 function disableWidgets(){
@@ -65,7 +61,7 @@ function enableWidgets(){
 
 $.validator.addMethod("validEmployeeName", function(value, element) {                 
                	 var empName    =   trim($('#systemUser_employeeName').val());
-                 var empId      =   $('#systemUser_employeeId').val();  
+                 var empId      =   $('#systemUser_employeeName_id').val();  
                  
                  if(empName.length > 0 && empId == ''){
                      return false;

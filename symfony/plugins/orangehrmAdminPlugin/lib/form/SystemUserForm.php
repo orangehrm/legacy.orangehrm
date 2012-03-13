@@ -41,7 +41,7 @@ class SystemUserForm extends BaseForm {
         $this->setWidgets(array(
             'userId' => new sfWidgetFormInputHidden(),
             'userType' => new sfWidgetFormSelect(array('choices' => $userRoleList)),
-            'employeeName' => new sfWidgetFormInputText(),
+            'employeeName' => new ohrmWidgetEmployeeNameAutoFill(),
             'employeeId' => new sfWidgetFormInputHidden(),
             'userName' => new sfWidgetFormInputText(),
             'password' => new sfWidgetFormInputPassword(),
@@ -53,7 +53,8 @@ class SystemUserForm extends BaseForm {
             'userId' => new sfValidatorNumber(array('required' => false)),
             'userType' => new sfValidatorString(array('required' => true, 'max_length' => 3)),
             'employeeName' => new sfValidatorString(array('required' => true, 'max_length' => 200)),
-            'employeeId' => new sfValidatorString(array('required' => true)),
+            'employeeName_id' => new sfValidatorString(array('required' => false)),
+            'employeeId' => new sfValidatorString(array('required' => false)),
             'userName' => new sfValidatorString(array('required' => true, 'max_length' => 20)),
             'password' => new sfValidatorString(array('required' => false, 'max_length' => 20)),
             'confirmPassword' => new sfValidatorString(array('required' => false, 'max_length' => 20)),
@@ -126,7 +127,7 @@ class SystemUserForm extends BaseForm {
         }
 
         $user->setUserRoleId($this->getValue('userType'));
-        $user->setEmpNumber($this->getValue('employeeId'));
+        $user->setEmpNumber($this->getValue('employeeName_id'));
         $user->setUserName($this->getValue('userName'));
 
         $user->setStatus($this->getValue('status'));
