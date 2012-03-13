@@ -3448,7 +3448,7 @@ symfony/plugins/orangehrmAdminPlugin/lib/service/ProjectService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/SkillService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/WorkShiftService.php -text
-symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/actions.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/actions.class.bak.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addCustomerAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addProjectActivityAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/changeUserPasswordAction.class.php -text
@@ -3475,6 +3475,7 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/deleteSubunitAction.c
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/deleteSystemUsersAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/deleteWorkShiftsAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/employmentStatusAction.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/getActivitiesRelatedToAProjectAjaxAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/getActivityListJasonAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/getCurrencyDetailsJsonAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/getEmploymentStatusJsonAction.class.php -text
@@ -3490,6 +3491,7 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/getWorkShiftEmpInfoJs
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/getWorkShiftInfoJsonAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/isUniqueUserJsonAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/jobCategoryAction.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/listMailConfigurationAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/localizationAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/locationAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/membershipAction.class.php -text
@@ -3499,6 +3501,7 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/pimCsvImportAction.cl
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/sampleCsvDownloadAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveCustomerJsonAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveJobTitleAction.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveMailConfigurationAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/savePayGradeCurrencyAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveProjectAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSubscriberAction.class.php -text
