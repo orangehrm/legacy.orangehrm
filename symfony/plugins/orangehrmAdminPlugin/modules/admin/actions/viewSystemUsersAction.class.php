@@ -136,10 +136,11 @@ class viewSystemUsersAction extends sfAction {
     }
 
     private function _setSearchClues($sortField, $sortOrder, $offset, $limit) {
+        
         $searchClues = array(
             'userName' => $this->form->getValue('userName'),
             'userType' => $this->form->getValue('userType'),
-            'employeeId' => $this->form->getValue('employeeId'),
+            'employeeId' => $this->form->getValue('employeeName_id'),
             'status' => $this->form->getValue('status'),
             'location' => $this->form->getValue('location'),
             'sortField' => $sortField,

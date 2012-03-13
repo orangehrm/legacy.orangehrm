@@ -49,22 +49,9 @@ $(document).ready(function() {
     $('#dialogCancelBtn').click(function() {
         $("#deleteConfirmation").dialog("close");
     });
-
-    
-    $("#searchSystemUser_employeeName").autocomplete(employees, {
-
-        formatItem: function(item) {
-            return item.name;
-        }
-        ,
-        matchContains:true
-    }).result(function(event, item) {
-        $('#searchSystemUser_employeeId').val(item.id);
-    }
-    );
             
     if ($("#searchSystemUser_employeeName").val() == '') {
-        $('#searchSystemUser_employeeId').val('');
+        $('#searchSystemUser_employeeName_id').val('');
         $("#searchSystemUser_employeeName").val(lang_typeforhint)
         .addClass("inputFormatHint");
     }
@@ -86,7 +73,7 @@ $(document).ready(function() {
     
     $('#searchSystemUser_employeeName').click(function(){
         if($('#searchSystemUser_employeeName').val() == lang_typeforhint){
-            $('#searchSystemUser_employeeId').val('');
+            $('#searchSystemUser_employeeName_id').val('');
             $('#searchSystemUser_employeeName').val("")
             $('#searchSystemUser_employeeName').removeClass("inputFormatHint");
         }
@@ -95,19 +82,25 @@ $(document).ready(function() {
     $('#searchSystemUser_employeeName').keyup(function(){
         $('#searchSystemUser_employeeId').val('');
     });
+    
+    /* Setting default employee ID */
+    
+    if ($('#searchSystemUser_employeeId').val() != '') {
+        $('#searchSystemUser_employeeName_id').val($('#searchSystemUser_employeeId').val());
+    }     
 
 });
 
 $.validator.addMethod("validEmployeeName", function(value, element) {                 
     var empName    =   trim($('#searchSystemUser_employeeName').val());
-    var empId      =   $('#searchSystemUser_employeeId').val();  
+    var empId      =   $('#searchSystemUser_employeeName_id').val();  
                  
     if(empName != lang_typeforhint && empName.length > 0  && empId == ''){
         return false;
     }else{
         return true;
     }
-                
+    
 });
             
 

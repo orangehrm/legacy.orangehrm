@@ -129,7 +129,7 @@ class SearchSystemUserForm extends BaseForm {
 
         $widgets['userName'] = new sfWidgetFormInputText();
         $widgets['userType'] = new sfWidgetFormSelect(array('choices' => $userRoleList));
-        $widgets['employeeName'] = new sfWidgetFormInputText();
+        $widgets['employeeName'] = new ohrmWidgetEmployeeNameAutoFill();
         $widgets['employeeId'] = new sfWidgetFormInputHidden();
         $widgets['status'] = new sfWidgetFormSelect(array('choices' => $statusList));
 
@@ -146,6 +146,7 @@ class SearchSystemUserForm extends BaseForm {
         $validators['userName'] = new sfValidatorString(array('required' => false));
         $validators['userType'] = new sfValidatorString(array('required' => false));
         $validators['employeeName'] = new sfValidatorString(array('required' => false));
+        $validators['employeeName_id'] = new sfValidatorString(array('required' => false));
         $validators['employeeId'] = new sfValidatorString(array('required' => false));
         $validators['status'] = new sfValidatorString(array('required' => false));
         

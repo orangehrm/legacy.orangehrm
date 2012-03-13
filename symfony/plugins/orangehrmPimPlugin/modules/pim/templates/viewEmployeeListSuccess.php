@@ -85,7 +85,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 
     $(document).ready(function() {
 
-        var employees = <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?> ;
         var supervisors = <?php echo str_replace('&#039;', "'", $form->getSupervisorListAsJson()) ?>;
         
         $('#btnDelete').attr('disabled', 'disabled');
@@ -116,7 +115,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             $("#empsearch_id").val('<?php echo __("Type Employee Id") . "..."; ?>')
             .addClass("inputFormatHint");
         }
-
 
         if ($("#empsearch_employee_name").val() == '') {
             $("#empsearch_employee_name").val('<?php echo __("Type for hints") . "..."; ?>')

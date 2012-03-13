@@ -106,8 +106,6 @@
     var addUserUrl          =   '<?php echo url_for('admin/saveSystemUser'); ?>';
     var viewUserUrl          =   '<?php echo url_for('admin/viewSystemUsers'); ?>';
     var lang_typeforhint    =   '<?php echo __("Type for hints") . "..."; ?>';
-    var employees           =   <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?> ;
-    var employeesArray      =   eval(employees);
     var user_ValidEmployee  =   '<?php echo __(ValidationMessages::INVALID); ?>';
 
 </script>
