@@ -37,6 +37,22 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
                 
         $this->manager = new BasicUserRoleManager();
     }
+    
+    public function testGetAccessibleEmployeesAdmin() {
+        
+    }
+
+    public function testGetAccessibleEmployeesSupervisor() {
+        
+    }
+    
+    public function testGetAccessibleEmployeesESS() {
+        
+    }    
+    
+    public function testGetAccessibleSystemUsers() {
+        
+    }
 
     public function testGetUserRoles() {
         $this->manager = new TestBasicUserRoleManager();

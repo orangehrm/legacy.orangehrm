@@ -36,10 +36,40 @@ class ScreenPermissionServiceTest extends PHPUnit_Framework_TestCase {
     
     /**
      * Test case for when no permissions are defined for given user role(s).
-     * Behavior is to allow access, unless prohibited through a rule in the database.
+     * Behavior is to allow access if the screen is not defined, unless prohibited through a rule in the database.
      * This allows to progressively update the rules in code. 
      */
-    public function testGetScreenPermissionsNone() {
+    public function testGetScreenPermissionsNoneWithNoScreen() {
+        $module = 'xim';
+        $action = 'doThis';
+        $roles = '';
+        
+        $permissionDao = $this->getMock('ScreenPermissionDao', array('getScreenPermissions'));
+        $emptyDoctrineCollection = new Doctrine_Collection('ScreenPermission');
+        
+        $permissionDao->expects($this->once())
+                ->method('getScreenPermissions')
+                ->with($module, $action, $roles)
+                ->will($this->returnValue($emptyDoctrineCollection));
+        
+        $this->service->setScreenPermissionDao($permissionDao);
+        
+        $screenDao = $this->getMock('ScreenDao', array('getScreen'));
+        $screenDao->expects($this->once())
+                ->method('getScreen')
+                ->with($module, $action)
+                ->will($this->returnValue(false));        
+        
+        $this->service->setScreenDao($screenDao);
+        
+        $permissions = $this->service->getScreenPermissions($module, $action, $roles);
+        
+        $this->assertTrue($permissions instanceof ResourcePermission);
+        $this->verifyPermissions($permissions, true, true, true, true);
+
+    }
+    
+    public function testGetScreenPermissionsNoneWithScreenDefined() {
         $module = 'xim';
         $action = 'doThis';
         $roles = '';
@@ -54,10 +84,21 @@ class ScreenPermissionServiceTest extends PHPUnit_Framework_TestCase {
         
         $this->service->setScreenPermissionDao($mockDao);
         
+        $screen = new Screen();
+        $screen->setName('abc');
+        
+        $screenDao = $this->getMock('ScreenDao', array('getScreen'));
+        $screenDao->expects($this->once())
+                ->method('getScreen')
+                ->with($module, $action)
+                ->will($this->returnValue($screen));        
+        
+        $this->service->setScreenDao($screenDao);        
+        
         $permissions = $this->service->getScreenPermissions($module, $action, $roles);
         
         $this->assertTrue($permissions instanceof ResourcePermission);
-        $this->verifyPermissions($permissions, true, true, true, true);
+        $this->verifyPermissions($permissions, false, false, false, false);
 
     }
     

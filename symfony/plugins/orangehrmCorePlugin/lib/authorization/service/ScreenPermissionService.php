@@ -24,8 +24,20 @@
  */
 class ScreenPermissionService {
     
-    private $screenPermissionDao;
+    private $screenPermissionDao;    
+    private $screenDao;
     
+    public function getScreenDao() {
+        if (empty($this->screenDao)) {
+            $this->screenDao = new ScreenDao();
+        }         
+        return $this->screenDao;
+    }
+
+    public function setScreenDao($screenDao) {       
+        $this->screenDao = $screenDao;
+    }
+
     public function getScreenPermissionDao() {
         if (empty($this->screenPermissionDao)) {
             $this->screenPermissionDao = new ScreenPermissionDao();
@@ -49,10 +61,18 @@ class ScreenPermissionService {
         $screenPermissions = $this->getScreenPermissionDao()->getScreenPermissions($module, $actionUrl, $roles);
         
         $permission = null;
-        
+
         // if empty, give all permissions
         if (count($screenPermissions) == 0) {
-            $permission = new ResourcePermission(true, true, true, true);
+            
+            // If screen not defined, give all permissions, if screen is defined, 
+            // but don't give any permissions.
+            $screen = $this->getScreenDao()->getScreen($module, $actionUrl);
+            if ($screen === false) {
+                $permission = new ResourcePermission(true, true, true, true);
+            } else {
+                $permission = new ResourcePermission(false, false, false, false);
+            }
         } else {
             $read = false;
             $create = false;            

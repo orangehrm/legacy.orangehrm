@@ -26,8 +26,10 @@ class ScreenDao {
     
     /**
      * Get screen for given module and action
+     * 
      * @param string $module Module Name
      * @param string $actionUrl Action
+     * @return Screen object or FALSE if not found
      */
     public function getScreen($module, $action) {
         try {           
