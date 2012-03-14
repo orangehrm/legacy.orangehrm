@@ -487,8 +487,9 @@ class LeaveSummaryForm extends sfForm {
         $widgets['cmbLeaveType'] = new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeChoices()));
 
         if ($this->hasAdministrativeFilters()) {
-            $widgets['txtEmpName'] = new sfWidgetFormInput(array(), array('class' => ''));
-            $widgets['cmbEmpId'] = new sfWidgetFormInputHidden();
+            //$widgets['txtEmpName'] = new sfWidgetFormInput(array(), array('class' => ''));
+            $widgets['txtEmpName'] = new ohrmWidgetEmployeeNameAutoFill();
+            //$widgets['cmbEmpId'] = new sfWidgetFormInputHidden();
             $widgets['cmbJobTitle'] = new sfWidgetFormChoice(array('choices' => $this->getJobTitleChoices()));
             $widgets['cmbLocation'] = new sfWidgetFormChoice(array('choices' => $this->getLocationChoices()));
             $widgets['cmbSubDivision'] = new ohrmWidgetSubDivisionList();
@@ -520,7 +521,8 @@ class LeaveSummaryForm extends sfForm {
             $validators['cmbSubDivision'] = new sfValidatorString(array('required' => false)); // TODO: Improve this validator
             $validators['cmbWithTerminated'] = new sfValidatorString(array('required' => false));
             $validators['txtEmpName'] = new sfValidatorString(array('required' => false));
-            $validators['cmbEmpId'] = new sfValidatorString(array('required' => false));
+            $validators['txtEmpName_id'] = new sfValidatorString(array('required' => false));
+//            $validators['cmbEmpId'] = new sfValidatorString(array('required' => false));
         }
 
         $validators['cmbRecordsCount'] = new sfValidatorChoice(array('choices' => array_keys($this->getRecordsPerPageChoices())));

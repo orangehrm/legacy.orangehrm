@@ -67,37 +67,10 @@ class SearchSystemUserForm extends BaseForm {
         return $list;
     }
 
-    public function getEmployeeListAsJson() {
-
-        $jsonArray = array();
-        $employeeService = new EmployeeService();
-        $employeeService->setEmployeeDao(new EmployeeDao());
-
-        $employeeList = $employeeService->getEmployeeList();
-
-        $employeeUnique = array();
-        foreach ($employeeList as $employee) {
-            $workShiftLength = 0;
-
-            if (!isset($employeeUnique[$employee->getEmpNumber()])) {
-
-                $name = $employee->getFullName();
-
-                $employeeUnique[$employee->getEmpNumber()] = $name;
-                $jsonArray[] = array('name' => $name, 'id' => $employee->getEmpNumber());
-            }
-        }
-
-        $jsonString = json_encode($jsonArray);
-
-        return $jsonString;
-    }
-
     public function setDefaultDataToWidgets($searchClues) {
         $this->setDefault('userName', $searchClues['userName']);
         $this->setDefault('userType', $searchClues['userType']);
         $this->setDefault('employeeName', $searchClues['employeeName']);
-        $this->setDefault('employeeId', $searchClues['employeeId']);
         $this->setDefault('status', $searchClues['status']);
     }
 
@@ -130,7 +103,6 @@ class SearchSystemUserForm extends BaseForm {
         $widgets['userName'] = new sfWidgetFormInputText();
         $widgets['userType'] = new sfWidgetFormSelect(array('choices' => $userRoleList));
         $widgets['employeeName'] = new ohrmWidgetEmployeeNameAutoFill();
-        $widgets['employeeId'] = new sfWidgetFormInputHidden();
         $widgets['status'] = new sfWidgetFormSelect(array('choices' => $statusList));
 
         return $widgets;
@@ -145,9 +117,7 @@ class SearchSystemUserForm extends BaseForm {
 
         $validators['userName'] = new sfValidatorString(array('required' => false));
         $validators['userType'] = new sfValidatorString(array('required' => false));
-        $validators['employeeName'] = new sfValidatorString(array('required' => false));
-        $validators['employeeName_id'] = new sfValidatorString(array('required' => false));
-        $validators['employeeId'] = new sfValidatorString(array('required' => false));
+        $validators['employeeName'] = new ohrmValidatorEmployeeNameAutoFill();
         $validators['status'] = new sfValidatorString(array('required' => false));
         
         return $validators;

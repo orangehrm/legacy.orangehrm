@@ -38,8 +38,6 @@ class viewSystemUsersAction extends sfAction {
      */
     public function execute($request) {
 
-
-
         $isPaging = $request->getParameter('pageNo');
         $sortField = $request->getParameter('sortField');
         $sortOrder = $request->getParameter('sortOrder');
@@ -54,8 +52,6 @@ class viewSystemUsersAction extends sfAction {
         
         $limit = SystemUser::NO_OF_RECORDS_PER_PAGE;
         $offset = ($pageNumber >= 1) ? (($pageNumber - 1) * $limit) : ($request->getParameter('pageNo', 1) - 1) * $limit;
-
-
 
         $searchClues = $this->_setSearchClues($sortField, $sortOrder, $offset, $limit);
 
@@ -130,10 +126,12 @@ class viewSystemUsersAction extends sfAction {
 
     private function _setSearchClues($sortField, $sortOrder, $offset, $limit) {
         
+        $empData = $this->form->getValue('employeeName');
+        
         $searchClues = array(
             'userName' => $this->form->getValue('userName'),
             'userType' => $this->form->getValue('userType'),
-            'employeeId' => $this->form->getValue('employeeName_id'),
+            'employeeId' => $empData['empId'],
             'status' => $this->form->getValue('status'),
             'location' => $this->form->getValue('location'),
             'sortField' => $sortField,

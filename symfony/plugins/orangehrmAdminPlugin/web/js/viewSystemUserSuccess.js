@@ -50,12 +50,6 @@ $(document).ready(function() {
         $("#deleteConfirmation").dialog("close");
     });
             
-    if ($("#searchSystemUser_employeeName").val() == '') {
-        $('#searchSystemUser_employeeName_id').val('');
-        $("#searchSystemUser_employeeName").val(lang_typeforhint)
-        .addClass("inputFormatHint");
-    }
-    
     $('#searchBtn').click(function() {
         if(isValidForm()){         
             $('#search_form').submit();
@@ -64,36 +58,18 @@ $(document).ready(function() {
     
     $('#resetBtn').click(function() {
                   
-        $("#searchSystemUser_employeeName").val(lang_typeforhint).addClass("inputFormatHint");
+        $("#searchSystemUser_employeeName_empName").val(lang_typeforhint).addClass("inputFormatHint");
         $("#searchSystemUser_userName").val('');
         $("#searchSystemUser_userType option[value='']").attr("selected", "selected");
         $("#searchSystemUser_status option[value='']").attr("selected", "selected");
         window.location.replace(viewUserUrl);
     });
     
-    $('#searchSystemUser_employeeName').click(function(){
-        if($('#searchSystemUser_employeeName').val() == lang_typeforhint){
-            $('#searchSystemUser_employeeName_id').val('');
-            $('#searchSystemUser_employeeName').val("")
-            $('#searchSystemUser_employeeName').removeClass("inputFormatHint");
-        }
-    }); 
-    
-    $('#searchSystemUser_employeeName').keyup(function(){
-        $('#searchSystemUser_employeeId').val('');
-    });
-    
-    /* Setting default employee ID */
-    
-    if ($('#searchSystemUser_employeeId').val() != '') {
-        $('#searchSystemUser_employeeName_id').val($('#searchSystemUser_employeeId').val());
-    }     
-
 });
 
 $.validator.addMethod("validEmployeeName", function(value, element) {                 
-    var empName    =   trim($('#searchSystemUser_employeeName').val());
-    var empId      =   $('#searchSystemUser_employeeName_id').val();  
+    var empName    =   trim($('#searchSystemUser_employeeName_empName').val());
+    var empId      =   $('#searchSystemUser_employeeName_empName_empId').val();  
                  
     if(empName != lang_typeforhint && empName.length > 0  && empId == ''){
         return false;

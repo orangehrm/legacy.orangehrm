@@ -118,32 +118,18 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             .addClass("inputFormatHint");
         }
 
-        if ($("#empsearch_employee_name").val() == '') {
-            $("#empsearch_employee_name").val('<?php echo __("Type for hints") . "..."; ?>')
-            .addClass("inputFormatHint");
-        }
         if ($("#empsearch_supervisor_name").val() == '') {
             $("#empsearch_supervisor_name").val('<?php echo __("Type for hints") . "..."; ?>')
             .addClass("inputFormatHint");
         }
 
-        $("#empsearch_id, #empsearch_employee_name, #empsearch_supervisor_name").one('focus', function() {
+        $("#empsearch_id, #empsearch_supervisor_name").one('focus', function() {
 
             if ($(this).hasClass("inputFormatHint")) {
                 $(this).val("");
                 $(this).removeClass("inputFormatHint");
             }
         });
-
-        //Auto complete
-        $("#empsearch_employee_name").autocomplete(employees, {
-            formatItem: function(item) {
-                return item.name;
-            }
-            ,matchContains:true
-        }).result(function(event, item) {
-        }
-    );
 
         $("#empsearch_supervisor_name").autocomplete(supervisors, {
             formatItem: function(item) {
@@ -160,7 +146,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         });
 
         $('#resetBtn').click(function(){
-            $("#empsearch_employee_name").val('');
+            $("#empsearch_employee_name_empName").val('');
             $("#empsearch_supervisor_name").val('');
             $("#empsearch_id").val('');
             $("#empsearch_job_title").val('0');

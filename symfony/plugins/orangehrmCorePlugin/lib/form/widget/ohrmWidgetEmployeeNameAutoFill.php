@@ -29,8 +29,11 @@
 class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
 
     public function render($name, $value = null, $attributes = array(), $errors = array()) {
+
+        $empNameValue   = isset($value['empName'])?$value['empName']:'';
+        $empIdValue     = isset($value['empId'])?$value['empId']:'';        
         
-        $html           = parent::render($name, $value, $attributes, $errors);
+        $html           = parent::render($name . '[empName]', $empNameValue, $attributes, $errors);
         $typeHint       = __('Type for hints') . '...';
         $hiddenFieldId  = $this->getHiddenFieldId($name);
 
@@ -40,33 +43,37 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
             var employees = %s;
 
             $(document).ready(function() {
-
-                if ($("#%s").val() == '') {
-                    $("#%s").val('%s')
-                    .addClass("inputFormatHint");
+            
+                var nameField = $("#%s");
+                var idStoreField = $("#%s");
+                var typeHint = '%s';
+                var hintClass = 'inputFormatHint';
+            
+                if (nameField.val() == '') {
+                    nameField.val(typeHint).addClass(hintClass);
                 }
 
-                $("#%s").one('focus', function() {
+                nameField.one('focus', function() {
 
-                    if ($(this).hasClass("inputFormatHint")) {
+                    if ($(this).hasClass(hintClass)) {
                         $(this).val("");
-                        $(this).removeClass("inputFormatHint");
+                        $(this).removeClass(hintClass);
                     }
                     
                 });
-                
-                $("#%s").autocomplete(employees, {
+
+                nameField.autocomplete(employees, {
 
                         formatItem: function(item) {
                             return item.name;
                         }
                         ,matchContains:true
                     }).result(function(event, item) {
-                        $("#%s").val(item.id);
+                        idStoreField.val(item.id);
                     }
                     
                 );
-
+                
             }); // End of $(document).ready
 
         </script>
@@ -74,28 +81,26 @@ EOF
                         ,
                         $this->getEmployeeListAsJson($this->getEmployeeList()),
                         $this->getHtmlId($name),
-                        $this->getHtmlId($name),
-                        $typeHint,
-                        $this->getHtmlId($name),
-                        $this->getHtmlId($name),
-                        $hiddenFieldId);
+                        $hiddenFieldId,
+                        $typeHint);
 
-        return "\n\n" . $html . "\n\n" . $this->getHiddenFieldHtml($name) . "\n\n" . $javaScript . "\n\n";
+        return "\n\n" . $html . "\n\n" . $this->getHiddenFieldHtml($name, $empIdValue) . "\n\n" . $javaScript . "\n\n";
         
     }
     
-    protected function getHiddenFieldHtml($name) {
+    protected function getHiddenFieldHtml($name, $value) {
         
-        $hiddenName = substr($name, 0, strlen($name) - 1) . '_id]';
+        //$hiddenName = substr($name, 0, strlen($name) - 1) . '_id]';
+        $hiddenName = $name . '[empId]';
         $hiddenId   = $this->getHiddenFieldId($name);
         
-        return "<input type=\"hidden\" name=\"$hiddenName\" id=\"$hiddenId\" value=\"\" />";
+        return "<input type=\"hidden\" name=\"$hiddenName\" id=\"$hiddenId\" value=\"$value\" />";
         
     }
     
     protected function getHiddenFieldId($name) {
         
-        return $this->getHtmlId($name) . '_id';
+        return $this->getHtmlId($name) . '_empId';
         
     }
 
@@ -105,7 +110,7 @@ EOF
             return $this->attributes['id'];
         }
         
-        return $this->generateId($name);
+        return $this->generateId($name) . '_empName';
         
     }
     

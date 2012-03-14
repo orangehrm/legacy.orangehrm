@@ -42,7 +42,6 @@ class SystemUserForm extends BaseForm {
             'userId' => new sfWidgetFormInputHidden(),
             'userType' => new sfWidgetFormSelect(array('choices' => $userRoleList)),
             'employeeName' => new ohrmWidgetEmployeeNameAutoFill(),
-            'employeeId' => new sfWidgetFormInputHidden(),
             'userName' => new sfWidgetFormInputText(),
             'password' => new sfWidgetFormInputPassword(),
             'confirmPassword' => new sfWidgetFormInputPassword(),
@@ -52,9 +51,7 @@ class SystemUserForm extends BaseForm {
         $this->setValidators(array(
             'userId' => new sfValidatorNumber(array('required' => false)),
             'userType' => new sfValidatorString(array('required' => true, 'max_length' => 3)),
-            'employeeName' => new sfValidatorString(array('required' => true, 'max_length' => 200)),
-            'employeeName_id' => new sfValidatorString(array('required' => false)),
-            'employeeId' => new sfValidatorString(array('required' => false)),
+            'employeeName' => new ohrmValidatorEmployeeNameAutoFill(),
             'userName' => new sfValidatorString(array('required' => true, 'max_length' => 20)),
             'password' => new sfValidatorString(array('required' => false, 'max_length' => 20)),
             'confirmPassword' => new sfValidatorString(array('required' => false, 'max_length' => 20)),
@@ -77,8 +74,7 @@ class SystemUserForm extends BaseForm {
 
         $this->setDefault('userId', $systemUser->getId());
         $this->setDefault('userType', $systemUser->getUserRoleId());
-        $this->setDefault('employeeName', $systemUser->getEmployee()->getFullName());
-        $this->setDefault('employeeId', $systemUser->getEmpNumber());
+        $this->setDefault('employeeName', array('empName' => $systemUser->getEmployee()->getFullName(), 'empId' => $systemUser->getEmployee()->getEmpNumber()));
         $this->setDefault('userName', $systemUser->getUserName());
         $this->setDefault('status', $systemUser->getStatus());
     }
@@ -127,7 +123,8 @@ class SystemUserForm extends BaseForm {
         }
 
         $user->setUserRoleId($this->getValue('userType'));
-        $user->setEmpNumber($this->getValue('employeeName_id'));
+        $empData = $this->getValue('employeeName');
+        $user->setEmpNumber($empData['empId']);
         $user->setUserName($this->getValue('userName'));
 
         $user->setStatus($this->getValue('status'));

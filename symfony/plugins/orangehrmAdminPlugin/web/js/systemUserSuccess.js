@@ -25,23 +25,10 @@ $(document).ready(function() {
      $("#systemUser_password").password({
 	           score: '.score' 
 	       });
-
-    $('#systemUser_employeeName').click(function(){
-        if($('#systemUser_employeeName').val() == user_typeForHints){
-            $('#systemUser_employeeName').val("")
-            $('#systemUser_employeeName').removeClass("inputFormatHint");
-        }
-        }); 
         
      $('#btnCancel').click(function() {
         window.location.replace(viewSystemUserUrl+'?userId='+userId);
     });
-    
-    /* Setting default employee ID */
-    
-    if ($('#systemUser_employeeId').val() != '') {
-        $('#systemUser_employeeName_id').val($('#systemUser_employeeId').val());
-    }        
     
 });
 
@@ -60,8 +47,8 @@ function enableWidgets(){
 
 
 $.validator.addMethod("validEmployeeName", function(value, element) {                 
-               	 var empName    =   trim($('#systemUser_employeeName').val());
-                 var empId      =   $('#systemUser_employeeName_id').val();  
+               	 var empName    =   trim($('#systemUser_employeeName_empName').val());
+                 var empId      =   $('#systemUser_employeeName_empId').val();  
                  
                  if(empName.length > 0 && empId == ''){
                      return false;
@@ -102,7 +89,7 @@ function isValidForm(){
                 maxlength: 20,
                 equalTo: "#systemUser_password"
             },
-            'systemUser[employeeName]' : {
+            'systemUser[employeeName][empName]' : {
                 required:true,
                 maxlength: 200,
                 validEmployeeName: true
@@ -126,7 +113,7 @@ function isValidForm(){
                 maxlength: user_Max20Chars,
                 equalTo: user_samePassword
             },
-            'systemUser[employeeName]' : {
+            'systemUser[employeeName][empName]' : {
                 required: user_EmployeeNameRequired,
                 validEmployeeName: user_ValidEmployee
             }
