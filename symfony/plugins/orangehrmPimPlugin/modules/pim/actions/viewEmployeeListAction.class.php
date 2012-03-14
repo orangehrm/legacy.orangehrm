@@ -49,10 +49,8 @@ class viewEmployeeListAction extends basePimAction {
             return $this->forward("pim", "unauthorized");
         }
         
-        $this->mode = $mode = $this->getMode();
-        
         $empNumber = $request->getParameter('empNumber');
-        $isPaging = $request->getParameter('pageNo');
+        $isPaging = $request->getParameter('hdnAction') == 'search' ? 1 : $request->getParameter('pageNo', 1);
 
         $pageNumber = $isPaging;
         if (!empty($empNumber) && $this->getUser()->hasAttribute('pageNumber')) {
@@ -62,7 +60,8 @@ class viewEmployeeListAction extends basePimAction {
         $sortField = $request->getParameter('sortField');
         $sortOrder = $request->getParameter('sortOrder');
 
-        $noOfRecords = JobTitle::NO_OF_RECORDS_PER_PAGE;
+        $noOfRecords = sfConfig::get('app_items_per_page');
+
         $offset = ($pageNumber >= 1) ? (($pageNumber - 1) * $noOfRecords) : ($request->getParameter('pageNo', 1) - 1) * $noOfRecords;
 
          // Reset filters if requested to
@@ -123,30 +122,14 @@ class viewEmployeeListAction extends basePimAction {
         ohrmListComponent::setConfigurationFactory($this->getListConfigurationFactory());
         ohrmListComponent::setActivePlugin('orangehrmPimPlugin');
         ohrmListComponent::setListData($employeeList);
-//        ohrmListComponent::setItemsPerPage(sfConfig::get('app_items_per_page'));
         ohrmListComponent::setItemsPerPage($noOfRecords);
         ohrmListComponent::setNumberOfRecords($count);      
         ohrmListComponent::setPageNumber($page);
     }
     
     protected function getListConfigurationFactory() {
-        EmployeeListConfigurationFactory::setListMode($this->mode);
-        $configurationFactory = new EmployeeListConfigurationFactory();
-        
+        $configurationFactory = new EmployeeListConfigurationFactory();        
         return $configurationFactory;
-    }
-    
-    
-    protected function getMode() {
-        $mode ='';
-        
-        if ($this->adminMode) {
-            $mode = 'adminMode';
-        } else if($this->supervisorMode) {
-            $mode = 'supervisorMode';
-        }
-        
-        return $mode;
     }
 
     /**

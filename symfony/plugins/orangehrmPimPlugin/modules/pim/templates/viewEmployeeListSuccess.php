@@ -45,7 +45,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     </div>
 
     <div class="searchbox">
-        <form id="search_form" method="post" action="<?php echo url_for('@employee_list'); ?>">
+        <form id="search_form" name="frmEmployeeSearch" method="post" action="<?php echo url_for('@employee_list'); ?>">
             <div id="formcontent">
                 <br class="clear"/>
                 <?php echo $form->render(); ?>  
@@ -66,6 +66,8 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                 </div>
                 <br class="clear" />
             </div>
+            <input type="hidden" name="pageNo" id="pageNo" value="" />
+            <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
         </form>
     </div>
 </div> <!-- outerbox -->
@@ -75,7 +77,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 <!-- confirmation box -->
 <div id="deleteConfirmation" title="<?php echo __('OrangeHRM - Confirmation Required'); ?>" style="display: none;">
     <?php echo __(CommonMessages::DELETE_CONFIRMATION); ?>
-    <div class="dialogButtons">
+    <div class="dialogButtons">        
         <input type="button" id="dialogDeleteBtn" class="savebutton" value="<?php echo __('Ok'); ?>" />
         <input type="button" id="dialogCancelBtn" class="savebutton" value="<?php echo __('Cancel'); ?>" />
     </div>
@@ -200,10 +202,9 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     }); //ready
     
     function submitPage(pageNo) {
-
-        document.frmHiddenParam.pageNo.value = pageNo;
-        document.frmHiddenParam.hdnAction.value = 'paging';
-        document.getElementById('frmHiddenParam').submit();
-
-    }    
+        document.frmEmployeeSearch.pageNo.value = pageNo;
+        document.frmEmployeeSearch.hdnAction.value = 'paging';
+        $('#search_form input.inputFormatHint').val('');
+        document.getElementById('search_form').submit();
+    }   
 </script>
