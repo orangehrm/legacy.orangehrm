@@ -24,15 +24,15 @@
  */
 class UserRoleManagerFactory {
     
-    protected $userRoleManager = null;
+    private static $userRoleManager = null;
     
     public static function getUserRoleManager() {
         
-        if (empty($this->userRoleManager)) {
+        if (empty(self::$userRoleManager)) {
             $userRoleManagerService = new UserRoleManagerService();
-            $this->userRoleManager = $userRoleManagerService->getUserRoleManager();
+            self::$userRoleManager = $userRoleManagerService->getUserRoleManager();
         }        
-        return $this->userRoleManager;
+        return self::$userRoleManager;
     }    
     
 }

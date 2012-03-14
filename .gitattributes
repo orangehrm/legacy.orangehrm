@@ -3955,6 +3955,7 @@ symfony/plugins/orangehrmCorePlugin/lib/action/ohrmExportableAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/orangehrmAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenPermissionDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/entity/ResourcePermission.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/AbstractUserRoleManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/BasicUserRoleManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/UserRoleManagerFactory.php -text

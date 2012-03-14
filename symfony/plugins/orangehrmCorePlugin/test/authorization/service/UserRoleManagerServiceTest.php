@@ -151,4 +151,7 @@ class UnitTestUserRoleManager extends AbstractUserRoleManager {
     protected function getUserRoles(SystemUser $user) {
         
     }    
+    public function getScreenPermissions($module, $screen) {
+        
+    }
 }

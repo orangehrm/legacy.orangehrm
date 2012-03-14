@@ -26,7 +26,19 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     
     protected $employeeService;
     protected $systemUserService;
+    protected $screenPermissionService;
     
+    public function getScreenPermissionService() {
+        if (empty($this->screenPermissionService)) {
+            $this->screenPermissionService = new ScreenPermissionService();
+        }         
+        return $this->screenPermissionService;
+    }
+
+    public function setScreenPermissionService($screenPermissionService) {
+        $this->screenPermissionService = $screenPermissionService;
+    }
+
     public function getSystemUserService() {
         if (empty($this->systemUserService)) {
             $this->systemUserService = new SystemUserService();
@@ -76,11 +88,17 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
     }
     
+    public function getScreenPermissions($module, $action) {
+        $permissions = $this->getScreenPermissionService()->getScreenPermissions($module, $action, $this->userRoles);
+        
+        return $permissions;
+    }
+    
     protected function getUserRoles(SystemUser $user) {
         
         $user = $this->getSystemUserService()->getSystemUser($user->id);
 
-        $roles[] = $user->getUserRole();
+        $roles = array($user->getUserRole());
         
         // Check for supervisor:
         $empNumber = $user->getEmpNumber();

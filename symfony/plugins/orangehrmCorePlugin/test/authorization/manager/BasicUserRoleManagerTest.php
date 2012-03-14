@@ -64,8 +64,48 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         
         // 5 - Admin (Default admin)
         $roles = $this->manager->getUserRolesPublic($users[5]);
-        $this->compareUserRoles(array('Admin'), $roles);
-       
+        $this->compareUserRoles(array('Admin'), $roles);       
+    }
+    
+    public function testGetScreenPermissions() {
+        
+        $userRole = new UserRole();
+        $userRole->setId(1);
+        $userRole->setName('Admin');
+        
+        $user = new SystemUser();
+        $user->setId(1);
+        $user->setEmpNumber(NULL);
+        $user->setUserRole($userRole);
+        
+        $systemUserService = $this->getMock('SystemUserService', array('getSystemUser'));
+        
+        $systemUserService->expects($this->once())
+                ->method('getSystemUser')
+                ->with($user->getId())
+                ->will($this->returnValue($user));
+        
+        $this->manager->setSystemUserService($systemUserService);
+        $this->manager->setUser($user);       
+        
+        $mockScreenPermissionService = $this->getMock('ScreenPermissionService', array('getScreenPermissions'));
+        $permission = new ResourcePermission(true, false, true, false);
+        
+        $module = 'admin';
+        $action = 'testAction';
+        $roles = array($userRole);
+        
+        $mockScreenPermissionService->expects($this->once())
+                ->method('getScreenPermissions')
+                ->with($module, $action, $roles)
+                ->will($this->returnValue($permission));
+        
+        $this->manager->setScreenPermissionService($mockScreenPermissionService);   
+        
+        $result = $this->manager->getScreenPermissions($module, $action);        
+        
+        $this->assertEquals($permission, $result);
+        
     }
     
     protected function compareUserRoles($expected, $actual) {

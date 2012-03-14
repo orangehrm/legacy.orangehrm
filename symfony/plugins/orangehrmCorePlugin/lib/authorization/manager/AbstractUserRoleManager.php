@@ -46,6 +46,8 @@ abstract class AbstractUserRoleManager {
     
     public abstract function isScreenAccessible($module, $screen, $field);
     
+    public abstract function getScreenPermissions($module, $screen);
+    
     public abstract function isFieldAccessible($module, $screen, $field);
     
     protected abstract function getUserRoles(SystemUser $user);    
