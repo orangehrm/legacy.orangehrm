@@ -3953,6 +3953,7 @@ symfony/plugins/orangehrmCorePlugin/lib/action/displayReportAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/displayReportCriteriaAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/ohrmExportableAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/orangehrmAction.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenPermissionDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/entity/ResourcePermission.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php -text
@@ -4122,6 +4123,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/definePredefinedRepor
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedReportSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text
+symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenPermissionDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/manager/BasicUserRoleManagerTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/service/ScreenPermissionServiceTest.php -text
@@ -4147,6 +4149,7 @@ symfony/plugins/orangehrmCorePlugin/test/fixtures/ConfigDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportGeneratorService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableService.yml -text
+symfony/plugins/orangehrmCorePlugin/test/fixtures/ScreenDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ScreenPermissionDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/base-service-test-data.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/sample_query_extensions.yml -text
