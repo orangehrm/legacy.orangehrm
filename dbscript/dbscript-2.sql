@@ -1263,14 +1263,30 @@ INSERT INTO `ohrm_email_notification` (`id`, `name`, `is_enable`) VALUES
 #(6, 'HSP Notifications', 0),
 (7, 'Performance Review Submissions', 0);
 
-INSERT INTO `ohrm_module` (`name`, `status`) VALUES
-('core', 1),
-('admin', 1),
-('pim', 1),
-('leave', 1),
-('time', 1),
-('attendance', 1),
-('recruitment', 1),
-('recruitmentApply', 1),
-('performance', 1),
-('benefits', 0);
+INSERT INTO `ohrm_module` (`id`, `name`, `status`) VALUES
+(1, 'core', 1),
+(2, 'admin', 1),
+(3, 'pim', 1),
+(4, 'leave', 1),
+(5, 'time', 1),
+(6, 'attendance', 1),
+(7, 'recruitment', 1),
+(8, 'recruitmentApply', 1),
+(9, 'performance', 1),
+(10, 'benefits', 0);
+
+INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
+(1, 'User List', 2, 'viewSystemUsers'),
+(2, 'Add/Edit System User', 2, 'saveSystemUser'),
+(3, 'Delete System Users', 2, 'deleteSystemUsers');
+
+INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
+(1, 1, 1, 1, 1, 1),
+(2, 1, 0, 0, 0, 0),
+(3, 1, 0, 0, 0, 0),
+(1, 2, 1, 1, 1, 1),
+(2, 2, 0, 0, 0, 0),
+(3, 2, 0, 0, 0, 0),
+(1, 3, 1, 1, 1, 1),
+(2, 3, 0, 0, 0, 0),
+(3, 3, 0, 0, 0, 0);

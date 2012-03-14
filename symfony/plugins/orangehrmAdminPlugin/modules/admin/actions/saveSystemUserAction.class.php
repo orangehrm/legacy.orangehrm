@@ -37,13 +37,6 @@ class saveSystemUserAction extends sfAction {
         return $this->form;
     }
 
-    public function preExecute() {
-        $usrObj = $this->getUser()->getAttribute('user');
-		if (!$usrObj->isAdmin()) {
-			$this->redirect('pim/viewPersonalDetails');
-		}
-    }
-
     public function execute($request) {
 
 

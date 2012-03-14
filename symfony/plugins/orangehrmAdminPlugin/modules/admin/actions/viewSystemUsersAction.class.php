@@ -21,13 +21,6 @@ class viewSystemUsersAction extends sfAction {
 
     private $systemUserService;
 
-    public function preExecute() {
-        $usrObj = $this->getUser()->getAttribute('user');
-        if (!$usrObj->isAdmin()) {
-            $this->redirect('pim/viewPersonalDetails');
-        }
-    }
-
     public function getSystemUserService() {
         $this->systemUserService = new SystemUserService();
         return $this->systemUserService;
