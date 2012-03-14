@@ -41,7 +41,8 @@ class ohrmAuthorizationFilter extends sfFilter {
                     && (sfConfig::get('sf_secure_action') == $actionName) 
                 || ('auth' == $moduleName && 
                             (($actionName == 'retryLogin') || 
-                             ($actionName == 'validateCredentials')))) {
+                             ($actionName == 'validateCredentials') || 
+                             ($actionName == 'logout')))) {
             $filterChain->execute();
 
             return;
