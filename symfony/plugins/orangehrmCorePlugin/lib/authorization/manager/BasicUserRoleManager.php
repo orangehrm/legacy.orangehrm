@@ -87,6 +87,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                 case 'Employee':
                     $ids = $this->getAccessibleEmployeeIds($role, $operation, $returnType);
                     break;
+                case 'SystemUser':
+                    $ids = $this->getAccessibleSystemUserIds($role, $operation, $returnType);
+                    break;
 
             }
             
@@ -169,5 +172,23 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $ids;
         
     }
+    
+    protected function getAccessibleSystemUserIds($role, $operation = null, $returnType = null) {
+        
+        $systemUsers = array();
+        
+        if ('Admin' == $role->getName()) {
+            $systemUsers = $this->getSystemUserService()->getSystemUsers();
+        }
+        
+        $ids = array();
+        
+        foreach ($systemUsers as $user) {
+            $ids[] = $user->getId();
+        }
+
+        return $ids;
+        
+    }    
 }
 
