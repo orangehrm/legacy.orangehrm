@@ -106,7 +106,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                 case 'OperationalCountry':
                     $ids = $this->getAccessibleOperationalCountryIds($role, $operation, $returnType);
                     break;
-
+                case 'UserRole':
+                    $ids = $this->getAccessibleUserRoleIds($role, $operation, $returnType);
+                    break;
             }
             
             if (count($ids) > 0) {
@@ -223,5 +225,22 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
         return $ids;        
     }    
+    
+    protected function getAccessibleUserRoleIds($role, $operation = null, $returnType = null) {
+        
+        $userRoles = array();
+        
+        if ('Admin' == $role->getName()) {
+            $userRoles = $this->getSystemUserService()->getAssignableUserRoles();
+        }
+        
+        $ids = array();
+        
+        foreach ($userRoles as $role) {
+            $ids[] = $role->getId();
+        }
+
+        return $ids;        
+    }     
 }
 

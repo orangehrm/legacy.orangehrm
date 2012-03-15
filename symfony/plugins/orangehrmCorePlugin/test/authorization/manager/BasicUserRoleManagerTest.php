@@ -212,7 +212,69 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         
         $result = $this->manager->getAccessibleEntityIds('SystemUser');        
         $this->assertEquals(0, count($result));           
-    }      
+    } 
+    
+    public function testGetAccessibleUserRolesAdmin() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser'); 
+        $userRoles = TestDataService::loadObjectList('UserRole', $this->fixture, 'UserRole'); 
+        
+        $expected = array();
+        foreach ($userRoles as $role) {
+            if ($role->is_assignable == 1) {
+                $expected[] = $role->getId();
+            }
+        }        
+
+        // Default Admin user  (no employee)
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        $result = $this->manager->getAccessibleEntityIds('UserRole');
+        
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);        
+        
+        // Admin user 
+        $admin = $users[0];
+        $this->manager->setUser($admin);
+        $result = $this->manager->getAccessibleEntityIds('UserRole');
+        
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);   
+        
+        // Admin + supervisor
+        $adminSupervisor = $users[3];
+        $this->manager->setUser($adminSupervisor);
+        $result = $this->manager->getAccessibleEntityIds('UserRole');
+        
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);       
+    } 
+    
+    public function testGetAccessibleUserRolesESSSupervisor() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        
+        // Supervisor with one subordinate
+        $supervisor = $users[1];
+        $this->manager->setUser($supervisor);
+        
+        $result = $this->manager->getAccessibleEntityIds('UserRole');        
+        $this->assertEquals(0, count($result));  
+                
+        // Supervisor with multiple subordinates
+        $supervisor = $users[6];
+        $this->manager->setUser($supervisor);
+        
+        $result = $this->manager->getAccessibleEntityIds('UserRole');        
+        $this->assertEquals(0, count($result));    
+        
+        // ESS user
+        $essUser = $users[4];
+        $this->manager->setUser($essUser);
+        
+        $result = $this->manager->getAccessibleEntityIds('UserRole');        
+        $this->assertEquals(0, count($result));           
+    } 
+         
 
     public function testGetUserRoles() {
         $this->manager = new TestBasicUserRoleManager();
