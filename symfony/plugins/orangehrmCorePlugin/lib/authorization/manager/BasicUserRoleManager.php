@@ -63,11 +63,43 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     }
 
         
-    public function getAccessibleEntities($entityType, $operation, $returnType) {
-        
+    public function getAccessibleEntities($entityType, $operation = null, $returnType = null) {
     }
     
-    public function isEntityAccessible($entityType, $entityId, $operation, 
+    
+    /**
+     * TODO: 'locations', 'system users', 'operational countries', 
+     *       'user role' (only ess for regional admin),
+     * 
+     * @param type $entityType
+     * @param type $operation
+     * @param type $returnType
+     * @return type 
+     */
+    public function getAccessibleEntityIds($entityType, $operation = null, $returnType = null) {
+    
+        $allIds = array();
+        
+        foreach ($this->userRoles as $role) {  
+            $ids = array();
+
+            switch ($entityType) {
+                case 'Employee':
+                    $ids = $this->getAccessibleEmployeeIds($role, $operation, $returnType);
+                    break;
+
+            }
+            
+            if (count($ids) > 0) {
+                $allIds = array_unique(array_merge($allIds, $ids));
+            }
+        }
+        
+        return $allIds;
+    }
+    
+    
+    public function isEntityAccessible($entityType, $entityId, $operation = null, 
                                                 $preferredUserRoleOrder = null) {
         
     }
@@ -114,5 +146,28 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
         return $roles;
     }    
+    
+    protected function getAccessibleEmployeeIds($role, $operation = null, $returnType = null) {
+        
+        $employees = array();
+        
+        if ('Admin' == $role->getName()) {
+            $employees = $this->getEmployeeService()->getEmployeeList('empNumber', 'ASC', true);
+        } else if ('Supervisor' == $role->getName()) {
+            $empNumber = $this->getUser()->getEmpNumber();
+            if (!empty($empNumber)) {
+                $employees = $this->getEmployeeService()->getSupervisorEmployeeChain($empNumber, true);
+            }
+        }
+        
+        $ids = array();
+        
+        foreach ($employees as $employee) {
+            $ids[] = $employee->getEmpNumber();
+        }
+
+        return $ids;
+        
+    }
 }
 

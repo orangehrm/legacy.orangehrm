@@ -24,7 +24,7 @@
  */
 class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
     
-    /** @property UserRoleManagerService $service */
+    /** @property BasicUserRoleManager $service */
     private $manager;
     
     /**
@@ -38,16 +38,69 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         $this->manager = new BasicUserRoleManager();
     }
     
-    public function testGetAccessibleEmployeesAdmin() {
+    public function testGetAccessibleEmployeeIdsAdmin() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
         
+        // Default Admin user  (no employee)
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $expected = $this->getEmployeeIds($allEmployees);
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);        
+        
+        // Admin user 
+        $admin = $users[0];
+        $this->manager->setUser($admin);
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $expected = $this->getEmployeeIds($allEmployees);
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);
+        
+        // Admin + supervisor
+        $adminSupervisor = $users[3];
+        $this->manager->setUser($adminSupervisor);
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $expected = $this->getEmployeeIds($allEmployees);
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);      
     }
 
     public function testGetAccessibleEmployeesSupervisor() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
         
+        // Supervisor with one subordinate
+        $supervisor = $users[1];
+        $this->manager->setUser($supervisor);
+        $expected = array($allEmployees[2]->getEmpNumber());
+        
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);
+        
+        
+        // Supervisor with multiple subordinates
+        $supervisor = $users[6];
+        $this->manager->setUser($supervisor);
+        $expected = array($allEmployees[0]->getEmpNumber(), $allEmployees[2]->getEmpNumber(), 
+                          $allEmployees[3]->getEmpNumber(), $allEmployees[4]->getEmpNumber());
+        
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);         
     }
     
     public function testGetAccessibleEmployeesESS() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
         
+        // Supervisor with one subordinate
+        $essUser = $users[4];
+        $this->manager->setUser($essUser);
+        
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $this->assertEquals(0, count($result));        
     }    
     
     public function testGetAccessibleSystemUsers() {
@@ -139,6 +192,41 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
             
             $this->assertTrue($found, 'Expected Role ' . $role . ' not found');
         }
+    }
+    
+    protected function compareEmployees($expected, $actual) {
+        $this->assertEquals(count($expected), count($actual));
+        
+        foreach($expected as $expectedEmployee) {
+            $found = false;
+            
+            foreach($actual as $employee) {
+                
+                if ($employee->getEmpNumber() == $expectedEmployee->getEmpNumber()) {
+                    $found = true;
+                    break;
+                }
+            }
+            
+            $this->assertTrue($found, 'Expected Employee (id = ' . $expectedEmployee->getEmpNumber() . ' not found');
+        }        
+    }
+    
+    protected function compareArrays($expected, $actual) {
+        $this->assertEquals(count($expected), count($actual));
+        
+        $diff = array_diff($expected, $actual);
+        $this->assertEquals(0, count($diff), $diff);       
+    }    
+    
+    protected function getEmployeeIds($employees) {
+        $ids = array();
+        
+        foreach ($employees as $employee) {
+            $ids[] = $employee->getEmpNumber();
+        }
+        
+        return $ids;
     }
 }
 

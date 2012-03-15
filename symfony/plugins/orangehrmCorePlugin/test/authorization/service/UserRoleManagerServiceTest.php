@@ -123,11 +123,11 @@ class InvalidUserRoleManager {
 }
 
 class UnitTestUserRoleManager extends AbstractUserRoleManager {
-    public function getAccessibleEntities($entityType, $operation, $returnType) {
+    public function getAccessibleEntities($entityType, $operation = null, $returnType = null) {
         
     }
     
-    public function isEntityAccessible($entityType, $entityId, $operation, 
+    public function isEntityAccessible($entityType, $entityId, $operation = null, 
                                                 $preferredUserRoleOrder = null) {
         
     }

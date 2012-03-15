@@ -4,6 +4,7 @@ Employee:
   2: {empNumber: 3, firstName: 'Renukshan', lastName: 'Saputhanthri'}
   3: {empNumber: 4, firstName: 'Chaturanga', lastName: 'Namal'}
   4: {empNumber: 5, firstName: 'Indiran', lastName: 'Nadarajah'}
+  5: {empNumber: 6, firstName: 'Supun', lastName: 'Super'}
   
 UserRole:
   0: {id: 1, name: Admin, is_assignable: 1, is_predefined: 1}
@@ -17,6 +18,7 @@ SystemUser:
   3: {id: 4, user_role_id: 1, emp_number: 4, user_name: 'Chaturanga', user_password: 'Chaturanga'}
   4: {id: 5, user_role_id: 2, emp_number: 5, user_name: 'Indiran', user_password: 'Indiran'}
   5: {id: 6, user_role_id: 1, user_name: 'Admin', user_password: 'Admin'}
+  6: {id: 7, user_role_id: 2, emp_number: 6, user_name: 'Supun', user_password: 'Supun'}
 
 ReportingMethod:
   0: {id: 1, name: 'Direct'}
@@ -25,3 +27,7 @@ ReportingMethod:
 ReportTo:
   0: {supervisorId: 2, subordinateId: 3, reportingMethodId: 1}
   1: {supervisorId: 4, subordinateId: 3, reportingMethodId: 1}
+  2: {supervisorId: 6, subordinateId: 3, reportingMethodId: 1}
+  3: {supervisorId: 6, subordinateId: 4, reportingMethodId: 1}
+  4: {supervisorId: 6, subordinateId: 5, reportingMethodId: 1}
+  5: {supervisorId: 6, subordinateId: 1, reportingMethodId: 1}

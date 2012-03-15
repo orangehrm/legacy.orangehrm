@@ -35,9 +35,9 @@ abstract class AbstractUserRoleManager {
         return $this->user;
     }
     
-    public abstract function getAccessibleEntities($entityType, $operation, $returnType);
+    public abstract function getAccessibleEntities($entityType, $operation = null, $returnType = null);
     
-    public abstract function isEntityAccessible($entityType, $entityId, $operation, 
+    public abstract function isEntityAccessible($entityType, $entityId, $operation = null, 
                                                 $preferredUserRoleOrder = null);
     
     public abstract function getAccessibleModules();
