@@ -118,6 +118,7 @@ class AuthenticationService extends BaseService {
         $sfUser->setAttribute('auth.empId', $user->getEmployee()->getEmployeeId());
         $sfUser->setAttribute('auth.empNumber', $user->getEmpNumber());
         $sfUser->setAttribute('auth.firstName', $user->getName());
+        $sfUser->setAttribute('auth.userRole', $user->getUserRole()->getName());
     }
 
     /**
