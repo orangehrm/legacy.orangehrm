@@ -77,12 +77,11 @@ class LeaveSummaryForm extends sfForm {
                 $employeeId = $this->searchParam['employeeId'];
                 $employeeService = $this->getEmployeeService();
                 $employee = $employeeService->getEmployee($this->searchParam['employeeId']);
-                $empName = $employee->getFirstName() . " " . $employee->getMiddleName() . " " . $employee->getLastName();
+                $empName = $employee->getFullName();
             }
 
             /* Setting default values */
-            $this->setDefault('txtEmpName', $empName);
-            $this->setDefault('cmbEmpId', $employeeId);
+            $this->setDefault('txtEmpName', array('empName' => $empName, 'empId' => $employeeId));
             $this->setDefault('cmbLeavePeriod', $this->currentLeavePeriodId);
             $this->setDefault('hdnSubjectedLeavePeriod', $this->_getLeavePeriod());
 
@@ -266,37 +265,27 @@ class LeaveSummaryForm extends sfForm {
         return true;
     }
 
-    public function getEmployeeListAsJson() {
+    protected function getEmployeeList() {
 
-        $jsonArray = array();
+        $employeeList = array();
         $employeeService = $this->getEmployeeService();
 
         if ($this->userType == 'Admin') {
+            
             $employeeList = $employeeService->getEmployeeList();
+            
         } elseif ($this->userType == 'Supervisor') {
 
             $employeeList = $employeeService->getSupervisorEmployeeChain($this->loggedUserId);
             $loggedInEmployee = $employeeService->getEmployee($this->loggedUserId);
             array_push($employeeList, $loggedInEmployee);
-        } else {
+            
+        } 
 
-            $employeeList = array();
-        }
-        $employeeUnique = array();
-        foreach ($employeeList as $employee) {
-            if (!isset($employeeUnique[$employee->getEmpNumber()])) {
-                $name = $employee->getFullName();
-
-                $employeeUnique[$employee->getEmpNumber()] = $name;
-                $jsonArray[] = array('name' => $name, 'id' => $employee->getEmpNumber());
-            }
-        }
-
-        $jsonString = json_encode($jsonArray);
-
-        return $jsonString;
+        return $employeeList;
+        
     }
-
+    
     public function setPager(sfWebRequest $request) {
 
         if ($request->isMethod('post')) {
@@ -375,6 +364,12 @@ class LeaveSummaryForm extends sfForm {
     }
 
     protected function adjustSearchClues($clues) {
+        
+        if (is_array($clues['txtEmpName'])) {
+            $a = $clues['txtEmpName'];
+            $clues['txtEmpName'] = $a['empName'];
+            $clues['cmbEmpId'] = $a['empId'];
+        }
 
         if ($this->userType == 'Admin') {
             $clues['userType'] = 'Admin';
@@ -479,17 +474,15 @@ class LeaveSummaryForm extends sfForm {
      * @return array 
      */
     protected function getFormWidgets() {
+        
         $widgets = array();
-
 
         $widgets['cmbLeavePeriod'] = new sfWidgetFormChoice(array('choices' => $this->getLeavePeriodChoices()));
         $widgets['hdnSubjectedLeavePeriod'] = new sfWidgetFormInputHidden();
         $widgets['cmbLeaveType'] = new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeChoices()));
 
         if ($this->hasAdministrativeFilters()) {
-            //$widgets['txtEmpName'] = new sfWidgetFormInput(array(), array('class' => ''));
-            $widgets['txtEmpName'] = new ohrmWidgetEmployeeNameAutoFill();
-            //$widgets['cmbEmpId'] = new sfWidgetFormInputHidden();
+            $widgets['txtEmpName'] = new ohrmWidgetEmployeeNameAutoFill(array('employeeList' => $this->getEmployeeList()));
             $widgets['cmbJobTitle'] = new sfWidgetFormChoice(array('choices' => $this->getJobTitleChoices()));
             $widgets['cmbLocation'] = new sfWidgetFormChoice(array('choices' => $this->getLocationChoices()));
             $widgets['cmbSubDivision'] = new ohrmWidgetSubDivisionList();
@@ -501,8 +494,8 @@ class LeaveSummaryForm extends sfForm {
             $widgets['cmbWithTerminated'] = new sfWidgetFormInputCheckbox(array('value_attribute_value' => 'on'));
         }
 
-
         return $widgets;
+        
     }
 
     /**
@@ -520,9 +513,7 @@ class LeaveSummaryForm extends sfForm {
             $validators['cmbJobTitle'] = new sfValidatorChoice(array('choices' => array_keys($this->getJobTitleChoices())));
             $validators['cmbSubDivision'] = new sfValidatorString(array('required' => false)); // TODO: Improve this validator
             $validators['cmbWithTerminated'] = new sfValidatorString(array('required' => false));
-            $validators['txtEmpName'] = new sfValidatorString(array('required' => false));
-            $validators['txtEmpName_id'] = new sfValidatorString(array('required' => false));
-//            $validators['cmbEmpId'] = new sfValidatorString(array('required' => false));
+            $validators['txtEmpName'] = new ohrmValidatorEmployeeNameAutoFill();
         }
 
         $validators['cmbRecordsCount'] = new sfValidatorChoice(array('choices' => array_keys($this->getRecordsPerPageChoices())));

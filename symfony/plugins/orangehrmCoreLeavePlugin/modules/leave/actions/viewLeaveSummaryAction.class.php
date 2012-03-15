@@ -76,7 +76,7 @@ class viewLeaveSummaryAction extends sfAction implements ohrmExportableAction {
             } else {
                 $searchParam['cmbWithTerminated'] = 0;
             }
-            }
+        }
         $params = array_merge($searchParam, $userDetails);
 
         $this->setForm($this->getFormInstance(array(), $params, true));
@@ -107,7 +107,7 @@ class viewLeaveSummaryAction extends sfAction implements ohrmExportableAction {
             $empName = $this->getEmployeeService()->getEmployee($searchParam['employeeId'])->getFirstAndLastNames();            
             if (!empty($empName)) {
                 $clues['txtEmpName'] = $empName;
-                $this->form->setDefault('txtEmpName', $empName);
+                $this->form->setDefault('txtEmpName', array('empName' => $empName, 'empId' => $searchParam['employeeId']));
             }
             
             if (!empty($terminationId)) {

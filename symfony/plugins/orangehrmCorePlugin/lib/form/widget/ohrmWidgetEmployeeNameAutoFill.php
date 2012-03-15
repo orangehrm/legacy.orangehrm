@@ -27,6 +27,12 @@
  */
 
 class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
+    
+    public function configure($options = array(), $attributes = array()) {
+
+        $this->addOption('employeeList', '');
+        
+    }    
 
     public function render($name, $value = null, $attributes = array(), $errors = array()) {
 
@@ -115,6 +121,12 @@ EOF
     }
     
     protected function getEmployeeList() {
+        
+        $employeeList = $this->getOption('employeeList'); 
+        
+        if (is_array($employeeList)) {
+            return $employeeList;
+        }
         
         return sfContext::getInstance()->getUser()->getAttribute("user")->getEmployeeList();
         

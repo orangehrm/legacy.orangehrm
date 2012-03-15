@@ -110,11 +110,6 @@
         
     });
 
-    /* Employee list */
-
-    var empdata = <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()); ?>;
-
-
     function submitPage(pageNo) {
 
         document.frmLeaveSummarySearch.pageNo.value = pageNo;

@@ -10,29 +10,8 @@ $(document).ready(function() {
         removeEditLinks();
     }
 
-    if ($("#reportto_name").val() == '') {
-        $("#reportto_name").val(typeForHints)
-        .addClass("inputFormatHint");
-    }
-
     $('#reportto_reportingMethodType').change(function() {
         hideShowReportingMethodOther();
-    });
-
-    $("#reportto_name").one('focus', function() {
-
-        if ($(this).hasClass("inputFormatHint")) {
-            $(this).val("");
-            $(this).removeClass("inputFormatHint");
-        }
-    });
-
-    $("#reportto_name").click(function() {
-
-        if ($(this).hasClass("inputFormatHint")) {
-            $(this).val("");
-            $(this).removeClass("inputFormatHint");
-        }
     });
     
     $('#btnSaveReportTo').click(function() {
@@ -85,7 +64,7 @@ $(document).ready(function() {
     // Add a supervisor 
     $('#btnAddSupervisorDetail').click(function() {
 
-        $('#reportto_name_id').val("");
+        $('#reportto_name_empId').val("");
         $("#reportto_previousRecord").val("");
         $('#reportto_type_flag_1').attr('checked', 'checked');
         $("#reportToHeading").text(addSupervisor);
@@ -106,7 +85,7 @@ $(document).ready(function() {
     // Add a subordinate
     $('#btnAddSubordinateDetail').click(function() {
 
-        $('#reportto_name_id').val("");
+        $('#reportto_name_empId').val("");
         $("#reportto_previousRecord").val("");
         $('#reportto_type_flag_2').attr('checked', 'checked');
         $("#reportToHeading").text(addSubordinate);
@@ -171,11 +150,11 @@ $(document).ready(function() {
         var name = $(this).text();
         var reportingMethodType = row.find("td:nth-child(3)").text();
 
-        $("#reportto_name_id").val(tempArray[0]);
+        $("#reportto_name_empId").val(tempArray[0]);
         $("#reportto_previousRecord").val(primarykey);
         $('#reportto_type_flag_1').attr('checked', 'checked');
-        $('#reportto_name').val(name);
-        $('#reportto_name').hide();
+        $('#reportto_name_empName').val(name);
+        $('#reportto_name_empName').hide();
         $('.radio_list').hide();
 
         $('#name').text(name);
@@ -205,12 +184,12 @@ $(document).ready(function() {
         var name1 = $(this).text();
         var reportingMethodType = row.find("td:nth-child(3)").text();
 
-        $("#reportto_name_id").val(tempArray[1]);
+        $("#reportto_name_empId").val(tempArray[1]);
         $("#reportto_previousRecord").val(primarykey);
         $('#reportto_type_flag_2').attr('checked', 'checked');
 
-        $('#reportto_name').val(name1);
-        $('#reportto_name').hide();
+        $('#reportto_name_empName').val(name1);
+        $('#reportto_name_empName').hide();
         $('.radio_list').hide();
 
         $('#name').text(name1);
@@ -233,8 +212,11 @@ $(document).ready(function() {
 
 function isValidForm(){
     $.validator.addMethod("empNameValidation", function(value, element, params) {
+        
+        var employeesArray = eval(employees);
+        
         var temp = false;
-        if($('#reportto_name_id').val() > 0){
+        if($('#reportto_name_empId').val() > 0){
             temp = true;
         }
 
@@ -244,11 +226,11 @@ function isValidForm(){
       
             var i;
             for (i=0; i < empDateCount; i++) {
-                empName = $.trim($('#reportto_name').val()).toLowerCase();
+                empName = $.trim($('#reportto_name_empName').val()).toLowerCase();
                 arrayName = employeesArray[i].name.toLowerCase();
 
                 if (empName == arrayName) {
-                    $('#reportto_name_id').val(employeesArray[i].id);
+                    $('#reportto_name_empId').val(employeesArray[i].id);
                     temp = true
                     break;
                 }
@@ -314,15 +296,15 @@ function hideShowReportingMethodOther() {
 
 function clearAddForm() {
 
-    $('#reportto_name').val('');
-    $('#reportto_name').show();
+    $('#reportto_name_empName').val('');
+    $('#reportto_name_empName').show();
     $('#reportto_reportingMethodType').val('');
     $('div#addPaneReportTo label.error').hide();
     $('#name').hide();
     $('div#messagebar').hide();
 
-    if ($("#reportto_name").val() == '') {
-        $("#reportto_name").val(typeForHints)
+    if ($("#reportto_name_empName").val() == '') {
+        $("#reportto_name_empName").val(typeForHints)
         .addClass("inputFormatHint");
     }
     hideShowReportingMethodOther()
