@@ -1,10 +1,5 @@
 <?php
 
-/**
- * viewLeaveListAction
- *
- * @author sujith
- */
 class viewLeaveListAction extends sfAction {
 
     protected $leavePeriodService;
@@ -150,9 +145,10 @@ class viewLeaveListAction extends sfAction {
                     
                     $employeeName = $employee->getFullName();
                     $terminationId = $employee->getTerminationId();
+                    $empData = array('empName' => $employeeName, 'empId' => $employee->getEmpNumber());
 
-                    $this->form->setDefault('txtEmployee', $employeeName);
-                    $values['txtEmployee'] = $employeeName;
+                    $this->form->setDefault('txtEmployee', $empData);
+                    $values['txtEmployee'] = $empData;
 
                     if (!empty($terminationId)) {
                         $terminatedEmp = 'on';
@@ -204,7 +200,8 @@ class viewLeaveListAction extends sfAction {
         $terminatedEmp = $this->_getFilterValue($values, 'cmbWithTerminated', null);
         $fromDate = $this->_getFilterValue($values, 'calFromDate', null);
         $toDate = $this->_getFilterValue($values, 'calToDate', null);
-        $employeeName = $this->_getFilterValue($values, 'txtEmployee', null);
+        $empData = $this->_getFilterValue($values, 'txtEmployee', null);
+        $employeeName = $empData['empName'];
                 
         $message = $this->getUser()->getFlash('message', '');
         $messageType = $this->getUser()->getFlash('messageType', '');
@@ -234,7 +231,7 @@ class viewLeaveListAction extends sfAction {
 
         $list = empty($list) ? null : $list;
         $this->form->setList($list);
-        $this->form->setEmployeeListAsJson($this->getEmployeeListAsJson());
+        $this->form->setEmployeeList($this->getEmployeeList());
         
         $this->message = $message;
         $this->messageType = $messageType;
@@ -311,9 +308,8 @@ class viewLeaveListAction extends sfAction {
         return $employeeFilter;
     }
 
-    private function getEmployeeListAsJson() {
+    protected function getEmployeeList() {
 
-        $jsonArray = array();
         $employeeService = new EmployeeService();
         $employeeList = array();
 
@@ -324,21 +320,11 @@ class viewLeaveListAction extends sfAction {
         if ($_SESSION['isSupervisor'] && trim(Auth::instance()->getEmployeeNumber()) != "") {
             $employeeList = $employeeService->getSupervisorEmployeeChain(Auth::instance()->getEmployeeNumber());
         }
-        $employeeUnique = array();
-        foreach ($employeeList as $employee) {
-            if (!isset($employeeUnique[$employee->getEmpNumber()])) {
-                $name = $employee->getFullName();
 
-                $employeeUnique[$employee->getEmpNumber()] = $name;
-                $jsonArray[] = array('name' => $name, 'id' => $employee->getEmpNumber());
-            }
-        }
-
-        $jsonString = json_encode($jsonArray);
-
-        return $jsonString;
+        return $employeeList;
+        
     }
-
+    
     /**
      * Set's the current page number in the user session.
      * @param $page int Page Number

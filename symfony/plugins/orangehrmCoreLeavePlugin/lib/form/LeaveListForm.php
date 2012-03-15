@@ -14,7 +14,7 @@ class LeaveListForm extends sfForm {
     private $mode;
     private $list = null;
 
-    private $empJson;
+    private $employeeList;
     private $leavePeriodService;
     private $companyStructureService;
 
@@ -105,19 +105,9 @@ class LeaveListForm extends sfForm {
 
         if ($this->mode != self::MODE_MY_LEAVE_LIST) {
 
-            // TODO: Populate employee name in auto complete box
-            
-            $widgets['txtEmpID'] = new sfWidgetFormInputHidden(); 
-            $validators['txtEmpID'] = new sfValidatorInteger(array('required' => false, 'min' => 0));
-
-            
-            //if ($employeeName == "" && $this->employee instanceof Employee) {
-            //    $employeeName = $this->employee->getFirstName() . " " . $this->employee->getMiddleName() . " " . $this->employee->getLastName();
-            //}
-            
-            $widgets['txtEmployee'] = new sfWidgetFormInput();
+            $widgets['txtEmployee'] = new ohrmWidgetEmployeeNameAutoFill(array('employeeList' => $this->getEmployeeList()));
             $labels['txtEmployee'] = __('Employee');
-            $validators['txtEmployee'] = new sfValidatorString(array('required' => false, 'trim' => true));
+            $validators['txtEmployee'] = new ohrmValidatorEmployeeNameAutoFill();
             
             $widgets['cmbSubunit'] = new ohrmWidgetSubUnitDropDown();    
             $labels['cmbSubunit'] = __('Sub Unit');
@@ -184,13 +174,13 @@ class LeaveListForm extends sfForm {
         return $this->list;
     }
 
-    public function getEmployeeListAsJson() {
-        return $this->empJson;
+    public function getEmployeeList() {
+        return $this->employeeList;
     }
 
-    public function setEmployeeListAsJson($str) {
-        $this->empJson = $str;
-    }
+    public function setEmployeeList($employeeList) {
+        $this->employeeList = $employeeList;
+    }    
 
     public function getActionButtons() {
 
