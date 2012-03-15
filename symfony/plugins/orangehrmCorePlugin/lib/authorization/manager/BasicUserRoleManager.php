@@ -27,7 +27,20 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $employeeService;
     protected $systemUserService;
     protected $screenPermissionService;
+    protected $operationalCountryService;
     
+    public function getOperationalCountryService() {
+        if (empty($this->operationalCountryService)) {
+            $this->operationalCountryService = new OperationalCountryService();
+        }         
+        return $this->operationalCountryService;
+    }
+
+    public function setOperationalCountryService($operationalCountryService) {
+        $this->operationalCountryService = $operationalCountryService;
+    }
+
+        
     public function getScreenPermissionService() {
         if (empty($this->screenPermissionService)) {
             $this->screenPermissionService = new ScreenPermissionService();
@@ -89,6 +102,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                     break;
                 case 'SystemUser':
                     $ids = $this->getAccessibleSystemUserIds($role, $operation, $returnType);
+                    break;
+                case 'OperationalCountry':
+                    $ids = $this->getAccessibleOperationalCountryIds($role, $operation, $returnType);
                     break;
 
             }
@@ -187,8 +203,25 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
             $ids[] = $user->getId();
         }
 
-        return $ids;
+        return $ids;        
+    }    
+    
+    
+    protected function getAccessibleOperationalCountryIds($role, $operation = null, $returnType = null) {
         
+        $operationalCountries = array();
+        
+        if ('Admin' == $role->getName()) {
+            $operationalCountries = $this->getOperationalCountryService()->getOperationalCountryList();
+        }
+        
+        $ids = array();
+        
+        foreach ($operationalCountries as $country) {
+            $ids[] = $country->getId();
+        }
+
+        return $ids;        
     }    
 }
 

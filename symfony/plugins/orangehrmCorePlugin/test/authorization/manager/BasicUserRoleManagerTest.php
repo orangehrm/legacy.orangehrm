@@ -105,7 +105,7 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
     
     public function testGetAccessibleSystemUsersAdmin() {
         $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
-        $expected = $this->getSystemUserIds($users);
+        $expected = $this->getObjectIds($users);
 
         // Default Admin user  (no employee)
         $defaultAdmin = $users[5];
@@ -156,6 +156,63 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         $result = $this->manager->getAccessibleEntityIds('SystemUser');        
         $this->assertEquals(0, count($result));           
     }  
+    
+    public function testGetAccessibleOperationalCountriesAdmin() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser'); 
+        $operationalCountries = TestDataService::loadObjectList('OperationalCountry', $this->fixture, 'OperationalCountry'); 
+        
+        
+        $expected = $this->getObjectIds($operationalCountries);
+
+        // Default Admin user  (no employee)
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        $result = $this->manager->getAccessibleEntityIds('OperationalCountry');
+        
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);        
+        
+        // Admin user 
+        $admin = $users[0];
+        $this->manager->setUser($admin);
+        $result = $this->manager->getAccessibleEntityIds('OperationalCountry');
+        
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);   
+        
+        // Admin + supervisor
+        $adminSupervisor = $users[3];
+        $this->manager->setUser($adminSupervisor);
+        $result = $this->manager->getAccessibleEntityIds('OperationalCountry');
+        
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);       
+    }    
+    
+    public function xtestGetAccessibleOperationalCountriesESSSupervisor() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        
+        // Supervisor with one subordinate
+        $supervisor = $users[1];
+        $this->manager->setUser($supervisor);
+        
+        $result = $this->manager->getAccessibleEntityIds('SystemUser');        
+        $this->assertEquals(0, count($result));  
+                
+        // Supervisor with multiple subordinates
+        $supervisor = $users[6];
+        $this->manager->setUser($supervisor);
+        
+        $result = $this->manager->getAccessibleEntityIds('SystemUser');        
+        $this->assertEquals(0, count($result));    
+        
+        // ESS user
+        $essUser = $users[4];
+        $this->manager->setUser($essUser);
+        
+        $result = $this->manager->getAccessibleEntityIds('SystemUser');        
+        $this->assertEquals(0, count($result));           
+    }      
 
     public function testGetUserRoles() {
         $this->manager = new TestBasicUserRoleManager();
@@ -279,7 +336,7 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         return $ids;
     }
     
-    protected function getSystemUserIds($users) {
+    protected function getObjectIds($users) {
         $ids = array();
         
         foreach ($users as $user) {
