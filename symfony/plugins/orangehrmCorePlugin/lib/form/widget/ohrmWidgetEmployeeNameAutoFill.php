@@ -31,6 +31,7 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
     public function configure($options = array(), $attributes = array()) {
 
         $this->addOption('employeeList', '');
+        $this->addOption('jsonList', '');
         
     }    
 
@@ -106,7 +107,7 @@ EOF
     
     protected function getHiddenFieldId($name) {
         
-        return $this->getHtmlId($name) . '_empId';
+        return $this->generateId($name) . '_empId';
         
     }
 
@@ -133,6 +134,12 @@ EOF
     }
 
     protected function getEmployeeListAsJson($employeeList) {
+        
+        $jsonList = $this->getOption('jsonList');
+        
+        if (!empty($jsonList)) {
+            return $jsonList;
+        }
 
         $jsonArray = array();        
         
