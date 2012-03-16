@@ -31,10 +31,10 @@ class SearchSystemUserForm extends BaseForm {
 
         $this->setWidgets($this->getFormWidgets());
         $this->setValidators($this->getFormValidators());
-        
+
         //merge location filter
-        $formExtension  =   PluginFormMergeManager::instance();
-        $formExtension->mergeForms($this,'viewSystemUsers','SearchSystemUserForm');
+        $formExtension = PluginFormMergeManager::instance();
+        $formExtension->mergeForms($this, 'viewSystemUsers', 'SearchSystemUserForm');
 
         $this->getWidgetSchema()->setNameFormat('searchSystemUser[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
@@ -70,7 +70,9 @@ class SearchSystemUserForm extends BaseForm {
     public function setDefaultDataToWidgets($searchClues) {
         $this->setDefault('userName', $searchClues['userName']);
         $this->setDefault('userType', $searchClues['userType']);
-        $this->setDefault('employeeName', $searchClues['employeeName']);
+        if (isset($searchClues['employeeName'])) {
+            $this->setDefault('employeeName', $searchClues['employeeName']);
+        }
         $this->setDefault('status', $searchClues['status']);
     }
 
@@ -119,7 +121,7 @@ class SearchSystemUserForm extends BaseForm {
         $validators['userType'] = new sfValidatorString(array('required' => false));
         $validators['employeeName'] = new ohrmValidatorEmployeeNameAutoFill();
         $validators['status'] = new sfValidatorString(array('required' => false));
-        
+
         return $validators;
     }
 
