@@ -189,10 +189,10 @@ class AssignLeaveForm extends sfForm {
      */
     protected function getFormWidgets() {
         $widgets = array(
-            'txtEmployee' => new ohrmWidgetEmployeeNameAutoFill(array('jsonList' => $this->getEmployeeListAsJson())),
+            'txtEmployee' => new ohrmWidgetEmployeeNameAutoFill(array('jsonList' => $this->getEmployeeListAsJson()), array('class' => 'formInputText')),
             'txtEmpWorkShift' => new sfWidgetFormInputHidden(),
             'txtLeaveType' => new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeList()), array('class' => 'formSelect')),
-            'leaveBalance' => new ohrmWidgetDiv(),
+            'leaveBalance' => new ohrmWidgetDiv(array(), array('style' => 'float:left;padding-top: 10px;')),
             'txtFromDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtFromDate'), array('class' => 'formDateInput')),
             'txtToDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtToDate'), array('class' => 'formDateInput')),
             'txtFromTime' => new sfWidgetFormChoice(array('choices' => $this->getTimeChoices()), array('class' => 'formSelect')),
