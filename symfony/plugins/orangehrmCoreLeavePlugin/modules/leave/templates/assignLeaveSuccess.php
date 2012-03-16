@@ -63,7 +63,6 @@
 
         <?php if ($assignLeaveForm->hasErrors()) {
         ?>
-        <?php echo $assignLeaveForm['txtEmpID']->renderError(); ?>
         <?php echo $assignLeaveForm['txtEmployee']->renderError(); ?>
         <?php echo $assignLeaveForm['txtLeaveType']->renderError(); ?>
         <?php echo $assignLeaveForm['txtFromDate']->renderError(); ?>
