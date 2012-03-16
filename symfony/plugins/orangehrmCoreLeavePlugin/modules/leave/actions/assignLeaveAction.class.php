@@ -89,6 +89,10 @@ class assignLeaveAction extends baseLeaveAction {
     }
     
     protected function getLeaveParameterObject(array $formValues) {
+        
+        $empData = $formValues['txtEmployee'];
+        $formValues['txtEmpID'] = $empData['empId'];
+        
         return new LeaveParameterObject($formValues);
     }
     

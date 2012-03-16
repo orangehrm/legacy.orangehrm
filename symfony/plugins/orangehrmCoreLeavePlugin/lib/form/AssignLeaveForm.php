@@ -128,20 +128,7 @@ class AssignLeaveForm extends sfForm {
         return $dateRange;
     }
 
-    
-
-    
-
-    /**
-     * Get Employee number
-     * @return int
-     */
-    private function getEmployeeNumber() {
-        $posts = $this->getValues();
-        return $posts['txtEmpID'];
-    }
-
-    public function getEmployeeListAsJson() {
+    protected function getEmployeeListAsJson() {
 
         $jsonArray = array();
         $employeeService = new EmployeeService();
@@ -202,8 +189,7 @@ class AssignLeaveForm extends sfForm {
      */
     protected function getFormWidgets() {
         $widgets = array(
-            'txtEmpID' => new sfWidgetFormInputHidden(),
-            'txtEmployee' => new sfWidgetFormInput(array(), array('class' => 'formInputText')),
+            'txtEmployee' => new ohrmWidgetEmployeeNameAutoFill(array('jsonList' => $this->getEmployeeListAsJson())),
             'txtEmpWorkShift' => new sfWidgetFormInputHidden(),
             'txtLeaveType' => new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeList()), array('class' => 'formSelect')),
             'leaveBalance' => new ohrmWidgetDiv(),
@@ -226,8 +212,7 @@ class AssignLeaveForm extends sfForm {
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
 
         $validators = array(
-            'txtEmpID' => new sfValidatorString(array('required' => false)),
-            'txtEmployee' => new sfValidatorString(array('required' => true), array('required' => __(ValidationMessages::REQUIRED))),
+            'txtEmployee' => new ohrmValidatorEmployeeNameAutoFill(),
             'txtEmpWorkShift' => new sfValidatorString(array('required' => false)),
             'txtLeaveType' => new sfValidatorChoice(array('choices' => array_keys($this->getLeaveTypeList()))),
             'txtFromDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true),

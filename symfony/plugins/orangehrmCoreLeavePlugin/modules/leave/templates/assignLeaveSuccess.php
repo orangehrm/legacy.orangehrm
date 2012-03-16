@@ -93,16 +93,14 @@
 
             showTimeControls(false);
 
-            var data = <?php echo str_replace('&#039;', "'", $assignLeaveForm->getEmployeeListAsJson()) ?> ;
-
             // Auto complete
-            $("#assignleave_txtEmployee").autocomplete(data, {
+            $("#assignleave_txtEmployee_empName").autocomplete(employees, {
                 formatItem: function(item) {
                     return item.name;
                 }
                 ,matchContains:true
             }).result(function(event, item) {
-                $('#assignleave_txtEmpID').val(item.id);
+                $('#assignleave_txtEmployee_empId').val(item.id);
                 $('#assignleave_txtEmpWorkShift').val(item.workShift);
                 updateLeaveBalance();
             }
@@ -186,7 +184,7 @@
 
             function updateLeaveBalance() {
                 var leaveType = $('#assignleave_txtLeaveType').val();
-                var empId = $('#assignleave_txtEmpID').val();
+                var empId = $('#assignleave_txtEmployee_empId').val();
                 if (leaveType == "" || empId == "") {
                     $('#assignleave_leaveBalance').text('--');
                 } else {
@@ -332,8 +330,8 @@
             $('#frmLeaveApply').submit();
         });
 
-        $("#assignleave_txtEmployee").change(function(){
-            autoFill('assignleave_txtEmployee', 'assignleave_txtEmpID', data);
+        $("#assignleave_txtEmployee_empName").change(function(){
+            autoFill('assignleave_txtEmployee_empName', 'assignleave_txtEmployee_empId', employees);
             updateLeaveBalance();
         });
 
