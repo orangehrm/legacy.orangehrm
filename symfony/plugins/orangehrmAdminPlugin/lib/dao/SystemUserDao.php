@@ -182,7 +182,11 @@ class SystemUserDao extends BaseDao {
             $query->addWhere('u.user_name = ?', $searchClues['userName']);
         }
         if (!empty($searchClues['userType'])) {
-            $query->addWhere('u.user_role_id = ?', $searchClues['userType']);
+            if (is_array($searchClues['userType'])) {
+                $query->andWhereIn('u.user_role_id', $searchClues['userType']);
+            } else {
+                $query->addWhere('u.user_role_id = ?', $searchClues['userType']);
+            }
         }
         if (!empty($searchClues['employeeId'])) {
             $query->addWhere('u.emp_number = ?', $searchClues['employeeId']);
@@ -195,6 +199,10 @@ class SystemUserDao extends BaseDao {
             $query->leftJoin('u.Employee e');
             $query->leftJoin('e.EmpLocations l');
             $query->whereIn('l.location_id', explode(',', $searchClues['location']));
+        }
+        
+        if ($searchClues['user_ids'] && is_array($searchClues['user_ids'])) {
+            $query->whereIn('u.id', $searchClues['user_ids']);
         }
 
         $query->addWhere('u.deleted=?', 0);

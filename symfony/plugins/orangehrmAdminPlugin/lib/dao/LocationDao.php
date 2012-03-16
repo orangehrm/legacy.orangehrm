@@ -64,7 +64,7 @@ class LocationDao extends BaseDao {
 			$q = $this->_buildSearchQuery($srchClues);
 			$q->orderBy($sortField . ' ' . $sortOrder)
 				->offset($offset)
-				->limit($limit);
+				->limit($limit);                        
 			return $q->execute();
 		} catch (Exception $e) {
 			throw new DaoException($e->getMessage());
@@ -88,7 +88,11 @@ class LocationDao extends BaseDao {
 			$q->addWhere('city LIKE ?', "%" . trim($srchClues['city']) . "%");
 		}
 		if (!empty($srchClues['country'])) {
+                    if (is_array($srchClues['country'])) {
+                        $q->andWhereIn('country_code', $srchClues['country']);
+                    } else {
 			$q->addWhere('country_code = ?', $srchClues['country']);
+                    }
 		}
 		return $q;
 	}
