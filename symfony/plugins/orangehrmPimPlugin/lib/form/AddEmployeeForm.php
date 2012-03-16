@@ -215,7 +215,7 @@ class AddEmployeeForm extends sfForm {
                 $user->user_name = $posts['user_name'];
                 $user->user_password = md5($posts['user_password']);
                 $user->emp_number = $empNumber;
-                $user->setStatus(($posts['status'] == 'Enabled') ? true : false);
+                $user->setStatus(($posts['status'] == 'Enabled') ? '1' : '0');
                 $user->setUserRoleId(2);
                 $userService->saveSystemUser($user);
             }
