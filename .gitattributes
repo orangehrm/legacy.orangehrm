@@ -4210,6 +4210,7 @@ symfony/plugins/orangehrmPimPlugin/lib/form/EmployeeUsTaxExemptionsForm.php -tex
 symfony/plugins/orangehrmPimPlugin/lib/form/ReportingMethodForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/TerminationReasonForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/WorkExperienceForm.php -text
+symfony/plugins/orangehrmPimPlugin/lib/form/sfWidgetFormSchemaFormatterAddEmployee.class.php -text
 symfony/plugins/orangehrmPimPlugin/lib/list/EmployeeListConfigurationFactory.php -text
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpBasicsalary.class.php -text
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpBasicsalaryTable.class.php -text

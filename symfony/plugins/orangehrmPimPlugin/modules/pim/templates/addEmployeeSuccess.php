@@ -10,22 +10,35 @@
     var lang_userNameRequired = "<?php echo __("Should have at least %number% characters", array('%number%' => 5)); ?>";
     var lang_passwordRequired = "<?php echo __("Should have at least %number% characters", array('%number%' => 4)); ?>";
     var lang_unMatchingPassword = "<?php echo __("Passwords do not match"); ?>";
-    var lang_statusRequired = "<?php echo __(ValidationMessages::REQUIRED);?>";
-    var lang_locationRequired = "<?php echo __(ValidationMessages::REQUIRED);?>";
-    var cancelNavigateUrl = "<?php echo public_path("../../index.php?menu_no_top=hr");?>";
-    var createUserAccount = "<?php echo $createUserAccount;?>";
-    var ldapInstalled = <?php echo ($ldapInstalled)?'true':'false'; ?>;
+    var lang_statusRequired = "<?php echo __(ValidationMessages::REQUIRED); ?>";
+    var lang_locationRequired = "<?php echo __(ValidationMessages::REQUIRED); ?>";
+    var cancelNavigateUrl = "<?php echo public_path("../../index.php?menu_no_top=hr"); ?>";
+    var createUserAccount = "<?php echo $createUserAccount; ?>";
+    var ldapInstalled = <?php echo ($ldapInstalled) ? 'true' : 'false'; ?>;
     
     //]]>
 </script>
+
+<style type="text/css">
+    table#mytable td {
+        width: auto;
+    }
+    table#mytable tr {
+        width: auto;
+    }
+    table#mytable tbody {
+        width: 700px;
+    }
+</style>
+
 <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" style="margin-left: 16px;width: 700px;">
     <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
 </div>
 <div class="outerbox">
     <div class="mainHeading"><h2><?php echo __('Add Employee'); ?></h2></div>
     <div>
-        <form id="frmAddEmp" method="post" action="<?php echo url_for('pim/addEmployee'); ?>" enctype="multipart/form-data">
-            <?php echo $form->render(); ?>            
+        <form id="frmAddEmp" method="post" action="<?php echo url_for('pim/addEmployee'); ?>" enctype="multipart/form-data" style="width: auto">
+            <table id="addEmployeeTbl"><?php echo $form->render(); ?> </table>                       
             <div class="formbuttons">
                 <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Save"); ?>"  />
                 <input type="button" class="savebutton" id="btnCancel" value="<?php echo __("Cancel"); ?>" />

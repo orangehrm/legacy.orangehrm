@@ -66,16 +66,20 @@ class AddEmployeeForm extends sfForm {
             'firstName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
             'middleName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
             'lastName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
-            'employeeId' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 10)),
-            'photofile' => new sfWidgetFormInputFileEditable(array('edit_mode' => false, 'with_delete' => false, 'file_src' => ''), array("class" => "duplexBox")),
+            'empty' => new ohrmWidgetDiv(),
+            'fullNameLabel' => new ohrmWidgetDiv(),
+            'firstNameLabel' => new ohrmWidgetDiv(),
+            'middleNameLabel' => new ohrmWidgetDiv(),
+            'lastNameLabel' => new ohrmWidgetDiv(),
+            'employeeId' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 10, "colspan" => 3)),
+            'photofile' => new sfWidgetFormInputFileEditable(array('edit_mode' => false, 'with_delete' => false, 'file_src' => ''), array("class" => "duplexBox", "colspan" => 2)),
             'helpText' => new ohrmWidgetDiv(),
-            'chkLogin' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1), array("class" => "formInputText")),
-            'loginStart' => new ohrmWidgetDiv(array(), array("style" => "float:left")),
+            'chkLogin' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1), array("class" => "formInputText", "colspan" => 3)),
+            'lineSeperator' => new ohrmWidgetDiv(array(), array("colspan" => 3)),
             'user_name' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 20)),
-            'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText")),
+            'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText", "br" => true)),
             'user_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText", "maxlength" => 20)),
-            're_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText", "maxlength" => 20)),
-            'loginEnd' => new ohrmWidgetDiv(array(), array("style" => "clear:both")),
+            're_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText", "maxlength" => 20, "br" => true)),
             'empNumber' => new sfWidgetFormInputHidden(),
         );
 
@@ -91,7 +95,7 @@ class AddEmployeeForm extends sfForm {
         $this->widgets['lastName']->setDefault($this->getOption('lastName'));
 
         $this->widgets['chkLogin']->setDefault($this->getOption('chkLogin'));
-        
+
         $this->widgets['user_name']->setDefault($this->getOption('user_name'));
         $this->widgets['user_password']->setDefault($this->getOption('user_password'));
         $this->widgets['re_password']->setDefault($this->getOption('re_password'));
@@ -115,12 +119,12 @@ class AddEmployeeForm extends sfForm {
 
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
 
+        sfWidgetFormSchemaFormatterAddEmployee::setNoOfColumns(4);
         //merge location dropdown
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'addEmployee', 'AddEmployeeForm');
 
-        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->widgetSchema->setFormFormatterName('AddEmployee');
     }
 
     /**
@@ -130,18 +134,22 @@ class AddEmployeeForm extends sfForm {
     protected function getFormLabels() {
         $labels = array(
             'photofile' => __('Photograph'),
-            'firstName' => __('First Name'). '<span class="required">*</span>',
-            'middleName' => __('Middle Name'),
-            'lastName' => __('Last Name'). '<span class="required">*</span>',
+            'firstName' => __('Full Name'),
+            'middleName' => false,
+            'lastName' => false,
+            'empty' => false,
+            'fullNameLabel' => ' ',
+            'firstNameLabel' => '<span class="helpText">'. __('First Name') . '</span><span class="required">*</span>',
+            'middleNameLabel' => '<span class="helpText">'. __('Middle Name') . '</span>',
+            'lastNameLabel' => '<span class="helpText">'. __('Last Name') . '</span><span class="required">*</span>',
             'employeeId' => __('Employee Id'),
             'chkLogin' => __('Create Login Details'),
-            'user_name' => __('User Name'). '<span class="required">*</span>',
-            'user_password' => __('Password'). '<span class="required">*</span>',
-            're_password' => __('Confirm Password'). '<span class="required">*</span>',
-            'status' => __('Status'). '<span class="required">*</span>',
+            'lineSeperator' => '<div class="hrLine" id="lineSeperator">&nbsp;</div>',
+            'user_name' => __('User Name') . '<span class="required">*</span>',
+            'user_password' => __('Password') . '<span class="required">*</span>',
+            're_password' => __('Confirm Password') . '<span class="required">*</span>',
+            'status' => __('Status') . '<span class="required">*</span>',
             'helpText' => '<div class="helpText" style="width:160px;padding-top:5px;">' . __(CommonMessages::FILE_LABEL_IMAGE) . '</div>',
-            'loginStart' => '<div id="loginSection">',
-            'loginEnd' => '</div>',
         );
 
         return $labels;
@@ -181,11 +189,11 @@ class AddEmployeeForm extends sfForm {
             $empPicture->height = $sizeArray['height'];
             $empPicture->save();
         }
-        
-        if($this->createUserAccount) {
+
+        if ($this->createUserAccount) {
             $this->saveUser($empNumber);
         }
-        
+
         //merge location dropdown
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->saveMergeForms($this, 'addEmployee', 'AddEmployeeForm');
@@ -207,6 +215,7 @@ class AddEmployeeForm extends sfForm {
                 $user->user_name = $posts['user_name'];
                 $user->user_password = md5($posts['user_password']);
                 $user->emp_number = $empNumber;
+                $user->setStatus(($posts['status'] == 'Enabled') ? true : false);
                 $user->setUserRoleId(2);
                 $userService->saveSystemUser($user);
             }

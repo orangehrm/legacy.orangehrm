@@ -1,28 +1,34 @@
 $(document).ready(function() {
 
-    $("#chkLogin").attr("checked", "checked");
-    var loginStyle = { 'width' : '100%', 'margin' : '0', 'padding' : '0' }
-    $("label[for='loginStart']").css(loginStyle);
-    $("#photofile").next('br').remove();
+    $("#chkLogin").attr("checked", true);
+
+    $("#addEmployeeTbl td div:empty").remove();
+    $("#addEmployeeTbl td:empty").remove();
+    $("label[for='lineSeperator']").parent('td').attr('colspan', 4);
+    $("label[for='lineSeperator']").replaceWith($("label[for='lineSeperator']").html());
+        
+    $("label[for='user_name']").closest("tr").attr('class', 'loginSectionRow');
+    $("label[for='user_password']").closest("tr").attr('class', 'loginSectionRow');
+
 
     if(createUserAccount == 0) {
         //hiding login section by default
         $("#lineSeperator").hide();
         $("#loginSection").hide();
+        $(".loginSectionRow").hide();
 
         $("#chkLogin").removeAttr("checked");
     }
 
     //default edit button behavior
     $("#btnSave").click(function() {
-
         $("#frmAddEmp").submit();
-
     });
 
     $("#chkLogin").click(function() {
         $("#lineSeperator").hide();
         $("#loginSection").hide();
+        $(".loginSectionRow").hide();
 
         $("#user_name").val("");
         $("#user_password").val("");
@@ -32,6 +38,7 @@ $(document).ready(function() {
         if($("#chkLogin").attr('checked') == true) {
             $("#lineSeperator").show();
             $("#loginSection").show();
+            $(".loginSectionRow").show();
         }
     });
 
@@ -54,7 +61,8 @@ $(document).ready(function() {
             're_password': {validateReCheckPassword: lang_unMatchingPassword},
             'status': {validateStatusRequired: lang_statusRequired },
             'location': {required: lang_locationRequired }
-        }
+        },
+        errorElement : 'div'
     });
 
     $.validator.addMethod("validateLoginName", function(value, element) {
