@@ -68,10 +68,16 @@ class viewSystemUsersAction extends sfAction {
             $this->getUser()->setAttribute('searchClues', $searchClues);
         }
 
-        $searchClues['user_ids'] = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('SystemUser');
+        $userIds = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('SystemUser');
         
-        $systemUserList = $this->getSystemUserService()->searchSystemUsers($searchClues);
-        $systemUserListCount = $this->getSystemUserService()->getSearchSystemUsersCount($searchClues);
+        if (empty($userIds)) {
+            $systemUserList = array();
+        } else {
+            $searchClues['user_ids'] = $userIds;            
+            $systemUserList = $this->getSystemUserService()->searchSystemUsers($searchClues);
+            $systemUserListCount = $this->getSystemUserService()->getSearchSystemUsersCount($searchClues);
+        }        
+
         $this->_setListComponent($systemUserList, $limit, $pageNumber, $systemUserListCount);
         $this->getUser()->setAttribute('pageNumber', $pageNumber);
         $params = array();

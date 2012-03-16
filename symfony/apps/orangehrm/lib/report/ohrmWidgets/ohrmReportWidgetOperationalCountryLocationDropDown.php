@@ -51,19 +51,24 @@ class ohrmReportWidgetOperationalCountryLocationDropDown extends ohrmWidgetSelec
             $addedLocationIds = array();
 
             // adding locations that assigned to operational country first
+            $accessibleCountries = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('OperationalCountry'); 
+            
             foreach ($operationalCountries as $operationalCountry) {
 
                 $country = $operationalCountry->getCountry();
-                $locations = $country->getLocation();
+                
+                if (in_array($operationalCountry->getId(), $accessibleCountries)) {
+                    $locations = $country->getLocation();
 
-                if (count($locations) > 0) {
-                    $locationChoices = array();
-                    foreach ($locations as $location) {
-                        $addedLocationIds[] = $location->getId();
-                        $locationChoices[$location->getId()] = $location->getName();
+                    if (count($locations) > 0) {
+                        $locationChoices = array();
+                        foreach ($locations as $location) {
+                            $addedLocationIds[] = $location->getId();
+                            $locationChoices[$location->getId()] = $location->getName();
+                        }
+                        asort($locationChoices);
+                        $choices[$country->getCouName()] = $locationChoices;
                     }
-                    asort($locationChoices);
-                    $choices[$country->getCouName()] = $locationChoices;
                 }
             }
 
@@ -171,8 +176,12 @@ class ohrmReportWidgetOperationalCountryLocationDropDown extends ohrmWidgetSelec
         $locationList = array();
         $locations = $locationService->getLocationList();
 
+        $accessibleLocations = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Location');
+        
         foreach ($locations as $location) {
-            $locationList[$location->id] = $location->name;
+            if (in_array($location->id, $accessibleLocations)) {
+                $locationList[$location->id] = $location->name;
+            }
         }
 
         return ($locationList);

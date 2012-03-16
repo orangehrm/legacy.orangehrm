@@ -52,8 +52,13 @@ class SearchSystemUserForm extends BaseForm {
         $list = array();
         $list[] = __("All");
         $userRoles = $this->getSystemUserService()->getAssignableUserRoles();
+        
+        $accessibleRoleIds = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('UserRole');
+        
         foreach ($userRoles as $userRole) {
-            $list[$userRole->getId()] = $userRole->getDisplayName();
+            if (in_array($userRole->getId(), $accessibleRoleIds)) {
+                $list[$userRole->getId()] = $userRole->getDisplayName();
+            }
         }
         return $list;
     }

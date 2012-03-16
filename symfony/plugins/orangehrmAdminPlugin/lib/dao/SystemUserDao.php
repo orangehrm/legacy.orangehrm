@@ -201,7 +201,7 @@ class SystemUserDao extends BaseDao {
             $query->whereIn('l.location_id', explode(',', $searchClues['location']));
         }
         
-        if ($searchClues['user_ids'] && is_array($searchClues['user_ids'])) {
+        if (isset($searchClues['user_ids']) && is_array($searchClues['user_ids'])) {   
             $query->whereIn('u.id', $searchClues['user_ids']);
         }
 
