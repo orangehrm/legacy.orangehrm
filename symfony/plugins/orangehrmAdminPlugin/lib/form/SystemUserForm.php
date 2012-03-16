@@ -50,7 +50,8 @@ class SystemUserForm extends BaseForm {
 
         $this->setValidators(array(
             'userId' => new sfValidatorNumber(array('required' => false)),
-            'userType' => new sfValidatorString(array('required' => true, 'max_length' => 3)),
+            'userType' => new sfValidatorChoice(array('required' => true, 
+                                                      'choices' => array_keys($userRoleList))),            
             'employeeName' => new ohrmValidatorEmployeeNameAutoFill(),
             'userName' => new sfValidatorString(array('required' => true, 'max_length' => 20)),
             'password' => new sfValidatorString(array('required' => false, 'max_length' => 20)),
@@ -87,8 +88,13 @@ class SystemUserForm extends BaseForm {
     private function getAssignableUserRoleList() {
         $list = array();
         $userRoles = $this->getSystemUserService()->getAssignableUserRoles();
+        
+        $accessibleRoleIds = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('UserRole');
+        
         foreach ($userRoles as $userRole) {
-            $list[$userRole->getId()] = $userRole->getDisplayName();
+            if (in_array($userRole->getId(), $accessibleRoleIds)) {
+                $list[$userRole->getId()] = $userRole->getDisplayName();
+            }
         }
         return $list;
     }

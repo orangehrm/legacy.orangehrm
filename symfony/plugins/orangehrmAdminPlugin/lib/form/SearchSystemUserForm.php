@@ -29,8 +29,26 @@ class SearchSystemUserForm extends BaseForm {
 
     public function configure() {
 
-        $this->setWidgets($this->getFormWidgets());
-        $this->setValidators($this->getFormValidators());
+        $userRoleList = $this->getAssignableUserRoleList();
+        $statusList = $this->getStatusList();
+
+        $widgets = array();
+
+        $widgets['userName'] = new sfWidgetFormInputText();
+        $widgets['userType'] = new sfWidgetFormSelect(array('choices' => $userRoleList));
+        $widgets['employeeName'] = new ohrmWidgetEmployeeNameAutoFill();
+        $widgets['status'] = new sfWidgetFormSelect(array('choices' => $statusList));        
+        $this->setWidgets($widgets);
+                
+        $validators = array();
+        $validators['userName'] = new sfValidatorString(array('required' => false));
+        $validators['userType'] = new sfValidatorChoice(array('required' => false, 
+                'choices' => array_keys($userRoleList)));                
+        $validators['employeeName'] = new ohrmValidatorEmployeeNameAutoFill();
+        $validators['status'] = new sfValidatorChoice(array('required' => false, 
+                'choices' => array_keys($statusList)));
+        
+        $this->setValidators($validators);
 
         //merge location filter
         $formExtension = PluginFormMergeManager::instance();
@@ -94,40 +112,6 @@ class SearchSystemUserForm extends BaseForm {
         );
 
         return $labels;
-    }
-
-    /**
-     *
-     * @return array 
-     */
-    protected function getFormWidgets() {
-
-        $userRoleList = $this->getAssignableUserRoleList();
-        $statusList = $this->getStatusList();
-
-        $widgets = array();
-
-        $widgets['userName'] = new sfWidgetFormInputText();
-        $widgets['userType'] = new sfWidgetFormSelect(array('choices' => $userRoleList));
-        $widgets['employeeName'] = new ohrmWidgetEmployeeNameAutoFill();
-        $widgets['status'] = new sfWidgetFormSelect(array('choices' => $statusList));
-
-        return $widgets;
-    }
-
-    /**
-     *
-     * @return array 
-     */
-    protected function getFormValidators() {
-        $validators = array();
-
-        $validators['userName'] = new sfValidatorString(array('required' => false));
-        $validators['userType'] = new sfValidatorString(array('required' => false));
-        $validators['employeeName'] = new ohrmValidatorEmployeeNameAutoFill();
-        $validators['status'] = new sfValidatorString(array('required' => false));
-
-        return $validators;
     }
 
 }
