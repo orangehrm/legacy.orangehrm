@@ -25,6 +25,12 @@ Employee:
   4: {empNumber: 5, firstName: 'Indiran', lastName: 'Nadarajah'}
   5: {empNumber: 6, firstName: 'Supun', lastName: 'Super'}
   
+EmpLocations:
+  0: {empNumber: 1, locationId: 4}
+  1: {empNumber: 2, locationId: 4}
+  2: {empNumber: 3, locationId: 4}
+  3: {empNumber: 5, locationId: 1}  
+  
 UserRole:
   0: {id: 1, name: Admin, is_assignable: 1, is_predefined: 1}
   1: {id: 2, name: ESS, is_assignable: 1, is_predefined: 1}

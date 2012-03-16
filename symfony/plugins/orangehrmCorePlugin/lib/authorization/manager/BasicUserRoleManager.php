@@ -28,8 +28,20 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $systemUserService;
     protected $screenPermissionService;
     protected $operationalCountryService;
+    protected $locationService;
     
-    public function getOperationalCountryService() {
+    public function getLocationService() {
+        if (empty($this->locationService)) {
+            $this->locationService = new LocationService();
+        }        
+        return $this->locationService;
+    }
+
+    public function setLocationService($locationService) {
+        $this->locationService = $locationService;
+    }
+
+        public function getOperationalCountryService() {
         if (empty($this->operationalCountryService)) {
             $this->operationalCountryService = new OperationalCountryService();
         }         
@@ -109,6 +121,10 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                 case 'UserRole':
                     $ids = $this->getAccessibleUserRoleIds($role, $operation, $returnType);
                     break;
+                case 'Location':
+                    $ids = $this->getAccessibleLocationIds($role, $operation, $returnType);
+                    break;
+                    
             }
             
             if (count($ids) > 0) {
@@ -241,6 +257,23 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         }
 
         return $ids;        
-    }     
+    } 
+    
+    protected function getAccessibleLocationIds($role, $operation = null, $returnType = null) {
+        
+        $userRoles = array();
+        
+        if ('Admin' == $role->getName()) {
+            $userRoles = $this->getLocationService()->getLocationList();
+        }
+        
+        $ids = array();
+        
+        foreach ($userRoles as $role) {
+            $ids[] = $role->getId();
+        }
+
+        return $ids;        
+    }    
 }
 

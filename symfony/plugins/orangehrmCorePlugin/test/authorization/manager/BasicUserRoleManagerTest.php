@@ -275,7 +275,66 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, count($result));           
     } 
          
+    public function testGetAccessibleLocationIdsAdmin() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $locations = TestDataService::loadObjectList('Location', $this->fixture, 'Location');
+        $expected = $this->getObjectIds($locations);
+        
+        // Default Admin user  (no employee)
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        $result = $this->manager->getAccessibleEntityIds('Location');
 
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);        
+        
+        // Admin user 
+        $admin = $users[0];
+        $this->manager->setUser($admin);
+        $result = $this->manager->getAccessibleEntityIds('Location');
+
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);
+        
+        // Admin + supervisor
+        $adminSupervisor = $users[3];
+        $this->manager->setUser($adminSupervisor);
+        $result = $this->manager->getAccessibleEntityIds('Location');
+
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);      
+    }
+
+    public function testGetAccessibleLocationIdsSupervisor() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        
+        // Supervisor with one subordinate
+        $supervisor = $users[1];
+        $this->manager->setUser($supervisor);
+        
+        $result = $this->manager->getAccessibleEntityIds('Location');
+        $this->assertEquals(0, count($result));
+        
+        
+        // Supervisor with multiple subordinates
+        $supervisor = $users[6];
+        $this->manager->setUser($supervisor);
+        
+        $result = $this->manager->getAccessibleEntityIds('Location');
+        $this->assertEquals(0, count($result));       
+    }
+    
+    public function testGetAccessibleLocationIdsESS() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        
+        // Supervisor with one subordinate
+        $essUser = $users[4];
+        $this->manager->setUser($essUser);
+        
+        $result = $this->manager->getAccessibleEntityIds('Location');
+        $this->assertEquals(0, count($result));        
+    }  
+    
     public function testGetUserRoles() {
         $this->manager = new TestBasicUserRoleManager();
         $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');
