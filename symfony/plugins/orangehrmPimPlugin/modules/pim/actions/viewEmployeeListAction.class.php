@@ -46,7 +46,7 @@ class viewEmployeeListAction extends basePimAction {
         }
 
         if (!$this->adminMode && !$this->supervisorMode) {
-            return $this->forward("pim", "unauthorized");
+            return $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
         
         $empNumber = $request->getParameter('empNumber');

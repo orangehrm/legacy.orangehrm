@@ -32,7 +32,7 @@ class deleteEmployeesAction extends basePimAction {
         $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
 
         if (!$adminMode) {
-            return $this->forward("pim", "unauthorized");
+            return $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
 
         $ids = $request->getParameter('chkSelectRow');
