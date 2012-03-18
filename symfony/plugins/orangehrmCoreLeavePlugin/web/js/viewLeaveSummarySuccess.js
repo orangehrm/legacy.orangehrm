@@ -17,8 +17,10 @@ function initLeaveSummary() {
     /* Search button */
     $('#btnSearch').click(function() {
         // 9706 $("#frmLeaveSummarySearch").validate().resetForm();
+        if(userType != 'ESS') {
         recheckEmpId();
         adjustEmpId();
+        }
         $('#hdnAction').val('search');
         
         if($("#leaveSummary_txtEmpName_empName").val() == lang_typeHint || $("#leaveSummary_txtEmpName_empName").val() =="") {

@@ -68,6 +68,7 @@
     
     /* Define language strings here */
     var lang_not_numeric = '<?php echo __(ValidationMessages::INVALID); ?>';
+    var userType = '<?php echo $form->userType; ?>';
     
     $(document).ready(function() {
         
