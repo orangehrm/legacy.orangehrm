@@ -51,7 +51,9 @@ class ohrmAuthorizationFilter extends sfFilter {
         $logger = Logger::getLogger('filter.ohrmAuthorizationFilter');    
         
         try {
-            $userRoleManager = UserRoleManagerFactory::getUserRoleManager();        
+            $userRoleManager = UserRoleManagerFactory::getUserRoleManager();  
+            $this->context->setUserRoleManager($userRoleManager);
+            
             $permissions = $userRoleManager->getScreenPermissions($moduleName, $actionName);
         } catch (Exception $e) {                    
             $logger->error('Exception: ' . $e);            
@@ -66,8 +68,8 @@ class ohrmAuthorizationFilter extends sfFilter {
             // the user doesn't have access
             $this->forwardToSecureAction();
         } else {
-            // set permissions in context or request??
-            $this->context->setAttribute('screen_permissions', $permissions);
+            // set permissions in context
+            $this->context->set('screen_permissions', $permissions);
         }
 
         // the user has access, continue

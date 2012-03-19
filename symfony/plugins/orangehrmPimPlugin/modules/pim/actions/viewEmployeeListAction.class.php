@@ -107,7 +107,26 @@ class viewEmployeeListAction extends basePimAction {
     
     protected function setListComponent($employeeList, $count, $noOfRecords, $page) {
         
-        ohrmListComponent::setConfigurationFactory($this->getListConfigurationFactory());
+        $configurationFactory = $this->getListConfigurationFactory();
+
+        $permissions = $this->getContext()->get('screen_permissions');
+        $runtimeDefinitions = array();
+        $buttons = array();
+
+        if ($permissions->canCreate()) {
+            $buttons['Add'] = array('label' => 'Add');
+        }
+        if (!$permissions->canDelete()) {
+            $runtimeDefinitions['hasSelectableRows'] = false;
+        } else {
+            $buttons['Delete'] = array('label' => 'Delete', 'type' => 'submit');
+        }
+
+        $runtimeDefinitions['buttons'] = $buttons;
+        $configurationFactory->setRuntimeDefinitions($runtimeDefinitions);
+        
+        ohrmListComponent::setConfigurationFactory($configurationFactory);
+        
         ohrmListComponent::setActivePlugin('orangehrmPimPlugin');
         ohrmListComponent::setListData($employeeList);
         ohrmListComponent::setItemsPerPage($noOfRecords);

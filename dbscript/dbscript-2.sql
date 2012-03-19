@@ -1278,7 +1278,10 @@ INSERT INTO `ohrm_module` (`id`, `name`, `status`) VALUES
 INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (1, 'User List', 2, 'viewSystemUsers'),
 (2, 'Add/Edit System User', 2, 'saveSystemUser'),
-(3, 'Delete System Users', 2, 'deleteSystemUsers');
+(3, 'Delete System Users', 2, 'deleteSystemUsers'),
+(4, 'Add Employee', 3, 'addEmployee'),
+(5, 'View Employee List', 3, 'viewEmployeeList'),
+(6, 'Delete Employees', 3, 'deleteEmployees');
 
 INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
 (1, 1, 1, 1, 1, 1),
@@ -1289,4 +1292,8 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (3, 2, 0, 0, 0, 0),
 (1, 3, 1, 1, 1, 1),
 (2, 3, 0, 0, 0, 0),
-(3, 3, 0, 0, 0, 0);
+(3, 3, 0, 0, 0, 0),
+(1, 4, 1, 1, 1, 1),
+(1, 5, 1, 1, 1, 1),
+(3, 5, 1, 0, 0, 0),
+(1, 6, 1, 0, 0, 1);
