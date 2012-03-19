@@ -44,12 +44,6 @@ class addEmployeeAction extends basePimAction {
 
         $this->showBackButton = true;
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
-        $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
-
-        if(!$adminMode) {
-            //shud b redirected 2 ESS user view
-            $this->redirect('pim/viewPersonalDetails?empNumber='. $loggedInEmpNum);
-        }
 
         //this is to preserve post value if any error occurs
         $postArray = array();

@@ -32,6 +32,7 @@ class EmployeeTable extends PluginEmployeeTable {
             'supervisorId' => 's.emp_firstname',
             'termination' => 'e.termination_id',
             'location' => 'l.location_id',
+            'employee_id_list' => 'e.emp_number',
     );
 
     /**
@@ -121,8 +122,6 @@ class EmployeeTable extends PluginEmployeeTable {
                 $supervisorList = $row['supervisors'];
 
                 if (!empty($supervisorList)) {
-
-                    $supervisors = new Doctrine_Collection(Doctrine::getTable('Employee'));
 
                     $supervisorArray = explode(',', $supervisorList);
                     foreach ($supervisorArray as $supervisor) {
@@ -286,6 +285,8 @@ class EmployeeTable extends PluginEmployeeTable {
                             $conditions[] = ' s.emp_number = ? ';
                             $bindParams[] = $searchBy;
                         }
+                    } else if ($searchField == 'employee_id_list') {
+                        $conditions[] = ' e.emp_number IN (' . implode(',', $searchBy) . ') ';
                     } else if ($searchField == 'supervisor_name') {
                         $conditions[] = $field . ' LIKE ? ';
                         // Replace multiple spaces in string with wildcards

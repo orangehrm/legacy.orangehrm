@@ -29,24 +29,9 @@ class viewEmployeeListAction extends basePimAction {
      * @param sfWebRequest $request
      */
     public function execute($request) {
-
-        // Check if admin mode or supervisor mode
-        $userType = 'Admin';
-        $this->adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
         
         if ($this->getUser()->hasFlash('templateMessage')) {
             list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-        }
-
-        if (!$this->adminMode) {
-            $this->supervisorMode = $this->getUser()->hasCredential(Auth::SUPERVISOR_ROLE);
-            $userType = 'Supervisor';
-        } else {
-            $this->supervisorMode = false;
-        }
-
-        if (!$this->adminMode && !$this->supervisorMode) {
-            return $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
         
         $empNumber = $request->getParameter('empNumber');
@@ -70,8 +55,7 @@ class viewEmployeeListAction extends basePimAction {
             $this->setPage(1);
         }
 
-        $params = array('userType'=> $userType, 'loggedInUserId'=>$this->getUser()->getEmployeeNumber());
-        $this->form = new EmployeeSearchForm($this->getFilters(), $params);
+        $this->form = new EmployeeSearchForm($this->getFilters());
         if ($request->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
@@ -90,15 +74,19 @@ class viewEmployeeListAction extends basePimAction {
         
         $this->filterApply = !empty($filters);
 
+        $accessibleEmployees = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Employee');
 
-        if ($this->supervisorMode) {
-            $filters['supervisorId'] = $this->getUser()->getEmployeeNumber();
+        if (count($accessibleEmployees) > 0) {
+            $filters['employee_id_list'] = $accessibleEmployees;
+            $table = Doctrine::getTable('Employee');
+            $count = $table->getEmployeeCount($filters);
+
+            $list = $table->getEmployeeList($sortField, $sortOrder, $filters, $offset, $noOfRecords);
+        } else {
+            $count = 0;
+            $list = array();
         }
 
-        $table = Doctrine::getTable('Employee');
-        $count = $table->getEmployeeCount($filters);
-
-        $list = $table->getEmployeeList($sortField, $sortOrder, $filters, $offset, $noOfRecords);
         $this->setListComponent($list, $count, $noOfRecords, $pageNumber);
 
         // Show message if list is empty, and we don't already have a message.

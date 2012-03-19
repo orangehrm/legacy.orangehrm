@@ -23,8 +23,6 @@
  */
 class EmployeeSearchForm extends BaseForm {
 
-    private $userType;
-    private $loggedInUserId;
     private $companyStructureService;
     private $jobService;
     private $jobTitleService;
@@ -51,9 +49,6 @@ class EmployeeSearchForm extends BaseForm {
     }
 
     public function configure() {
-
-        $this->userType = $this->getOption('userType');
-        $this->loggedInUserId = $this->getOption('loggedInUserId');
 
         $this->setWidgets(array(
             'employee_name' => new ohrmWidgetEmployeeNameAutoFill(),
@@ -86,35 +81,6 @@ class EmployeeSearchForm extends BaseForm {
         sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(4);
         $this->getWidgetSchema()->setFormFormatterName('BreakTags');
 
-    }
-
-    public function getEmployeeListAsJson() {
-
-        $jsonArray = array();
-        $employeeService = new EmployeeService();
-        $employeeService->setEmployeeDao(new EmployeeDao());
-
-        if ($this->userType == 'Admin') {
-            $employeeList = $employeeService->getEmployeeList('empNumber', 'ASC', true);
-        } elseif ($this->userType == 'Supervisor') {
-
-            $employeeList = $employeeService->getSupervisorEmployeeChain($this->loggedInUserId, true);
-        }
-
-        $employeeUnique = array();
-        foreach ($employeeList as $employee) {
-
-            if (!isset($employeeUnique[$employee->getEmpNumber()])) {
-
-                $name = $employee->getFullName();
-                $employeeUnique[$employee->getEmpNumber()] = $name;
-                $jsonArray[] = array('name' => $name, 'id' => $employee->getEmpNumber());
-            }
-        }
-
-        $jsonString = json_encode($jsonArray);
-
-        return $jsonString;
     }
 
     public function getSupervisorListAsJson() {
