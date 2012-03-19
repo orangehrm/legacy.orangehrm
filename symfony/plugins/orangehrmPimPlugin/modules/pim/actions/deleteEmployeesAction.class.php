@@ -30,7 +30,12 @@ class deleteEmployeesAction extends basePimAction {
         
         $ids = $request->getParameter('chkSelectRow');
 
-        $employeeService = $this->getEmployeeService();
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        if (!$userRoleManager->areEntitiesAccessible('Employee', $ids)) {
+            $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+        }
+        
+        $employeeService = $this->getEmployeeService();               
         $count = $employeeService->deleteEmployee($ids);
 
         if ($count == count($ids)) {
