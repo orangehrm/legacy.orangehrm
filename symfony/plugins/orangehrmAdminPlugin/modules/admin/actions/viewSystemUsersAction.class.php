@@ -72,6 +72,7 @@ class viewSystemUsersAction extends sfAction {
         
         if (empty($userIds)) {
             $systemUserList = array();
+            $systemUserListCount = 0;
         } else {
             $searchClues['user_ids'] = $userIds;            
             $systemUserList = $this->getSystemUserService()->searchSystemUsers($searchClues);
@@ -98,10 +99,16 @@ class viewSystemUsersAction extends sfAction {
                 if ($this->form->isValid()) {
 
                     $searchClues = $this->_setSearchClues($sortField, $sortOrder, $offset, $limit);
-
+                    if (empty($userIds)) {
+                        $systemUserList = array();
+                        $systemUserListCount = 0;
+                    } else {
+                        $searchClues['user_ids'] = $userIds;            
+                        $systemUserList = $this->getSystemUserService()->searchSystemUsers($searchClues);
+                        $systemUserListCount = $this->getSystemUserService()->getSearchSystemUsersCount($searchClues);
+                    } 
+                    
                     $this->getUser()->setAttribute('searchClues', $searchClues);
-                    $systemUserList = $this->getSystemUserService()->searchSystemUsers($searchClues);
-                    $systemUserListCount = $this->getSystemUserService()->getSearchSystemUsersCount($searchClues);
                     $this->_setListComponent($systemUserList, $limit, $pageNumber, $systemUserListCount);
                 }
             }else{
