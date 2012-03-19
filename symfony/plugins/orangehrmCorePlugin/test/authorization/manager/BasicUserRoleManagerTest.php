@@ -37,6 +37,145 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
                 
         $this->manager = new BasicUserRoleManager();
     }
+    public function testAreEmployeesAccessibleAdmin() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
+        $allIds = $this->getEmployeeIds($allEmployees);
+        
+        // Default Admin user  (no employee)
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        $this->assertTrue($this->manager->areEntitiesAccessible('Employee', $allIds));
+        
+        // test with unavailable emp number
+        $empIds = array_merge($allIds, array(11));
+        
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $empIds));
+        
+        // Admin user 
+        $admin = $users[0];
+        $this->manager->setUser($admin);
+        $this->assertTrue($this->manager->areEntitiesAccessible('Employee', $allIds));
+        
+        // Admin + supervisor
+        $adminSupervisor = $users[3];
+        $this->manager->setUser($adminSupervisor);
+        $this->assertTrue($this->manager->areEntitiesAccessible('Employee', $allIds));
+    }
+
+    public function testAreEmployeesAccessibleSupervisor() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
+        $allIds = $this->getEmployeeIds($allEmployees);
+        
+        // Supervisor with one subordinate
+        $supervisor = $users[1];
+        $this->manager->setUser($supervisor);
+        $expected = array($allEmployees[2]->getEmpNumber());
+        $this->assertTrue($this->manager->areEntitiesAccessible('Employee', $expected));
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $allIds));
+        $notAccessible = array_diff($allIds, $expected);
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $notAccessible));
+        $mixed = array_merge($notAccessible, $expected);
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $mixed));
+        
+        // Supervisor with multiple subordinates
+        $supervisor = $users[6];
+        $this->manager->setUser($supervisor);
+        $expected = array($allEmployees[0]->getEmpNumber(), $allEmployees[2]->getEmpNumber(), 
+                          $allEmployees[3]->getEmpNumber(), $allEmployees[4]->getEmpNumber());
+        $this->assertTrue($this->manager->areEntitiesAccessible('Employee', $expected));
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $allIds));
+        $notAccessible = array_diff($allIds, $expected);
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $notAccessible));
+        $mixed = array_merge($notAccessible, $expected);
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $mixed));
+    }
+    
+    public function testAreEmployeesAccessibleESS() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
+        $allIds = $this->getEmployeeIds($allEmployees);
+        
+        // ESS user
+        $essUser = $users[4];
+        $this->manager->setUser($essUser);
+        $this->assertFalse($this->manager->areEntitiesAccessible('Employee', $allIds));        
+        foreach ($allIds as $id) {
+            $this->assertFalse($this->manager->areEntitiesAccessible('Employee', array($id)));
+        }      
+    }    
+    
+    public function testIsEmployeeAccessibleAdmin() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
+        $allIds = $this->getEmployeeIds($allEmployees);
+        
+        // Default Admin user  (no employee)
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        foreach ($allIds as $id) {
+            $this->assertTrue($this->manager->isEntityAccessible('Employee', $id));
+        }
+        
+        // Admin user 
+        $admin = $users[0];
+        $this->manager->setUser($admin);
+        foreach ($allIds as $id) {
+            $this->assertTrue($this->manager->isEntityAccessible('Employee', $id));
+        }
+        
+        // Admin + supervisor
+        $adminSupervisor = $users[3];
+        $this->manager->setUser($adminSupervisor);
+        foreach ($allIds as $id) {
+            $this->assertTrue($this->manager->isEntityAccessible('Employee', $id));
+        }
+    }
+
+    public function testIsEmployeeAccessibleSupervisor() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
+        $allIds = $this->getEmployeeIds($allEmployees);
+        
+        // Supervisor with one subordinate
+        $supervisor = $users[1];
+        $this->manager->setUser($supervisor);
+        $expected = array($allEmployees[2]->getEmpNumber());
+        foreach ($allIds as $id) {
+            if (in_array($id, $expected)) {
+                $this->assertTrue($this->manager->isEntityAccessible('Employee', $id));
+            } else {
+                $this->assertFalse($this->manager->isEntityAccessible('Employee', $id));
+            }
+        }
+        
+        // Supervisor with multiple subordinates
+        $supervisor = $users[6];
+        $this->manager->setUser($supervisor);
+        $expected = array($allEmployees[0]->getEmpNumber(), $allEmployees[2]->getEmpNumber(), 
+                          $allEmployees[3]->getEmpNumber(), $allEmployees[4]->getEmpNumber());
+        foreach ($allIds as $id) {
+            if (in_array($id, $expected)) {
+                $this->assertTrue($this->manager->isEntityAccessible('Employee', $id));
+            } else {
+                $this->assertFalse($this->manager->isEntityAccessible('Employee', $id));
+            }
+        }
+    }
+    
+    public function testIsEmployeeAccessibleESS() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
+        $allIds = $this->getEmployeeIds($allEmployees);
+        
+        // ESS user
+        $essUser = $users[4];
+        $this->manager->setUser($essUser);
+        foreach ($allIds as $id) {
+            $this->assertFalse($this->manager->isEntityAccessible('Employee', $id));
+        }      
+    }    
     
     public function testGetAccessibleEmployeesAdmin() {
         $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   

@@ -154,4 +154,8 @@ class UnitTestUserRoleManager extends AbstractUserRoleManager {
     public function getScreenPermissions($module, $screen) {
         
     }
+
+    public function areEntitiesAccessible($entityType, $entityIds, $operation = null, $preferredUserRoleOrder = null) {
+        
+    }
 }

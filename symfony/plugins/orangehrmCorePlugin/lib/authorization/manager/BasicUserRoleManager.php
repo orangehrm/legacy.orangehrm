@@ -155,7 +155,28 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     
     public function isEntityAccessible($entityType, $entityId, $operation = null, 
                                                 $preferredUserRoleOrder = null) {
+        $entityIds = $this->getAccessibleEntityIds($entityType, $operation, $preferredUserRoleOrder);
         
+        $accessible = in_array($entityId, $entityIds);
+        
+        return $accessible;
+    }
+    
+    public function areEntitiesAccessible($entityType, $entityIds, $operation = null, 
+                                                $preferredUserRoleOrder = null) {
+        $accessibleIds = $this->getAccessibleEntityIds($entityType, $operation, $preferredUserRoleOrder);
+        $intersection = array_intersect($accessibleIds, $entityIds);
+        
+        $accessible = false;
+        
+        if (count($entityIds) == count($intersection)) {
+            $diff = array_diff($entityIds, $intersection);
+            if (count($diff) == 0) {
+                $accessible = true;
+            }
+        }
+        
+        return $accessible;        
     }
     
     public function getAccessibleModules() {
