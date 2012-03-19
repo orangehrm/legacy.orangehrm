@@ -365,7 +365,7 @@ class LeaveSummaryForm extends sfForm {
 
     protected function adjustSearchClues($clues) {
         
-        if (is_array($clues['txtEmpName'])) {
+        if (isset($clues['txtEmpName']) && is_array($clues['txtEmpName'])) {
             $a = $clues['txtEmpName'];
             $clues['txtEmpName'] = $a['empName'];
             $clues['cmbEmpId'] = $a['empId'];
