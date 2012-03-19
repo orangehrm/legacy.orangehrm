@@ -129,7 +129,8 @@ EOF
             return $employeeList;
         }
         
-        return sfContext::getInstance()->getUser()->getAttribute("user")->getEmployeeList();
+        $employees = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntities('Employee');
+        return $employees;
         
     }
 
@@ -148,9 +149,15 @@ EOF
             $jsonArray[] = array('name' => $employee->getFullName(), 'id' => $employee->getEmpNumber());
             
         }
+        
+        usort($jsonArray, array($this, 'compareByName'));
 
         return json_encode($jsonArray);
 
+    }
+    
+    protected function compareByName($employee1, $employee2) {
+        return strcmp($employee1['name'], $employee2['name']);
     }
 
 }

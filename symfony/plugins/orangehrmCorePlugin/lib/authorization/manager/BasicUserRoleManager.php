@@ -89,6 +89,23 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
         
     public function getAccessibleEntities($entityType, $operation = null, $returnType = null) {
+        $allEmployees = array();
+        
+        foreach ($this->userRoles as $role) {  
+            $employees = array();
+
+            switch ($entityType) {
+                case 'Employee':
+                    $employees = $this->getAccessibleEmployees($role, $operation, $returnType);
+                    break;  
+            }
+            
+            if (count($employees) > 0) {
+                $allEmployees = $this->mergeEmployees($allEmployees, $employees);
+            }
+        }        
+
+        return $allEmployees;
     }
     
     
@@ -183,6 +200,37 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
         return $roles;
     }    
+    
+    protected function getAccessibleEmployees($role, $operation = null, $returnType = null) {
+        $employees = array();
+        
+        if ('Admin' == $role->getName()) {
+            $employees = $this->getEmployeeService()->getEmployeeList('empNumber', 'ASC', true);
+        } else if ('Supervisor' == $role->getName()) {
+            $empNumber = $this->getUser()->getEmpNumber();
+            if (!empty($empNumber)) {
+                $employees = $this->getEmployeeService()->getSupervisorEmployeeChain($empNumber, true);
+            }
+        }
+        
+        $employeesWithIds = array();
+        
+        foreach ($employees as $employee) {
+            $employeesWithIds[$employee->getEmpNumber()] = $employee;
+        }
+
+        return $employeesWithIds;        
+    }
+    
+    protected function mergeEmployees($empList1, $empList2) {
+        
+        foreach ($empList2 as $id=>$emp) {
+            if (!isset($empList1[$id])) {
+                $empList1[$id] = $emp;
+            }
+        }
+        return $empList1;
+    }
     
     protected function getAccessibleEmployeeIds($role, $operation = null, $returnType = null) {
         
