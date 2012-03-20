@@ -32,6 +32,12 @@ class terminateEmployementAction extends basePimAction {
         $paramForTerminationForm = array('empNumber' => $empNumber, 'employee' => $employee);
         $this->form = new EmployeeTerminateForm(array(), $paramForTerminationForm, true);
 
+        $userRoleManager = $this->getContext()->getUserRoleManager();            
+        $accessible = $userRoleManager->isEntityAccessible('Employee', $empNumber);
+        if (!$accessible) {
+            $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+        }
+        
         if ($this->getRequest()->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
