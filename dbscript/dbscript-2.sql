@@ -1281,7 +1281,18 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (3, 'Delete System Users', 2, 'deleteSystemUsers'),
 (4, 'Add Employee', 3, 'addEmployee'),
 (5, 'View Employee List', 3, 'viewEmployeeList'),
-(6, 'Delete Employees', 3, 'deleteEmployees');
+(6, 'Delete Employees', 3, 'deleteEmployees'),
+(7, 'Leave Type List', 4, 'leaveTypeList'),
+(8, 'Define Leave Type', 4, 'defineLeaveType'),
+(9, 'Undelete Leave Type', 4, 'undeleteLeaveType'),
+(10, 'Delete Leave Type', 4, 'deleteLeaveType'),
+(11, 'View Holiday List', 4, 'viewHolidayList'),
+(12, 'Define Holiday', 4, 'defineHoliday'),
+(13, 'Delete Holiday', 4, 'deleteHoliday'),
+(14, 'Define WorkWeek', 4, 'defineWorkWeek'),
+(16, 'Leave List', 4, 'viewLeaveList'),
+(17, 'Assign Leave', 4, 'assignLeave');
+
 
 INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
 (1, 1, 1, 1, 1, 1),
@@ -1296,4 +1307,18 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (1, 4, 1, 1, 1, 1),
 (1, 5, 1, 1, 1, 1),
 (3, 5, 1, 0, 0, 0),
-(1, 6, 1, 0, 0, 1);
+(1, 6, 1, 0, 0, 1),
+(1, 7, 1, 1, 1, 1),
+(1, 8, 1, 1, 1, 1),
+(1, 9, 1, 1, 1, 1),
+(1, 10, 1, 1, 1, 1),
+(1, 11, 1, 1, 1, 1),
+(1, 12, 1, 1, 1, 1),
+(1, 13, 1, 1, 1, 1),
+(1, 14, 1, 1, 1, 1),
+(1, 16, 1, 1, 1, 0),
+(2, 16, 1, 1, 1, 0),
+(1, 17, 1, 1, 1, 0),
+(2, 17, 1, 1, 1, 0);
+
+
