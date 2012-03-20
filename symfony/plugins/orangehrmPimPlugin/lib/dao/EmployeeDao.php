@@ -1511,10 +1511,10 @@ class EmployeeDao extends BaseDao {
                 $q->where('work_station = ?', $subUnits);
             }
             
-            if (!$includeTerminatedemployees) {
+            if (!$includeTerminatedEmployees) {                
                 $q->andwhere("termination_id IS NULL");
             }
-            
+
             return $q->execute();
 
         } catch (Exception $e) {
