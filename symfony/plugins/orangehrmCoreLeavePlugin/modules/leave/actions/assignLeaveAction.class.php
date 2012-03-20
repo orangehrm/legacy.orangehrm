@@ -60,12 +60,6 @@ class assignLeaveAction extends baseLeaveAction {
         $this->setForm($form);
         $this->overlapLeave = 0;
 
-        /* Authentication */
-        $userDetails = $this->getLoggedInUserDetails();
-        if ($userDetails['userType'] == 'ESS') {
-            $this->forward('leave', 'viewMyLeaveList');
-        }
-
         /* This section is to save leave request */
         if ($request->isMethod('post')) {
             $this->assignLeaveForm->bind($request->getParameter($this->assignLeaveForm->getName()));
@@ -116,12 +110,11 @@ class assignLeaveAction extends baseLeaveAction {
     protected function getAssignLeaveForm() {
         /* Making the optional parameters to create the form */
         $leaveTypes = $this->getElegibleLeaveTypes();
-        $userDetails = $this->getLoggedInUserDetails();
+
         if (count($leaveTypes) == 1) {
             $this->templateMessage = array('WARNING', __('No Leave Types with Leave Balance'));
         }
-        $leaveFormOptions = array('leaveTypes' => $leaveTypes, 'userType' => $userDetails['userType'],
-            'loggedUserId' => $userDetails['loggedUserId']);
+        $leaveFormOptions = array('leaveTypes' => $leaveTypes);
         $form = new AssignLeaveForm(array(), $leaveFormOptions, true);
 
         return $form;

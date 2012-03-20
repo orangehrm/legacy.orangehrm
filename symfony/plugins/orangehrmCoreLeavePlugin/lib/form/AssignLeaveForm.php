@@ -26,8 +26,6 @@
 class AssignLeaveForm extends sfForm {
 
     public $leaveTypeList = array();
-    public $userType;
-    public $loggedUserId;
 
     /**
      * Configure ApplyLeaveForm
@@ -35,8 +33,6 @@ class AssignLeaveForm extends sfForm {
      */
     public function configure() {
 
-        $this->userType = $this->getOption('userType');
-        $this->loggedUserId = $this->getOption('loggedUserId');
         $this->leaveTypeList = $this->getOption('leaveTypes');
 
         $this->setWidgets($this->getFormWidgets());
@@ -133,13 +129,10 @@ class AssignLeaveForm extends sfForm {
         $jsonArray = array();
         $employeeService = new EmployeeService();
         $employeeService->setEmployeeDao(new EmployeeDao());
-
-        if ($this->userType == 'Admin') {
-            $employeeList = $employeeService->getEmployeeList('empNumber', 'ASC', true);
-        } elseif ($this->userType == 'Supervisor') {
-
-            $employeeList = $employeeService->getSupervisorEmployeeChain($this->loggedUserId, true);
-        }
+        
+        $locationService = new LocationService();
+        
+        $employeeList = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntities('Employee');
 
         $employeeUnique = array();
         foreach ($employeeList as $employee) {
@@ -153,11 +146,17 @@ class AssignLeaveForm extends sfForm {
                 } else
                     $workShiftLength = WorkShift :: DEFAULT_WORK_SHIFT_LENGTH;
 
-                $operatinalCountry = $employee->getOperationalCountry();
+                /*$operatinalCountry = $employee->getOperationalCountry();
                 if ($employee->getOperationalCountry() instanceof OperationalCountry) {
                     $employeeCountry = $operatinalCountry->getId();
+                }*/
+                
+                $employeeLocations  = $employee->getLocations();
+                if ($employeeLocations[0] instanceof Location){                
+                    $location = $locationService->getLocationById($employeeLocations[0]->getId());
+                    $employeeCountry = $location->getCountry()->getOperationalCountry()->getId();
                 }
-
+                
                 $name = $employee->getFullName();
 
                 $employeeUnique[$employee->getEmpNumber()] = $name;
