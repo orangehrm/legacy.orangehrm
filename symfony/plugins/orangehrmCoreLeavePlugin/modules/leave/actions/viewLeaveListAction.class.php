@@ -63,25 +63,7 @@ class viewLeaveListAction extends sfAction {
     }
 
     protected function getMode() {
-
-        $user = $this->getUser();
-
-        if ($user->getAttribute('auth.isAdmin') == 'Yes') {
-            $mode = LeaveListForm::MODE_ADMIN_LIST;
-        } else if ($user->getAttribute('auth.isSupervisor')) {
-            $mode = LeaveListForm::MODE_SUPERVISOR_LIST;
-        } else {
-            $mode = LeaveListForm::MODE_MY_LEAVE_LIST;
-        }
-
-        // If my leave list was requested and user has a valid
-        // employee number, switch to my leave list.
-//        if ($mode != LeaveListForm::MODE_MY_LEAVE_LIST &&
-//                $this->requestedMode == LeaveListForm::MODE_MY_LEAVE_LIST &&
-//                !empty($empNumber)) {
-//
-//            $mode = LeaveListForm::MODE_MY_LEAVE_LIST;
-//        }
+        $mode = LeaveListForm::MODE_ADMIN_LIST;
         
         return $mode;
     }
@@ -281,30 +263,29 @@ class viewLeaveListAction extends sfAction {
     protected function getEmployeeFilter($mode, $empNumber) {
         
         $loggedInEmpNumber = $this->getUser()->getAttribute('auth.empNumber');
-        $employeeFilter = null;
         
+        // default filter to null. Will fetch all employees
+        $employeeFilter = null;
+            
         if ($mode == LeaveListForm::MODE_MY_LEAVE_LIST) {
             
             $employeeFilter = $loggedInEmpNumber;
-        } else if ($mode == LeaveListForm::MODE_ADMIN_LIST) {
-            
-            if (!empty($empNumber)) {
-                $employeeFilter = $empNumber;
-            }
-        } else if ($mode == LeaveListForm::MODE_SUPERVISOR_LIST) {
-            
-            $employeeFilter = array();
-            
-            $subordinates = $this->getEmployeeService()->getSupervisorEmployeeChain($loggedInEmpNumber, true);
-            
-            foreach ($subordinates as $subordinate) {
-                $subordinateId = $subordinate->getEmpNumber();
-                
-                if (empty($empNumber) || ($empNumber == $subordinateId)) {
-                    $employeeFilter[] = $subordinateId;
-                }
-            }
+        } else {
+            $manager = $this->getContext()->getUserRoleManager();
+            $accessibleEmpIds = $manager->getAccessibleEntityIds('Employee');
+
+            if (empty($empNumber)) {
+                $employeeFilter = $accessibleEmpIds;
+            } else {
+                if (in_array($empNumber, $accessibleEmpIds)) {
+                    $employeeFilter = $empNumber;
+                } else {
+                    // Requested employee is not accessible. 
+                    $employeeFilter = array();
+                }           
+            }                
         }
+        
         return $employeeFilter;
     }
 
@@ -348,8 +329,7 @@ class viewLeaveListAction extends sfAction {
      * Dates are expected in standard date format (yy-dd-mm, 2012-21-02).
      * 
      * @param mode Leave list mode. One of (LeaveListForm::MODE_ADMIN_LIST,
-     *                                      LeaveListForm::MODE_MY_LEAVE_LIST
-     *                                      LeaveListForm::MODE_SUPERVISOR_LIST)                            
+     *                                      LeaveListForm::MODE_MY_LEAVE_LIST)                            
      * @param array $filters Filters
      * @return unknown_type
      */

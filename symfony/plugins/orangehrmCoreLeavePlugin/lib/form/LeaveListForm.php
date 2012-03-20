@@ -4,12 +4,9 @@
  * Form class for leave list
  */
 class LeaveListForm extends sfForm {
-    const MODE_SUPERVISOR_DETAILED_LIST = 'detailed_supervisor_list';
-    const MODE_HR_ADMIN_DETAILED_LIST = 'detailed_hr_admin_list';
+
     const MODE_MY_LEAVE_LIST = 'my_leave_list';
-    const MODE_MY_LEAVE_DETAILED_LIST = 'my_leave_detailed_list';
     const MODE_ADMIN_LIST = 'default_list';
-    const MODE_SUPERVISOR_LIST = 'supervisor_list';
 
     private $mode;
     private $list = null;
