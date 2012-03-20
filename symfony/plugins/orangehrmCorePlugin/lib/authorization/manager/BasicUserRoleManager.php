@@ -41,7 +41,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         $this->locationService = $locationService;
     }
 
-        public function getOperationalCountryService() {
+    public function getOperationalCountryService() {
         if (empty($this->operationalCountryService)) {
             $this->operationalCountryService = new OperationalCountryService();
         }         
@@ -75,7 +75,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         $this->systemUserService = $systemUserService;
     }
 
-        public function getEmployeeService() {
+    public function getEmployeeService() {
         
         if (empty($this->employeeService)) {
             $this->employeeService = new EmployeeService();
@@ -88,10 +88,14 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     }
 
         
-    public function getAccessibleEntities($entityType, $operation = null, $returnType = null) {
+    public function getAccessibleEntities($entityType, $operation = null, $returnType = null,
+            $rolesToExclude = array(), $rolesToInclude = array()) {
+        
         $allEmployees = array();
         
-        foreach ($this->userRoles as $role) {  
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude); 
+        
+        foreach ($filteredRoles as $role) {  
             $employees = array();
 
             switch ($entityType) {
@@ -118,11 +122,13 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
      * @param type $returnType
      * @return type 
      */
-    public function getAccessibleEntityIds($entityType, $operation = null, $returnType = null) {
+    public function getAccessibleEntityIds($entityType, $operation = null, $returnType = null,
+            $rolesToExclude = array(), $rolesToInclude = array()) {
     
         $allIds = array();
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude);                
         
-        foreach ($this->userRoles as $role) {  
+        foreach ($filteredRoles as $role) {  
             $ids = array();
 
             switch ($entityType) {
@@ -154,8 +160,8 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     
     
     public function isEntityAccessible($entityType, $entityId, $operation = null, 
-                                                $preferredUserRoleOrder = null) {
-        $entityIds = $this->getAccessibleEntityIds($entityType, $operation, $preferredUserRoleOrder);
+            $rolesToExclude = array(), $rolesToInclude = array()) {
+        $entityIds = $this->getAccessibleEntityIds($entityType, $operation, null, $rolesToExclude, $rolesToInclude);
         
         $accessible = in_array($entityId, $entityIds);
         
@@ -163,8 +169,8 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     }
     
     public function areEntitiesAccessible($entityType, $entityIds, $operation = null, 
-                                                $preferredUserRoleOrder = null) {
-        $accessibleIds = $this->getAccessibleEntityIds($entityType, $operation, $preferredUserRoleOrder);
+            $rolesToExclude = array(), $rolesToInclude = array()) {
+        $accessibleIds = $this->getAccessibleEntityIds($entityType, $operation, null, $rolesToExclude, $rolesToInclude);
         $intersection = array_intersect($accessibleIds, $entityIds);
         
         $accessible = false;
@@ -344,5 +350,35 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
         return $ids;        
     }    
+    
+    protected function filterRoles($userRoles, $rolesToExclude, $rolesToInclude) {
+        
+        if (!empty($rolesToExclude)) {
+            
+            $temp = array();
+            
+            foreach ($userRoles as $role) {  
+                if (!in_array($role->getName(), $rolesToExclude)) {
+                    $temp[] = $role;
+                }
+            }         
+            
+            $userRoles = $temp;
+        }
+        
+        if (!empty($rolesToInclude)) {
+            $temp = array();
+            
+            foreach ($userRoles as $role) {  
+                if (in_array($role->getName(), $rolesToInclude)) {
+                    $temp[] = $role;
+                }
+            }         
+            
+            $userRoles = $temp;            
+        }  
+        
+        return $userRoles;
+    }
 }
 

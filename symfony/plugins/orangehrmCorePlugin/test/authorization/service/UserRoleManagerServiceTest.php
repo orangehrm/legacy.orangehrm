@@ -123,14 +123,10 @@ class InvalidUserRoleManager {
 }
 
 class UnitTestUserRoleManager extends AbstractUserRoleManager {
-    public function getAccessibleEntities($entityType, $operation = null, $returnType = null) {
+    public function getAccessibleEntities($entityType, $operation = null, $returnType = null,
+            $rolesToExclude = array(), $rolesToInclude = array()) {
         
-    }
-    
-    public function isEntityAccessible($entityType, $entityId, $operation = null, 
-                                                $preferredUserRoleOrder = null) {
-        
-    }
+    }    
     
     public function getAccessibleModules() {
         
@@ -155,7 +151,15 @@ class UnitTestUserRoleManager extends AbstractUserRoleManager {
         
     }
 
-    public function areEntitiesAccessible($entityType, $entityIds, $operation = null, $preferredUserRoleOrder = null) {
+    public function areEntitiesAccessible($entityType, $entityIds, $operation = null, $rolesToExclude = array(), $rolesToInclude = array()) {
+        
+    }
+
+    public function isEntityAccessible($entityType, $entityId, $operation = null, $rolesToExclude = array(), $rolesToInclude = array()) {
+        
+    }
+
+    public function getAccessibleEntityIds($entityType, $operation = null, $returnType = null, $rolesToExclude = array(), $rolesToInclude = array()) {
         
     }
 }

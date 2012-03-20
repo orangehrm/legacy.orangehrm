@@ -313,7 +313,7 @@ class EmployeeJobDetailsForm extends BaseForm {
         $locationService = new LocationService();
 
         $locationList = array('' => '-- ' . __('Select') . ' --');
-        $locations = $locationService->getLocationList();
+        $locations = $locationService->getLocationList();        
 
         foreach ($locations as $location) {
             $locationList[$location->id] = $location->name;

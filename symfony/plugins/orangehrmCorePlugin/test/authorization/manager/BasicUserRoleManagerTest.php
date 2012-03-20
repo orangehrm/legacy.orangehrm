@@ -37,6 +37,54 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
                 
         $this->manager = new BasicUserRoleManager();
     }
+    
+    public function testGetAccessibleEmployeeIdsExcludeIncludeRoles() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
+        $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');
+        
+        // Default Admin user  (no employee)
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $expected = $this->getEmployeeIds($allEmployees);
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);        
+        
+        // Exclude Supervisor Role
+        $result = $this->manager->getAccessibleEntityIds('Employee', null, null, array('Supervisor'));
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);       
+        
+        // Include Admin Role
+        $result = $this->manager->getAccessibleEntityIds('Employee', null, null, array(), array('Admin'));
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);  
+        
+        // Exclude Admin Role
+        $result = $this->manager->getAccessibleEntityIds('Employee', null, null, array('Admin'));
+        $this->assertEquals(0, count($result));       
+               
+        // Admin + supervisor
+        $adminSupervisor = $users[3];
+        $this->manager->setUser($adminSupervisor);
+        $result = $this->manager->getAccessibleEntityIds('Employee');
+        $expected = $this->getEmployeeIds($allEmployees);
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result);   
+        
+        // Exclude supervisor role
+        $result = $this->manager->getAccessibleEntityIds('Employee', null, null, array('Supervisor'));
+        $this->assertEquals(count($expected), count($result));
+        $this->compareArrays($expected, $result); 
+        
+        // Exclude Admin role
+        $result = $this->manager->getAccessibleEntityIds('Employee', null, null, array('Admin'));
+        $expected = array($allEmployees[2]->getEmpNumber());
+        $this->assertEquals(count($expected), count($result));
+        
+        $this->compareArrays($expected, $result);         
+    }
+    
     public function testAreEmployeesAccessibleAdmin() {
         $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');   
         $allEmployees = TestDataService::loadObjectList('Employee', $this->fixture, 'Employee');

@@ -118,7 +118,9 @@ class EmployeeReportToForm extends BaseForm {
     protected function getEmployeeList() {
 
         $employeeService = $this->getEmployeeService();
-        $employeeList = $employeeService->getEmployeeList();
+       
+        $employeeList = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntities('Employee');
+        
         $finalEmployeeList = array();
 
         /* Populating already assigned sup & sub */

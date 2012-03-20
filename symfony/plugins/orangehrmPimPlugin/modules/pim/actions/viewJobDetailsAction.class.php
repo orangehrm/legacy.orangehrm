@@ -35,7 +35,6 @@ class viewJobDetailsAction extends basePimAction {
         $this->ownRecords = ($loggedInEmpNum == $empNumber)?true:false;
 
         $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
-        $supervisorMode = $this->isSupervisor($loggedInEmpNum, $empNumber);
 
         if (!$this->IsActionAccessible($empNumber)) {
             $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));

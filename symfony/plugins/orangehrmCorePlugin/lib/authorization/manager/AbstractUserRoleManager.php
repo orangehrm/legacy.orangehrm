@@ -35,13 +35,17 @@ abstract class AbstractUserRoleManager {
         return $this->user;
     }
     
-    public abstract function getAccessibleEntities($entityType, $operation = null, $returnType = null);
+    public abstract function getAccessibleEntities($entityType, $operation = null, $returnType = null, 
+            $rolesToExclude = array(), $rolesToInclude = array());
+    
+    public abstract function getAccessibleEntityIds($entityType, $operation = null, $returnType = null,
+            $rolesToExclude = array(), $rolesToInclude = array());
     
     public abstract function isEntityAccessible($entityType, $entityId, $operation = null, 
-                                                $preferredUserRoleOrder = null);
+            $rolesToExclude = array(), $rolesToInclude = array());
     
     public abstract function areEntitiesAccessible($entityType, $entityIds, $operation = null, 
-                                                $preferredUserRoleOrder = null);
+            $rolesToExclude = array(), $rolesToInclude = array());
     
     public abstract function getAccessibleModules();
     

@@ -87,7 +87,12 @@ abstract class basePimAction extends sfAction {
             return false;
         }
 
-        if ($this->getUser()->hasCredential(Auth::ADMIN_ROLE)) {
+        $userRoleManager = $this->getContext()->getUserRoleManager();   
+        $excludeRoles = array('Supervisor');
+        
+        $accessible = $userRoleManager->isEntityAccessible('Employee', $empNumber, null, $excludeRoles);
+        
+        if ($accessible) {
             return true;
         }
 
