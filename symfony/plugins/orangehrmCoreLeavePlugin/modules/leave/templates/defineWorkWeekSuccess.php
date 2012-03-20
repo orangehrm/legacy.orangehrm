@@ -47,6 +47,13 @@
     </div>
     <script type="text/javascript">
         //<![CDATA[
+        var permissions = {
+            canRead: <?php echo $permissions->canRead() ? 'true' : 'false';?>,
+            canCreate: <?php echo $permissions->canCreate() ? 'true' : 'false';?>,            
+            canUpdate: <?php echo $permissions->canUpdate() ? 'true' : 'false';?>,
+            canDelete: <?php echo $permissions->canDelete() ? 'true' : 'false';?>
+        };
+        
         var lang_Save = "<?php echo __('Save') ?>";
         var lang_Edit = "<?php echo __('Edit') ?>";
         var lang_AtLeastOneWorkDay = "<?php echo __('At Least One Day Should Be a Working Day') ?>";
