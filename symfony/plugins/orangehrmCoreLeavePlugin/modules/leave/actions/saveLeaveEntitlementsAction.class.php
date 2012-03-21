@@ -17,15 +17,17 @@ class saveLeaveEntitlementsAction extends baseLeaveAction {
             $hdnLeavePeriodId = $request->getParameter('hdnLeavePeriodId');
             $txtLeaveEntitled = $request->getParameter('txtLeaveEntitled');
             $count = count($txtLeaveEntitled);
-
+            
             $leaveEntitlementService = $this->getLeaveEntitlementService();
             $leaveSummaryData = $request->getParameter('leaveSummary');
-
+            
             for ($i = 0; $i < $count; $i++) {
                 $leavePeriodId = empty($hdnLeavePeriodId[$i]) ? $leaveSummaryData['hdnSubjectedLeavePeriod'] : $hdnLeavePeriodId[$i];
                 try {
                     $leaveEntitlementService->saveEmployeeLeaveEntitlement($hdnEmpId[$i], $hdnLeaveTypeId[$i], $leavePeriodId, $txtLeaveEntitled[$i], true);
                 } catch (Exception $e) {
+                    $logger = Logger::getLogger('saveLeaveEntitlementsAction');                    
+                    $logger->error($e);
                     $saveSuccess = false;
                 }
             }

@@ -1291,8 +1291,9 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (13, 'Delete Holiday', 4, 'deleteHoliday'),
 (14, 'Define WorkWeek', 4, 'defineWorkWeek'),
 (16, 'Leave List', 4, 'viewLeaveList'),
-(17, 'Assign Leave', 4, 'assignLeave');
-
+(17, 'Assign Leave', 4, 'assignLeave'),
+(18, 'View Leave Summary', 4, 'viewLeaveSummary'),
+(19, 'Save Leave Entitlements', 4, 'saveLeaveEntitlements');
 
 INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
 (1, 1, 1, 1, 1, 1),
@@ -1319,6 +1320,10 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (1, 16, 1, 1, 1, 0),
 (2, 16, 1, 1, 1, 0),
 (1, 17, 1, 1, 1, 0),
-(2, 17, 1, 1, 1, 0);
+(2, 17, 1, 1, 1, 0),
+(1, 18, 1, 1, 1, 0),
+(2, 18, 1, 0, 0, 0),
+(3, 18, 1, 0, 0, 0),
+(1, 19, 1, 1, 1, 1);
 
 

@@ -99,11 +99,14 @@ class EmployeeLeaveEntitlement extends PluginEmployeeLeaveEntitlement {
      * @return bool
      * @todo Move this logic to service classes
      */
-    public function isEmployeeDetailsAccessibleTo($supervisorId, $userType) {
-        if ($userType == SystemUser::USER_TYPE_ADMIN) {
+    public function isEmployeeDetailsAccessible() {
+        
+        $empNumber = $this->getEmployee()->getEmpNumber();
+        
+        $manager = UserRoleManagerFactory::getUserRoleManager();
+        
+        if ($manager->isEntityAccessible('Employee', $empNumber)) {
             return true;
-        } elseif ($userType == SystemUser::USER_TYPE_SUPERVISOR) {
-            return $this->getEmployee()->isSubordinateOf($supervisorId);
         } else {
             return false;
         }

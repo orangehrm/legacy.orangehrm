@@ -91,8 +91,8 @@ class viewLeaveSummaryAction extends sfAction implements ohrmExportableAction {
         $this->form->recordsCount = $this->form->getLeaveSummaryRecordsCount();
         $this->form->setPager($request);
 
-        LeaveSummaryConfigurationFactory::setUserType($userDetails['userType']);
-        LeaveSummaryConfigurationFactory::setUserId($userDetails['loggedUserId']);
+        $permissions = $this->getContext()->get('screen_permissions');        
+        LeaveSummaryConfigurationFactory::setPermissions($permissions);
 
         $leaveSummaryService = new LeaveSummaryService();
         $leaveSummaryDao = new LeaveSummaryDao();
@@ -166,19 +166,10 @@ class viewLeaveSummaryAction extends sfAction implements ohrmExportableAction {
      */
     protected function getLoggedInUserDetails() {
         $userDetails = array();
-        $userDetails['userType'] = 'ESS';
 
         /* Value 0 is assigned for default admin */
         $userDetails['loggedUserId'] = (empty($_SESSION['empNumber'])) ? 0 : $_SESSION['empNumber'];
         $userDetails['empId'] = (empty($_SESSION['empID'])) ? 0 : $_SESSION['empID'];
-
-        if ($_SESSION['isSupervisor']) {
-            $userDetails['userType'] = 'Supervisor';
-        }
-
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 'Yes') {
-            $userDetails['userType'] = 'Admin';
-        }
         
         return $userDetails;
     }

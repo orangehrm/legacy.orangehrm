@@ -36,6 +36,9 @@ class LeaveSummaryForm extends sfForm {
     protected $leaveTypeChoices = null;
     protected $leavePeriodChoices;
     protected $locationService;
+    protected $employeeList = array();
+    protected $employeeIdList = array();
+    protected $hasAdministrativeFilters = false;
 
     public $leaveSummaryEditMode = false;
     public $pageNo = 1;
@@ -44,7 +47,6 @@ class LeaveSummaryForm extends sfForm {
     public $recordsCount = 0;
     public $recordsLimit = 20;
     public $saveSuccess;
-    public $userType;
     public $loggedUserId;
     public $subordinatesList;
     public $currentLeavePeriodId;
@@ -58,18 +60,16 @@ class LeaveSummaryForm extends sfForm {
 
     public function configure() {
 
-        $this->userType = $this->getOption('userType');
         $this->loggedUserId = $this->getOption('loggedUserId');
         $this->searchParam['employeeId'] = $this->getOption('employeeId');
         $this->searchParam['cmbWithTerminated'] = $this->getOption('cmbWithTerminated');
         $this->empId = $this->getOption('empId');
+        
+        $this->setupEmployeeList();
 
         $this->setCurrentLeavePeriodId(); // This should be called before _setLeavePeriodWidgets()
 
-        $formWidgets = array();
-        $formValidators = array();
-
-        if ($this->userType == 'Admin' || $this->userType == 'Supervisor') {
+        if ($this->hasAdministrativeFilters()) {
 
             $employeeId = 0;
             $empName = "";
@@ -215,29 +215,6 @@ class LeaveSummaryForm extends sfForm {
     }
 
     /**
-     * 
-     * @return array
-     */
-    private function getSubDivisionChoices() {
-
-        if (is_null($this->subDivisionChoices)) {
-            $this->subDivisionChoices = array(0 => __('All'));
-
-            $treeObject = $this->getCompanyStructureService()->getSubunitTreeObject();
-
-            $tree = $treeObject->fetchTree();
-
-            foreach ($tree as $node) {
-                if ($node->getId() != 1) {
-                    $this->subDivisionChoices[$node->getId()] = str_repeat('&nbsp;&nbsp;', $node['level'] - 1) . $node['name'];
-                }
-            }
-        }
-
-        return $this->subDivisionChoices;
-    }
-
-    /**
      *
      * @return array
      */
@@ -265,22 +242,36 @@ class LeaveSummaryForm extends sfForm {
         return true;
     }
 
-    protected function getEmployeeList() {
+    protected function setupEmployeeList() {
 
         $employeeList = array();
-        $employeeService = $this->getEmployeeService();
+        $idList = array();
+        
+        $manager = UserRoleManagerFactory::getUserRoleManager();
+        $employeeList = $manager->getAccessibleEntities('Employee');
+        
+        $this->hasAdministrativeFilters = count($employeeList) > 0;
+        
+        $hasSelf = false;
+        foreach ($employeeList as $employee) {
+            $idList[] = $employee->getEmpNumber();
+            if ($employee->getEmpNumber() == $this->loggedUserId) {
+                $hasSelf = true;
+            }
+        }
+        
+        if (!$hasSelf) {
 
-        if ($this->userType == 'Admin') {
-            
-            $employeeList = $employeeService->getEmployeeList();
-            
-        } elseif ($this->userType == 'Supervisor') {
-
-            $employeeList = $employeeService->getSupervisorEmployeeChain($this->loggedUserId);
+            $employeeService = $this->getEmployeeService();            
             $loggedInEmployee = $employeeService->getEmployee($this->loggedUserId);
-            array_push($employeeList, $loggedInEmployee);
-            
-        } 
+            if ($loggedInEmployee instanceof Employee) {
+                $idList[] = $this->loggedUserId;                
+                array_push($employeeList, $loggedInEmployee);
+            }
+        }
+        
+        $this->employeeList = $employeeList;
+        $this->employeeIdList = $idList;
 
         return $employeeList;
         
@@ -371,18 +362,8 @@ class LeaveSummaryForm extends sfForm {
             $clues['cmbEmpId'] = $a['empId'];
         }
 
-        if ($this->userType == 'Admin') {
-            $clues['userType'] = 'Admin';
-            return $clues;
-        } elseif ($this->userType == 'Supervisor') {
-            $clues['userType'] = 'Supervisor';
-            $clues['subordinates'] = $this->_getSubordinatesIds();
-            return $clues;
-        } else {
-            $clues['userType'] = 'ESS';
-            $clues['cmbEmpId'] = $this->loggedUserId;
-            return $clues;
-        }
+        $clues['emp_numbers'] = $this->employeeIdList;
+        return $clues;        
     }
 
     private function _getSubordinatesList() {
@@ -482,7 +463,7 @@ class LeaveSummaryForm extends sfForm {
         $widgets['cmbLeaveType'] = new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeChoices()));
 
         if ($this->hasAdministrativeFilters()) {
-            $widgets['txtEmpName'] = new ohrmWidgetEmployeeNameAutoFill(array('employeeList' => $this->getEmployeeList()));
+            $widgets['txtEmpName'] = new ohrmWidgetEmployeeNameAutoFill(array('employeeList' => $this->employeeList));
             $widgets['cmbJobTitle'] = new sfWidgetFormChoice(array('choices' => $this->getJobTitleChoices()));
             $widgets['cmbLocation'] = new sfWidgetFormChoice(array('choices' => $this->getLocationChoices()));
             $widgets['cmbSubDivision'] = new ohrmWidgetSubDivisionList();
@@ -527,7 +508,7 @@ class LeaveSummaryForm extends sfForm {
      * @return bool
      */
     protected function hasAdministrativeFilters() {
-        return ($this->userType == 'Admin' || $this->userType == 'Supervisor');
+        return ($this->hasAdministrativeFilters);
     }
 
 }
