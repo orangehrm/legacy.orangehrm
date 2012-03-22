@@ -56,7 +56,7 @@
 <?php } ?>
     <div class="formpage">
     <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-    <?php if (count($assignLeaveForm->leaveTypeList) > 1) {
+    <?php if (count($assignLeaveForm->leaveTypeList) > 0) {
     ?>
         <div class="outerbox">
             <div class="mainHeading"><h2 class="paddingLeft"><?php echo __('Assign Leave') ?></h2></div>
