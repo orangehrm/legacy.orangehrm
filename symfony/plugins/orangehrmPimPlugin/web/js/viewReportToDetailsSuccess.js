@@ -249,7 +249,7 @@ function isValidForm(){
     $("#frmAddReportTo").validate({
         //errorClass: "reportToError",
         rules: {
-            'reportto[name]' : {
+            'reportto[name][empName]' : {
                 empNameValidation: true
             },
             'reportto[reportingMethodType]' : {
@@ -263,7 +263,7 @@ function isValidForm(){
 
         },
         messages: {
-            'reportto[name]' : {
+            'reportto[name][empName]' : {
                 empNameValidation: nameIsRequired
 
             },
