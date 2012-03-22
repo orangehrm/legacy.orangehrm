@@ -58,7 +58,7 @@ class EmployeeJobDetailsForm extends BaseForm {
 
         $eeoCategories = $this->_getEEOCategories();
         $subDivisions = $this->_getSubDivisions();
-        $locations = $this->_getLocations();
+        $locations = $this->_getLocations($employee);
 
         $empService = new EmployeeService();
 
@@ -309,13 +309,20 @@ class EmployeeJobDetailsForm extends BaseForm {
         return($subUnitList);
     }
 
-    private function _getLocations() {
+    private function _getLocations(Employee $employee) {
         $locationList = array('' => '-- ' . __('Select') . ' --');
 
         $locationService = new LocationService();
         $locations = $locationService->getLocationList();        
 
         $accessibleLocations = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Location');
+        
+        $empLocations = $employee->getLocations();        
+        
+        foreach ($empLocations as $location) {
+            $accessibleLocations[] = $location->getId();
+        }
+        
         foreach ($locations as $location) {
             if (in_array($location->id, $accessibleLocations)) {
                 $locationList[$location->id] = $location->name;
