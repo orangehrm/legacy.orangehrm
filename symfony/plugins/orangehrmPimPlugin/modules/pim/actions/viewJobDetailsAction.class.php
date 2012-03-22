@@ -33,6 +33,7 @@ class viewJobDetailsAction extends basePimAction {
         $this->empNumber = $empNumber;
 
         $this->ownRecords = ($loggedInEmpNum == $empNumber)?true:false;
+        $this->allowEdit = $this->isAllowedAdminOnlyActions($loggedInEmpNum, $empNumber);
 
         $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
 
@@ -57,6 +58,10 @@ class viewJobDetailsAction extends basePimAction {
 
         if ($this->getRequest()->isMethod('post')) {
 
+            if (!$this->allowEdit) {
+                $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+            }
+                    
             // Handle the form submission           
             $this->form->bind($request->getParameter($this->form->getName()), 
                     $request->getFiles($this->form->getName()));
