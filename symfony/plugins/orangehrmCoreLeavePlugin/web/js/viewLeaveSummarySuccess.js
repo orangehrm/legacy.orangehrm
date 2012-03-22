@@ -3,7 +3,12 @@ function initLeaveSummary() {
     /* Making all text boxes non editable by default */
     disableEntitlementTextboxes();
     
-
+    /* Remove edit/save buttons if no editable leave entitlements */
+    var editableRows = $('input[name="txtLeaveEntitled[]"][type="text"]').length;
+    if (editableRows == 0) {
+        $('div[class="actionbar"]').hide();
+    }
+    
     /* Clearing auto-fill fields */
     $('#leaveSummary_txtEmpName_empName').click(function(){
         $(this).attr('value', '');
