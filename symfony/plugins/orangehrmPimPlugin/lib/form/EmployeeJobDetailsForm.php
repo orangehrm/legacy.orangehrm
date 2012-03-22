@@ -310,13 +310,16 @@ class EmployeeJobDetailsForm extends BaseForm {
     }
 
     private function _getLocations() {
-        $locationService = new LocationService();
-
         $locationList = array('' => '-- ' . __('Select') . ' --');
+
+        $locationService = new LocationService();
         $locations = $locationService->getLocationList();        
 
+        $accessibleLocations = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Location');
         foreach ($locations as $location) {
-            $locationList[$location->id] = $location->name;
+            if (in_array($location->id, $accessibleLocations)) {
+                $locationList[$location->id] = $location->name;
+            }
         }
 
         return($locationList);
