@@ -27,6 +27,8 @@ class AssignLeaveForm extends sfForm {
 
     public $leaveTypeList = array();
 
+    protected $employeeService;
+    
     /**
      * Configure ApplyLeaveForm
      *
@@ -45,14 +47,23 @@ class AssignLeaveForm extends sfForm {
         $this->getWidgetSchema()->setNameFormat('assignleave[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
         $this->getWidgetSchema()->setFormFormatterName('BreakTags');
-    }
+    }        
 
     /**
      *
      * @return array
      */
     public function getLeaveTypeList() {
-        return $this->leaveTypeList;
+        
+        $leaveTypeChoices = array();
+
+        $leaveTypeChoices[''] = '--' . __('Select') . '--';
+        
+        foreach ($this->leaveTypeList as $leaveType) {
+            $leaveTypeChoices[$leaveType->getLeaveTypeId()] = $leaveType->getLeaveTypeName();
+        }
+        
+        return $leaveTypeChoices;
     }
 
     /**
@@ -127,8 +138,7 @@ class AssignLeaveForm extends sfForm {
     protected function getEmployeeListAsJson() {
 
         $jsonArray = array();
-        $employeeService = new EmployeeService();
-        $employeeService->setEmployeeDao(new EmployeeDao());
+        $employeeService = $this->getEmployeeService();
         
         $locationService = new LocationService();
         
@@ -249,5 +259,23 @@ class AssignLeaveForm extends sfForm {
         return $labels;
     }
 
+    /**
+     *
+     * @return EmployeeService
+     */
+    public function getEmployeeService() {
+        if (!($this->employeeService instanceof EmployeeService)) {
+            $this->employeeService = new EmployeeService();
+        }
+        return $this->employeeService;
+    }
+
+    /**
+     *
+     * @param EmployeeService $service 
+     */
+    public function setEmployeeService(EmployeeService $service) {
+        $this->employeeService = $service;
+    }     
 }
 

@@ -94,14 +94,8 @@ class assignLeaveAction extends baseLeaveAction {
      * Retrieve Leave Type List
      */
     protected function getElegibleLeaveTypes() {
-        $leaveTypeChoices = array();
         $leaveTypeList = $this->getLeaveTypeService()->getLeaveTypeList();
-
-        $leaveTypeChoices[''] = '--' . __('Select') . '--';
-        foreach ($leaveTypeList as $leaveType) {
-            $leaveTypeChoices[$leaveType->getLeaveTypeId()] = $leaveType->getLeaveTypeName();
-        }
-        return $leaveTypeChoices;
+        return $leaveTypeList;
     }
 
     /**
