@@ -336,16 +336,16 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     
     protected function getAccessibleLocationIds($role, $operation = null, $returnType = null) {
         
-        $userRoles = array();
+        $locations = array();
         
         if ('Admin' == $role->getName()) {
-            $userRoles = $this->getLocationService()->getLocationList();
+            $locations = $this->getLocationService()->getLocationList();
         }
         
         $ids = array();
         
-        foreach ($userRoles as $role) {
-            $ids[] = $role->getId();
+        foreach ($locations as $location) {
+            $ids[] = $location->getId();
         }
 
         return $ids;        
