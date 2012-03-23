@@ -93,9 +93,6 @@ class EmployeeLeaveEntitlement extends PluginEmployeeLeaveEntitlement {
     }
     
     /**
-     *
-     * @param type $supervisorId
-     * @param type $userType
      * @return bool
      * @todo Move this logic to service classes
      */
@@ -112,6 +109,19 @@ class EmployeeLeaveEntitlement extends PluginEmployeeLeaveEntitlement {
         }
     }
 
+    public function isEmployeeLeaveEntitlementEditable() {
+        $empNumber = $this->getEmployee()->getEmpNumber();
+        
+        $manager = UserRoleManagerFactory::getUserRoleManager();
+
+        // Supervisor cannot edit leave entitlement even when employee is accessible (subordinate)
+        if ($manager->isEntityAccessible('Employee', $empNumber, null, array('Supervisor'))) {
+            return true;
+        } else {
+            return false;
+        }        
+    }
+    
     /**
      * Is leave type editable?
      *
