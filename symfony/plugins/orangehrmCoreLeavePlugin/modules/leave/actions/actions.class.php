@@ -135,7 +135,7 @@ class leaveActions extends sfActions {
                 $changes = $request->getParameter('leave');
                 $changeType = 'change_leave';
             }
-            
+
             //this is to bypass the approval/rejection comment
             foreach($changes as $k => $v) {
                 if(trim($v) != "") {
@@ -150,14 +150,14 @@ class leaveActions extends sfActions {
             $allowed = $manager->areEntitiesAccessible('Employee', $empNumbers);
             
             $mode = $request->getParameter('hdnMode', null);
-            
+
             if ($allowed) {
                 if ($mode != LeaveListForm::MODE_MY_LEAVE_LIST && $mode != viewLeaveRequestAction::MODE_MY_LEAVE_DETAILED_LIST) {
                     $changedByUserType = SystemUser::USER_TYPE_ADMIN;
                 } else {
                     $changedByUserType = SystemUser::USER_TYPE_EMPLOYEE;
                 }
-                
+
             } else {
                 // Check if changing own leave status
                 $loggedInEmpNumber = $this->getUser()->getAttribute('auth.empNumber');
@@ -183,6 +183,13 @@ class leaveActions extends sfActions {
 
         if ($changedByUserType == SystemUser::USER_TYPE_EMPLOYEE) {
 
+            if ($changeType == 'change_leave') {
+                $url = "leave/viewLeaveRequest";
+                $this->getUser()->setFlash('myLeave', true);
+            } else {
+                $url = "leave/viewMyLeaveList";
+            }
+            
             $url = ($changeType == 'change_leave') ? "leave/viewLeaveRequest" : "leave/viewMyLeaveList";
 
             if(trim($request->getParameter("id")) != "") {

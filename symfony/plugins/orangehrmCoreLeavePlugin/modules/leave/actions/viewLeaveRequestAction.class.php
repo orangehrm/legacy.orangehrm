@@ -90,6 +90,14 @@ class viewLeaveRequestAction extends sfAction {
 
         $this->backUrl = stripos($request->getReferer(), 'viewMyLeaveList') === FALSE ?
                 'leave/viewLeaveList' : 'leave/viewMyLeaveList';
+        
+        if ($this->getUser()->hasFlash('myLeave')) {
+            $myLeave = $this->getUser()->getFlash('myLeave');
+            if ($myLeave) {
+                $this->backUrl = 'leave/viewMyLeaveList';
+            }
+        }
+        
         $this->message = $this->getUser()->getFlash('message', '');
         $this->messageType = $this->getUser()->getFlash('messageType', '');
         $this->leaveRequestId = $request->getParameter('id');
