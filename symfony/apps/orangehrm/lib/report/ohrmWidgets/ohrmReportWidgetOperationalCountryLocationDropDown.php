@@ -35,6 +35,7 @@ class ohrmReportWidgetOperationalCountryLocationDropDown extends ohrmWidgetSelec
         // Parent requires the 'choices' option.
         $this->addOption('choices', array());
         $this->addOption('all_option_value', '-1');
+        $this->addOption('show_all_locations', false);
     }
 
     /**
@@ -47,6 +48,8 @@ class ohrmReportWidgetOperationalCountryLocationDropDown extends ohrmWidgetSelec
             $operationalCountries = $this->getOperationalCountryService()->getOperationalCountryList();
             $locationList = $this->_getLocationList();
 
+            $showAll = $this->getOption('show_all_locations');
+                    
             $choices = array();
             $addedLocationIds = array();
 
@@ -57,7 +60,7 @@ class ohrmReportWidgetOperationalCountryLocationDropDown extends ohrmWidgetSelec
 
                 $country = $operationalCountry->getCountry();
                 
-                if (in_array($operationalCountry->getId(), $accessibleCountries)) {
+                if ($showAll || in_array($operationalCountry->getId(), $accessibleCountries)) {
                     $locations = $country->getLocation();
 
                     if (count($locations) > 0) {
@@ -173,13 +176,15 @@ class ohrmReportWidgetOperationalCountryLocationDropDown extends ohrmWidgetSelec
     private function _getLocationList() {
         $locationService = new LocationService();
 
+        $showAll = $this->getOption('show_all_locations');
+        
         $locationList = array();
         $locations = $locationService->getLocationList();
 
         $accessibleLocations = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityIds('Location');
         
         foreach ($locations as $location) {
-            if (in_array($location->id, $accessibleLocations)) {
+            if ($showAll || in_array($location->id, $accessibleLocations)) {
                 $locationList[$location->id] = $location->name;
             }
         }
