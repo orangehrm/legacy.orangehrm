@@ -105,7 +105,7 @@ class assignLeaveAction extends baseLeaveAction {
         /* Making the optional parameters to create the form */
         $leaveTypes = $this->getElegibleLeaveTypes();
 
-        if (count($leaveTypes) == 1) {
+        if (count($leaveTypes) == 0) {
             $this->templateMessage = array('WARNING', __('No Leave Types with Leave Balance'));
         }
         $leaveFormOptions = array('leaveTypes' => $leaveTypes);
