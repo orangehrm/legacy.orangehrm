@@ -7,9 +7,18 @@ class indexAction extends sfAction {
             $submitBy = $request->getParameter('submitBy');
             switch ($submitBy) {
                 case 'databaseInfo':
-                    $this->redirect('upgrade/getVersionInfo');
+                    $this->redirect('upgrade/executeSystemCheck');
                     break;
-                case 'versionInfo':
+                case 'systemCheck':
+                    $this->redirect('upgrade/calculateIncrementNumbers');
+                    break;
+                case 'versionSelection':
+                    $this->redirect('upgrade/calculateIncrementNumbers');
+                    break; 
+                case 'calculateIncrementNumbers':
+                    $this->redirect('upgrade/displayVersionInfo');
+                    break;                
+                case 'displayVersionInfo':
                     $this->redirect('upgrade/executeDbChange');
                     break;
                 case 'dbChange':
