@@ -14,7 +14,7 @@
     var lang_locationRequired = "<?php echo __(ValidationMessages::REQUIRED); ?>";
     var cancelNavigateUrl = "<?php echo public_path("../../index.php?menu_no_top=hr"); ?>";
     var createUserAccount = "<?php echo $createUserAccount; ?>";
-    var ldapInstalled = <?php echo ($ldapInstalled) ? 'true' : 'false'; ?>;
+    var ldapInstalled = <?php echo ($sf_user->hasAttribute('ldap.available'))?'true':'false'; ?>;
     
     //]]>
 </script>

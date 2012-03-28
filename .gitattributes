@@ -3900,6 +3900,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveNotificationService.
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeavePeriodDao.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeavePeriodService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestDao.yml -text
+symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestDaoSearch.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveSummaryDao.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveTypeDao.yml -text
@@ -3912,6 +3913,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/leaveType.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/HolidayDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeavePeriodDaoTest.php -text
+symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveRequestDaoSearchTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveRequestDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveSummaryDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveTypeDaoTest.php -text

@@ -78,8 +78,8 @@ class AddEmployeeForm extends sfForm {
             'lineSeperator' => new ohrmWidgetDiv(array(), array("colspan" => 3)),
             'user_name' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 20)),
             'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText", "br" => true)),
-            'user_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText", "maxlength" => 20)),
-            're_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText", "maxlength" => 20, "br" => true)),
+            'user_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText passwordRequired", "maxlength" => 20)),
+            're_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText passwordRequired", "maxlength" => 20, "br" => true)),
             'empNumber' => new sfWidgetFormInputHidden(),
         );
 
@@ -219,6 +219,8 @@ class AddEmployeeForm extends sfForm {
                 $user->setUserRoleId(2);
                 $userService->saveSystemUser($user);
             }
+            
+            $this->_handleLdapEnabledUser($posts, $empNumber);            
         }
     }
 
@@ -250,4 +252,27 @@ class AddEmployeeForm extends sfForm {
         return array('width' => $newWidth, 'height' => $newHeight);
     }
 
+    protected function _handleLdapEnabledUser($postedValues, $empNumber) {
+        
+        $sfUser = sfContext::getInstance()->getUser();
+        
+        $password           = $postedValues['user_password'];
+        $confirmedPassword  = $postedValues['re_password'];
+        $check1             = (empty($password) && empty($confirmedPassword))?true:false;
+        $check2             = $sfUser->getAttribute('ldap.available');
+        
+        if ($check1 && $check2) {
+
+            $user = new SystemUser();
+            $user->setDateEntered(date('Y-m-d H:i:s'));
+            $user->setCreatedBy($sfUser->getAttribute('user')->getUserId());
+            $user->user_name = $postedValues['user_name'];
+            $user->user_password = md5('');
+            $user->emp_number = $empNumber;
+            $user->setUserRoleId(2);
+            $this->getUserService()->saveSystemUser($user);            
+            
+        }
+        
+    }    
 }

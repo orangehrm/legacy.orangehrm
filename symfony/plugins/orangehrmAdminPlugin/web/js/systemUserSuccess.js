@@ -1,6 +1,21 @@
 $(document).ready(function() {
     
-
+    if (isEditMode) {
+        $('#passwordDiv').hide();
+    }
+    
+    if (ldapInstalled) {
+        $('.passwordRequired').hide();
+    }
+    
+    $('#systemUser_chkChangePassword').click(function(){
+        if($(this).attr('checked') == true) {
+            $('#passwordDiv').show();
+        } else {
+            $('#passwordDiv').hide();
+        }
+    });
+    
     $('#btnSave').click(function() {
         
         if ($('#btnSave').val() == user_edit){
@@ -36,12 +51,14 @@ function disableWidgets(){
     
     $('.formInputText').attr('disabled','disabled');
     $('.formSelect').attr('disabled','disabled');
+    $('#systemUser_chkChangePassword').attr('disabled','disabled');
     $('#btnSave').val(user_edit);  
 }
 
 function enableWidgets(){ 
     $('.formInputText').removeAttr('disabled');
     $('.formSelect').removeAttr('disabled');
+    $('#systemUser_chkChangePassword').removeAttr('disabled');
     $('#btnSave').val(user_save);
 }
 
@@ -77,10 +94,10 @@ function isValidForm(){
             },
             'systemUser[password]' : {
                 required:function(element) {
-                    if(userId > 0)
-                        return false;
-                    else
+                    if($('#systemUser_chkChangePassword').attr('checked') == true && !ldapInstalled)
                         return true;
+                    else
+                        return false;
                   },
                 minlength: 4,
                 maxlength: 20
