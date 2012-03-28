@@ -55,6 +55,22 @@ class LocationDao extends BaseDao {
 	 */
 	public function searchLocations($srchClues) {
 
+                if (!isset($srchClues['sortField'])) {
+                    $srchClues['sortField'] = 'name';
+                }
+                
+                if (!isset($srchClues['sortOrder'])) {
+                    $srchClues['sortOrder'] = 'ASC';
+                }
+                
+                if (!isset($srchClues['offset'])) {
+                    $srchClues['offset'] = 0;
+                }
+                
+                if (!isset($srchClues['limit'])) {
+                    $srchClues['limit'] = 50;
+                }
+                
 		$sortField = ($srchClues['sortField'] == "") ? 'name' : $srchClues['sortField'];
 		$sortOrder = ($srchClues['sortOrder'] == "") ? 'ASC' : $srchClues['sortOrder'];
 		$offset = ($srchClues['offset'] == "") ? 0 : $srchClues['offset'];
