@@ -164,7 +164,15 @@ class AssignLeaveForm extends sfForm {
                 $employeeLocations  = $employee->getLocations();
                 if ($employeeLocations[0] instanceof Location){                
                     $location = $locationService->getLocationById($employeeLocations[0]->getId());
-                    $employeeCountry = $location->getCountry()->getOperationalCountry()->getId();
+                    if ($location instanceof Location) {
+                        $country = $location->getCountry();
+                        if ($country instanceof Country) {
+                            $employeeOperationalCountry = $country->getOperationalCountry();
+                            if ($employeeOperationalCountry instanceof OperationalCountry) {
+                                $employeeCountry = $employeeOperationalCountry->getId();
+                            }
+                        }
+                    }
                 }
                 
                 $name = $employee->getFullName();
