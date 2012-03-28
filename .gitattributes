@@ -3586,6 +3586,7 @@ symfony/plugins/orangehrmAdminPlugin/test/fixtures/MembershipDao.yml -text
 symfony/plugins/orangehrmAdminPlugin/test/fixtures/ModuleDao.yml -text
 symfony/plugins/orangehrmAdminPlugin/test/fixtures/NationalityDao.yml -text
 symfony/plugins/orangehrmAdminPlugin/test/fixtures/OperationalCountryDao.yml -text
+symfony/plugins/orangehrmAdminPlugin/test/fixtures/OrganizationDao.yml -text
 symfony/plugins/orangehrmAdminPlugin/test/fixtures/PayGradeDao.yml -text
 symfony/plugins/orangehrmAdminPlugin/test/fixtures/ProjectDao.yml -text
 symfony/plugins/orangehrmAdminPlugin/test/fixtures/SkillDao.yml -text
