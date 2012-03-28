@@ -57,6 +57,10 @@ class LeaveSummaryForm extends sfForm {
         }
         return $this->jobTitleService;
     }
+    
+    public function setJobTitleService($jobTitleService) {
+        $this->jobTitleService = $jobTitleService;
+    }
 
     public function configure() {
 
