@@ -13,5 +13,5 @@ DataGroup:
   0: {id: 1, name: 'pim_1', can_read: 1}
 
 DataGroupPermission:
-  0: {id: 1, user_role_id: 1, can_read: 1, data_group_id: 1}
+  0: {id: 1, user_role_id: 1, can_read: 1, data_group_id: 1, self:0}
     

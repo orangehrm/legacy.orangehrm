@@ -719,18 +719,13 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         $testManager->setSystemUserService($systemUserService);
         $testManager->setUser($user);
         
-        $employees = array();
-        for($i=0;$i<3;$i++){
-            $employee= new Employee();
-            $employee->setEmpNumber($i + 1);
-            $employees[$i] = $employee;
-        }        
+        $employeeIds = array(1, 2, 3);
         
-        $employeeService = $this->getMock('EmployeeService', array('getSupervisorEmployeeChain'));
+        $employeeService = $this->getMock('EmployeeService', array('getSubordinateIdListBySupervisorId'));
         $employeeService->expects($this->once())
-                 ->method('getSupervisorEmployeeChain')
-                ->with($user->getEmpNumber(), true)
-                 ->will($this->returnValue($employees));
+                 ->method('getSubordinateIdListBySupervisorId')
+                ->with($user->getEmpNumber())
+                 ->will($this->returnValue($employeeIds));
        
         $testManager->setEmployeeService($employeeService);
         
