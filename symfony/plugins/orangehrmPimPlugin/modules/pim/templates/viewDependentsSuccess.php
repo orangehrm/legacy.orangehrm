@@ -38,8 +38,6 @@ use_javascript('orangehrm.datepicker.js');
 
 $numDependents = count($dependents);
 $haveDependents = $numDependents > 0;
-$allowEdit = true;
-$allowDel = true;
 ?>
 <?php if ($form->hasErrors()): ?>
 <span class="error">
@@ -70,15 +68,18 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
 </div>
             
 <div class="formpage2col">
-<div id="addPaneDependent" style="display:none;" >
+<div id="addPaneDependent" <?php echo $haveDependents ? 'style="display:none;"' : '';?> >
 <div class="outerbox">
-
     <div class="mainHeading"><h2 id="heading"><?php echo __('Add Dependent'); ?></h2></div>
+    <?php if ($dependentPermissions->canRead() && (($dependentPermissions->canCreate()) || ($dependentPermissions->canUpdate() && $haveDependents))) { ?>
     <form name="frmEmpDependent" id="frmEmpDependent" method="post" action="<?php echo url_for('pim/updateDependent?empNumber=' . $empNumber); ?>">
 
     <?php echo $form['_csrf_token']; ?>
     <?php echo $form["empNumber"]->render(); ?>
+    
     <?php echo $form["seqNo"]->render(); ?>
+        
+ 
 
     <?php echo $form['name']->renderLabel(__('Name') . ' <span class="required">*</span>'); ?>
     <?php echo $form['name']->render(array("class" => "formInputText", "maxlength" => 50)); ?>
@@ -98,19 +99,24 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
     <?php echo $form['dateOfBirth']->render(array("class" => "formDateInput")); ?>
     <br class="clear"/>
     
-    <?php if (($allowEdit)) { ?>
+    <?php }?>
+    
+    <?php if (($haveDependents && $dependentPermissions->canUpdate()) || $dependentPermissions->canCreate()) { ?>
             <div class="formbuttons">
                 <input type="button" class="savebutton" name="btnSaveDependent" id="btnSaveDependent"
                        value="<?php echo __("Save"); ?>"
                        title="<?php echo __("Save"); ?>"
                        onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
+                <?php if ((!$haveDependents) || ($haveDependents && $dependentPermissions->canCreate()) || ($haveDependents && $dependentPermissions->canUpdate())) { ?>
                 <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __("Cancel"); ?>"/>
+                <?php } ?>
             </div>
     <?php } ?>
     </form>
 </div>
 </div>
 
+<?php if ($haveDependents && $dependentPermissions->canRead()) { ?>
 <div class="outerbox" id="listing">
 <form name="frmEmpDelDependents" id="frmEmpDelDependents" method="post" action="<?php echo url_for('pim/deleteDependents?empNumber=' . $empNumber); ?>">
 <?php echo $deleteForm['_csrf_token']->render(); ?>
@@ -120,12 +126,11 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
 
     <div class="actionbar" id="listActions">
             <div class="actionbuttons">
-<?php if ($allowEdit) { ?>
+            <?php if ($dependentPermissions->canCreate() ) { ?>
 
                     <input type="button" class="addbutton" id="btnAddDependent" onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __("Add"); ?>" title="<?php echo __("Add"); ?>"/>
             <?php } ?>
-            <?php if ($allowDel) {
- ?>
+            <?php if ($dependentPermissions->canDelete() ) { ?>
 
                 <input type="button" class="delbutton" id="delDependentBtn" onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __("Delete"); ?>" title="<?php echo __("Delete"); ?>"/>
             <?php } ?>
@@ -135,7 +140,9 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
     <table width="550" cellspacing="0" cellpadding="0" class="data-table" id="dependent_list">
         <thead>
             <tr>
+                <?php if ($dependentPermissions->canDelete()) { ?>
                 <td class="check"><input type='checkbox' id='checkAll' class="checkbox" /></td>
+                <?php }?>
                 <td class="dependentName"><?php echo __("Name"); ?></td>
                 <td colspan="2"><?php echo __("Relationship"); ?></td>
                 <td><?php echo __("Date of Birth"); ?></td>
@@ -147,9 +154,26 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
             foreach ($dependents as $dependent) {
                 $cssClass = ($row % 2) ? 'even' : 'odd';
                 echo '<tr class="' . $cssClass . '">';
-                echo "<td class='check'><input type='checkbox' class='checkbox' name='chkdependentdel[]' value='" . $dependent->seqno . "'/></td>";
+                 if ($dependentPermissions->canDelete()) {
+                    echo "<td class='check'><input type='checkbox' class='checkbox' name='chkdependentdel[]' value='" . $dependent->seqno . "'/></td>";
+                 }else{
+                     ?>
+                    <input type='hidden' class='checkbox' value="<?php echo $dependent->seqno; ?>"/>
+            <?php
+                 }
 ?>
-            <td class="dependentName"><a href="#"><?php echo $dependent->name; ?></a></td>
+            <td class="dependentName">
+                <?php if ($dependentPermissions->canUpdate()) { ?>
+                    <a href="#"><?php echo $dependent->name; ?></a>
+                <?php } else {
+                    echo $dependent->name; 
+                }
+                ?>
+
+            </td>
+            
+            
+            
             <input type="hidden" id="relationType_<?php echo  $dependent->seqno;?>" value="<?php echo $dependent->relationship_type;?>" />
             <input type="hidden" id="relationship_<?php echo  $dependent->seqno;?>" value="<?php echo $dependent->relationship;?>" />
             <input type="hidden" id="dateOfBirth_<?php echo  $dependent->seqno;?>" value="<?php echo set_datepicker_date_format($dependent->date_of_birth);?>" />
@@ -167,7 +191,8 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
         </table>
     </form>
 </div>
-<div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+ <?php } ?>
+<div class="paddingLeftRequired" <?php echo $haveDependents ? 'style="display:none;"' : '';?>><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
 <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'dependents'));?>
 <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'dependents'));?>    
 </div>
@@ -216,18 +241,6 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
     }
 
     $(document).ready(function() {
-        
-        if($(".checkbox").length > 1) {
-            $("#addPaneDependent").hide();
-            $("#listing").show();
-            $(".paddingLeftRequired").hide();
-        } else {
-            $("#btnCancel").hide();
-            $("#addPaneDependent").show();
-            $("#listing").hide();
-            $(".paddingLeftRequired").show();
-        }
-        
         $("#checkAll").click(function(){
             if($("#checkAll:checked").attr('value') == 'on') {
                 $(".checkbox").attr('checked', 'checked');
@@ -275,6 +288,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
             $('#addPaneDependent').css('display', 'block');
 
             $(".paddingLeftRequired").show();
+            $('#btnCancel').show();
 
         });
 
@@ -288,7 +302,9 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
             $('#addPaneDependent').css('display', 'none');
             $('#listActions').show();
             $('#dependent_list td.check').show();
+            <?php if ($dependentPermissions->canUpdate()){?>
             addEditLinks();
+            <?php }?>
             $('div#messagebar').hide();
             $(".paddingLeftRequired").hide();
         });

@@ -52,12 +52,13 @@
                                 <span style="font-weight: bold;"><?php echo $message; ?></span>
                             </div>
                         <?php endif; ?>
+                        <?php if ($jobInformationPermission->canRead()) { ?>
                             <div class="outerbox">
-                                <div class="mainHeading"><h2><?php echo __('Job'); ?></h2></div>
+                                    <div class="mainHeading"><h2><?php echo __('Job'); ?></h2></div>
                                 <div>
                                     <form id="frmEmpJobDetails" method="post" enctype="multipart/form-data"
                                           action="<?php echo url_for('pim/viewJobDetails'); ?>">
-                                          <?php echo $form['_csrf_token']; ?>
+                                        <?php echo $form['_csrf_token']; ?>
                                           <?php echo $form['emp_number']->render(); ?>
                                           <?php echo $form['job_title']->renderLabel(__('Job Title')); ?>
                                           <?php echo $form['job_title']->render(array("class" => "formSelect")); ?>
@@ -159,7 +160,7 @@
                                       </div> <!-- End of contractReadMode -->
 
                                       <div class="formbuttons">
-                                        <?php if ($allowEdit): ?>
+                                        <?php if ($jobInformationPermission->canUpdate()) : ?>
                                               <input type="button" class="savebutton" id="btnSave" style="padding-left: 5px; float: left" value="<?php echo __("Edit"); ?>" />
                                         <?php
                                               $empTermination = $form->empTermination;
@@ -176,7 +177,7 @@
                                     <?php endif; ?>
                                                 <br class="clear"/>
                                           </div>
-
+                                   <?php } ?>
                                       </form>
                                   </div>
                               </div>
@@ -362,7 +363,7 @@
 
 
                                               var readonlyFlag = 0;
-<?php if (!$allowEdit) { ?>
+<?php if (!$jobInformationPermission->canUpdate()) { ?>
                                           readonlyFlag = 1;
 <?php } ?>
 
@@ -396,8 +397,8 @@
                                       $('#contractEdidMode').show();
                                       $('#contractReadMode').hide();
 
-                                      if ( !readonlyFlag) {
-                                      //if user clicks on Edit make all fields editable
+                                      if ( !readonlyFlag) {  
+                                      //if user clicks on Edit make all fields editable                                     
                                       if($("#btnSave").attr('value') == edit) {
                                       for(i=0; i < list.length; i++) {
                                       $(list[i]).removeAttr("disabled");

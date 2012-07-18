@@ -23,7 +23,8 @@
                         <div>
                             <form id="frmEmpTaxExemptions" method="post" action="<?php echo url_for('pim/viewUsTaxExemptions'); ?>">
                                 <?php echo $form['_csrf_token']; ?>
-                                <?php echo $form['empNumber']->render(); ?>
+                                <?php echo $form['empNumber']->render(); 
+                                    if ($taxExemptionPermission->canRead()) { ?>
                                 <br />
                                 <span class="label"><?php echo __("Federal Income Tax") ?></span>
                                 <div>
@@ -66,15 +67,13 @@
                                     <?php echo $form['workState']->render(array("class" => "drpDown")); ?>
                                     <br class="clear" />
                                 </div>
-                                <?php if(!$essUserMode):?>
+                                <?php } ?>
                                  <div class="formbuttons">
-                                    <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Edit"); ?>" tabindex="2" />
-                                </div>
-                                <?php else:?>
-                                <br class="clear" />
-                                <br class="clear" />
-                                <?php endif;?>
-                             </form>
+                                     <?php if($taxExemptionPermission->canUpdate()){ ?>
+                                        <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Edit"); ?>" tabindex="2" />
+                                     <?php }?>
+                                 </div>                             
+                            </form>
                         </div>
                     </div>
                     <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'tax'));?>

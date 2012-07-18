@@ -81,6 +81,10 @@ if (file_exists('symfony/config/databases.yml')) {
             $_SESSION['timePeriodSet'] = 'No';
         }
         /* For checking TimesheetPeriodStartDaySet status : Ends */    
+        // Check if a user defined user role (isPredefined = false)
+        $systemUserService = new SystemUserService();
+        $user = $systemUserService->getSystemUser($_SESSION['user']);
+        $isPredefinedUserRole = $user->getUserRole()->getIsPredefined();
     }
 }
 
@@ -218,6 +222,9 @@ if ($_SESSION['isAdmin'] == 'Yes') {
      */
     if ($_SESSION['isHiringManager'] || $_SESSION['isInterviewer']) {
         $arrAllRights[Recruit] = array('view' => true);
+    }
+    if (!$isPredefinedUserRole) {
+        $arrAllRights[PIM]['view'] = true;
     }
 }
 
@@ -410,6 +417,12 @@ if ($_SESSION['isAdmin'] == 'Yes' || $arrAllRights[Admin]['view']) {
     $sub->setSubMenuItems($subsubs);
     $subs[] = $sub;
 
+    if (is_dir(ROOT_PATH . '/symfony/plugins/orangehrmBaseAuthorizationPlugin')) {
+        $sub = new MenuItem("userRole", $i18n->__("User Roles"), "./symfony/web/index.php/admin/viewUserRoles", "rightMenu");
+        $subsubs = array();
+        $subs[] = $sub;
+    }
+    
     $sub = new MenuItem("email", $i18n->__("Email Notifications"), "#");
     $subsubs = array();
     $subsubs[] = new MenuItem("email", $i18n->__("Configuration"), "./symfony/web/index.php/admin/listMailConfiguration");
@@ -462,7 +475,7 @@ define('PIM_MENU_TYPE', 'left');
 $_SESSION['PIM_MENU_TYPE'] = PIM_MENU_TYPE;
 
 /* PIM menu start */
-if (($_SESSION['isAdmin'] == 'Yes' || $_SESSION['isSupervisor']) && $arrAllRights[PIM]['view']) {
+if ((($_SESSION['isAdmin'] == 'Yes' || $_SESSION['isSupervisor']) && $arrAllRights[PIM]['view']) || !$isPredefinedUserRole) {
 
     $menuItem = new MenuItem("pim", $i18n->__("PIM"), "./index.php?menu_no_top=hr&reset=1");
     $menuItem->setCurrent($_GET['menu_no_top'] == "hr");
@@ -646,7 +659,7 @@ $menuItem->setSubMenuItems($subs);
 $menu[] = $menuItem;
 
 /* Start ESS menu */
-if ($_SESSION['isAdmin'] != 'Yes') {
+if ($_SESSION['isAdmin'] != 'Yes' && $isPredefinedUserRole) {
     $menuItem = new MenuItem("ess", $i18n->__('My Info'), './symfony/web/index.php/pim/viewPersonalDetails?empNumber=' . $_SESSION['empID'], "rightMenu");
 
     $menuItem->setCurrent($_GET['menu_no_top'] == "ess");

@@ -25,8 +25,6 @@ use_javascript('../orangehrmPimPlugin/js/viewEmergencyContactsSuccess');
 
 $numContacts = count($emergencyContacts);
 $haveContacts = $numContacts > 0;
-$allowEdit = true;
-$allowDel = true;
 ?>
 <?php if ($form->hasErrors()): ?>
 <span class="error">
@@ -64,7 +62,7 @@ var fileModified = 0;
     <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
 </div>
 
-<div id="addPaneEmgContact" style="display:none;" >
+<div id="addPaneEmgContact" <?php echo $haveContacts ? 'style="display:none;"' : '';?> >
 <div class="outerbox">
 
     <div class="mainHeading"><h2 id="emergencyContactHeading"><?php echo __('Add Emergency Contact'); ?></h2></div>
@@ -72,6 +70,7 @@ var fileModified = 0;
 
     <?php echo $form['_csrf_token']; ?>
     <?php echo $form["empNumber"]->render(); ?>
+    <?php if ($emergencyContactPermissions->canRead()) { ?>
     <?php echo $form["seqNo"]->render(); ?>
 
     <?php echo $form['name']->renderLabel(__('Name') . ' <span class="required">*</span>'); ?>
@@ -91,20 +90,24 @@ var fileModified = 0;
     <?php echo $form['workPhone']->renderLabel(__('Work Telephone')); ?>
     <?php echo $form['workPhone']->render(array("class" => "formInputText", "maxlength" => 25)); ?>
     <br class="clear"/>
+    <?php }?>
     
-    <?php if (($allowEdit)) { ?>
+    <?php if ($emergencyContactPermissions->canCreate() || $emergencyContactPermissions->canUpdate()) { ?>
             <div class="formbuttons">
                 <input type="button" class="savebutton" name="btnSaveEContact" id="btnSaveEContact"
                        value="<?php echo __("Save"); ?>"
                        title="<?php echo __("Save"); ?>"
                        onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
+                <?php if ((!$haveDependents) || ($haveDependents && $emergencyContactPermissions->canCreate()) || ($haveDependents && $emergencyContactPermissions->canUpdate())) { ?>
                 <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __("Cancel"); ?>"/>
+                <?php }?>
             </div>
     <?php } ?>
     </form>
 </div>
 </div>
-
+    
+<?php if ($haveContacts) { ?>
 <div class="outerbox" id="listEmegrencyContact">
 <form name="frmEmpDelEmgContacts" id="frmEmpDelEmgContacts" method="post" action="<?php echo url_for('pim/deleteEmergencyContacts?empNumber=' . $empNumber); ?>">
 <?php echo $deleteForm['_csrf_token']->render(); ?>
@@ -114,11 +117,11 @@ var fileModified = 0;
 
     <div class="actionbar" id="listActions">
             <div class="actionbuttons">
-<?php if ($allowEdit) { ?>
+            <?php if ($emergencyContactPermissions->canCreate()) { ?>
 
                     <input type="button" class="addbutton" id="btnAddContact" onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __("Add"); ?>" title="<?php echo __("Add"); ?>"/>
             <?php } ?>
-            <?php if ($allowDel) {
+            <?php if ($emergencyContactPermissions->canDelete()) {
  ?>
 
                 <input type="button" class="delbutton" id="delContactsBtn" onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __("Delete"); ?>" title="<?php echo __("Delete"); ?>"/>
@@ -129,7 +132,9 @@ var fileModified = 0;
     <table width="550" cellspacing="0" cellpadding="0" class="data-table" id="emgcontact_list">
         <thead>
             <tr>
+                <?php if ($emergencyContactPermissions->canDelete()) { ?>
                 <td class="check"><input type='checkbox' id='checkAll' class="checkbox" /></td>
+                <?php }?>
                 <td class="emgContactName"><?php echo __("Name"); ?></td>
                 <td><?php echo __("Relationship"); ?></td>
                 <td><?php echo __("Home Telephone"); ?></td>
@@ -143,9 +148,23 @@ var fileModified = 0;
             foreach ($emergencyContacts as $contact) {
                 $cssClass = ($row % 2) ? 'even' : 'odd';
                 echo '<tr class="' . $cssClass . '">';
-                echo "<td class='check'><input type='checkbox' class='checkbox' name='chkecontactdel[]' value='" . $contact->seqno . "'/></td>";
+                if ($emergencyContactPermissions->canDelete()) {
+                    echo "<td class='check'><input type='checkbox' class='checkbox' name='chkecontactdel[]' value='" . $contact->seqno . "'/></td>";
+                }
 ?>
-        <td class="emgContactName" valign="top"><a href="#"><?php echo $contact->name; ?></a></td>
+        <td class="emgContactName" valign="top">
+            <?php if ($emergencyContactPermissions->canUpdate()) { ?>
+            <a href="#"><?php echo $contact->name; ?></a>
+            <?php } else {
+                    echo $contact->name; 
+                }
+                ?>
+        </td>
+        <input type='hidden' class='check' name='chkdependentUP[]' value="<?php echo $contact->seqno; ?>"/>
+            <input type="hidden" id="relationship_<?php echo  $contact->seqno;?>" value="<?php echo $contact->relationship;?>" />
+            <input type="hidden" id="homePhone_<?php echo  $contact->seqno;?>" value="<?php echo $contact->home_phone;?>" />
+            <input type="hidden" id="mobilePhone_<?php echo  $contact->seqno;?>" value="<?php echo $contact->mobile_phone;?>" />
+            <input type="hidden" id="workPhone_<?php echo  $contact->seqno;?>" value="<?php echo $contact->office_phone;?>" />
             <?php
                 echo "<td valigh='top'>" . $contact->relationship . "</td>";
                 echo "<td valigh='top'>" . $contact->home_phone . '</td>';
@@ -158,6 +177,7 @@ var fileModified = 0;
         </table>
     </form>
 </div>
+<?php }?>
 <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
 <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'emergency'));?>
 <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'emergency'));?>
@@ -207,16 +227,6 @@ var fileModified = 0;
             }
         });
 
-        if($(".checkbox").length > 1) {
-            $(".paddingLeftRequired").hide();
-            $("#addPaneEmgContact").hide();
-        } else {
-            $("#btnCancel").hide();
-            $(".paddingLeftRequired").show();
-            $("#addPaneEmgContact").show();
-            $("#listEmegrencyContact").hide();
-        }
-
         $(".checkbox").click(function() {
             $("#checkAll").removeAttr('checked');
             if(($(".checkbox").length - 1) == $(".checkbox:checked").length) {
@@ -227,13 +237,13 @@ var fileModified = 0;
         $('#frmEmpDelEmgContacts a').live('click', function() {
 
             var row = $(this).closest("tr");
-            var seqNo = row.find('input.checkbox:first').val();
+            var seqNo = row.find('input.check:first').val();
             var name = $(this).text();
-            var relationship = row.find("td:nth-child(3)").text();
-            var homePhone = row.find("td:nth-child(4)").text();
-            var mobilePhone = row.find("td:nth-child(5)").text();
-            var workPhone = row.find("td:nth-child(6)").text();
-
+            var relationship = $("#relationship_" + seqNo).val();
+            var homePhone = $("#homePhone_" + seqNo).val();
+            var mobilePhone = $("#mobilePhone_" + seqNo).val();
+            var workPhone = $("#workPhone_" + seqNo).val();
+            
             $('#emgcontacts_seqNo').val(seqNo);
             $('#emgcontacts_name').val(name);
             $('#emgcontacts_relationship').val(relationship);
@@ -258,7 +268,9 @@ var fileModified = 0;
             $('#addPaneEmgContact').css('display', 'none');
             $('#listActions').show();
             $('#emgcontact_list td.check').show();
+            <?php  if ($emergencyContactPermissions->canUpdate()){?>
             addEditLinks();
+            <?php }?>
             $('div#messagebar').hide();
             $(".paddingLeftRequired").hide();
         });

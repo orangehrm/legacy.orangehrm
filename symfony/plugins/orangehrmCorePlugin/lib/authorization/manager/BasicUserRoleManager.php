@@ -29,6 +29,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $screenPermissionService;
     protected $operationalCountryService;
     protected $locationService;
+    protected $dataGroupService;
+    
+    protected $subordinates = null;
     
     public function getLocationService() {
         if (empty($this->locationService)) {
@@ -142,7 +145,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
             $employeeProperties = array();
         
-            if ('Admin' == $role->getName()) {
+            if ('Admin' == $role->getName() || !$role->getIsPredefined()) {
                 $employeeProperties = $this->getEmployeeService()->getEmployeePropertyList($properties, $orderField, $orderBy);
             } else if ('Supervisor' == $role->getName()) {
                 $empNumber = $this->getUser()->getEmpNumber();
@@ -274,7 +277,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected function getAccessibleEmployees($role, $operation = null, $returnType = null) {
         $employees = array();
         
-        if ('Admin' == $role->getName()) {
+        if ('Admin' == $role->getName() || !$role->getIsPredefined()) {
             $employees = $this->getEmployeeService()->getEmployeeList('empNumber', 'ASC', true);
         } else if ('Supervisor' == $role->getName()) {
             $empNumber = $this->getUser()->getEmpNumber();
@@ -304,7 +307,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     
     protected function getAccessibleEmployeeIds($role, $operation = null, $returnType = null) {
         $employeeIdArray = array();
-        if ('Admin' == $role->getName()) {
+        if ('Admin' == $role->getName() || !$role->getIsPredefined()) {
             $employeeIdArray = $this->getEmployeeService()->getEmployeeIdList();
         } else if ('Supervisor' == $role->getName()) {
             $empNumber = $this->getUser()->getEmpNumber();
@@ -385,7 +388,8 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $ids;        
     }    
     
-    protected function filterRoles($userRoles, $rolesToExclude, $rolesToInclude) {
+    protected function filterRoles($userRoles, $rolesToExclude, $rolesToInclude, $entities = array()) {
+        
         
         if (!empty($rolesToExclude)) {
             
@@ -412,7 +416,108 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
             $userRoles = $temp;            
         }  
         
+        $temp = array();
+        
+        if (!empty($entities)) {
+            foreach ($userRoles as $role) {
+                
+                $include = true;
+                
+                if ($role->getName() == 'Supervisor') {
+                    if (isset($entities['Employee'])) {
+                        if (!$this->isSupervisorFor($entities['Employee'])) {
+                            $include = false;
+                        }
+                    }
+                }
+                
+                if ($include) {
+                    $temp[] = $role;
+                }
+            }
+            
+            $userRoles = $temp;
+        }
+        
         return $userRoles;
     }
+    
+    protected function isSupervisorFor($empNumber) {
+
+        if (is_null($this->subordinates)) {
+            $this->subordinates = $this->getEmployeeService()->getSubordinateIdListBySupervisorId($this->user->getEmpNumber());
+        }
+        
+        if (is_array($this->subordinates) && in_array($empNumber, $this->subordinates)) {
+            return true;
+        }
+               
+        return false;
+    }
+    
+    public function getDataGroupService(){
+         if (empty($this->dataGroupService)) {
+            $this->dataGroupService = new DataGroupService();
+            $this->dataGroupService->setDao(new DataGroupDao());
+            return $this->dataGroupService;
+        }        
+        return $this->dataGroupService;
+    }
+
+    public function setDataGroupService($dataGroupService){
+        $this->dataGroupService = $dataGroupService;
 }
 
+
+    
+    /**
+     * Get user roles
+     * for each user role, 
+     * get data group permissions - if permissions not defined, should return object with all rights set to false.
+     * merge the permissions
+     * return merged data group permission object.
+     * 
+     * For testing, move service object into member variable.
+     * 
+     * @param type $dataGroupName
+     * @param type $userRoleId 
+     * 
+     * @return ResourcePermission
+     */
+    public function getDataGroupPermissions ($dataGroupName, $rolesToExclude = array(), $rolesToInclude = array(), $selfPermission = false, $entities = array()) {
+        
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude, $entities); 
+              
+        $finalPermission = array('read'=> false, 'create'=> false,'update'=> false,'delete'=> false);
+        
+        foreach ($filteredRoles as $role){ 
+            $userRoleId = $role->getId();           
+            $permissions = $this->getDataGroupService()->getDataGroupPermission($dataGroupName, $userRoleId, $selfPermission);
+            
+            foreach ($permissions as $permission ){           
+
+                if($permission->getCanRead()){
+                    $finalPermission ['read'] = true;
+                }
+
+                if($permission->getCanCreate()){
+                    $finalPermission ['create'] = true;
+                }
+
+                if($permission->getCanUpdate()){
+                    $finalPermission ['update'] = true;
+                }
+
+                if($permission->getCanDelete()){
+                    $finalPermission ['delete'] = true;
+                }
+            }
+        }
+        
+        $resourcePermission = new ResourcePermission( $finalPermission ['read'], $finalPermission ['create'], $finalPermission ['update'], $finalPermission ['delete']);
+        return $resourcePermission;
+    }
+    
+    
+    
+}

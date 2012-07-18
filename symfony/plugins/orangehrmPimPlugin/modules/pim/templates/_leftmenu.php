@@ -387,11 +387,15 @@
 </style>
 <?php
 $empMode = "EMP";
+$self = false;
 if($empNumber == $_SESSION['empID']) {
     $empMode = "ESS";
+    $self = true;
 }
 
-    // Old links require empNumber padded with 0's
+$userRoleManager = sfContext::getInstance()->getUserRoleManager();
+
+   // Old links require empNumber padded with 0's
     $idLength = OrangeConfig::getInstance()->getSysConf()->getEmployeeIdLength();
 
     $paddedEmpNumber = str_pad($empNumber, $idLength, "0", STR_PAD_LEFT);
@@ -405,6 +409,8 @@ if($empNumber == $_SESSION['empID']) {
         $width = $empPicture->width;
         $height = $empPicture->height;
     }
+    
+    $entities = array('Employee' => $empNumber);
 ?>
 
 <form id="frmEmp" action=""></form>
@@ -419,40 +425,78 @@ if($empNumber == $_SESSION['empID']) {
                 <span class="parent personal"><?php echo __("Personal");?></span></a>
             <ul class="l2">
                 <li class="l2">
-
-                    <a href="<?php echo url_for('pim/viewPersonalDetails?empNumber=' . $empNumber); ?>" id="personalLink" class="personal" accesskey="p">
-                        <span><?php echo __("Personal Details");?></span></a></li>
+<?php
+                    $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('personal_information','personal_attachment','personal_custom_fields'), array(), array(), $self, $entities);
+                    
+                    if($dataGroupPermission->canRead()){?>
+                        <a href="<?php echo url_for('pim/viewPersonalDetails?empNumber=' . $empNumber); ?>" id="personalLink" class="personal" accesskey="p">
+                            <span><?php echo __("Personal Details");?></span></a></li>
+<?php               }
+?>
                 <li class="l2">
+ <?php
+                    $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('contact_details','contact_attachment','contact_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){?>
                     <a href="<?php echo url_for('pim/contactDetails?empNumber=' . $empNumber); ?>" id="contactsLink" class="personal" accesskey="c">
                         <span><?php echo __("Contact Details");?></span></a></li>
+                        <?php               }
+?>
                 <li class="l2">
+                     <?php $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('emergency_contacts','emergency_attachment','emergency_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){?>
                     <a href="<?php echo url_for('pim/viewEmergencyContacts?empNumber=' . $empNumber); ?>" id="emgcontactsLink" class="personal"  accesskey="e">
                         <span><?php echo __("Emergency Contacts");?></span></a></li>
+                    <?php }?>
 
                 <li class="l2">
+                    <?php $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('dependents','dependents_attachment','dependents_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){?>
                     <a href="<?php echo url_for('pim/viewDependents?empNumber=' . $empNumber); ?>" id="dependentsLink" class="personal"  accesskey="d">
                         <span><?php echo __("Dependents");?></span></a></li>
+                        <?php }?>
+                        
                 <li class="l2">
+                    <?php $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('immigration','immigration_attachment','immigration_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){?>
                     <a href="<?php echo url_for('pim/viewImmigration?empNumber=' . $empNumber); ?>" id="immigrationLink" class="personal" accesskey="i" >
                         <span><?php echo __("Immigration");?></span></a></li>
+                        <?php }?>
+                        
                 <li class="l2">
-                    <a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>" id="jobLink" accesskey="j" class="employment"  >
+                    <?php 
+                    $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('job_details','job_attachment','job_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){?>
+                        <a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>" id="jobLink" accesskey="j" class="employment"  >
 
-                        <span><?php echo __("Job");?></span></a></li>
+                            <span><?php echo __("Job");?></span></a></li>
+                   <?php } ?>
+                          
                 <li class="l2">
+                    <?php 
+                    $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('salary_details','salary_attachment','salary_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){?>
                     <a href="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber);?>" id="paymentsLink" class="employment" accesskey="s" >
                         <span><?php echo __("Salary");?></span></a></li>
+                        <?php } ?>
 <?php 
 
     $showTax = OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_PIM_SHOW_TAX_EXEMPTIONS);
-    if ($showTax) { ?>                        
+    if ($showTax) {
+        $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('tax_exemptions','tax_attachment','tax_custom_fields'), array(), array(), $self, $entities);
+        if($dataGroupPermission->canRead()){ ?>                        
                 <li class="l2">
                     <a href="<?php echo url_for('pim/viewUsTaxExemptions?empNumber=' . $empNumber);?>" id="taxLink" class="employment" accesskey="t" >
                         <span><?php echo __("Tax Exemptions");?></span></a></li>
-<?php } ?>
+    <?php
+        }
+    }?>
                 <li class="l2">
+                   <?php $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('supervisor','subordinates','report-to_attachment','report-to_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){ ?>   
                     <a href="<?php echo url_for('pim/viewReportToDetails?empNumber=' . $empNumber);?>" id="report-toLink" class="employment" accesskey="r" >
-                        <span><?php echo __("Report-to");?></span></a></li>   
+                        <span><?php echo __("Report-to");?></span></a></li> 
+                        
+                        <?php } ?>
                 <li class="l2">
 
                     <a href="<?php echo url_for('pim/viewQualifications?empNumber=' . $empNumber); ?>" id="personalLink" class="personal" accesskey="p">

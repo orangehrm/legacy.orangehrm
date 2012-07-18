@@ -31,17 +31,14 @@ class viewJobDetailsAction extends basePimAction {
         $job = $request->getParameter('job');
         $empNumber = (isset($job['emp_number'])) ? $job['emp_number']: $request->getParameter('empNumber');
         $this->empNumber = $empNumber;
-
+        
+        $this->jobInformationPermission = $this->getDataGroupPermissions('job_details', $empNumber);
         $this->ownRecords = ($loggedInEmpNum == $empNumber)?true:false;
-        $this->allowEdit = $this->isAllowedAdminOnlyActions($loggedInEmpNum, $empNumber);
 
-        $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
 
         if (!$this->IsActionAccessible($empNumber)) {
             $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
-        
-        $this->essMode = !$adminMode && !empty($loggedInEmpNum) && ($empNumber == $loggedInEmpNum);
                        
         if ($this->getUser()->hasFlash('templateMessage')) {
             list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
@@ -58,9 +55,6 @@ class viewJobDetailsAction extends basePimAction {
 
         if ($this->getRequest()->isMethod('post')) {
 
-            if (!$this->allowEdit) {
-                $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
-            }
                     
             // Handle the form submission           
             $this->form->bind($request->getParameter($this->form->getName()), 
@@ -69,8 +63,10 @@ class viewJobDetailsAction extends basePimAction {
             if ($this->form->isValid()) {
 
                 // save data
-                $service = new EmployeeService();
-                $service->saveJobDetails($this->form->getEmployee(), false);
+                if($this->jobInformationPermission->canUpdate()){
+                    $service = new EmployeeService();
+                    $service->saveJobDetails($this->form->getEmployee(), false);
+                }
                 $this->form->updateAttachment();
                 
                 

@@ -28,8 +28,8 @@ $(document).ready(function() {
             $(".checkboxSup").removeAttr('checked');
         }
     });
-
-    if($(".checkboxSup").length > 1 || $(".checkboxSub").length > 1) {
+    
+    if (haveSupervisors || haveSubordinates) {
         $(".paddingLeftRequired").hide();
         $("#addPaneReportTo").hide();
     } else {

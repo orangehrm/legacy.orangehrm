@@ -57,7 +57,9 @@
                             <div>
                                 <form id="frmEmpContactDetails" method="post" action="<?php echo url_for('pim/contactDetails'); ?>">
                                     <?php echo $form['_csrf_token']; ?>
-                                    <?php echo $form['empNumber']->render();?>
+                                    <?php echo $form['empNumber']->render();
+                                     if ($contactDetailsPermission->canRead()) {
+                                    ?>
                                     <br />
                                     <div>
                                         <?php echo $form['street1']->renderLabel(__("Address Street 1")); ?>
@@ -121,14 +123,20 @@
                                         <?php echo $form['emp_oth_email']->render(array("class" => "txtBox", "maxlength" => 50)); ?>
                                         <br class="clear" />
                                     </div>
+                                    <?php }?>
                                     <div class="formbuttons">
+                                        <?php if ($contactDetailsPermission->canUpdate()){?>
                                         <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Edit"); ?>" tabindex="2" />
+                                        <?php }?>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'contact'));?>
-                        <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'contact'));?>
+                        
+                        <?php 
+                            echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'contact'));
+                            echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'contact'));
+                        ?>
                     </td>
                     <td valign="top" align="center">
                     </td>

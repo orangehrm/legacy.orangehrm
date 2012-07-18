@@ -30,21 +30,25 @@ class getEmployeeListAjaxAction  extends sfAction{
 	 * 
 	 */
 	public function execute($request){
-
         $jsonArray = array();
+        
 
-        $properties = array("empNumber","firstName", "middleName", "lastName");
-        $employeeNameList = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntityProperties('Employee', $properties);
+        $employeeList = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntities('Employee');
 
-        foreach ($employeeNameList as $id => $attributes) {
-            $jsonArray[$attributes['empNumber']] = array('name' => trim($attributes['firstName'] . ' ' . $attributes['middleName'],' ') . ' ' . $attributes['lastName'], 'id' => $attributes['empNumber']);
+       foreach ($employeeList as $employee) {
+
+            $jsonArray[] = array('name' => $employee->getFullName(), 'id' => $employee->getEmpNumber());
+            
         }
+        
         usort($jsonArray, array($this, 'compareByName'));
+
+       
+
         $jsonString = json_encode($jsonArray);
 
         echo $jsonString;
         exit;
-
 	}
     
     protected function compareByName($employee1, $employee2) {

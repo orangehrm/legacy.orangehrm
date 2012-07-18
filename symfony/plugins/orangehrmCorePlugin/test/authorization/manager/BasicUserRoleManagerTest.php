@@ -658,6 +658,104 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         
     }
     
+    public function testFilterRoles() {
+        
+        $testManager = new TestBasicUserRoleManager();
+        
+        $userRoles = $this->__convertRoleNamesToObjects(array('Supervisor', 'Admin', 'RegionalAdmin'));;
+        
+        $rolesToExclude = array();
+        $rolesToInclude = array();
+        
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude);        
+        $this->assertEquals($userRoles, $roles);
+        
+        $rolesToExclude =  array('Admin');
+        $rolesToInclude = array();        
+        
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude);        
+        $this->assertEquals(array($userRoles[0], $userRoles[2]), $roles);
+        
+        $rolesToExclude = array();
+        $rolesToInclude =  array('Supervisor','RegionalAdmin');        
+        
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude);        
+        $this->assertEquals(array($userRoles[0], $userRoles[2]), $roles);
+        
+        $rolesToExclude = array('Admin', 'Supervisor','RegionalAdmin');   
+        $rolesToInclude = array();      
+        
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude);     
+        $this->assertEquals(0, count($roles));
+        
+        $rolesToExclude = array('NewRole');   
+        $rolesToInclude = array();      
+        
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude);     
+        $this->assertEquals($userRoles, $roles);      
+    }
+    
+ public function testFilterRolesSupervisorForEmployee() {
+        
+        $testManager = new TestBasicUserRoleManager();
+        
+        $userRoles = $this->__convertRoleNamesToObjects(array('Supervisor', 'Admin', 'RegionalAdmin'));
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude);        
+        $this->assertEquals($userRoles, $roles);        
+        
+        $rolesToExclude = array();
+        $rolesToInclude = array();
+        
+        $user = new SystemUser();
+        $user->setId(11);        
+        $user->setEmpNumber(9);
+        
+        
+        $systemUserService = $this->getMock('SystemUserService', array('getSystemUser'));
+        $systemUserService->expects($this->once())
+                 ->method('getSystemUser')
+                 ->will($this->returnValue($user));
+        
+        $testManager->setSystemUserService($systemUserService);
+        $testManager->setUser($user);
+        
+        $employees = array();
+        for($i=0;$i<3;$i++){
+            $employee= new Employee();
+            $employee->setEmpNumber($i + 1);
+            $employees[$i] = $employee;
+        }        
+        
+        $employeeService = $this->getMock('EmployeeService', array('getSupervisorEmployeeChain'));
+        $employeeService->expects($this->once())
+                 ->method('getSupervisorEmployeeChain')
+                ->with($user->getEmpNumber(), true)
+                 ->will($this->returnValue($employees));
+       
+        $testManager->setEmployeeService($employeeService);
+        
+        // Test that supervisor role is returned for Employee who is a subordinate 
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude, array('Employee' => 3));        
+        $this->assertEquals($userRoles, $roles);
+        
+        // Test that supervisor role is not returned for Employee who is not a subordinate
+        $roles = $testManager->filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude, array('Employee' => 13));        
+        $this->assertEquals(array($userRoles[1], $userRoles[2]), $roles);
+    }
+    
+    private function __convertRoleNamesToObjects(array $roleNames) {
+        $roles = array();
+        
+        foreach ($roleNames as $name) {
+            $userRole = new UserRole();
+            $userRole->setName($name);
+            
+            $roles[] = $userRole;
+        }
+        
+        return $roles;
+    }
+    
     protected function compareUserRoles($expected, $actual) {
         $this->assertEquals(count($expected), count($actual));
         foreach($expected as $role) {
@@ -736,6 +834,10 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
 class TestBasicUserRoleManager extends BasicUserRoleManager {
     public function getUserRolesPublic($user) {
         return $this->getUserRoles($user);
+    }
+    
+    public function filterUserRolesPublic($userRoles, $rolesToExclude, $rolesToInclude, $entities = array()) {
+        return $this->filterRoles($userRoles, $rolesToExclude, $rolesToInclude, $entities);
     }
 }
 
