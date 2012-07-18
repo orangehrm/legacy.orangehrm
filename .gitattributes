@@ -864,6 +864,10 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/CompositeDisplayField.class.php -
 symfony/lib/model/doctrine/orangehrmCorePlugin/CompositeDisplayFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/Config.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ConfigTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroup.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupPermission.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupPermissionTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DisplayFieldGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DisplayFieldGroupTable.class.php -text
@@ -908,6 +912,8 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseAbstractDisplayField.cla
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseAvailableGroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseCompositeDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseConfig.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroup.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroupPermission.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayFieldGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseFilterField.class.php -text
@@ -3955,6 +3961,7 @@ symfony/plugins/orangehrmCorePlugin/lib/action/displayReportAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/displayReportCriteriaAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/ohrmExportableAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/orangehrmAction.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/DataGroupDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenPermissionDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/entity/ResourcePermission.php -text
@@ -3962,6 +3969,7 @@ symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFi
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/AbstractUserRoleManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/BasicUserRoleManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/UserRoleManagerFactory.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/service/DataGroupService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/service/ScreenPermissionService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/service/UserRoleManagerService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Button.php -text
@@ -4045,6 +4053,10 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginCompositeDisplayFie
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginCompositeDisplayFieldTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginConfig.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginConfigTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroup.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupPermission.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupPermissionTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDisplayField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDisplayFieldGroup.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDisplayFieldGroupTable.class.php -text
@@ -4127,6 +4139,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/definePredefinedRepor
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedReportSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text
+symfony/plugins/orangehrmCorePlugin/test/authorization/dao/DataGroupDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenPermissionDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/manager/BasicUserRoleManagerTest.php -text
@@ -4150,6 +4163,7 @@ symfony/plugins/orangehrmCorePlugin/test/fixtures/AccessFlowStateMachineDao.yml 
 symfony/plugins/orangehrmCorePlugin/test/fixtures/AccessFlowStateMachineService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/BasicUserRoleManager.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ConfigDao.yml -text
+symfony/plugins/orangehrmCorePlugin/test/fixtures/DataGroupDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportGeneratorService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableService.yml -text
