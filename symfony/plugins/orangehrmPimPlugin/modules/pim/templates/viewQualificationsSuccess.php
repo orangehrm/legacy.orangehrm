@@ -223,7 +223,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                 <?php include_partial('language',
                                         array('empNumber'=>$empNumber, 'form'=>$languageForm,
                                               'message'=>$message, 'messageType'=>$messageType,
-                                              'section'=>$section));?>
+                                              'section'=>$section, 'languagePermissions' => $languagePermissions));?>
 
                                 <!-- this is Licenses section -->
                                 <br class="clear" />
