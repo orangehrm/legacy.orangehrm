@@ -98,7 +98,7 @@ var fileModified = 0;
                        value="<?php echo __("Save"); ?>"
                        title="<?php echo __("Save"); ?>"
                        onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                <?php if ((!$haveDependents) || ($haveDependents && $emergencyContactPermissions->canCreate()) || ($haveDependents && $emergencyContactPermissions->canUpdate())) { ?>
+                <?php if (($haveDependents) || ($haveDependents && $emergencyContactPermissions->canCreate()) || ($haveDependents && $emergencyContactPermissions->canUpdate())) { ?>
                 <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __("Cancel"); ?>"/>
                 <?php }?>
             </div>

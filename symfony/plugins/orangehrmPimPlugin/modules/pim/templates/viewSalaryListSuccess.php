@@ -123,7 +123,7 @@
                                         <?php if ((count($salaryList) > 0 && $salaryPermissions->canUpdate()) || $salaryPermissions->canCreate()) { ?>
                                         <div class="formbuttons">
                                             <input type="button" class="savebutton" id="btnSalarySave" value="<?php echo __("Save"); ?>" />
-                                            <?php if ((!count($salaryList) > 0) || (count($salaryList) > 0 && $salaryPermissions->canCreate()) || (count($salaryList) > 0 && $salaryPermissions->canUpdate())) { ?>
+                                            <?php if ((count($salaryList) > 0) || (count($salaryList) > 0 && $salaryPermissions->canCreate()) || (count($salaryList) > 0 && $salaryPermissions->canUpdate())) { ?>
                                                 <input type="button" class="savebutton" id="btnSalaryCancel" value="<?php echo __("Cancel"); ?>" />
                                             <?php } ?>
                                         </div>

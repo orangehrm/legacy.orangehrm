@@ -96,7 +96,7 @@ $havePassports = $numContacts>0;
                                         <?php if (($havePassports&& $immigrationPermission->canUpdate()) || $immigrationPermission->canCreate()) { ?>
                                         <div class="formbuttons">
                                             <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Save"); ?>" />
-                                            <?php if ((!$havePassports) || ($havePassports && $immigrationPermission->canCreate()) || ($havePassports && $immigrationPermission->canUpdate())) { ?>
+                                            <?php if (($havePassports) || ($havePassports && $immigrationPermission->canCreate()) || ($havePassports && $immigrationPermission->canUpdate())) { ?>
                                             <input type="button" class="savebutton" id="btnCancel" value="<?php echo __("Cancel"); ?>" />
                                             <?php }?>
                                         </div>
