@@ -215,7 +215,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                 <?php include_partial('skill',
                                         array('empNumber'=>$empNumber, 'form'=>$skillForm,
                                               'message'=>$message, 'messageType'=>$messageType,
-                                              'section'=>$section));?>
+                                              'section'=>$section, 'skillPermissions'=>$skillPermissions));?>
                                 
                                 <!-- this is Languages section -->
                                 <br class="clear" />

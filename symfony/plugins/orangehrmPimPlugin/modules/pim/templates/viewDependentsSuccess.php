@@ -107,7 +107,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                        value="<?php echo __("Save"); ?>"
                        title="<?php echo __("Save"); ?>"
                        onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                <?php if ((!$haveDependents) || ($haveDependents && $dependentPermissions->canCreate()) || ($haveDependents && $dependentPermissions->canUpdate())) { ?>
+                <?php if (($haveDependents) || ($haveDependents && $dependentPermissions->canCreate()) || ($haveDependents && $dependentPermissions->canUpdate())) { ?>
                 <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __("Cancel"); ?>"/>
                 <?php } ?>
             </div>
