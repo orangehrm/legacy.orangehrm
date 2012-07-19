@@ -28,7 +28,7 @@ $(document).ready(function() {
             $(".checkboxSup").removeAttr('checked');
         }
     });
-    
+
     if (haveSupervisors || haveSubordinates) {
         $(".paddingLeftRequired").hide();
         $("#addPaneReportTo").hide();
@@ -313,8 +313,12 @@ function clearAddForm() {
 function addEditLinks() {
     // called here to avoid double adding links - When in edit mode and cancel is pressed.
     removeEditLinks();
-    $('#sup_list tbody td.supName').wrapInner('<a href="#"/>');
-    $('#sub_list tbody td.subName').wrapInner('<a href="#"/>');
+    if (canUpdateSupervisors){
+        $('#sup_list tbody td.supName').wrapInner('<a href="#"/>');
+    }
+    if (canUpdateSubordinates){
+        $('#sub_list tbody td.subName').wrapInner('<a href="#"/>');
+    }
 }
 
 function removeEditLinks() {

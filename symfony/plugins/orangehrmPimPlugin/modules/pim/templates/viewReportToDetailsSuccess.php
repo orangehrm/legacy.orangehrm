@@ -300,5 +300,7 @@
                                 
                                 var haveSupervisors = <?php echo $hasSupDetails ? 'true' : 'false';?>;
                                 var haveSubordinates = <?php echo $hasSubDetails ? 'true' : 'false';?>;
+                                var canUpdateSupervisors ='<?php echo $reportToSupervisorPermission->canUpdate();?>';
+                                var canUpdateSubordinates = '<?php echo $reportToSubordinatePermission->canUpdate();?>';
     //]]>
 </script>
