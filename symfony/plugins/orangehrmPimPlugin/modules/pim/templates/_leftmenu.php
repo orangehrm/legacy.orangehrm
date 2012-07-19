@@ -498,10 +498,11 @@ $userRoleManager = sfContext::getInstance()->getUserRoleManager();
                         
                         <?php } ?>
                 <li class="l2">
-
+                    <?php $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('qualification_work','qualification_education','qualification_skills','qualification_languages','qualification_license','qualifications_attachment','qualifications_custom_fields'), array(), array(), $self, $entities);
+                    if($dataGroupPermission->canRead()){ ?>  
                     <a href="<?php echo url_for('pim/viewQualifications?empNumber=' . $empNumber); ?>" id="personalLink" class="personal" accesskey="p">
                         <span><?php echo __("Qualifications");?></span></a></li>
-                
+                   <?php } ?>
                 <li class="l2">
                     <a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>" id="membershipsLink" class="pimmemberships" accesskey="m">
                         <span><?php echo __("Membership");?></span>
