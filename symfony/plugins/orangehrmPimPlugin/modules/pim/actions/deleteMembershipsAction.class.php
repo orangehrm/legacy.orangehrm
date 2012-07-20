@@ -22,7 +22,7 @@
  * Action class for PIM module delete memberships
  *
  */
-class deleteMembershipsAction extends sfAction {
+class deleteMembershipsAction extends basePimAction {
 
     /**
      * Delete employee memberships
@@ -37,20 +37,23 @@ class deleteMembershipsAction extends sfAction {
         $this->form = new EmployeeMembershipsDeleteForm(array(), array('empNumber' => $empNumber), true);
 
         $this->form->bind($request->getParameter($this->form->getName()));
+        $membershipPermissions = $this->getDataGroupPermissions('membership', $empNumber);
+        
+        if ($membershipPermissions->canDelete()) {
+            if ($this->form->isValid()) {
 
-        if ($this->form->isValid()) {
+                if (!$empNumber) {
+                    throw new PIMServiceException("No Employee ID given");
+                }
+                $membershipsToDelete = $request->getParameter('chkmemdel', array());
 
-            if (!$empNumber) {
-                throw new PIMServiceException("No Employee ID given");
-            }
-            $membershipsToDelete = $request->getParameter('chkmemdel', array());
+                if ($membershipsToDelete) {
 
-            if ($membershipsToDelete) {
+                    $service = new EmployeeService();
+                    $count = $service->deleteMembershipDetails($membershipsToDelete);
+                    $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::DELETE_SUCCESS)));
 
-                $service = new EmployeeService();
-                $count = $service->deleteMembershipDetails($membershipsToDelete);
-                $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::DELETE_SUCCESS)));
-                
+                }
             }
         }
 

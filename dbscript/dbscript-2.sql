@@ -1402,6 +1402,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (1, 33, 1, 1, 1, 1, 0),
 (1, 34, 1, 1, 1, 1, 0),
 (1, 35, 1, NULL, 1, NULL, 0),
+(1, 36, 1, 1, 1, 1, 0),
 (1, 37, 1, 1, 1, 1, 0),
 (1, 38, 1, NULL, 1, NULL, 0),
 
@@ -1440,6 +1441,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (1, 33, 1, 1, 1, 1, 1),
 (1, 34, 1, 1, 1, 1, 1),
 (1, 35, 1, NULL, 1, NULL, 1),
+(1, 36, 1, 1, 1, 1, 1),
 (1, 37, 1, 1, 1, 1, 1),
 (1, 38, 1, NULL, 1, NULL, 1),
 
@@ -1478,6 +1480,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (2, 33, 1, 1, 1, 1, 1),
 (2, 34, 1, 1, 1, 1, 1),
 (2, 35, 1, NULL, 1, NULL, 1),
+(2, 36, 1, 1, 1, 1, 1),
 (2, 37, 1, 1, 1, 1, 1),
 (2, 38, 1, NULL, 1, NULL, 1),
 
@@ -1516,6 +1519,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (3, 33, 1, 1, 1, 1, 0),
 (3, 34, 1, 1, 1, 1, 0),
 (3, 35, 1, NULL, 1, NULL, 0),
+(3, 36, 1, 1, 1, 1, 0),
 (3, 37, 1, 1, 1, 1, 0),
 (3, 38, 1, NULL, 1, NULL, 0),
 
@@ -1554,5 +1558,6 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (3, 33, 1, 1, 1, 1, 1),
 (3, 34, 1, 1, 1, 1, 1),
 (3, 35, 1, NULL, 1, NULL, 1),
+(3, 36, 1, 1, 1, 1, 1),
 (3, 37, 1, 1, 1, 1, 1),
 (3, 38, 1, NULL, 1, NULL, 1);

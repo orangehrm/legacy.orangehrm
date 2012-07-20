@@ -28,7 +28,7 @@
 </script>
 
 <?php echo stylesheet_tag('../orangehrmPimPlugin/css/viewQualificationsSuccess'); ?>
-<?php
+<?php 
 $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
 
 ?>
@@ -79,8 +79,9 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                 ?>
                                 <div id="workExpMessagebar" class="<?php echo $tmpMsgClass; ?>">
                                     <span style="font-weight: bold;"><?php echo $tmpMsg; ?></span>
-                                </div>                                 
+                                </div>                
                                 
+                                <?php if ($workExperiencePermissions->canRead()) { ?>
                                 <div class="sectionDiv" id="sectionWorkExperience">
                                     <div style="float: left; width: 450px;"><h3><?php echo __('Work Experience'); ?></h3></div>
                                     <div id="actionWorkExperience" style="float: left; margin-top: 20px; width: 335px; text-align: right">
@@ -201,16 +202,20 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                     </form>
                                     <?php }?>
                                 </div>
+                                <?php } ?>
                                 <!-- this is education section -->
                                 <br class="clear" />
+                                <?php if ($educationPermissions->canRead()) { ?>
                                 <a name="education"></a>
                                 <?php include_partial('education',
                                         array('empNumber'=>$empNumber, 'form'=>$educationForm,
                                               'message'=>$message, 'messageType'=>$messageType,
-                                              'section'=>$section));?>
+                                              'section'=>$section, 'educationPermissions'=>$educationPermissions));?>
 
                                 <!-- this is skills section -->
                                 <br class="clear" />
+                                <?php } ?>
+                                <?php if ($skillPermissions->canRead()) { ?>
                                 <a name="skill"></a>
                                 <?php include_partial('skill',
                                         array('empNumber'=>$empNumber, 'form'=>$skillForm,
@@ -219,6 +224,8 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                 
                                 <!-- this is Languages section -->
                                 <br class="clear" />
+                                <?php } ?>
+                                <?php if ($languagePermissions->canRead()) { ?>
                                 <a name="language"></a>
                                 <?php include_partial('language',
                                         array('empNumber'=>$empNumber, 'form'=>$languageForm,
@@ -227,6 +234,8 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
 
                                 <!-- this is Licenses section -->
                                 <br class="clear" />
+                                <?php } ?>
+                                <?php if ($licensePermissions->canRead()) { ?>
                                 <a name="license"></a>
                                 <?php include_partial('license',
                                         array('empNumber'=>$empNumber, 'form'=>$licenseForm,
@@ -234,6 +243,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                               'section'=>$section));?>
                                 
                                 <br />
+                                <?php } ?>
                             </div>
                         <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'qualifications'));?>
                         <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'qualifications'));?>

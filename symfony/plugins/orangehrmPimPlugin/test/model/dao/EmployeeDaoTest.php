@@ -152,6 +152,15 @@ class EmployeeDaoTest extends PHPUnit_Framework_TestCase {
 
         $memberDetail = $this->employeeDao->getMembershipDetail($empNumber, $membership);
         $this->assertTrue($memberDetail[0] instanceof EmployeeMemberDetail);
+        $this->assertEquals($empNumber, $memberDetail[0]->getEmpNumber());
+        $this->assertEquals($membership, $memberDetail[0]->getMembershipCode());
+        
+        $empNumber = 1;
+        $membership = 4;
+
+        $memberDetail = $this->employeeDao->getMembershipDetail($empNumber, $membership);        
+        $this->assertEquals(0, $memberDetail->count());
+   
     }
 
     /**
