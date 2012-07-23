@@ -405,7 +405,8 @@ $userRoleManager = sfContext::getInstance()->getUserRoleManager();
 
     $width = '150';
     $height = '180';
-    if (!empty($empPicture)) {
+    $photographPermissions = $userRoleManager->getDataGroupPermissions(array('photograph'), array(), array(), $self, $entities);
+    if ((!empty($empPicture)) && ($photographPermissions->canRead())) {
         $width = $empPicture->width;
         $height = $empPicture->height;
     }
@@ -416,8 +417,7 @@ $userRoleManager = sfContext::getInstance()->getUserRoleManager();
 <form id="frmEmp" action=""></form>
 <div id="pimleftmenu">
     <?php 
-    $photographPermissions = $userRoleManager->getDataGroupPermissions(array('photograph'), array(), array(), $self, $entities);
-                    
+                        
     include_partial('photo', array('empNumber' => $empNumber,
         'width' => $width, 'height' => $height,
         'editMode' => isset($editPhotoMode) ? $editPhotoMode : false,
