@@ -57,7 +57,7 @@ $havePassports = $numContacts>0;
                                     <form name="frmEmpImmigration" id="frmEmpImmigration" method="post" action="<?php echo url_for('pim/viewImmigration'); ?>">
                                         <?php echo $form['_csrf_token']; ?>
                                         <?php echo $form['emp_number']->render();?>
-                                        <?php// if (($immigrationPermission->canRead() && $immigrationPermission->canCreate()) || ($immigrationPermission->canRead() && $immigrationPermission->canUpdate() && $havePassports)) { ?>
+                                        <?php // if (($immigrationPermission->canRead() && $immigrationPermission->canCreate()) || ($immigrationPermission->canRead() && $immigrationPermission->canUpdate() && $havePassports)) { ?>
                                        <?php echo $form['seqno']->render();?>
                                         <div>
                                             <?php echo $form['type_flag']->renderLabel(__('Document') . ' <span class="required">*</span>'); ?>
