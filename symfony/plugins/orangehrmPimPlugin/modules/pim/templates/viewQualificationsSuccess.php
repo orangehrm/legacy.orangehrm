@@ -240,7 +240,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                 <?php include_partial('license',
                                         array('empNumber'=>$empNumber, 'form'=>$licenseForm,
                                               'message'=>$message, 'messageType'=>$messageType,
-                                              'section'=>$section));?>
+                                              'section'=>$section, 'licensePermissions' => $licensePermissions));?>
                                 
                                 <br />
                                 <?php } ?>

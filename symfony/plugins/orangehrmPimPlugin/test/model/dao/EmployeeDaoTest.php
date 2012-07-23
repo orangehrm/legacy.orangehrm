@@ -517,6 +517,9 @@ class EmployeeDaoTest extends PHPUnit_Framework_TestCase {
 
         $licenseCode = $this->employeeDao->getLicense($empNumber, $licenseCode);
         $this->assertTrue($licenseCode instanceof EmployeeLicense);
+        //testing with not included 
+        $licenseCodeNull = $this->employeeDao->getLicense(2, 1);
+        $this->assertTrue(!($licenseCodeNull instanceof EmployeeLicense));
     }
 
     /**
