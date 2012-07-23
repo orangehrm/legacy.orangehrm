@@ -1363,8 +1363,8 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (35, 'qualifications_custom_fields', 'Custom Fields in Qualifications', 1, NULL, 1, NULL),
 (36, 'membership', 'Membership', 1, 1, 1, 1),
 (37, 'membership_attachment', 'Attachments in Membership', 1, 1, 1, 1),
-(38, 'membership_custom_fields', 'Custom Fields in Membership', 1, NULL, 1, NULL);
-
+(38, 'membership_custom_fields', 'Custom Fields in Membership', 1, NULL, 1, NULL),
+(39, 'photograph', 'Employee Photograph', 1, NULL, 1, 1);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 (1, 1, 1, NULL, 1, NULL, 0),
@@ -1405,6 +1405,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (1, 36, 1, 1, 1, 1, 0),
 (1, 37, 1, 1, 1, 1, 0),
 (1, 38, 1, NULL, 1, NULL, 0),
+(1, 39, 1, NULL, 1, 1, 0),
 
 (1, 1, 1, NULL, 1, NULL, 1),
 (1, 2, 1, 1, 1, 1, 1),
@@ -1444,6 +1445,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (1, 36, 1, 1, 1, 1, 1),
 (1, 37, 1, 1, 1, 1, 1),
 (1, 38, 1, NULL, 1, NULL, 1),
+(1, 39, 1, NULL, 1, 1, 1),
 
 (2, 1, 1, NULL, 1, NULL, 1),
 (2, 2, 1, 1, 1, 1, 1),
@@ -1483,6 +1485,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (2, 36, 1, 1, 1, 1, 1),
 (2, 37, 1, 1, 1, 1, 1),
 (2, 38, 1, NULL, 1, NULL, 1),
+(2, 39, 1, NULL, 1, 1, 1),
 
 (3, 1, 1, NULL, 1, NULL, 0),
 (3, 2, 1, 1, 1, 1, 0),
@@ -1522,6 +1525,7 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (3, 36, 1, 1, 1, 1, 0),
 (3, 37, 1, 1, 1, 1, 0),
 (3, 38, 1, NULL, 1, NULL, 0),
+(3, 39, 1, NULL, 1, 1, 0),
 
 (3, 1, 1, NULL, 1, NULL, 1),
 (3, 2, 1, 1, 1, 1, 1),
@@ -1560,4 +1564,5 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (3, 35, 1, NULL, 1, NULL, 1),
 (3, 36, 1, 1, 1, 1, 1),
 (3, 37, 1, 1, 1, 1, 1),
-(3, 38, 1, NULL, 1, NULL, 1);
+(3, 38, 1, NULL, 1, NULL, 1),
+(3, 39, 1, NULL, 1, 1, 1);

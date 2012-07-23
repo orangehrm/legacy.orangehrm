@@ -415,10 +415,13 @@ $userRoleManager = sfContext::getInstance()->getUserRoleManager();
 
 <form id="frmEmp" action=""></form>
 <div id="pimleftmenu">
-    <?php include_partial('photo', array('empNumber' => $empNumber,
+    <?php 
+    $photographPermissions = $userRoleManager->getDataGroupPermissions(array('photograph'), array(), array(), $self, $entities);
+                    
+    include_partial('photo', array('empNumber' => $empNumber,
         'width' => $width, 'height' => $height,
         'editMode' => isset($editPhotoMode) ? $editPhotoMode : false,
-        'fullName' => htmlspecialchars($form->fullName)));?>
+        'fullName' => htmlspecialchars($form->fullName), 'photographPermissions' => $photographPermissions));?>
     <ul class="pimleftmenu">
         <li class="l1 parent">
             <a href="#" class="expanded" onclick="showHideSubMenu(this);">
