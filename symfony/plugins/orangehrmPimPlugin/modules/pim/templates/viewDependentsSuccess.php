@@ -69,9 +69,10 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
             
 <div class="formpage2col">
 <div id="addPaneDependent" <?php echo $haveDependents ? 'style="display:none;"' : '';?> >
-<div class="outerbox">
+<?php if ($dependentPermissions->canRead() && (($dependentPermissions->canCreate()) || ($dependentPermissions->canUpdate() && $haveDependents))) { ?>
+    <div class="outerbox">
     <div class="mainHeading"><h2 id="heading"><?php echo __('Add Dependent'); ?></h2></div>
-    <?php if ($dependentPermissions->canRead() && (($dependentPermissions->canCreate()) || ($dependentPermissions->canUpdate() && $haveDependents))) { ?>
+    
     <form name="frmEmpDependent" id="frmEmpDependent" method="post" action="<?php echo url_for('pim/updateDependent?empNumber=' . $empNumber); ?>">
 
     <?php echo $form['_csrf_token']; ?>
@@ -98,41 +99,38 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
     <?php echo $form['dateOfBirth']->renderLabel(__('Date of Birth')); ?>
     <?php echo $form['dateOfBirth']->render(array("class" => "formDateInput")); ?>
     <br class="clear"/>
-    
-    <?php }?>
-    
-    <?php if (($haveDependents && $dependentPermissions->canUpdate()) || $dependentPermissions->canCreate()) { ?>
-            <div class="formbuttons">
-                <input type="button" class="savebutton" name="btnSaveDependent" id="btnSaveDependent"
-                       value="<?php echo __("Save"); ?>"
-                       title="<?php echo __("Save"); ?>"
-                       onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                <?php if (($haveDependents) || ($haveDependents && $dependentPermissions->canCreate()) || ($haveDependents && $dependentPermissions->canUpdate())) { ?>
-                <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __("Cancel"); ?>"/>
-                <?php } ?>
-            </div>
-    <?php } ?>
+        
+    <div class="formbuttons">
+        <input type="button" class="savebutton" name="btnSaveDependent" id="btnSaveDependent"
+            value="<?php echo __("Save"); ?>"
+            title="<?php echo __("Save"); ?>"
+            onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
+        <?php if (($haveDependents) || ($haveDependents && $dependentPermissions->canCreate()) || ($haveDependents && $dependentPermissions->canUpdate())) { ?>
+            <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __("Cancel"); ?>"/>
+        <?php } ?>
+    </div>
     </form>
 </div>
+<?php } ?>
 </div>
 
-<?php if ($haveDependents && $dependentPermissions->canRead()) { ?>
+<?php if ($dependentPermissions->canRead()) { ?>
 <div class="outerbox" id="listing">
 <form name="frmEmpDelDependents" id="frmEmpDelDependents" method="post" action="<?php echo url_for('pim/deleteDependents?empNumber=' . $empNumber); ?>">
 <?php echo $deleteForm['_csrf_token']->render(); ?>
 <?php echo $deleteForm['empNumber']->render(); ?>
 
     <div class="mainHeading"><h2><?php echo __("Assigned Dependents"); ?></h2></div>
-
+    <?php if ($haveDependents) { ?>
     <div class="actionbar" id="listActions">
-            <div class="actionbuttons">
+        <div class="actionbuttons">
             <?php if ($dependentPermissions->canCreate() ) { ?>
 
                     <input type="button" class="addbutton" id="btnAddDependent" onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __("Add"); ?>" title="<?php echo __("Add"); ?>"/>
             <?php } ?>
             <?php if ($dependentPermissions->canDelete() ) { ?>
 
-                <input type="button" class="delbutton" id="delDependentBtn" onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __("Delete"); ?>" title="<?php echo __("Delete"); ?>"/>
+                    <input type="button" class="delbutton" id="delDependentBtn" onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __("Delete"); ?>" title="<?php echo __("Delete"); ?>"/>
             <?php } ?>
         </div>
     </div>
@@ -187,9 +185,13 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                 echo '</tr>';
                 $row++;
             } ?>
-            </tbody>
-        </table>
-    </form>
+            </tbody>           
+    </table>
+    <?php } 
+        else {
+            echo __(TopLevelMessages::NO_RECORDS_FOUND);
+        } ?>
+</form>
 </div>
  <?php } ?>
 <div class="paddingLeftRequired" <?php echo $haveDependents ? 'style="display:none;"' : '';?>><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>

@@ -63,7 +63,8 @@ var fileModified = 0;
 </div>
 
 <div id="addPaneEmgContact" <?php echo $haveContacts ? 'style="display:none;"' : '';?> >
-<div class="outerbox">
+<?php if ($emergencyContactPermissions->canCreate() || ($haveContacts && $emergencyContactPermissions->canUpdate())) { ?>
+    <div class="outerbox">
 
     <div class="mainHeading"><h2 id="emergencyContactHeading"><?php echo __('Add Emergency Contact'); ?></h2></div>
     <form name="frmEmpEmgContact" id="frmEmpEmgContact" method="post" action="<?php echo url_for('pim/updateEmergencyContact?empNumber=' . $empNumber); ?>">
@@ -92,22 +93,23 @@ var fileModified = 0;
     <br class="clear"/>
     <?php }?>
     
-    <?php if ($emergencyContactPermissions->canCreate() || $emergencyContactPermissions->canUpdate()) { ?>
+    
             <div class="formbuttons">
                 <input type="button" class="savebutton" name="btnSaveEContact" id="btnSaveEContact"
                        value="<?php echo __("Save"); ?>"
                        title="<?php echo __("Save"); ?>"
                        onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                <?php if (($haveDependents) || ($haveDependents && $emergencyContactPermissions->canCreate()) || ($haveDependents && $emergencyContactPermissions->canUpdate())) { ?>
+                <?php if (($haveContacts) || ($haveContacts && $emergencyContactPermissions->canCreate()) || ($haveContacts && $emergencyContactPermissions->canUpdate())) { ?>
                 <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __("Cancel"); ?>"/>
                 <?php }?>
             </div>
-    <?php } ?>
+    
     </form>
-</div>
+    </div>
+<?php } ?>
 </div>
     
-<?php if ($haveContacts) { ?>
+<?php if ($haveContacts && ($emergencyContactPermissions->canRead())) { ?>
 <div class="outerbox" id="listEmegrencyContact">
 <form name="frmEmpDelEmgContacts" id="frmEmpDelEmgContacts" method="post" action="<?php echo url_for('pim/deleteEmergencyContacts?empNumber=' . $empNumber); ?>">
 <?php echo $deleteForm['_csrf_token']->render(); ?>
@@ -177,8 +179,9 @@ var fileModified = 0;
         </table>
     </form>
 </div>
-<?php }?>
+
 <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+<?php }?>
 <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'emergency'));?>
 <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'emergency'));?>
     

@@ -18,13 +18,14 @@
                         <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" style="margin-left: 16px;width: 550px;">
                             <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
                         </div>
+                    <?php if ($taxExemptionPermission->canRead()) { ?>
                         <div class="outerbox" id="outerbox">
                         <div class="mainHeading"><h2><?php echo __('Tax Exemptions'); ?></h2></div>
                         <div>
                             <form id="frmEmpTaxExemptions" method="post" action="<?php echo url_for('pim/viewUsTaxExemptions'); ?>">
                                 <?php echo $form['_csrf_token']; ?>
-                                <?php echo $form['empNumber']->render(); 
-                                    if ($taxExemptionPermission->canRead()) { ?>
+                                <?php echo $form['empNumber']->render(); ?>
+                                    
                                 <br />
                                 <span class="label"><?php echo __("Federal Income Tax") ?></span>
                                 <div>
@@ -67,7 +68,7 @@
                                     <?php echo $form['workState']->render(array("class" => "drpDown")); ?>
                                     <br class="clear" />
                                 </div>
-                                <?php } ?>
+                                
                                  <div class="formbuttons">
                                      <?php if($taxExemptionPermission->canUpdate()){ ?>
                                         <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Edit"); ?>" tabindex="2" />
@@ -76,6 +77,7 @@
                             </form>
                         </div>
                     </div>
+                    <?php } ?>
                     <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'tax'));?>
                     <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'tax'));?>
                     </td>
