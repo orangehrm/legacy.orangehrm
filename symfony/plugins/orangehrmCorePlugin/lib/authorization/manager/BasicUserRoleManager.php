@@ -204,6 +204,46 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $allIds;
     }
     
+    /**
+     * Check State Transition possible for User 
+     * 
+     * @param type $workFlowId
+     * @param type $state
+     * @param type $action
+     * @return boolean 
+     */
+    public function isActionAllowed($workFlowId, $state, $action){
+        $accessFlowStateMachineService = new AccessFlowStateMachineService();
+        $isAllowed = FALSE;
+        foreach ($this->userRoles as $role) {
+           $isAllowed = $accessFlowStateMachineService->isActionAllowed($workFlowId, $state, $role, $action);
+           if($isAllowed){
+               break;
+           }
+        }
+        return $isAllowed;
+    }
+    
+    /**
+     * Get allowed Actions for User
+     * 
+     * @param type $workflow
+     * @param type $state
+     * @return actionsArray 
+     */
+    public function getAllowedActions($workflow, $state){
+        $accessFlowStateMachineService = new AccessFlowStateMachineService();
+        $allAction = array();
+        foreach ($this->userRoles as $role) {
+            $userAction = $accessFlowStateMachineService->getAllowedActions($workflow, $state, $role);     
+            
+            if (count($userAction) > 0) {
+                $allAction = array_unique(array_merge($allAction, $userAction));
+            }
+        }
+        return $allAction;
+    }
+    
     
     public function isEntityAccessible($entityType, $entityId, $operation = null, 
             $rolesToExclude = array(), $rolesToInclude = array()) {

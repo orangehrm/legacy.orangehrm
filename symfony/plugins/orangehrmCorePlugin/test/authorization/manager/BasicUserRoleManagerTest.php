@@ -822,7 +822,50 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         }
         
         return $ids;
-    }    
+    }
+    
+    public function testGetAllowedActionsForAdminUserRole() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');
+        $expected = array(3, 2);
+        
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        
+        $workflow = 3;
+        $state = 'ACTIVE';
+        $result = $this->manager->getAllowedActions($workflow, $state);
+        
+        $this->assertEquals(2, count($result));
+        $this->compareArrays($expected, $result);
+    }
+    
+    public function testIsActionAllowedForAdminAddEmployee() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');
+        
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        
+        $workflow = 3;
+        $state = 'NOT EXIST';
+        $action = '1';
+        $isAllowed = $this->manager->isActionAllowed($workflow, $state, $action);
+        
+        $this->assertTrue($isAllowed);
+    }
+    
+    public function testIsActionAllowedForAdminAddActiveEmployee() {
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');
+        
+        $defaultAdmin = $users[5];
+        $this->manager->setUser($defaultAdmin);
+        
+        $workflow = 3;
+        $state = 'ACTIVE';
+        $action = '1';
+        $isAllowed = $this->manager->isActionAllowed($workflow, $state, $action);
+        
+        $this->assertTrue(!$isAllowed);
+    }
 }
 
 /* Extend class to get access to protected method */

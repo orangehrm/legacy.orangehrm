@@ -629,6 +629,11 @@ INSERT INTO `ohrm_workflow_state_machine` VALUES ('1','0','INITIAL','SYSTEM','7'
                                     ('78','0','INITIAL','ADMIN','7','NOT SUBMITTED'),
                                     ('79','0','INITIAL','ESS USER','7','NOT SUBMITTED'),
                                     ('80','0','INITIAL','SUPERVISOR','7','NOT SUBMITTED');
+                                    ('81','3','NOT EXIST','ADMIN','1','ACTIVE'),
+                                    ('82','3','ACTIVE','ADMIN','2','NOT EXIST'),
+                                    ('83','3','ACTIVE','ADMIN','3','TERMINATED'),
+                                    ('84','3','TERMINATED','ADMIN','4','ACTIVE'),
+                                    ('85','3','TERMINATED','ADMIN','5','NOT EXIST');
                                     
 INSERT INTO `ohrm_report_group` (`report_group_id`, `name`, `core_sql`) VALUES 
    (1,'timesheet', 'SELECT selectCondition FROM ohrm_project_activity LEFT JOIN (SELECT * FROM ohrm_timesheet_item WHERE whereCondition1) AS ohrm_timesheet_item  ON (ohrm_timesheet_item.activity_id = ohrm_project_activity.activity_id) LEFT JOIN ohrm_project ON (ohrm_project.project_id = ohrm_project_activity.project_id) LEFT JOIN hs_hr_employee ON (hs_hr_employee.emp_number = ohrm_timesheet_item.employee_id) LEFT JOIN ohrm_timesheet ON (ohrm_timesheet.timesheet_id = ohrm_timesheet_item.timesheet_id) LEFT JOIN ohrm_customer ON (ohrm_customer.customer_id = ohrm_project.customer_id) WHERE whereCondition2 groupByClause ORDER BY ohrm_customer.name, ohrm_project.name, ohrm_project_activity.name, hs_hr_employee.emp_lastname, hs_hr_employee.emp_firstname'),
