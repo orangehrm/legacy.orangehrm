@@ -162,19 +162,25 @@
                                       <div class="formbuttons">
                                         <?php if ($jobInformationPermission->canUpdate()) : ?>
                                               <input type="button" class="savebutton" id="btnSave" style="padding-left: 5px; float: left" value="<?php echo __("Edit"); ?>" />
+                                    <?php endif; ?>                                              
                                         <?php
                                               $empTermination = $form->empTermination;
+                                              $allowed = true;
+                                              
                                               if (!empty($empTermination)) {
+                                                  $allowed = $allowActivate;
                                                   $terminatedId = $empTermination->getId();
                                                   $btnTitle = __("Activate Employment");
                                                   $label = __("Terminated on")." : ". set_datepicker_date_format($empTermination->getDate());
                                               } else {
+                                                  $allowed = $allowTerminate;
                                                   $btnTitle = __("Terminate Employment");
                                               }
                                         ?>
+                                              <?php if ($allowed) { ?>
                                               <input type="button" class="terminateButton" id="btnTerminateEmployement" style="margin-left: 5px; float: left;" value="<?php echo $btnTitle; ?>" />
-                                              <label id="terminatedDate" style="width: 250px; float: left"><a href="javascript:openTerminateEmploymentDialog()"><?php echo $label; ?></a></label>
-                                    <?php endif; ?>
+                                              <?php } ?>
+                                              <label id="terminatedDate" style="width: 250px; float: left"><a href="javascript:openTerminateEmploymentDialog()"><?php echo $label; ?></a></label>                                              
                                                 <br class="clear"/>
                                           </div>
                                    <?php } ?>
@@ -194,7 +200,7 @@
                           </tr>
                       </table>
 
-
+<?php if ($allowTerminate || ($employeeState == Employee::STATE_TERMINATED)) { ?>
                       <div id="terminateEmployement" title="<?php echo __("Terminate Employment"); ?>"  style="display:none;">
                           <form id="frmTerminateEmployement" method="post"
                                 action="<?php echo url_for('pim/terminateEmployement?empNumber=' . $empNumber.'&terminatedId='.$terminatedId); ?>">
@@ -212,13 +218,15 @@
                                               <br class="clear"/>
                                           </form>
                                           <div class="formbuttons">
+                                              <?php if ($allowTerminate){ ?>
                                               <input type="button" id="dialogConfirm" class="savebutton" value="<?php echo __('Confirm'); ?>" />
+                                              <?php }?>
                                               <input type="button" id="dialogCancel" class="savebutton" value="<?php echo __('Cancel'); ?>" />
                                           </div>
                                           <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
                                       </div>
 
-
+<?php } ?>
 
 
                                       <script type="text/javascript">

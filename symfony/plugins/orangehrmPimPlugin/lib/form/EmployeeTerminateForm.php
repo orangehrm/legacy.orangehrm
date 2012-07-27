@@ -14,6 +14,9 @@ class EmployeeTerminateForm extends BaseForm {
 
     private $employeeService;
     private $terminationReasonService;
+    
+    private $allowActivate;
+    private $allowTerminate;
 
     /**
      * Get EmployeeService
@@ -51,19 +54,29 @@ class EmployeeTerminateForm extends BaseForm {
 
     public function configure() {
 
-        $empNumber = $this->getOption('empNumber');
         $employee = $this->getOption('employee');
 
+        $this->allowActivate = $this->getOption('allowActivate');
+        $this->allowTerminate = $this->getOption('allowTerminate');
+        
         $empTerminatedId = $employee->termination_id;
 
         $terminateReasons = $this->__getTerminationReasons();
 
         //creating widgets
-        $this->setWidgets(array(
+        $widgets = array(
             'date' => new ohrmWidgetDatePickerNew(array(), array('id' => 'terminate_date')),
             'reason' => new sfWidgetFormSelect(array('choices' => $terminateReasons)),
             'note' => new sfWidgetFormTextArea()
-        ));
+        );
+
+        if (!$this->allowTerminate) {
+            foreach ($widgets as $widget) {
+                $widget->setAttribute('disabled', 'disabled');
+            }
+        }
+        
+        $this->setWidgets($widgets);
         
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
 
@@ -78,13 +91,13 @@ class EmployeeTerminateForm extends BaseForm {
         $this->setDefault('date', set_datepicker_date_format(date('Y-m-d')));
         $this->setDefault('reason', 1);
 
-        if(!empty($empTerminatedId)){
+        if (!empty($empTerminatedId)){
             $empTermination = $employee->getEmpTermination();
             $this->setDefault('date', set_datepicker_date_format($empTermination->getDate()));
             $this->setDefault('reason', $empTermination->getReasonId());
             $this->setDefault('note', $empTermination->getNote());
         }
-
+        
         $this->widgetSchema->setNameFormat('terminate[%s]');
     }
 

@@ -412,6 +412,12 @@ $userRoleManager = sfContext::getInstance()->getUserRoleManager();
     }
     
     $entities = array('Employee' => $empNumber);
+    
+    $employee = $employeeService->getEmployee($empNumber);
+    $allowedActions = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_EMPLOYEE, $employee->getState());
+        
+    $allowActivate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE, $allowedActions);
+    $allowTerminate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_TERMINATE, $allowedActions);
 ?>
 
 <form id="frmEmp" action=""></form>
@@ -468,7 +474,7 @@ $userRoleManager = sfContext::getInstance()->getUserRoleManager();
                 <li class="l2">
                     <?php 
                     $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('job_details','job_attachment','job_custom_fields'), array(), array(), $self, $entities);
-                    if($dataGroupPermission->canRead()){?>
+                    if($dataGroupPermission->canRead() || $allowTerminate || $allowActivate){?>
                         <a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>" id="jobLink" accesskey="j" class="employment"  >
 
                             <span><?php echo __("Job");?></span></a></li>
