@@ -69,10 +69,10 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
             
 <div class="formpage2col">
 <div id="addPaneDependent" <?php echo $haveDependents ? 'style="display:none;"' : '';?> >
-<?php if ($dependentPermissions->canRead() && (($dependentPermissions->canCreate()) || ($dependentPermissions->canUpdate() && $haveDependents))) { ?>
+
     <div class="outerbox">
     <div class="mainHeading"><h2 id="heading"><?php echo __('Add Dependent'); ?></h2></div>
-    
+    <?php if ($dependentPermissions->canRead() && (($dependentPermissions->canCreate()) || ($dependentPermissions->canUpdate() && $haveDependents))) { ?>
     <form name="frmEmpDependent" id="frmEmpDependent" method="post" action="<?php echo url_for('pim/updateDependent?empNumber=' . $empNumber); ?>">
 
     <?php echo $form['_csrf_token']; ?>
@@ -110,11 +110,17 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
         <?php } ?>
     </div>
     </form>
-</div>
-<?php } ?>
+    <?php } else {
+         echo __(TopLevelMessages::NO_RECORDS_FOUND);
+    }
+?>
+    
+    
 </div>
 
-<?php if ($dependentPermissions->canRead()) { ?>
+</div>
+
+<?php if ($dependentPermissions->canRead() && $haveDependents) { ?>
 <div class="outerbox" id="listing">
 <form name="frmEmpDelDependents" id="frmEmpDelDependents" method="post" action="<?php echo url_for('pim/deleteDependents?empNumber=' . $empNumber); ?>">
 <?php echo $deleteForm['_csrf_token']->render(); ?>
@@ -194,7 +200,9 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
 </form>
 </div>
  <?php } ?>
+<?php if((($haveDependents && $dependentPermissions->canUpdate()) || $dependentPermissions->canCreate())) {?>
 <div class="paddingLeftRequired" <?php echo $haveDependents ? 'style="display:none;"' : '';?>><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+<?php }?>
 <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => 'dependents'));?>
 <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => 'dependents'));?>    
 </div>

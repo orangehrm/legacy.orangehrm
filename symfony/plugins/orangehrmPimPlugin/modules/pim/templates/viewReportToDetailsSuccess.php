@@ -75,10 +75,10 @@
                 </div>
                 <?php if (!$essUserMode): ?>
                     <div id="addPaneReportTo" style="width: 600px" style="display:none;">
+                       
                         <div class="outerbox">
-
                             <div class="mainHeading"><h2 id="reportToHeading"><?php echo __('Add Supervisor/Subordinate'); ?></h2></div>
-                            <?php if ($reportToPermissions->canRead() && (($reportToPermissions->canCreate()) || ($reportToPermissions->canUpdate() && $hasSupDetails && $hasSubDetails))) { ?>
+                             <?php if ($reportToPermissions->canRead() && (($reportToPermissions->canCreate()) || ($hasSupDetails && $reportToSupervisorPermission->canUpdate()) || ($hasSubDetails && $reportToSubordinatePermission->canUpdate()))) { ?>
                             <form name="frmAddReportTo" id="frmAddReportTo" method="post" action="<?php echo url_for('pim/updateReportToDetail?empNumber=' . $empNumber); ?>">
 
                             <?php echo $form['_csrf_token']; ?>
@@ -104,7 +104,7 @@
                                     <br class="clear"/>
                                 </div>
                             </div>
-                            <?php if (($reportToPermissions && $reportToPermissions->canUpdate()) || $reportToPermissions->canCreate()) { ?>
+                            <?php if (($reportToPermissions->canUpdate()) || $reportToPermissions->canCreate()) { ?>
                                         <div class="formbuttons">
                                             <input type="button" class="savebutton" name="btnSaveReportTo" id="btnSaveReportTo"
                                                    value="<?php echo __("Save"); ?>"
@@ -114,11 +114,16 @@
                                         </div>
                             <?php } ?>
                                 </form>
-                             <?php }?>
+                             <?php 
+                             
+                             } else {
+                                    echo __(TopLevelMessages::NO_RECORDS_FOUND);
+                             }
+?>
                             </div>
-
+                   <?php if ((($hasSupDetails && $reportToSupervisorPermission->canUpdate()) || $reportToSupervisorPermission->canCreate()) || (($hasSubDetails && $reportToSubordinatePermission->canUpdate()) || $reportToSubordinatePermission->canCreate())) {?>
                   <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
-
+                  <?php }?>
                         </div>
                 <?php endif; ?>
 
