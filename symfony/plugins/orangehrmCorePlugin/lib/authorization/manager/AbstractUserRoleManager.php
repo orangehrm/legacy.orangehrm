@@ -36,16 +36,16 @@ abstract class AbstractUserRoleManager {
     }
     
     public abstract function getAccessibleEntities($entityType, $operation = null, $returnType = null, 
-            $rolesToExclude = array(), $rolesToInclude = array());
+            $rolesToExclude = array(), $rolesToInclude = array(), $requestedPermissions = array());
     
     public abstract function getAccessibleEntityIds($entityType, $operation = null, $returnType = null,
-            $rolesToExclude = array(), $rolesToInclude = array());
+            $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array());
     
     public abstract function isEntityAccessible($entityType, $entityId, $operation = null, 
-            $rolesToExclude = array(), $rolesToInclude = array());
+            $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array());
     
     public abstract function areEntitiesAccessible($entityType, $entityIds, $operation = null, 
-            $rolesToExclude = array(), $rolesToInclude = array());
+            $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array());
     
     public abstract function getAccessibleModules();
     

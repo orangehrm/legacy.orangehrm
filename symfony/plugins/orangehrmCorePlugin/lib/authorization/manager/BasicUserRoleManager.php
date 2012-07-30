@@ -24,6 +24,8 @@
  */
 class BasicUserRoleManager extends AbstractUserRoleManager {
     
+    const PERMISSION_TYPE_DATA_GROUP = 'data_group';
+    
     protected $employeeService;
     protected $systemUserService;
     protected $screenPermissionService;
@@ -90,9 +92,8 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         $this->employeeService = $employeeService;
     }
 
-        
     public function getAccessibleEntities($entityType, $operation = null, $returnType = null,
-            $rolesToExclude = array(), $rolesToInclude = array()) {
+            $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array()) {
         
         $allEmployees = array();
         
@@ -103,7 +104,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
             switch ($entityType) {
                 case 'Employee':
-                    $employees = $this->getAccessibleEmployees($role, $operation, $returnType);
+                    $employees = $this->getAccessibleEmployees($role, $operation, $returnType, $requiredPermissions);
                     break;  
             }
             
@@ -169,7 +170,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
      * @return type 
      */
     public function getAccessibleEntityIds($entityType, $operation = null, $returnType = null,
-            $rolesToExclude = array(), $rolesToInclude = array()) {
+            $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array()) {
     
         $allIds = array();
         $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude);                
@@ -179,7 +180,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
             switch ($entityType) {
                 case 'Employee':
-                    $ids = $this->getAccessibleEmployeeIds($role, $operation, $returnType);
+                    $ids = $this->getAccessibleEmployeeIds($role, $operation, $returnType, $requiredPermissions);
                     break;
                 case 'SystemUser':
                     $ids = $this->getAccessibleSystemUserIds($role, $operation, $returnType);
@@ -246,8 +247,10 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     
     
     public function isEntityAccessible($entityType, $entityId, $operation = null, 
-            $rolesToExclude = array(), $rolesToInclude = array()) {
-        $entityIds = $this->getAccessibleEntityIds($entityType, $operation, null, $rolesToExclude, $rolesToInclude);
+            $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array()) {
+        
+        $entityIds = $this->getAccessibleEntityIds($entityType, $operation, null, 
+                $rolesToExclude, $rolesToInclude, $requiredPermissions);
         
         $accessible = in_array($entityId, $entityIds);
         
@@ -255,8 +258,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     }
     
     public function areEntitiesAccessible($entityType, $entityIds, $operation = null, 
-            $rolesToExclude = array(), $rolesToInclude = array()) {
-        $accessibleIds = $this->getAccessibleEntityIds($entityType, $operation, null, $rolesToExclude, $rolesToInclude);
+            $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array()) {
+        $accessibleIds = $this->getAccessibleEntityIds($entityType, $operation, 
+                null, $rolesToExclude, $rolesToInclude, $requiredPermissions);
         $intersection = array_intersect($accessibleIds, $entityIds);
         
         $accessible = false;
@@ -314,15 +318,23 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $roles;
     }    
     
-    protected function getAccessibleEmployees($role, $operation = null, $returnType = null) {
+    protected function getAccessibleEmployees($role, $operation = null, $returnType = null, $requiredPermissions = array()) {
         $employees = array();
         
-        if ('Admin' == $role->getName() || !$role->getIsPredefined()) {
+        if ('Admin' == $role->getName()) {
             $employees = $this->getEmployeeService()->getEmployeeList('empNumber', 'ASC', true);
         } else if ('Supervisor' == $role->getName()) {
             $empNumber = $this->getUser()->getEmpNumber();
             if (!empty($empNumber)) {
                 $employees = $this->getEmployeeService()->getSupervisorEmployeeChain($empNumber, true);
+            }
+        } else if (!$role->getIsPredefined()) {
+                        
+            // A user defined user role
+            $permitted = $this->areRequiredPermissionsAvailable($role, $requiredPermissions);
+
+            if ($permitted) {
+                $employees = $this->getEmployeeService()->getEmployeeList('empNumber', 'ASC', true);
             }
         }
         
@@ -335,6 +347,36 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $employeesWithIds;        
     }
     
+    protected function areRequiredPermissionsAvailable($role, $requiredPermissions = array()) {
+        $permitted = true;
+        
+        foreach ($requiredPermissions as $permissionType => $permissions) {
+            if ($permissionType == self::PERMISSION_TYPE_DATA_GROUP) {
+                foreach ($permissions as $dataGroupName => $requestedResourcePermission) {
+                    $dataGroupPermissions = $this->getDataGroupPermissions($dataGroupName, array(), array($role->getName()));
+
+                    if ($permitted && $requestedResourcePermission->canRead()) {
+                        $permitted = $permitted && $dataGroupPermissions->canRead();
+                    }
+
+                    if ($permitted && $requestedResourcePermission->canCreate()) {
+                        $permitted = $dataGroupPermissions->canCreate();
+                    }
+
+                    if ($permitted && $requestedResourcePermission->canUpdate()) {
+                        $permitted = $dataGroupPermissions->canUpdate();
+                    }
+
+                    if ($permitted && $requestedResourcePermission->canDelete()) {
+                        $permitted = $dataGroupPermissions->canDelete();
+                    }                        
+                }
+            }
+        } 
+        
+        return $permitted;
+    }
+    
     protected function mergeEmployees($empList1, $empList2) {
         
         foreach ($empList2 as $id=>$emp) {
@@ -345,16 +387,27 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $empList1;
     }
     
-    protected function getAccessibleEmployeeIds($role, $operation = null, $returnType = null) {
+    protected function getAccessibleEmployeeIds($role, $operation = null, 
+            $returnType = null, $requiredPermissions = array()) {
+        
         $employeeIdArray = array();
-        if ('Admin' == $role->getName() || !$role->getIsPredefined()) {
+        
+        if ('Admin' == $role->getName()) {
             $employeeIdArray = $this->getEmployeeService()->getEmployeeIdList();
         } else if ('Supervisor' == $role->getName()) {
             $empNumber = $this->getUser()->getEmpNumber();
             if (!empty($empNumber)) {
                 $employeeIdArray = $this->getEmployeeService()->getSubordinateIdListBySupervisorId($empNumber);
             }
-        }
+        } else if (!$role->getIsPredefined()) {
+                        
+            // A user defined user role
+            $permitted = $this->areRequiredPermissionsAvailable($role, $requiredPermissions);
+
+            if ($permitted) {
+                $employeeIdArray = $this->getEmployeeService()->getEmployeeIdList();
+            }
+        }        
 
         return $employeeIdArray;
     }
