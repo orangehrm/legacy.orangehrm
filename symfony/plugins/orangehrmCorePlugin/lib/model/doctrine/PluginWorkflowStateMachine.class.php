@@ -94,7 +94,7 @@ abstract class PluginWorkflowStateMachine extends BaseWorkflowStateMachine {
      * @param type $actionValue
      * @return string 
      */
-    public function getEmployeeActionName($actionValue) {
+    public static function getEmployeeActionName($actionValue) {
         $actionName = "";
         switch ($actionValue) {
             case PluginWorkflowStateMachine::EMPLOYEE_ACTION_ADD:

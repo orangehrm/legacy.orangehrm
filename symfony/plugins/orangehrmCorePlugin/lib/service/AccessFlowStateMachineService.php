@@ -128,15 +128,26 @@ class AccessFlowStateMachineService {
      * @param type $workFlowId
      * @return type Doctrine collections
      */
-    public function getWorkFlowStateMachineRecords($workFlowId){
-        return $this->accessFlowStateMachineDao->getWorkFlowStateMachineRecords($workFlowId);
+    public function getWorkFlowStateMachineRecords($workFlowId, $role){
+        return $this->accessFlowStateMachineDao->getWorkFlowStateMachineRecords($workFlowId, $role);
     }
 
     public function saveWorkflowStateMachineRecord(WorkflowStateMachine $workflowStateMachineRecord) {
 
         return $this->getAccessFlowStateMachineDao()->saveWorkflowStateMachineRecord($workflowStateMachineRecord);
     }
-
+    
+    /**
+     * set workflow records form array
+     * @param type $workflowStateMachineRecordArray 
+     */
+    public function saveWorkflowStateMachineRecordAsArray($workflowStateMachineRecordArray) {
+        if (count($workflowStateMachineRecordArray) > 0) {
+            foreach ($workflowStateMachineRecordArray as $workflowStateMachineRecord) {
+                $this->saveWorkflowStateMachineRecord($workflowStateMachineRecord);
+            }
+        }
+    }
 	/*
     public function deleteWorkflowStateMachineRecord($flow, $state, $role, $action, $resultingState) {
 		$this->getAccessFlowStateMachineDao()->deleteWorkflowStateMachinerecord($flow, $state, $role, $action, $resultingState);

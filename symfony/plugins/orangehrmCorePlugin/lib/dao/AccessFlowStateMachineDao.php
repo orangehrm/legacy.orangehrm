@@ -156,16 +156,26 @@ class AccessFlowStateMachineDao {
     /**
      * 
      * @param type $workFlowId
-     * @return Doctrine Collections
+     * @param type $role
+     * @return Doctrine_Collection
      * @throws DaoException 
      */
-    public function getWorkFlowStateMachineRecords($workFlowId) {
+    public function getWorkFlowStateMachineRecords($workFlowId, $role = NULL) {
         try {
+            if ($role != NULL) {
+                $q = Doctrine_Query:: create()
+                    ->from("WorkflowStateMachine")
+                    ->where("workflow = ?", $workFlowId)
+                    ->andWhere("role = ?", $role);
+             
+                return $results = $q->execute();
+            } else {
              $q = Doctrine_Query:: create()
                     ->from("WorkflowStateMachine")
                     ->where("workflow = ?", $workFlowId);
-
+             
                 return $results = $q->execute();
+            }
             
         } catch (Exception $e) {
             throw new DaoException($e->getMessage());

@@ -85,6 +85,9 @@ if (file_exists('symfony/config/databases.yml')) {
         $systemUserService = new SystemUserService();
         $user = $systemUserService->getSystemUser($_SESSION['user']);
         $isPredefinedUserRole = $user->getUserRole()->getIsPredefined();
+        
+        $allowedToAddEmployee = UserRoleManagerFactory::getUserRoleManager()->isActionAllowed(PluginWorkflowStateMachine::FLOW_EMPLOYEE,
+                Employee::STATE_NOT_EXIST, PluginWorkflowStateMachine::EMPLOYEE_ACTION_ADD);        
     }
 }
 
@@ -348,6 +351,7 @@ if ($_SESSION['isAdmin'] == 'No') {
         }
     }
 }
+$arrAllRights[PIM]['add'] = $allowedToAddEmployee;
 
 require_once ROOT_PATH . '/lib/common/Language.php';
 require_once ROOT_PATH . '/lib/common/menu/MenuItem.php';
@@ -499,7 +503,7 @@ if ((($_SESSION['isAdmin'] == 'Yes' || $_SESSION['isSupervisor']) && $arrAllRigh
 
     $subs[] = new MenuItem("emplist", $i18n->__("Employee List"), "./symfony/web/index.php/pim/viewEmployeeList/reset/1", "rightMenu");
     if ($arrAllRights[PIM]['add']) {
-        $subs[] = new MenuItem("empadd", $i18n->__("Add Employee"), "./symfony/web/index.php/pim/addEmployee", "rightMenu");
+            $subs[] = new MenuItem("empadd", $i18n->__("Add Employee"), "./symfony/web/index.php/pim/addEmployee", "rightMenu");
     }
 
     if ($_SESSION['isAdmin'] == 'Yes') {
