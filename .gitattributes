@@ -3994,6 +3994,7 @@ symfony/plugins/orangehrmCorePlugin/lib/authorization/service/ScreenPermissionSe
 symfony/plugins/orangehrmCorePlugin/lib/authorization/service/UserRoleManagerService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AbstractUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AdminUserRole.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/EssUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/SupervisorUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/UserDefinedUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Button.php -text
