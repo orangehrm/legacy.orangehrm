@@ -19,3 +19,6 @@ default:
 viewJobsSuccess:
    javascripts:    [-*]
    stylesheets:    [-*]
+   
+viewEmployeeListSuccess:
+  layout: freshorange
