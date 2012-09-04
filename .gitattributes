@@ -4767,6 +4767,7 @@ symfony/web/js/prototype.js -text
 symfony/web/orangehrm_dev.php -text
 symfony/web/robots.txt -text
 symfony/web/sfDoctrinePlugin -text
+symfony/web/themes/default/css/jquery/jquery.autocomplete.css -text
 symfony/web/themes/default/css/main.css -text
 symfony/web/themes/default/css/tipTip.css -text
 /sysinfo.php -text
