@@ -4776,6 +4776,9 @@ symfony/web/themes/default/images/paging-first.png -text
 symfony/web/themes/default/images/paging-last.png -text
 symfony/web/themes/default/images/paging-next.png -text
 symfony/web/themes/default/images/paging-previous.png -text
+symfony/web/themes/default/images/tablesorter-bg.png -text
+symfony/web/themes/default/images/toggle-down.png -text
+symfony/web/themes/default/images/toggle-up.png -text
 /sysinfo.php -text
 themes/beyondT/css/compstruct.css -text
 themes/beyondT/css/error.css -text
