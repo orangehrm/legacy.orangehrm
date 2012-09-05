@@ -4771,6 +4771,10 @@ symfony/web/sfDoctrinePlugin -text
 symfony/web/themes/default/css/jquery/jquery.autocomplete.css -text
 symfony/web/themes/default/css/main.css -text
 symfony/web/themes/default/css/tipTip.css -text
+symfony/web/themes/default/images/paging-first.png -text
+symfony/web/themes/default/images/paging-last.png -text
+symfony/web/themes/default/images/paging-next.png -text
+symfony/web/themes/default/images/paging-previous.png -text
 /sysinfo.php -text
 themes/beyondT/css/compstruct.css -text
 themes/beyondT/css/error.css -text
