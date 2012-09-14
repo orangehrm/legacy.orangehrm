@@ -4355,6 +4355,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewEmployeeListAction.cl
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewImmigrationAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewJobDetailsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewMembershipsAction.class.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewMyDetailsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewPersonalDetailsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewPhotoAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewPhotographAction.class.php -text
