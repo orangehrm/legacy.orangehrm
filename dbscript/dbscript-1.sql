@@ -1200,6 +1200,18 @@ create table ohrm_user_role_screen (
   primary key (`id`)
 ) engine=innodb default charset=utf8;
 
+create table `ohrm_menu_item` (
+   `id` int not null auto_increment, 
+   `menu_title` varchar(255) not null, 
+   `screen_id` int default null,
+   `parent_id` int default null,
+   `level` tinyint not null,
+   `order_hint` int not null,
+   `url_extras` varchar(255) default null, 
+   `status` tinyint not null default 1,
+   primary key (`id`)
+) engine=innodb default charset=utf8;
+
 create table `ohrm_upgrade_history` (
   `id` int(10) not null auto_increment,
   `start_version` varchar(30) DEFAULT NULL,
@@ -1246,6 +1258,10 @@ CREATE TABLE ohrm_user_role_data_group (
     self TINYINT, 
     PRIMARY KEY(id)
 ) ENGINE = INNODB DEFAULT CHARSET=utf8;
+
+alter table ohrm_menu_item 
+       add constraint foreign key (screen_id)
+                             references ohrm_screen(id) on delete cascade;
 
 alter table ohrm_user_role_data_group 
        add constraint foreign key (user_role_id)

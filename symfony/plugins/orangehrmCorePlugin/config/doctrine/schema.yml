@@ -709,4 +709,24 @@ DataGroupPermission:
     UserRole:
       local: user_role_id
       foreign: id
+      type: one    
+
+MenuItem:
+  tableName: ohrm_menu_item
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    menu_title as menuTitle: string(255)
+    screen_id as screenId: integer
+    parent_id as parentId: integer
+    level: integer
+    order_hint as orderHint: integer
+    url_extras as urlExtras: string(255)
+    status: integer
+  relations:
+    Screen:
+      local: screenId
+      foreign: id
       type: one      

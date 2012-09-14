@@ -879,6 +879,8 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/FilterField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/FilterFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/GroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/GroupFieldTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/MenuItem.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/MenuItemTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/Report.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ReportGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ReportGroupTable.class.php -text
@@ -921,6 +923,7 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayField.class.php -
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayFieldGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseFilterField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseGroupField.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseMenuItem.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseReport.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseReportGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseScreen.class.php -text
@@ -4039,6 +4042,7 @@ symfony/plugins/orangehrmCorePlugin/lib/dao/AccessFlowStateMachineDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/dao/BaseDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/dao/ConfigDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/dao/DatabaseSessionManager.php -text
+symfony/plugins/orangehrmCorePlugin/lib/dao/MenuDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/dao/ReportableDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/exception/CoreDaoException.php -text
 symfony/plugins/orangehrmCorePlugin/lib/exception/CoreServiceException.php -text
@@ -4093,6 +4097,8 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginFilterField.class.p
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginFilterFieldTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginGroupField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginGroupFieldTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginMenuItem.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginMenuItemTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReport.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReportGroup.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReportGroupTable.class.php -text
@@ -4169,6 +4175,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedRepo
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/DataGroupDaoTest.php -text
+symfony/plugins/orangehrmCorePlugin/test/authorization/dao/MenuDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenPermissionDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/manager/BasicUserRoleManagerTest.php -text
@@ -4195,6 +4202,7 @@ symfony/plugins/orangehrmCorePlugin/test/fixtures/AccessFlowStateMachineService.
 symfony/plugins/orangehrmCorePlugin/test/fixtures/BasicUserRoleManager.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ConfigDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/DataGroupDao.yml -text
+symfony/plugins/orangehrmCorePlugin/test/fixtures/MenuDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportGeneratorService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableService.yml -text
