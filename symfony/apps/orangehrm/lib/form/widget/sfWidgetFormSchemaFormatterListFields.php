@@ -4,7 +4,7 @@ class sfWidgetFormSchemaFormatterListFields extends sfWidgetFormSchemaFormatter 
 
     protected static $index = 1;
     protected static $noOfColumns = 1;
-    protected $rowFormat = "<li>%label%\n  %field%%help%\n%hidden_fields%</li> %break% %error%\n";
+    protected $rowFormat = "<li>%label%\n  %field%%help%\n%hidden_fields%</li> %error%\n";
     protected $errorRowFormat = "<span>\n%errors%</span>\n";
     protected $helpFormat = '<br />%help%';
     protected $decoratorFormat = "<form>\n  %content%</form>";
@@ -38,19 +38,10 @@ class sfWidgetFormSchemaFormatterListFields extends sfWidgetFormSchemaFormatter 
         return strtr($this->getRowFormat(), array(
             '%label%' => $label,
             '%field%' => $field,
-            '%break%' => $this->getBreakTag(),
             '%error%' => $this->formatErrorsForRow($errors),
             '%help%' => $this->formatHelp($help),
             '%hidden_fields%' => null === $hiddenFields ? '%hidden_fields%' : $hiddenFields,
         ));
-    }
-
-    /**
-     *
-     * @return string
-     */
-    protected function getBreakTag() {
-        return((self::$index++ % self::$noOfColumns == 0) ? tag('br') : '');
     }
 
 }

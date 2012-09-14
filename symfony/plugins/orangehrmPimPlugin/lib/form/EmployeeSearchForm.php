@@ -78,8 +78,7 @@ class EmployeeSearchForm extends BaseForm {
         
         $this->widgetSchema->setNameFormat('empsearch[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(4);
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
 
     }
 

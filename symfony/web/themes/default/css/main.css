@@ -7,6 +7,7 @@ body {
 }
 a {
 	outline:none;
+    color:#5d5d5d;
 }
 #wrapper {
 	min-width:940px;
@@ -347,7 +348,7 @@ a {
 	border-radius: 3px;
 }
 .box .toggle {
-	background: url(../images/toggle-s.png) no-repeat 99% 50%;
+	background: url(../images/toggle-down.png) no-repeat 99% 50%;
 	width:9px;
 	height:8px;
 	text-indent:-9999px;
@@ -359,7 +360,7 @@ a {
 	height:40px;
 }
 .box .toggle.activated	{
-	background: url(../images/toggle.png) no-repeat 99% 50%;
+	background: url(../images/toggle-up.png) no-repeat 99% 50%;
 }
 form ol {
 	border-bottom:1px solid #dedede;
@@ -465,7 +466,7 @@ form ol li.radio label, form ol li.checkbox label {
 }
 form p {
 	padding-top:10px;
-	text-align:right;
+	text-align:left;
 }
 .single form p {
 	text-align:left;
@@ -559,6 +560,12 @@ table.table th {
 	border:1px solid #fff;
 	text-align:left;
 }
+
+table.table th a {
+	color:#fff;
+    text-decoration: none;
+}
+
 table.table th.center, table.table td.center {
 	text-align:center;
 }
@@ -1193,4 +1200,8 @@ color:#fff;
 	position:absolute;
 	left:15px;
 	bottom:65px;
+}
+
+#search-results a {
+    
 }

@@ -19,14 +19,17 @@
 ?>
 
 <?php
-use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
+use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
+use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+/*
 use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
 use_stylesheet('../orangehrmPimPlugin/css/viewEmployeeListSuccess');
 use_javascript('../../../scripts/jquery/ui/ui.core.js');
 use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+ */
 ?>
 
+<!--
 <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >
     <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
 </div>
@@ -70,22 +73,67 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
         </form>
     </div>
-</div> <!-- outerbox -->
+</div> -->
+<!-- outerbox -->
+
+<div class="box" id="employee-information">
+    <div class="head">
+        <h1>Employee Information</h1>
+    </div>
+    <div class="inner">
+        <form id="search_form" name="frmEmployeeSearch" method="post" action="<?php echo url_for('@employee_list'); ?>">
+
+            <fieldset>
+                
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>
+                
+                <input type="hidden" name="pageNo" id="pageNo" value="" />
+                <input type="hidden" name="hdnAction" id="hdnAction" value="search" />                 
+                
+                <p>
+                    <!--
+                    <button type="reset" class="reset">Reset</button>
+                    <button type="submit">Search</button>
+                    -->
+                    <input type="button" class="plainbtn" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />  
+                    <input type="button" class="plainbtn" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />                    
+                </p>
+                
+            </fieldset>
+            
+        </form>
+        
+    </div> <!-- inner -->
+
+    <a href="#" class="toggle tiptip" title="Expand for options">&gt;</a>
+    
+</div> <!-- employee-information -->
 
 <?php include_component('core', 'ohrmList'); ?>
 
-<!-- confirmation box -->
-<div id="deleteConfirmation" title="<?php echo __('OrangeHRM - Confirmation Required'); ?>" style="display: none;">
-    <?php echo __(CommonMessages::DELETE_CONFIRMATION); ?>
-    <div class="dialogButtons">        
-        <input type="button" id="dialogDeleteBtn" class="savebutton" value="<?php echo __('Ok'); ?>" />
-        <input type="button" id="dialogCancelBtn" class="savebutton" value="<?php echo __('Cancel'); ?>" />
-    </div>
+<!-- Confirmation box HTML: Begins -->
+<div class="modal hide" id="deleteConfModal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="dialogDeleteBtn" value="<?php echo __('Ok'); ?>" />
+    <input type="button" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+  </div>
 </div>
+<!-- Confirmation box HTML: Ends -->
 
 <script type="text/javascript">
 
     $(document).ready(function() {
+        
+        $(".tiptip").tipTip();
 
         var supervisors = <?php echo str_replace('&#039;', "'", $form->getSupervisorListAsJson()) ?>;
         
@@ -168,24 +216,30 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             });
         });
 
-        $("#deleteConfirmation").dialog({
-            autoOpen: false,
-            modal: true,
-            width: 325,
-            height: 50,
-            position: 'middle',
-            open: function() {
-                $('#dialogCancelBtn').focus();
-            }
-        });
-
-        $('#frmList_ohrmListComponent').attr('name','frmList_ohrmListComponent');
+        /* Delete confirmation controls: Begin */
         $('#dialogDeleteBtn').click(function() {
             document.frmList_ohrmListComponent.submit();
         });
-        $('#dialogCancelBtn').click(function() {
-            $("#deleteConfirmation").dialog("close");
+        /* Delete confirmation controls: End */
+        
+        /* Toggling search form: Begins */
+        $("#employee-information .inner").hide();
+        
+        $("#employee-information .toggle").click(function () {
+            $("#employee-information .inner").slideToggle('slow', function() {
+                if($(this).is(':hidden')) {
+                    $('#employee-information .tiptip').tipTip({content:'Expand for options'});
+                } else {
+                    $('#employee-information .tiptip').tipTip({content:'Hide options'});
+                }
+            });
+            $(this).toggleClass("activated");
+        }); 
+
+        $("#search-results .toggle").click(function () {
+            $("#search-results .inner").slideToggle();
         });
+        /* Toggling search form: Ends */
 
     }); //ready
     

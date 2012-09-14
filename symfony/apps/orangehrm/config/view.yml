@@ -22,3 +22,5 @@ viewJobsSuccess:
    
 viewEmployeeListSuccess:
   layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]  

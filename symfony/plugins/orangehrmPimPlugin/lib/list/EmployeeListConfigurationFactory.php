@@ -29,7 +29,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header2->populateFromArray(array(
             'name' => __('First (& Middle) Name'),
-            'width' => '20%',
+            'width' => '13%',
             'isSortable' => true,
             'sortField' => 'firstMiddleName',
             'elementType' => 'link',
@@ -43,7 +43,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header3->populateFromArray(array(
             'name' => 'Last Name',
-            'width' => '15%',
+            'width' => '10%',
             'isSortable' => true,
             'sortField' => 'lastName',
             'elementType' => 'link',
@@ -67,7 +67,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header5->populateFromArray(array(
             'name' => 'Employment Status',
-            'width' => '15%',
+            'width' => '12%',
             'isSortable' => true,
             'sortField' => 'employeeStatus',
             'elementType' => 'label',
@@ -77,7 +77,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header6->populateFromArray(array(
             'name' => 'Sub Unit',
-            'width' => '15%',
+            'width' => '10%',
             'isSortable' => true,
             'sortField' => 'subDivision',
             'elementType' => 'label',
@@ -87,7 +87,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header7->populateFromArray(array(
             'name' => 'Supervisor',
-            'width' => '30%',
+            'width' => '43%',
             'isSortable' => true,
             'sortField' => 'supervisor',
             'elementType' => 'label',

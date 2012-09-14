@@ -1,4 +1,3 @@
-<?php echo use_stylesheet('../orangehrmCorePlugin/css/_ohrmList.css'); ?>
 <?php
 if ($tableWidth == 'auto') {
     $outboxWidth = 0;
@@ -13,8 +12,7 @@ if ($tableWidth == 'auto') {
 function renderActionBar($buttons, $condition = true) {
     if ($condition && count($buttons) > 0) {
 ?>
-        <div class="actionbar">
-            <div class="formbuttons">
+
         <?php
         foreach ($buttons as $key => $buttonProperties) {
             $button = new Button();
@@ -23,12 +21,7 @@ function renderActionBar($buttons, $condition = true) {
             echo $button->__toString(), "\n";
         }
         ?>
-    </div>
 
-    <br class="clear" />
-
-   
-</div>
  <?php } ?>
 <?php
 }
@@ -64,7 +57,10 @@ function printButtonEventBindings($buttons) {
     }
 }
 ?>
-<div class="outerbox" style="padding-right: 15px; width: <?php echo $outboxWidth; ?>">
+<div class="box simple" id="search-results">
+    
+    <div class="inner">
+    
 <?php if (!empty($title)) { ?>
         <div class="mainHeading"><h2><?php echo __($title); ?></h2></div>
 
@@ -81,7 +77,10 @@ function printButtonEventBindings($buttons) {
     <?php include_component('core', 'ohrmPluginPannel', array('location' => 'widget-panel-1')) ?>
     <?php include_component('core', 'ohrmPluginPannel', array('location' => 'widget-panel-2')) ?>
         
-    <form method="<?php echo $formMethod; ?>" action="<?php echo public_path($formAction); ?>" id="frmList_ohrmListComponent">
+    <form method="<?php echo $formMethod; ?>" action="<?php echo public_path($formAction); ?>" name="frmList_ohrmListComponent" id="frmList_ohrmListComponent">
+        
+        <div class="top">
+        
 <?php
     if (count($buttons) > 0) {
         renderActionBar($buttons, $buttonsPosition === ohrmListConfigurationFactory::BEFORE_TABLE);
@@ -95,16 +94,32 @@ function printButtonEventBindings($buttons) {
 
     include_component('core', 'ohrmPluginPannel', array('location' => 'list-component-before-table-action-bar'));
 ?>
+         </div> <!-- top -->
+            
+        
+        
+        
         <div id="helpText" class="helpText"></div>
         <?php if ($pager->haveToPaginate()) {
  ?>
+            <!--
             <div class="navigationHearder">
                 <div class="pagingbar"><?php include_partial('global/paging_links_js', array('pager' => $pager)); ?></div>
                 <br class="clear" />
             </div>
+            -->
+            
+            <ul class="paging top">
+                <?php include_partial('global/paging_links_new', array('pager' => $pager)); ?>
+            </ul>
+            
+            
 <?php } ?>
 
-        <table style="border-collapse: collapse; width: <?php echo $tableWidth; ?>; text-align: left;" class="data-table">
+        <!-- <table style="border-collapse: collapse; width: <?php echo $tableWidth; ?>; text-align: left;" class="data-table"> -->
+        <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+            
+            <!--
             <colgroup align="right">
 <?php if ($hasSelectableRows) { ?>
                     <col width="50" />
@@ -114,6 +129,7 @@ function printButtonEventBindings($buttons) {
                     <col width="<?php echo $header->getWidth(); ?>" />
                 <?php } ?>
             </colgroup>
+            -->
 
                     <?php
                     
@@ -188,10 +204,14 @@ function printButtonEventBindings($buttons) {
                                         )
                                 );
                             }
-
+                            
+                            /*
                             $headerCellHtml = '<th style="text-align: ' . $header->getTextAlignmentStyleForHeader() . '"' .
                                               ' rowspan="' . $rowspan .
                                               '">' . $headerCell->__toString() . "</th>\n";
+                             */
+                            $headerCellClassHtml = $header->isSortable()?' class="header"':'';
+                            $headerCellHtml = '<th rowspan="' . $rowspan . '" width="' . $header->getWidth() . '"' . $headerCellClassHtml . '>' . $headerCell->__toString() . "</th>\n";                            
                             
                             if ($group->showHeader()) {
                                 $headerRow2 .= $headerCellHtml;
@@ -309,17 +329,28 @@ function printButtonEventBindings($buttons) {
                 </table>
 
 <?php renderActionBar($buttons, $buttonsPosition === ohrmListConfigurationFactory::AFTER_TABLE); ?>
-                    <br class="clear" />
+
 <?php if ($pager->haveToPaginate()) { ?>
+            <!--        
             <div class="navigationHearder">
                 <div class="pagingbar"><?php include_partial('global/paging_links_js', array('pager' => $pager)); ?></div>
                 <br class="clear" />
             </div>
+            -->    
+               
+            <ul class="paging bottom">
+                <?php include_partial('global/paging_links_new', array('pager' => $pager)); ?>
+            </ul>
+            
+                    
+                    
 <?php } ?>
 
-                </form>
-
-            </div>
+        </form> <!-- frmList_ohrmListComponent --> 
+        
+    </div> <!-- inner -->
+        
+</div> <!-- search-results -->
 
 <?php echo javascript_include_tag('../orangehrmCorePlugin/js/_ohrmList.js'); ?>
 

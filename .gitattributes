@@ -4164,10 +4164,12 @@ symfony/plugins/orangehrmCorePlugin/modules/core/actions/actions.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/baseCsvImportAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/definePredefinedReportAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/displayPredefinedReportAction.class.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/actions/mainMenuComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmListComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmPluginPannelComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/viewDefinedPredefinedReportsAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_footer.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/templates/_mainMenu.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmList.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmPluginPannel.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/definePredefinedReportSuccess.php -text
