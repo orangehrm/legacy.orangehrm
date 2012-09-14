@@ -77,6 +77,7 @@ class orangehrmCorePluginAllTests {
         $suite->addTestFile(dirname(__FILE__) . '/authorization/dao/DataGroupDaoTest.php');
         
         $suite->addTestFile(dirname(__FILE__) . '/authorization/dao/MenuDaoTest.php');
+        $suite->addTestFile(dirname(__FILE__) . '/authorization/service/MenuServiceTest.php');
         
         return $suite;
     }
