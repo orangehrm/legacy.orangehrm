@@ -33,6 +33,7 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmCorePlugin/test/fixtures/MenuDao.yml';
         TestDataService::populate($this->fixture);                
         $this->menuService = new MenuService();
+        $this->_clearDoctrineResults();
         
     }
     
@@ -61,23 +62,10 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
     public function testGetMenuItemArrayForEss() {
         
         $userRoleList[0] = new UserRole();
-        $userRoleList[0]->setName('ESS');            
+        $userRoleList[0]->setName('ESS');  
         
         $menuArray = $this->menuService->getMenuItemArray($userRoleList);
         
-        echo "\n\n";
-        
-        foreach ($menuArray as $menu) {
-            
-            echo $menu->getMenuTitle() . "\n\n";
-            
-            $subMenuItems = $menu->getSubMenuItems();
-            
-            foreach ($subMenuItems as $subMenuItem) {
-                echo "\t\t" . $subMenuItem->getMenuTitle() . "\n\n";
-            }
-        }
-       
         /* Checking the count of level-1 menu items */
         $this->assertEquals(2, count($menuArray));
         
@@ -92,6 +80,14 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }    
     
+    private function _clearDoctrineResults() {
+        
+        $manager = Doctrine_Manager::getInstance();
+        $connection = $manager->getCurrentConnection();
+        $table = $connection->getTable('MenuItem');        
+        $table->clear();        
+        
+    }
  
 }
 

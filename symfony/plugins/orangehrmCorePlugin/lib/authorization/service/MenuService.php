@@ -53,7 +53,7 @@ class MenuService {
     public function getMenuItemArray($userRoleList) {
         
         $menuArray = $this->_getMenuItemListAsArray($userRoleList);
-      
+        
         for ($i=$this->numberOfLevels; $i>0; $i--) {
             
             foreach ($menuArray as $menuItem) {
@@ -106,9 +106,6 @@ class MenuService {
         $menuArray = array();
         
         foreach ($menuItemList as $menuItem) {
-            
-            //echo $menuItem->getMenuTitle() . "\n";
-            
             $menuArray[$menuItem->getId()] = $menuItem;
         }
         
