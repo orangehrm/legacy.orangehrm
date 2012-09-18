@@ -62,7 +62,10 @@ class MenuService {
                 
                 if ($menuItem->getLevel() == $i && array_key_exists($parentId, $menuArray)) {
                     
-                    $menuArray[$parentId]->addSubMenuItem($menuItem);
+                    if ($menuItem->getScreenId() != "" || !$this->_AreSubMenusEmpty($menuItem)) {                    
+                        $menuArray[$parentId]->addSubMenuItem($menuItem);
+                    }
+                    
                     unset($menuArray[$menuItem->getId()]);
                     
                 }
@@ -75,13 +78,12 @@ class MenuService {
             
             $subMenuItems = $value->getSubMenuItems();
             
-            if (empty($subMenuItems)) {
+            if ($value->getScreenId() == "" && empty($subMenuItems)) {
                 unset($menuArray[$key]);
             }
             
         }
 
-        print_r(array_keys($menuArray));
         return $menuArray;
         
     }
@@ -114,10 +116,19 @@ class MenuService {
         
     }
     
-    protected function _purifyMenuItemArray() {
+    protected function _AreSubMenusEmpty(MenuItem $menuItem) {
         
+        $subMenus = $menuItem->getSubMenuItems();
         
+        foreach ($subMenus as $subMenu) {
+            
+            if ($subMenu->getScreenId() != "") {
+                return false;
+            }
+            
+        }
         
+        return true;
         
     }
     

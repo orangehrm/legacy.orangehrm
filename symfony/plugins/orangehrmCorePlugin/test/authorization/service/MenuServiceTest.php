@@ -64,9 +64,22 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         $userRoleList[0]->setName('ESS');            
         
         $menuArray = $this->menuService->getMenuItemArray($userRoleList);
+        
+        echo "\n\n";
+        
+        foreach ($menuArray as $menu) {
+            
+            echo $menu->getMenuTitle() . "\n\n";
+            
+            $subMenuItems = $menu->getSubMenuItems();
+            
+            foreach ($subMenuItems as $subMenuItem) {
+                echo "\t\t" . $subMenuItem->getMenuTitle() . "\n\n";
+            }
+        }
        
         /* Checking the count of level-1 menu items */
-        //$this->assertEquals(2, count($menuArray));
+        $this->assertEquals(2, count($menuArray));
         
         /* Checking the type */
         foreach ($menuArray as $menuItem) { //echo $menuItem->getMenuTitle() . "\n";
