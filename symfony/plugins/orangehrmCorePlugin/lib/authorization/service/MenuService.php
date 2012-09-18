@@ -50,7 +50,7 @@ class MenuService {
      * 
      * @return array Array of MenuItem objects
      */    
-    public function getMenuItemArray($userRoleList) {
+    public function getMenuItemCollection($userRoleList) {
         
         $menuArray = $this->_getMenuItemListAsArray($userRoleList);
         
@@ -88,6 +88,70 @@ class MenuService {
         
     }
     
+    public function getMenuItemsAsArray($userRoleList) {
+        
+        $firstLevelItems = $this->getMenuItemCollection($userRoleList);
+        $menuArray = array();        
+        
+        foreach ($firstLevelItems as $firstLevelItem) {   
+            
+
+            
+            $secondLevelItems = $firstLevelItem->getSubMenuItems();
+            $b = array();
+            
+            if (!empty($secondLevelItems)) {
+                
+                foreach ($secondLevelItems as $secondLevelItem) {
+                    
+                    $thirdLevelItems = $secondLevelItem->getSubMenuItems();
+                    $c = array();
+                    
+                    if (!empty($thirdLevelItems)) {
+                        
+                        foreach ($thirdLevelItems as $thirdLevelItem) {
+                            
+                            $c[] = $this->_abc($thirdLevelItem);
+                            
+                        }                      
+                        
+                    }
+                    
+                    $bb = $this->_abc($secondLevelItem);
+                    $bb['subMenuItems'] = $c;
+                    
+                    $b[] = $bb;
+                    
+                }
+                
+            }
+            
+            $a = $this->_abc($firstLevelItem);
+            $a['subMenuItems'] = $b;
+            
+            $menuArray[] = $a;
+            
+        }
+        
+        return $menuArray;
+        
+    }
+    
+    private function _abc(MenuItem $menuItem) {
+        
+        $menu['id'] = $menuItem->getId();
+        $menu['menuTitle'] = $menuItem->getMenuTitle();
+        $menu['subMenuItems'] = array();
+        
+        return $menu;
+        
+    }
+
+
+
+
+
+
     public function printMenu($userRoleList) {
         
         $menuArray = $this->getMenuItemArray($userRoleList);

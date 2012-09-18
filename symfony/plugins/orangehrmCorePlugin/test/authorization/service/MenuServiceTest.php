@@ -37,12 +37,21 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }
     
-    public function testGetMenuItemArrayForAdmin() {
+    private function _clearDoctrineResults() {
+        
+        $manager = Doctrine_Manager::getInstance();
+        $connection = $manager->getCurrentConnection();
+        $table = $connection->getTable('MenuItem');        
+        $table->clear();        
+        
+    }    
+    
+    public function testGetMenuItemCollectionForAdmin() {
         
         $userRoleList[0] = new UserRole();
         $userRoleList[0]->setName('Admin');            
         
-        $menuArray = $this->menuService->getMenuItemArray($userRoleList);
+        $menuArray = $this->menuService->getMenuItemCollection($userRoleList);
        
         /* Checking the count of level-1 menu items */
         $this->assertEquals(3, count($menuArray));
@@ -59,12 +68,12 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }
     
-    public function testGetMenuItemArrayForEss() {
+    public function testGetMenuItemCollectionForEss() {
         
         $userRoleList[0] = new UserRole();
         $userRoleList[0]->setName('ESS');  
         
-        $menuArray = $this->menuService->getMenuItemArray($userRoleList);
+        $menuArray = $this->menuService->getMenuItemCollection($userRoleList);
         
         /* Checking the count of level-1 menu items */
         $this->assertEquals(2, count($menuArray));
@@ -80,14 +89,44 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }    
     
-    private function _clearDoctrineResults() {
+    public function testGetMenuItemsAsArrayForAdmin() {
         
-        $manager = Doctrine_Manager::getInstance();
-        $connection = $manager->getCurrentConnection();
-        $table = $connection->getTable('MenuItem');        
-        $table->clear();        
+        $userRoleList[0] = new UserRole();
+        $userRoleList[0]->setName('Admin');        
+        
+        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        
+        /* Checking the count of level-1 menu items */
+        $this->assertEquals(3, count($menuArray));     
+        
+        /* Checking order and eligible items */
+        $this->assertEquals('Admin', $menuArray[0]['menuTitle']);
+        $this->assertEquals('PIM', $menuArray[1]['menuTitle']);
+        $this->assertEquals('Leave', $menuArray[2]['menuTitle']);  
+        
+        $organizationMenu = $menuArray[0]['subMenuItems'];
+        $this->assertEquals('Organization', $organizationMenu[0]['menuTitle']);
+        
+        $LocationsMenu = $organizationMenu[0]['subMenuItems'];
+        $this->assertEquals('Locations', $LocationsMenu[1]['menuTitle']);
         
     }
+    
+    public function testGetMenuItemsAsArrayForEss() {
+        
+        $userRoleList[0] = new UserRole();
+        $userRoleList[0]->setName('ESS');        
+        
+        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        
+        /* Checking the count of level-1 menu items */
+        $this->assertEquals(2, count($menuArray));     
+        
+        /* Checking order and eligible items */
+        $this->assertEquals('Leave', $menuArray[0]['menuTitle']);
+        $this->assertEquals('My Info', $menuArray[1]['menuTitle']);
+        
+    }    
  
 }
 
