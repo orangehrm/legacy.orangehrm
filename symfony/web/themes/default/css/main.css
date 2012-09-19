@@ -1,8 +1,9 @@
 /** * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/) * http://cssreset.com */html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {	margin: 0;	padding: 0;	border: 0;	font-size: 100%;	font: inherit;	vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {	display: block;}body {	line-height: 1;}ol, ul {	list-style: none;}blockquote, q {	quotes: none;}blockquote:before, blockquote:after,q:before, q:after {	content: '';	content: none;}table {	border-collapse: collapse;	border-spacing: 0;}
 
 body {
-	font-family: 'Signika', sans-serif;
-	font-size:14px;
+	/*font-family: 'Signika', sans-serif;*/
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
 	color:#5d5d5d;
 }
 a {
@@ -317,7 +318,7 @@ a {
 	border-top:none;
 	-moz-border-radius-bottomright: 3px;
 	-webkit-border-bottom-right-radius: 3px;
-	border-bottom-right-radius: 3px
+	border-bottom-right-radius: 3px;
 	-moz-border-radius-bottomleft: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
@@ -384,6 +385,13 @@ form ol li {
 }
 form ol li.required {
 	float:left;
+	width:425px;
+	margin-top:9px;
+	color:#a9a9a9;
+	font-size:11px;
+}
+form ol li.required-odd {
+	clear:both;
 	width:425px;
 	margin-top:9px;
 	color:#a9a9a9;
@@ -491,6 +499,9 @@ form button.reset {
 form button.delete {
 	background:#aa4935;
 }
+form button.edit {
+	background:#db7018;
+}
 .simple form button {
 	margin-left:0;
 	margin-right:10px;
@@ -574,20 +585,43 @@ table.table td {
 	background:#fff;
 	line-height:20px;
 }
+table.table td.comments input {
+	float:left;
+}
+table.table td.comments img {
+	float:left;
+	margin:2px 0 0 2px;
+}
 table.tablesorter thead tr .header {
 	background-image: url(../images/tablesorter-bg.png);
 	background-repeat: no-repeat;
 	background-position: 95% 55%;
 	cursor: pointer;
 }
-table.tablesorter tbody tr.odd td {
+table.tablesorter tbody tr.odd td, table tbody tr.odd td {
 	background-color:#eaeaea;
 }
+table tbody tr.total td {
+	background-color:#555657;
+	color:#fff;
+}
+table tbody tr td strong {
+	color:#333;
+	font-weight:bold;
+}
+table tbody tr.total td strong {
+	font-weight:bold;
+	color:#fff;
+}
+
 table.tablesorter thead tr .headerSortUp {
 	background-image: url(../images/tablesorter-asc.png);
 }
 table.tablesorter thead tr .headerSortDown {
 	background-image: url(../images/tablesorter-dsc.png);
+}
+.emergency table {
+	margin-top:45px;
 }
 #footer {
 	text-align:center;
@@ -866,6 +900,7 @@ input.error { border: 1px solid red; }
 
 #sidebar {
 	width:203px;
+	overflow:hidden;
 	float:left;
 	margin:0 17px 0 0;
 	min-height:300px;
@@ -1204,4 +1239,68 @@ color:#fff;
 
 #search-results a {
     
+}
+
+#timesheet .top h3 {
+	font-size:18px;
+	float:left;
+	margin-top:5px;
+}
+#edit-timesheet .top h3 {
+	font-size:18px;
+	float:left;
+	margin:0 0 10px 0;
+}
+#timesheet .top select {
+	width:200px;
+	float:left;
+	height:28px;
+	margin:3px 0 0 10px;
+}
+#timesheet .top button {
+	float:left;
+	margin:0 0 5px 10px;
+}
+#timesheet .bottom {
+	border-top:1px solid #dedede;
+	margin-top:10px;
+	padding-top:10px;
+}
+#timesheet .bottom em {
+	font-size:14px;
+	float:left;
+}
+#timesheet .bottom p {
+	text-align:right;
+	margin-top:-10px;
+}
+#edit-timesheet input {
+	width:40px;
+}
+#edit-timesheet input.main-input {
+	width:150px;
+	float:left;
+}
+#edit-timesheet select, #edit-timesheet .checkbox-input {
+	float:left;
+}
+#edit-timesheet .checkbox-input {
+	clear:both;
+	margin:0 0 10px 7px;
+}
+#edit-timesheet .bottom {
+	border-top:1px solid #dedede;
+	margin-top:10px;
+	padding-top:10px;
+}
+#edit-timesheet .bottom .required {
+	float:left;
+	width:425px;
+	margin-top:-9px;
+	color:#a9a9a9;
+	font-size:11px;
+	text-align:left;
+}
+#edit-timesheet .bottom .required em {
+	color:#aa4935;
 }
