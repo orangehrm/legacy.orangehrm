@@ -143,6 +143,18 @@ class MenuService {
         $menu['menuTitle'] = $menuItem->getMenuTitle();
         $menu['subMenuItems'] = array();
         
+        $path = '';
+        $screen = $menuItem->getScreen();
+        
+        if ($screen instanceof Screen) {
+            $module = $screen->getModule()->getName();
+            $action = $screen->getActionUrl();
+            $urlExtras = $menuItem->getUrlExtras();
+            $path = $module . '/' . $action . $urlExtras;
+        }
+        
+        $menu['path'] = $path;        
+        
         return $menu;
         
     }
