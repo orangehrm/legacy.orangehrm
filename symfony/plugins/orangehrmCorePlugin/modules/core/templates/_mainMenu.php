@@ -1,8 +1,51 @@
-<?php
+<div class="menu">
+    
+    <ul>
+        
+        <?php foreach ($menuItemArray as $firstLevelItem) : ?>
+            
+            <li><a href="#"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
+            
+            <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>
+            
+                <ul>
+                    
+                    <?php foreach ($firstLevelItem['subMenuItems'] as $secondLevelItem) : ?>
+                    
+                        <li><a href="#"><?php echo $secondLevelItem['menuTitle'] ?></a>
+                        
+                        <?php if (count($secondLevelItem['subMenuItems']) > 0) : ?>
+                        
+                            <ul>
+                                
+                                <?php foreach ($secondLevelItem['subMenuItems'] as $thirdLevelItem) : ?>
+                                
+                                    <li><a href="#"><?php echo $thirdLevelItem['menuTitle'] ?></a></li>
+                                
+                                <?php endforeach; ?>
+                                
+                            </ul> <!-- third level -->
+                            
+                        <?php endif; ?>
+                            
+                        </li>   
+                    
+                    <?php endforeach; ?>
+
+                </ul> <!-- second level -->
+            
+            <?php endif; ?>
+                
+            </li>
+            
+        <?php endforeach; ?>
+            
+    </ul> <!-- first level -->
+    
+</div> <!-- menu -->
 
 
-?>
-
+<!--
         <div class="menu">
             <ul>
                 <li><a href="#"><b>Admin</b></a></li>
@@ -28,3 +71,4 @@
                 <li><a href="#"><b>Perfomance</b></a></li>
             </ul>
 		</div>
+-->

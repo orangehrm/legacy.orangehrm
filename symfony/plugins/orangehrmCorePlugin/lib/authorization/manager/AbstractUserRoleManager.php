@@ -49,6 +49,8 @@ abstract class AbstractUserRoleManager {
     
     public abstract function getAccessibleModules();
     
+    public abstract function getAccessibleMenuItems(SystemUser $user);
+    
     public abstract function isModuleAccessible($module);
     
     public abstract function isScreenAccessible($module, $screen, $field);

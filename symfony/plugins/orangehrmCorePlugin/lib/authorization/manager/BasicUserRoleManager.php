@@ -34,6 +34,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $locationService;
     protected $dataGroupService;
     protected $subordinates = null;   
+    protected $menuService;
     
     protected $userRoleClasses;
 
@@ -140,6 +141,20 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     public function setEmployeeService($employeeService) {
         $this->employeeService = $employeeService;
     }
+    
+    public function getMenuService() {
+        
+        if (!$this->menuService instanceof MenuService) {
+            $this->menuService = new MenuService();
+        }
+        
+        return $this->menuService;
+        
+    }
+    
+    public function setMenuService(MenuService $menuService) {
+        $this->menuService = $menuService;
+    }    
 
     public function getAccessibleEntities($entityType, $operation = null, $returnType = null,
             $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array()) {
@@ -330,6 +345,12 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     public function getAccessibleModules() {
         
     }
+    
+    public function getAccessibleMenuItems(SystemUser $user) {
+        
+        return $this->getMenuService()->getMenuItemsAsArray($this->userRoles);
+        
+    }    
 
     public function isModuleAccessible($module) {
         

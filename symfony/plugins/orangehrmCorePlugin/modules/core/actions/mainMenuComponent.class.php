@@ -20,8 +20,24 @@
 class mainMenuComponent extends sfComponent {
 
     public function execute($request) {
+        
+        $this->menuItemArray = $this->_getMenuItemArray();
 
     }
 
+    protected function _getMenuItemArray() {
+        
+        if ($this->getUser()->hasAttribute('mainMenu.menuItemArray')) {
+            return $this->getUser()->getAttribute('mainMenu.menuItemArray');
+        }
+        
+        $menuItemArray = $this->getContext()->getUserRoleManager()->getAccessibleMenuItems();  
+        $this->getUser()->setAttribute('mainMenu.menuItemArray', $menuItemArray);
+        
+        return $menuItemArray;
+        
+    }
+    
+    
 
 }
