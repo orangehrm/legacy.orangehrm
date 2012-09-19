@@ -126,6 +126,51 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('Leave', $menuArray[0]['menuTitle']);
         $this->assertEquals('My Info', $menuArray[1]['menuTitle']);
         
+    }
+    
+    public function testGetMenuItemsAsArrayForSupervisor() {
+        
+        $userRoleList[0] = new UserRole();
+        $userRoleList[0]->setName('ESS');
+        $userRoleList[1] = new UserRole();
+        $userRoleList[1]->setName('Supervisor');         
+        
+        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        
+        /* Checking the count of level-1 menu items */
+        $this->assertEquals(3, count($menuArray));     
+        
+        /* Checking order and eligible items */
+        $this->assertEquals('PIM', $menuArray[0]['menuTitle']);
+        $this->assertEquals('Leave', $menuArray[1]['menuTitle']);
+        $this->assertEquals('My Info', $menuArray[2]['menuTitle']);
+        
+        $pimSubMenus = $menuArray[0]['subMenuItems'];
+        $this->assertEquals('Employee List', $pimSubMenus[0]['menuTitle']);
+        
+    }   
+    
+    public function testGetMenuItemsAsArrayForAdminAndEss() {
+        
+        $userRoleList[0] = new UserRole();
+        $userRoleList[0]->setName('ESS');
+        $userRoleList[1] = new UserRole();
+        $userRoleList[1]->setName('Admin');         
+        
+        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        
+        /* Checking the count of level-1 menu items */
+        $this->assertEquals(4, count($menuArray));     
+        
+        /* Checking order and eligible items */
+        $this->assertEquals('Admin', $menuArray[0]['menuTitle']);
+        $this->assertEquals('PIM', $menuArray[1]['menuTitle']);
+        $this->assertEquals('Leave', $menuArray[2]['menuTitle']);
+        $this->assertEquals('My Info', $menuArray[3]['menuTitle']);
+        
+        $adminSubMenus = $menuArray[0]['subMenuItems'];
+        $this->assertEquals('Organization', $adminSubMenus[0]['menuTitle']);
+        
     }    
  
 }
