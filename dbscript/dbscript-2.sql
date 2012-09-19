@@ -1329,7 +1329,7 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (47, 'Define Leave Period', 4, 'defineLeavePeriod'),
 (48, 'View My Leave List', 4, 'viewMyLeaveList'),
 (49, 'Apply Leave', 4, 'applyLeave'),
-(50, 'Define Timesheet Start Date', 5, 'menu_no_top=time')
+(50, 'Define Timesheet Start Date', 5, 'menu_no_top=time'),
 (51, 'View My Timesheet', 5, 'viewMyTimesheet'),
 (52, 'View Employee Timesheet', 5, 'viewEmployeeTimesheet'),
 (53, 'View My Attendance', 5, 'viewMyAttendanceRecord');
