@@ -4799,10 +4799,13 @@ symfony/web/themes/default/images/paging-first.png -text
 symfony/web/themes/default/images/paging-last.png -text
 symfony/web/themes/default/images/paging-next.png -text
 symfony/web/themes/default/images/paging-previous.png -text
+symfony/web/themes/default/images/sub-nav-arrow-s.png -text
+symfony/web/themes/default/images/sub-nav-arrow.png -text
 symfony/web/themes/default/images/sub-nav.png -text
 symfony/web/themes/default/images/tablesorter-bg.png -text
 symfony/web/themes/default/images/toggle-down.png -text
 symfony/web/themes/default/images/toggle-up.png -text
+symfony/web/themes/default/images/top-nav-selected.png -text
 symfony/web/themes/default/images/welcome.png -text
 /sysinfo.php -text
 themes/beyondT/css/compstruct.css -text
