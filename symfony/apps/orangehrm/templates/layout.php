@@ -49,7 +49,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
             <div id="branding">
                 <img src="<?php echo public_path('../../symfony/web/themes/default/images/logo.png')?>" width="283" height="56" alt="OrangeHRM">
                 <a href="#" class="subscribe">Join OrangeHRM Community</a>
-                <a href="#" id="welcome">Welcome Admin</a>
+                <a href="#" id="welcome"><?php echo __('Welcome') . ' ' . $sf_user->getAttribute('auth.firstName'); ?></a>
                 <div id="welcome-menu">
                     <ul>
                         <li><a href="<?php echo url_for('admin/changeUserPassword'); ?>">Change Password</a></li>
