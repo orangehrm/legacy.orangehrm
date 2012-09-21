@@ -67,7 +67,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     $("#welcome-menu").slideToggle("fast");
                     $(this).toggleClass("activated");
                     return false;
-    		});
+                });
 
             });
             
