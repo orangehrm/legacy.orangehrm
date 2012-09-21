@@ -3,9 +3,12 @@
 class validateCredentialsAction extends sfAction {
 
     protected $authenticationService;
+    protected $homePageService;
 
     public function execute($request) {
+        
         if ($request->isMethod(sfWebRequest::POST)) {
+            
             $username = $request->getParameter('txtUsername');
             $password = $request->getParameter('txtPassword');
             $additionalData = array(
@@ -13,17 +16,25 @@ class validateCredentialsAction extends sfAction {
             );
 
             try {
+
                 $success = $this->getAuthenticationService()->setCredentials($username, $password, $additionalData);
+                
                 if ($success) {
-                    $this->redirect(public_path('../../index.php'));
+                    
+                    $this->redirect($this->getHomePageService()->getHomePagePath());
+                    
                 } else {
                     $this->getUser()->setFlash('message', __('Invalid credentials'), true);
                     $this->forward('auth', 'retryLogin');
                 }
+                
             } catch (AuthenticationServiceException $e) {
+                
                 $this->getUser()->setFlash('message', $e->getMessage(), false);
                 $this->forward('auth', 'login');
+                
             }
+            
         }
 
         return sfView::NONE;
@@ -40,5 +51,20 @@ class validateCredentialsAction extends sfAction {
         }
         return $this->authenticationService;
     }
+    
+    public function getHomePageService() {
+        
+        if (!$this->homePageService instanceof HomePageService) {
+            $this->homePageService = new HomePageService($this->getUser());
+        }
+        
+        return $this->homePageService;
+        
+    }
+
+    public function setHomePageService($homePageService) {
+        $this->homePageService = $homePageService;
+    }
+    
 
 }

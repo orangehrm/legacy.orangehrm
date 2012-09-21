@@ -643,6 +643,7 @@ symfony/apps/orangehrm/templates/layout.php -text
 symfony/apps/orangehrm/templates/mail/performance_approve.txt -text
 symfony/apps/orangehrm/templates/mail/performance_reject.txt -text
 symfony/apps/orangehrm/templates/mail/performance_submit.txt -text
+symfony/apps/orangehrm/templates/oldLayout.php -text
 symfony/config/ProjectConfiguration.class.php -text
 symfony/config/autoload.yml -text
 symfony/config/doctrine/schema.yml -text
@@ -3996,6 +3997,7 @@ symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/AbstractUserRoleMa
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/BasicUserRoleManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/manager/UserRoleManagerFactory.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/service/DataGroupService.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/service/HomePageService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/service/MenuService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/service/ScreenPermissionService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/service/UserRoleManagerService.php -text
