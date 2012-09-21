@@ -6,6 +6,7 @@ class Button extends Control {
         
         $label = $this->getPropertyValue('label', $this->identifier);
         $id = $this->getId();
+        $class = '';
         
         $attributes = array(
             'type' => $this->getPropertyValue('type', 'button'),
