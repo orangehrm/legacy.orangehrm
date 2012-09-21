@@ -479,7 +479,7 @@ form p {
 .single form p {
 	text-align:left;
 }
-form button {
+form button, input[type="button"], input[type="submit"] {
 	background:#33ac3f;
 	color:#fff;
 	font-size:15px;
@@ -493,10 +493,10 @@ form button {
 .single form button {
 	margin-left:0;
 }
-form button.reset {
+form button.reset, input.reset {
 	background:#848484;
 }
-form button.delete {
+form button.delete, input.delete {
 	background:#aa4935;
 }
 form button.edit {

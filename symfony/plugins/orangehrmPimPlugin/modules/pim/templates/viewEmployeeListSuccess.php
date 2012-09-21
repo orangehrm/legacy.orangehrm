@@ -97,8 +97,8 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
                     <button type="reset" class="reset">Reset</button>
                     <button type="submit">Search</button>
                     -->
-                    <input type="button" class="plainbtn" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />  
-                    <input type="button" class="plainbtn" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />                    
+                    <input type="button" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />
+                    <input type="button" class="reset" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />                    
                 </p>
                 
             </fieldset>
