@@ -30,21 +30,24 @@ $cultureElements = explode('_', $sf_user->getCulture());
 
             <div id="branding">
                 <img src="<?php echo public_path('../../symfony/web/themes/default/images/logo.png')?>" width="283" height="56" alt="OrangeHRM">
-                <a href="#" class="subscribe">Join OrangeHRM Community</a>
-                <a href="#" id="welcome">Welcome Admin</a>
+                <a href="http://www.orangehrm.com/user-survey-registration.php" class="subscribe" target="_blank"><?php echo __('Join OrangeHRM Community'); ?></a>
+                <a href="#" id="welcome"><?php echo __('Welcome Admin'); ?></a>
                 <div id="welcome-menu">
                     <ul>
-                        <li><a href="<?php echo url_for('admin/changeUserPassword'); ?>">Change Password</a></li>
-                        <li><a href="<?php echo url_for('auth/logout'); ?>">Logout</a></li>
+                        <li><a href="<?php echo url_for('admin/changeUserPassword'); ?>"><?php echo __('Change Password'); ?></a></li>
+                        <li><a href="<?php echo url_for('auth/logout'); ?>"><?php echo __('Logout'); ?></a></li>
                     </ul>
                 </div>
-                <a href="#" id="help">Help &amp; Training</a>
+                <a href="#" id="help"><?php echo __('Help &amp; Training'); ?></a>
                 <div id="help-menu">
                     <ul>
-                        <li><a href="#">Link 1</a></li>
-                        <li><a href="#">Link 2</a></li>
-                        <li><a href="#">Link 3</a></li>
-                        <li><a href="#">Link 4</a></li>
+                        <li><a href="http://www.orangehrm.com/support-plans.php?utm_source=application_support&amp;utm_medium=app_url&amp;utm_campaign=orangeapp" target="_blank"><?php echo __('Support'); ?></a></li>
+                        <li><a href="http://www.orangehrm.com/training.php?utm_source=application_traning&amp;utm_medium=app_url&amp;utm_campaign=orangeapp" target="_blank"><?php echo __('Training'); ?></a></li>
+                        <li><a href="http://www.orangehrm.com/addon-plans.shtml?utm_source=application_addons&amp;utm_medium=app_url&amp;utm_campaign=orangeapp" target="_blank"><?php echo __('Add-Ons'); ?></a></li>
+                        <li><a href="http://www.orangehrm.com/customizations.php?utm_source=application_cus&amp;utm_medium=app_url&amp;utm_campaign=orangeapp" target="_blank"><?php echo __('Customizations'); ?></a></li>
+                        <li><a href="http://forum.orangehrm.com/" target="_blank"><?php echo __('Forum'); ?></a></li>
+                        <li><a href="http://blog.orangehrm.com/" target="_blank"><?php echo __('Blog'); ?></a></li>
+                        <li><a href="http://sourceforge.net/apps/mantisbt/orangehrm/view_all_bug_page.php" target="_blank"><?php echo __('Bug Tracker'); ?></a></li>                        
                     </ul>
                 </div>
             </div> <!-- branding -->      
@@ -68,6 +71,12 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     $(this).toggleClass("activated");
                     return false;
                 });
+                
+                $("#help").click(function () {
+                    $("#help-menu").slideToggle("fast");
+                    $(this).toggleClass("activated");
+                    return false;
+                });                
 
             });
             
