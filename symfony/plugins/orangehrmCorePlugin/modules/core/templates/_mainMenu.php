@@ -1,10 +1,40 @@
+<?php
+
+function getSubMenuIndication($menuItem) {
+    
+    if (count($menuItem['subMenuItems']) > 0) {
+        return ' class="arrow"';
+    } else {
+        return '';
+    }
+    
+}
+
+function getListItemClass($menuItem, $module, $action) {
+    
+    $displayModule = ($module == 'attendance')?'time':$module;
+    
+    if ($menuItem['level'] == 1) {
+        
+        if (strstr(strtolower($menuItem['menuTitle']), $displayModule)) {
+            return ' class="current"';
+        } else {
+            return '';
+        }
+        
+    }
+    
+}
+
+?>
+
 <div class="menu">
     
     <ul>
         
         <?php foreach ($menuItemArray as $firstLevelItem) : ?>
             
-        <li><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
+        <li<?php echo getListItemClass($firstLevelItem, $module, $action); ?>><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
             
             <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>
             
@@ -12,7 +42,7 @@
                     
                     <?php foreach ($firstLevelItem['subMenuItems'] as $secondLevelItem) : ?>
                     
-                        <li><a href="<?php echo empty($secondLevelItem['path'])?'':url_for($secondLevelItem['path']) ?>"><?php echo $secondLevelItem['menuTitle'] ?></a>
+                        <li><a href="<?php echo empty($secondLevelItem['path'])?'':url_for($secondLevelItem['path']) ?>"<?php echo getSubMenuIndication($secondLevelItem); ?>><?php echo $secondLevelItem['menuTitle'] ?></a>
                         
                         <?php if (count($secondLevelItem['subMenuItems']) > 0) : ?>
                         
@@ -43,32 +73,3 @@
     </ul> <!-- first level -->
     
 </div> <!-- menu -->
-
-
-<!--
-        <div class="menu">
-            <ul>
-                <li><a href="#"><b>Admin</b></a></li>
-                <li class="current"><a href="#"><b>PIM</b></a>
-                    <ul>
-                    	<li class="drop"><a href="#" class="arrow">Configuration</a>
-                            <ul>
-                                <li><a href="#">Optional Fields</a></li>
-                                <li><a href="#">Custom Fields</a></li>
-                                <li><a href="#">Data Import</a></li>
-                                <li><a href="#">Reporting Methods</a></li>
-                                <li><a href="#">Termination Reasons</a></li>
-                            </ul>
-                    	</li>
-                        <li class="current"><a href="#">Employee list</a></li>
-                        <li><a href="#">Add Employee</a></li>
-                        <li><a href="#">Reports</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><b>Leave</b></a></li>
-                <li><a href="#"><b>Time</b></a></li>
-                <li><a href="#"><b>Recruitment</b></a></li>
-                <li><a href="#"><b>Perfomance</b></a></li>
-            </ul>
-		</div>
--->

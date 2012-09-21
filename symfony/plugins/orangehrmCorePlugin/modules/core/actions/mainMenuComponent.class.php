@@ -22,6 +22,8 @@ class mainMenuComponent extends sfComponent {
     public function execute($request) {
         
         $this->menuItemArray = $this->_getMenuItemArray();
+        $this->module = $this->getContext()->getModuleName();
+        $this->action = $this->getContext()->getActionName();
 
     }
 

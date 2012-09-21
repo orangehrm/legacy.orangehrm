@@ -106,10 +106,16 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
         $organizationMenu = $menuArray[0]['subMenuItems'];
         $this->assertEquals('Organization', $organizationMenu[0]['menuTitle']);
+        $this->assertEquals('', $organizationMenu[0]['module']);
+        $this->assertEquals('', $organizationMenu[0]['action']);
+        $this->assertEquals(2, $organizationMenu[0]['level']);
         
         $LocationsMenu = $organizationMenu[0]['subMenuItems'];
         $this->assertEquals('Locations', $LocationsMenu[1]['menuTitle']);
         $this->assertEquals('admin/viewLocations', $LocationsMenu[1]['path']);
+        $this->assertEquals('admin', $LocationsMenu[1]['module']);
+        $this->assertEquals('viewLocations', $LocationsMenu[1]['action']);        
+        $this->assertEquals(3, $LocationsMenu[1]['level']);
         
     }
     
