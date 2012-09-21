@@ -4,7 +4,7 @@
         
         <?php foreach ($menuItemArray as $firstLevelItem) : ?>
             
-        <li><a href="<?php echo empty($firstLevelItem['path'])?'':'../' . $firstLevelItem['path'] ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
+        <li><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
             
             <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>
             
@@ -12,7 +12,7 @@
                     
                     <?php foreach ($firstLevelItem['subMenuItems'] as $secondLevelItem) : ?>
                     
-                        <li><a href="<?php echo empty($secondLevelItem['path'])?'':'../' . $secondLevelItem['path'] ?>"><?php echo $secondLevelItem['menuTitle'] ?></a>
+                        <li><a href="<?php echo empty($secondLevelItem['path'])?'':url_for($secondLevelItem['path']) ?>"><?php echo $secondLevelItem['menuTitle'] ?></a>
                         
                         <?php if (count($secondLevelItem['subMenuItems']) > 0) : ?>
                         
@@ -20,7 +20,7 @@
                                 
                                 <?php foreach ($secondLevelItem['subMenuItems'] as $thirdLevelItem) : ?>
                                 
-                                    <li><a href="<?php echo empty($thirdLevelItem['path'])?'':'../' . $thirdLevelItem['path'] ?>"><?php echo $thirdLevelItem['menuTitle'] ?></a></li>
+                                    <li><a href="<?php echo empty($thirdLevelItem['path'])?'':url_for($thirdLevelItem['path']) ?>"><?php echo $thirdLevelItem['menuTitle'] ?></a></li>
                                 
                                 <?php endforeach; ?>
                                 
