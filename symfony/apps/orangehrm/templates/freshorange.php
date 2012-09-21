@@ -34,8 +34,8 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 <a href="#" id="welcome">Welcome Admin</a>
                 <div id="welcome-menu">
                     <ul>
-                        <li><a href="#">Edit My Profile</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="<?php echo url_for('admin/changeUserPassword'); ?>">Change Password</a></li>
+                        <li><a href="<?php echo url_for('auth/logout'); ?>">Logout</a></li>
                     </ul>
                 </div>
                 <a href="#" id="help">Help &amp; Training</a>
@@ -58,6 +58,20 @@ $cultureElements = explode('_', $sf_user->getCulture());
             </div> <!-- content -->
           
         </div> <!-- wrapper -->
+        
+        <script type="text/javascript">
+
+            $(document).ready(function() {        
+
+                $("#welcome").click(function () {
+                    $("#welcome-menu").slideToggle("fast");
+                    $(this).toggleClass("activated");
+                    return false;
+    		});
+
+            });
+            
+        </script>        
 
     </body>
     
