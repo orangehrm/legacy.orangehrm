@@ -1388,7 +1388,7 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (37, 'Employee List', 5, 30, 2, 200, '/reset/1'),
 (38, 'Add Employee', 4, 30, 2, 300, NULL),
 (39, 'Reports', 45, 30, 2, 400, '/reportGroup/3/reportType/PIM_DEFINED'),
-(40, 'My Info', 46, NULL, 1, 700, '/empNumber/'),
+(40, 'My Info', 46, NULL, 1, 700, NULL),
 (41, 'Leave', NULL, NULL, 1, 300, NULL),
 (42, 'Configure', NULL, 41, 2, 100, NULL),
 (43, 'Leave Period', 47, 42, 3, 100, NULL),
