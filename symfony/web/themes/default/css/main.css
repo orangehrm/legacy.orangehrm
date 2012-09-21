@@ -488,7 +488,7 @@ form button, input[type="button"], input[type="submit"] {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	margin-left:10px;
+	margin-right:4px;
 }
 .single form button {
 	margin-left:0;

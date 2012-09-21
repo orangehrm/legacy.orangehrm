@@ -27,6 +27,12 @@ class Button extends Control {
         if (!empty($dataTarget)) {
             $attributes['data-target'] = $dataTarget;
         }
+        
+        $class = $this->getPropertyValue('class');
+        
+        if (!empty($dataTarget)) {
+            $attributes['class'] = $class;
+        }        
  
         return tag('input', $attributes);        
         

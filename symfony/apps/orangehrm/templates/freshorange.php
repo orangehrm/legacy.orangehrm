@@ -62,10 +62,15 @@ $cultureElements = explode('_', $sf_user->getCulture());
           
         </div> <!-- wrapper -->
         
+        <div id="footer">
+            OrangeHRM ver 2.7 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
+        </div> <!-- footer -->
+ 
         <script type="text/javascript">
 
             $(document).ready(function() {        
 
+                /* Toggling header menus */
                 $("#welcome").click(function () {
                     $("#welcome-menu").slideToggle("fast");
                     $(this).toggleClass("activated");
@@ -76,6 +81,25 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     $("#help-menu").slideToggle("fast");
                     $(this).toggleClass("activated");
                     return false;
+                });
+
+                /* Button hovering effects */
+                $("input[type=button]").hover(function() {
+                    $(this).css("background-color","#086912");
+                        }, function() {
+                    $(this).css("background-color","#33ac3f");
+                });
+
+                $("input.reset").hover(function() {
+                    $(this).css("background-color","#4d4d4d");
+                        }, function() {
+                    $(this).css("background-color","#848484");
+                });
+
+                $("input.delete").hover(function() {
+                    $(this).css("background-color","#782918");
+                        }, function() {
+                    $(this).css("background-color","#aa4935");
                 });                
 
             });
