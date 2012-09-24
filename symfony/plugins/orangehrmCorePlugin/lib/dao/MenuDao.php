@@ -44,6 +44,8 @@ class MenuDao {
                     ->leftJoin('sc.Module mo')
                     ->leftJoin('sc.ScreenPermission sp')
                     ->leftJoin('sp.UserRole ur')
+                    ->andWhere('mi.status = 1')
+                    ->andWhere('sp.can_read = 1')
                     ->whereIn('ur.name', $roleNames)
                     ->orWhere('mi.screenId IS NULL')
                     ->orderBy('mi.orderHint ASC');
