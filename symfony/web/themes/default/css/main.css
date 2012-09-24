@@ -420,7 +420,6 @@ form ol li label em {
 	margin:0;
 }
 form ol li input, form ol li select,  form ol li textarea {
-	font-family: 'Signika', sans-serif;
 	font-size:13px;
 	border:1px solid #d2d1d1;
 	color:#5d5d5d;
