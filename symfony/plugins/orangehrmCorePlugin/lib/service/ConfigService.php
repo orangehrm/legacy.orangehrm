@@ -131,6 +131,15 @@ class ConfigService extends BaseService {
     }
     
     /**
+     * Get Value: Whether timesheet period has been set
+     * @return bool Returns true if timesheet period has been set
+     */
+    public function isTimesheetPeriodDefined() {
+        $val = $this->_getConfigValue(self::KEY_TIMESHEET_PERIOD_SET);
+        return ($val == 'Yes');
+    }    
+    
+    /**
      * Retrun is Supervisor Chain suported
      * @return boolean is Supervisor Chain suported
      */

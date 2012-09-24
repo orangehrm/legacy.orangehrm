@@ -4634,6 +4634,7 @@ symfony/plugins/orangehrmTimePlugin/modules/time/actions/proceedTimesheetPeriodA
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/saveTimesheetAction.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewEmployeeTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewMyTimesheetAction.class.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewTimeModuleAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.en_US.xml -text
 symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.es_ES.xml -text

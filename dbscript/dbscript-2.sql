@@ -1346,7 +1346,8 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (63, 'Add/Edit KPI', 9, 'saveKpi'),
 (64, 'Copy KPI', 9, 'copyKpi'),
 (65, 'Add Review', 9, 'saveReview'),
-(66, 'Review List', 9, 'viewReview');
+(66, 'Review List', 9, 'viewReview'),
+(67, 'View Time Module', 5, 'viewTimeModule');
 
 
 INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`) VALUES
@@ -1400,7 +1401,7 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (49, 'Assign Leave', 17, 41, 2, 400, NULL),
 (50, 'My Leave', 48, 41, 2, 500, '/reset/1'),
 (51, 'Apply', 49, 41, 2, 600, NULL),
-(52, 'Time', NULL, NULL, 1, 400, NULL),
+(52, 'Time', 67, NULL, 1, 400, NULL),
 (53, 'Timesheets', NULL, 52, 2, 100, NULL),
 (54, 'My Timesheets', 51, 53, 3, 100, NULL),
 (55, 'Employee Timesheets', 52, 53, 3, 200, NULL),
@@ -1484,6 +1485,7 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (2, 48, 1, 1, 1, 0),
 (2, 49, 1, 1, 1, 1),
 (1, 50, 1, 1, 1, 1),
+(2, 50, 1, 0, 0, 0),
 (2, 51, 1, 1, 1, 1),
 (1, 52, 1, 1, 1, 1),
 (3, 52, 1, 1, 1, 1),
@@ -1508,7 +1510,10 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (1, 65, 1, 1, 1, 1),
 (1, 66, 1, 1, 1, 1),
 (2, 66, 1, 0, 1, 0),
-(7, 66, 1, 0, 1, 0);
+(7, 66, 1, 0, 1, 0),
+(1, 67, 1, 1, 1, 1),
+(2, 67, 1, 0, 1, 0),
+(3, 67, 1, 0, 1, 0);
 
 INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
 (1, 'personal_information', 'PIM - Personal Details', 1, NULL, 1, NULL),

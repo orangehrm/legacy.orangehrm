@@ -23,6 +23,21 @@
 class HomePageService {
 
     protected $userSession;
+    protected $configService;
+    
+    public function getConfigService() {
+        
+        if (!$this->configService instanceof ConfigService) {
+            $this->configService = new ConfigService();
+        }
+        
+        return $this->configService;
+        
+    }
+
+    public function setConfigService($configService) {
+        $this->configService = $configService;
+    }    
     
     public function __construct(myUser $userSession) {
         $this->userSession = $userSession;
@@ -34,6 +49,26 @@ class HomePageService {
             return 'pim/viewEmployeeList';
         } else {
             return 'pim/viewMyDetails';
+        }
+        
+    }
+    
+    public function getTimeModuleDefaultPath() {
+        
+        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
+        
+        if ($this->getConfigService()->isTimesheetPeriodDefined()) {
+            
+            if ($isAdmin) {
+                return 'time/viewEmployeeTimesheet';
+            } else {
+                return 'time/viewMyTimeTimesheet';
+            }
+            
+        } else {
+            
+            return 'time/defineTimesheetPeriod';
+            
         }
         
     }
