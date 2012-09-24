@@ -44,7 +44,7 @@ class MenuDao {
                     ->leftJoin('sc.Module mo')
                     ->leftJoin('sc.ScreenPermission sp')
                     ->leftJoin('sp.UserRole ur')
-                    ->andWhere('mi.status = 1')
+                    ->andWhere('mi.status = ?', MenuItem::STATUS_ENABLED)
                     ->andWhere('sp.can_read = 1')
                     ->whereIn('ur.name', $roleNames)
                     ->orWhere('mi.screenId IS NULL')
@@ -57,6 +57,41 @@ class MenuDao {
             throw new DaoException($e->getMessage(), $e->getCode(), $e);
         }    
         // @codeCoverageIgnoreEnd        
+        
+    }
+    
+    public function enableModuleMenuItems($moduleName) {
+        
+        try {
+            
+            $query = Doctrine_Query::create()
+                    ->from('MenuItem mi')
+                    ->leftJoin('mi.Screen sc')
+                    ->leftJoin('sc.Module mo')
+                    ->andWhere('mo.name = ?', $moduleName)
+                    ->andWhere('mi.status = ?', MenuItem::STATUS_DISABLED);
+
+            $menuItemList = $query->execute();
+            $i = 0;
+            
+            foreach ($menuItemList as $menuItem) {
+                
+                $menuItem->setStatus(MenuItem::STATUS_ENABLED);
+                $menuItem->save();
+                $i++;
+                
+            }
+            
+            return $i;
+            
+        // @codeCoverageIgnoreStart
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }    
+        // @codeCoverageIgnoreEnd        
+        
+        
+        
         
     }
     

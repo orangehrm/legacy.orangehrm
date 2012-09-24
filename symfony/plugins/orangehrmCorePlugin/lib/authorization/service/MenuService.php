@@ -198,6 +198,10 @@ class MenuService {
         
     }
     
+    public function enableModuleMenuItems($moduleName) {
+        return $this->getMenuDao()->enableModuleMenuItems($moduleName);
+    }
+
     private function _abc(MenuItem $menuItem) {
         
         $menu['id'] = $menuItem->getId();
