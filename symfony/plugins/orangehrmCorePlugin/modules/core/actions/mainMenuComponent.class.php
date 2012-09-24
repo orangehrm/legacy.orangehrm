@@ -18,22 +18,55 @@
  */
 
 class mainMenuComponent extends sfComponent {
+    
+    protected $menuService;
+    
+    public function getMenuService() {
+        
+        if (!$this->menuService instanceof MenuService) {
+            $this->menuService = new MenuService();
+        }
+        
+        return $this->menuService;
+        
+    }
+    
+    public function setMenuService(MenuService $menuService) {
+        $this->menuService = $menuService;
+    }    
 
     public function execute($request) {
         
-        $this->menuItemArray = $this->_getMenuItemArray();
+        $menuItemDetails = $this->_getMenuItemDetails();
+        
+        $this->menuItemArray = $menuItemDetails['menuItemArray'];
         $this->module = $this->getContext()->getModuleName();
-        $this->action = $this->getContext()->getActionName();
+        
+        $initialAction = $request->getParameter('initialActionName', '');
+        
+        if (!empty($initialAction)) {
+            $this->action = $initialAction;
+        } else {
+            $this->action = $this->getContext()->getActionName();
+        }
+        
+        $details['module']          = $this->module;
+        $details['action']          = $this->action;
+        $details['actionArray']     = $menuItemDetails['actionArray'];
+        $details['parentIdArray']   = $menuItemDetails['parentIdArray'];
+        $details['levelArray']      = $menuItemDetails['levelArray'];       
+        
+        $this->currentItemDetails = $this->getMenuService()->getCurrentItemDetails($details);
 
     }
 
-    protected function _getMenuItemArray() {
+    protected function _getMenuItemDetails() {
         
         if ($this->getUser()->hasAttribute('mainMenu.menuItemArray')) {
             return $this->getUser()->getAttribute('mainMenu.menuItemArray');
         }
         
-        $menuItemArray = $this->getContext()->getUserRoleManager()->getAccessibleMenuItems();  
+        $menuItemArray = $this->getContext()->getUserRoleManager()->getAccessibleMenuItemDetails();  
         $this->getUser()->setAttribute('mainMenu.menuItemArray', $menuItemArray);
         
         return $menuItemArray;

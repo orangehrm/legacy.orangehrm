@@ -10,19 +10,21 @@ function getSubMenuIndication($menuItem) {
     
 }
 
-function getListItemClass($menuItem, $module, $action) {
+function getListItemClass($menuItem, $currentItemDetails) {
     
-    $displayModule = ($module == 'attendance')?'time':$module;
+    $flag = false;
     
     if ($menuItem['level'] == 1) {
-        
-        if (strstr(strtolower($menuItem['menuTitle']), $displayModule)) {
-            return ' class="current"';
-        } else {
-            return '';
-        }
-        
+        $flag = ($menuItem['id'] == $currentItemDetails['level1']);
+    } elseif ($menuItem['level'] == 2) {
+        $flag = ($menuItem['id'] == $currentItemDetails['level2']);
     }
+    
+    if ($flag) {
+        return ' class="current"';
+    }
+    
+    return '';
     
 }
 
@@ -34,7 +36,7 @@ function getListItemClass($menuItem, $module, $action) {
         
         <?php foreach ($menuItemArray as $firstLevelItem) : ?>
             
-        <li<?php echo getListItemClass($firstLevelItem, $module, $action); ?>><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
+        <li<?php echo getListItemClass($firstLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
             
             <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>
             
@@ -42,7 +44,7 @@ function getListItemClass($menuItem, $module, $action) {
                     
                     <?php foreach ($firstLevelItem['subMenuItems'] as $secondLevelItem) : ?>
                     
-                        <li><a href="<?php echo empty($secondLevelItem['path'])?'':url_for($secondLevelItem['path']) ?>"<?php echo getSubMenuIndication($secondLevelItem); ?>><?php echo $secondLevelItem['menuTitle'] ?></a>
+                        <li<?php echo getListItemClass($secondLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($secondLevelItem['path'])?'':url_for($secondLevelItem['path']) ?>"<?php echo getSubMenuIndication($secondLevelItem); ?>><?php echo $secondLevelItem['menuTitle'] ?></a>
                         
                         <?php if (count($secondLevelItem['subMenuItems']) > 0) : ?>
                         

@@ -89,12 +89,13 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }    
     
-    public function testGetMenuItemsAsArrayForAdmin() {
+    public function testGetMenuItemDetailsForAdmin() {
         
         $userRoleList[0] = new UserRole();
         $userRoleList[0]->setName('Admin');        
         
-        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        $menuDetails = $this->menuService->getMenuItemDetails($userRoleList);
+        $menuArray = $menuDetails['menuItemArray'];
         
         /* Checking the count of level-1 menu items */
         $this->assertEquals(3, count($menuArray));     
@@ -119,12 +120,13 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }
     
-    public function testGetMenuItemsAsArrayForEss() {
+    public function testGetMenuItemDetailsForEss() {
         
         $userRoleList[0] = new UserRole();
         $userRoleList[0]->setName('ESS');        
         
-        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        $menuDetails = $this->menuService->getMenuItemDetails($userRoleList);
+        $menuArray = $menuDetails['menuItemArray'];
         
         /* Checking the count of level-1 menu items */
         $this->assertEquals(2, count($menuArray));     
@@ -135,14 +137,15 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }
     
-    public function testGetMenuItemsAsArrayForSupervisor() {
+    public function testGetMenuItemDetailsForSupervisor() {
         
         $userRoleList[0] = new UserRole();
         $userRoleList[0]->setName('ESS');
         $userRoleList[1] = new UserRole();
         $userRoleList[1]->setName('Supervisor');         
         
-        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        $menuDetails = $this->menuService->getMenuItemDetails($userRoleList);
+        $menuArray = $menuDetails['menuItemArray'];
         
         /* Checking the count of level-1 menu items */
         $this->assertEquals(3, count($menuArray));     
@@ -157,14 +160,15 @@ class MenuServiceTest extends PHPUnit_Framework_TestCase {
         
     }   
     
-    public function testGetMenuItemsAsArrayForAdminAndEss() {
+    public function testGetMenuItemsDetailsForAdminAndEss() {
         
         $userRoleList[0] = new UserRole();
         $userRoleList[0]->setName('ESS');
         $userRoleList[1] = new UserRole();
         $userRoleList[1]->setName('Admin');         
         
-        $menuArray = $this->menuService->getMenuItemsAsArray($userRoleList);
+        $menuDetails = $this->menuService->getMenuItemDetails($userRoleList);
+        $menuArray = $menuDetails['menuItemArray'];
         
         /* Checking the count of level-1 menu items */
         $this->assertEquals(4, count($menuArray));     

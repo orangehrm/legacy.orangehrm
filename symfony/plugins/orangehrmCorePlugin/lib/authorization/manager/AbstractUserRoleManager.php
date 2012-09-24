@@ -49,7 +49,7 @@ abstract class AbstractUserRoleManager {
     
     public abstract function getAccessibleModules();
     
-    public abstract function getAccessibleMenuItems();
+    public abstract function getAccessibleMenuItemDetails();
     
     public abstract function isModuleAccessible($module);
     

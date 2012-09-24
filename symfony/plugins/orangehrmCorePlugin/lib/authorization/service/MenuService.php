@@ -88,14 +88,15 @@ class MenuService {
         
     }
     
-    public function getMenuItemsAsArray($userRoleList) {
+    public function getMenuItemDetails($userRoleList) {
         
         $firstLevelItems = $this->getMenuItemCollection($userRoleList);
-        $menuArray = array();        
+        $menuArray = array();
+        $actionArray = array();
+        $parentIdArray = array();
+        $levelArray = array();
         
         foreach ($firstLevelItems as $firstLevelItem) {   
-            
-
             
             $secondLevelItems = $firstLevelItem->getSubMenuItems();
             $b = array();
@@ -111,7 +112,16 @@ class MenuService {
                         
                         foreach ($thirdLevelItems as $thirdLevelItem) {
                             
-                            $c[] = $this->_abc($thirdLevelItem);
+                            $cc = $this->_abc($thirdLevelItem);
+                            
+                            $parentIdArray[$cc['id']] = $thirdLevelItem->getParentId();
+                            $levelArray[$cc['id']] = $cc['level'];
+                            
+                            if (!empty($cc['module']) && !empty($cc['action'])) {
+                                $actionArray[$cc['module'] . '_' . $cc['action']] = $cc['id'];
+                            }                            
+                            
+                            $c[] = $cc;
                             
                         }                      
                         
@@ -119,6 +129,13 @@ class MenuService {
                     
                     $bb = $this->_abc($secondLevelItem);
                     $bb['subMenuItems'] = $c;
+                    
+                    $parentIdArray[$bb['id']] = $secondLevelItem->getParentId();
+                    $levelArray[$bb['id']] = $bb['level'];
+
+                    if (!empty($bb['module']) && !empty($bb['action'])) {
+                        $actionArray[$bb['module'] . '_' . $bb['action']] = $bb['id'];
+                    }                    
                     
                     $b[] = $bb;
                     
@@ -129,11 +146,55 @@ class MenuService {
             $a = $this->_abc($firstLevelItem);
             $a['subMenuItems'] = $b;
             
+            $parentIdArray[$a['id']] = $firstLevelItem->getParentId();
+            $levelArray[$a['id']] = $a['level'];
+
+            if (!empty($a['module']) && !empty($a['action'])) {
+                $actionArray[$a['module'] . '_' . $a['action']] = $a['id'];
+            }            
+            
             $menuArray[] = $a;
             
         }
         
-        return $menuArray;
+        return array('menuItemArray' => $menuArray, 
+                     'actionArray' => $actionArray, 
+                     'parentIdArray' => $parentIdArray, 
+                     'levelArray' => $levelArray);
+        
+    }
+    
+    public function getCurrentItemDetails($details) {
+        
+        $module         = $details['module'];
+        $action         = $details['action'];
+        $actionArray    = $details['actionArray'];
+        $parentIdArray  = $details['parentIdArray'];
+        $levelArray     = $details['levelArray'];
+        
+        $currentItemId = $actionArray[$module . '_' . $action];
+        $level = $levelArray[$currentItemId];
+        $currentItemDetails = array('level1' => '', 'level2' => '', 'level3' => '');
+        
+        if ($level == 1) {
+            
+            $currentItemDetails['level1'] = $currentItemId;
+            return $currentItemDetails;
+            
+        } elseif ($level == 2) {
+            
+            $currentItemDetails['level2'] = $currentItemId;
+            $currentItemDetails['level1'] = $parentIdArray[$currentItemId];
+            return $currentItemDetails;
+            
+        } elseif ($level == 3) {
+            
+            $currentItemDetails['level3'] = $currentItemId;
+            $currentItemDetails['level2'] = $parentIdArray[$currentItemId];
+            $currentItemDetails['level1'] = $parentIdArray[$currentItemDetails['level2']];
+            return $currentItemDetails;
+            
+        }
         
     }
     
@@ -167,18 +228,6 @@ class MenuService {
         
     }
 
-    public function printMenu($userRoleList) {
-        
-        $menuArray = $this->getMenuItemArray($userRoleList);
-        
-        foreach ($menuArray as $menuItem) {
-            
-        }
-        
-        
-        
-    }    
-    
     protected function _getMenuItemListAsArray($userRoleList) {
         
         $menuItemList = $this->getMenuDao()->getMenuItemList($userRoleList);

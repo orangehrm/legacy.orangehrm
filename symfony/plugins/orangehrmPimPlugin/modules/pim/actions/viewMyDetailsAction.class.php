@@ -25,6 +25,7 @@ class viewMyDetailsAction extends basePimAction {
     public function execute($request) {
         
         $request->setParameter('empNumber', $this->getUser()->getAttribute('auth.empNumber'));
+        $request->setParameter('initialActionName', 'viewMyDetails');
         $this->forward('pim', 'viewPersonalDetails');
         
     }

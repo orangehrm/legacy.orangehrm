@@ -346,9 +346,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
     }
     
-    public function getAccessibleMenuItems() {
+    public function getAccessibleMenuItemDetails() {
         
-        return $this->getMenuService()->getMenuItemsAsArray($this->userRoles);
+        return $this->getMenuService()->getMenuItemDetails($this->userRoles);
         
     }    
 
