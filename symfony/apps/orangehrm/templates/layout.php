@@ -70,11 +70,11 @@ $cultureElements = explode('_', $sf_user->getCulture());
             
             <?php include_component('core', 'mainMenu'); ?>
 
-            <!--<div id="content">-->
+            <div id="content-old-screens" style="padding-top:35px;min-height: 250px;">
 
                   <?php echo $sf_content ?>
 
-            <!--</div>--> <!-- content -->
+            </div> <!-- content -->
           
         </div> <!-- wrapper -->      
      
