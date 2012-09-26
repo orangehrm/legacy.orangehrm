@@ -3870,6 +3870,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/undeleteLeaveType
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/updateCommentAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewHolidayListAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveListAction.class.php -text
+symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveRequestAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveSummaryAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewMyLeaveListAction.class.php -text

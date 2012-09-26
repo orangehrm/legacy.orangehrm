@@ -73,4 +73,27 @@ class HomePageService {
         
     }
     
+    public function getLeaveModuleDefaultPath() {
+        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
+        $isSupervisor = ($this->userSession->getAttribute('auth.isSupervisor'));
+        
+        if ($this->getConfigService()->isLeavePeriodDefined()) {
+            
+            if ($isAdmin || $isSupervisor) {
+                return 'leave/viewLeaveList/reset/1';
+            } else {
+                return 'time/viewMyLeaveList';
+            }
+            
+        } else {
+            if ($isAdmin) {
+                return 'leave/defineLeavePeriod';
+            } else {
+                return 'leave/showLeavePeriodNotDefinedWarning';
+            }
+            
+        }
+
+    }
+    
 }

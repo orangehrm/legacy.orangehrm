@@ -26,7 +26,21 @@ class defineLeavePeriodAction extends sfAction {
 
     private $leavePeriodService;
     private $leaveRequestService;
-
+    protected $menuService;
+    
+    public function getMenuService() {
+        
+        if (!$this->menuService instanceof MenuService) {
+            $this->menuService = new MenuService();
+        }
+        
+        return $this->menuService;
+        
+    }
+    
+    public function setMenuService(MenuService $menuService) {
+        $this->menuService = $menuService;
+    }  
 
     public function getLeavePeriodService() {
 
@@ -114,6 +128,9 @@ class defineLeavePeriodAction extends sfAction {
                     $leavePeriod->setEndDate($fullEndDate);
                     $leavePeriodService->saveLeavePeriod($leavePeriod);
                 }
+         
+                $this->getMenuService()->enableModuleMenuItems('leave');
+                $this->getUser()->getAttributeHolder()->remove('mainMenu.menuItemArray');
 
                 $this->redirect('leave/defineLeavePeriod');
             }
