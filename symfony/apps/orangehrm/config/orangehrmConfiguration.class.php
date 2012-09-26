@@ -22,6 +22,12 @@ class orangehrmConfiguration extends sfApplicationConfiguration
         }
 
        //$manager->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, 'hs_hr_%s');
+        
+        // Allow running doctrine:build-schema without error
+        $isCli = (php_sapi_name() == "cli");
+        if (true == $isCli) {
+            Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, false);
+        }        
    }
    
 }
