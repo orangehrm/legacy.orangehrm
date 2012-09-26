@@ -945,6 +945,7 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseWorkflowStateMachine.cla
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlementTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveType.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveTypeTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveType.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/CustomField.class.php -text
