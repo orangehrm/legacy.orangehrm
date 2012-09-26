@@ -14,14 +14,10 @@ function getListItemClass($menuItem, $currentItemDetails) {
     
     $flag = false;
     
-    if ($menuItem['level'] == 1) {
-        $flag = ($menuItem['id'] == $currentItemDetails['level1']);
-    } elseif ($menuItem['level'] == 2) {
-        $flag = ($menuItem['id'] == $currentItemDetails['level2']);
-    }
-    
-    if ($flag) {
+    if ($menuItem['level'] == 1 && $menuItem['id'] == $currentItemDetails['level1']) {
         return ' class="current"';
+    } elseif ($menuItem['level'] == 2 && $menuItem['id'] == $currentItemDetails['level2']) {
+        return ' class="selected"';
     }
     
     return '';

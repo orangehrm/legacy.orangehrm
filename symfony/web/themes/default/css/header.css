@@ -196,8 +196,8 @@ a {
 	left:0;
 	opacity:1;
 }
-.menu > ul > li > ul > li.current > a {
-	background:#555657;
+.menu > ul > li > ul > li.selected > a {
+	background:#555657 url(../images/sub-nav-arrow-s.png) no-repeat 92% 48%;
 	color:#fff;
 }
 .menu > ul > li > ul > li.current > a b {
