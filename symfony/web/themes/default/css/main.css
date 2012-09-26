@@ -194,7 +194,7 @@ a {
 	opacity:1;
 }
 .menu > ul > li > ul > li.selected > a {
-	background:#555657 url(../images/sub-nav-arrow-s.png) no-repeat 92% 48%;
+	background:#555657;
 	color:#fff;
 }
 .menu > ul > li > ul > li.current > a b {
@@ -268,13 +268,16 @@ a {
 }
 #help {
 	color:#f28c38;
-	background: url(../images/help.png) no-repeat center right;
+	background: url(../images/help-down.png) no-repeat center right;
 	padding:2px 15px 1px 1px;
 	text-decoration:none;
 	position:absolute;
 	top:10px;
 	right:233px;
 	z-index:999;
+}
+#wrapper .activated-help {
+	background: url(../images/help-up.png) no-repeat center right;
 }
 #help-menu {
 	background:#454648;

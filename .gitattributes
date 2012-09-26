@@ -4796,7 +4796,8 @@ symfony/web/themes/default/css/jquery/jquery.autocomplete.css -text
 symfony/web/themes/default/css/main.css -text
 symfony/web/themes/default/css/tipTip.css -text
 symfony/web/themes/default/images/close.png -text
-symfony/web/themes/default/images/help.png -text
+symfony/web/themes/default/images/help-down.png -text
+symfony/web/themes/default/images/help-up.png -text
 symfony/web/themes/default/images/logo.png -text
 symfony/web/themes/default/images/nav-bg.png -text
 symfony/web/themes/default/images/paging-first.png -text

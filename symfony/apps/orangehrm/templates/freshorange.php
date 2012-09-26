@@ -79,7 +79,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 
                 $("#help").click(function () {
                     $("#help-menu").slideToggle("fast");
-                    $(this).toggleClass("activated");
+                    $(this).toggleClass("activated-help");
                     return false;
                 });
 
