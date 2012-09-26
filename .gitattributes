@@ -4234,6 +4234,8 @@ symfony/plugins/orangehrmCorePlugin/web/css/ohrmWidgetCheckboxGroup.css -text
 symfony/plugins/orangehrmCorePlugin/web/css/ohrmWidgetSelectableGroupDropDown.css -text
 symfony/plugins/orangehrmCorePlugin/web/js/_ohrmList.js -text
 symfony/plugins/orangehrmCorePlugin/web/js/nationality.js -text
+symfony/plugins/orangehrmLeavePlugin/config/doctrine/schema.yml -text
+symfony/plugins/orangehrmLeavePlugin/test/orangehrmLeavePluginAllTests.php -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmPimPlugin/config/list_component.yml -text
 symfony/plugins/orangehrmPimPlugin/config/routing.yml -text
