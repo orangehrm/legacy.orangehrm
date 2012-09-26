@@ -1259,6 +1259,35 @@ CREATE TABLE ohrm_user_role_data_group (
     PRIMARY KEY(id)
 ) ENGINE = INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE ohrm_leave_type (
+  `id` int unsigned not null auto_increment,
+  `name` varchar(50) not null,
+  `deleted` tinyint(1) not null default 0,
+  `operational_country_id` int unsigned default null,
+  primary key  (`id`)
+) engine=innodb default charset=utf8;
+
+CREATE TABLE ohrm_leave_entitlement (
+  `id` int not null auto_increment,
+  no_of_days int not null,
+  leave_type_id int unsigned not null,
+  from_date datetime not null,
+  to_date datetime,
+  credited_date datetime,
+  note varchar(255) default null, 
+  entitlement_type int not null,
+  `deleted` tinyint(1) not null default 0,
+  PRIMARY KEY(`id`)
+) ENGINE = INNODB DEFAULT CHARSET=utf8;
+
+alter table ohrm_leave_type
+    add foreign key (operational_country_id)
+        references ohrm_operational_country(id) on delete set null;
+
+alter table ohrm_leave_entitlement
+    add foreign key (leave_type_id)
+        references ohrm_leave_type(id) on delete cascade;
+
 alter table ohrm_menu_item 
        add constraint foreign key (screen_id)
                              references ohrm_screen(id) on delete cascade;
