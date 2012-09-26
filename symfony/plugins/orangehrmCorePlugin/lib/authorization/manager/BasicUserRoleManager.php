@@ -35,6 +35,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $dataGroupService;
     protected $subordinates = null;   
     protected $menuService;
+    protected $projectService;
     
     protected $userRoleClasses;
 
@@ -154,6 +155,20 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     
     public function setMenuService(MenuService $menuService) {
         $this->menuService = $menuService;
+    }
+    
+    public function getProjectService() {
+        
+        if (is_null($this->projectService)) {
+            $this->projectService = new ProjectService();
+        }
+        
+        return $this->projectService;
+        
+    }
+
+    public function setProjectService($projectService) {
+        $this->projectService = $projectService;
     }    
 
     public function getAccessibleEntities($entityType, $operation = null, $returnType = null,
@@ -384,6 +399,10 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                 $roles[] = $this->getSystemUserService()->getUserRole('ESS');
             }
             
+            if ($this->isProjectAdmin($empNumber)) {
+                $roles[] = $this->getSystemUserService()->getUserRole('ProjectAdmin');
+            }            
+            
             if ($this->getEmployeeService()->isSupervisor($empNumber)) {
                 $supervisorRole = $this->getSystemUserService()->getUserRole('Supervisor');
                 if (!empty($supervisorRole)) {
@@ -505,6 +524,10 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return false;
     }
     
+    protected function isProjectAdmin($empNumber) {
+        return $this->getProjectService()->isProjectAdmin($empNumber);
+    }
+
     public function getDataGroupService() {
          if (empty($this->dataGroupService)) {
             $this->dataGroupService = new DataGroupService();
