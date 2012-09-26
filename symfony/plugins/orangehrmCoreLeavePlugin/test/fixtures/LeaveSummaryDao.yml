@@ -26,7 +26,7 @@ JobTitle:
   0: {id: 1, jobTitleName: 'Marketing Executive', jobDescription: 'ME'}
   1: {id: 2, jobTitleName: 'Production Manager', jobDescription: 'PM'}
 
-LeaveType:
+OldLeaveType:
   0: {leaveTypeId: 'LTY001', leaveTypeName: 'Casual', availableFlag: 1}
   1: {leaveTypeId: 'LTY002', leaveTypeName: 'Medical', availableFlag: 1}
   2: {leaveTypeId: 'LTY003', leaveTypeName: 'Company', availableFlag: 0}

@@ -594,7 +594,7 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         
         // 0 - Admin (also ESS?)
         $roles = $this->manager->getUserRolesPublic($users[0]);
-        $this->compareUserRoles(array('Admin'), $roles);
+        $this->compareUserRoles(array('Admin', 'ESS'), $roles);
         
         // 1 - ESS, Supervisor   
         $roles = $this->manager->getUserRolesPublic($users[1]);
@@ -606,13 +606,13 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         
         // 3 - Admin, Supervisor
         $roles = $this->manager->getUserRolesPublic($users[3]);
-        $this->compareUserRoles(array('Admin', 'Supervisor'), $roles);
+        $this->compareUserRoles(array('Admin', 'Supervisor', 'ESS'), $roles);
         
         // 4 - ESS
         $roles = $this->manager->getUserRolesPublic($users[4]);
         $this->compareUserRoles(array('ESS'), $roles);
         
-        // 5 - Admin (Default admin)
+        // 5 - Admin (Default admin) - does not have ESS role
         $roles = $this->manager->getUserRolesPublic($users[5]);
         $this->compareUserRoles(array('Admin'), $roles);       
     }

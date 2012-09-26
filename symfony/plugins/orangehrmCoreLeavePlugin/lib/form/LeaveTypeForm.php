@@ -53,7 +53,7 @@ class LeaveTypeForm extends orangehrmForm {
         $leaveTypeService = $this->getLeaveTypeService();
         $leaveTypeObject = $leaveTypeService->readLeaveType($leaveTypeId);
 
-        if ($leaveTypeObject instanceof LeaveType) {
+        if ($leaveTypeObject instanceof OldLeaveType) {
 
             $this->setDefault('hdnLeaveTypeId', $leaveTypeObject->getLeaveTypeId());
             $this->setDefault('txtLeaveTypeName', $leaveTypeObject->getLeaveTypeName());
@@ -76,8 +76,8 @@ class LeaveTypeForm extends orangehrmForm {
         if (!empty($leaveTypeId)) {
             $leaveType = $this->getLeaveTypeService()->readLeaveType($leaveTypeId);
         } else {
-            $leaveType = new LeaveType();
-            $leaveType->setAvailableFlag(LeaveType::AVAILABLE);
+            $leaveType = new OldLeaveType();
+            $leaveType->setAvailableFlag(OldLeaveType::AVAILABLE);
         }        
         
         $leaveType->setLeaveTypeName($this->getValue('txtLeaveTypeName'));

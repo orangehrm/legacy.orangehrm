@@ -36,12 +36,12 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
     protected $leaveTypeId;
 
     protected function setUp() {
-        TestDataService::truncateSpecificTables(array('Employee', 'Leave', 'LeaveRequest', 'LeaveType', 'EmployeeLeaveEntitlement', 'LeavePeriod'));
+        TestDataService::truncateSpecificTables(array('Employee', 'Leave', 'LeaveRequest', 'OldLeaveType', 'EmployeeLeaveEntitlement', 'LeavePeriod'));
 
         // Save leave type
         $leaveTypeData = sfYaml::load(sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/leaveType.yml');
         $leaveTypeDao = new LeaveTypeDao();
-        $leaveType = new LeaveType();
+        $leaveType = new OldLeaveType();
         $leaveType->setLeaveTypeName($leaveTypeData['leaveType']['LT_001']['name']);
 //                $leaveType->setLeaveRules($leaveTypeData['leaveType']['LT_001']['rule']);
         $leaveTypeDao->saveLeaveType($leaveType);
@@ -79,7 +79,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $q->execute();
 
         $q = Doctrine_Query::create()
-                ->delete('LeaveType lt')
+                ->delete('OldLeaveType lt')
                 ->where('lt.leaveTypeId=?', $this->leaveTypeId);
 
         $q->execute();

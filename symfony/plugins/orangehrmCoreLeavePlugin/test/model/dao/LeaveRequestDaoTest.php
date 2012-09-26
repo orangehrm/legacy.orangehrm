@@ -1114,7 +1114,7 @@
         $leave->leave_length_hours = 8;
         $leave->leave_length_days = 1;
         $leave->leave_request_id = $leaveRequestId;
-        $leave->leave_type_id = $this->fixture['LeaveType'][0]['leaveTypeId'];
+        $leave->leave_type_id = $this->fixture['OldLeaveType'][0]['leaveTypeId'];
         $leave->employee_id = $this->fixture['Employee'][0]['empNumber'];
         $leave->leave_date = '2010-09-09';
         $leave->leave_status = 1;

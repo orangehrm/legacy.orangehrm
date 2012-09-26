@@ -1,4 +1,4 @@
-LeaveType:
+OldLeaveType:
   0: {leaveTypeId: 'LTY001', leaveTypeName: 'Casual', availableFlag: 1}
   1: {leaveTypeId: 'LTY002', leaveTypeName: 'Medical', availableFlag: 1}
   2: {leaveTypeId: 'LTY003', leaveTypeName: 'Company', availableFlag: 0}

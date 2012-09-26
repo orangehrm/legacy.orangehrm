@@ -140,7 +140,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
 
     /**
      * Is Valid leave request
-     * @param LeaveType $leaveType
+     * @param OldLeaveType $leaveType
      * @param array $leaveRecords
      * @returns boolean
      */
@@ -188,7 +188,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
     
     /**
      * hasWorkingDays
-     * @param LeaveType $leaveType
+     * @param OldLeaveType $leaveType
      * @returns boolean
      */
     protected function hasWorkingDays($holidayCount, $leaves) {

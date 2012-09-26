@@ -37,10 +37,10 @@ class LeaveTypeDao extends BaseDao {
 
     /**
      *
-     * @param LeaveType $leaveType
+     * @param OldLeaveType $leaveType
      * @return boolean
      */
-    public function saveLeaveType(LeaveType $leaveType) {
+    public function saveLeaveType(OldLeaveType $leaveType) {
         try {
             if ($leaveType->getLeaveTypeId() == '') {
 
@@ -69,7 +69,7 @@ class LeaveTypeDao extends BaseDao {
         try {
 
             $q = Doctrine_Query::create()
-                            ->update('LeaveType lt')
+                            ->update('OldLeaveType lt')
                             ->set('lt.availableFlag', '?', '0')
                             ->whereIn('lt.leaveTypeId', $leaveTypeList);
             $numDeleted = $q->execute();
@@ -86,12 +86,12 @@ class LeaveTypeDao extends BaseDao {
     /**
      * Get Leave Type list
      * @param mixed $operationalCountryId 
-     * @return LeaveType Collection
+     * @return OldLeaveType Collection
      */
     public function getLeaveTypeList($operationalCountryId = null) {
         try {
             $q = Doctrine_Query::create()
-                            ->from('LeaveType lt')
+                            ->from('OldLeaveType lt')
                             ->where('lt.availableFlag = 1')
                             ->orderBy('lt.leaveTypeName');
             
@@ -115,7 +115,7 @@ class LeaveTypeDao extends BaseDao {
     public function getDeletedLeaveTypeList($operationalCountryId = null) {
         try {
             $q = Doctrine_Query::create()
-                            ->from('LeaveType lt')
+                            ->from('OldLeaveType lt')
                             ->where('lt.availableFlag = 0')
                             ->orderBy('lt.leaveTypeId');
 
@@ -134,11 +134,11 @@ class LeaveTypeDao extends BaseDao {
 
     /**
      * Read Leave Type
-     * @return LeaveType
+     * @return OldLeaveType
      */
     public function readLeaveType($leaveTypeId) {
         try {
-            return Doctrine::getTable('LeaveType')->find($leaveTypeId);
+            return Doctrine::getTable('OldLeaveType')->find($leaveTypeId);
         } catch (Exception $e) {
             $this->getLogger()->error("Exception in readLeaveType:" . $e);
             throw new DaoException($e->getMessage());
@@ -148,7 +148,7 @@ class LeaveTypeDao extends BaseDao {
     public function readLeaveTypeByName($leaveTypeName) {
         try {
             $q = Doctrine_Query::create()
-                            ->from('LeaveType lt')
+                            ->from('OldLeaveType lt')
                             ->where("lt.leaveTypeName = ?", $leaveTypeName)
                             ->andWhere('lt.availableFlag = 1');
 
@@ -166,7 +166,7 @@ class LeaveTypeDao extends BaseDao {
         try {
 
             $q = Doctrine_Query::create()
-                            ->update('LeaveType lt')
+                            ->update('OldLeaveType lt')
                             ->set('lt.availableFlag', '1')
                             ->where("lt.leaveTypeId = '" . $leaveTypeId . "'");
 

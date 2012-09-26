@@ -41,7 +41,7 @@ EmployeeLeaveEntitlement:
       default: '0.00'
       scale: false
   relations:
-    LeaveType:
+    OldLeaveType:
       local: leave_type_id
       foreign: leaveTypeId
       type: one
@@ -82,7 +82,7 @@ LeaveRequest:
       local: empNumber
       foreign: empNumber
       type: one
-    LeaveType:
+    OldLeaveType:
       local: leave_type_id
       foreign: leaveTypeId
       type: one
@@ -127,7 +127,7 @@ Leave:
       foreign: leave_request_id
       type: one
 
-LeaveType:
+OldLeaveType:
   tableName: hs_hr_leavetype
   columns:
     leave_type_id:

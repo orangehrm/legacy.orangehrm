@@ -233,7 +233,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetEmployeeAllowedToApplyLeaveTypes() {
-        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'set5');
+        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'set5');
 
         //mocking LeaveTypeService
         $leaveTypeService = $this->getMock('LeaveTypeService', array('getLeaveTypeList'));
@@ -266,7 +266,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
 
         $this->assertTrue(is_array($result));
         foreach($result as $leaveType) {
-            $this->assertTrue($leaveType instanceof LeaveType);
+            $this->assertTrue($leaveType instanceof OldLeaveType);
         }
 
         // Test handling of exceptions

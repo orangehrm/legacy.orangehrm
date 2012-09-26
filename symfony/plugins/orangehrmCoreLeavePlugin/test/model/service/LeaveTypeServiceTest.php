@@ -42,7 +42,7 @@
 
     public function testGetLeaveTypeList() {
 
-        $leaveTypeList = TestDataService::loadObjectList('LeaveType', $this->fixture, 'set1');
+        $leaveTypeList = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'set1');
 
         $leaveTypeDao = $this->getMock('LeaveTypeDao', array('getLeaveTypeList'));
         $leaveTypeDao->expects($this->once())
@@ -55,14 +55,14 @@
         $this->assertEquals(5, count($returnedLeaveTypeList));
         
         foreach ($returnedLeaveTypeList as $leaveType) {
-            $this->assertTrue($leaveType instanceof LeaveType);
+            $this->assertTrue($leaveType instanceof OldLeaveType);
         }
 
     }
 
     public function testGetLeaveTypeListWithOperationalCountryId() {
 
-        $leaveTypeList = TestDataService::loadObjectList('LeaveType', $this->fixture, 'set1');
+        $leaveTypeList = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'set1');
 
         $leaveTypeDao = $this->getMock('LeaveTypeDao', array('getLeaveTypeList'));
         $leaveTypeDao->expects($this->once())
@@ -76,7 +76,7 @@
         $this->assertEquals(5, count($returnedLeaveTypeList));
         
         foreach ($returnedLeaveTypeList as $leaveType) {
-            $this->assertTrue($leaveType instanceof LeaveType);
+            $this->assertTrue($leaveType instanceof OldLeaveType);
         }            
     }
     
@@ -84,7 +84,7 @@
 
     public function testSaveLeaveType() {
 
-        $leaveTypeList = TestDataService::loadObjectList('LeaveType', $this->fixture, 'set1');
+        $leaveTypeList = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'set1');
         $leaveType = $leaveTypeList[0];
 
         $leaveTypeDao = $this->getMock('LeaveTypeDao', array('saveLeaveType'));
@@ -103,7 +103,7 @@
 
     public function testReadLeaveType() {
 
-        $leaveTypeList = TestDataService::loadObjectList('LeaveType', $this->fixture, 'set1');
+        $leaveTypeList = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'set1');
         $leaveType = $leaveTypeList[0];
 
         $leaveTypeDao = $this->getMock('LeaveTypeDao', array('readLeaveType'));
@@ -116,7 +116,7 @@
 
         $leaveType = $this->leaveTypeService->readLeaveType('LTY001');
 
-        $this->assertTrue($leaveType instanceof LeaveType);
+        $this->assertTrue($leaveType instanceof OldLeaveType);
 
     }
 

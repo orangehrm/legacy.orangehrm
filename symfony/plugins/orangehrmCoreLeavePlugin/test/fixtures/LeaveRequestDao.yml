@@ -45,7 +45,7 @@ EmpLocations:
   4: {emp_number: 5, location_id: 4 }
   5: {emp_number: 6, location_id: 3 }
   
-LeaveType:
+OldLeaveType:
   0: {leaveTypeId: 'LTY001', leaveTypeName: 'Casual', availableFlag: 1}
   1: {leaveTypeId: 'LTY002', leaveTypeName: 'Medical', availableFlag: 1}
   2: {leaveTypeId: 'LTY003', leaveTypeName: 'Company', availableFlag: 0}

@@ -39,7 +39,7 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
 
     private function _getLeaveTypeObjectWithValues() {
 
-        $leaveType = new LeaveType();
+        $leaveType = new OldLeaveType();
         $leaveType->setLeaveTypeName('Special');
         $leaveType->setAvailableFlag(1);
 
@@ -49,16 +49,16 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
     /* Testing saveLeaveType() */
 
     public function testSaveLeaveTypeReturnValue() {
-        TestDataService::truncateTables(array('LeaveType'));
+        TestDataService::truncateTables(array('OldLeaveType'));
         $this->assertTrue($this->leaveTypeDao->saveLeaveType($this->_getLeaveTypeObjectWithValues()));
     }
 
     public function testSaveLeaveTypeCheckSavedType() {
-        TestDataService::truncateTables(array('LeaveType'));
+        TestDataService::truncateTables(array('OldLeaveType'));
 
         $this->leaveTypeDao->saveLeaveType($this->_getLeaveTypeObjectWithValues());
 
-        $savedLeaveTypes = TestDataService::fetchLastInsertedRecords('LeaveType', 1);
+        $savedLeaveTypes = TestDataService::fetchLastInsertedRecords('OldLeaveType', 1);
 
         $this->assertEquals('LTY001', $savedLeaveTypes[0]->getLeaveTypeId());
         $this->assertEquals('Special', $savedLeaveTypes[0]->getLeaveTypeName());
@@ -73,7 +73,7 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
         $this->leaveTypeDao->saveLeaveType($this->_getLeaveTypeObjectWithValues());
 
         /* Changing entry in hs_hr_unique_id to 7 */
-        TestDataService::adjustUniqueId(LeaveType, 7, true);
+        TestDataService::adjustUniqueId(OldLeaveType, 7, true);
 
         /* Following should throw an exception for LTY008 */
         $this->leaveTypeDao->saveLeaveType($this->_getLeaveTypeObjectWithValues());
@@ -81,26 +81,26 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
 
     public function testSaveLeaveTypeWithOperationalCountry() {
 
-        TestDataService::truncateSpecificTables(array('LeaveType'));
+        TestDataService::truncateSpecificTables(array('OldLeaveType'));
 
         $leaveType = $this->_getLeaveTypeObjectWithValues();
         $leaveType->setOperationalCountryId(1);
 
         $this->leaveTypeDao->saveLeaveType($leaveType);
 
-        $savedLeaveType = TestDataService::fetchLastInsertedRecord('LeaveType', 'leave_type_id');
+        $savedLeaveType = TestDataService::fetchLastInsertedRecord('OldLeaveType', 'leave_type_id');
         $this->assertEquals(1, $savedLeaveType->getOperationalCountryId());
     }
 
     public function testSaveLeaveTypeWithoutOperationalCountry() {
 
-        TestDataService::truncateSpecificTables(array('LeaveType'));
+        TestDataService::truncateSpecificTables(array('OldLeaveType'));
 
         $leaveType = $this->_getLeaveTypeObjectWithValues();
 
         $this->leaveTypeDao->saveLeaveType($leaveType);
 
-        $savedLeaveType = TestDataService::fetchLastInsertedRecord('LeaveType', 'leave_type_id');
+        $savedLeaveType = TestDataService::fetchLastInsertedRecord('OldLeaveType', 'leave_type_id');
         $this->assertTrue(is_null($savedLeaveType->getOperationalCountryId()));
     }
 
@@ -126,7 +126,7 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
     public function testDeleteLeaveTypeValues() {
 
         $this->assertTrue($this->leaveTypeDao->deleteLeaveType(array('LTY001')));
-        $deletedTypeObject = TestDataService::fetchObject('LeaveType', 'LTY001');
+        $deletedTypeObject = TestDataService::fetchObject('OldLeaveType', 'LTY001');
 
         $this->assertEquals('LTY001', $deletedTypeObject->getLeaveTypeId());
         $this->assertEquals(0, $deletedTypeObject->getAvailableFlag());
@@ -151,7 +151,7 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
         $leaveTypeList = $this->leaveTypeDao->getLeaveTypeList();
 
         foreach ($leaveTypeList as $leaveTypeObj) {
-            $this->assertTrue($leaveTypeObj instanceof LeaveType);
+            $this->assertTrue($leaveTypeObj instanceof OldLeaveType);
         }
     }
 
@@ -201,7 +201,7 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
         $leaveTypeList = $this->leaveTypeDao->getDeletedLeaveTypeList();
 
         foreach ($leaveTypeList as $leaveTypeObj) {
-            $this->assertTrue($leaveTypeObj instanceof LeaveType);
+            $this->assertTrue($leaveTypeObj instanceof OldLeaveType);
         }
     }
 
@@ -246,10 +246,10 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
     public function testReadLeaveTypeObjectType() {
 
         // Active type
-        $this->assertTrue($this->leaveTypeDao->readLeaveType('LTY001') instanceof LeaveType);
+        $this->assertTrue($this->leaveTypeDao->readLeaveType('LTY001') instanceof OldLeaveType);
 
         // Deleted type
-        $this->assertTrue($this->leaveTypeDao->readLeaveType('LTY003') instanceof LeaveType);
+        $this->assertTrue($this->leaveTypeDao->readLeaveType('LTY003') instanceof OldLeaveType);
     }
 
     public function testReadLeaveTypeObjectWrongArgument() {
@@ -269,8 +269,8 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
 
     public function testReadLeaveTypeByNameType() {
 
-        $this->assertTrue($this->leaveTypeDao->readLeaveTypeByName('Casual') instanceof LeaveType);
-        $this->assertTrue($this->leaveTypeDao->readLeaveTypeByName('Casual ') instanceof LeaveType);
+        $this->assertTrue($this->leaveTypeDao->readLeaveTypeByName('Casual') instanceof OldLeaveType);
+        $this->assertTrue($this->leaveTypeDao->readLeaveTypeByName('Casual ') instanceof OldLeaveType);
     }
 
     public function testReadLeaveTypeByNameValues() {
@@ -292,7 +292,7 @@ class LeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
     public function testUndeleteLeaveTypeValues() {
 
         $this->assertTrue($this->leaveTypeDao->undeleteLeaveType('LTY003'));
-        $undeletedTypeObject = TestDataService::fetchObject('LeaveType', 'LTY003');
+        $undeletedTypeObject = TestDataService::fetchObject('OldLeaveType', 'LTY003');
 
         $this->assertEquals('LTY003', $undeletedTypeObject->getLeaveTypeId());
         $this->assertEquals(1, $undeletedTypeObject->getAvailableFlag());

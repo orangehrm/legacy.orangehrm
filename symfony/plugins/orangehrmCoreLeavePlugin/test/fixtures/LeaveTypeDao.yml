@@ -6,7 +6,7 @@ OperationalCountry:
   0: {id: 1, country_code: 'LK'}
   1: {id: 2, country_code: 'US'}  
   
-LeaveType:
+OldLeaveType:
   0: {leaveTypeId: 'LTY001', leaveTypeName: 'Casual', availableFlag: 1, operational_country_id: 1}
   1: {leaveTypeId: 'LTY002', leaveTypeName: 'Medical', availableFlag: 1, operational_country_id: 2}
   2: {leaveTypeId: 'LTY003', leaveTypeName: 'Company', availableFlag: 0, operational_country_id: 2}

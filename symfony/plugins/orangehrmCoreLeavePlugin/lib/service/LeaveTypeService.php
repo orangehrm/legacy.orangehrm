@@ -37,10 +37,10 @@ class LeaveTypeService extends BaseService {
 
     /**
      *
-     * @param LeaveType $leaveType
+     * @param OldLeaveType $leaveType
      * @return boolean
      */
-    public function saveLeaveType(LeaveType $leaveType) {
+    public function saveLeaveType(OldLeaveType $leaveType) {
 
         $this->getLeaveTypeDao()->saveLeaveType($leaveType);
 
@@ -60,7 +60,7 @@ class LeaveTypeService extends BaseService {
 
     /**
      *
-     * @return LeaveType Collection
+     * @return OldLeaveType Collection
      */
     public function getLeaveTypeList($operationalCountryId = null) {
 
@@ -69,7 +69,7 @@ class LeaveTypeService extends BaseService {
 
     /**
      *
-     * @return LeaveType
+     * @return OldLeaveType
      */
     public function readLeaveType($leaveTypeId) {
 

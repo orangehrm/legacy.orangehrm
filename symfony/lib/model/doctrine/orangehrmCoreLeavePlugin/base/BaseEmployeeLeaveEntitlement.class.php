@@ -12,7 +12,7 @@
  * @property decimal $leave_taken
  * @property decimal $leave_brought_forward
  * @property decimal $leave_carried_forward
- * @property LeaveType $LeaveType
+ * @property OldLeaveType $OldLeaveType
  * @property Employee $Employee
  * @property LeavePeriod $LeavePeriod
  * 
@@ -23,7 +23,7 @@
  * @method decimal                  getLeaveTaken()            Returns the current record's "leave_taken" value
  * @method decimal                  getLeaveBroughtForward()   Returns the current record's "leave_brought_forward" value
  * @method decimal                  getLeaveCarriedForward()   Returns the current record's "leave_carried_forward" value
- * @method LeaveType                getLeaveType()             Returns the current record's "LeaveType" value
+ * @method OldLeaveType             getOldLeaveType()          Returns the current record's "OldLeaveType" value
  * @method Employee                 getEmployee()              Returns the current record's "Employee" value
  * @method LeavePeriod              getLeavePeriod()           Returns the current record's "LeavePeriod" value
  * @method EmployeeLeaveEntitlement setLeaveTypeId()           Sets the current record's "leave_type_id" value
@@ -33,7 +33,7 @@
  * @method EmployeeLeaveEntitlement setLeaveTaken()            Sets the current record's "leave_taken" value
  * @method EmployeeLeaveEntitlement setLeaveBroughtForward()   Sets the current record's "leave_brought_forward" value
  * @method EmployeeLeaveEntitlement setLeaveCarriedForward()   Sets the current record's "leave_carried_forward" value
- * @method EmployeeLeaveEntitlement setLeaveType()             Sets the current record's "LeaveType" value
+ * @method EmployeeLeaveEntitlement setOldLeaveType()          Sets the current record's "OldLeaveType" value
  * @method EmployeeLeaveEntitlement setEmployee()              Sets the current record's "Employee" value
  * @method EmployeeLeaveEntitlement setLeavePeriod()           Sets the current record's "LeavePeriod" value
  * 
@@ -90,7 +90,7 @@ abstract class BaseEmployeeLeaveEntitlement extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('LeaveType', array(
+        $this->hasOne('OldLeaveType', array(
              'local' => 'leave_type_id',
              'foreign' => 'leaveTypeId'));
 

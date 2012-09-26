@@ -326,7 +326,7 @@ class LeaveRequestDao extends BaseDao {
                 ->from('LeaveRequest lr')
                 ->leftJoin('lr.Leave l')
                 ->leftJoin('lr.Employee em')
-                ->leftJoin('lr.LeaveType lt');
+                ->leftJoin('lr.OldLeaveType lt');
 
         $dateRange = $searchParameters->getParameter('dateRange', new DateRange());
         $statuses = $searchParameters->getParameter('statuses');
@@ -379,7 +379,7 @@ class LeaveRequestDao extends BaseDao {
         }
 
         if (!empty($leaveType)) {
-            $leaveTypeId = ($leaveType instanceof LeaveType) ? $leaveType->getLeaveTypeId() : $leaveType;
+            $leaveTypeId = ($leaveType instanceof OldLeaveType) ? $leaveType->getLeaveTypeId() : $leaveType;
             $q->andWhere('lr.leave_type_id = ?', $leaveTypeId);
         }
         if (!empty($leaveTypeId)) {
@@ -592,7 +592,7 @@ class LeaveRequestDao extends BaseDao {
         $q = Doctrine_Query::create()
 
                 ->from('LeaveRequest lr')
-                ->leftJoin('lr.LeaveType lt')
+                ->leftJoin('lr.OldLeaveType lt')
                 ->leftJoin('lr.Leave l')                
                 ->leftJoin('lr.Employee em');
 
@@ -647,7 +647,7 @@ class LeaveRequestDao extends BaseDao {
         }
 
         if (!empty($leaveType)) {
-            $leaveTypeId = ($leaveType instanceof LeaveType) ? $leaveType->getLeaveTypeId() : $leaveType;
+            $leaveTypeId = ($leaveType instanceof OldLeaveType) ? $leaveType->getLeaveTypeId() : $leaveType;
             $q->andWhere('lr.leave_type_id = ?', $leaveTypeId);
         }
         if (!empty($leaveTypeId)) {

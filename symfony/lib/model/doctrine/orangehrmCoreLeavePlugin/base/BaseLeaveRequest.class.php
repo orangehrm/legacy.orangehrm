@@ -13,7 +13,7 @@
  * @property integer $empNumber
  * @property string $leave_comments
  * @property Employee $Employee
- * @property LeaveType $LeaveType
+ * @property OldLeaveType $OldLeaveType
  * @property LeavePeriod $LeavePeriod
  * @property Doctrine_Collection $Leave
  * 
@@ -25,7 +25,7 @@
  * @method integer             getEmpNumber()        Returns the current record's "empNumber" value
  * @method string              getLeaveComments()    Returns the current record's "leave_comments" value
  * @method Employee            getEmployee()         Returns the current record's "Employee" value
- * @method LeaveType           getLeaveType()        Returns the current record's "LeaveType" value
+ * @method OldLeaveType        getOldLeaveType()     Returns the current record's "OldLeaveType" value
  * @method LeavePeriod         getLeavePeriod()      Returns the current record's "LeavePeriod" value
  * @method Doctrine_Collection getLeave()            Returns the current record's "Leave" collection
  * @method LeaveRequest        setLeaveRequestId()   Sets the current record's "leave_request_id" value
@@ -36,7 +36,7 @@
  * @method LeaveRequest        setEmpNumber()        Sets the current record's "empNumber" value
  * @method LeaveRequest        setLeaveComments()    Sets the current record's "leave_comments" value
  * @method LeaveRequest        setEmployee()         Sets the current record's "Employee" value
- * @method LeaveRequest        setLeaveType()        Sets the current record's "LeaveType" value
+ * @method LeaveRequest        setOldLeaveType()     Sets the current record's "OldLeaveType" value
  * @method LeaveRequest        setLeavePeriod()      Sets the current record's "LeavePeriod" value
  * @method LeaveRequest        setLeave()            Sets the current record's "Leave" collection
  * 
@@ -92,7 +92,7 @@ abstract class BaseLeaveRequest extends sfDoctrineRecord
              'local' => 'empNumber',
              'foreign' => 'empNumber'));
 
-        $this->hasOne('LeaveType', array(
+        $this->hasOne('OldLeaveType', array(
              'local' => 'leave_type_id',
              'foreign' => 'leaveTypeId'));
 

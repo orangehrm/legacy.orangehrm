@@ -24,7 +24,7 @@ class LeaveRequestDaoSearchTest extends PHPUnit_Framework_TestCase {
      */
     protected function setUp() {
 
-        TestDataService::truncateTables(array('Employee', 'LeaveType', 'LeavePeriod', 'Leave'));
+        TestDataService::truncateTables(array('Employee', 'OldLeaveType', 'LeavePeriod', 'Leave'));
         TestDataService::populate(sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestDaoSearch.yml');
     }
 
