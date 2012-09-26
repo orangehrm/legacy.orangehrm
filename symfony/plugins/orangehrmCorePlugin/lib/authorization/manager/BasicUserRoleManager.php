@@ -36,6 +36,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $subordinates = null;   
     protected $menuService;
     protected $projectService;
+    protected $vacancyService;
     
     protected $userRoleClasses;
 
@@ -169,6 +170,20 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
     public function setProjectService($projectService) {
         $this->projectService = $projectService;
+    }
+    
+    public function getVacancyService() {
+        
+        if (is_null($this->vacancyService)) {
+            $this->vacancyService = new VacancyService();
+        }
+        
+        return $this->vacancyService;
+        
+    }
+
+    public function setVacancyService($vacancyService) {
+        $this->vacancyService = $vacancyService;
     }    
 
     public function getAccessibleEntities($entityType, $operation = null, $returnType = null,
@@ -401,6 +416,14 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
             
             if ($this->isProjectAdmin($empNumber)) {
                 $roles[] = $this->getSystemUserService()->getUserRole('ProjectAdmin');
+            }
+            
+            if ($this->isHiringManager($empNumber)) {
+                $roles[] = $this->getSystemUserService()->getUserRole('HiringManager');
+            }
+            
+            if ($this->isInterviewer($empNumber)) {
+                $roles[] = $this->getSystemUserService()->getUserRole('Interviewer');
             }            
             
             if ($this->getEmployeeService()->isSupervisor($empNumber)) {
@@ -527,6 +550,14 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected function isProjectAdmin($empNumber) {
         return $this->getProjectService()->isProjectAdmin($empNumber);
     }
+    
+    private function isHiringManager($empNumber) {
+        return $this->getVacancyService()->isHiringManager($empNumber);
+    }
+    
+    private function isInterviewer($empNumber) {
+        return $this->getVacancyService()->isInterviewer($empNumber);
+    }    
 
     public function getDataGroupService() {
          if (empty($this->dataGroupService)) {
