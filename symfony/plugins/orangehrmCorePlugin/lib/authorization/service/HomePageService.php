@@ -62,7 +62,7 @@ class HomePageService {
             if ($isAdmin) {
                 return 'time/viewEmployeeTimesheet';
             } else {
-                return 'time/viewMyTimeTimesheet';
+                return 'time/viewMyTimesheet';
             }
             
         } else {
