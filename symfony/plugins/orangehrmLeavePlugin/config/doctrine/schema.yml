@@ -7,6 +7,12 @@ LeaveEntitlement:
       unsigned: false
       primary: true
       autoincrement: true
+    emp_number:
+      type: integer(7)
+      fixed: false
+      unsigned: false
+      primary: false
+      autoincrement: false
     no_of_days:
       type: integer(4)
       fixed: false
@@ -69,7 +75,11 @@ LeaveEntitlement:
       local: leave_type_id
       foreign: id
       type: one
-
+    Employee:
+      local: emp_number
+      foreign: emp_number
+      type: one
+      
 LeaveType:
   tableName: ohrm_leave_type
   columns:

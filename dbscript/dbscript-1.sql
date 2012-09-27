@@ -1269,6 +1269,7 @@ CREATE TABLE ohrm_leave_type (
 
 CREATE TABLE ohrm_leave_entitlement (
   `id` int not null auto_increment,
+  emp_number int(7) not null,
   no_of_days int not null,
   leave_type_id int unsigned not null,
   from_date datetime not null,
@@ -1287,6 +1288,10 @@ alter table ohrm_leave_type
 alter table ohrm_leave_entitlement
     add foreign key (leave_type_id)
         references ohrm_leave_type(id) on delete cascade;
+
+alter table ohrm_leave_entitlement
+    add foreign key (emp_number)
+        references hs_hr_employee(emp_number) on delete cascade;
 
 alter table ohrm_menu_item 
        add constraint foreign key (screen_id)

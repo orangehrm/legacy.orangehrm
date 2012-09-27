@@ -73,6 +73,7 @@
  * @property Doctrine_Collection $EmployeeLeaveEntitlement
  * @property Doctrine_Collection $LeaveRequest
  * @property Doctrine_Collection $SystemUser
+ * @property Doctrine_Collection $LeaveEntitlement
  * @property Doctrine_Collection $subordinates
  * @property Doctrine_Collection $EmpPicture
  * @property Doctrine_Collection $EmpJobtitleHistory
@@ -162,6 +163,7 @@
  * @method Doctrine_Collection       getEmployeeLeaveEntitlement()  Returns the current record's "EmployeeLeaveEntitlement" collection
  * @method Doctrine_Collection       getLeaveRequest()              Returns the current record's "LeaveRequest" collection
  * @method Doctrine_Collection       getSystemUser()                Returns the current record's "SystemUser" collection
+ * @method Doctrine_Collection       getLeaveEntitlement()          Returns the current record's "LeaveEntitlement" collection
  * @method Doctrine_Collection       getSubordinates()              Returns the current record's "subordinates" collection
  * @method Doctrine_Collection       getEmpPicture()                Returns the current record's "EmpPicture" collection
  * @method Doctrine_Collection       getEmpJobtitleHistory()        Returns the current record's "EmpJobtitleHistory" collection
@@ -250,6 +252,7 @@
  * @method Employee                  setEmployeeLeaveEntitlement()  Sets the current record's "EmployeeLeaveEntitlement" collection
  * @method Employee                  setLeaveRequest()              Sets the current record's "LeaveRequest" collection
  * @method Employee                  setSystemUser()                Sets the current record's "SystemUser" collection
+ * @method Employee                  setLeaveEntitlement()          Sets the current record's "LeaveEntitlement" collection
  * @method Employee                  setSubordinates()              Sets the current record's "subordinates" collection
  * @method Employee                  setEmpPicture()                Sets the current record's "EmpPicture" collection
  * @method Employee                  setEmpJobtitleHistory()        Sets the current record's "EmpJobtitleHistory" collection
@@ -575,6 +578,10 @@ abstract class BaseEmployee extends sfDoctrineRecord
              'foreign' => 'empNumber'));
 
         $this->hasMany('SystemUser', array(
+             'local' => 'emp_number',
+             'foreign' => 'emp_number'));
+
+        $this->hasMany('LeaveEntitlement', array(
              'local' => 'emp_number',
              'foreign' => 'emp_number'));
 
