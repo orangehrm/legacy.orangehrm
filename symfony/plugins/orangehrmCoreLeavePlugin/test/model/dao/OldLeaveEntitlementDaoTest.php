@@ -25,7 +25,7 @@
  * 
  * @group CoreLeave 
  */
-class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
+class OldLeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
 
     public $leaveEntitlementDao;
     public $leaveType;
