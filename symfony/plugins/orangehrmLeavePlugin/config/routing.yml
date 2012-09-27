@@ -1,0 +1,6 @@
+leave_entitlements:
+  url:   /leave/viewLeaveEntitlements/*
+  param: { module:leave, action: viewLeaveEntitlements }
+  with_wildcard_routes: true
+
+

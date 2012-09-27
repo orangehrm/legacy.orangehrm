@@ -24,6 +24,20 @@
  */
 class LeaveEntitlementsForm extends BaseForm {
 
+    protected $leaveTypeService;
+    
+    public function getLeaveTypeService() {
+        if (!isset($this->leaveTypeService)) {
+            $this->leaveTypeService = new LeaveTypeService();
+        }
+        return $this->leaveTypeService;
+    }
+
+    public function setLeaveTypeService(LeaveTypeService $leaveTypeService) {
+        $this->leaveTypeService = $leaveTypeService;
+    }
+
+    
     public function configure() {
 
         $this->setWidgets(array(
@@ -32,6 +46,8 @@ class LeaveEntitlementsForm extends BaseForm {
 
         $this->setValidator('employee_name', new ohrmValidatorEmployeeNameAutoFill());
 
+        $this->_setLeaveTypeWidget();
+        
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'viewLeaveEntitlements','LeaveEntitlementsForm');
 
@@ -42,17 +58,18 @@ class LeaveEntitlementsForm extends BaseForm {
 
     }
 
-    private function _setJobTitleWidget() {
+    private function _setLeaveTypeWidget() {
 
-        $jobTitleList = $this->getJobTitleService()->getJobTitleList();
-        $choices = array('0' => __('All'));
-
-        foreach ($jobTitleList as $job) {
-            $choices[$job->getId()] = $job->getJobTitleName();
+        $choices = array('' => '--' . __('Select') . '--');
+        
+        $leaveTypeList = $this->getLeaveTypeService()->getLeaveTypeList();
+        
+        foreach ($leaveTypeList as $leaveType) {
+            $choices[$leaveType->getLeaveTypeId()] = $leaveType->getLeaveTypeName();
         }
 
-        $this->setWidget('job_title', new sfWidgetFormChoice(array('choices' => $choices)));
-        $this->setValidator('job_title', new sfValidatorChoice(array('choices' => array_keys($choices))));
+        $this->setWidget('leave_type', new sfWidgetFormChoice(array('choices' => $choices)));
+        $this->setValidator('leave_type', new sfValidatorChoice(array('choices' => array_keys($choices))));
     }
 
     /**
@@ -62,7 +79,8 @@ class LeaveEntitlementsForm extends BaseForm {
     protected function getFormLabels() {
 
         $labels = array(
-            'employee_name' => __('Employee Name')
+            'employee_name' => __('Employee'),
+            'leave_type' => __('Leave Type')
         );
         return $labels;
     }

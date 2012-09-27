@@ -34,6 +34,8 @@ class viewLeaveEntitlementsAction extends sfAction {
             if ($this->form->isValid()) {
             }                
         }        
+        
+        
     }
 }
 
