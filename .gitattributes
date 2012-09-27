@@ -4065,6 +4065,7 @@ symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorEmployeeNameA
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorSchemaCompare.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/orangehrmValidatedFile.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetCheckboxGroup.php -text
+symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetDatePicker.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetDatePickerNew.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetDiv.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetEmployeeNameAutoFill.php -text
@@ -4819,6 +4820,7 @@ symfony/web/themes/default/css/header.css -text
 symfony/web/themes/default/css/jquery/jquery.autocomplete.css -text
 symfony/web/themes/default/css/main.css -text
 symfony/web/themes/default/css/tipTip.css -text
+symfony/web/themes/default/images/calendar.png -text
 symfony/web/themes/default/images/close.png -text
 symfony/web/themes/default/images/help-down.png -text
 symfony/web/themes/default/images/help-up.png -text
