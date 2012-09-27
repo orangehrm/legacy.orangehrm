@@ -27,6 +27,7 @@ class LeaveEntitlementSearchParameterHolder extends SearchParameterHolder {
     protected $leaveTypeId;    
     protected $fromDate;
     protected $toDate;
+    protected $deletedFlag = false;
     
     public function __construct() {
         $this->orderField = 'from_date';
@@ -63,4 +64,14 @@ class LeaveEntitlementSearchParameterHolder extends SearchParameterHolder {
     public function setToDate($toDate) {
         $this->toDate = $toDate;
     }    
+    
+    public function getDeletedFlag() {
+        return $this->deletedFlag;
+    }
+
+    public function setDeletedFlag($deleted) {
+        $this->deletedFlag = $deleted;
+    }
+
+    
 }

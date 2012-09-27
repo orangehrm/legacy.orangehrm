@@ -3,7 +3,7 @@ LeaveType:
   1: {id: 2, name: 'Medical', deleted: 0}
   2: {id: 3, name: 'Company', deleted: 1}
   3: {id: 4, name: 'Annual', deleted: 0}
-  4: {id: 5, name: 'Lesure', deleted: 1}
+  4: {id: 5, name: 'Sick', deleted: 1}
   5: {id: 6, name: 'Wesak', deleted: 0}
   6: {id: 7, name: 'Christmas', deleted: 0}
 
@@ -14,7 +14,7 @@ EmployeeTerminationRecord:
   0: {id: 1, reasonId: 1, date: '2011-11-20'}
     
 Employee:
-  0: {empNumber: 1, firstName: 'Kayla', lastName: 'Abbey', termination_id: 1}
+  0: {empNumber: 1, firstName: 'Kayla', lastName: 'Shneider', termination_id: 1}
   1: {empNumber: 2, firstName: 'Ashley', lastName: 'Abel', middleName: 'Aldis'}
   2: {empNumber: 3, firstName: 'Tyler', lastName: 'Abraham'}
   3: {empNumber: 4, firstName: 'Landon', lastName: 'Abrahams'}
@@ -22,10 +22,10 @@ Employee:
   5: {empNumber: 6, firstName: 'Jane', lastName: 'Edward'}
   
 LeaveEntitlement:
-  0: {id: 1, leave_type_id: 1, emp_number: 1, no_of_days: 3, from_date: '2012-01-01', to_date: '2012-08-01', credited_date: '2012-01-01', note: '', entitlement_type: 1, deleted: 0}
-  1: {id: 2, leave_type_id: 1, emp_number: 2, no_of_days: 4, from_date: '2013-03-05', to_date: '2013-09-01', credited_date: '2013-01-06', note: '', entitlement_type: 1, deleted: 0}
-  2: {id: 3, leave_type_id: 2, emp_number: 1, no_of_days: 1, from_date: '2012-04-04', to_date: '2012-06-01', credited_date: '2012-01-01', note: '', entitlement_type: 1, deleted: 0}
-  3: {id: 4, leave_type_id: 2, emp_number: 1, no_of_days: 2, from_date: '2012-05-05', to_date: '2012-08-01', credited_date: '2012-02-01', note: '', entitlement_type: 1, deleted: 0}
-  4: {id: 5, leave_type_id: 1, emp_number: 5, no_of_days: 5, from_date: '2012-06-06', to_date: '2012-09-01', credited_date: '2012-01-01', note: '', entitlement_type: 1, deleted: 1}
+  0: {id: 1, leave_type_id: 1, emp_number: 1, no_of_days: 3, from_date: '2012-01-01 00:00:00', to_date: '2012-08-01 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
+  1: {id: 2, leave_type_id: 6, emp_number: 2, no_of_days: 4, from_date: '2013-08-05 00:00:00', to_date: '2013-09-01 00:00:00', credited_date: '2013-01-06 00:00:00', note: '', entitlement_type: 1, deleted: 0}
+  2: {id: 3, leave_type_id: 2, emp_number: 1, no_of_days: 1, from_date: '2012-04-04 00:00:00', to_date: '2012-06-01 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
+  3: {id: 4, leave_type_id: 2, emp_number: 1, no_of_days: 2, from_date: '2012-05-05 00:00:00', to_date: '2012-08-01 00:00:00', credited_date: '2012-02-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
+  4: {id: 5, leave_type_id: 1, emp_number: 5, no_of_days: 5, from_date: '2012-06-06 00:00:00', to_date: '2012-09-01 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 1}
     
   

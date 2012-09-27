@@ -42,7 +42,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 
         $leaveEntitlements  = TestDataService::loadObjectList('EmployeeLeaveEntitlement', $this->fixture, 'EmployeeLeaveEntitlement');
         
-        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('getEmployeeLeaveEntitlement'));
+        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('getEmployeeLeaveEntitlement'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('getEmployeeLeaveEntitlement')
                             ->will($this->returnValue($leaveEntitlements[0]));
@@ -62,7 +62,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
         $leaveRequests  = TestDataService::loadObjectList('LeaveRequest', $this->fixture, 'LeaveRequest');
         $leaves[0]->setLeaveRequest($leaveRequests[0]);
 
-        $leaveEntitlementDao = $this->getMock('LeaveEntitlementDao', array('adjustEmployeeLeaveEntitlement'));
+        $leaveEntitlementDao = $this->getMock('OldLeaveEntitlementDao', array('adjustEmployeeLeaveEntitlement'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('adjustEmployeeLeaveEntitlement')
                             ->will($this->returnValue(true));
@@ -76,7 +76,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
     
     public function testSaveEmployeeLeaveEntitlementReadReturnsNull() {
         
-        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('readEmployeeLeaveEntitlement', 'saveEmployeeLeaveEntitlement'));
+        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('readEmployeeLeaveEntitlement', 'saveEmployeeLeaveEntitlement'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('readEmployeeLeaveEntitlement')
                             ->will($this->returnValue(null));
@@ -97,7 +97,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 
         $leaveEntitlements  = TestDataService::loadObjectList('EmployeeLeaveEntitlement', $this->fixture, 'EmployeeLeaveEntitlement');
 
-        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('readEmployeeLeaveEntitlement', 'overwriteEmployeeLeaveEntitlement'));
+        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('readEmployeeLeaveEntitlement', 'overwriteEmployeeLeaveEntitlement'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('readEmployeeLeaveEntitlement')
                             ->will($this->returnValue($leaveEntitlements[0]));
@@ -118,7 +118,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 
         $leaveEntitlements  = TestDataService::loadObjectList('EmployeeLeaveEntitlement', $this->fixture, 'EmployeeLeaveEntitlement');
 
-        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('readEmployeeLeaveEntitlement', 'updateEmployeeLeaveEntitlement'));
+        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('readEmployeeLeaveEntitlement', 'updateEmployeeLeaveEntitlement'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('readEmployeeLeaveEntitlement')
                             ->will($this->returnValue($leaveEntitlements[0]));
@@ -139,7 +139,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 
         $leaveEntitlements  = TestDataService::loadObjectList('EmployeeLeaveEntitlement', $this->fixture, 'EmployeeLeaveEntitlement');
 
-        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('readEmployeeLeaveEntitlement'));
+        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('readEmployeeLeaveEntitlement'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('readEmployeeLeaveEntitlement')
                             ->will($this->returnValue($leaveEntitlements[0]));
@@ -159,7 +159,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
     
     public function testSaveEmployeeLeaveCarriedForward() {
 
-        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('saveEmployeeLeaveCarriedForward'));
+        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('saveEmployeeLeaveCarriedForward'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('saveEmployeeLeaveCarriedForward')
                             ->will($this->returnValue(true));
@@ -174,7 +174,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 
     public function testSaveEmployeeLeaveBroughtForward() {
 
-        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('saveEmployeeLeaveBroughtForward'));
+        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('saveEmployeeLeaveBroughtForward'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('saveEmployeeLeaveBroughtForward')
                             ->will($this->returnValue(true));
@@ -195,7 +195,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
     public function testGetLeaveBalanceExistingRecords() {
 
         $leaveEntitlementService = new OldLeaveEntitlementService();
-        $leaveEntitlementDao = $this->getMock('LeaveEntitlementDao', array('getLeaveBalance'));
+        $leaveEntitlementDao = $this->getMock('OldLeaveEntitlementDao', array('getLeaveBalance'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('getLeaveBalance')
                             ->with(1, 'LTY001', 1)
@@ -209,7 +209,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
     public function testGetLeaveBalanceEmptyRecords() {
 
         $leaveEntitlementService = new OldLeaveEntitlementService();
-        $leaveEntitlementDao = $this->getMock('LeaveEntitlementDao', array('getLeaveBalance'));
+        $leaveEntitlementDao = $this->getMock('OldLeaveEntitlementDao', array('getLeaveBalance'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('getLeaveBalance')
                             ->with(1, 'LTY001', 1)
@@ -243,7 +243,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
         
         $employeeLeaveEntitlementCollection->add($employeeLeaveEntitlement);
         
-        $leaveEntitlementDao = $this->getMock('LeaveEntitlementDao', array('searchEmployeeLeaveEntitlement'));
+        $leaveEntitlementDao = $this->getMock('OldLeaveEntitlementDao', array('searchEmployeeLeaveEntitlement'));
         $leaveEntitlementDao->expects($this->once())
                                 ->method('searchEmployeeLeaveEntitlement')
                                 ->with(array(1, 2), array(1, 1), 1, 2)
@@ -284,7 +284,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
         $employeeLeaveEntitlementCollection->add($employeeLeaveEntitlement);
         $employeeLeaveEntitlementList[] = $employeeLeaveEntitlement;
         
-        $leaveEntitlementDao = $this->getMock('LeaveEntitlementDao', array('saveEmployeeLeaveEntitlementCollection'));
+        $leaveEntitlementDao = $this->getMock('OldLeaveEntitlementDao', array('saveEmployeeLeaveEntitlementCollection'));
         $leaveEntitlementDao->expects($this->once())
                                 ->method('saveEmployeeLeaveEntitlementCollection')
                                 ->with($employeeLeaveEntitlementList)
@@ -307,7 +307,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 //        $leaveEntitlements  = TestDataService::loadObjectList('EmployeeLeaveEntitlement', $this->fixture, 'EmployeeLeaveEntitlement');
 //        $parameters = array($leaveEntitlements[0]->getEmployeeId(), $leaveEntitlements[0]->getLeaveTypeId(), $leaveEntitlements[0]->getLeavePeriodId());
 //        
-//        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('getEmployeeLeaveEntitlement'));
+//        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('getEmployeeLeaveEntitlement'));
 //        $leaveEntitlementDao->expects($this->once())
 //                            ->method('getEmployeeLeaveEntitlement')
 //                            ->with($parameters[0], $parameters[1], $parameters[2])
@@ -352,7 +352,7 @@ class OldLeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 //                                ->with($parameters[0], $parameters[1], $parameters[2])
 //                                ->will($this->returnValue($leaveEntitlements[0]->getNoOfDaysAllotted()));
 //
-//        $leaveEntitlementDao    = $this->getMock('LeaveEntitlementDao', array('getEmployeeLeaveEntitlement'));
+//        $leaveEntitlementDao    = $this->getMock('OldLeaveEntitlementDao', array('getEmployeeLeaveEntitlement'));
 //        $leaveEntitlementDao->expects($this->once())
 //                            ->method('getEmployeeLeaveEntitlement')
 //                            ->with($parameters[0], $parameters[1], $parameters[2])

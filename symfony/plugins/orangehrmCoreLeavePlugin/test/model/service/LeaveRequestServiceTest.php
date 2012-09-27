@@ -243,7 +243,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $this->leaveRequestService->setLeaveTypeService($leaveTypeService);
 
         //mocking LeaveEntitlementService
-        $leaveEntitlementService = $this->getMock('LeaveEntitlementService', array('getLeaveBalance'));
+        $leaveEntitlementService = $this->getMock('OldLeaveEntitlementService', array('getLeaveBalance'));
         $leaveEntitlementService->expects($this->any())
                 ->method('getLeaveBalance')
                 ->will($this->returnValue(2));
@@ -465,7 +465,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $nextLeavePeriod->setStartDate('2011-01-01');
         $nextLeavePeriod->setEndDate('2011-12-31');
 
-        $leaveEntitlementService = $this->getMock('LeaveEntitlementService',
+        $leaveEntitlementService = $this->getMock('OldLeaveEntitlementService',
                 array('getEmployeeLeaveEntitlementDays',
                       'readEmployeeLeaveEntitlement',
                       'getLeaveBalance',
@@ -551,7 +551,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $nextLeavePeriod->setStartDate('2011-01-01');
         $nextLeavePeriod->setEndDate('2011-12-31');
 
-        $leaveEntitlementService = $this->getMock('LeaveEntitlementService',
+        $leaveEntitlementService = $this->getMock('OldLeaveEntitlementService',
                 array('getEmployeeLeaveEntitlementDays',
                       'readEmployeeLeaveEntitlement',
                       'getLeaveBalance',
