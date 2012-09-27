@@ -12,5 +12,5 @@
  */
 abstract class PluginLeaveEntitlement extends BaseLeaveEntitlement
 {
-
+    const ENTITLEMENT_TYPE_ADD = 1;
 }

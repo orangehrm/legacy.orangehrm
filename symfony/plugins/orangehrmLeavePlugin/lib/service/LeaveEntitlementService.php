@@ -20,9 +20,22 @@
  */
 
 /**
- * Leave Entitlement Dao class
+ * LeaveEntitlement service
  */
-class LeaveEntitlementDao extends BaseDao {
+class LeaveEntitlementService extends BaseService {
+
+    protected $leaveEntitlementDao;
+
+    public function getLeaveEntitlementDao() {
+        if (!($this->leaveEntitlementDao instanceof LeaveEntitlementDao)) {
+            $this->leaveEntitlementDao = new LeaveEntitlementDao();
+        }
+        return $this->leaveEntitlementDao;
+    }
+
+    public function setLeaveEntitlementDao(LeaveEntitlementDao $leaveEntitlementDao) {
+        $this->leaveEntitlementDao = $leaveEntitlementDao;
+    }
     
     public function searchLeaveEntitlements(LeaveEntitlementSearchParameterHolder $searchParameters) {
         
@@ -34,5 +47,6 @@ class LeaveEntitlementDao extends BaseDao {
     
     public function deleteLeaveEntitlements($ids) {
         
-    }
+    }    
+
 }

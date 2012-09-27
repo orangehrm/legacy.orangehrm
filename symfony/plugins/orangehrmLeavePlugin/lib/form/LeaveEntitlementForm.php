@@ -22,7 +22,7 @@
  * Form class for leave entitlements screen
  *
  */
-class LeaveEntitlementsForm extends BaseForm {
+class LeaveEntitlementForm extends BaseForm {
 
     protected $leaveTypeService;
     

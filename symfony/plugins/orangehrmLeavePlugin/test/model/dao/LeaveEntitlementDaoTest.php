@@ -20,19 +20,35 @@
  */
 
 /**
- * Leave Entitlement Dao class
+ * @group Leave 
  */
-class LeaveEntitlementDao extends BaseDao {
+class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
+
+    private $dao;
+    protected $fixture;
+
+    /**
+     * Set up method
+     */
+    protected function setUp() {
+
+        $this->dao = new LeaveEntitlementDao();
+        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/LeaveEntitlementDao.yml';
+        TestDataService::populate($this->fixture);
+    }
     
-    public function searchLeaveEntitlements(LeaveEntitlementSearchParameterHolder $searchParameters) {
+    public function testSearchLeaveEntitlements() {
         
     }
     
-    public function saveLeaveEntitlement(LeaveEntitlement $leaveEntitlement) {
+    public function testSaveLeaveEntitlement() {
         
     }
     
-    public function deleteLeaveEntitlements($ids) {
+    public function testDeleteLeaveEntitlements() {
         
     }
+    
 }
+
+    

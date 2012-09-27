@@ -11,10 +11,10 @@ class orangehrmLeavePluginAllTests {
         $suite = new PHPUnit_Framework_TestSuite('orangehrmLeavePluginAllTest');
 
         /* Dao Test Cases */
-        //$suite->addTestFile(dirname(__FILE__) . '/model/dao/WorkWeekDaoTest.php');      
+        $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveEntitlementDaoTest.php');      
 
         /* Service Test Cases */
-        //$suite->addTestFile(dirname(__FILE__) . '/model/service/WorkWeekServiceTest.php');
+        $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveEntitlementServiceTest.php');
         return $suite;
 
     }

@@ -25,7 +25,7 @@
 class viewLeaveEntitlementsAction extends sfAction {
     
     public function execute($request) {
-        $this->form = new LeaveEntitlementsForm();
+        $this->form = new LeaveEntitlementForm();
 
         if ($request->isMethod('post')) {
 

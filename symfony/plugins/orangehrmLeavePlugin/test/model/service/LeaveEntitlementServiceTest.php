@@ -20,19 +20,33 @@
  */
 
 /**
- * Leave Entitlement Dao class
+ * LeaveEntitlementServiceTest
+ * 
+ * @group Leave 
  */
-class LeaveEntitlementDao extends BaseDao {
+class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
+
+    private $service;
+    protected $fixture;
+
+    /**
+     * Set up method
+     */
+    protected function setUp() {
+
+        $this->service = new LeaveEntitlementService();
+    }
     
-    public function searchLeaveEntitlements(LeaveEntitlementSearchParameterHolder $searchParameters) {
+    public function testSearchLeaveEntitlements() {
         
     }
     
-    public function saveLeaveEntitlement(LeaveEntitlement $leaveEntitlement) {
+    public function testSaveLeaveEntitlement() {
         
     }
     
-    public function deleteLeaveEntitlements($ids) {
+    public function testDeleteLeaveEntitlements() {
         
     }
+    
 }
