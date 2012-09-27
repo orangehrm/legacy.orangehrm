@@ -95,9 +95,24 @@ class LeaveEntitlementDao extends BaseDao {
         }
     }
     
-    public function saveLeaveEntitlement(LeaveEntitlement $leaveEntitlement) {
-        
+    public function getLeaveEntitlement($id) {
+        try {
+            $leaveEntitlement = Doctrine::getTable('LeaveEntitlement')->find($id);
+            return ($leaveEntitlement === false) ? null : $leaveEntitlement;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }        
     }
+    
+    public function saveLeaveEntitlement(LeaveEntitlement $leaveEntitlement) {
+        try {
+            $leaveEntitlement->save();
+            return $leaveEntitlement;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }        
+    }
+    
     
     public function deleteLeaveEntitlements($ids) {
         try {

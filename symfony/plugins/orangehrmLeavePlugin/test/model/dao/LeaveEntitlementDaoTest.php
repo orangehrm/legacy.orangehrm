@@ -210,12 +210,71 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->_compareEntitlements($expected, $results);         
     }
     
+    public function testGetLeaveEntitlement() {
+        $id = 3;
+        $leaveEntitlement = $this->dao->getLeaveEntitlement($id);
+        
+        $this->assertTrue($leaveEntitlement instanceof LeaveEntitlement);
+        $fromDb = Doctrine_Query::create()
+                                ->from('LeaveEntitlement le')
+                                ->where('le.id = ? ', $id)
+                                ->fetchOne();        
+        
+        $this->_compareEntitlement($fromDb, $leaveEntitlement);
+        
+        // non existing id
+        $nonExisting = $this->dao->getLeaveEntitlement(111);
+        $this->assertTrue(is_null($nonExisting));
+    }
+    
     public function testSaveLeaveEntitlementNew() {
+        $leaveEntitlement = new LeaveEntitlement();
+        //$leaveEntitlement->setId();
+        $leaveEntitlement->setEmpNumber(1);
+        $leaveEntitlement->setNoOfDays(12);
+        $leaveEntitlement->setLeaveTypeId(2);
+        $leaveEntitlement->setFromDate('2012-09-13');
+        $leaveEntitlement->setToDate('2012-11-28');
+        $leaveEntitlement->setCreditedDate('2012-05-01');
+        $leaveEntitlement->setNote('Created by Unit test');
+        $leaveEntitlement->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+        $leaveEntitlement->setDeleted(0);
+        
+        $savedObj = $this->dao->saveLeaveEntitlement($leaveEntitlement);
+        $this->assertTrue($savedObj instanceof LeaveEntitlement);
+        
+        $savedId = $savedObj->getId();
+        $this->assertTrue(!empty($savedId));
+        
+        $leaveEntitlement->setId($savedId);
+        $this->_compareEntitlement($leaveEntitlement, $savedObj);
+        
+        $fromDb = Doctrine_Query::create()
+                ->from('LeaveEntitlement le')
+                ->where('le.id = ? ', $savedId)
+                ->fetchOne();
+        $this->_compareEntitlement($leaveEntitlement, $fromDb);
         
     }
     
     public function testSaveLeaveEntitlementUpdate() {
+        $id = 3;
+        $existingEntitlement = Doctrine_Query::create()
+                                ->from('LeaveEntitlement le')
+                                ->where('le.id = ? ', $id)
+                                ->fetchOne();   
         
+        $existingEntitlement->setNoOfDays(41);
+        $savedObj = $this->dao->saveLeaveEntitlement($existingEntitlement);
+        
+        $this->_compareEntitlement($existingEntitlement, $savedObj);
+        
+        $fromDb = Doctrine_Query::create()
+                    ->from('LeaveEntitlement le')
+                    ->where('le.id = ? ', $id)
+                    ->fetchOne();   
+        
+        $this->_compareEntitlement($existingEntitlement, $fromDb);        
     }    
     
     public function testDeleteLeaveEntitlementsMultiple() {
