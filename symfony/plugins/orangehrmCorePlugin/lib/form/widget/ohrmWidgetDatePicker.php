@@ -40,7 +40,7 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
 
         $("#%s").datepicker({
             showOn: "both",
-            dateFormat: displayDateFormat,
+            dateFormat: datepickerDateFormat,
             buttonImage: "%s",
             buttonText:"",
             buttonImageOnly: true
