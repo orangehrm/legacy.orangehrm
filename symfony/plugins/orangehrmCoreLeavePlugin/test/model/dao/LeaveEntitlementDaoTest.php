@@ -67,7 +67,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
 
         // save leave quota
         $this->leaveEntitlement = sfYaml::load(sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/leaveEntitlement.yml');
-        $this->leaveEntitlementDao = new LeaveEntitlementDao();
+        $this->leaveEntitlementDao = new OldLeaveEntitlementDao();
     }
 
     public function tearDown() {

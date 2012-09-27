@@ -30,20 +30,20 @@ abstract class baseLeaveAction extends sfAction {
 
     /**
      *
-     * @return LeaveEntitlementService
+     * @return OldLeaveEntitlementService
      */
     protected function getLeaveEntitlementService() {
-        if (!($this->leaveEntitlementService instanceof LeaveEntitlementService)) {
-            $this->leaveEntitlementService = new LeaveEntitlementService();
+        if (!($this->leaveEntitlementService instanceof OldLeaveEntitlementService)) {
+            $this->leaveEntitlementService = new OldLeaveEntitlementService();
         }
         return $this->leaveEntitlementService;
     }
 
     /**
      *
-     * @param LeaveEntitlementService $service 
+     * @param OldLeaveEntitlementService $service 
      */
-    protected function setLeaveEntitlementService(LeaveEntitlementService $service) {
+    protected function setLeaveEntitlementService(OldLeaveEntitlementService $service) {
         $this->leaveEntitlementService = $service;
     }
 

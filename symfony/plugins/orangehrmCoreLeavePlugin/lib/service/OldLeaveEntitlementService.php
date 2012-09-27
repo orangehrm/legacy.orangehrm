@@ -22,19 +22,19 @@
 /**
  * Leave Period Service
  */
-class LeaveEntitlementService extends BaseService {
+class OldLeaveEntitlementService extends BaseService {
 
     private $leaveEntitlementDao;
     private $leaveRequestService;
 
     public function getLeaveEntitlementDao() {
-        if (!($this->leaveEntitlementDao instanceof LeaveEntitlementDao)) {
-            $this->leaveEntitlementDao = new LeaveEntitlementDao();
+        if (!($this->leaveEntitlementDao instanceof OldLeaveEntitlementDao)) {
+            $this->leaveEntitlementDao = new OldLeaveEntitlementDao();
         }
         return $this->leaveEntitlementDao ;
     }
 
-    public function setLeaveEntitlementDao(LeaveEntitlementDao $leaveEntitlementDao) {
+    public function setLeaveEntitlementDao(OldLeaveEntitlementDao $leaveEntitlementDao) {
         $this->leaveEntitlementDao	=	$leaveEntitlementDao;
     }
 

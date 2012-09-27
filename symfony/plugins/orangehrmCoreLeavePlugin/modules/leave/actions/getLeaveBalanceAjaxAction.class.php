@@ -109,11 +109,11 @@ class getLeaveBalanceAjaxAction extends sfAction {
     }
 
     /**
-     * @return LeaveEntitlementService
+     * @return OldLeaveEntitlementService
      */
     public function getLeaveEntitlementService() {
         if (is_null($this->leaveEntitlementService)) {
-            $this->leaveEntitlementService = new LeaveEntitlementService();
+            $this->leaveEntitlementService = new OldLeaveEntitlementService();
         }
         return $this->leaveEntitlementService;
     }
@@ -122,7 +122,7 @@ class getLeaveBalanceAjaxAction extends sfAction {
      *
      * @param LeavePeriodService $leavePeriodService
      */
-    public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
+    public function setLeaveEntitlementService(OldLeaveEntitlementService $leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }
 

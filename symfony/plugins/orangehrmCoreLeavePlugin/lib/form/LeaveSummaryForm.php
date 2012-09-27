@@ -336,14 +336,14 @@ class LeaveSummaryForm extends sfForm {
         $this->leaveSummaryService = $leaveSummaryService;
     }
 
-    public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
+    public function setLeaveEntitlementService(OldLeaveEntitlementService $leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }
 
     public function getLeaveEntitlementService() {
         if (is_null($this->leaveEntitlementService)) {
-            $this->leaveEntitlementService = new LeaveEntitlementService();
-            $this->leaveEntitlementService->setLeaveEntitlementDao(new LeaveEntitlementDao());
+            $this->leaveEntitlementService = new OldLeaveEntitlementService();
+            $this->leaveEntitlementService->setLeaveEntitlementDao(new OldLeaveEntitlementDao());
         }
         return $this->leaveEntitlementService;
     }

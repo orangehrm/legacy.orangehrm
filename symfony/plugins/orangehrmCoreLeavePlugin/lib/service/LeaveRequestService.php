@@ -86,12 +86,12 @@ class LeaveRequestService extends BaseService {
     }
 
     /**
-     * @return LeaveEntitlementService
+     * @return OldLeaveEntitlementService
      */
     public function getLeaveEntitlementService() {
         if(is_null($this->leaveEntitlementService)) {
-            $this->leaveEntitlementService = new LeaveEntitlementService();
-            $this->leaveEntitlementService->setLeaveEntitlementDao(new LeaveEntitlementDao());
+            $this->leaveEntitlementService = new OldLeaveEntitlementService();
+            $this->leaveEntitlementService->setLeaveEntitlementDao(new OldLeaveEntitlementDao());
         }
         return $this->leaveEntitlementService;
     }
@@ -109,9 +109,9 @@ class LeaveRequestService extends BaseService {
 
     /**
      * Sets LeaveEntitlementService
-     * @param LeaveEntitlementService $leaveEntitlementService
+     * @param OldLeaveEntitlementService $leaveEntitlementService
      */
-    public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
+    public function setLeaveEntitlementService(OldLeaveEntitlementService $leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }
 

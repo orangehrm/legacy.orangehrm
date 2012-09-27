@@ -342,7 +342,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
 
     public function testGetLeaveEntitlementService() {
         $service = $this->leaveRequestService->getLeaveEntitlementService();
-        $this->assertTrue(is_a($service, LeaveEntitlementService) );
+        $this->assertTrue(is_a($service, OldLeaveEntitlementService) );
     }
 
     public function testGetLeaveTypeService() {

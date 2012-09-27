@@ -15,21 +15,21 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
 
     /**
      * Get LeaveEntitlementService
-     * @return LeaveEntitlementService
+     * @return OldLeaveEntitlementService
      * 
      */
     public function getLeaveEntitlementService() {
-        if (!($this->leaveEntitlementService instanceof LeaveEntitlementService)) {
-            $this->leaveEntitlementService = new LeaveEntitlementService();
+        if (!($this->leaveEntitlementService instanceof OldLeaveEntitlementService)) {
+            $this->leaveEntitlementService = new OldLeaveEntitlementService();
         }
         return $this->leaveEntitlementService;
     }
     
     /**
      * Set LeaveEntitlementService
-     * @param LeaveEntitlementService $service 
+     * @param OldLeaveEntitlementService $service 
      */
-    public function setLeaveEntitlementService(LeaveEntitlementService $service) {
+    public function setLeaveEntitlementService(OldLeaveEntitlementService $service) {
         $this->leaveEntitlementService = $service;
     }
 

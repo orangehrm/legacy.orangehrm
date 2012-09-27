@@ -63,7 +63,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
     }
 
     public function getLeaveBalance() {
-        $leaveEntitlementService = new LeaveEntitlementService();
+        $leaveEntitlementService = new OldLeaveEntitlementService();
         $employeeId = $this->getEmpNumber();
         $leaveTypeId = $this->getLeaveTypeId();
         $leavePeriodId = $this->getLeavePeriodId();

@@ -18,7 +18,7 @@
  * Boston, MA  02110-1301, USA
  *
  */
-class LeaveEntitlementDao extends BaseDao{
+class OldLeaveEntitlementDao extends BaseDao{
 	
 	/**
 	 * Get Employee Leave Entitlement

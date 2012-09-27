@@ -32,7 +32,7 @@ class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
 
         $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/LeaveEntitlementService.yml';
-        $this->leaveEntitlementService = new LeaveEntitlementService();
+        $this->leaveEntitlementService = new OldLeaveEntitlementService();
         
     }
     
@@ -188,13 +188,13 @@ class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
     public function testGetLeaveEntitlementDaoNewInstance() {
 
         $leaveEntitlementDao = $this->leaveEntitlementService->getLeaveEntitlementDao();
-        $this->assertTrue($leaveEntitlementDao instanceof LeaveEntitlementDao);
+        $this->assertTrue($leaveEntitlementDao instanceof OldLeaveEntitlementDao);
 
     }
 
     public function testGetLeaveBalanceExistingRecords() {
 
-        $leaveEntitlementService = new LeaveEntitlementService();
+        $leaveEntitlementService = new OldLeaveEntitlementService();
         $leaveEntitlementDao = $this->getMock('LeaveEntitlementDao', array('getLeaveBalance'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('getLeaveBalance')
@@ -208,7 +208,7 @@ class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
 
     public function testGetLeaveBalanceEmptyRecords() {
 
-        $leaveEntitlementService = new LeaveEntitlementService();
+        $leaveEntitlementService = new OldLeaveEntitlementService();
         $leaveEntitlementDao = $this->getMock('LeaveEntitlementDao', array('getLeaveBalance'));
         $leaveEntitlementDao->expects($this->once())
                             ->method('getLeaveBalance')
@@ -249,7 +249,7 @@ class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
                                 ->with(array(1, 2), array(1, 1), 1, 2)
                                 ->will($this->returnValue($employeeLeaveEntitlementCollection));
 
-        $leaveEntitlementService = new LeaveEntitlementService();
+        $leaveEntitlementService = new OldLeaveEntitlementService();
         $leaveEntitlementService->setLeaveEntitlementDao($leaveEntitlementDao);
         $results = $leaveEntitlementService->searchEmployeeLeaveEntitlement(array(1, 2), array(1, 1), 1, 2);
         
@@ -290,7 +290,7 @@ class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
                                 ->with($employeeLeaveEntitlementList)
                                 ->will($this->returnValue($employeeLeaveEntitlementCollection));
 
-        $leaveEntitlementService = new LeaveEntitlementService();
+        $leaveEntitlementService = new OldLeaveEntitlementService();
         $leaveEntitlementService->setLeaveEntitlementDao($leaveEntitlementDao);
         $results = $leaveEntitlementService->saveEmployeeLeaveEntitlementCollection($employeeLeaveEntitlementList);
         
