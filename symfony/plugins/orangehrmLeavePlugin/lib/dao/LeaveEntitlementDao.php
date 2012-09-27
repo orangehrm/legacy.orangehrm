@@ -100,6 +100,15 @@ class LeaveEntitlementDao extends BaseDao {
     }
     
     public function deleteLeaveEntitlements($ids) {
-        
+        try {
+            $q = Doctrine_Query::create()
+                    ->update('LeaveEntitlement le')
+                    ->set('le.deleted', 1)
+                    ->whereIn('le.id', $ids);
+
+            return $q->execute();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }
     }
 }

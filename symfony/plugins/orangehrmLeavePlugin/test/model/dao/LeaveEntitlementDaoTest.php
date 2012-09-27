@@ -210,13 +210,48 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->_compareEntitlements($expected, $results);         
     }
     
-    public function testSaveLeaveEntitlement() {
+    public function testSaveLeaveEntitlementNew() {
         
     }
     
-    public function testDeleteLeaveEntitlements() {
+    public function testSaveLeaveEntitlementUpdate() {
         
+    }    
+    
+    public function testDeleteLeaveEntitlementsMultiple() {
+        $deleted = array(5);
+                
+        // delete with invalid ids
+        $ids = array(21, 31);
+        $count = $this->dao->deleteLeaveEntitlements($ids);        
+        $this->assertEquals(0, $count);                
+        $this->_verifyDeletedFlags($deleted);
+               
+        
+        // delete multiple 
+        $ids = array(2, 3);
+        $count = $this->dao->deleteLeaveEntitlements($ids);        
+        $this->assertEquals(2, $count);                
+        
+        // verify deleted
+        $deleted = array_merge($deleted, $ids);        
+        $this->_verifyDeletedFlags($deleted);
+        
+        // delete one
+        $ids = array(4);
+        
+        $count = $this->dao->deleteLeaveEntitlements($ids);        
+        $this->assertEquals(1, $count);
+        
+        // verify deleted
+        $deleted = array_merge($deleted, $ids);        
+        $this->_verifyDeletedFlags($deleted);
+        
+        // delete already deleted entry
+        $count = $this->dao->deleteLeaveEntitlements(array(2));  
+        $this->_verifyDeletedFlags($deleted);        
     }
+        
     
     protected function _compareEntitlements($expected, $results) {
         $this->assertEquals(count($expected), count($results));
@@ -239,7 +274,27 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected->getDeleted(), $actual->getDeleted());
         
     }
+ 
+    protected function _verifyDeletedFlags($deleted) {
+        
+        $ids = array(1, 2, 3, 4, 5);
+
+        $nonDeleted = array_diff($ids, $deleted);
     
+        // verify deleted
+        foreach($deleted as $id) {
+            echo $i;
+            $entitlement = TestDataService::fetchObject('LeaveEntitlement', $id);
+            $this->assertEquals(1, $entitlement->getDeleted(), 'id=' . $id);
+        }
+        
+        // verify non deleted
+        foreach($nonDeleted as $id) {
+            $entitlement = TestDataService::fetchObject('LeaveEntitlement', $id);
+            $this->assertEquals(0, $entitlement->getDeleted(), 'id=' . $id);
+        }        
+        
+    }    
 }
 
     
