@@ -38,15 +38,19 @@ class LeaveEntitlementService extends BaseService {
     }
     
     public function searchLeaveEntitlements(LeaveEntitlementSearchParameterHolder $searchParameters) {
-        
+        return $this->getLeaveEntitlementDao()->searchLeaveEntitlements($searchParameters);
     }
     
     public function saveLeaveEntitlement(LeaveEntitlement $leaveEntitlement) {
-        
+        return $this->getLeaveEntitlementDao()->saveLeaveEntitlement($leaveEntitlement);
     }
     
     public function deleteLeaveEntitlements($ids) {
-        
+        return $this->getLeaveEntitlementDao()->deleteLeaveEntitlements($ids);
+    }    
+    
+    public function getLeaveEntitlement($id) {
+        return $this->getLeaveEntitlementDao()->getLeaveEntitlement($id);
     }    
 
 }

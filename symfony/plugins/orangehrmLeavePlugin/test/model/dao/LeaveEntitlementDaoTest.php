@@ -36,7 +36,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
 
         $this->dao = new LeaveEntitlementDao();
-        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/LeaveEntitlementDao.yml';
+        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/LeaveEntitlement.yml';
         TestDataService::populate($this->fixture);
     }
     
