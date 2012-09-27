@@ -24,3 +24,8 @@ viewEmployeeListSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]  
+  
+viewLeaveEntitlementsSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]    
