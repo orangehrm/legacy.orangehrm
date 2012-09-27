@@ -28,57 +28,18 @@ use_javascript('../../../scripts/jquery/ui/ui.core.js');
 use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
  */
 ?>
-
 <!--
-<div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >
-    <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
-</div>
-
 <?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error')): ?>
     <div class="messagebar">
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
         <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
     </div>
 <?php endif; ?>
-
-<div class="outerbox">
-
-    <div class="mainHeading">
-        <h2><?php echo __("Employee Information") ?></h2>
-    </div>
-
-    <div class="searchbox">
-        <form id="search_form" name="frmEmployeeSearch" method="post" action="<?php echo url_for('@employee_list'); ?>">
-            <div id="formcontent">
-                <br class="clear"/>
-                <?php echo $form->render(); ?>  
-
-                <div class="actionbar">
-                    <div class="actionbuttons">
-                        <input
-                            type="button" class="plainbtn" id="searchBtn"
-                            onmouseover="this.className='plainbtn plainbtnhov'"
-                            onmouseout="this.className='plainbtn'" value="<?php echo __("Search") ?>" name="_search" />
-                        <input
-                            type="button" class="plainbtn"
-                            onmouseover="this.className='plainbtn plainbtnhov'" id="resetBtn"
-                            onmouseout="this.className='plainbtn'" value="<?php echo __("Reset") ?>" name="_reset" />
-
-                    </div>
-                    <br class="clear" />
-                </div>
-                <br class="clear" />
-            </div>
-            <input type="hidden" name="pageNo" id="pageNo" value="" />
-            <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
-        </form>
-    </div>
-</div> -->
-<!-- outerbox -->
+-->
 
 <div class="box" id="employee-information">
     <div class="head">
-        <h1>Employee Information</h1>
+        <h1><?php echo __("Employee Information") ?></h1>
     </div>
     <div class="inner">
         <form id="search_form" name="frmEmployeeSearch" method="post" action="<?php echo url_for('@employee_list'); ?>">
