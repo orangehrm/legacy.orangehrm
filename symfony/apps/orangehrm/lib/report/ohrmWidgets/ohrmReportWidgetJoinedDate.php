@@ -35,8 +35,8 @@ class ohrmReportWidgetJoinedDate extends sfWidgetForm implements ohrmEnhancedEmb
         );
 
         $this->addOption($this->id . '_' . 'comparision', new sfWidgetFormChoice(array('choices' => $choices)));
-        $this->addOption($this->id . '_' . 'from', new ohrmWidgetDatePicker(array(), array('id' => $this->id . '_' . 'from')));
-        $this->addOption($this->id . '_' . 'to', new ohrmWidgetDatePicker(array(), array('id' => $this->id . '_' . 'to')));
+        $this->addOption($this->id . '_' . 'from', new ohrmWidgetDatePickerOld(array(), array('id' => $this->id . '_' . 'from')));
+        $this->addOption($this->id . '_' . 'to', new ohrmWidgetDatePickerOld(array(), array('id' => $this->id . '_' . 'to')));
 
 
         $this->addOption('template', '%comparision% &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp %from% &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp %to%');
