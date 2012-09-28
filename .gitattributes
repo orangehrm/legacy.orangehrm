@@ -4260,6 +4260,7 @@ symfony/plugins/orangehrmLeavePlugin/test/orangehrmLeavePluginAllTests.php -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmPimPlugin/config/list_component.yml -text
 symfony/plugins/orangehrmPimPlugin/config/routing.yml -text
+symfony/plugins/orangehrmPimPlugin/config/view.yml -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/CustomFieldConfigurationDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/EmployeeDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/ReportingMethodConfigurationDao.php -text
@@ -4420,6 +4421,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_language.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_leftmenu.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_license.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_photo.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_pimLeftMenu.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_skill.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/addEmployeeSuccess.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/configurePimSuccess.php -text

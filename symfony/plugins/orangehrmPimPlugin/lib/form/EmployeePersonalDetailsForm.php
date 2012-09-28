@@ -143,7 +143,7 @@ class EmployeePersonalDetailsForm extends BaseForm {
             'txtOtherID' => new sfWidgetFormInputText(),
             'cmbMarital' => new sfWidgetFormSelect(array('choices' => array('' => "-- " . __('Select') . " --", 'Single' => __('Single'), 'Married' => __('Married'), 'Other' => __('Other')))),
             'chkSmokeFlag' => new sfWidgetFormInputCheckbox(),
-            'txtLicExpDate' => new ohrmWidgetDatePickerNew(array(), array('id' => 'personal_txtLicExpDate')),
+            'txtLicExpDate' => new ohrmWidgetDatePicker(array(), array('id' => 'personal_txtLicExpDate')),
             'txtMilitarySer' => new sfWidgetFormInputText(),
         );
 
@@ -203,7 +203,7 @@ class EmployeePersonalDetailsForm extends BaseForm {
         $widgets = array('txtEmployeeId' => new sfWidgetFormInputText(),
             'txtNICNo' => new sfWidgetFormInputText(),
             'txtSINNo' => new sfWidgetFormInputText(),
-            'DOB' => new ohrmWidgetDatePickerNew(array(), array('id' => 'personal_DOB')),
+            'DOB' => new ohrmWidgetDatePicker(array(), array('id' => 'personal_DOB')),
             'txtLicenNo' => new sfWidgetFormInputText());
 
 

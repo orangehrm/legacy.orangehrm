@@ -37,6 +37,11 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
      
         var datepickerDateFormat = '%s';
         var displayDateFormat = datepickerDateFormat.replace('yy', 'yyyy');
+        
+        var dateFieldValue = $.trim($("#%s").val());
+        if (dateFieldValue == '') {
+            $("#%s").val(displayDateFormat);
+        }
 
         $("#%s").datepicker({
             showOn: "both",
@@ -44,6 +49,12 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
             buttonImage: "%s",
             buttonText:"",
             buttonImageOnly: true
+        });
+        
+        $("#%s").click(function(){
+            if ($(this).val() == displayDateFormat) {
+                $(this).val('');
+            }
         });
     
     });
@@ -53,11 +64,25 @@ EOF
                         ,
                         get_datepicker_date_format(sfContext::getInstance()->getUser()->getDateFormat()),
                         $this->attributes['id'],
-                        public_path('../../symfony/web/themes/default/images/calendar.png')
+                        $this->attributes['id'],
+                        $this->attributes['id'],
+                        public_path('../../symfony/web/themes/default/images/calendar.png'),
+                        $this->attributes['id']
         );
 
         return $html . $javaScript;
     }
+    
+    
+    public function getStylesheets() {
+        return array(public_path('../../symfony/web/jquery/jquery-ui-1.8.21.custom.css') => 'all');
+    }
+    
+    public function getJavaScripts() {
+        return array(public_path('../../symfony/web/jquery/jquery.ui.core.js'));
+    }
+    
+
     
 
 }

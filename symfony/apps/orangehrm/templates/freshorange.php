@@ -10,15 +10,20 @@ $cultureElements = explode('_', $sf_user->getCulture());
     <?php include_metas() ?>
     <?php include_title() ?>
 
-        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery-1.7.2.min.js')?>"></script>  
-        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.core.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.tipTip.minified.js')?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery-1.7.2.min.js')?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.validate.js')?>"></script>
+        <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.core.js')?>"></script>-->
+        <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.datepicker.js')?>"></script>-->
 
         <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.widget.js')?>"></script>-->
-        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/bootstrap-modal.js')?>"></script>
         <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.functions.js')?>"></script>-->
+        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.tipTip.minified.js')?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/bootstrap-modal.js')?>"></script>
 
-
+       <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.core.js')) ?>
+        <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.datepicker.js')) ?>
+        
+        <link href="<?php echo public_path('../../symfony/web/jquery/jquery-ui-1.8.21.custom.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo public_path('../../symfony/web/themes/default/css/main.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo public_path('../../symfony/web/themes/default/css/tipTip.css')?>" rel="stylesheet" type="text/css"/>
         
@@ -104,7 +109,12 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     $(this).css("background-color","#782918");
                         }, function() {
                     $(this).css("background-color","#aa4935");
-                });                
+                });
+
+                /* Fading out main messages */
+                $(".message a").click(function() {
+                    $(".message").fadeOut("slow");
+                });
 
             });
             

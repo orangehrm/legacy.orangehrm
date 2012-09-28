@@ -173,3 +173,13 @@ function escapeForJavascript($string) {
 function escapeHtml($value) {
     return htmlspecialchars($value, ENT_QUOTES);
 }
+
+function displayMainMessage($messageType, $message) {
+    
+    if ($messageType == 'success') {
+        $type = 'success';
+    }
+    
+    return "<div class=\"message $type\">$message<a href=\"#\">Close</a></div>";
+    
+}

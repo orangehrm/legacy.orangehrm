@@ -23,19 +23,23 @@ $(document).ready(function() {
         }
     });
 
-//on form loading
-    var list = new Array('form#frmEmpPersonalDetails .formInputText', '.calendarBtn', '#personal_optGender_1', '#personal_optGender_2', '#personal_chkSmokeFlag');
-    for(i=0; i < list.length; i++) {
-        $(list[i]).attr("disabled", "disabled");
-    }
-
+    $(".editable").each(function(){
+        $(this).attr("disabled", "disabled");
+    });
+    
+    $(".editable").live("click", function(){
+        
+        
+    });
+    
     $("#btnSave").click(function() {
         //if user clicks on Edit make all fields editable
         if($("#btnSave").attr('value') == edit) {
-            for(i=0; i < list.length; i++) {
-                $(list[i]).removeAttr("disabled");
-            }
-
+            
+            $(".editable").each(function(){
+                $(this).removeAttr("disabled");
+            });            
+            
             // handle read only fields                
             for (var j = 0; j < readOnlyFields.length; j++) {
                 var fieldId = '#personal_' + readOnlyFields[j];
