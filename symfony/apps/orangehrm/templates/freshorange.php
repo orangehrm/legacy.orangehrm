@@ -21,7 +21,6 @@ $cultureElements = explode('_', $sf_user->getCulture());
 
         <link href="<?php echo public_path('../../symfony/web/themes/default/css/main.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo public_path('../../symfony/web/themes/default/css/tipTip.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="http://fonts.googleapis.com/css?family=Signika:400,700" rel="stylesheet" type="text/css"/>
         
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
