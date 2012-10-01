@@ -27,11 +27,6 @@ $(document).ready(function() {
         $(this).attr("disabled", "disabled");
     });
     
-    $(".editable").live("click", function(){
-        
-        
-    });
-    
     $("#btnSave").click(function() {
         //if user clicks on Edit make all fields editable
         if($("#btnSave").attr('value') == edit) {

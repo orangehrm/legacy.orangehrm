@@ -51,6 +51,8 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
             buttonImageOnly: true
         });
         
+        //$("img.ui-datepicker-trigger").addClass("editable");
+        
         $("#%s").click(function(){
             if ($(this).val() == displayDateFormat) {
                 $(this).val('');
