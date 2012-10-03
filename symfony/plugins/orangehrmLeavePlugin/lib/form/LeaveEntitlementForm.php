@@ -26,6 +26,8 @@ class LeaveEntitlementForm extends BaseForm {
 
     protected $leaveTypeService;
     
+    protected $leavePeriodService;
+    
     public function getLeaveTypeService() {
         if (!isset($this->leaveTypeService)) {
             $this->leaveTypeService = new LeaveTypeService();
@@ -37,6 +39,18 @@ class LeaveEntitlementForm extends BaseForm {
         $this->leaveTypeService = $leaveTypeService;
     }
 
+    public function getLeavePeriodService() {
+        if (!isset($this->leavePeriodService)) {
+            $this->leavePeriodService = new LeavePeriodService();
+        }        
+        return $this->leavePeriodService;
+    }
+
+    public function setLeavePeriodService($leavePeriodService) {
+        $this->leavePeriodService = $leavePeriodService;
+    }
+
+    
     
     public function configure() {
 
@@ -55,6 +69,9 @@ class LeaveEntitlementForm extends BaseForm {
 
         $this->setWidget('date_to', new ohrmWidgetDatePicker(array(), array('id' => 'date_to')));
         $this->setValidator('date_to', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
+        
+        $this->setDefaultDates();    
+
                 
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'viewLeaveEntitlements','LeaveEntitlementsForm');
@@ -68,7 +85,7 @@ class LeaveEntitlementForm extends BaseForm {
 
     private function _setLeaveTypeWidget() {
 
-        $choices = array('' => '--' . __('Select') . '--');
+        $choices = array();
         
         $leaveTypeList = $this->getLeaveTypeService()->getLeaveTypeList();
         
@@ -78,6 +95,7 @@ class LeaveEntitlementForm extends BaseForm {
 
         $this->setWidget('leave_type', new sfWidgetFormChoice(array('choices' => $choices)));
         $this->setValidator('leave_type', new sfValidatorChoice(array('choices' => array_keys($choices))));
+        
     }
 
     /**
@@ -93,6 +111,27 @@ class LeaveEntitlementForm extends BaseForm {
         );
         return $labels;
     }
-
+    
+    protected function setDefaultDates() {
+        $now = time();
+        
+        // If leave period defined, use leave period start and end date
+        $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod($now);        
+        if (!empty($leavePeriod)) {
+            $fromDate = $leavePeriod->getStartDate();
+            $toDate = $leavePeriod->getEndDate();
+        } else {
+            // else use this year as the period
+            $year = date('Y', $now);
+            $fromDate = $year . '-1-1';
+            $toDate = $year . '-12-31';
+        }        
+        
+        $this->setDefaults(array(
+                'date_from' => set_datepicker_date_format($fromDate),
+                'date_to' => set_datepicker_date_format($toDate)
+            ));
+    }
+    
 }
 
