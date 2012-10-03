@@ -147,7 +147,7 @@ function printButtonEventBindings($buttons) {
                         $selectAllRowspan = $showGroupHeaders ? 2 : 1;     
                         
                         $headerRow1 .= content_tag('th', $selectAllCheckbox->__toString(),
-                                                   array('rowspan' => $selectAllRowspan)) . "\n";
+                                                   array('rowspan' => $selectAllRowspan, 'class' => 'checkbox-col')) . "\n";
                     }
 
 
