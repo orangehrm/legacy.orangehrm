@@ -4,6 +4,13 @@
  *
  **/
 
+/** Set default for jquery validator */
+$.validator.setDefaults({
+    errorElement : 'span',
+    errorClass : 'validation-error'    
+});
+
+
 /**
  * valid_date validator method.
  *

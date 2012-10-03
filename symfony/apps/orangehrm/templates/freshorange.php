@@ -12,6 +12,8 @@ $cultureElements = explode('_', $sf_user->getCulture());
 
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery-1.7.2.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/validate/jquery.validate.js')?>"></script>
+        <?php use_javascript(public_path('js/orangehrm.validate.js')); ?>;
+        
         <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.core.js')?>"></script>-->
         <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.datepicker.js')?>"></script>-->
 
