@@ -455,7 +455,7 @@ form ol li select {
 	height:25px;
 	margin-top:4px;
 	width:89%;
-	padding:5px;
+	/*padding:5px; */
 }
 form ol li.new {
 	clear:left;
