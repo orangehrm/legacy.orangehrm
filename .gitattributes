@@ -4802,6 +4802,12 @@ symfony/web/jquery/jquery.ui.core.js -text
 symfony/web/jquery/jquery.ui.datepicker.js -text
 symfony/web/jquery/jquery.ui.widget.js -text
 symfony/web/jquery/jquery.validate.js -text
+symfony/web/jquery/validate/README.md -text
+symfony/web/jquery/validate/additional-methods.js -text
+symfony/web/jquery/validate/additional-methods.min.js -text
+symfony/web/jquery/validate/changelog.txt -text
+symfony/web/jquery/validate/jquery.validate.js -text
+symfony/web/jquery/validate/jquery.validate.min.js -text
 symfony/web/js/bsn.AutoSuggest_2.1.3.js -text
 symfony/web/js/bsn.AutoSuggest_2.1.3_comp.js -text
 symfony/web/js/date.js -text
