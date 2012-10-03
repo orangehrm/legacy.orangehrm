@@ -20,30 +20,36 @@
 ?>
 
 <?php
-use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
+
+use_javascripts_for_form($form);
+use_stylesheets_for_form($form);
+
+use_stylesheet(public_path('themes/default/css/jquery/jquery.autocomplete.css'));
 use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 ?>
-<div class="box" id="leave-entitlementsSearch">
+
+<?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error')): ?>
+    <div class="messagebar">
+        <?php include_partial('global/form_errors', array('form' => $form)); ?>
+        <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
+    </div>
+<?php endif; ?>
+
+<div class="box search2col" id="leave-entitlementsSearch">
     <div class="head">
         <h1><?php echo __("Leave Entitlements");?></h1>
     </div>
     <div class="inner">
         <form id="search_form" name="frmLeaveEntitlementSearch" method="post" action="<?php echo url_for('@leave_entitlements'); ?>">
 
-            <fieldset>
-                
+            <fieldset>                
                 <ol>
                     <?php echo $form->render(); ?>
                 </ol>            
                 
                 <p>
-                    <!--
-                    <button type="reset" class="reset">Reset</button>
-                    <button type="submit">Search</button>
-                    -->
                     <input type="button" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />
-                </p>
-                
+                </p>                
             </fieldset>
             
         </form>
@@ -53,6 +59,11 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     <a href="#" class="toggle tiptip" title="Expand for options">&gt;</a>
     
 </div> <!-- employee-information -->
+
+<?php if ($showResultTable) { ?>
+    <?php include_component('core', 'ohrmList'); ?>
+<?php } ?>
+
 
 <!-- Confirmation box HTML: Begins -->
 <div class="modal hide" id="deleteConfModal">
@@ -71,10 +82,80 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 <!-- Confirmation box HTML: Ends -->
 
 <script type="text/javascript">
-
-    $(document).ready(function() {
+    var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
+    var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';
+    var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
+    var lang_dateError = '<?php echo __("To date should be after from date") ?>';
+        
+    $(document).ready(function() {        
         
         $(".tiptip").tipTip();
+        
+        $("#searchBtn").click(function() {
+            $('#search_form').submit();
+        });
+
+        $('#search_form').validate({
+                rules: {
+                    'entitlements[employee][empName]': {
+                        required: true,
+                        no_default_value: function(element) {
+
+                            return {
+                                defaults: $(element).data('typeHint')
+                            }
+                        }
+                    },
+                    'entitlements[leave_type]':{required: true },
+                    'entitlements[date_from]': {
+                        required: true,
+                        valid_date: function() {
+                            return {
+                                required: true,                                
+                                format:datepickerDateFormat,
+                                displayFormat:displayDateFormat
+                            }
+                        }
+                    },
+                    'entitlements[date_to]': {
+                        required: true,
+                        valid_date: function() {
+                            return {
+                                required: true,
+                                format:datepickerDateFormat,
+                                displayFormat:displayDateFormat
+                            }
+                        },
+                        date_range: function() {
+                            return {
+                                format:datepickerDateFormat,
+                                displayFormat:displayDateFormat,
+                                fromDate:$("#date_from").val()
+                            }
+                        }
+                    }
+                },
+                messages: {
+                    'entitlements[employee][empName]':{
+                        required:'<?php echo __(ValidationMessages::REQUIRED); ?>',
+                        no_default_value:'<?php echo __(ValidationMessages::REQUIRED); ?>'
+                    },
+                    'entitlements[leave_type]':{
+                        required:'<?php echo __(ValidationMessages::REQUIRED); ?>'
+                    },
+                    'entitlements[date_from]':{
+                        required:lang_invalidDate,
+                        valid_date: lang_invalidDate
+                    },
+                    'entitlements[date_to]':{
+                        required:lang_invalidDate,
+                        valid_date: lang_invalidDate ,
+                        date_range: lang_dateError
+                    }
+            }
+
+        });
+        
     });
 
 </script>

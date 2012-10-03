@@ -24,18 +24,65 @@
  */
 class viewLeaveEntitlementsAction extends sfAction {
     
+    protected $leaveEntitlementService;
+    
+    public function getLeaveEntitlementService() {
+        if (empty($this->leaveEntitlementService)) {
+            $this->leaveEntitlementService = new LeaveEntitlementService();
+        }
+        return $this->leaveEntitlementService;
+    }
+
+    public function setLeaveEntitlementService($leaveEntitlementService) {
+        $this->leaveEntitlementService = $leaveEntitlementService;
+    }
+
+    
+    
     public function execute($request) {
         $this->form = new LeaveEntitlementForm();
 
+        $this->showResultTable = false;
         if ($request->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
 
             if ($this->form->isValid()) {
-            }                
-        }        
-        
-        
+                $this->showResultTable = true;
+                
+                $searchParameters = $this->getSearchParameterObject($this->form);
+                $results = $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
+                $this->setListComponent($results, 0, 0);
+            }
+        }
     }
+    
+    protected function getSearchParameterObject($form) {
+        $searchParameters = new LeaveEntitlementSearchParameterHolder();
+        $employeeName = $form->getValue('employee_name');
+        $id = $employeeName['empId'];
+        $searchParameters->setEmpNumber($id);
+        
+        $searchParameters->setLeaveTypeId($form->getValue('leave_type_id'));
+        $searchParameters->setFromDate($form->getValue('date_from'));
+        $searchParameters->setToDate($form->getValue('date_to'));
+        return $searchParameters;
+    }
+    
+    protected function setListComponent($leaveList, $count, $page) {
+        
+        ohrmListComponent::setConfigurationFactory($this->getListConfigurationFactory());
+        ohrmListComponent::setActivePlugin('orangehrmLeavePlugin');
+        ohrmListComponent::setListData($leaveList);
+        ohrmListComponent::setItemsPerPage(sfConfig::get('app_items_per_page'));
+        ohrmListComponent::setNumberOfRecords($count);      
+        ohrmListComponent::setPageNumber($page);
+    }    
+    
+    protected function getListConfigurationFactory() {
+        $configurationFactory = new LeaveEntitlementListConfigurationFactory();
+        
+        return $configurationFactory;
+    }    
 }
 

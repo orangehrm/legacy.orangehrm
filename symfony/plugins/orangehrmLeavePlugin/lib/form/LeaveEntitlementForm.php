@@ -41,13 +41,21 @@ class LeaveEntitlementForm extends BaseForm {
     public function configure() {
 
         $this->setWidgets(array(
-            'employee_name' => new ohrmWidgetEmployeeNameAutoFill(array('loadingMethod'=>'ajax')),
+            'employee' => new ohrmWidgetEmployeeNameAutoFill(array('loadingMethod'=>'ajax')),
         ));
 
-        $this->setValidator('employee_name', new ohrmValidatorEmployeeNameAutoFill());
+        $this->setValidator('employee', new ohrmValidatorEmployeeNameAutoFill());
 
         $this->_setLeaveTypeWidget();
         
+        $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
+        
+        $this->setWidget('date_from', new ohrmWidgetDatePicker(array(), array('id' => 'date_from')));
+        $this->setValidator('date_from', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
+
+        $this->setWidget('date_to', new ohrmWidgetDatePicker(array(), array('id' => 'date_to')));
+        $this->setValidator('date_to', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
+                
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'viewLeaveEntitlements','LeaveEntitlementsForm');
 
@@ -79,8 +87,9 @@ class LeaveEntitlementForm extends BaseForm {
     protected function getFormLabels() {
 
         $labels = array(
-            'employee_name' => __('Employee'),
-            'leave_type' => __('Leave Type')
+            'employee' => __('Employee'),
+            'leave_type' => __('Leave Type'),
+            'date_earned' => __('Earned')
         );
         return $labels;
     }
