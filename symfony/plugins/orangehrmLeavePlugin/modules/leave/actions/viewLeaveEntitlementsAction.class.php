@@ -59,7 +59,7 @@ class viewLeaveEntitlementsAction extends sfAction {
     
     protected function getSearchParameterObject($form) {
         $searchParameters = new LeaveEntitlementSearchParameterHolder();
-        $employeeName = $form->getValue('employee_name');
+        $employeeName = $form->getValue('employee');
         $id = $employeeName['empId'];
         $searchParameters->setEmpNumber($id);
         

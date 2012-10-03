@@ -55,8 +55,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         </form>
         
     </div> <!-- inner -->
-
-    <a href="#" class="toggle tiptip" title="Expand for options">&gt;</a>
     
 </div> <!-- employee-information -->
 
@@ -89,12 +87,32 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         
     $(document).ready(function() {        
         
-        $(".tiptip").tipTip();
-        
         $("#searchBtn").click(function() {
             $('#search_form').submit();
         });
 
+        $('#btnDelete').attr('disabled','disabled');
+        $("#ohrmList_chkSelectAll").click(function() {
+            if($(":checkbox").length == 1) {
+                $('#btnDelete').attr('disabled','disabled');
+            }
+            else {
+                if($("#ohrmList_chkSelectAll").is(':checked')) {
+                    $('#btnDelete').removeAttr('disabled');
+                } else {
+                    $('#btnDelete').attr('disabled','disabled');
+                }
+            }
+        });
+        
+        $(':checkbox[name*="chkSelectRow[]"]').click(function() {
+            if($(':checkbox[name*="chkSelectRow[]"]').is(':checked')) {
+                $('#btnDelete').removeAttr('disabled');
+            } else {
+                $('#btnDelete').attr('disabled','disabled');
+            }
+        });
+        
         $('#search_form').validate({
                 rules: {
                     'entitlements[employee][empName]': {

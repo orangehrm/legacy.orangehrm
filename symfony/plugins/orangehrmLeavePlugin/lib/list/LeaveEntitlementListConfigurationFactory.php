@@ -36,7 +36,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
 
         $header1->populateFromArray(array(
             'name' => 'Entitlement Type',
-            'width' => '35%',
+            'width' => '40%',
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'left',
@@ -44,18 +44,9 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
             'elementProperty' => array('getter' => 'getEntitlementType')
         ));
 
-        $header2->populateFromArray(array(
-            'name' => 'Date Added',
-            'width' => '20%',
-            'isSortable' => false,
-            'elementType' => 'labelDate',
-            'textAlignmentStyle' => 'left',
-            'elementProperty' => array('getter' => 'getCreditedDate')
-        ));
-
         $header3->populateFromArray(array(
             'name' => 'Valid From',
-            'width' => '20%',
+            'width' => '25%',
             'isSortable' => false,
             'elementType' => 'labelDate',
             'textAlignmentStyle' => 'left',
@@ -64,7 +55,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
 
         $header4->populateFromArray(array(
             'name' => 'Valid To',
-            'width' => '20%',
+            'width' => '25%',
             'isSortable' => false,
             'elementType' => 'labelDate',
             'textAlignmentStyle' => 'left',
@@ -73,7 +64,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
         
         $header5->populateFromArray(array(
             'name' => 'Days',
-            'width' => '5%',
+            'width' => '10%',
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'center',
