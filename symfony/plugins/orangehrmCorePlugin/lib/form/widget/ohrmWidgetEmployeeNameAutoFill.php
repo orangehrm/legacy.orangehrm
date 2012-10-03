@@ -36,6 +36,7 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
         $this->addOption('jsonList', '');
         $this->addOption('loadingMethod','');
         $this->addOption('requiredPermissions', array());
+        $this->addOption('typeHint', __('Type for hints') . '...');
     }    
 
     public function render($name, $value = null, $attributes = array(), $errors = array()) {
@@ -44,7 +45,7 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
         $empIdValue     = isset($value['empId'])?$value['empId']:'';        
         
         $html           = parent::render($name . '[empName]', $empNameValue, $attributes, $errors);
-        $typeHint       = __('Type for hints') . '...';
+        $typeHint       = $this->getOption('typeHint');
         $hiddenFieldId  = $this->getHiddenFieldId($name);
 
         $javaScript     = sprintf(<<<EOF
@@ -60,6 +61,7 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
                 var hintClass = 'inputFormatHint';
                 var loadingMethod = '%s';
             
+                nameField.data('typeHint', typeHint);
                 nameField.one('focus', function() {
 
                         if ($(this).hasClass(hintClass)) {
