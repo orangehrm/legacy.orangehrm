@@ -4827,6 +4827,7 @@ symfony/web/themes/default/css/main.css -text
 symfony/web/themes/default/css/tipTip.css -text
 symfony/web/themes/default/images/calendar.png -text
 symfony/web/themes/default/images/close.png -text
+symfony/web/themes/default/images/h1-bg.png -text
 symfony/web/themes/default/images/help-down.png -text
 symfony/web/themes/default/images/help-up.png -text
 symfony/web/themes/default/images/logo.png -text
