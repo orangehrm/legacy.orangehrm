@@ -48,7 +48,11 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
             dateFormat: datepickerDateFormat,
             buttonImage: "%s",
             buttonText:"",
-            buttonImageOnly: true
+            buttonImageOnly: true,
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+100",
+            firstDay: 1
         });
         
         //$("img.ui-datepicker-trigger").addClass("editable");

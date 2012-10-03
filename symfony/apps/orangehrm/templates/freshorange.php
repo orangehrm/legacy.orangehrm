@@ -117,6 +117,12 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 $(".message a").click(function() {
                     $(".message").fadeOut("slow");
                 });
+                
+                setTimeout(function(){
+                    $("div.message").fadeOut("slow", function () {
+                        $("div.message").remove();
+                    });
+                }, 2000);                
 
             });
             
