@@ -1,4 +1,4 @@
-LeaveRequest:
+LeaveEntitlement:
   pluginName: orangehrmLeavePlugin
   hasSelectableRows: true
   unselectableRowIds: []
@@ -16,6 +16,6 @@ LeaveRequest:
       function: handleDeleteButton      
   buttonsPosition: before-data
   formMethod: post
-  formAction: 'index.php/leave/addLeaveEntitlement'
+  formAction: 'index.php/leave/deleteLeaveEntitlement'
   assets: []
   jsInitMethods: []

@@ -71,7 +71,31 @@ class viewLeaveEntitlementsAction extends sfAction {
     
     protected function setListComponent($leaveList, $count, $page) {
         
-        ohrmListComponent::setConfigurationFactory($this->getListConfigurationFactory());
+        $configurationFactory = $this->getListConfigurationFactory();
+
+        $permissions = $this->getContext()->get('screen_permissions');
+        
+        $runtimeDefinitions = array();
+        $buttons = array();
+
+        if ($permissions->canCreate()) {
+            $buttons['Add'] = array('label' => 'Add');
+        }
+        if (!$permissions->canDelete()) {
+            $runtimeDefinitions['hasSelectableRows'] = false;
+        } else {
+            $buttons['Delete'] = array(
+                'label' => 'Delete',
+                'type' => 'submit',
+                'data-toggle' => 'modal',
+                'data-target' => '#deleteConfModal',
+                'class' => 'delete');
+        }
+
+        $runtimeDefinitions['buttons'] = $buttons;
+        $configurationFactory->setRuntimeDefinitions($runtimeDefinitions);
+        
+        ohrmListComponent::setConfigurationFactory($configurationFactory);
         ohrmListComponent::setActivePlugin('orangehrmLeavePlugin');
         ohrmListComponent::setListData($leaveList);
         ohrmListComponent::setItemsPerPage(sfConfig::get('app_items_per_page'));
