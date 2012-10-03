@@ -1306,3 +1306,8 @@ color:#fff;
 #edit-timesheet .bottom .required em {
 	color:#aa4935;
 }
+
+.search2col form ol input.calendar {
+	width:165px;
+	float:left;
+}
