@@ -32,11 +32,11 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
 
         $javaScript = sprintf(<<<EOF
  <script type="text/javascript">
-     
+
+    var datepickerDateFormat = '%s';
+    var displayDateFormat = datepickerDateFormat.replace('yy', 'yyyy');
+
     $(document).ready(function(){
-     
-        var datepickerDateFormat = '%s';
-        var displayDateFormat = datepickerDateFormat.replace('yy', 'yyyy');
         
         var dateFieldValue = $.trim($("#%s").val());
         if (dateFieldValue == '') {

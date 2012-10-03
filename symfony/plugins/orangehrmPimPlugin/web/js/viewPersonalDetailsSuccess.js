@@ -13,13 +13,6 @@ $(document).ready(function() {
             'personal[txtEmpLastName]': { required: lang_lastNameRequired },
             'personal[DOB]': { valid_date: lang_invalidDate },
             'personal[txtLicExpDate]': { valid_date: lang_invalidDate }
-        },
-        errorElement : 'div',
-        errorPlacement: function(error, element) {
-            error.insertAfter(element.next(".clear"));
-            error.insertAfter(element.next().next(".clear"));
-            error.insertAfter(element.next().next().next(".clear"));
-            error.insertAfter(element.parent().parent().next(".clear"));
         }
     });
 

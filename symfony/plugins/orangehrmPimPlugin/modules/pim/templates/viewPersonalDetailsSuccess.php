@@ -11,6 +11,8 @@
     
     <div class="inner">
         
+        <?php if ($personalInformationPermission->canRead()) : ?>
+        
         <?php echo isset($message) ? displayMainMessage($messageType, $message) : ''; ?>
         
         <form id="frmEmpPersonalDetails" method="post" action="<?php echo url_for('pim/viewPersonalDetails'); ?>">
@@ -29,46 +31,88 @@
                 </ol>
                 <ol>
                     <li>
-                        <label for="Employee_ID"><?php echo __('Employee Id'); ?></label>
+                        <label for="personal_txtEmployeeId"><?php echo __('Employee Id'); ?></label>
                         <?php echo $form['txtEmployeeId']->render(array("maxlength" => 10, "class" => "editable")); ?>
                     </li>
                     <li>
-                        <label for="Other_ID"><?php echo __('Other Id'); ?></label>
+                        <label for="personal_txtOtherID"><?php echo __('Other Id'); ?></label>
                         <?php echo $form['txtOtherID']->render(array("maxlength" => 30, "class" => "editable")); ?>
                     </li>
                     <li class="long">
-                        <label for="License_Number"><?php echo __("Driver's License Number"); ?></label>
+                        <label for="personal_txtLicenNo"><?php echo __("Driver's License Number"); ?></label>
                         <?php echo $form['txtLicenNo']->render(array("maxlength" => 30, "class" => "editable")); ?>
                     </li>
                     <li>
-                        <label for="Expiry_Date"><?php echo __('License Expiry Date'); ?></label>
+                        <label for="personal_txtLicExpDate"><?php echo __('License Expiry Date'); ?></label>
                         <?php echo $form['txtLicExpDate']->render(array("class"=>"calendar editable")); ?>
                     </li>
+                    <?php if ($showSSN) : ?>
+                    <li class="line">
+                        <label for="personal_txtNICNo"><?php echo __('SSN Number'); ?></label>
+                        <?php echo $form['txtNICNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
+                    </li>                    
+                    <?php endif; ?>
+                    <?php if ($showSIN) : ?>
+                    <li class="new">
+                        <label for="personal_txtSINNo"><?php echo __('SIN Number'); ?></label>
+                        <?php echo $form['txtSINNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
+                    </li>                    
+                    <?php endif; ?>                    
                 </ol>
                 <ol>
                     <li class="radio">
-                        <label for="Gender" class="block"><?php echo __("Gender"); ?></label>
+                        <label for="personal_optGender" class="block"><?php echo __("Gender"); ?></label>
                         <?php echo $form['optGender']->render(array("class"=>"editable")); ?>
                     </li>
                     <li>
-                        <label for="Marital_Status"><?php echo __('Marital Status'); ?></label>
+                        <label for="personal_cmbMarital"><?php echo __('Marital Status'); ?></label>
                         <?php echo $form['cmbMarital']->render(array("class"=>"editable")); ?>
                     </li>
                     <li class="new">
-                        <label for="Nationality"><?php echo __("Nationality"); ?></label>
+                        <label for="personal_cmbNation"><?php echo __("Nationality"); ?></label>
                         <?php echo $form['cmbNation']->render(array("class"=>"editable")); ?>
                     </li>
                     <li class="line">
-                        <label for="Date_of_Birth"><?php echo __("Date of Birth"); ?></label>
+                        <label for="personal_DOB"><?php echo __("Date of Birth"); ?></label>
                         <?php echo $form['DOB']->render(array("class"=>"editable")); ?>
                     </li>
+                    <?php if(!$showDeprecatedFields) : ?>
                     <li class="required">
                         <em>*</em> required field
                     </li>
+                    <?php endif; ?>
+                </ol>    
+                <?php if($showDeprecatedFields) : ?>    
+                <ol>
+                    <li>
+                        <label for="personal_txtEmpNickName"><?php echo __("Nick Name"); ?></label>
+                        <?php echo $form['txtEmpNickName']->render(array("maxlength" => 30, "class" => "editable")); ?>
+                    </li>
+                    <li>
+                        <label for="personal_chkSmokeFlag"><?php echo __('Smoker'); ?></label>
+                        <?php echo $form['chkSmokeFlag']->render(array("class" => "editable")); ?>
+                    </li>
+                    <li>
+                        <label for="personal_txtMilitarySer"><?php echo __("Military Service"); ?></label>
+                        <?php echo $form['txtMilitarySer']->render(array("maxlength" => 30, "class" => "editable")); ?>
+                    </li>
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>                    
                 </ol>
+                <?php endif; ?>                        
+                
+                <?php  if ($personalInformationPermission->canUpdate()) : ?>
                 <p><input type="button" id="btnSave" value="<?php echo __("Edit"); ?>" /></p>
+                <?php endif; ?>
+                
             </fieldset>
         </form>
+        
+        <?php else : ?>
+        <div><?php echo __(CommonMessages::DONT_HAVE_ACCESS); ?></div>
+        <?php endif; ?>
+        
     </div> <!-- inner -->
 
 </div> <!-- employee-details -->
