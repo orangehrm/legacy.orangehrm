@@ -160,3 +160,43 @@ $.validator.addMethod('date_range', function(value, element, params) {
     }
     return valid;
 });
+
+/** Check if input value is the default (eg: type for... hint)
+ *
+ * Use as follows:
+ *
+ * To check for one default:
+ *   'name': {
+ *      required: true,
+ *      no_default_value: function() {
+ *        return {
+ *          defaults: 'Type for hints...'
+ *        }
+ *      }
+ *    },
+ *    
+ * For more than one default, use:
+ *  defaults: ['loading...', 'Type for hints...']   
+ */                    
+$.validator.addMethod("no_default_value", function(value, element, params) {
+    var valid = true;
+    
+    if (params.defaults) {
+        
+        // If defaults is an array, check for each element
+        if (params.defaults instanceof Array) {
+            for (var i = 0; i < params.defaults.length; i++) {
+                if (value == params.defaults[i]) {
+                    valid = false;
+                    break;
+                }
+            }            
+        } else {
+            if (value == params.defaults) {
+                valid = false;
+            }
+        }
+    }
+
+    return valid;
+});
