@@ -4244,7 +4244,7 @@ symfony/plugins/orangehrmCorePlugin/web/js/nationality.js -text
 symfony/plugins/orangehrmLeavePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/list_component.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/routing.yml -text
-symfony/plugins/orangehrmLeavePlugin/install/dbscript.sql -text
+symfony/plugins/orangehrmLeavePlugin/install/upgrade.sql -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveEntitlementDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementListConfigurationFactory.php -text
