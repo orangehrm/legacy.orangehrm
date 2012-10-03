@@ -1311,3 +1311,7 @@ color:#fff;
 	width:165px;
 	float:left;
 }
+
+table.table th.checkbox-col {
+    width: 10px;
+}
