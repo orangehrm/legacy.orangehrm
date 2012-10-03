@@ -4801,7 +4801,7 @@ symfony/web/jquery/jquery.tipTip.minified.js -text
 symfony/web/jquery/jquery.ui.core.js -text
 symfony/web/jquery/jquery.ui.datepicker.js -text
 symfony/web/jquery/jquery.ui.widget.js -text
-symfony/web/jquery/jquery.validate.js -text
+symfony/web/jquery/jquery.validate-geektantra.js -text
 symfony/web/jquery/validate/README.md -text
 symfony/web/jquery/validate/additional-methods.js -text
 symfony/web/jquery/validate/additional-methods.min.js -text
