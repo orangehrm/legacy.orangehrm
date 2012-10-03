@@ -63,6 +63,9 @@ class viewLeaveEntitlementsAction extends sfAction {
         $id = $employeeName['empId'];
         $searchParameters->setEmpNumber($id);
         
+        // TODO: Check if empNumber is accessible to current user:
+        // Otherwise show error message
+        
         $searchParameters->setLeaveTypeId($form->getValue('leave_type_id'));
         $searchParameters->setFromDate($form->getValue('date_from'));
         $searchParameters->setToDate($form->getValue('date_to'));
