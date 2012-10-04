@@ -1318,3 +1318,19 @@ color:#fff;
 table.table th.checkbox-col {
     width: 10px;
 }
+table.table tr.total td.right {
+    text-align: center;
+}
+
+table tfoot tr.total td {
+	background-color:#555657;
+	color:#fff;
+}
+table tfoot tr td strong {
+	color:#333;
+	font-weight:bold;
+}
+table tfoot tr.total td strong {
+	font-weight:bold;
+	color:#fff;
+}

@@ -300,8 +300,11 @@ function printButtonEventBindings($buttons) {
             <?php if ($hasSummary) {
  ?>
                         <tfoot>
-                            <tr>
+                            <tr class="total">
                     <?php
+                        if ($hasSelectableRows) {
+                            echo "<td>&nbsp;</td>";
+                        }                      
                         $firstHeader = true;
                         foreach ($columns as $header) {
                             if ($header->getName() == $summary['summaryField']) {
@@ -314,9 +317,10 @@ function printButtonEventBindings($buttons) {
                                 echo "<td class='right'>" . $aggregateValue . '</td>';
                             } else {
                                 $tdValue = '&nbsp;';
+                                
                                 if ($firstHeader) {
                                     $tdValue = $summary['summaryLabel'];
-                                    $firstHeader = false;
+                                    $firstHeader = false;                                    
                                 }
                                 //echo tag('td', $tdValue);
                                 echo "<td>" . $tdValue . '</td>';
