@@ -147,8 +147,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $parameterHolder->setFromDate('2012-03-01');
         $parameterHolder->setToDate('2012-07-01');
                 
-        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3], $entitlementList[1]);
-        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3]);
+        $expected = array($entitlementList[2], $entitlementList[3]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         
         $this->_compareEntitlements($expected, $results);         
@@ -156,7 +155,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         // from date matching entitlement from date
         $parameterHolder->setFromDate('2012-04-04');
         $parameterHolder->setToDate('2012-04-05');        
-        $expected = array($entitlementList[0], $entitlementList[2]);
+        $expected = array($entitlementList[2]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         
         $this->_compareEntitlements($expected, $results);        
@@ -179,10 +178,8 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         // from date matching entitlement to date
         $parameterHolder->setFromDate('2013-09-01');
         $parameterHolder->setToDate('2013-11-01');        
-        $expected = array($entitlementList[1]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
-        
-        $this->_compareEntitlements($expected, $results);            
+        $this->assertEquals(0, count($results));
     }
     
     public function testSearchLeaveEntitlementsDeletedFlag() {

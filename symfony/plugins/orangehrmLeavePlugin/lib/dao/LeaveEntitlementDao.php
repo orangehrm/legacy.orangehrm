@@ -56,9 +56,7 @@ class LeaveEntitlementDao extends BaseDao {
             }
             
             if (!empty($fromDate) && !empty($toDate)) {
-                $q->addWhere('(le.from_date BETWEEN :fromDate AND :toDate) OR ' . 
-                             '(le.to_date BETWEEN :fromDate AND :toDate) OR ' . 
-                             '(:fromDate BETWEEN le.from_date AND le.to_date)');
+                $q->addWhere('(le.from_date BETWEEN :fromDate AND :toDate)');
                 
                 $params[':fromDate'] = $fromDate;
                 $params[':toDate'] = $toDate;
