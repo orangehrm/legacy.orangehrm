@@ -24,6 +24,7 @@
  */
 class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFactory {
     
+    protected $allowEdit;
     
     public function init() {
         sfContext::getInstance()->getConfiguration()->loadHelpers('OrangeDate');
@@ -66,9 +67,14 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
             'name' => 'Days',
             'width' => '10%',
             'isSortable' => false,
-            'elementType' => 'label',
+            'elementType' => 'link',
             'textAlignmentStyle' => 'center',
-            'elementProperty' => array('getter' => 'getNoOfDays')
+            'elementProperty' => array(
+                'linkable' => $this->allowEdit,
+                'labelGetter' => array('getNoOfDays'),
+                'placeholderGetters' => array('id' => 'getId'),
+                'urlPattern' => public_path('index.php/leave/addLeaveEntitlement/id/{id}'),
+            ),            
         ));
 
 
@@ -78,4 +84,14 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
     public function getClassName() {
         return 'LeaveEntitlement';
     }
+    
+    public function getAllowEdit() {
+        return $this->allowEdit;
+    }
+
+    public function setAllowEdit($allowEdit) {
+        $this->allowEdit = $allowEdit;
+    }
+
+    
 }

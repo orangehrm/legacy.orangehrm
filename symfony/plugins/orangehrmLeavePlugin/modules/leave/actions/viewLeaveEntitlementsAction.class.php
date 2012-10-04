@@ -113,6 +113,8 @@ class viewLeaveEntitlementsAction extends sfAction {
                 'data-target' => '#deleteConfModal',
                 'class' => 'delete');
         }
+        
+        $configurationFactory->setAllowEdit($permissions->canUpdate());
 
         $runtimeDefinitions['buttons'] = $buttons;
         $configurationFactory->setRuntimeDefinitions($runtimeDefinitions);
