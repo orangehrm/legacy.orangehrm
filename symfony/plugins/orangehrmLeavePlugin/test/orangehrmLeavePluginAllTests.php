@@ -11,7 +11,8 @@ class orangehrmLeavePluginAllTests {
         $suite = new PHPUnit_Framework_TestSuite('orangehrmLeavePluginAllTest');
 
         /* Dao Test Cases */
-        $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveEntitlementDaoTest.php');      
+        $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveEntitlementDaoTest.php'); 
+        $suite->addTestFile(dirname(__FILE__) . '/model/dao/NewLeaveTypeDaoTest.php');      
 
         /* Service Test Cases */
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveEntitlementServiceTest.php');

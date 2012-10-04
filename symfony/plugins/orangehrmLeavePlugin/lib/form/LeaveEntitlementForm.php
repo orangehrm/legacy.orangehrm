@@ -31,6 +31,7 @@ class LeaveEntitlementForm extends BaseForm {
     public function getLeaveTypeService() {
         if (!isset($this->leaveTypeService)) {
             $this->leaveTypeService = new LeaveTypeService();
+            $this->leaveTypeService->setLeaveTypeDao(new NewLeaveTypeDao());
         }
         return $this->leaveTypeService;
     }
@@ -93,7 +94,7 @@ class LeaveEntitlementForm extends BaseForm {
             $choices[''] = __('No leave types defined');
         } else {
             foreach ($leaveTypeList as $leaveType) {
-                $choices[$leaveType->getLeaveTypeId()] = $leaveType->getLeaveTypeName();            
+                $choices[$leaveType->getId()] = $leaveType->getName();            
             }
         }
 
@@ -111,7 +112,8 @@ class LeaveEntitlementForm extends BaseForm {
         $labels = array(
             'employee' => __('Employee'),
             'leave_type' => __('Leave Type'),
-            'date_earned' => __('Earned')
+            'date_from' => __('Earned From'),
+            'date_to' => __('To')
         );
         return $labels;
     }

@@ -90,6 +90,9 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         $("#searchBtn").click(function() {
             $('#search_form').submit();
         });
+        $('#btnAdd').click(function() {
+            location.href = "<?php echo url_for('leave/addLeaveEntitlement') ?>";
+        });        
 
         $('#btnDelete').attr('disabled','disabled');
         $("#ohrmList_chkSelectAll").click(function() {

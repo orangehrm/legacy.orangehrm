@@ -22,7 +22,7 @@
 /**
  * Description of NewLeaveTypeDao
  */
-class NewLeaveTypeDao extends BaseDao {
+class NewLeaveTypeDao extends LeaveTypeDao {
     
     public function getLeaveTypeList($operationalCountryId = null) {
         try {

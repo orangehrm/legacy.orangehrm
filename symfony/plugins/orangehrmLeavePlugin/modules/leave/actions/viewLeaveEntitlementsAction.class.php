@@ -81,7 +81,7 @@ class viewLeaveEntitlementsAction extends sfAction {
             $this->redirect('leave/viewLeaveEntitlements');
         }
         
-        $searchParameters->setLeaveTypeId($filters['leave_type_id']);
+        $searchParameters->setLeaveTypeId($filters['leave_type']);
         $searchParameters->setFromDate($filters['date_from']);
         $searchParameters->setToDate($filters['date_to']);
         return $searchParameters;
