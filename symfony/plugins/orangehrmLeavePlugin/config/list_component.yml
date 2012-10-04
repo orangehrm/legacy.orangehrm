@@ -5,8 +5,12 @@ LeaveEntitlement:
   idValueGetter: getId
   title: ''
   tableWidth: 100%
-  hasSummary: false
-  summary: []   
+  hasSummary: true
+  summary:
+    summaryLabel: 'Total'
+    summaryField: 'Days'
+    summaryFunction: SUM
+    summaryFieldDecimals: 0
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/leave/deleteLeaveEntitlements'
