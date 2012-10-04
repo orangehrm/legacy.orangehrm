@@ -37,9 +37,12 @@ class viewLeaveEntitlementsAction extends sfAction {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }    
     
+    protected function getForm() {
+        return new LeaveEntitlementForm();
+    }
     public function execute($request) {        
         
-        $this->form = new LeaveEntitlementForm();
+        $this->form = $this->getForm();
 
         $this->showResultTable = false;
         $filters = array();
@@ -73,14 +76,13 @@ class viewLeaveEntitlementsAction extends sfAction {
         
         $userRoleManager = $this->getContext()->getUserRoleManager();
         $isAccessible = $userRoleManager->isEntityAccessible('Employee', $id);
-        if ($isAccessible || $this->getUser()->getAttribute('auth.empNumber') == $id) {        
+        if ($isAccessible || (!empty($id) && $this->getUser()->getAttribute('auth.empNumber') == $id)) {        
             $searchParameters->setEmpNumber($id);
         } else {
-            var_dump($filters);die;
             $this->getUser()->setFlash('warning', 'Access Denied to Selected Employee');
             $this->redirect('leave/viewLeaveEntitlements');
         }
-        
+
         $searchParameters->setLeaveTypeId($filters['leave_type']);
         $searchParameters->setFromDate($filters['date_from']);
         $searchParameters->setToDate($filters['date_to']);

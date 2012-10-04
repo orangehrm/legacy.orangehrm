@@ -40,7 +40,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
-        <form id="search_form" name="frmLeaveEntitlementSearch" method="post" action="<?php echo url_for('@leave_entitlements'); ?>">
+        <form id="search_form" name="frmLeaveEntitlementSearch" method="post" action="">
 
             <fieldset>                
                 <ol>
