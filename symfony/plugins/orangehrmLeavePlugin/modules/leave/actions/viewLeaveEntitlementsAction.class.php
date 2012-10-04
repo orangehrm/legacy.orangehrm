@@ -24,6 +24,8 @@
  */
 class viewLeaveEntitlementsAction extends sfAction {
     
+    const FILTERS_ATTRIBUTE_NAME = 'entitlementlist.filters';
+    
     protected $leaveEntitlementService;
     
     public function getLeaveEntitlementService() {
@@ -134,7 +136,7 @@ class viewLeaveEntitlementsAction extends sfAction {
      * @param array $filters
      */
     protected function saveFilters(array $filters) {
-        $this->getUser()->setAttribute('entitlementlist.filters', $filters, 'leave');
+        $this->getUser()->setAttribute(self::FILTERS_ATTRIBUTE_NAME, $filters, 'leave');
     }    
     
     /**
@@ -143,7 +145,7 @@ class viewLeaveEntitlementsAction extends sfAction {
      * @return array
      */
     protected function getFilters() {
-        return $this->getUser()->getAttribute('entitlementlist.filters', null, 'leave');
+        return $this->getUser()->getAttribute(self::FILTERS_ATTRIBUTE_NAME, null, 'leave');
     }        
 }
 

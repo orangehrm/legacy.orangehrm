@@ -28,5 +28,6 @@ class LeaveEntitlementAddForm extends LeaveEntitlementForm {
         $this->setWidget('entitlement', new sfWidgetFormInputText());
         $this->setValidator('entitlement', new sfValidatorNumber(array('required' => true)));
         $this->widgetSchema->setLabel('entitlement', __('Entitlement'));
+        $this->widgetSchema->setLabel('date_from', __('Entitled from'));
     }    
 }

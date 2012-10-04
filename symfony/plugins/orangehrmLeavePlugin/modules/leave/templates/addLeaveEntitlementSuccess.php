@@ -48,7 +48,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                 </ol>            
                 
                 <p>
-                    <input type="button" id="saveBtn" value="<?php echo __("Save") ?>"/>
+                    <input type="button" id="btnSave" value="<?php echo __("Save") ?>"/>
                 </p>                
             </fieldset>
             
@@ -68,42 +68,13 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         
     $(document).ready(function() {        
         
-        $("#searchBtn").click(function() {
-            $('#search_form').submit();
-        });
-        $('#btnAdd').click(function() {
-            location.href = "<?php echo url_for('leave/addLeaveEntitlement') ?>";
+        $('#btnSave').click(function() {
+            $('#frmLeaveEntitlementAdd').submit();
         });        
 
-        $('#btnDelete').attr('disabled','disabled');
-        $("#ohrmList_chkSelectAll").click(function() {
-            if($(":checkbox").length == 1) {
-                $('#btnDelete').attr('disabled','disabled');
-            }
-            else {
-                if($("#ohrmList_chkSelectAll").is(':checked')) {
-                    $('#btnDelete').removeAttr('disabled');
-                } else {
-                    $('#btnDelete').attr('disabled','disabled');
-                }
-            }
-        });
-        
-        $(':checkbox[name*="chkSelectRow[]"]').click(function() {
-            if($(':checkbox[name*="chkSelectRow[]"]').is(':checked')) {
-                $('#btnDelete').removeAttr('disabled');
-            } else {
-                $('#btnDelete').attr('disabled','disabled');
-            }
-        });
-        
-        /* Delete confirmation controls: Begin */
-        $('#dialogDeleteBtn').click(function() {
-            document.frmList_ohrmListComponent.submit();
-        });
         /* Delete confirmation controls: End */
         
-        $('#search_form').validate({
+        $('#frmLeaveEntitlementAdd').validate({
                 rules: {
                     'entitlements[employee][empName]': {
                         required: true,
@@ -141,7 +112,12 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                                 fromDate:$("#date_from").val()
                             }
                         }
+                    },
+                    'entitlements[entitlement]': {
+                        required: true,
+                        number: true
                     }
+                    
                 },
                 messages: {
                     'entitlements[employee][empName]':{
@@ -159,7 +135,11 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                         required:lang_invalidDate,
                         valid_date: lang_invalidDate ,
                         date_range: lang_dateError
-                    }
+                    },
+                    'entitlements[entitlement]': {
+                        required: '<?php echo __(ValidationMessages::REQUIRED); ?>',
+                        number: '<?php echo __("Should be a number"); ?>'
+                    }                    
             }
 
         });

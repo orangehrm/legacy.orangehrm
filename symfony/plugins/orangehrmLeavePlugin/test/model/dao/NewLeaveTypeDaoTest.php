@@ -21,6 +21,7 @@
 
 /**
  * Description of TestNewLeaveTypeDao
+ * @group Leave
  */
 class NewLeaveTypeDaoTest extends PHPUnit_Framework_TestCase {
 
