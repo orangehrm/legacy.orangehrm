@@ -18,13 +18,18 @@
 */
 ?>
 
-<?php if ($sf_user->hasFlash('success')): ?>
-  <span class="success">
-    <?php echo $sf_user->getFlash('success') ?>
-  </span>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <span class="error">
-    <?php echo $sf_user->getFlash('error') ?>
-  </span>
-<?php endif; ?>
+<?php
+$messageTypes = array('success', 'warning', 'error');
+
+foreach ($messageTypes as $messageType) :
+    if ($sf_user->hasFlash($messageType)) : 
+?>
+<div class="message <?php echo $messageType;?>">
+    <?php echo $sf_user->getFlash($messageType);?>
+    <a href="#"><?php echo __('Close');?></a>
+</div>
+<?php
+    endif; 
+endforeach;
+?>
+

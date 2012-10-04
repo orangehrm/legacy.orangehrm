@@ -28,10 +28,9 @@ use_stylesheet(public_path('themes/default/css/jquery/jquery.autocomplete.css'))
 use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 ?>
 
-<?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error')): ?>
+<?php if ($form->hasErrors()): ?>
     <div class="messagebar">
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
-        <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
     </div>
 <?php endif; ?>
 
@@ -40,6 +39,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         <h1><?php echo __("Leave Entitlements");?></h1>
     </div>
     <div class="inner">
+        <?php include_partial('global/flash_messages'); ?>
         <form id="search_form" name="frmLeaveEntitlementSearch" method="post" action="<?php echo url_for('@leave_entitlements'); ?>">
 
             <fieldset>                
@@ -112,6 +112,12 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                 $('#btnDelete').attr('disabled','disabled');
             }
         });
+        
+        /* Delete confirmation controls: Begin */
+        $('#dialogDeleteBtn').click(function() {
+            document.frmList_ohrmListComponent.submit();
+        });
+        /* Delete confirmation controls: End */
         
         $('#search_form').validate({
                 rules: {

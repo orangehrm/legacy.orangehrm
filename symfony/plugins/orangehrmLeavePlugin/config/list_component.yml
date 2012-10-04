@@ -6,16 +6,9 @@ LeaveEntitlement:
   title: ''
   tableWidth: 100%
   hasSummary: false
-  summary: []
-  buttons:
-    Add:
-      label: Add
-      function: handleAddButton
-    Delete:
-      label: Delete
-      function: handleDeleteButton      
+  summary: []   
   buttonsPosition: before-data
   formMethod: post
-  formAction: 'index.php/leave/deleteLeaveEntitlement'
+  formAction: 'index.php/leave/deleteLeaveEntitlements'
   assets: []
   jsInitMethods: []

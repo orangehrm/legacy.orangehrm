@@ -89,8 +89,12 @@ class LeaveEntitlementForm extends BaseForm {
         
         $leaveTypeList = $this->getLeaveTypeService()->getLeaveTypeList();
         
-        foreach ($leaveTypeList as $leaveType) {
-            $choices[$leaveType->getLeaveTypeId()] = $leaveType->getLeaveTypeName();
+        if (count($leaveTypeList) == 0) {
+            $choices[''] = __('No leave types defined');
+        } else {
+            foreach ($leaveTypeList as $leaveType) {
+                $choices[$leaveType->getLeaveTypeId()] = $leaveType->getLeaveTypeName();            
+            }
         }
 
         $this->setWidget('leave_type', new sfWidgetFormChoice(array('choices' => $choices)));

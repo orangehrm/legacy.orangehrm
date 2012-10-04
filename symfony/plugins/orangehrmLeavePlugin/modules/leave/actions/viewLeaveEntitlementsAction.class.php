@@ -35,40 +35,55 @@ class viewLeaveEntitlementsAction extends sfAction {
 
     public function setLeaveEntitlementService($leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
-    }
-
+    }    
     
-    
-    public function execute($request) {
+    public function execute($request) {        
+        
         $this->form = new LeaveEntitlementForm();
 
         $this->showResultTable = false;
+        $filters = array();
+        
         if ($request->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
 
             if ($this->form->isValid()) {
                 $this->showResultTable = true;
-                
-                $searchParameters = $this->getSearchParameterObject($this->form);
-                $results = $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
-                $this->setListComponent($results, 0, 0);
+                $filters = $this->form->getValues();                
+                $this->saveFilters($filters);                       
             }
+        } else if ($request->hasParameter('savedsearch')) {
+            $this->showResultTable = true;
+            $filters = $this->getFilters();
+            $this->form->setDefaults($filters);
+        }
+        
+        if ($this->showResultTable) {
+            $searchParameters = $this->getSearchParameterObject($filters);
+            $results = $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
+            $this->setListComponent($results, 0, 0);        
         }
     }
     
-    protected function getSearchParameterObject($form) {
+    protected function getSearchParameterObject($filters) {
         $searchParameters = new LeaveEntitlementSearchParameterHolder();
-        $employeeName = $form->getValue('employee');
+        $employeeName = $filters['employee'];
         $id = $employeeName['empId'];
-        $searchParameters->setEmpNumber($id);
         
-        // TODO: Check if empNumber is accessible to current user:
-        // Otherwise show error message
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        $isAccessible = $userRoleManager->isEntityAccessible('Employee', $id);
+        if ($isAccessible || $this->getUser()->getAttribute('auth.empNumber') == $id) {        
+            $searchParameters->setEmpNumber($id);
+        } else {
+            var_dump($filters);die;
+            $this->getUser()->setFlash('warning', 'Access Denied to Selected Employee');
+            $this->redirect('leave/viewLeaveEntitlements');
+        }
         
-        $searchParameters->setLeaveTypeId($form->getValue('leave_type_id'));
-        $searchParameters->setFromDate($form->getValue('date_from'));
-        $searchParameters->setToDate($form->getValue('date_to'));
+        $searchParameters->setLeaveTypeId($filters['leave_type_id']);
+        $searchParameters->setFromDate($filters['date_from']);
+        $searchParameters->setToDate($filters['date_to']);
         return $searchParameters;
     }
     
@@ -111,5 +126,22 @@ class viewLeaveEntitlementsAction extends sfAction {
         
         return $configurationFactory;
     }    
+    
+    /**
+     * Save search filters as user attribute
+     * @param array $filters
+     */
+    protected function saveFilters(array $filters) {
+        $this->getUser()->setAttribute('entitlementlist.filters', $filters, 'leave');
+    }    
+    
+    /**
+     * Get search filters from user attribute
+     * @param array $filters
+     * @return array
+     */
+    protected function getFilters() {
+        return $this->getUser()->getAttribute('entitlementlist.filters', null, 'leave');
+    }        
 }
 
