@@ -41,7 +41,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'left',
-            'filters' => array('LeaveEntitlementTypeCellFilter' => array()),  
+            'filters' => array('LeaveEntitlementTypeCellFilter' => array()),
             'elementProperty' => array('getter' => 'getEntitlementType')
         ));
 
@@ -68,7 +68,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
             'width' => '10%',
             'isSortable' => false,
             'elementType' => 'link',
-            'textAlignmentStyle' => 'center',
+            'textAlignmentStyle' => 'right',
             'elementProperty' => array(
                 'linkable' => $this->allowEdit,
                 'labelGetter' => array('getNoOfDays'),
