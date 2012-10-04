@@ -23,7 +23,7 @@
 echo $form->renderGlobalErrors();
  
 foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
-  echo $form[$widgetName]->renderError();
+  echo $widgetName . ' ' . $form[$widgetName]->renderError();
 }
 ?>
 </span>

@@ -36,7 +36,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 
 <div class="box single" id="add-leave-entitlement">
     <div class="head">
-        <h1><?php echo __("Add Leave Entitlements");?></h1>
+        <h1><?php echo $addMode ? __("Add Leave Entitlement") : __('Edit Leave Entitlement');?></h1>
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>

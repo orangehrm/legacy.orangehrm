@@ -39,7 +39,15 @@ class addLeaveEntitlementAction extends sfAction {
     
     public function execute($request) {
         
+        $this->addMode = true;
         $this->form = $this->getForm();
+        
+        if ($request->hasParameter('id')) {                
+            $id = $request->getParameter('id');
+            $filters = $this->getFiltersFromEntitlement($id);  
+            $this->addMode = false;
+            $this->form->setEditMode();
+        }       
         
         if ($request->isMethod('post')) {
 
@@ -48,15 +56,42 @@ class addLeaveEntitlementAction extends sfAction {
             if ($this->form->isValid()) {
                 $leaveEntitlement = $this->getLeaveEntitlement($this->form->getValues());
                 $this->getLeaveEntitlementService()->saveLeaveEntitlement($leaveEntitlement);
-                $this->getUser()->setFlash('success', TopLevelMessages::ADD_SUCCESS);
+                
+                $successMessage = $this->addMode ?  TopLevelMessages::ADD_SUCCESS : TopLevelMessages::UPDATE_SUCCESS;
+                $this->getUser()->setFlash('success', __($successMessage));
                 $this->redirect('leave/viewLeaveEntitlements?savedsearch=1');
             }
         } else {
-            $filters = $this->getFilters();
+            if ($request->hasParameter('id')) {                
+                $id = $request->getParameter('id');
+                $filters = $this->getFiltersFromEntitlement($id);  
+            } else {
+                $filters = $this->getFilters();
+            }
+            
             if (!empty($filters)) {
                 $this->form->setDefaults($filters);
-            }
+            }            
         }        
+    }
+    
+    protected function getFiltersFromEntitlement($id) {
+        $entitlement = $this->getLeaveEntitlementService()->getLeaveEntitlement($id);    
+        
+        $employee = $entitlement->getEmployee();        
+        
+        $filters = array(
+            'id' => $id,
+            'employee' => array(
+                'empName' => $employee->getFirstAndLastNames(),
+                'empId' => $employee->getEmpNumber()),
+            'leave_type' => $entitlement->getLeaveTypeId(),
+            'date_from' => set_datepicker_date_format($entitlement->getFromDate()),
+            'date_to' => set_datepicker_date_format($entitlement->getToDate()),
+            'entitlement' => $entitlement->getNoOfDays()
+        );
+        
+        return $filters;
     }
     
     protected function getForm() {
@@ -73,19 +108,32 @@ class addLeaveEntitlementAction extends sfAction {
     }  
     
     protected function getLeaveEntitlement($values) {
-        $leaveEntitlement = new LeaveEntitlement();
         
-        //$leaveEntitlement->setId();
-        $leaveEntitlement->setEmpNumber($values['employee']['empId']);
+        if (isset($values['id'])) {
+            $id = $values['id'];
+            $leaveEntitlement = $this->getLeaveEntitlementService()->getLeaveEntitlement($id);
+        } else {
+            $leaveEntitlement = new LeaveEntitlement();  
+            
+            $leaveEntitlement->setEmpNumber($values['employee']['empId']);
+            $leaveEntitlement->setLeaveTypeId($values['leave_type']);
+        
+            $user = $this->getUser();
+            $userId = $user->getAttribute('auth.userId');
+            $createdBy = $this->getUser()->getAttribute('auth.firstName');
+            
+            $leaveEntitlement->setCreditedDate(date('Y-m-d'));
+            $leaveEntitlement->setCreatedById($userId);
+            $leaveEntitlement->setCreatedByName($createdBy);        
+            
+            $leaveEntitlement->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+            $leaveEntitlement->setDeleted(0);            
+        }
+        
         $leaveEntitlement->setNoOfDays($values['entitlement']);
-        $leaveEntitlement->setLeaveTypeId($values['leave_type']);
         $leaveEntitlement->setFromDate($values['date_from']);
         $leaveEntitlement->setToDate($values['date_to']);
-        $leaveEntitlement->setCreditedDate(date('Y-m-d'));
-        //$leaveEntitlement->setNote('Created by Unit test');
-        $leaveEntitlement->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
-        $leaveEntitlement->setDeleted(0);
-        
+
         return $leaveEntitlement;
     }
 }

@@ -25,9 +25,20 @@
 class LeaveEntitlementAddForm extends LeaveEntitlementForm {
     public function configure() {
         parent::configure();
+        $this->setWidget('id', new sfWidgetFormInputHidden());
+        $this->setValidator('id', new sfValidatorNumber(array('required' => false, 'min' => 1)));
+        
         $this->setWidget('entitlement', new sfWidgetFormInputText());
         $this->setValidator('entitlement', new sfValidatorNumber(array('required' => true)));
         $this->widgetSchema->setLabel('entitlement', __('Entitlement'));
         $this->widgetSchema->setLabel('date_from', __('Entitled from'));
+             
     }    
+    
+    public function setEditMode() {
+        $this->getWidget('leave_type')->setAttribute('disabled', 'disabled');
+        $this->getWidget('employee')->setAttribute('disabled', 'disabled');
+        $this->setValidator('employee', new sfValidatorPass());
+        $this->setValidator('leave_type', new sfValidatorPass());           
+    }
 }
