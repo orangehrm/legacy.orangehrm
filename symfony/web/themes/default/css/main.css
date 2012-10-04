@@ -376,6 +376,9 @@ form ol li {
 	margin:0 0 15px 0;
 	position:relative;
 }
+.single form ol {
+    padding-bottom: 5px; /* ruchira: fix overlap between validation error in last input field */    
+}
 .single form ol li {
 	width:90%;
 	float:left;
