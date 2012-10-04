@@ -1318,8 +1318,8 @@ color:#fff;
 table.table th.checkbox-col {
     width: 10px;
 }
-table.table tr.total td.right {
-    text-align: center;
+table.table td.right {
+    text-align: right;
 }
 
 table tfoot tr.total td {
