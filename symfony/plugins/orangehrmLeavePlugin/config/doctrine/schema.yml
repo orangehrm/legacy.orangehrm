@@ -14,9 +14,8 @@ LeaveEntitlement:
       primary: false
       autoincrement: false
     no_of_days:
-      type: integer(4)
-      fixed: false
-      unsigned: false
+      type: decimal(6)
+      scale: false      
       primary: false
       notnull: true
       autoincrement: false
@@ -70,6 +69,20 @@ LeaveEntitlement:
       default: '0'
       notnull: true
       autoincrement: false
+    created_by_id:
+      type: integer(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    created_by_name:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false      
   relations:
     LeaveType:
       local: leave_type_id
@@ -78,6 +91,10 @@ LeaveEntitlement:
     Employee:
       local: emp_number
       foreign: emp_number
+      type: one
+    SystemUser:
+      local: created_by_id
+      foreign: id
       type: one
       
 LeaveType:

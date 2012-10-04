@@ -7,7 +7,7 @@
  * 
  * @property integer $id
  * @property integer $emp_number
- * @property integer $no_of_days
+ * @property decimal $no_of_days
  * @property integer $leave_type_id
  * @property timestamp $from_date
  * @property timestamp $to_date
@@ -15,12 +15,15 @@
  * @property string $note
  * @property integer $entitlement_type
  * @property integer $deleted
+ * @property integer $created_by_id
+ * @property string $created_by_name
  * @property LeaveType $LeaveType
  * @property Employee $Employee
+ * @property SystemUser $SystemUser
  * 
  * @method integer          getId()               Returns the current record's "id" value
  * @method integer          getEmpNumber()        Returns the current record's "emp_number" value
- * @method integer          getNoOfDays()         Returns the current record's "no_of_days" value
+ * @method decimal          getNoOfDays()         Returns the current record's "no_of_days" value
  * @method integer          getLeaveTypeId()      Returns the current record's "leave_type_id" value
  * @method timestamp        getFromDate()         Returns the current record's "from_date" value
  * @method timestamp        getToDate()           Returns the current record's "to_date" value
@@ -28,8 +31,11 @@
  * @method string           getNote()             Returns the current record's "note" value
  * @method integer          getEntitlementType()  Returns the current record's "entitlement_type" value
  * @method integer          getDeleted()          Returns the current record's "deleted" value
+ * @method integer          getCreatedById()      Returns the current record's "created_by_id" value
+ * @method string           getCreatedByName()    Returns the current record's "created_by_name" value
  * @method LeaveType        getLeaveType()        Returns the current record's "LeaveType" value
  * @method Employee         getEmployee()         Returns the current record's "Employee" value
+ * @method SystemUser       getSystemUser()       Returns the current record's "SystemUser" value
  * @method LeaveEntitlement setId()               Sets the current record's "id" value
  * @method LeaveEntitlement setEmpNumber()        Sets the current record's "emp_number" value
  * @method LeaveEntitlement setNoOfDays()         Sets the current record's "no_of_days" value
@@ -40,8 +46,11 @@
  * @method LeaveEntitlement setNote()             Sets the current record's "note" value
  * @method LeaveEntitlement setEntitlementType()  Sets the current record's "entitlement_type" value
  * @method LeaveEntitlement setDeleted()          Sets the current record's "deleted" value
+ * @method LeaveEntitlement setCreatedById()      Sets the current record's "created_by_id" value
+ * @method LeaveEntitlement setCreatedByName()    Sets the current record's "created_by_name" value
  * @method LeaveEntitlement setLeaveType()        Sets the current record's "LeaveType" value
  * @method LeaveEntitlement setEmployee()         Sets the current record's "Employee" value
+ * @method LeaveEntitlement setSystemUser()       Sets the current record's "SystemUser" value
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -69,14 +78,13 @@ abstract class BaseLeaveEntitlement extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 7,
              ));
-        $this->hasColumn('no_of_days', 'integer', 4, array(
-             'type' => 'integer',
-             'fixed' => 0,
-             'unsigned' => false,
+        $this->hasColumn('no_of_days', 'decimal', 6, array(
+             'type' => 'decimal',
+             'scale' => false,
              'primary' => false,
              'notnull' => true,
              'autoincrement' => false,
-             'length' => 4,
+             'length' => 6,
              ));
         $this->hasColumn('leave_type_id', 'integer', 4, array(
              'type' => 'integer',
@@ -142,6 +150,24 @@ abstract class BaseLeaveEntitlement extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 1,
              ));
+        $this->hasColumn('created_by_id', 'integer', 10, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 10,
+             ));
+        $this->hasColumn('created_by_name', 'string', 255, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 255,
+             ));
     }
 
     public function setUp()
@@ -154,5 +180,9 @@ abstract class BaseLeaveEntitlement extends sfDoctrineRecord
         $this->hasOne('Employee', array(
              'local' => 'emp_number',
              'foreign' => 'emp_number'));
+
+        $this->hasOne('SystemUser', array(
+             'local' => 'created_by_id',
+             'foreign' => 'id'));
     }
 }

@@ -1531,7 +1531,7 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 -- (3, 70, 0, 0, 0, 0),
 (1, 71, 1, 0, 0, 1),
 (1, 72, 1, 1, 1, 0),
-(1, 73, 1, 0, 1, 0)
+(1, 73, 1, 0, 1, 0);
 
 INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
 (1, 'personal_information', 'PIM - Personal Details', 1, NULL, 1, NULL),

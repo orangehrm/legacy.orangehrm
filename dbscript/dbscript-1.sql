@@ -1276,8 +1276,10 @@ CREATE TABLE ohrm_leave_entitlement (
   to_date datetime,
   credited_date datetime,
   note varchar(255) default null, 
-  entitlement_type int not null,
+  entitlement_type decimal(6,2) not null,
   `deleted` tinyint(1) not null default 0,
+  created_by_id int(10),
+  created_by_name varchar(255),
   PRIMARY KEY(`id`)
 ) ENGINE = INNODB DEFAULT CHARSET=utf8;
 
@@ -1292,6 +1294,10 @@ alter table ohrm_leave_entitlement
 alter table ohrm_leave_entitlement
     add foreign key (emp_number)
         references hs_hr_employee(emp_number) on delete cascade;
+
+alter table ohrm_leave_entitlement
+    add foreign key (created_by_id)
+        references ohrm_user(`id`) on delete set null;
 
 alter table ohrm_menu_item 
        add constraint foreign key (screen_id)
