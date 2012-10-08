@@ -909,141 +909,6 @@ form input.validation-error {
     margin-bottom: 10px;
 }
 /* ================ Mini list styles: End ================ */
-/* ================ PIM Sidebar styles: Begin ================ */
-#sidebar {
-	width:203px;
-	overflow:hidden;
-	float:left;
-	margin:0 17px 0 0;
-	min-height:300px;
-}
-#sidebar #sidenav {
-	margin:19px 0 0 0;
-	padding:7px;
-	background: #f28c38 url(../images/sidebar-nav-bg.png) repeat-y top right;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-#sidebar #sidenav a {
-	color:#fff;
-	display:block;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	padding:7px 7px;
-	width:174px;
-	text-decoration:none;
-	margin-bottom:5px;
-	border-bottom:1px solid #f19a52;
-}
-#sidebar #sidenav a:hover {
-	background-color:#ce6d1d;
-}
-#sidebar #sidenav .selected a {
-	background-color:#555657;
-	color:#fff;
-	border-bottom:none;
-}
-/* ================ PIM Sidebar styles: End ================ */
-/* ================ PIM Styles: Begin ================ */
-.pimPane {
-	width:97%;
-	float:left;
-}
-.pimPane .head, .pimPane .inner {
-	margin-left:220px;
-}
-.pimPane #profile-pic h1 {
-	background: #f3f3f3 url(../images/h1-bg.png) left bottom repeat-x;
-	font-size:14px;
-	color:#5d5d5d;
-	padding:9px 15px;
-	line-height:20px;
-	border:1px solid #dedede;
-	-moz-border-radius-topleft: 3px;
-	-webkit-border-top-left-radius: 3px;
-	 border-top-left-radius: 3px;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-right-radius: 3px;
-	border-top-right-radius: 3px;
-}
-.pimPane #profile-pic img {
-	border:1px solid #dedede;
-	border-top:none;
-}
-.pimPane form p.normal {
-	float:left;
-}
-.pimPane form p.required {
-	float:left;
-	width:425px;
-	margin-top:0px;
-	color:#a9a9a9;
-	font-size:11px;
-}
-.pimPane form p.required em {
-	color:#aa4935;
-}
-/* ================ PIM Styles: End ================ */
-/* ================ Personal Details Styles: Begin ================ */
-.pimStyle1 form ol {
-	margin-bottom:9px;
-	position:relative;
-}
-.pimStyle1 form ol li {
-	float:left;
-	width:350px;
-}
-.pimStyle1 form ol li input {
-	width:192px;
-}
-.pimStyle1 form ol li select {
-	width:206px;
-}
-.pimStyle1 form ol li input.calendar {
-	width:165px;
-}
-.pimStyle1 form ol li.line {
-	float:left;
-	width:100%;
-}
-.pimStyle1 form ol li.long, .pimStyle1 form ol li.new {
-	clear:both;
-}
-.pimStyle1 form ol li.long label {
-	margin-top:0px;
-}
-.pimStyle1 form li label {
-	float:left;
-}
-.pimStyle1 form ol li .block {
-	float:left;
-	margin-right:12px;
-}
-.pimStyle1 form ol li .default {
-	color:#5d5d5d;
-}
-.pimStyle1 form ol li .defaulttext {
-	color:#a4a4a4;
-}
-.pimStyle1 form ol li.radio {
-	padding:5px 0 0 0;
-	margin-bottom:0;
-}
-.pimStyle1 form ol li.radio label {
-	width:30%;
-}
-.pimStyle1 form ol li.radio input {
-	width:10px;
-}
-.pimStyle1 form ol li.radio label.block {
-	width:37%;
-}
-.pimStyle1 form p {
-	float:left;
-}
-/* ================ Personal Details Styles: End ================ */
 .modal-open .dropdown-menu {
   z-index: 2050;
 }
@@ -1343,3 +1208,138 @@ table tfoot tr.total td strong {
 	font-weight:bold;
 	color:#fff;
 }
+/* ================ PIM Sidebar styles: Begin ================ */
+#sidebar {
+	width:203px;
+	overflow:hidden;
+	float:left;
+	margin:0 17px 0 0;
+	min-height:300px;
+}
+#sidebar #sidenav {
+	margin:19px 0 0 0;
+	padding:7px;
+	background: #f28c38 url(../images/sidebar-nav-bg.png) repeat-y top right;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+#sidebar #sidenav a {
+	color:#fff;
+	display:block;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding:7px 7px;
+	width:174px;
+	text-decoration:none;
+	margin-bottom:5px;
+	border-bottom:1px solid #f19a52;
+}
+#sidebar #sidenav a:hover {
+	background-color:#ce6d1d;
+}
+#sidebar #sidenav .selected a {
+	background-color:#555657;
+	color:#fff;
+	border-bottom:none;
+}
+/* ================ PIM Sidebar styles: End ================ */
+/* ================ PIM Styles: Begin ================ */
+.pimPane {
+	width:97%;
+	float:left;
+}
+.pimPane .head, .pimPane .inner {
+	margin-left:220px;
+}
+.pimPane #profile-pic h1 {
+	background: #f3f3f3 url(../images/h1-bg.png) left bottom repeat-x;
+	font-size:14px;
+	color:#5d5d5d;
+	padding:9px 15px;
+	line-height:20px;
+	border:1px solid #dedede;
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+	 border-top-left-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.pimPane #profile-pic img {
+	border:1px solid #dedede;
+	border-top:none;
+}
+.pimPane form p.normal {
+	float:left;
+}
+.pimPane form p.required {
+	float:left;
+	width:425px;
+	margin-top:0px;
+	color:#a9a9a9;
+	font-size:11px;
+}
+.pimPane form p.required em {
+	color:#aa4935;
+}
+/* ================ PIM Styles: End ================ */
+/* ================ Personal Details Styles: Begin ================ */
+.personalDetails form ol {
+	margin-bottom:9px;
+	position:relative;
+}
+.personalDetails form ol li {
+	float:left;
+	width:350px;
+}
+.personalDetails form ol li input {
+	width:192px;
+}
+.personalDetails form ol li select {
+	width:206px;
+}
+.personalDetails form ol li input.calendar {
+	width:165px;
+}
+.personalDetails form ol li.line {
+	float:left;
+	width:100%;
+}
+.personalDetails form ol li.long, .personalDetails form ol li.new {
+	clear:both;
+}
+.personalDetails form ol li.long label {
+	margin-top:0px;
+}
+.personalDetails form li label {
+	float:left;
+}
+.personalDetails form ol li .block {
+	float:left;
+	margin-right:12px;
+}
+.personalDetails form ol li .default {
+	color:#5d5d5d;
+}
+.personalDetails form ol li .defaulttext {
+	color:#a4a4a4;
+}
+.personalDetails form ol li.radio {
+	padding:5px 0 0 0;
+	margin-bottom:0;
+}
+.personalDetails form ol li.radio label {
+	width:30%;
+}
+.personalDetails form ol li.radio input {
+	width:10px;
+}
+.personalDetails form ol li.radio label.block {
+	width:37%;
+}
+.personalDetails form p {
+	float:left;
+}
+/* ================ Personal Details Styles: End ================ */

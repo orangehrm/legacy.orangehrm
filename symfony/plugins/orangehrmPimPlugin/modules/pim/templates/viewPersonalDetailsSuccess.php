@@ -5,7 +5,7 @@
     
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
     
-    <div class="pimStyle1">
+    <div class="personalDetails">
         
         <div class="head">
             <h1><?php echo __('Personal Details'); ?></h1>
