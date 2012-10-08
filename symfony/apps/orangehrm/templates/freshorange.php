@@ -12,7 +12,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
 
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery-1.7.2.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/validate/jquery.validate.js')?>"></script>
-        <?php use_javascript(public_path('js/orangehrm.validate.js')); ?>;
+        <?php use_javascript(public_path('js/orangehrm.validate.js')); ?>
         
         <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.core.js')?>"></script>-->
         <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.ui.datepicker.js')?>"></script>-->
@@ -79,7 +79,10 @@ $cultureElements = explode('_', $sf_user->getCulture());
  
         <script type="text/javascript">
 
-            $(document).ready(function() {        
+            $(document).ready(function() {
+                
+                /* Enabling tooltips */
+                $(".tiptip").tipTip();
 
                 /* Toggling header menus */
                 $("#welcome").click(function () {
@@ -101,7 +104,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     $(this).css("background-color","#33ac3f");
                 });
 
-                $("input.reset").hover(function() {
+                $("input.reset, input.cancel").hover(function() {
                     $(this).css("background-color","#4d4d4d");
                         }, function() {
                     $(this).css("background-color","#848484");

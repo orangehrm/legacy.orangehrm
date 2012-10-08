@@ -1,120 +1,127 @@
 <?php use_javascripts_for_form($form) ?>
 <?php use_stylesheets_for_form($form) ?>
 
-<div class="box single main" id="employee-details">
+<div class="box single pimPane" id="employee-details">
     
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
     
-    <div class="head">
-        <h1><?php echo __('Personal Details'); ?></h1>
-    </div> <!-- head -->
+    <div class="pimStyle1">
+        
+        <div class="head">
+            <h1><?php echo __('Personal Details'); ?></h1>
+        </div> <!-- head -->
     
-    <div class="inner">
-        
-        <?php if ($personalInformationPermission->canRead()) : ?>
-        
-        <?php echo isset($message) ? displayMainMessage($messageType, $message) : ''; ?>
-        
-        <form id="frmEmpPersonalDetails" method="post" action="<?php echo url_for('pim/viewPersonalDetails'); ?>">
-            
-            <?php echo $form['_csrf_token']; ?>
-            <?php echo $form['txtEmpID']->render(); ?>
-            
-            <fieldset>
-                <ol>
-                    <li class="line">
-                        <label for="Full_Name"><?php echo __('Full Name'); ?></label>
-                        <?php echo $form['txtEmpFirstName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('First Name'))); ?>
-                        <?php echo $form['txtEmpMiddleName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Middle Name'))); ?>
-                        <?php echo $form['txtEmpLastName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
-                    </li>
-                </ol>
-                <ol>
-                    <li>
-                        <label for="personal_txtEmployeeId"><?php echo __('Employee Id'); ?></label>
-                        <?php echo $form['txtEmployeeId']->render(array("maxlength" => 10, "class" => "editable")); ?>
-                    </li>
-                    <li>
-                        <label for="personal_txtOtherID"><?php echo __('Other Id'); ?></label>
-                        <?php echo $form['txtOtherID']->render(array("maxlength" => 30, "class" => "editable")); ?>
-                    </li>
-                    <li class="long">
-                        <label for="personal_txtLicenNo"><?php echo __("Driver's License Number"); ?></label>
-                        <?php echo $form['txtLicenNo']->render(array("maxlength" => 30, "class" => "editable")); ?>
-                    </li>
-                    <li>
-                        <label for="personal_txtLicExpDate"><?php echo __('License Expiry Date'); ?></label>
-                        <?php echo $form['txtLicExpDate']->render(array("class"=>"calendar editable")); ?>
-                    </li>
-                    <?php if ($showSSN) : ?>
-                    <li class="line">
-                        <label for="personal_txtNICNo"><?php echo __('SSN Number'); ?></label>
-                        <?php echo $form['txtNICNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
-                    </li>                    
-                    <?php endif; ?>
-                    <?php if ($showSIN) : ?>
-                    <li class="new">
-                        <label for="personal_txtSINNo"><?php echo __('SIN Number'); ?></label>
-                        <?php echo $form['txtSINNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
-                    </li>                    
-                    <?php endif; ?>                    
-                </ol>
-                <ol>
-                    <li class="radio">
-                        <label for="personal_optGender" class="block"><?php echo __("Gender"); ?></label>
-                        <?php echo $form['optGender']->render(array("class"=>"editable")); ?>
-                    </li>
-                    <li>
-                        <label for="personal_cmbMarital"><?php echo __('Marital Status'); ?></label>
-                        <?php echo $form['cmbMarital']->render(array("class"=>"editable")); ?>
-                    </li>
-                    <li class="new">
-                        <label for="personal_cmbNation"><?php echo __("Nationality"); ?></label>
-                        <?php echo $form['cmbNation']->render(array("class"=>"editable")); ?>
-                    </li>
-                    <li class="line">
-                        <label for="personal_DOB"><?php echo __("Date of Birth"); ?></label>
-                        <?php echo $form['DOB']->render(array("class"=>"editable")); ?>
-                    </li>
-                    <?php if(!$showDeprecatedFields) : ?>
-                    <li class="required">
-                        <em>*</em> required field
-                    </li>
-                    <?php endif; ?>
-                </ol>    
-                <?php if($showDeprecatedFields) : ?>    
-                <ol>
-                    <li>
-                        <label for="personal_txtEmpNickName"><?php echo __("Nick Name"); ?></label>
-                        <?php echo $form['txtEmpNickName']->render(array("maxlength" => 30, "class" => "editable")); ?>
-                    </li>
-                    <li>
-                        <label for="personal_chkSmokeFlag"><?php echo __('Smoker'); ?></label>
-                        <?php echo $form['chkSmokeFlag']->render(array("class" => "editable")); ?>
-                    </li>
-                    <li>
-                        <label for="personal_txtMilitarySer"><?php echo __("Military Service"); ?></label>
-                        <?php echo $form['txtMilitarySer']->render(array("maxlength" => 30, "class" => "editable")); ?>
-                    </li>
-                    <li class="required">
-                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
-                    </li>                    
-                </ol>
-                <?php endif; ?>                        
-                
-                <?php  if ($personalInformationPermission->canUpdate()) : ?>
-                <p><input type="button" id="btnSave" value="<?php echo __("Edit"); ?>" /></p>
-                <?php endif; ?>
-                
-            </fieldset>
-        </form>
-        
-        <?php else : ?>
-        <div><?php echo __(CommonMessages::DONT_HAVE_ACCESS); ?></div>
-        <?php endif; ?>
-        
-    </div> <!-- inner -->
+        <div class="inner">
 
+            <?php if ($personalInformationPermission->canRead()) : ?>
+
+            <?php include_partial('global/flash_messages'); ?>
+
+            <form id="frmEmpPersonalDetails" method="post" action="<?php echo url_for('pim/viewPersonalDetails'); ?>">
+
+                <?php echo $form['_csrf_token']; ?>
+                <?php echo $form['txtEmpID']->render(); ?>
+
+                <fieldset>
+                    <ol>
+                        <li class="line">
+                            <label for="Full_Name"><?php echo __('Full Name'); ?></label>
+                            <?php echo $form['txtEmpFirstName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('First Name'))); ?>
+                            <?php echo $form['txtEmpMiddleName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Middle Name'))); ?>
+                            <?php echo $form['txtEmpLastName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
+                        </li>
+                    </ol>
+                    <ol>
+                        <li>
+                            <label for="personal_txtEmployeeId"><?php echo __('Employee Id'); ?></label>
+                            <?php echo $form['txtEmployeeId']->render(array("maxlength" => 10, "class" => "editable")); ?>
+                        </li>
+                        <li>
+                            <label for="personal_txtOtherID"><?php echo __('Other Id'); ?></label>
+                            <?php echo $form['txtOtherID']->render(array("maxlength" => 30, "class" => "editable")); ?>
+                        </li>
+                        <li class="long">
+                            <label for="personal_txtLicenNo"><?php echo __("Driver's License Number"); ?></label>
+                            <?php echo $form['txtLicenNo']->render(array("maxlength" => 30, "class" => "editable")); ?>
+                        </li>
+                        <li>
+                            <label for="personal_txtLicExpDate"><?php echo __('License Expiry Date'); ?></label>
+                            <?php echo $form['txtLicExpDate']->render(array("class"=>"calendar editable")); ?>
+                        </li>
+                        <?php if ($showSSN) : ?>
+                        <li class="line">
+                            <label for="personal_txtNICNo"><?php echo __('SSN Number'); ?></label>
+                            <?php echo $form['txtNICNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
+                        </li>                    
+                        <?php endif; ?>
+                        <?php if ($showSIN) : ?>
+                        <li class="new">
+                            <label for="personal_txtSINNo"><?php echo __('SIN Number'); ?></label>
+                            <?php echo $form['txtSINNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
+                        </li>                    
+                        <?php endif; ?>                    
+                    </ol>
+                    <ol>
+                        <li class="radio">
+                            <label for="personal_optGender" class="block"><?php echo __("Gender"); ?></label>
+                            <?php echo $form['optGender']->render(array("class"=>"editable")); ?>
+                        </li>
+                        <li>
+                            <label for="personal_cmbMarital"><?php echo __('Marital Status'); ?></label>
+                            <?php echo $form['cmbMarital']->render(array("class"=>"editable")); ?>
+                        </li>
+                        <li class="new">
+                            <label for="personal_cmbNation"><?php echo __("Nationality"); ?></label>
+                            <?php echo $form['cmbNation']->render(array("class"=>"editable")); ?>
+                        </li>
+                        <li class="line">
+                            <label for="personal_DOB"><?php echo __("Date of Birth"); ?></label>
+                            <?php echo $form['DOB']->render(array("class"=>"editable")); ?>
+                        </li>
+                        <?php if(!$showDeprecatedFields) : ?>
+                        <li class="required">
+                            <em>*</em> required field
+                        </li>
+                        <?php endif; ?>
+                    </ol>    
+                    <?php if($showDeprecatedFields) : ?>    
+                    <ol>
+                        <li>
+                            <label for="personal_txtEmpNickName"><?php echo __("Nick Name"); ?></label>
+                            <?php echo $form['txtEmpNickName']->render(array("maxlength" => 30, "class" => "editable")); ?>
+                        </li>
+                        <li>
+                            <label for="personal_chkSmokeFlag"><?php echo __('Smoker'); ?></label>
+                            <?php echo $form['chkSmokeFlag']->render(array("class" => "editable")); ?>
+                        </li>
+                        <li>
+                            <label for="personal_txtMilitarySer"><?php echo __("Military Service"); ?></label>
+                            <?php echo $form['txtMilitarySer']->render(array("maxlength" => 30, "class" => "editable")); ?>
+                        </li>
+                        <li class="required">
+                            <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                        </li>                    
+                    </ol>
+                    <?php endif; ?>                        
+
+                    <?php  if ($personalInformationPermission->canUpdate()) : ?>
+                    <p class="normal"><input type="button" id="btnSave" value="<?php echo __("Edit"); ?>" /></p>
+                    <?php endif; ?>
+
+                </fieldset>
+            </form>
+
+            <?php else : ?>
+            <div><?php echo __(CommonMessages::DONT_HAVE_ACCESS); ?></div>
+            <?php endif; ?>
+
+        </div> <!-- inner -->
+        
+    </div> <!-- pimStyle1 -->
+
+    
+    <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => EmployeeAttachment::SCREEN_PERSONAL_DETAILS));?>
+    
 </div> <!-- employee-details -->
  
 <?php //echo stylesheet_tag('orangehrm.datepicker.css') ?>
@@ -139,7 +146,7 @@
 </script>
 
 <?php //echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => CustomField::SCREEN_PERSONAL_DETAILS));?>
-<?php //echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => EmployeeAttachment::SCREEN_PERSONAL_DETAILS));?>
+
 
 
 <?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewPersonalDetailsSuccess'); ?>

@@ -94,8 +94,6 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
 
     $(document).ready(function() {
         
-        $(".tiptip").tipTip();
-
         var supervisors = <?php echo str_replace('&#039;', "'", $form->getSupervisorListAsJson()) ?>;
         
         $('#btnDelete').attr('disabled', 'disabled');

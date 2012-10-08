@@ -44,10 +44,6 @@ class viewPersonalDetailsAction extends basePimAction {
             // TODO: Improve            
             $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
 
-            if ($this->getUser()->hasFlash('templateMessage')) {
-                list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-            }           
-           
             $this->personalInformationPermission = $this->getDataGroupPermissions('personal_information', $empNumber);
             $this->canEditSensitiveInformation = ($empNumber != $loggedInEmpNum) || $adminMode;
             
@@ -76,7 +72,7 @@ class viewPersonalDetailsAction extends basePimAction {
 
                         $employee = $this->form->getEmployee();
                         $this->getEmployeeService()->saveEmployee($employee);
-                        $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
+                        $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
                         $this->redirect('pim/viewPersonalDetails?empNumber='. $empNumber);
 
                     }

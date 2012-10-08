@@ -21,6 +21,103 @@ a {
 #branding img {
 	margin:14px 0 0 0;
 }
+.close {
+	position:absolute;
+	right:10px;
+	bottom:80px;
+	display:none;
+}
+.subscribe {
+	padding:10px 15px 12px 15px;
+	font-size:13px;
+	color:#fff;
+	text-decoration:none;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	position:absolute;
+	top:0;
+	right:25px;
+	background: rgb(40, 134, 49);
+	background: -moz-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
+	background: -webkit-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
+	background: -o-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
+	background: -ms-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
+	background: linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
+}
+.subscribe:hover {
+	background: #288832;
+	color:#fff;
+}
+#welcome {
+	color:#5d5d5d;
+	background: url(../images/welcome.png) no-repeat center right;
+	padding:2px 32px 1px 1px;
+	text-decoration:none;
+	position:absolute;
+	top:55px;
+	right:35px;
+	z-index:999;
+}
+#welcome-menu {
+	background:#454648;
+	z-index:999;
+	position:absolute;
+	top:75px;
+	right:30px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding:5px 10px;
+	display:none;
+	min-width:122px;
+}
+#welcome-menu li a {
+	color:#fff;
+	line-height:20px;
+	text-decoration:none;
+}
+#welcome-menu li a:hover {
+	text-decoration:underline;
+}
+#help {
+	color:#f28c38;
+	background: url(../images/help-down.png) no-repeat center right;
+	padding:2px 15px 1px 1px;
+	text-decoration:none;
+	position:absolute;
+	top:10px;
+	right:233px;
+	z-index:999;
+}
+#wrapper .activated-help {
+	background: url(../images/help-up.png) no-repeat center right;
+}
+#help-menu {
+	background:#454648;
+	z-index:9998;
+	position:absolute;
+	top:30px;
+	right:230px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding:5px 10px;
+	display:none;
+	min-width:122px;
+}
+#help-menu li a {
+	color:#fff;
+	line-height:20px;
+	text-decoration:none;
+}
+#help-menu li a:hover {
+	text-decoration:underline;
+}
+/* ================ Main menu styles: Begin ================ */
 .menu {
 	height:40px;
 	background:url(../images/nav-bg.png) left bottom repeat-x;
@@ -204,102 +301,7 @@ a {
 	left:0;
 	opacity:1;
 }
-.close {
-	position:absolute;
-	right:10px;
-	bottom:80px;
-	display:none;
-}
-.subscribe {
-	padding:10px 15px 12px 15px;
-	font-size:13px;
-	color:#fff;
-	text-decoration:none;
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	border-bottom-right-radius: 3px
-	-moz-border-radius-bottomleft: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-	position:absolute;
-	top:0;
-	right:25px;
-	background: rgb(40, 134, 49);
-	background: -moz-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
-	background: -webkit-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
-	background: -o-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
-	background: -ms-linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
-	background: linear-gradient(90deg, rgb(40, 134, 49) 20%, rgb(124, 202, 132) 100%);
-}
-.subscribe:hover {
-	background: #288832;
-	color:#fff;
-}
-#welcome {
-	color:#5d5d5d;
-	background: url(../images/welcome.png) no-repeat center right;
-	padding:2px 32px 1px 1px;
-	text-decoration:none;
-	position:absolute;
-	top:55px;
-	right:35px;
-	z-index:999;
-}
-#welcome-menu {
-	background:#454648;
-	z-index:999;
-	position:absolute;
-	top:75px;
-	right:30px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	padding:5px 10px;
-	display:none;
-	min-width:122px;
-}
-#welcome-menu li a {
-	color:#fff;
-	line-height:20px;
-	text-decoration:none;
-}
-#welcome-menu li a:hover {
-	text-decoration:underline;
-}
-#help {
-	color:#f28c38;
-	background: url(../images/help-down.png) no-repeat center right;
-	padding:2px 15px 1px 1px;
-	text-decoration:none;
-	position:absolute;
-	top:10px;
-	right:233px;
-	z-index:999;
-}
-#wrapper .activated-help {
-	background: url(../images/help-up.png) no-repeat center right;
-}
-#help-menu {
-	background:#454648;
-	z-index:9998;
-	position:absolute;
-	top:30px;
-	right:230px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	padding:5px 10px;
-	display:none;
-	min-width:122px;
-}
-#help-menu li a {
-	color:#fff;
-	line-height:20px;
-	text-decoration:none;
-}
-#help-menu li a:hover {
-	text-decoration:underline;
-}
+/* ================ Main menu styles: End ================ */
 #content {
 	padding-top:35px;
 }
@@ -450,9 +452,8 @@ form ol li input, form ol li select,  form ol li textarea {
 }
 .single form ol li textarea {
 	float:left;
-	width:225px;
+	width:250px;
 	height:80px;
-	margin-bottom:10px;
 }
 form ol li select {
 	height:25px;
@@ -498,7 +499,7 @@ form button, input[type="button"], input[type="submit"] {
 .single form button {
 	margin-left:0;
 }
-form button.reset, input.reset {
+form button.reset, input.reset, input.cancel {
 	background:#848484;
 }
 form button.delete, input.delete {
@@ -902,39 +903,19 @@ form input.validation-error {
 .ui-datepicker-trigger {
 	margin:2px 0 0 5px;
 }
-
+/* ================ Mini list styles: Begin ================ */
+.miniList p {
+    margin-top:-10px;
+    margin-bottom: 10px;
+}
+/* ================ Mini list styles: End ================ */
+/* ================ PIM Sidebar styles: Begin ================ */
 #sidebar {
 	width:203px;
 	overflow:hidden;
 	float:left;
 	margin:0 17px 0 0;
 	min-height:300px;
-}
-.main {
-	width:97%;
-	float:left;
-}
-.main .head h1 {
-	margin-left:220px;
-}
-
-.main #profile-pic h1 {
-	background: #f3f3f3 url(../images/h1-bg.png) left bottom repeat-x;
-	font-size:14px;
-	color:#5d5d5d;
-	padding:9px 15px;
-	line-height:20px;
-	border:1px solid #dedede;
-	-moz-border-radius-topleft: 3px;
-	-webkit-border-top-left-radius: 3px;
-	 border-top-left-radius: 3px;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-right-radius: 3px;
-	border-top-right-radius: 3px;
-}
-.main #profile-pic img {
-	border:1px solid #dedede;
-	border-top:none;
 }
 #sidebar #sidenav {
 	margin:19px 0 0 0;
@@ -964,77 +945,105 @@ form input.validation-error {
 	color:#fff;
 	border-bottom:none;
 }
-.main form ol {
-	margin-bottom:9px;
-	position:relative;
-}
-.main form ol li {
-	float:left;
-	width:350px;
-}
-.main form ol li input {
-	width:192px;
-}
-.main form ol li select {
-	width:206px;
-}
-.main form ol li input.calendar {
-	width:165px;
-}
-.main form ol li.line {
-	float:left;
-	width:100%;
-}
-.main form ol li.long, .main form ol li.new {
-	clear:both;
-}
-.main form ol li.long label {
-	margin-top:0px;
-}
-.main form li label {
+/* ================ PIM Sidebar styles: End ================ */
+/* ================ PIM Styles: Begin ================ */
+.pimPane {
+	width:97%;
 	float:left;
 }
-.main form ol li .block {
-	float:left;
-	margin-right:12px;
+.pimPane .head, .pimPane .inner {
+	margin-left:220px;
 }
-.main form ol li .default {
+.pimPane #profile-pic h1 {
+	background: #f3f3f3 url(../images/h1-bg.png) left bottom repeat-x;
+	font-size:14px;
 	color:#5d5d5d;
+	padding:9px 15px;
+	line-height:20px;
+	border:1px solid #dedede;
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+	 border-top-left-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	border-top-right-radius: 3px;
 }
-.main form ol li .defaulttext {
-	color:#a4a4a4;
+.pimPane #profile-pic img {
+	border:1px solid #dedede;
+	border-top:none;
 }
-.main form ol li.radio {
-	padding:5px 0 0 0;
-	margin-bottom:0;
-}
-.main form ol li.radio label {
-	width:30%;
-}
-.main form ol li.radio input {
-	width:10px;
-}
-.main form ol li.radio label.block {
-	width:37%;
-}
-.main form p {
-	float:left;
-	margin-top:-10px;
-}
-.main form p.normal {
+.pimPane form p.normal {
 	float:left;
 }
-.main form p.required {
+.pimPane form p.required {
 	float:left;
 	width:425px;
 	margin-top:0px;
 	color:#a9a9a9;
 	font-size:11px;
 }
-.main form p.required em {
+.pimPane form p.required em {
 	color:#aa4935;
 }
-
+/* ================ PIM Styles: End ================ */
+/* ================ Personal Details Styles: Begin ================ */
+.pimStyle1 form ol {
+	margin-bottom:9px;
+	position:relative;
+}
+.pimStyle1 form ol li {
+	float:left;
+	width:350px;
+}
+.pimStyle1 form ol li input {
+	width:192px;
+}
+.pimStyle1 form ol li select {
+	width:206px;
+}
+.pimStyle1 form ol li input.calendar {
+	width:165px;
+}
+.pimStyle1 form ol li.line {
+	float:left;
+	width:100%;
+}
+.pimStyle1 form ol li.long, .pimStyle1 form ol li.new {
+	clear:both;
+}
+.pimStyle1 form ol li.long label {
+	margin-top:0px;
+}
+.pimStyle1 form li label {
+	float:left;
+}
+.pimStyle1 form ol li .block {
+	float:left;
+	margin-right:12px;
+}
+.pimStyle1 form ol li .default {
+	color:#5d5d5d;
+}
+.pimStyle1 form ol li .defaulttext {
+	color:#a4a4a4;
+}
+.pimStyle1 form ol li.radio {
+	padding:5px 0 0 0;
+	margin-bottom:0;
+}
+.pimStyle1 form ol li.radio label {
+	width:30%;
+}
+.pimStyle1 form ol li.radio input {
+	width:10px;
+}
+.pimStyle1 form ol li.radio label.block {
+	width:37%;
+}
+.pimStyle1 form p {
+	float:left;
+}
+/* ================ Personal Details Styles: End ================ */
 .modal-open .dropdown-menu {
   z-index: 2050;
 }
