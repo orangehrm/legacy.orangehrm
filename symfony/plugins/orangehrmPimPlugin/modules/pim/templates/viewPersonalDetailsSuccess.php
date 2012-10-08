@@ -55,7 +55,7 @@
                         </li>                    
                         <?php endif; ?>
                         <?php if ($showSIN) : ?>
-                        <li class="<?php echo !(($showSSN))?'new':''; ?>">
+                        <li class="<?php echo !($showSSN)?'new':''; ?>">
                             <label for="personal_txtSINNo"><?php echo __('SIN Number'); ?></label>
                             <?php echo $form['txtSINNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
                         </li>                    
