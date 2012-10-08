@@ -40,7 +40,14 @@ class mainMenuComponent extends sfComponent {
         $menuItemDetails = $this->_getMenuItemDetails();
         
         $this->menuItemArray = $menuItemDetails['menuItemArray'];
-        $this->module = $this->getContext()->getModuleName();
+
+        $initialModule = $request->getParameter('initialModuleName', '');
+        
+        if (!empty($initialModule)) {
+            $this->module = $initialModule;
+        } else {
+            $this->module = $this->getContext()->getModuleName();
+        }        
         
         $initialAction = $request->getParameter('initialActionName', '');
         

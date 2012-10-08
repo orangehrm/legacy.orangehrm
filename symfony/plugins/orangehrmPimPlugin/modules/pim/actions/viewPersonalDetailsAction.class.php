@@ -34,6 +34,10 @@ class viewPersonalDetailsAction extends basePimAction {
     
     public function execute($request) {
         try {
+            
+            /* For highlighting corresponding menu item */
+            $request->setParameter('initialActionName', 'viewEmployeeList');
+            
             $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
             $this->isLeavePeriodDefined();
 
