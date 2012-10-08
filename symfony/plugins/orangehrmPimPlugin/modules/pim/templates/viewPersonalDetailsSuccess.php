@@ -49,13 +49,13 @@
                             <?php echo $form['txtLicExpDate']->render(array("class"=>"calendar editable")); ?>
                         </li>
                         <?php if ($showSSN) : ?>
-                        <li class="line">
+                        <li class="new">
                             <label for="personal_txtNICNo"><?php echo __('SSN Number'); ?></label>
                             <?php echo $form['txtNICNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
                         </li>                    
                         <?php endif; ?>
                         <?php if ($showSIN) : ?>
-                        <li class="new">
+                        <li class="<?php echo !(($showSSN))?'new':''; ?>">
                             <label for="personal_txtSINNo"><?php echo __('SIN Number'); ?></label>
                             <?php echo $form['txtSINNo']->render(array("class" => "editable", "maxlength" => 30)); ?>
                         </li>                    
@@ -74,7 +74,7 @@
                             <label for="personal_cmbNation"><?php echo __("Nationality"); ?></label>
                             <?php echo $form['cmbNation']->render(array("class"=>"editable")); ?>
                         </li>
-                        <li class="line">
+                        <li>
                             <label for="personal_DOB"><?php echo __("Date of Birth"); ?></label>
                             <?php echo $form['DOB']->render(array("class"=>"editable")); ?>
                         </li>
