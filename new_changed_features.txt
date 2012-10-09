@@ -1,3 +1,9 @@
+New & Changed Features for OrangeHRM ver  3.0-alpha.1
+    New Features
+    ------------
+    PIM Employee list and personal details screens converted to new UI
+    New implementation for Leave->Entitlements
+
 New & Changed Features for OrangeHRM ver  2.7.1-rc.1
 
     New Features
