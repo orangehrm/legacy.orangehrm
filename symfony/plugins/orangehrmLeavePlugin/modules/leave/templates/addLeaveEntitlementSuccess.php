@@ -18,7 +18,25 @@
  * Boston, MA  02110-1301, USA
  */
 ?>
-
+<style type="text/css">
+    ol#filter {
+        border-bottom: 0px;
+    }
+    
+    ol#filter li {
+        float: left;
+        width: auto;
+        margin-right: 20px;
+    }    
+    ol#filter li:first-child {
+        float: left;
+        width: 100%;
+    }
+    ol#filter li:first-child label {
+        width: 200px;
+    }    
+</style>
+    
 <?php
 
 use_javascripts_for_form($form);
@@ -44,7 +62,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 
             <fieldset>                
                 <ol>
-                    <?php //echo $form['leave_type']->renderRow();?>
                     <?php echo $form->render(); ?>
                 </ol>            
                 
@@ -69,8 +86,18 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';
     var listUrl = '<?php echo url_for('leave/viewLeaveEntitlements?savedsearch=1');?>';
         
+    function toggleFilters(show) {
+        if (show) {
+           $('ol#filter li:not(:first)').show();                
+        } else {
+            $('ol#filter li:not(:first)').hide();
+        }        
+    }
     $(document).ready(function() {        
         
+        toggleFilters(false);
+        $('#entitlements_employee_empName').parent('li').hide();
+                
         $('#btnSave').click(function() {
             $('#frmLeaveEntitlementAdd').submit();
         });        
@@ -79,18 +106,22 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             window.location.href = listUrl;
         });        
  
-        $('#entitlement_filter_bulk_assign').click(function(){            
-            if ($(this).is(':checked')) {
-                
+        $('#entitlements_filters_bulk_assign').click(function(){     
+            var checked = $(this).is(':checked');
+            toggleFilters(checked);
+            if (checked) {
+                $('#entitlements_employee_empName').parent('li').hide();
             } else {
-                
+                $('#entitlements_employee_empName').parent('li').show();
             }
         });
  
         $('#frmLeaveEntitlementAdd').validate({
                 rules: {
                     'entitlements[employee][empName]': {
-                        required: true,
+                        required: function(element) {
+                            return !$('#entitlements_filters_bulk_assign').is(':checked');
+                        },
                         no_default_value: function(element) {
 
                             return {

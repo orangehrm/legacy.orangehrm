@@ -26,6 +26,10 @@ class LeaveEntitlementAddForm extends LeaveEntitlementForm {
     protected $bulkAssignForm;
     
     public function configure() {
+        $this->bulkAssignForm = new LeaveEntitlementBulkAssignFilterForm();    
+
+        $this->embedForm('filters', $this->bulkAssignForm, '<ol id="filter">%content%</ol>');    
+        
         parent::configure();
         $this->setWidget('id', new sfWidgetFormInputHidden());
         $this->setValidator('id', new sfValidatorNumber(array('required' => false, 'min' => 1)));                
@@ -37,8 +41,8 @@ class LeaveEntitlementAddForm extends LeaveEntitlementForm {
         $this->setValidator('entitlement', new sfValidatorNumber(array('required' => true)));
         $this->widgetSchema->setLabel('entitlement', __('Entitlement'));
         $this->widgetSchema->setLabel('date_from', __('Entitled from'));
-        $this->bulkAssignForm = new LeaveEntitlementBulkAssignFilterForm();             
-        $this->embedForm('filter', $this->bulkAssignForm);        
+        $this->widgetSchema->setLabel('filters', '&nbsp;');        
+    
     }    
     
     public function setEditMode() {
@@ -52,10 +56,4 @@ class LeaveEntitlementAddForm extends LeaveEntitlementForm {
         
     }
     
-    public function render($attributes = array()) {
-        
-        //$html = $this->bulkAssignForm->render($attributes);
-        $html = parent::render($attributes);
-        return $html;
-    }
 }

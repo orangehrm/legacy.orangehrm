@@ -25,7 +25,7 @@
 class LeaveEntitlementBulkAssignFilterForm extends BaseForm {
 
     public function configure() {
-
+        
         $labels = array();
 
         // Add employee filter checkbox and widgets
@@ -50,31 +50,9 @@ class LeaveEntitlementBulkAssignFilterForm extends BaseForm {
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'viewLeaveEntitlements', 'LeaveEntitlementBulkAssignFilterForm');
 
-        // add entitlement_filter class to widgets
-
         $this->widgetSchema->setNameFormat('entitlement_filter[%s]');
-        $this->getWidgetSchema()->setFormFormatterName('Plain');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
     }
-
-//    public function render($attributes = array()) {
-//        return parent::render();
-////        $html = "<li class='line'>";
-////        $html .= $this['bulk_assign']->renderRow();
-////        $html .= "</li>";
-////
-////        $widgets = $this->getWidgetSchema()->getFields();
-////
-////        $html .= '<li class="line">';
-////        foreach ($widgets as $name => $widget) {
-////
-////            if ($name != 'bulk_assign') {
-////                $html .= $this[$name]->renderRow();
-////            }
-////        }
-////        $html .= '</li>';
-////
-////        return $html;
-//    }
 
 }
 

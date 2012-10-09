@@ -55,9 +55,7 @@ class LeaveEntitlementForm extends BaseForm {
     
     public function configure() {
 
-        $this->setWidgets(array(
-            'employee' => new ohrmWidgetEmployeeNameAutoFill(array('loadingMethod'=>'ajax')),
-        ));
+        $this->setWidget('employee', new ohrmWidgetEmployeeNameAutoFill(array('loadingMethod'=>'ajax')));
 
         $this->setValidator('employee', new ohrmValidatorEmployeeNameAutoFill());
 
@@ -76,12 +74,10 @@ class LeaveEntitlementForm extends BaseForm {
                 
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'viewLeaveEntitlements','LeaveEntitlementsForm');
-
-        
+  
         $this->widgetSchema->setNameFormat('entitlements[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
         $this->getWidgetSchema()->setFormFormatterName('ListFields');
-
     }
 
     private function _setLeaveTypeWidget() {
