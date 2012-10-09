@@ -48,13 +48,10 @@ class getFilteredEmployeesAjaxAction  extends sfAction {
 
 
         $names = array();
-        for ($i=1; $i< 1000; $i++) {
-            
-        
-            foreach($employees as $employee) {
-                $names[] = $employee->getFullName();
-            }
-        }
+        foreach($employees as $employee) {
+            $names[] = $employee->getFullName();
+        }        
+
         return $names;
     }
     
