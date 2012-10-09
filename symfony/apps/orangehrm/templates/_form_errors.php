@@ -23,7 +23,9 @@
 echo $form->renderGlobalErrors();
  
 foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
-  echo $widgetName . ' ' . $form[$widgetName]->renderError();
+    if ($form[$widgetName]->hasError()) {
+        echo $widgetName . ' ' . $form[$widgetName]->renderError();
+    }
 }
 ?>
 </span>
