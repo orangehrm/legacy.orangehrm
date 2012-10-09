@@ -18,8 +18,10 @@
  * Boston, MA  02110-1301, USA
  */
 ?>
+
+<?php $firstDate = isset($form['employee']) ? 3: 2;?>
 <style type="text/css">
-    form#search_form li:nth-child(3) {
+    form#search_form li:nth-child(<?php echo $firstDate;?>) {
         width: auto;
         margin-right: 10px;
     }

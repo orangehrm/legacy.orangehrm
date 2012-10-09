@@ -116,8 +116,8 @@ class LeaveEntitlementForm extends BaseForm {
         $labels = array(
             'employee' => __('Employee'),
             'leave_type' => __('Leave Type'),
-            'date_from' => __('Earned From'),
-            'date_to' => __('To')
+            'date_from' => __('Earned Between'),
+            'date_to' => __('&nbsp;')
         );
         return $labels;
     }
