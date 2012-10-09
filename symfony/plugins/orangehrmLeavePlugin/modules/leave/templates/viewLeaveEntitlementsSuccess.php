@@ -36,7 +36,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 
 <div class="box search2col" id="leave-entitlementsSearch">
     <div class="head">
-        <h1><?php echo __("Leave Entitlements");?></h1>
+        <h1><?php echo __($title);?></h1>
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
@@ -93,7 +93,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         $('#btnAdd').click(function() {
             location.href = "<?php echo url_for('leave/addLeaveEntitlement') ?>";
         });        
-
+       
         $('#btnDelete').attr('disabled','disabled');
         $("#ohrmList_chkSelectAll").click(function() {
             if($(":checkbox").length == 1) {

@@ -1428,8 +1428,10 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (71, 'Copy KPI', 64, 68, 2, 300, NULL, 1),
 (72, 'Add Review', 65, 68, 2, 400, NULL, 1),
 (73, 'Reviews', 66, 68, 2, 500, '/mode/new', 1),
-(74, 'Entitlements', 69, 41, 2, 100, '/reset/1', 0),
-(75, 'My Entitlements', 70, 41, 2, 200, '/reset/1', 0);
+(74, 'Entitlements', NULL, 41, 2, 100, NULL, 0),
+(75, 'Add Entitlements', 72, 74, 3, 100, NULL, 0),
+(76, 'My Entitlements', 70, 74, 3, 200, '/reset/1', 0),
+(77, 'Employee Entitlements', 69, 74, 3, 300, '/reset/1', 0);
 
 INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
 (1, 1, 1, 1, 1, 1),

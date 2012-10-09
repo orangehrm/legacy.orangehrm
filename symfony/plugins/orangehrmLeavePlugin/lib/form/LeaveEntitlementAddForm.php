@@ -23,16 +23,22 @@
  * Leave Entitlement add form
  */
 class LeaveEntitlementAddForm extends LeaveEntitlementForm {
+    protected $bulkAssignForm;
+    
     public function configure() {
         parent::configure();
         $this->setWidget('id', new sfWidgetFormInputHidden());
-        $this->setValidator('id', new sfValidatorNumber(array('required' => false, 'min' => 1)));
+        $this->setValidator('id', new sfValidatorNumber(array('required' => false, 'min' => 1)));                
         
+        $this->addFilterWidgets();
+    
+
         $this->setWidget('entitlement', new sfWidgetFormInputText());
         $this->setValidator('entitlement', new sfValidatorNumber(array('required' => true)));
         $this->widgetSchema->setLabel('entitlement', __('Entitlement'));
         $this->widgetSchema->setLabel('date_from', __('Entitled from'));
-             
+        $this->bulkAssignForm = new LeaveEntitlementBulkAssignFilterForm();             
+        $this->embedForm('filter', $this->bulkAssignForm);        
     }    
     
     public function setEditMode() {
@@ -40,5 +46,16 @@ class LeaveEntitlementAddForm extends LeaveEntitlementForm {
         $this->getWidget('employee')->setAttribute('disabled', 'disabled');
         $this->setValidator('employee', new sfValidatorPass());
         $this->setValidator('leave_type', new sfValidatorPass());           
+    }
+    
+    public function addFilterWidgets() {
+        
+    }
+    
+    public function render($attributes = array()) {
+        
+        //$html = $this->bulkAssignForm->render($attributes);
+        $html = parent::render($attributes);
+        return $html;
     }
 }

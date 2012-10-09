@@ -89,17 +89,25 @@ class LeaveEntitlementForm extends BaseForm {
         $choices = array();
         
         $leaveTypeList = $this->getLeaveTypeService()->getLeaveTypeList();
+        $defaultLeaveTypeId = NULL;
         
         if (count($leaveTypeList) == 0) {
             $choices[''] = __('No leave types defined');
         } else {
             foreach ($leaveTypeList as $leaveType) {
+                if (is_null($defaultLeaveTypeId)) {
+                    $defaultLeaveTypeId = $leaveType->getId();
+                }
                 $choices[$leaveType->getId()] = $leaveType->getName();            
             }
         }
 
         $this->setWidget('leave_type', new sfWidgetFormChoice(array('choices' => $choices)));
         $this->setValidator('leave_type', new sfValidatorChoice(array('choices' => array_keys($choices))));
+        
+        if (!is_null($defaultLeaveTypeId)) {
+            $this->setDefault('leave_type', $defaultLeaveTypeId);
+        }        
         
     }
 
@@ -133,10 +141,9 @@ class LeaveEntitlementForm extends BaseForm {
             $toDate = $year . '-12-31';
         }        
         
-        $this->setDefaults(array(
-                'date_from' => set_datepicker_date_format($fromDate),
-                'date_to' => set_datepicker_date_format($toDate)
-            ));
+        $this->setDefault('date_from', set_datepicker_date_format($fromDate));
+        $this->setDefault('date_to', set_datepicker_date_format($toDate));
+
     }
     
 }

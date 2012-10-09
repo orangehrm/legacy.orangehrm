@@ -33,5 +33,22 @@ class viewMyLeaveEntitlementsAction extends viewLeaveEntitlementsAction {
         $options = array('empNumber' => $this->getUser()->getAttribute('auth.empNumber'));
         return new MyLeaveEntitlementForm(array(), $options);
     }
+    
+    protected function showResultTableByDefault() {
+        return true;
+    }    
+    
+    protected function getTitle() {
+        return 'My Leave Entitlements';
+    }    
+    
+    protected function getDefaultFilters() {
+        $filters = $this->form->getDefaults();
+        
+        $employee = array('empId' => $this->getUser()->getAttribute('auth.empNumber'));
+        $filters['employee'] = $employee;
+        
+        return $filters;
+    }    
 
 }

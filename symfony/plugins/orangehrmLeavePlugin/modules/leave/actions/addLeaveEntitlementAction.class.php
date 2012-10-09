@@ -55,10 +55,16 @@ class addLeaveEntitlementAction extends sfAction {
 
             if ($this->form->isValid()) {
                 $leaveEntitlement = $this->getLeaveEntitlement($this->form->getValues());
-                $this->getLeaveEntitlementService()->saveLeaveEntitlement($leaveEntitlement);
+                $leaveEntitlement = $this->getLeaveEntitlementService()->saveLeaveEntitlement($leaveEntitlement);
                 
                 $successMessage = $this->addMode ?  TopLevelMessages::ADD_SUCCESS : TopLevelMessages::UPDATE_SUCCESS;
                 $this->getUser()->setFlash('success', __($successMessage));
+                
+                // Before redirecting, update saved search parameters, so that the 
+                // entitlement added now will be visible in the list
+                $filters = $this->getFiltersFromEntitlement($leaveEntitlement->getId());
+                $this->saveFilters($filters);
+                
                 $this->redirect('leave/viewLeaveEntitlements?savedsearch=1');
             }
         } else {
@@ -68,7 +74,6 @@ class addLeaveEntitlementAction extends sfAction {
             } else {
                 $filters = $this->getFilters();
             }
-            
             if (!empty($filters)) {
                 $this->form->setDefaults($filters);
             }            
@@ -107,8 +112,17 @@ class addLeaveEntitlementAction extends sfAction {
         return $this->getUser()->getAttribute(viewLeaveEntitlementsAction::FILTERS_ATTRIBUTE_NAME, array(), 'leave');
     }  
     
+    /**
+     * Save search filters as user attribute
+     * @param array $filters
+     */
+    protected function saveFilters(array $filters) {
+        unset($filters['id']);        
+        $this->getUser()->setAttribute(viewLeaveEntitlementsAction::FILTERS_ATTRIBUTE_NAME, $filters, 'leave');
+    }  
+    
     protected function getLeaveEntitlement($values) {
-        
+
         if (isset($values['id'])) {
             $id = $values['id'];
             $leaveEntitlement = $this->getLeaveEntitlementService()->getLeaveEntitlement($id);

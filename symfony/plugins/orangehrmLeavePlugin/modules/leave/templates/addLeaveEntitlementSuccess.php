@@ -44,11 +44,13 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 
             <fieldset>                
                 <ol>
+                    <?php //echo $form['leave_type']->renderRow();?>
                     <?php echo $form->render(); ?>
                 </ol>            
                 
                 <p>
                     <input type="button" id="btnSave" value="<?php echo __("Save") ?>"/>
+                    <input type="button" id="btnCancel" class="cancel" value="<?php echo __("Cancel") ?>"/>
                 </p>                
             </fieldset>
             
@@ -65,6 +67,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';
+    var listUrl = '<?php echo url_for('leave/viewLeaveEntitlements?savedsearch=1');?>';
         
     $(document).ready(function() {        
         
@@ -72,8 +75,18 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             $('#frmLeaveEntitlementAdd').submit();
         });        
 
-        /* Delete confirmation controls: End */
-        
+        $('#btnCancel').click(function() {
+            window.location.href = listUrl;
+        });        
+ 
+        $('#entitlement_filter_bulk_assign').click(function(){            
+            if ($(this).is(':checked')) {
+                
+            } else {
+                
+            }
+        });
+ 
         $('#frmLeaveEntitlementAdd').validate({
                 rules: {
                     'entitlements[employee][empName]': {

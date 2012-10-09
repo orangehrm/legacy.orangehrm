@@ -33,11 +33,10 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
         $header2 = new ListHeader();
         $header3 = new ListHeader();
         $header4 = new ListHeader();
-        $header5 = new ListHeader();
 
         $header1->populateFromArray(array(
             'name' => 'Entitlement Type',
-            'width' => '40%',
+            'width' => '45%',
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'left',
@@ -45,27 +44,37 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
             'elementProperty' => array('getter' => 'getEntitlementType')
         ));
 
-        $header3->populateFromArray(array(
+        $header2->populateFromArray(array(
             'name' => 'Valid From',
             'width' => '25%',
             'isSortable' => false,
-            'elementType' => 'labelDate',
+            'elementType' => 'linkDate',
             'textAlignmentStyle' => 'left',
-            'elementProperty' => array('getter' => 'getFromDate')
+            'elementProperty' => array(
+                'linkable' => $this->allowEdit,
+                'labelGetter' => 'getFromDate',
+                'placeholderGetters' => array('id' => 'getId'),
+                'urlPattern' => public_path('index.php/leave/addLeaveEntitlement/id/{id}')                
+            )
         ));
 
-        $header4->populateFromArray(array(
+        $header3->populateFromArray(array(
             'name' => 'Valid To',
             'width' => '25%',
             'isSortable' => false,
-            'elementType' => 'labelDate',
+            'elementType' => 'linkDate',
             'textAlignmentStyle' => 'left',
-            'elementProperty' => array('getter' => 'getToDate')
+            'elementProperty' => array(
+                'linkable' => $this->allowEdit,
+                'labelGetter' => 'getToDate',
+                'placeholderGetters' => array('id' => 'getId'),
+                'urlPattern' => public_path('index.php/leave/addLeaveEntitlement/id/{id}'),                
+            )
         ));
         
-        $header5->populateFromArray(array(
+        $header4->populateFromArray(array(
             'name' => 'Days',
-            'width' => '10%',
+            'width' => '5%',
             'isSortable' => false,
             'elementType' => 'link',
             'textAlignmentStyle' => 'right',
@@ -78,7 +87,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
         ));
 
 
-        $this->headers = array($header1, $header3, $header4, $header5);
+        $this->headers = array($header1, $header2, $header3, $header4);
     }
     
     public function getClassName() {

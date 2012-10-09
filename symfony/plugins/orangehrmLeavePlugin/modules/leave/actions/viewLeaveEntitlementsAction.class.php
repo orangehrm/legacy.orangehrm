@@ -42,12 +42,27 @@ class viewLeaveEntitlementsAction extends sfAction {
     protected function getForm() {
         return new LeaveEntitlementForm();
     }
+    
+    protected function showResultTableByDefault() {
+        return false;
+    }
+    
+    protected function getTitle() {
+        return 'Leave Entitlements';
+    }
+    
+    protected function getDefaultFilters() {
+        return $this->form->getDefaults();
+    }
+    
     public function execute($request) {        
         
+        $this->title = $this->getTitle();
         $this->form = $this->getForm();
 
-        $this->showResultTable = false;
-        $filters = array();
+        $this->showResultTable = $this->showResultTableByDefault();
+        
+        $filters = $this->getDefaultFilters();
         
         if ($request->isMethod('post')) {
 
@@ -62,6 +77,8 @@ class viewLeaveEntitlementsAction extends sfAction {
             $this->showResultTable = true;
             $filters = $this->getFilters();
             $this->form->setDefaults($filters);
+        } else {
+            $this->saveFilters(array());
         }
         
         if ($this->showResultTable) {

@@ -4249,8 +4249,10 @@ symfony/plugins/orangehrmLeavePlugin/install/upgrade.sql -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveEntitlementDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/NewLeaveTypeDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementAddForm.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementBulkAssignFilterForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/MyLeaveEntitlementForm.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/sfWidgetFormSchemaFormatterPlain.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementTypeCellFilter.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlement.class.php -text
