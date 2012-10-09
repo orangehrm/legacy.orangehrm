@@ -50,6 +50,6 @@ class LinkCell extends Cell {
     }
 
     public function toValue() {
-        return $this->getValue('labelGetter');
+        return $this->getLabel();
     }
 }
