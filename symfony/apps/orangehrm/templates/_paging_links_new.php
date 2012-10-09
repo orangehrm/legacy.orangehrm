@@ -19,6 +19,7 @@
  *
  */
 
+echo "<li class=\"desc\">".__($pager->getFirstIndice() . '-' . $pager->getLastIndice() . ' ' . __('of') . ' ' . $pager->getNumResults())."</li> ";
 echo "<li class=\"first\"><a href=\"javascript:submitPage(1)\" class=\"tiptip\" title=\"".__('First')."\">".__('First')."</a></li> ";
 echo "<li class=\"previous\"><a href=\"javascript:submitPage({$pager->getPreviousPage()})\" class=\"tiptip\" title=\"".__('Previous')."\">".__('Previous')."</a></li> ";
 
