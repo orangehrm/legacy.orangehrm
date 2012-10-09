@@ -18,6 +18,14 @@
  * Boston, MA  02110-1301, USA
  */
 ?>
+<style type="text/css">
+    form#search_form li:nth-child(3) {
+        width: auto;
+        margin-right: 10px;
+    }
+    
+    
+</style>
 
 <?php
 

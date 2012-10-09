@@ -30,14 +30,16 @@ class LeaveEntitlementBulkAssignFilterForm extends BaseForm {
 
         // Add employee filter checkbox and widgets
         $this->setWidget('bulk_assign', new sfWidgetFormInputCheckbox());
-        $this->setValidator('bulk_assign', new sfValidatorChoice(array('choices' => array(1), 'required' => false)));
+        //$this->setValidator('bulk_assign', new sfValidatorChoice(array('choices' => array(1), 'required' => false)));
+        $this->setValidator('bulk_assign', new sfValidatorPass());
         $labels['bulk_assign'] = __('Add to multiple employees');
 
-        $locationWidget = new ohrmWidgetOperationalCountryLocationDropDown();
+        $locationWidget = new ohrmReportWidgetOperationalCountryLocationDropDown();
         $this->setWidget('location', $locationWidget);
         $labels['location'] = __('Location');
-        $locationChoices = $locationWidget->getValidValues();
-        $this->setValidator('location', new sfValidatorChoice(array('choices' => $locationChoices, 'required' => false)));
+        //$locationChoices = $locationWidget->getValidValues();
+        //$this->setValidator('location', new sfValidatorChoice(array('choices' => $locationChoices, 'required' => false)));
+        $this->setValidator('location', new sfValidatorPass());
 
         $subUnitWidget = new ohrmWidgetSubUnitDropDown();
         $this->setWidget('subunit', $subUnitWidget);

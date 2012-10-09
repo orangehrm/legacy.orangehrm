@@ -26,6 +26,19 @@ class addLeaveEntitlementAction extends sfAction {
     
     protected $leaveEntitlementService;
     
+    protected $employeeService;
+    
+    public function getEmployeeService() { 
+        if (empty($this->employeeService)) {
+            $this->employeeService = new EmployeeService();
+        }
+        return $this->employeeService;
+    }
+
+    public function setEmployeeService($employeeService) {
+        $this->employeeService = $employeeService;
+    }
+    
     public function getLeaveEntitlementService() {
         if (empty($this->leaveEntitlementService)) {
             $this->leaveEntitlementService = new LeaveEntitlementService();
@@ -36,6 +49,27 @@ class addLeaveEntitlementAction extends sfAction {
     public function setLeaveEntitlementService($leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }    
+    
+    /**
+     * Get employees matching the filter parameters.
+     * @param type $parameters
+     * @return type
+     */
+    protected function getMatchingEmployees($parameters) {
+
+        $parameterHolder = new EmployeeSearchParameterHolder();
+        $filters = array('location' => $parameters['location'],
+            'sub_unit' => $parameters['subunit']);
+
+        $parameterHolder->setFilters($filters);
+        $employees = $this->getEmployeeService()->searchEmployees($parameterHolder);
+
+        $ids = array();
+        foreach($employees as $employee) {
+            $ids[] = $employee->getEmpNumber();
+        }
+        return $ids;
+    }
     
     public function execute($request) {
         
@@ -55,15 +89,33 @@ class addLeaveEntitlementAction extends sfAction {
 
             if ($this->form->isValid()) {
                 $leaveEntitlement = $this->getLeaveEntitlement($this->form->getValues());
-                $leaveEntitlement = $this->getLeaveEntitlementService()->saveLeaveEntitlement($leaveEntitlement);
                 
-                $successMessage = $this->addMode ?  TopLevelMessages::ADD_SUCCESS : TopLevelMessages::UPDATE_SUCCESS;
-                $this->getUser()->setFlash('success', __($successMessage));
-                
-                // Before redirecting, update saved search parameters, so that the 
-                // entitlement added now will be visible in the list
-                $filters = $this->getFiltersFromEntitlement($leaveEntitlement->getId());
-                $this->saveFilters($filters);
+                $bulkFilter = $this->form->getValue('filters');
+                if (!isset($bulkFilter['bulk_assign'])) {
+                    $leaveEntitlement = $this->getLeaveEntitlementService()->saveLeaveEntitlement($leaveEntitlement);
+                    
+                    $eventType = $this->addMode ? LeaveEvents::ENTITLEMENT_ADD : LeaveEvents::ENTITLEMENT_UPDATE;
+                    $this->dispatcher->notify(new sfEvent($this, $eventType, 
+                            array('entitlement' => $leaveEntitlement)));                    
+                    
+                    $successMessage = $this->addMode ?  TopLevelMessages::ADD_SUCCESS : TopLevelMessages::UPDATE_SUCCESS;
+                    $this->getUser()->setFlash('success', __($successMessage));
+
+                    // Before redirecting, update saved search parameters, so that the 
+                    // entitlement added now will be visible in the list
+                    $filters = $this->getFiltersFromEntitlement($leaveEntitlement->getId());
+                    $this->saveFilters($filters);                    
+                } else {
+                    $employeeNumbers = $this->getMatchingEmployees($this->form->getValue('filters'));
+                    
+                    $savedCount = $this->getLeaveEntitlementService()->bulkAssignLeaveEntitlements($employeeNumbers, $leaveEntitlement);
+                    
+                    $this->dispatcher->notify(new sfEvent($this, LeaveEvents::ENTITLEMENT_BULK_ADD, 
+                            array('entitlement' => $leaveEntitlement,
+                                  'employeeNumbers' => $employeeNumbers)));
+                    
+                    $this->getUser()->setFlash('success', __('Entitlements added to %count% employees(s)', array('%count%' => $savedCount)));
+                }
                 
                 $this->redirect('leave/viewLeaveEntitlements?savedsearch=1');
             }

@@ -124,4 +124,32 @@ class LeaveEntitlementDao extends BaseDao {
             throw new DaoException($e->getMessage(), 0, $e);
         }
     }
+    
+    public function bulkAssignLeaveEntitlements($employeeNumbers, LeaveEntitlement $leaveEntitlement) {
+        $savedCount = 0;
+        
+        foreach ($employeeNumbers as $empNumber) {
+            $entitlement = new LeaveEntitlement(); 
+            
+            $entitlement->setEmpNumber($empNumber);
+            $entitlement->setLeaveTypeId($leaveEntitlement->getLeaveTypeId());
+            
+            $entitlement->setCreditedDate($leaveEntitlement->getCreditedDate());
+            $entitlement->setCreatedById($leaveEntitlement->getCreatedById());
+            $entitlement->setCreatedByName($leaveEntitlement->getCreatedByName());        
+            
+            $entitlement->setEntitlementType($leaveEntitlement->getEntitlementType());
+            $entitlement->setDeleted(0);            
+        
+            $entitlement->setNoOfDays($leaveEntitlement->getNoOfDays());
+            $entitlement->setFromDate($leaveEntitlement->getFromDate());
+            $entitlement->setToDate($leaveEntitlement->getToDate());            
+            
+            $this->saveLeaveEntitlement($entitlement);
+            $savedCount++;
+        }
+        
+        return $savedCount;
+        
+    }    
 }

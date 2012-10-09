@@ -52,5 +52,9 @@ class LeaveEntitlementService extends BaseService {
     public function getLeaveEntitlement($id) {
         return $this->getLeaveEntitlementDao()->getLeaveEntitlement($id);
     }    
+    
+    public function bulkAssignLeaveEntitlements($employeeNumbers, LeaveEntitlement $leaveEntitlement) {
+        return $this->getLeaveEntitlementDao()->bulkAssignLeaveEntitlements($employeeNumbers, $leaveEntitlement);
+    }    
 
 }

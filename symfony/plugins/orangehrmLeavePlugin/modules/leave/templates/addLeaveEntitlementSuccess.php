@@ -35,6 +35,32 @@
     ol#filter li:first-child label {
         width: 200px;
     }    
+    ol#filter span#ajax_count {
+        margin-left: 5px;
+    }
+    
+    ol#employee_list {
+        margin-top: 20px;
+        height: 200px;
+        overflow-y: scroll;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    ol#employee_list li {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 2px;
+        padding-right: 2px;
+        
+    }    
+    ol#employee_list li.odd {
+        background-color: #EAEAEA;
+    }
+    
+    ol#employee_list li.even {
+        
+    }
+    
 </style>
     
 <?php
@@ -77,7 +103,35 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     
 </div> <!-- employee-information -->
 
+<!-- Confirmation box HTML: Begins -->
+<div class="modal hide" id="noselection">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('OrangeHRM - No matching employees'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p><?php echo __('No employees match the selected filters'); ?></p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="dialogDeleteBtn" value="<?php echo __('Ok'); ?>" />
+  </div>
+</div>
 <!-- Confirmation box HTML: Ends -->
+<div class="modal hide" id="preview">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('OrangeHRM - Matching employees'); ?></h3>
+  </div>
+  <div class="modal-body">
+      <span><?php echo __('The selected leave entitlement will be applied to the following employees.');?></span>
+      <ol id="employee_list">          
+      </ol>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="dialogConfirmBtn" value="<?php echo __('Confirm'); ?>" />
+    <input type="button" class="cancel" data-dismiss="modal" id="dialogCancelBtn" value="<?php echo __('Cancel'); ?>" />
+  </div>
+</div>
 
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
@@ -85,7 +139,14 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';
     var listUrl = '<?php echo url_for('leave/viewLeaveEntitlements?savedsearch=1');?>';
+    var getCountUrl = '<?php echo url_for('leave/getFilteredEmployeeCountAjax');?>';
+    var getEmployeeUrl = '<?php echo url_for('leave/getFilteredEmployeesAjax');?>';
+    var lang_matchesOne = '<?php echo __('Matches one employee');?>';
+    var lang_matchesMany = '<?php echo __('Matches %count% employees');?>';
+    var lang_matchesNone = '<?php echo __('No matching employees');?>';
         
+    var filterMatchingEmployees = 0;
+    
     function toggleFilters(show) {
         if (show) {
            $('ol#filter li:not(:first)').show();                
@@ -93,20 +154,116 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             $('ol#filter li:not(:first)').hide();
         }        
     }
-    $(document).ready(function() {        
+    
+    function updateFilterMatches() {
         
-        toggleFilters(false);
-        $('#entitlements_employee_empName').parent('li').hide();
+        var params = '';
+        
+        $('ol#filter li:not(:first)').find('input,select').each(function(index, element) {
+            var name = $(this).attr('name');
+            name = name.replace('entitlements[filters][', '');
+            name = name.replace(']', '');
+            var value = $(this).val();
+
+            params = params + '&' + name + '=' + value;
+        });
+        
+        $.ajax({
+            type: 'GET',
+            url: getCountUrl,
+            data: params,
+            dataType: 'json',
+            success: function(data) {
+                filterMatchingEmployees = data;
+                $('span#ajax_count').remove();
+                var text = lang_matchesMany.replace('%count%', data);
+                if (data == 1) {
+                    text = lang_matchesOne;
+                } else if (data == 0) {
+                    text = lang_matchesNone;
+                }
+
+                $('ol#filter li:last').append('<span id="ajax_count">' + text + '</span>');
+            }
+        });
+    }
+
+    function updateEmployeeList() {
+        
+        var params = '';
+        
+        $('ol#filter li:not(:first)').find('input,select').each(function(index, element) {
+            var name = $(this).attr('name');
+            name = name.replace('entitlements[filters][', '');
+            name = name.replace(']', '');
+            var value = $(this).val();
+
+            params = params + '&' + name + '=' + value;
+        });
+        
+        $.ajax({
+            type: 'GET',
+            url: getEmployeeUrl,
+            data: params,
+            dataType: 'json',
+            success: function(data) {
+                $('ol#employee_list').html('');
+                
+                
+                var count = data.length;
+                
+                for (var i = 0; i < count; i++) {
+                    var css = "odd";
+                    if (i % 2) {
+                        css = "even";
+                    }
+                    $('ol#employee_list').append('<li class="' + css + '">' + data[i] + '</li>');
+                }
+            }
+        });
+    }
+
+    $(document).ready(function() {               
+        
+        if ($('#entitlements_filters_bulk_assign').is(':checked')) {
+            toggleFilters(true);    
+            $('#entitlements_employee_empName').parent('li').hide();
+        } else {
+            toggleFilters(false);
+        }
+        
                 
         $('#btnSave').click(function() {
-            $('#frmLeaveEntitlementAdd').submit();
+            if ($('#entitlements_filters_bulk_assign').is(':checked')) {
+                
+                if (filterMatchingEmployees == 0) {
+                    $('#noselection').modal();
+                } else {
+                    var valid = $('#frmLeaveEntitlementAdd').valid();
+                    if (valid) {
+                        updateEmployeeList();
+                        $('#preview').modal();
+                    }
+                }
+            } else {
+                $('#frmLeaveEntitlementAdd').submit();
+            }
         });        
+        
+        $('#dialogConfirmBtn').click(function() {
+            $('#frmLeaveEntitlementAdd').submit();
+        });
 
         $('#btnCancel').click(function() {
             window.location.href = listUrl;
         });        
  
         $('#entitlements_filters_bulk_assign').click(function(){     
+            
+            if ($('span#ajax_count').length == 0) {
+                updateFilterMatches();
+            }
+            
             var checked = $(this).is(':checked');
             toggleFilters(checked);
             if (checked) {
@@ -114,6 +271,10 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             } else {
                 $('#entitlements_employee_empName').parent('li').show();
             }
+        });
+        
+        $('ol#filter li:not(:first)').find('input,select').change(function(){
+           updateFilterMatches(); 
         });
  
         $('#frmLeaveEntitlementAdd').validate({

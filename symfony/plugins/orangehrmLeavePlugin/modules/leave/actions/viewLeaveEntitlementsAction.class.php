@@ -74,8 +74,9 @@ class viewLeaveEntitlementsAction extends sfAction {
                 $this->saveFilters($filters);                       
             }
         } else if ($request->hasParameter('savedsearch')) {
+            $filters = $this->getFilters();            
             $this->showResultTable = true;
-            $filters = $this->getFilters();
+
             $this->form->setDefaults($filters);
         } else {
             $this->saveFilters(array());
@@ -83,8 +84,13 @@ class viewLeaveEntitlementsAction extends sfAction {
         
         if ($this->showResultTable) {
             $searchParameters = $this->getSearchParameterObject($filters);
-            $results = $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
-            $this->setListComponent($results, 0, 0);        
+            $empNumber = $searchParameters->getEmpNumber();
+            if (empty($empNumber)) {
+                $this->showResultTable = false;
+            } else {
+                $results = $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
+                $this->setListComponent($results, 0, 0);        
+            }
         }
     }
     
@@ -95,13 +101,14 @@ class viewLeaveEntitlementsAction extends sfAction {
         
         $userRoleManager = $this->getContext()->getUserRoleManager();
         $isAccessible = $userRoleManager->isEntityAccessible('Employee', $id);
-        if ($isAccessible || (!empty($id) && $this->getUser()->getAttribute('auth.empNumber') == $id)) {        
-            $searchParameters->setEmpNumber($id);
-        } else {
-            $this->getUser()->setFlash('warning', 'Access Denied to Selected Employee');
-            $this->redirect('leave/viewLeaveEntitlements');
+        if (!empty($id)) {
+            if ($isAccessible || ($this->getUser()->getAttribute('auth.empNumber') == $id)) {        
+                $searchParameters->setEmpNumber($id);
+            } else {
+                $this->getUser()->setFlash('warning', 'Access Denied to Selected Employee');
+                $this->redirect('leave/viewLeaveEntitlements');
+            }
         }
-
         $searchParameters->setLeaveTypeId($filters['leave_type']);
         $searchParameters->setFromDate($filters['date_from']);
         $searchParameters->setToDate($filters['date_to']);
