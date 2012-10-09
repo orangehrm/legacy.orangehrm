@@ -11,6 +11,33 @@ OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WAR
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 See the GNU General Public License for more details.
 
+Installing
+----------
+1. Install OrangeHRM using the web installer
+
+
+Testing Leave Module
+--------------------
+The leave module new screens are not yet complete. Therefore, you have to use old screens
+to setup a leave period and create leave types.
+
+1. Click on the Leave menu and set up a leave period.
+2. Use the menu item Leave->Configure->Leave Types to create some leave types
+3. Create some employees
+4. (Optional) Assign leave entitlements to the employees using the Leave->Leave Summary screen.
+   This can also be done by the new screen Leave->Entitlements->Add
+5. Move the Leave type and Leave entitlement data created above into new tables.
+   Run the following command from the symfony directory:
+
+   php symfony UpgradeLeaveModule
+
+   Note that this command deletes all records in new tables before upgrading data. Therefore,
+   any leave entitlements created using the new UI's will not be available afterwards.
+
+
+Deprecated Notes
+----------------
+
 The source that you have downloaded(ZIP archive) in which this was enclosed, is of the 
 directory structure as follows; ( since release of OrangeHRM version 0.1 we have altered 
 the directory structure, for further details please refer to the changelog.txt
