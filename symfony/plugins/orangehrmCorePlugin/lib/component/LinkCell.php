@@ -2,6 +2,16 @@
 
 class LinkCell extends Cell {
 
+    protected function getLabel() {
+        if ($this->hasProperty('labelGetter')) {
+            $label = $this->getValue('labelGetter');
+        } else {
+            $label = $this->getPropertyValue('label', 'Undefined');
+        }
+
+        return $label;
+    }
+    
     public function __toString() {
         $linkable = $this->getPropertyValue('linkable', true);
         
@@ -29,11 +39,9 @@ class LinkCell extends Cell {
                 'href' => $url,
             );
                 
-            if ($this->hasProperty('labelGetter')) {
-                $label = $this->getValue('labelGetter');
-            } else {
-                $label = $this->getPropertyValue('label', 'Undefined');
-            }
+            $label = $this->getLabel();
+            
+
             return content_tag('a', $label, $linkAttributes) 
                     . $this->getHiddenFieldHTML();
         } else {
