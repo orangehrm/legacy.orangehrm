@@ -30,8 +30,8 @@ if (!mysql_connect($conf->dbhost.":".$conf->dbport, $conf->dbuser, $conf->dbpass
 if (!mysql_select_db($conf->dbname)) { echo mysql_error(); exit(0); }
 
 // Truncating tables
-if (!mysql_query("TRUNCATE TABLE `ohrm_emp_termination`")) { echo mysql_error(); die; }
-if (!mysql_query("TRUNCATE TABLE `hs_hr_employee`")) { echo mysql_error(); die; }
+if (!mysql_query("DELETE from `hs_hr_employee`")) { echo mysql_error(); die; }
+if (!mysql_query("DELETE from `ohrm_emp_termination`")) { echo mysql_error(); die; }
 if (!mysql_query("TRUNCATE TABLE `ohrm_user`")) { echo mysql_error(); die; }
 
 // Default admin

@@ -33,10 +33,10 @@
         width: 100%;
     }
     ol#filter li:first-child label {
-        width: 200px;
+        width: 200px;        
     }    
     ol#filter span#ajax_count {
-        margin-left: 5px;
+        margin-left: 20px;
     }
     
     ol#employee_list {
@@ -70,6 +70,7 @@ use_stylesheets_for_form($form);
 
 use_stylesheet(public_path('themes/default/css/jquery/jquery.autocomplete.css'));
 use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+
 ?>
 
 <?php if ($form->hasErrors()): ?>
@@ -124,7 +125,8 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
   </div>
   <div class="modal-body">
       <span><?php echo __('The selected leave entitlement will be applied to the following employees.');?></span>
-      <ol id="employee_list">          
+      <ol id="employee_list">  
+          <li><?php echo __('Loading...');?></li>
       </ol>
   </div>
   <div class="modal-footer">
@@ -174,7 +176,8 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             data: params,
             dataType: 'json',
             success: function(data) {
-                filterMatchingEmployees = data;
+                filterMatchingEmployees = data;s
+                
                 $('span#ajax_count').remove();
                 var text = lang_matchesMany.replace('%count%', data);
                 if (data == 1) {
@@ -183,7 +186,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                     text = lang_matchesNone;
                 }
 
-                $('ol#filter li:last').append('<span id="ajax_count">' + text + '</span>');
+                $('ol#filter li:first').append('<span id="ajax_count">(' + text + ')</span>');
             }
         });
     }
@@ -206,15 +209,17 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             url: getEmployeeUrl,
             data: params,
             dataType: 'json',
-            success: function(data) {
-                $('ol#employee_list').html('');
-                
+            success: function(data) {                
                 
                 var count = data.length;
+                var rows = $('ol#employee_list li').length;
+                
+                $('ol#employee_list').html('');                      
                 
                 for (var i = 0; i < count; i++) {
                     var css = "odd";
-                    if (i % 2) {
+                    rows++;
+                    if (rows % 2) {
                         css = "even";
                     }
                     $('ol#employee_list').append('<li class="' + css + '">' + data[i] + '</li>');
@@ -240,8 +245,9 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                     $('#noselection').modal();
                 } else {
                     var valid = $('#frmLeaveEntitlementAdd').valid();
-                    if (valid) {
+                    if (valid) {                      
                         updateEmployeeList();
+                        
                         $('#preview').modal();
                     }
                 }

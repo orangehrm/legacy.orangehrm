@@ -46,9 +46,14 @@ class getFilteredEmployeesAjaxAction  extends sfAction {
         $parameterHolder->setFilters($filters);
         $employees = $this->getEmployeeService()->searchEmployees($parameterHolder);
 
+
         $names = array();
-        foreach($employees as $employee) {
-            $names[] = $employee->getFullName();
+        for ($i=1; $i< 1000; $i++) {
+            
+        
+            foreach($employees as $employee) {
+                $names[] = $employee->getFullName();
+            }
         }
         return $names;
     }
