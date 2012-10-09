@@ -176,7 +176,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             data: params,
             dataType: 'json',
             success: function(data) {
-                filterMatchingEmployees = data;s
+                filterMatchingEmployees = data;
                 
                 $('span#ajax_count').remove();
                 var text = lang_matchesMany.replace('%count%', data);
