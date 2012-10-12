@@ -40,7 +40,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess');
         <h1><?php echo __("System Users") ?></h1>
     </div>
     <div class="inner">
-        <form id="search_form" method="post" action="<?php echo url_for('admin/viewSystemUsers'); ?>">
+        <form id="search_form" name="frmUserSearch" method="post" action="<?php echo url_for('admin/viewSystemUsers'); ?>">
             
             <fieldset>
                 
@@ -87,11 +87,10 @@ use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess');
 
 <script type="text/javascript">
     function submitPage(pageNo) {
-
-        document.frmHiddenParam.pageNo.value = pageNo;
-        document.frmHiddenParam.hdnAction.value = 'paging';
-        document.getElementById('frmHiddenParam').submit();
-
+        document.frmUserSearch.pageNo.value = pageNo;
+        document.frmUserSearch.hdnAction.value = 'paging';
+        $('#search_form input.inputFormatHint').val('');
+        document.getElementById('search_form').submit();
     }
                 
     var addUserUrl          =   '<?php echo url_for('admin/saveSystemUser'); ?>';
