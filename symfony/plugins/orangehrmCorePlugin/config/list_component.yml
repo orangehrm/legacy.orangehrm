@@ -213,6 +213,9 @@ Customer:
     Delete:
       label: Delete
       type: submit
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/admin/deleteCustomer'
@@ -234,6 +237,9 @@ Project:
     Delete:
       label: Delete
       type: submit
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/admin/deleteProject'
@@ -333,6 +339,9 @@ JobTitle:
     Delete:
       label: Delete
       type: submit
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/admin/deleteJobTitle'
@@ -439,6 +448,9 @@ SystemUser:
     Delete:
       label: Delete
       type: submit
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/admin/deleteSystemUsers'
@@ -460,6 +472,9 @@ Membership:
     Delete:
       label: Delete
       type: submit
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/admin/deleteMemberships'
@@ -481,6 +496,9 @@ Nationality:
     Delete:
       label: Delete
       type: submit
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/admin/deleteNationalities'

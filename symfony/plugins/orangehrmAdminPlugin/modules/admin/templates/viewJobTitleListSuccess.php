@@ -21,13 +21,11 @@
  */
 ?>
 
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<?php use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.8.13.custom.css'); ?>
-<?php use_javascript('../../../scripts/jquery/ui/ui.core.js'); ?>
-<?php use_javascript('../../../scripts/jquery/ui/ui.dialog.js'); ?>
-<?php use_stylesheet('../orangehrmAdminPlugin/css/viewJobTitleListSuccess'); ?>
-<?php use_javascript('../orangehrmAdminPlugin/js/viewJobTitleListSuccess'); ?>
+<?php 
+use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
+use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+use_javascript('../orangehrmAdminPlugin/js/viewJobTitleListSuccess'); 
+?>
 
 <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
 <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >

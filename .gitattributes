@@ -3323,6 +3323,7 @@ symfony/plugins/.registry/.channel.pear.symfony-project.com/symfony.reg -text
 symfony/plugins/.registry/.channel.plugins.symfony-project.org/sfphpunitplugin.reg -text
 symfony/plugins/orangehrmAdminPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmAdminPlugin/config/supported_languages.yml -text
+symfony/plugins/orangehrmAdminPlugin/config/view.yml -text
 symfony/plugins/orangehrmAdminPlugin/lib/dao/CompanyStructureDao.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/dao/CustomerDao.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/dao/DeletePayGradeCurrenciesForm.php -text

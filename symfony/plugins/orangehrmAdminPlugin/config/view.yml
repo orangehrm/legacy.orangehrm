@@ -1,0 +1,28 @@
+membershipSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+nationalitySuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+viewSystemUsersSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+viewEmailNotificationSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+viewCustomersSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+viewProjectsSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+viewJobTitleListSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]

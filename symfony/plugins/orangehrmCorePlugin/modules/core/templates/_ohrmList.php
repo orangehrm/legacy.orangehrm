@@ -59,10 +59,13 @@ function printButtonEventBindings($buttons) {
 ?>
 <div class="box simple" id="search-results">
     
+    <?php if (!empty($title)) { ?>
+        <div class="head"><h1><?php echo __($title); ?></h1></div>
+    <?php } ?>
+    
     <div class="inner">
     
 <?php if (!empty($title)) { ?>
-        <div class="mainHeading"><h2><?php echo __($title); ?></h2></div>
 
 <?php if ($partial != null): ?>
         <div style="padding-left: 5px; padding-top: 5px;">

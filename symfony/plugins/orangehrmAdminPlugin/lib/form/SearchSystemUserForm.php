@@ -58,7 +58,7 @@ class SearchSystemUserForm extends BaseForm {
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
 
         sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(3);
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
     }
 
     /**

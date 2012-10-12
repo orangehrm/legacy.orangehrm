@@ -9,6 +9,7 @@ $(document).ready(function() {
     $('#btnAdd').click(function() {
         $('#nationality').show();
         $('#btnAdd').hide();
+        $('#btnDelete').hide();
         $('#nationality_name').val('');
         $('#nationality_nationalityId').val('');
         $('#nationalityHeading').html(lang_addNationality);
@@ -18,6 +19,7 @@ $(document).ready(function() {
     $('#btnCancel').click(function() {
         $('#nationality').hide();
         $('#btnAdd').show();
+        $('#btnDelete').show();
         validator.resetForm();
     });
 
@@ -143,5 +145,6 @@ function getNationalityInfo(url){
         $('#nationality').show();
         $(".messageBalloon_success").remove();
         $('#btnAdd').hide();
+        $('#btnDelete').hide();
     });
 }

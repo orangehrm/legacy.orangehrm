@@ -80,17 +80,6 @@ $(document).ready(function() {
         });
     });
 
-    $("#deleteConfirmation").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 325,
-        height: 50,
-        position: 'middle',
-        open: function() {
-            $('#dialogCancelBtn').focus();
-        }
-    });
-
     $('#frmList_ohrmListComponent').attr('name','frmList_ohrmListComponent');
     $('#dialogDeleteBtn').click(function() {
         document.frmList_ohrmListComponent.submit();
@@ -98,6 +87,32 @@ $(document).ready(function() {
     $('#dialogCancelBtn').click(function() {
         $("#deleteConfirmation").dialog("close");
     });
+    
+    /* Delete confirmation controls: Begin */
+        $('#dialogDeleteBtn').click(function() {
+            document.frmList_ohrmListComponent.submit();
+        });
+        /* Delete confirmation controls: End */
+    
+    /* Toggling search form: Begins */
+        $("#searchProject .inner").hide();
+        
+        $("#searchProject .toggle").click(function () {
+            $("#searchProject .inner").slideToggle('slow', function() {
+                if($(this).is(':hidden')) {
+                    $('#searchProject .tiptip').tipTip({content:'Expand for options'});
+                } else {
+                    $('#searchProject .tiptip').tipTip({content:'Hide options'});
+                }
+            });
+            $(this).toggleClass("activated");
+        }); 
+
+        $("#search-results .toggle").click(function () {
+            $("#search-results .inner").slideToggle();
+        });
+        /* Toggling search form: Ends */  
+    
 });
 
 function addTypeForHints(){

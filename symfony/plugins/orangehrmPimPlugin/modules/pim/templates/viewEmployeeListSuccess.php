@@ -28,14 +28,13 @@ use_javascript('../../../scripts/jquery/ui/ui.core.js');
 use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
  */
 ?>
-<!--
-<?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error')): ?>
-    <div class="messagebar">
+
+<?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error') || $sf_user->hasFlash('warning')): ?>
+    <div class="box simple">
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
         <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
     </div>
 <?php endif; ?>
--->
 
 <div class="box" id="employee-information">
     <div class="head">

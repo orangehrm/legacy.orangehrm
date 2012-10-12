@@ -30,7 +30,7 @@ class Button extends Control {
         
         $class = $this->getPropertyValue('class');
         
-        if (!empty($dataTarget)) {
+        if (!empty($class)) {
             $attributes['class'] = $class;
         }        
  

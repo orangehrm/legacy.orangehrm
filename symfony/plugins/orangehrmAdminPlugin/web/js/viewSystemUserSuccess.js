@@ -31,17 +31,6 @@ $(document).ready(function() {
         });
     });
 
-    $("#deleteConfirmation").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 325,
-        height: 50,
-        position: 'middle',
-        open: function() {
-            $('#dialogCancelBtn').focus();
-        }
-    });
-
     $('#frmList_ohrmListComponent').attr('name','frmList_ohrmListComponent');
     $('#dialogDeleteBtn').click(function() {
         document.frmList_ohrmListComponent.submit();
@@ -65,6 +54,30 @@ $(document).ready(function() {
         window.location.replace(viewUserUrl);
     });
     
+    /* Delete confirmation controls: Begin */
+        $('#dialogDeleteBtn').click(function() {
+            document.frmList_ohrmListComponent.submit();
+        });
+        /* Delete confirmation controls: End */
+    
+    /* Toggling search form: Begins */
+        $("#systemUser-information .inner").hide();
+        
+        $("#systemUser-information .toggle").click(function () {
+            $("#systemUser-information .inner").slideToggle('slow', function() {
+                if($(this).is(':hidden')) {
+                    $('#systemUser-information .tiptip').tipTip({content:'Expand for options'});
+                } else {
+                    $('#systemUser-information .tiptip').tipTip({content:'Hide options'});
+                }
+            });
+            $(this).toggleClass("activated");
+        }); 
+
+        $("#search-results .toggle").click(function () {
+            $("#search-results .inner").slideToggle();
+        });
+        /* Toggling search form: Ends */    
 });
 
 $.validator.addMethod("validEmployeeName", function(value, element) {                 

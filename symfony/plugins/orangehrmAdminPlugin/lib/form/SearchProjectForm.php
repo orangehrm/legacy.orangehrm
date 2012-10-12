@@ -63,6 +63,7 @@ class SearchProjectForm extends BaseForm {
 		));
 
 		$this->widgetSchema->setNameFormat('searchProject[%s]');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
 	}
 
 	public function setDefaultDataToWidgets($searchClues) {

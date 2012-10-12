@@ -9,6 +9,7 @@ $(document).ready(function() {
     $('#btnAdd').click(function() {
         $('#membership').show();
         $('#btnAdd').hide();
+        $('#btnDelete').hide();
         $('#membership_name').val('');
         $('#membership_membershipId').val('');
         $('#membershipHeading').html(lang_addMembership);
@@ -18,6 +19,7 @@ $(document).ready(function() {
     $('#btnCancel').click(function() {
         $('#membership').hide();
         $('#btnAdd').show();
+        $('#btnDelete').show();
         validator.resetForm();
     });
 
@@ -143,5 +145,6 @@ function getMembershipInfo(url){
         $('#membership').show();
         $(".messageBalloon_success").remove();
         $('#btnAdd').hide();
+        $('#btnDelete').hide();
     });
 }
