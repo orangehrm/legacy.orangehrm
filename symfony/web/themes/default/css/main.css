@@ -298,6 +298,9 @@ a {
 	background:#555657;
 	color:#fff;
 }
+.menu > ul > li > ul > li.selected > a.arrow {
+	background:#555657 url(../images/sub-nav-arrow-s.png) no-repeat 92% 48%;
+}
 .menu > ul > li > ul > li.current > a b {
 	background:#555657;
 }
