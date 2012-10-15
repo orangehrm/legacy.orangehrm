@@ -1353,10 +1353,14 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (70, 'My Leave Entitlements', 4, 'viewMyLeaveEntitlements'),
 (71, 'Delete Leave Entitlements', 4, 'deleteLeaveEntitlements'),
 (72, 'Add Leave Entitlement', 4, 'addLeaveEntitlement'),
-(73, 'Edit Leave Entitlement', 4, 'editLeaveEntitlement');
+(73, 'Edit Leave Entitlement', 4, 'editLeaveEntitlement'),
+(74, 'View Admin Module', 2, 'viewAdminModule'),
+(75, 'View PIM Module', 3, 'viewPimModule'),
+(76, 'View Recruitment Module', 7, 'viewRecruitmentModule'),
+(77, 'View Performance Module', 9, 'viewPerformanceModule');
 
 INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
-(1, 'Admin', NULL, NULL, 1, 100, NULL, 1),
+(1, 'Admin', 74, NULL, 1, 100, NULL, 1),
 (2, 'Organization', NULL, 1, 2, 100, NULL, 1),
 (3, 'General Information', 20, 2, 3, 100, NULL, 1),
 (4, 'Location', 21, 2, 3, 200, NULL, 1),
@@ -1384,7 +1388,7 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (26, 'Configuration', NULL, 1, 2, 900, NULL, 1),
 (27, 'Localization', 38, 26, 3, 100, NULL, 1),
 (28, 'Modules', 39, 26, 3, 200, NULL, 1),
-(30, 'PIM', NULL, NULL, 1, 200, NULL, 1),
+(30, 'PIM', 75, NULL, 1, 200, NULL, 1),
 (31, 'Configuration', NULL, 30, 2, 100, NULL, 1),
 (32, 'Optional Fields', 40, 31, 3, 100, NULL, 1),
 (33, 'Custom Fields', 41, 31, 3, 200, NULL, 1),
@@ -1419,10 +1423,10 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (62, 'Project Reports', 57, 61, 3, 100, '?reportId=1', 0),
 (63, 'Employee Reports', 58, 61, 3, 200, '?reportId=2', 0),
 (64, 'Attendance Summary', 59, 61, 3, 300, '?reportId=4', 0),
-(65, 'Recruitment', NULL, NULL, 1, 500, NULL, 1),
+(65, 'Recruitment', 76, NULL, 1, 500, NULL, 1),
 (66, 'Candidates', 60, 65, 2, 100, NULL, 1),
 (67, 'Vacancies', 61, 65, 2, 200, NULL, 1),
-(68, 'Performance', NULL, NULL, 1, 600, NULL, 1),
+(68, 'Performance', 77, NULL, 1, 600, NULL, 1),
 (69, 'KPI List', 62, 68, 2, 100, NULL, 1),
 (70, 'Add KPI', 63, 68, 2, 200, NULL, 1),
 (71, 'Copy KPI', 64, 68, 2, 300, NULL, 1),
@@ -1533,7 +1537,17 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 -- (3, 70, 0, 0, 0, 0),
 (1, 71, 1, 0, 0, 1),
 (1, 72, 1, 1, 1, 0),
-(1, 73, 1, 0, 1, 0);
+(1, 73, 1, 0, 1, 0),
+(1, 74, 1, 1, 1, 1),
+(4, 74, 1, 1, 1, 1),
+(1, 75, 1, 1, 1, 1),
+(3, 75, 1, 1, 1, 1),
+(1, 76, 1, 1, 1, 1),
+(5, 76, 1, 1, 1, 1),
+(6, 76, 1, 1, 1, 1),
+(1, 77, 1, 1, 1, 1),
+(2, 77, 1, 1, 1, 1),
+(7, 77, 1, 1, 1, 1);
 
 INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
 (1, 'personal_information', 'PIM - Personal Details', 1, NULL, 1, NULL),

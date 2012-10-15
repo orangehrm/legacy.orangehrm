@@ -238,10 +238,12 @@ a {
 .menu ul li:hover {
 	direction:ltr;
 }
+/*
 .menu > ul > li:hover > ul {
 	left:0;
 	opacity:1;
 }
+*/
 .menu > ul > li > ul > li:hover > a {
 	color:#fff; background:#555657;
 }
@@ -277,9 +279,11 @@ a {
 .menu > ul:hover > li.current > a b {
 	background:#f28c38;
 }
+/*
 .menu > ul:hover > li.current > ul {
 	left:-9999px;
 }
+*/
 .menu > ul:hover > li.current:hover > a {
 	background:#f28c38;
 }

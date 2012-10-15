@@ -3522,6 +3522,7 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSubscriberAction.
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSubunitAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSystemUserAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/updateNotificationAction.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/viewAdminModuleAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/viewCompanyStructureAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/viewCompanyStructureHtmlAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/viewCustomersAction.class.php -text
@@ -4420,6 +4421,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewMyDetailsAction.class
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewPersonalDetailsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewPhotoAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewPhotographAction.class.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewPimModuleAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewQualificationsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewReportToDetailsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewReportingMethodsAction.class.php -text
@@ -4569,6 +4571,7 @@ symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewAttac
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewCandidateAttachmentAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewCandidatesAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewJobVacancyAction.class.php -text
+symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/viewRecruitmentModuleAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/i18n/messages.en_US.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/i18n/messages.es_ES.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/i18n/messages.fr_CA.xml -text

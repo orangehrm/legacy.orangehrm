@@ -96,4 +96,42 @@ class HomePageService {
 
     }
     
+    public function getAdminModuleDefaultPath() {
+        
+        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
+        $isProjectAdmin = ($this->userSession->getAttribute('auth.isProjectAdmin'));    
+        
+        if ($isAdmin) {
+            return 'admin/viewOrganizationGeneralInformation';
+        } elseif ($isProjectAdmin) {
+            return 'admin/viewProjects';
+        }         
+        
+    }
+    
+    public function getPimModuleDefaultPath() {
+        
+        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
+        $isSupervisor = ($this->userSession->getAttribute('auth.isSupervisor'));    
+        
+        if ($isAdmin || $isSupervisor) {
+            return 'pim/viewEmployeeList';
+        } else {
+            return 'pim/viewMyDetails';
+        }        
+        
+    }
+    
+    public function getRecruitmentModuleDefaultPath() {
+        
+        return 'recruitment/viewCandidates';
+        
+    }
+    
+    public function getPerformanceModuleDefaultPath() {
+        
+        return 'performance/viewReview';
+        
+    }
+    
 }

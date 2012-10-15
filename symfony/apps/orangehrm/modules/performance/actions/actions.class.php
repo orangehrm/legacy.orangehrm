@@ -28,6 +28,21 @@ class performanceActions extends sfActions {
     private $performanceKpiService;
     private $performanceReviewService;
     private $jobTitleService;
+    protected $homePageService;
+    
+    public function getHomePageService() {
+        
+        if (!$this->homePageService instanceof HomePageService) {
+            $this->homePageService = new HomePageService($this->getUser());
+        }
+        
+        return $this->homePageService;
+        
+    }
+
+    public function setHomePageService($homePageService) {
+        $this->homePageService = $homePageService;
+    }    
 
     public function getJobTitleService() {
         if (is_null($this->jobTitleService)) {
@@ -853,5 +868,11 @@ class performanceActions extends sfActions {
             return false;
         }
     }
+    
+    public function executeViewPerformanceModule(sfWebRequest $request) {        
+
+        $this->redirect($this->getHomePageService()->getPerformanceModuleDefaultPath());
+
+    }    
 
 }
