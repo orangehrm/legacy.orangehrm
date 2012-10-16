@@ -21,12 +21,6 @@
 <?php
 use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
 use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-/*
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-use_stylesheet('../orangehrmPimPlugin/css/viewEmployeeListSuccess');
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
- */
 ?>
 
 <?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error') || $sf_user->hasFlash('warning')): ?>
@@ -53,10 +47,6 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
                 <input type="hidden" name="hdnAction" id="hdnAction" value="search" />                 
                 
                 <p>
-                    <!--
-                    <button type="reset" class="reset">Reset</button>
-                    <button type="submit">Search</button>
-                    -->
                     <input type="button" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />
                     <input type="button" class="reset" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />                    
                 </p>
