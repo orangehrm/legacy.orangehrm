@@ -125,7 +125,22 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     $("div.message").fadeOut("slow", function () {
                         $("div.message").remove();
                     });
-                }, 2000);                
+                }, 2000);
+
+                /* Toggling search form: Begins */
+                $(".toggableForm .inner").hide();
+
+                $(".toggableForm .toggle").click(function () {
+                    $(".toggableForm .inner").slideToggle('slow', function() {
+                        if($(this).is(':hidden')) {
+                            $('.toggableForm .tiptip').tipTip({content:'<?php echo __('Expand for options'); ?>'});
+                        } else {
+                            $('.toggableForm .tiptip').tipTip({content:'<?php echo __('Hide options'); ?>'});
+                        }
+                    });
+                    $(this).toggleClass("activated");
+                });
+                /* Toggling search form: Ends */                
 
             });
             

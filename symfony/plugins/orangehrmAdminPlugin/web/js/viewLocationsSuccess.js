@@ -51,23 +51,4 @@ $(document).ready(function() {
         $("#deleteConfirmation").dialog("close");
     });
     
-     /* Toggling search form: Begins */
-        $("#location-information .inner").hide();
-        
-        $("#location-information .toggle").click(function () {
-            $("#location-information .inner").slideToggle('slow', function() {
-                if($(this).is(':hidden')) {
-                    $('#location-information .tiptip').tipTip({content:'Expand for options'});
-                } else {
-                    $('#location-information .tiptip').tipTip({content:'Hide options'});
-                }
-            });
-            $(this).toggleClass("activated");
-        }); 
-
-        $("#search-results .toggle").click(function () {
-            $("#search-results .inner").slideToggle();
-        });
-        /* Toggling search form: Ends */
-    
 });

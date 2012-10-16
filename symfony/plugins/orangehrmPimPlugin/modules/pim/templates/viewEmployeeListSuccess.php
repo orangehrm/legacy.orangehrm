@@ -30,7 +30,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     </div>
 <?php endif; ?>
 
-<div class="box" id="employee-information">
+<div class="box toggableForm" id="employee-information">
     <div class="head">
         <h1><?php echo __("Employee Information") ?></h1>
     </div>
@@ -170,25 +170,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         });
         /* Delete confirmation controls: End */
         
-        /* Toggling search form: Begins */
-        $("#employee-information .inner").hide();
-        
-        $("#employee-information .toggle").click(function () {
-            $("#employee-information .inner").slideToggle('slow', function() {
-                if($(this).is(':hidden')) {
-                    $('#employee-information .tiptip').tipTip({content:'Expand for options'});
-                } else {
-                    $('#employee-information .tiptip').tipTip({content:'Hide options'});
-                }
-            });
-            $(this).toggleClass("activated");
-        }); 
-
-        $("#search-results .toggle").click(function () {
-            $("#search-results .inner").slideToggle();
-        });
-        /* Toggling search form: Ends */
-
     }); //ready
     
     function submitPage(pageNo) {

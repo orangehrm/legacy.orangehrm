@@ -34,7 +34,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
     </div>
 <?php endif; ?>
 
-<div id="searchProject" class="box">
+<div id="searchProject" class="box toggableForm">
     <div class="head">
             <h1 id="searchProjectHeading"><?php echo __("Projects"); ?></h1>
     </div>

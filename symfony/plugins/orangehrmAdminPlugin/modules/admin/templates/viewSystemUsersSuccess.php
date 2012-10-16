@@ -27,7 +27,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess'); 
 ?>
 
-<div id="systemUser-information" class="box">
+<div id="systemUser-information" class="box toggableForm">
     <div class="head">
         <h1><?php echo __("System Users") ?></h1>
     </div>

@@ -89,29 +89,10 @@ $(document).ready(function() {
     });
     
     /* Delete confirmation controls: Begin */
-        $('#dialogDeleteBtn').click(function() {
-            document.frmList_ohrmListComponent.submit();
-        });
-        /* Delete confirmation controls: End */
-    
-    /* Toggling search form: Begins */
-        $("#searchProject .inner").hide();
-        
-        $("#searchProject .toggle").click(function () {
-            $("#searchProject .inner").slideToggle('slow', function() {
-                if($(this).is(':hidden')) {
-                    $('#searchProject .tiptip').tipTip({content:'Expand for options'});
-                } else {
-                    $('#searchProject .tiptip').tipTip({content:'Hide options'});
-                }
-            });
-            $(this).toggleClass("activated");
-        }); 
-
-        $("#search-results .toggle").click(function () {
-            $("#search-results .inner").slideToggle();
-        });
-        /* Toggling search form: Ends */  
+    $('#dialogDeleteBtn').click(function() {
+        document.frmList_ohrmListComponent.submit();
+    });
+    /* Delete confirmation controls: End */
     
 });
 

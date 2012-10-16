@@ -60,24 +60,6 @@ $(document).ready(function() {
         });
         /* Delete confirmation controls: End */
     
-    /* Toggling search form: Begins */
-        $("#systemUser-information .inner").hide();
-        
-        $("#systemUser-information .toggle").click(function () {
-            $("#systemUser-information .inner").slideToggle('slow', function() {
-                if($(this).is(':hidden')) {
-                    $('#systemUser-information .tiptip').tipTip({content:'Expand for options'});
-                } else {
-                    $('#systemUser-information .tiptip').tipTip({content:'Hide options'});
-                }
-            });
-            $(this).toggleClass("activated");
-        }); 
-
-        $("#search-results .toggle").click(function () {
-            $("#search-results .inner").slideToggle();
-        });
-        /* Toggling search form: Ends */    
 });
 
 $.validator.addMethod("validEmployeeName", function(value, element) {                 

@@ -4,7 +4,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess'); 
 ?>
 
-<div id="location-information" class="box">
+<div id="location-information" class="box toggableForm">
     
     <div class="head">
         <h1 id="searchLocationHeading"><?php echo __("Locations") ?></h1>
