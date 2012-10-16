@@ -24,6 +24,20 @@ function getListItemClass($menuItem, $currentItemDetails) {
     
 }
 
+function getHtmlId($menuItem) {
+    
+    $id = '';
+    
+    if (!empty($menuItem['path'])) {
+        $id = 'menu_' . $menuItem['module'] . '_' . $menuItem['action'];
+    } else {
+        $id = 'menu_' . str_replace(' ', '', $menuItem['menuTitle']) . '_' . $menuItem['level'];
+    }
+    
+    return $id;
+    
+}
+
 ?>
 
 <div class="menu">
@@ -32,7 +46,7 @@ function getListItemClass($menuItem, $currentItemDetails) {
         
         <?php foreach ($menuItemArray as $firstLevelItem) : ?>
             
-        <li<?php echo getListItemClass($firstLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
+        <li<?php echo getListItemClass($firstLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>" id="<?php echo getHtmlId($firstLevelItem); ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
             
             <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>
             
@@ -40,7 +54,7 @@ function getListItemClass($menuItem, $currentItemDetails) {
                     
                     <?php foreach ($firstLevelItem['subMenuItems'] as $secondLevelItem) : ?>
                     
-                        <li<?php echo getListItemClass($secondLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($secondLevelItem['path'])?'':url_for($secondLevelItem['path']) ?>"<?php echo getSubMenuIndication($secondLevelItem); ?>><?php echo $secondLevelItem['menuTitle'] ?></a>
+                        <li<?php echo getListItemClass($secondLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($secondLevelItem['path'])?'':url_for($secondLevelItem['path']) ?>" id="<?php echo getHtmlId($secondLevelItem); ?>"<?php echo getSubMenuIndication($secondLevelItem); ?>><?php echo $secondLevelItem['menuTitle'] ?></a>
                         
                         <?php if (count($secondLevelItem['subMenuItems']) > 0) : ?>
                         
@@ -48,7 +62,7 @@ function getListItemClass($menuItem, $currentItemDetails) {
                                 
                                 <?php foreach ($secondLevelItem['subMenuItems'] as $thirdLevelItem) : ?>
                                 
-                                    <li><a href="<?php echo empty($thirdLevelItem['path'])?'':url_for($thirdLevelItem['path']) ?>"><?php echo $thirdLevelItem['menuTitle'] ?></a></li>
+                                    <li><a href="<?php echo empty($thirdLevelItem['path'])?'':url_for($thirdLevelItem['path']) ?>" id="<?php echo getHtmlId($thirdLevelItem); ?>"><?php echo $thirdLevelItem['menuTitle'] ?></a></li>
                                 
                                 <?php endforeach; ?>
                                 
