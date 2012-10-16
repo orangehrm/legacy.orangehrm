@@ -3,7 +3,9 @@ $(document).ready(function() {
     $('#addCustomer_customerId').val(customerId);
     $('#btnSave').click(function() {
         if($('#btnSave').val() == lang_edit){
-            $('.formInput').removeAttr('disabled');
+            $(".editable").each(function(){
+                $(this).removeAttr("disabled");
+            });
             $('#btnSave').val(lang_save);
         } else if ($('#btnSave').val() == lang_save){
             if(isValidForm()){  
@@ -14,7 +16,9 @@ $(document).ready(function() {
        
     if(customerId > 0) {
         $('#addCustomerHeading').text(lang_editCustomer);
-        $('.formInput').attr('disabled', 'disabled');
+        $(".editable").each(function(){
+            $(this).attr("disabled", "disabled");
+        });
         $('#btnSave').val(lang_edit);
     }
        

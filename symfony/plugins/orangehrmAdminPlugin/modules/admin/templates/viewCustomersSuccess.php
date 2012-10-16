@@ -29,7 +29,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewCustomersSuccess');
 
 <?php if ($sf_user->hasFlash('success') || $sf_user->hasFlash('error') || $sf_user->hasFlash('warning')) : ?>
     <div class="box simple">
-        <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
+        <?php include_partial('global/flash_messages'); ?>
     </div>
 <?php endif; ?>
 

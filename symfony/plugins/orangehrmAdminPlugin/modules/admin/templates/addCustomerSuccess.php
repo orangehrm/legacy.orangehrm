@@ -1,47 +1,55 @@
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
 
-<?php use_stylesheet('../orangehrmAdminPlugin/css/addCustomerSuccess'); ?>
-<?php use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess'); ?>
-<?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-<div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >
-	<span><?php echo isset($message) ? $message : ''; ?></span>
-</div>
+<?php
+use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
+use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess'); 
+?>
 
-<div id="addCustomer">
-            <div class="outerbox">
-
-                <div class="mainHeading"><h2 id="addCustomerHeading"><?php echo __("Add Customer"); ?></h2></div>
-                <form name="frmAddCustomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
-
+<div class="box single double"  id="addCustomer">
+    <div class="head">
+        <h1 id="addCustomerHeading"><?php echo __("Add Customer"); ?></h1>
+    </div>
+           
+    <div class="inner">
+            
+        <?php include_partial('global/flash_messages'); ?>
+       
+        <form name="frmAddCustomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
+            
             <?php echo $form['_csrf_token']; ?>
             <?php echo $form->renderHiddenFields(); ?>
-            <br class="clear"/>
-	    <div class="newColumn">
-                <?php echo $form['customerName']->renderLabel(__('Name'). ' <span class="required">*</span>'); ?>
-                <?php echo $form['customerName']->render(array("class" => "formInput", "maxlength" => 52)); ?>
-                <div class="errorHolder"></div>
-            </div>
-	    <br class="clear"/>
-	    
-	    <div class="newColumn">
-                <?php echo $form['description']->renderLabel(__('Description')); ?>
-                <?php echo $form['description']->render(array("class" => "formInput", "maxlength" => 255)); ?>
-                <div class="errorHolder"></div>
-            </div>
-	    <br class="clear"/>
-	    
-	    
-	    <div class="formbuttons">
-                    <input type="button" class="savebutton" name="btnSave" id="btnSave"
-                           value="<?php echo __("Save"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                    <input type="button" class="cancelbutton" name="btnCancel" id="btnCancel"
-                           value="<?php echo __("Cancel"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-	    </div>
-	    </div>
-    </form>
-</div>
-<div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+            
+            <fieldset>
+                    
+                <ol>
+                    <li>
+                        <?php echo $form['customerName']->renderLabel(__('Name'). ' <em>*</em>'); ?>
+                        <?php echo $form['customerName']->render(array("class" => "block default editable valid", "maxlength" => 52)); ?>
+                    </li>
+                    
+                    <li>
+                        <?php echo $form['description']->renderLabel(__('Description')); ?>
+                        <?php echo $form['description']->render(array("class" => "editable", "maxlength" => 255)); ?>
+                    </li>
+                    
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
+                </ol>
+                    
+                <p>
+                    <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="btn reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
+                </p>
+            
+            </fieldset>
+            
+        </form>
+        
+    </div> <!-- End-inner -->
+    
+</div> <!-- End-addCustomer -->
+
 <script type="text/javascript">
 	var customers = <?php echo str_replace('&#039;', "'", $form->getCustomerListAsJson()) ?> ;
         var customerList = eval(customers);

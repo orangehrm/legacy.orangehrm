@@ -9,6 +9,7 @@ $(document).ready(function() {
     
     $('#btnAdd').click(function() {
         $('#jobCategory').show();
+        $('#btnDelete').hide();
         $('#btnAdd').hide();
         $('#jobCategory_name').val('');
         $('#jobCategory_jobCategoryId').val('');
@@ -18,6 +19,7 @@ $(document).ready(function() {
     
     $('#btnCancel').click(function() {
         $('#jobCategory').hide();
+        $('#btnDelete').show();
         $('#btnAdd').show();
         validator.resetForm();
     });
@@ -61,17 +63,6 @@ $(document).ready(function() {
             $('#deleteConfirmation').dialog('open');
             return false;
         });
-    });
-
-    $("#deleteConfirmation").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 325,
-        height: 50,
-        position: 'middle',
-        open: function() {
-            $('#dialogCancelBtn').focus();
-        }
     });
 
     $('#frmList_ohrmListComponent').attr('name','frmList_ohrmListComponent');
@@ -144,6 +135,7 @@ function getJobCatInfo(url){
 		$('#jobCategory_name').val(data.name);
 		$('#jobCategory').show();
 		$(".messageBalloon_success").remove();
+        $('#btnDelete').hide();
 		$('#btnAdd').hide();
 	});
 }

@@ -66,6 +66,8 @@ function printButtonEventBindings($buttons) {
     <div class="inner">
     
 <?php if (!empty($title)) { ?>
+        
+        <?php include_partial('global/flash_messages'); ?>
 
 <?php if ($partial != null): ?>
         <div style="padding-left: 5px; padding-top: 5px;">

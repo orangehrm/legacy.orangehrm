@@ -31,6 +31,9 @@ class addCustomerAction extends sfAction {
 
 	public function execute($request) {
 
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewCustomers');
+            
 		$usrObj = $this->getUser()->getAttribute('user');
 		if (!$usrObj->isAdmin()) {
 			$this->redirect('pim/viewPersonalDetails');
@@ -40,9 +43,6 @@ class addCustomerAction extends sfAction {
 		$values = array('customerId' => $this->customerId);
 		$this->setForm(new CustomerForm(array(), $values));
 		
-		if ($this->getUser()->hasFlash('templateMessage')) {
-			list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-		}
 		$this->getUser()->setAttribute('addScreen', true);
 
 		if ($request->isMethod('post')) {
@@ -51,7 +51,7 @@ class addCustomerAction extends sfAction {
 			if ($this->form->isValid()) {
 				$result = $this->form->save();
 				$this->getUser()->setAttribute('addScreen', false);
-				$this->getUser()->setFlash('templateMessage', array($result['messageType'], $result['message']));
+				$this->getUser()->setFlash($result['messageType'], $result['message']);
 				$this->redirect('admin/viewCustomers');
 			}
 		}

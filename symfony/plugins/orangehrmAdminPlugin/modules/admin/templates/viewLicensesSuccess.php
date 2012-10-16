@@ -19,14 +19,18 @@
  */
 ?>
 
-<?php use_stylesheet('../orangehrmAdminPlugin/css/viewLicensesSuccess'); ?>
+<?php 
+use_javascript('../orangehrmAdminPlugin/js/viewLicensesSuccess'); 
+?>
 
 <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
 
-<div id="saveFormDiv">
-    <div class="outerbox">
-
-    <div class="mainHeading"><h2 id="saveFormHeading">Add License</h2></div>
+<div class="box single double" id="saveFormDiv">
+    <div class="head">
+            <h1 id="saveFormHeading">Add Education</h1>
+    </div>
+    
+    <div class="inner">
 
         <form name="frmSave" id="frmSave" method="post" action="<?php echo url_for('admin/viewLicenses'); ?>">
             
@@ -34,59 +38,74 @@
             
             <?php echo $form['id']->render(); ?>
             
-            <?php echo $form['name']->renderLabel(__('Name'). ' <span class="required">*</span>'); ?>
-            <?php echo $form['name']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
-            <div class="errorHolder"></div>
-            <br class="clear"/>
-            
-            <div class="formbuttons">
-                <input type="button" class="savebutton" name="btnSave" id="btnSave"
-                       value="<?php echo __('Save'); ?>"
-                       title="<?php echo __('Save'); ?>"
-                       onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                <input type="button" id="btnCancel" class="cancelbutton" value="<?php echo __('Cancel'); ?>"/>
-            </div>
+            <fieldset>
+                
+                <ol>
+                    
+                    <li>
+                        <?php echo $form['name']->renderLabel(__('Name'). ' <em>*</em>'); ?>
+                        <?php echo $form['name']->render(array("class" => "block default editable valid", "maxlength" => 100)); ?>
+                    </li>
+                    
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
+                    
+                </ol>
+                
+                <p>
+                    <input type="button" class="addbutton tiptip" name="btnSave" id="btnSave" value="<?php echo __('Save'); ?>" title="<?php echo __('Save'); ?>"/>
+                    <input type="button" id="btnCancel" class="reset tiptip" value="<?php echo __('Cancel'); ?>" title="<?php echo __('Cancel'); ?>"/>
+                </p>
+                
+            </fieldset>
 
         </form>
     
-    </div>
-    
-<div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>    
+    </div>    
     
 </div> <!-- saveFormDiv -->
 
 <!-- Listi view -->
 
-<div id="recordsListDiv">
-    <div class="outerbox">
+<div id="recordsListDiv" class="box">
+    <div class="head">
+            <h1><?php echo __('Licenses'); ?></h1>
+    </div>
+    
+    <div class="inner">
+        
+        <?php include_partial('global/flash_messages'); ?>
+        
         <form name="frmList" id="frmList" method="post" action="<?php echo url_for('admin/deleteLicenses'); ?>">
-            <div class="mainHeading"><h2><?php echo __('Licenses'); ?></h2></div>
+            
+            <p id="listActions">
+                <input type="button" class="addbutton tiptip" id="btnAdd" value="<?php echo __('Add'); ?>" title="<?php echo __('Add'); ?>"/>
+                <input type="button" class="delete tiptip" id="btnDel" value="<?php echo __('Delete'); ?>" title="<?php echo __('Delete'); ?>"/>
+            </p>
 
-            <div class="actionbar" id="listActions">
-                <div class="actionbuttons">
-                    <input type="button" class="addbutton" id="btnAdd" 
-                           onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __('Add'); ?>" title="<?php echo __('Add'); ?>"/>
-                    <input type="button" class="delbutton" id="btnDel" 
-                           onmouseover="moverButton(this);" onmouseout="moutButton(this);" value="<?php echo __('Delete'); ?>" title="<?php echo __('Delete'); ?>"/>
-                </div>
-            </div>
-
-            <table width="550" cellspacing="0" cellpadding="0" class="data-table" id="recordsListTable">
+            <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="recordsListTable">
                 <thead>
                     <tr>
-                        <td class="check"><input type="checkbox" id="checkAll" class="checkbox" /></td>
-                        <td><?php echo __('Name'); ?></td>
+                        <th class="check" width="2%"><input type="checkbox" id="checkAll" class="checkboxAtch" /></th>
+                        <th width="98%"><?php echo __('Name'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     
-                    <?php foreach($records as $record): ?>
+                    <?php 
+                    $row = 0;
+                    $cssClass = ($row%2) ? 'even' : 'odd';
+                    foreach($records as $record): 
+                        $cssClass = ($row%2) ? 'even' : 'odd';
+                        $row++;
+                    ?>
                     
-                    <tr>
-                        <td class="check">
-                            <input type="checkbox" class="checkbox" name="chkListRecord[]" value="<?php echo $record->getId(); ?>" />
+                    <tr class="<?php echo $cssClass;?>">
+                        <td class="check" width="2%">
+                            <input type="checkbox" class="checkboxAtch" name="chkListRecord[]" value="<?php echo $record->getId(); ?>" />
                         </td>
-                        <td class="tdName tdValue">
+                        <td class="tdName tdValue" width="98%">
                             <a href="#"><?php echo $record->getName(); ?></a>
                         </td>
                     </tr>
@@ -94,7 +113,7 @@
                     <?php endforeach; ?>
                     
                     <?php if (count($records) == 0) : ?>
-                    <tr>
+                    <tr class="<?php echo $cssClass;?>">
                         <td>
                             <?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?>
                         </td>
@@ -106,9 +125,6 @@
         </form>
     </div>
 </div> <!-- recordsListDiv -->    
-
-
-<?php use_javascript('../orangehrmAdminPlugin/js/viewLicensesSuccess'); ?>
 
 <script type="text/javascript">
 //<![CDATA[	    

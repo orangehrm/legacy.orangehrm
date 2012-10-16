@@ -51,6 +51,7 @@ class SearchLocationForm extends BaseForm {
 		));
 
 		$this->widgetSchema->setNameFormat('searchLocation[%s]');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
 	}
 
 	public function setDefaultDataToWidgets($searchClues) {

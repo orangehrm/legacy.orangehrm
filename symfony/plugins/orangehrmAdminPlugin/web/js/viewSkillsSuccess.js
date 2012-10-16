@@ -94,6 +94,7 @@ function executeLoadtimeActions() {
     $('table.data-table tbody tr:even').addClass('even');
     
     if (recordsCount == 0) {
+        $('#recordsListTable th.check').hide();
         $('#recordsListTable td.check').hide();
     }    
     
@@ -103,21 +104,21 @@ function loadCheckboxBehavior() {
     
     $("#checkAll").click(function(){
         if($("#checkAll:checked").attr('value') == 'on') {
-            $(".checkbox").attr('checked', 'checked');
+            $(".checkboxAtch").attr('checked', 'checked');
         } else {
-            $(".checkbox").removeAttr('checked');
+            $(".checkboxAtch").removeAttr('checked');
         }
     });
 
-    $(".checkbox").click(function() {
+    $(".checkboxAtch").click(function() {
         
         $("#checkAll").removeAttr('checked');
         
-        if(($(".checkbox").length - 1) == $(".checkbox:checked").length) {
+        if(($(".checkboxAtch").length - 1) == $(".checkboxAtch:checked").length) {
             $("#checkAll").attr('checked', 'checked');
         }
         
-        if ($(".checkbox:checked").length > 0 && $(".checkbox").length >1) {
+        if ($(".checkboxAtch:checked").length > 0 && $(".checkboxAtch").length >1) {
             $('#btnDel').removeAttr('disabled');
         } else {
             $('#btnDel').attr('disabled', 'disabled');
@@ -134,6 +135,7 @@ function loadAddForm() {
         $('#saveFormDiv').show();
         $('#saveFormHeading').text(lang_addFormHeading);
         
+        $('#recordsListTable th.check').hide();
         $('#recordsListTable td.check').hide();
         
         for (i in saveFormFieldIds) {
@@ -175,10 +177,11 @@ function loadEditForm() {
 
         });
         
-        $('#'+recordKeyId).val(row.find('input.checkbox:first').val());
+        $('#'+recordKeyId).val(row.find('input.checkboxAtch:first').val());
         
         _clearErrorMessages();
 
+        $('#recordsListTable th.check').hide();
         $('#recordsListTable td.check').hide();
         $('#listActions').hide();
 
@@ -192,6 +195,7 @@ function loadCancelButtonBehavior() {
         
         $('#saveFormDiv').hide();
         
+        $('#recordsListTable th.check').show();
         $('#recordsListTable td.check').show();
         
         _addRecordLinks();
@@ -199,6 +203,7 @@ function loadCancelButtonBehavior() {
         $('#listActions').show();
         
         if (recordsCount == 0) {
+            $('#recordsListTable th.check').hide();
             $('#recordsListTable td.check').hide();
         }         
         
@@ -208,7 +213,7 @@ function loadCancelButtonBehavior() {
 
 function loadDeleteButtonBehavior() {   
     
-    if ($(".checkbox:checked").length == 0) {
+    if ($(".checkboxAtch:checked").length == 0) {
         $('#btnDel').attr('disabled', 'disabled');
     } 
     

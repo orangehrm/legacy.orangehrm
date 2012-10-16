@@ -27,18 +27,14 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess'); 
 ?>
 
-
-<?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error') || $sf_user->hasFlash('warning')) : ?>
-    <div class="box simple">
-        <?php include_partial('global/form_errors', array('form' => $form)); ?>
-        <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
-    </div>
-<?php endif; ?>
-
 <div id="systemUser-information" class="box">
     <div class="head">
         <h1><?php echo __("System Users") ?></h1>
     </div>
+    
+    <?php include_partial('global/form_errors', array('form' => $form)); ?>
+    <?php include_partial('global/flash_messages'); ?>
+    
     <div class="inner">
         <form id="search_form" name="frmUserSearch" method="post" action="<?php echo url_for('admin/viewSystemUsers'); ?>">
             

@@ -45,7 +45,7 @@ class saveJobTitleAction extends sfAction {
             }
             if ($this->form->isValid()) {
                 $result = $this->form->save();
-                $this->getUser()->setFlash('templateMessage', array($result['messageType'], $result['message']));
+                $this->getUser()->setFlash($result['messageType'], $result['message']);
                 $this->redirect('admin/viewJobTitleList');
             }
         }
