@@ -40,7 +40,7 @@ abstract class PluginLeave extends BaseLeave {
     }
 
     public function canApprove() {
-        if (!$this->getLeaveRequest()->getLeaveType()->getAvailableFlag()) {
+        if (!$this->getLeaveRequest()->getOldLeaveType()->getAvailableFlag()) {
             return false;
         }
         $canApprove = ($this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);

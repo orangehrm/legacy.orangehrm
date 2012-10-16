@@ -48,7 +48,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'left',
-            'elementProperty' => array('getter' => array('getLeaveType', 'getDescriptiveLeaveTypeName')),
+            'elementProperty' => array('getter' => array('getOldLeaveType', 'getDescriptiveLeaveTypeName')),
         ));
 
         $header4->populateFromArray(array(
