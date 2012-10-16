@@ -487,6 +487,7 @@ form ol li.radio label, form ol li.checkbox label {
 }
 form p {
 	text-align:left;
+    padding-top: 10px;
 }
 .single form p {
 	text-align:left;
@@ -912,6 +913,7 @@ form input.validation-error {
 /* ================ Mini list styles: Begin ================ */
 .miniList p {
     margin-bottom: 10px;
+    padding-top: 0;
 }
 /* ================ Mini list styles: End ================ */
 .modal-open .dropdown-menu {
