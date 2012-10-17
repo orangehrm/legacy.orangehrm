@@ -1357,7 +1357,9 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (74, 'View Admin Module', 2, 'viewAdminModule'),
 (75, 'View PIM Module', 3, 'viewPimModule'),
 (76, 'View Recruitment Module', 7, 'viewRecruitmentModule'),
-(77, 'View Performance Module', 9, 'viewPerformanceModule');
+(77, 'View Performance Module', 9, 'viewPerformanceModule'),
+(78, 'Leave Balance Report', 4, 'viewLeaveBalanceReport'),
+(79, 'My Leave Balance Report', 4, 'viewMyLeaveBalanceReport');
 
 INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
 (1, 'Admin', 74, NULL, 1, 100, NULL, 1),
@@ -1400,16 +1402,16 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (39, 'Reports', 45, 30, 2, 400, '/reportGroup/3/reportType/PIM_DEFINED', 1),
 (40, 'My Info', 46, NULL, 1, 700, NULL, 1),
 (41, 'Leave', 68, NULL, 1, 300, NULL, 1),
-(42, 'Configure', NULL, 41, 2, 300, NULL, 0),
+(42, 'Configure', NULL, 41, 2, 400, NULL, 0),
 (43, 'Leave Period', 47, 42, 3, 100, NULL, 0),
 (44, 'Leave Types', 7, 42, 3, 200, NULL, 0),
 (45, 'Work Week', 14, 42, 3, 300, NULL, 0),
 (46, 'Holidays', 11, 42, 3, 400, NULL, 0),
-(47, 'Leave Summary', 18, 41, 2, 400, NULL, 0),
-(48, 'Leave List', 16, 41, 2, 500, '/reset/1', 0),
-(49, 'Assign Leave', 17, 41, 2, 600, NULL, 0),
-(50, 'My Leave', 48, 41, 2, 700, '/reset/1', 0),
-(51, 'Apply', 49, 41, 2, 700, NULL, 0),
+(47, 'Leave Summary', 18, 41, 2, 500, NULL, 0),
+(48, 'Leave List', 16, 41, 2, 600, '/reset/1', 0),
+(49, 'Assign Leave', 17, 41, 2, 700, NULL, 0),
+(50, 'My Leave', 48, 41, 2, 800, '/reset/1', 0),
+(51, 'Apply', 49, 41, 2, 900, NULL, 0),
 (52, 'Time', 67, NULL, 1, 400, NULL, 1),
 (53, 'Timesheets', NULL, 52, 2, 100, NULL, 1),
 (54, 'My Timesheets', 51, 53, 3, 100, NULL, 0),
@@ -1435,7 +1437,10 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (74, 'Entitlements', NULL, 41, 2, 100, NULL, 0),
 (75, 'Add Entitlements', 72, 74, 3, 100, NULL, 0),
 (76, 'My Entitlements', 70, 74, 3, 200, '/reset/1', 0),
-(77, 'Employee Entitlements', 69, 74, 3, 300, '/reset/1', 0);
+(77, 'Employee Entitlements', 69, 74, 3, 300, '/reset/1', 0),
+(78, 'Reports', NULL, 41, 2, 200, NULL, 0),
+(79, 'Leave Balance', 78, 78, 3, 100, NULL, 0),
+(80, 'My Leave Balance', 79, 78, 3, 200, NULL, 0);
 
 INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
 (1, 1, 1, 1, 1, 1),
@@ -1547,7 +1552,10 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (6, 76, 1, 1, 1, 1),
 (1, 77, 1, 1, 1, 1),
 (2, 77, 1, 1, 1, 1),
-(7, 77, 1, 1, 1, 1);
+(7, 77, 1, 1, 1, 1),
+(1, 78, 1, 0, 0, 0),
+(3, 78, 1, 0, 0, 0),
+(2, 79, 1, 0, 0, 0);
 
 INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
 (1, 'personal_information', 'PIM - Personal Details', 1, NULL, 1, NULL),
