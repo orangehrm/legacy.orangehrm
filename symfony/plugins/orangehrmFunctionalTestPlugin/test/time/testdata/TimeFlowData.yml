@@ -1,0 +1,228 @@
+## YAML Template.
+---
+
+PrerequisiteDetails:
+  fileName: 'TimePrerequisites.yml'
+  
+#This is being Editied to the new design  
+SaveTimeSheetAsAdmin:
+  flow: {0: LogIn, 1: viewTimeSheet, 2: addTimeSheet, 3: addTimeSheetRecord, 4: saveTimeSheet}
+  0: {userName: 'admin', password: 'admin'}
+  1: {person: 'Kayla Abbey'}
+  2: {date: '2011-07-01'}
+  3: 
+    0: { ProjectName: 'RedHat - System', ActivityName: Design, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+    1: { ProjectName: 'Virtusa - Website', ActivityName: Development, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+  4: {}
+       
+SaveTimeSheetAsSuperVisor:
+  flow: {0: LogIn, 1: viewTimeSheetESS, 2: addTimeSheet, 3: addTimeSheetRecord, 4: saveTimeSheet}
+  0: {userName: 'boody', password: 'boody'}
+  1: {}
+  2: {date: '2011-06-01'}
+  3:  
+     0: {ProjectName: 'RedHat - System', ActivityName: Design, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+  4: {}   
+  
+SaveAndSubmitTimeSheetAsAdmin:
+  flow: {0: LogIn, 1: viewTimeSheet, 2: addTimeSheet, 3: addTimeSheetRecord, 4: saveTimeSheet, 5: submitTimeSheet}
+  0: {userName: 'admin', password: 'admin'}
+  1: {person: 'Kayla Abbey'}
+  2: {date: '2011-06-15'}
+  3:  
+     0: {ProjectName: 'RedHat - System', ActivityName: Design, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+  4: {}   
+  5: {}
+  
+SaveAndSubmitTimeSheetAsSupervisor:
+  flow: {0: LogIn, 1: viewTimeSheetESS, 2: addTimeSheet, 3: addTimeSheetRecord, 4: saveTimeSheet, 5: submitTimeSheet}
+  0: {userName: 'boody', password: 'boody'}
+  1: {}
+  2: {date: '2011-07-01'}
+  3:  
+     0: {ProjectName: 'RedHat - System', ActivityName: Design, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+  4: {}   
+  5: {}
+
+ ##With Prerequisites
+ESSSubmitAndAdminApproveTimeSheet:
+  flow: {0: LogIn, 1: viewTimeSheetESS, 2: selectTimeSheet, 3: submitTimeSheet, 4: LogIn, 5: viewTimeSheet, 6: selectTimeSheet, 7: approveTimeSheet }
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {}
+  2: {dateRange: '2011-12-12 to 2011-12-18'}
+  3: {}
+  4: {userName: 'admin', password: 'admin'}
+  5: {person: 'Kayla Abbey'}
+  6: {dateRange: '2011-12-12 to 2011-12-18'}
+  7: {}
+ 
+ESSSubmitAndAdminRejectsTimeSheet:
+  flow: {0: LogIn, 1: viewTimeSheetESS, 2: selectTimeSheet, 3: submitTimeSheet, 4: LogIn, 5: viewTimeSheet, 6: selectTimeSheet, 7: rejectTimeSheet }
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {}
+  2: {dateRange: '2011-12-12 to 2011-12-18'}
+  3: {}
+  4: {userName: 'admin', password: 'admin'}
+  5: {person: 'Kayla Abbey'}
+  6: {dateRange: '2011-12-12 to 2011-12-18'}
+  7: {}
+  
+ESSSubmitAndAdminRejectsAndResetsTimeSheet:
+  flow: {0: LogIn, 1: viewTimeSheetESS, 2: selectTimeSheet, 3: submitTimeSheet, 4: LogIn, 5: viewTimeSheet, 6: selectTimeSheet, 7: approveTimeSheet, 8: resetTimeSheet}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {}
+  2: {dateRange: '2011-12-12 to 2011-12-18'}
+  3: {}
+  4: {userName: 'admin', password: 'admin'}
+  5: {person: 'Kayla Abbey'}
+  6: {dateRange: '2011-12-12 to 2011-12-18'}
+  7: {}
+  8: {}
+  
+viewApprovedProjectReport:
+  flow: {0: LogIn, 1: viewTimeSheet, 2: submitTimeSheet, 3: viewTimeSheet, 4: selectTimeSheet, 5: approveTimeSheet, 6: viewProjectReport}
+  0: {userName: 'admin', password: 'admin'}
+  1: {person: 'Kayla Abbey'}
+  2: {}
+  3: {person: 'Kayla Abbey'}
+  4: {dateRange: '2011-12-12 to 2011-12-18'}
+  5: {}
+  6: 
+    0: {projectName: 'RedHat - System', dateFrom: NULL, dateTo: NULL, check: true}
+    1: {development: 10, QA: 11, total: 21}
+
+viewNonApprovedProjectReport:
+  flow: {0: LogIn, 1: viewTimeSheet, 2: submitTimeSheet, 3: viewProjectReport}
+  0: {userName: 'admin', password: 'admin'}
+  1: {person: 'Kayla Abbey'}
+  2: {}
+  3: {projectName: 'RedHat - System', dateFrom: NULL, dateTo: NULL}
+# check: false
+
+viewEmployeeReport:  
+  flow: {0: LogIn, 1: viewTimeSheet, 2: submitTimeSheet, 3: viewEmployeeReport}
+  0: {userName: 'admin', password: 'admin'}
+  1: {person: 'Kayla Abbey'}
+  2: {}
+  3: {employee: 'Kayla Abbey', projectName: 'RedHat - System', activityName: NULL,  dateRangeFrom: NULL, dateRangeTo: NULL, chkOnlyApprovedSheets: false}
+  
+  
+  
+  
+  
+  
+  
+PunchInAndPunchOutAsESSUser:
+  flow: {0: LogIn, 1: PunchIn, 2: PunchOut}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {attendanceDate: '2011-12-26', attendanceTime: NULL, attendanceTimezone: NULL, attendanceNote: 'test'}
+  2: {attendanceDate: '2011-12-26', attendanceTime: NULL, attendanceTimezone: NULL, attendanceNote: 'test'}
+  
+       
+PunchInAndPunchOutWithTimeGivenAsSupervisorUser:
+  flow: {0: LogIn, 1: PunchIn, 2: PunchOut}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {attendanceDate: '2011-12-27', attendanceTime: '12:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  2: {attendanceDate: '2011-12-27', attendanceTime: '16:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  
+  
+EditAttendanceRecordESS:
+  flow: {0: LogIn, 1: PunchIn, 2: PunchOut, 3: viewMyAttendanceRecord, 4: editAttendance}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {attendanceDate: '2011-12-28', attendanceTime: '12:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  2: {attendanceDate: '2011-12-28', attendanceTime: '16:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  3: {date: '2011-12-28'}
+  4: 
+    0: { In: 13:00, out: 18:00}
+
+sample: 
+  flow: {0: LogIn, 1: viewMyAttendanceRecord, 2: editAttendance}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {date: '2011-12-28'}
+  2: 
+    0: { In: 13:00, out: 18:00}
+  
+EditAttendanceRecordSupervisor:
+  flow: {0: LogIn, 1: PunchIn, 2: PunchOut, 3: LogIn, 4: viewAttendanceRecord, 5: editAttendance}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {attendanceDate: '2012-01-02', attendanceTime: '12:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  2: {attendanceDate: '2012-01-02', attendanceTime: '16:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  3: {userName: 'kayla', password: 'kayla'}
+  4: {person: 'Ashley Abel', date: '2012-01-02'}
+  5: 
+    0: { In: 13:00, out: 18:00}
+     
+
+
+AttendanceSummaryReportAsAdmin:
+  flow: {0: LogIn, 1: PunchIn, 2: PunchOut, 3: LogIn, 4: viewAttendanceSummary}
+  0: {userName: 'boody', password: 'boody'}
+  1: {attendanceDate: '2012-01-02', attendanceTime: '03:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  2: {attendanceDate: '2012-01-02', attendanceTime: '05:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  3: {userName: 'admin', password: 'admin'}
+  4: {employeeName: 'Tom Mason Boody', jobTitle: null, subUnit: null, employeeStatus: null, fromDate: null, toDate: null}
+  
+  
+AttendanceSummaryReportAsSupervisor:
+  flow: {0: LogIn, 1: PunchIn, 2: PunchOut, 3: LogIn, 4: viewAttendanceSummary}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {attendanceDate: '2012-01-03', attendanceTime: '03:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  2: {attendanceDate: '2012-01-03', attendanceTime: '05:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  3: {userName: 'kayla', password: 'kayla'}
+  4: {employeeName: 'Ashley Abel', jobTitle: null, subUnit: null, employeeStatus: null, fromDate: null, toDate: null}
+  
+
+AddAttendanceRecordAsSupervisor:
+  flow: {0: LogIn, 1: viewAttendanceRecord , 2: addAttendanceRecord, 3: punchInSubOrdinate, 4: viewAttendanceRecord, 5: addAttendanceRecord, 6: punchOutSubOrdinate}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {person: 'Ashley Abel', date: '2011-11-01'}
+  2: {}
+  3: {attendanceDate: '2011-11-01', attendanceTime: '12:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  4: {}
+  5: {attendanceDate: '2011-11-01', attendanceTime: '13:00', attendanceTimezone: NULL, attendanceNote: 'test'}
+  
+  
+  
+AddAttendanceRecordAsSupervisorWithTimeZone:
+  flow: {0: LogIn, 1: viewAttendanceRecord , 2: addAttendanceRecord, 3: punchInSubOrdinate, 4: viewAttendanceRecord, 5: addAttendanceRecord, 6: punchOutSubOrdinate}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {person: 'Ashley Abel', date: '2011-11-29'}
+  2: {}
+  3: {attendanceDate: '2011-11-29', attendanceTime: '12:00', attendanceTimezone: '(GMT+08.00) Asia/Brunei', attendanceNote: 'test'}
+  4: {}
+  5: {attendanceDate: '2011-11-29', attendanceTime: '13:00', attendanceTimezone: '(GMT+01.00) Europe/Belgrade', attendanceNote: 'test'}
+ 
+ 
+ 
+#Supervisor views employee reports and verify
+ViewEmployeeeportAsSupervisor:
+  flow: {0: LogIn, 1: viewTimeSheet, 2: addTimeSheet, 3: addTimeSheetRecord, 4: saveTimeSheet, 5: LogIn, 6: viewSubOrdinateEmployeeReport}
+  0: {userName: 'admin', password: 'admin'}
+  1: {person: 'Ashley Abel'}
+  2: {date: '2010-01-01'}
+  3: 
+    0: { ProjectName: 'RedHat - System', ActivityName: Design, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+    1: { ProjectName: 'Virtusa - Website', ActivityName: Development, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+  4: {}
+  5: {userName: 'kayla', password: 'kayla'}
+  6: {employee: 'Ashley Abel', projectName: null, activityName: NULL,  dateRangeFrom: NULL, dateRangeTo: NULL, chkOnlyApprovedSheets: false}
+
+  
+ViewEmployeeeportAsSupervisorWithValues:
+  flow: {0: LogIn, 1: viewTimeSheet, 2: addTimeSheet, 3: addTimeSheetRecord, 4: saveTimeSheet, 5: LogIn, 6: viewSubOrdinateEmployeeReport}
+  0: {userName: 'admin', password: 'admin'}
+  1: {person: 'Ashley Abel'}
+  2: {date: '2009-01-01'}
+  3: 
+    0: { ProjectName: 'RedHat - System', ActivityName: Design, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+    1: { ProjectName: 'Virtusa - Website', ActivityName: Development, Mon: '2', Tue: '2', Wed: '2', Thu: '2', Fri: '2', Sat: '2', Sun: '2'}
+  4: {}
+  5: {userName: 'kayla', password: 'kayla'}
+  6: {employee: 'Ashley Abel', projectName: 'RedHat - System', activityName: 'Design',  dateRangeFrom: NULL, dateRangeTo: NULL, chkOnlyApprovedSheets: false}
+  
+sampleTry:
+  flow: {0: LogIn, 1: viewMyAttendanceRecord, 2: editAttendance}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {date: '2011-12-30'}
+  2: 
+    0: { In: 13:00, out: 18:00}

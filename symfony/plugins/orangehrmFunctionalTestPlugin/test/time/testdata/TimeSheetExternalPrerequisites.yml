@@ -1,0 +1,41 @@
+
+  
+Employee:
+  0: {emp_number: 1, emp_firstname: 'Kayla', emp_lastname: 'Abbey'}
+  1: {emp_number: 2, emp_firstname: 'Ashley', emp_lastname: 'Abel'}
+  2: {emp_number: 3, emp_firstname: 'John', emp_middle_name: 'De', emp_lastname: 'Soyza'}
+  3: {emp_number: 4, emp_firstname: 'Tom', emp_middle_name: 'Mason', emp_lastname: 'Boody'}
+
+JobTitle:
+  0: {id: '001', job_title: 'Technical Assistant', job_description: 'Assists the engineers', is_deleted: '0'}
+  1: {id: '002', job_title: 'Supervisor', job_description: 'Oversees technical assistant', is_deleted: '0'}
+  2: {id: '003', job_title: 'Engineering Manager', job_description: 'Manages Engineers', is_deleted: '0'}
+  3: {id: '004', job_title: 'Engineering Officer', job_description: 'Engineer', is_deleted: '0'} 
+  
+SystemUser:
+  0: {id: '001', user_role_id: 001, user_name: 'Admin', user_password: '21232f297a57a5a743894a0e4a801fc3', emp_number: NULL, status: '1', deleted: '0', userg_id: 'USG001'}
+  1: {id: '002', user_role_id: 003, user_name: 'Kayla', user_password: '16616347a7a5a764fe271009b247211a', emp_number: '1', status: '1', deleted: '0'}
+  2: {id: '003', user_role_id: 002, user_name: 'ashley', user_password: 'adff44c5102fca279fce7559abf66fee', emp_number: '2', status: '1', deleted: '0'}
+  3: {id: '004', user_role_id: 002, user_name: 'johnde', user_password: 'd409fa0ed2d96457b3e624384255708e', emp_number: '3', status: '1', deleted: '0'}
+  4: {id: '005', user_role_id: 003, user_name: 'boody', user_password: 'fffa6f0ee960aa01d88b397902d3fb30', emp_number: '4', status: '1', deleted: '0'}
+  
+ReportTo:
+    0: {erep_sup_emp_number: 1, erep_sub_emp_number: 2, erep_reporting_mode: 1}
+    1: {erep_sup_emp_number: 4, erep_sub_emp_number: 3, erep_reporting_mode: 1}
+    2: {erep_sup_emp_number: 1, erep_sub_emp_number: 4, erep_reporting_mode: 1}
+    
+Customer:
+  0: {customer_id: 1, name: 'RedHat', description: 'RedHat Pvt Ltd', deleted: 0}
+  1: {customer_id: 2, name: 'Virtusa', description: 'Virtusa Pvt Ltd', deleted: 0}
+  2: {customer_id: 3, name: 'Orangehrm', description: 'Orange Software Pvt Ltd', deleted: 0}
+  
+Project:
+  0: {project_id: 1, customer_id: 1, name: 'System', description: 'System for Wesbite', deleted: 0}
+  1: {project_id: 2, customer_id: 2, name: 'Website', description: 'Wesbite for Virtusa', deleted: 0}
+  
+ProjectActivity:
+  0: {activity_id: 1, project_id: 1, name: 'Development', deleted: 0}
+  1: {activity_id: 2, project_id: 1, name: 'QA', deleted: 0}
+  2: {activity_id: 3, project_id: 1, name: 'Design', deleted: 0}
+  3: {activity_id: 4, project_id: 2, name: 'Design', deleted: 0}
+  4: {activity_id: 5, project_id: 2, name: 'Development', deleted: 0}     

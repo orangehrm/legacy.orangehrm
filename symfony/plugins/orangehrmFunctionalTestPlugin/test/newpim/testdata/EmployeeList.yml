@@ -1,0 +1,26 @@
+SearchCriteria:
+  Test1: { TestName: "ID_Name_EmployeStatus",Id: "0001", EmployeeName: "Saman Kumara Herath", EmploymentStatus: "Full Time Contract", SupervisorName: "" , JobTitle: "All" , SubUnit: "All", Include: "Current Employees Only"}
+  Test2: { TestName: "ID_Name_Supervisor",Id: "0003", EmployeeName: "Ashan Kumara Perera", EmploymentStatus: "All", SupervisorName: "Chuck Fernando" , JobTitle: "All" , SubUnit: "All", Include: "Current Employees Only"}
+  Test3: { TestName: "ID_Name_JobTitle",Id: "0003", EmployeeName: "Ashan Kumara Perera", EmploymentStatus: "All", SupervisorName: "" , JobTitle: "Trainee QA Engineer" , SubUnit: "All", Include: "Current Employees Only"}
+  Test4: { TestName: "ID_Name_SubUnit",Id: "0001", EmployeeName: "Saman Kumara Herath", EmploymentStatus: "All", SupervisorName: "" , JobTitle: "All" , SubUnit: "OpenSource Team", Include: "Current Employees Only"}
+  
+  
+Results:
+  ID_Name_EmployeStatus: {Id: "0001","First (& Middle) Name": "Saman Kumara" ,"Last Name": "Herath" , "Employment Status": "Full Time Contract", Supervisor: "Chuck Fernando" ,"Job Title" : "Software Developer", "Sub Unit": "OpenSource Team"}
+  ID_Name_Supervisor: {Id: "0003","First (& Middle) Name": "Ashan Kumara" ,"Last Name": "Perera" , "Employment Status": "Full Time Internship", Supervisor: "Chuck Fernando" ,"Job Title" : "Trainee QA Engineer", "Sub Unit": "OpenSource Team"}
+  ID_Name_JobTitle: {Id: "0003","First (& Middle) Name": "Ashan Kumara" ,"Last Name": "Perera" , "Employment Status": "Full Time Internship", Supervisor: "Chuck Fernando" ,"Job Title" : "Trainee QA Engineer", "Sub Unit": "OpenSource Team"}
+  ID_Name_SubUnit: {Id: "0001","First (& Middle) Name": "Saman Kumara" ,"Last Name": "Herath" , "Employment Status": "Full Time Contract", Supervisor: "Chuck Fernando" ,"Job Title" : "Software Developer", "Sub Unit": "OpenSource Team"}
+               
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+

@@ -1,0 +1,28 @@
+SearchCriteria:
+  Test1: { TestName: "ID_Name_EmployeStatus",Id: "0001", EmployeeName: "Saman Kumara Herath", EmploymentStatus: "Full Time Contract", SupervisorName: "" , JobTitle: "All" , SubUnit: "All", Include: "Current Employees Only"}
+  Test2: { TestName: "ID", Id: "0001", EmployeeName: "", EmploymentStatus: "", SupervisorName: "" , JobTitle: "All" , SubUnit: "All", Include: "Current Employees Only"}
+  Test3: { TestName: "Name", Id: "", EmployeeName: "Saman Kumara Herath", EmploymentStatus: "", SupervisorName: "" , JobTitle: "All" , SubUnit: "All", Include: "Current Employees Only"}
+  Test4: { TestName: "Supervisor", Id: "", EmployeeName: "", EmploymentStatus: "", SupervisorName: "Chuck Fernando" , JobTitle: "All" , SubUnit: "All", Include: "Current Employees Only"}
+  Test5: { TestName: "EmployeStatus", Id: "", EmployeeName: "", EmploymentStatus: "Full Time Internship", SupervisorName: "" , JobTitle: "All" , SubUnit: "All", Include: "Current Employees Only"}
+
+  
+Results:
+  ID_Name_EmployeStatus: {Id: "0001","First (& Middle) Name": "Saman Kumara" ,"Last Name": "Herath" , "Employment Status": "Full Time Contract", Supervisor: "Chuck Fernando" ,"Job Title" : "Software Developer", "Sub Unit": "OpenSource Team"}
+  ID: {Id: "0001","First (& Middle) Name": "Saman Kumara" ,"Last Name": "Herath" , "Employment Status": "Full Time Contract", Supervisor: "Chuck Fernando" ,"Job Title" : "Software Developer", "Sub Unit": "OpenSource Team"}
+  Name: {Id: "0001","First (& Middle) Name": "Saman Kumara" ,"Last Name": "Herath" , "Employment Status": "Full Time Contract", Supervisor: "Chuck Fernando" ,"Job Title" : "Software Developer", "Sub Unit": "OpenSource Team"}
+  Supervisor: { Id: "0001","First (& Middle) Name": "Saman Kumara" ,"Last Name": "Herath" , "Employment Status": "Full Time Contract", Supervisor: "Chuck Fernando" ,"Job Title" : "Software Developer", "Sub Unit": "OpenSource Team"}
+  EmployeStatus: { Id: "0003","First (& Middle) Name": "Ashan Kumara" ,"Last Name": "Perera" , "Employment Status": "Full Time Internship", Supervisor: "Chuck Fernando" ,"Job Title" : "Trainee QA Engineer", "Sub Unit": "OpenSource Team"}
+               
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+

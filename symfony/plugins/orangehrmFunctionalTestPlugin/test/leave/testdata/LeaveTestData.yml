@@ -1,0 +1,250 @@
+PrerequisiteDetails:
+  fileName: 'LeavePrerequisites.yml'
+  
+Path2: 
+  flow: {0: LogIn, 1: Apply, 2: LogIn, 3: VerifyLeaveList, 4: VerifyLeaveList}
+  prerequisite:
+   leave: {0: 'kayla_001'}
+  0: {userName: 'ashley', password: 'ashley'}
+  #1: {prerequisite_leave_0: Fathima , status: 'Shortlist', notes: 'She is ShortListed'}
+  #2: {prerequisite_leave_0: Fathima , status: 'Schedule Interview', interviewTitle: 'First Interview', interviewer: 'Ashley Abel', date: '2011-11-17', time: '12:00', notes: 'first interview with Ashley Abel' }
+  1: {leaveTypeName: Annual, fromDate: '2011-12-30', toDate: '2012-01-03', leave_comments: "hello i'm applying 4 a two day holiday"}
+  2: {userName: 'admin', password: 'admin'}
+  3: {fromDate: '2011-12-30', toDate: '2011-12-31' }
+  4: {fromDate: '2012-01-01', toDate: '2012-01-03' }
+  
+  
+Path3: 
+  flow: {0: LogIn, 1: Cancel, 2: VerifyLeaveSummary}
+  prerequisite:
+    LeaveRequest: {0: '5'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {prerequisite_LeaveRequest_0: '5', fromDate: '2011-08-09', toDate: '2011-08-24', Action: 'Cancel'}
+  #Nilanga's Comments - Can't we use "prerequisite_LeaveRequest_0: '5'" to leave summry verification too instead of giving result set individually
+  2: {empName: 'Tom Mason Boody', leaveTypeName: 'Abroad', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '0.00'}
+  
+  
+#Path4: 
+  #flow: {0: LogIn, 1: ReadLeaveSummaryValues, 2: Cancel, 3: VerifyLeaveSummary}
+ # prerequisite:
+  #  leave: {0: 'kayla_001'}
+ # 0: {userName: 'admin', password: 'admin'}
+  #1: {prerequisite_leave_0: Fathima , status: 'Shortlist', notes: 'She is ShortListed'}
+  #2: {prerequisite_leave_0: Fathima , status: 'Schedule Interview', interviewTitle: 'First Interview', interviewer: 'Ashley Abel', date: '2011-11-17', time: '12:00', notes: 'first interview with Ashley Abel' }
+ # 1: {empName: 'Kayla Abbey', leaveTypeName: 'Sick', leavePeriod: '2011-01-01 to 2011-12-31'}
+ # 2: {prerequisite_leave_0: 'kayla_001', Action: 'Cancel'}
+ # 3: {leaveTaken: -1, leaveBalance: +1}
+
+Path5: 
+  flow: {0: LogIn, 1: Assign, 2: VerifyLeaveList, 3: VerifyLeaveList}
+  #prerequisite:
+   # leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  #1: {prerequisite_leave_0: Fathima , status: 'Shortlist', notes: 'She is ShortListed'}
+  #2: {prerequisite_leave_0: Fathima , status: 'Schedule Interview', interviewTitle: 'First Interview', interviewer: 'Ashley Abel', date: '2011-11-17', time: '12:00', notes: 'first interview with Ashley Abel' }
+  1: {empName: 'Kayla Abbey', leaveTypeName: Sick, fromDate: '2011-12-30', toDate: '2012-01-03', leave_comments: 'My Comment'}
+  2: {fromDate: '2011-12-30', toDate: '2011-12-31', leaveStatus: true, empName: 'Kayla Abbey'}
+  3: {fromDate: '2012-01-01', toDate: '2012-01-03', leaveStatus: true, empName: 'Kayla Abbey'}
+
+  
+Path6: 
+  flow: {0: LogIn, 1: Apply}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {leaveTypeName: Annual, fromDate: '2011-02-08', toDate: '2011-02-11', leave_comments: "I want a holiday"}
+  
+Path7: 
+  flow: {0: LogIn, 1: Assign, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {empName: 'Kayla Abbey', leaveTypeName: Sick, fromDate: '2011-02-08', toDate: '2011-02-11', leave_comments: "Assigning her a holiday"}
+  2: {fromDate: '2011-02-08', toDate: '2011-02-11', leaveStatus: true, empName: 'Kayla Abbey', NumberOfDays: '4.00', Status: 'Taken', Action: 'Cancel'}
+  3: {empName: 'Kayla Abbey', leaveTypeName: 'Sick', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '4.00'}
+  
+Path8: 
+  flow: {0: LogIn, 1: Assign, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {empName: 'Kayla Abbey', leaveTypeName: Sick, fromDate: '2012-02-07', toDate: '2012-02-10', leave_comments: "Assigning her a holiday"}
+  2: {fromDate: '2012-02-07', toDate: '2012-02-10', leaveStatus: true, empName: 'Kayla Abbey', NumberOfDays: '4.00', Status: 'Scheduled', Action: 'Cancel'}
+  3: {empName: 'Kayla Abbey', leaveTypeName: 'Sick', leavePeriod: '2012-01-01 to 2012-12-31', expectedLeaveScheduled: '4.00', expectedLeaveTaken: '0.00', expectedLeaveBalance: '96.00'}
+  
+Path9: 
+  flow: {0: LogIn, 1: Assign, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  #Comments by Nilanga : Here need to add flow action to verification of leave list detail view.
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {empName: 'Ashley Abel', leaveTypeName: Annual, fromDate: '2011-02-08', toDate: '2011-02-11', leave_comments: "Assigning her a holiday"}
+  2: {fromDate: '2011-02-08', toDate: '2011-02-11', leaveStatus: true, empName: 'Ashley Abel', NumberOfDays: '4.00', Status: 'Taken', Action: ''}
+  3: {empName: 'Ashley Abel', leaveTypeName: 'Annual', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '4.00'}
+  
+Path10: 
+  flow: {0: LogIn, 1: Apply, 2: VerifyMyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {leaveTypeName: Annual, fromDate: '2011-02-08', toDate: '2011-02-11', leave_comments: "I want a holiday"}
+  2: {fromDate: '2011-02-08', toDate: '2011-02-11', leaveStatus: true, NumberOfDays: '4.00', Status: 'Pending Approval', Action: 'Cancel'}
+  3: {leaveTypeName: 'Annual', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveScheduled: '0.00', expectedLeaveTaken: '0.00', expectedLeaveEntitled: '100.00'}
+  
+Path11: 
+  flow: {0: LogIn, 1: Apply, 2: VerifyMyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {leaveTypeName: Annual, fromDate: '2012-02-07', toDate: '2012-02-10', leave_comments: "I want a holiday"}
+  2: {fromDate: '2012-02-07', toDate: '2012-02-10', leaveStatus: true, NumberOfDays: '4.00', Status: 'Pending Approval', Action: 'Cancel'}
+  3: {leaveTypeName: 'Annual', leavePeriod: '2012-01-01 to 2012-12-31', expectedLeaveScheduled: '0.00', expectedLeaveTaken: '0.00', expectedLeaveEntitled: '100.00'}
+  
+Path12: 
+  flow: {0: LogIn, 1: CancelMyLeaverequest , 2: VerifyMyLeaveList, 2: VerifyLeaveSummary}
+  prerequisite:
+    LeaveRequest: {0: '14'}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {prerequisite_LeaveRequest_0: '14', fromDate: '2011-07-04', toDate: '2011-07-06'} 
+  2: {fromDate: '2011-07-04', toDate: '2011-07-06', leaveStatus: true, NumberOfDays: '3.00', Status: 'Canceled', Action: ''}
+  3: {leaveTypeName: 'Sick', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveScheduled: '0.00', expectedLeaveTaken: '0.00', expectedLeaveEntitled: '300.00'}
+  
+Path13: 
+  flow: {0: LogIn, 1: Approve, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  prerequisite:
+    LeaveRequest: {0: '19'}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {prerequisite_LeaveRequest_0: '19', fromDate: '2011-02-15', toDate: '2011-02-16', Action: 'Approve'} 
+  2: {empName: 'Tom Mason Boody', fromDate: '2011-02-15', toDate: '2011-02-16', leaveStatus: true, NumberOfDays: '2.00', Status: 'Taken', Action: ''}
+  3: {empName: 'Tom Mason Boody', leaveTypeName: 'Sick', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveScheduled: '0.00', expectedLeaveTaken: '2.00', expectedLeaveEntitled: '100.00'}
+  
+Path14: 
+  flow: {0: LogIn, 1: Reject, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  prerequisite:
+    LeaveRequest: {0: '19'}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {prerequisite_LeaveRequest_0: '19', fromDate: '2011-02-15', toDate: '2011-02-16', Action: 'Reject'} 
+  2: {empName: 'Tom Mason Boody', fromDate: '2011-02-15', toDate: '2011-02-16', leaveStatus: true, NumberOfDays: '2.00', Status: 'Rejected', Action: ''}
+  3: {empName: 'Tom Mason Boody', leaveTypeName: 'Sick', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveScheduled: '0.00', expectedLeaveTaken: '.00', expectedLeaveEntitled: '100.00'}
+
+Path15: 
+  flow: {0: LogIn, 1: Cancel, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  prerequisite:
+    LeaveRequest: {0: '19'}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {prerequisite_LeaveRequest_0: '19', fromDate: '2011-02-15', toDate: '2011-02-16', Action: 'Cancel'} 
+  2: {empName: 'Tom Mason Boody', fromDate: '2011-02-15', toDate: '2011-02-16', leaveStatus: true, NumberOfDays: '2.00', Status: 'Canceled', Action: ''}
+  3: {empName: 'Tom Mason Boody', leaveTypeName: 'Sick', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveScheduled: '0.00', expectedLeaveTaken: '0.00', expectedLeaveEntitled: '100.00'}
+
+
+
+Path16:
+  flow: {0: LogIn, 1: Assign, 2: Assign, 3: VerifyLeaveList, 4: VerifyLeaveList, 5: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {empName: 'Kayla Abbey', leaveTypeName: Sick, fromDate: '2012-02-07', toDate: '2012-02-07', fromTime: '02:00', toTime: '06:00', leave_comments: "Assigning her a holiday"}
+  2: {empName: 'Kayla Abbey', leaveTypeName: Sick, fromDate: '2012-02-07', toDate: '2012-02-07', fromTime: '06:00', toTime: '10:00', leave_comments: "Assigning her another holiday"}
+  3: {fromDate: '2012-02-07', toDate: '2012-02-07', leaveStatus: true, empName: 'Kayla Abbey', NumberOfDays: '0.50', Status: 'Scheduled', Action: 'Cancel'}
+  4: {fromDate: '2012-02-07', toDate: '2012-02-07', leaveStatus: true, empName: 'Kayla Abbey', NumberOfDays: '0.50', Status: 'Scheduled', Action: 'Cancel'}
+  5: {empName: 'Kayla Abbey', leaveTypeName: 'Sick', leavePeriod: '2012-01-01 to 2012-12-31', expectedLeaveScheduled: '1.00'}
+  
+
+Path17:
+  flow: {0: LogIn, 1: Assign, 2: VerifyLeaveList, 3: VerifyDetailedList, 4: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {empName: 'Kayla Abbey', leaveTypeName: Sick, fromDate: '2011-04-11', toDate: '2011-04-15', leave_comments: "Assigning her a holiday"}
+  2: {fromDate: '2011-04-11', toDate: '2011-04-15', leaveStatus: true, empName: 'Kayla Abbey', NumberOfDays: '4.00', Status: 'Taken', Action: 'Cancel'}
+  3: {fromDate: '2011-04-11', toDate: '2011-04-15', empName: 'Kayla Abbey', leaveStatus: true, dateToBeChecked: '2011-04-14', Status: 'Non Working Day', Action: ''}
+  4: {empName: 'Kayla Abbey', leaveTypeName: 'Sick', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '4.00', expectedLeaveSheduled: '0.00'}
+
+
+Path18:
+  flow: {0: LogIn, 1: VerifyDetailedList, 2: VerifyDetailedList, 3: VerifyDetailedList}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {fromDate: '2012-05-08', toDate: '2012-05-10', leaveStatus: true, empName: 'Kayla Abbey', dateToBeChecked: '2012-05-08', ActionToBePerformed: 'Approve',  Status: 'Scheduled'}
+  2: {fromDate: '2012-05-08', toDate: '2012-05-10', leaveStatus: true, empName: 'Kayla Abbey', dateToBeChecked: '2012-05-09', ActionToBePerformed: 'Reject',  Status: 'Rejected'}
+  3: {fromDate: '2012-05-08', toDate: '2012-05-10', leaveStatus: true, empName: 'Kayla Abbey', dateToBeChecked: '2012-05-10', ActionToBePerformed: 'Cancel',  Status: 'Canceled'}
+ 
+
+Path19:
+  flow: {0: LogIn, 1: Assign, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {empName: 'Ashley Abel', leaveTypeName: Annual, fromDate: '2011-09-05', toDate: '2011-09-06', leave_comments: "Assigning her a holiday"}
+  2: {fromDate: '2011-09-05', toDate: '2011-09-06', isTaken: true, empName: 'Ashley Abel', NumberOfDays: '2.00', Status: 'Taken', Action: 'Cancel'}
+  3: {empName: 'Ashley Abel', leaveTypeName: 'Annual', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '2.00', expectedLeaveSheduled: '0.00'}
+
+Path20:
+  flow: {0: LogIn, 1: Apply, 2: VerifyMyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {leaveTypeName: Annual, fromDate: '2011-09-05', toDate: '2011-09-06', leave_comments: "Applying for a holiday"}
+  2: {fromDate: '2011-09-05', toDate: '2011-09-06', isRejected: true, isCanceled: true, isScheduled: true, isTaken: true, NumberOfDays: '2.00', Status: 'Pending Approval', Action: 'Cancel'}
+  3: {leaveTypeName: 'Annual', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '0.00', expectedLeaveSheduled: '0.00'}
+
+Path21:
+  flow: {0: LogIn, 1: Assign, 2: VerifyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'admin', password: 'admin'}
+  1: {empName: 'Ashley Abel', leaveTypeName: Annual, fromDate: '2011-06-08', toDate: '2011-06-09', leave_comments: "Assigning her a holiday"}
+  2: {fromDate: '2011-06-08', toDate: '2011-06-09', isTaken: true, empName: 'Ashley Abel', NumberOfDays: '2.00', Status: 'Taken', Action: 'Cancel'}
+  3: {empName: 'Ashley Abel', leaveTypeName: 'Annual', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '2.00', expectedLeaveSheduled: '0.00'}
+
+Path22:
+  flow: {0: LogIn, 1: Apply, 2: VerifyMyLeaveList, 3: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'ashley', password: 'ashley'}
+  1: {leaveTypeName: Annual, fromDate: '2011-06-08', toDate: '2011-06-09', leave_comments: "Applying for a holiday"}
+  2: {fromDate: '2011-06-08', toDate: '2011-06-09', isRejected: true, isCanceled: true, isScheduled: true, isTaken: true, NumberOfDays: '2.00', Status: 'Pending Approval', Action: 'Cancel'}
+  3: {leaveTypeName: 'Annual', leavePeriod: '2011-01-01 to 2011-12-31', expectedLeaveTaken: '0.00', expectedLeaveSheduled: '0.00'}
+
+
+Path23:
+  flow: {0: LogIn, 1: Apply, 2: VerifyMyDetailedList}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'boody', password: 'boody'}
+  1: {leaveTypeName: Sick, fromDate: '2011-12-06', toDate: '2011-12-06', fromTime: '02:00', toTime: '12:00', leave_comments: "Applying for a holiday"}
+  2: {fromDate: '2011-12-06', toDate: '2011-12-06', dateToBeChecked: '2011-12-06', leaveStatus: true, Duration: '10.00', Status: 'Pending Approval', Action: 'Cancel'}
+
+
+
+Path24:
+  flow: {0: LogIn, 1: Assign, 2: VerifyDetailedList}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {empName: 'Tom Mason Boody', leaveTypeName: Sick, fromDate: '2011-12-06', toDate: '2011-12-06', fromTime: '02:00', toTime: '12:00', leave_comments: "Assigning her a holiday"}
+  2: {empName: 'Tom Mason Boody', fromDate: '2011-12-06', toDate: '2011-12-06', dateToBeChecked: '2011-12-06', leaveStatus: true, Duration: '10.00', Status: 'Taken', Action: 'Cancel'}
+
+Path25:
+  flow: {0: LogIn, 1: Apply, 2: Apply, 3: Apply}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'boody', password: 'boody'}
+  1: {leaveTypeName: Sick, fromDate: '2011-12-06', toDate: '2011-12-06', fromTime: '02:00', toTime: '06:00', leave_comments: "Applying for first holiday"}
+  2: {leaveTypeName: Sick, fromDate: '2011-12-06', toDate: '2011-12-06', fromTime: '06:15', toTime: '11:15', leave_comments: "Applying for second holiday"}
+  3: {leaveTypeName: Sick, fromDate: '2011-12-06', toDate: '2011-12-06', fromTime: '11:30', toTime: '13:30', leave_comments: "Applying for third holiday", WarningMessage: 'Failed to Submit: Work Shift Length Exceeded'}
+
+
+Path26:
+  flow: {0: LogIn, 1: Assign, 2: Assign, 3: VerifyLeaveList, 4: VerifyLeaveList, 5: VerifyLeaveSummary}
+  #prerequisite:
+   #leave: {0: 'kayla_001'}
+  0: {userName: 'kayla', password: 'kayla'}
+  1: {empName: 'Ashley Abel', leaveTypeName: Annual, fromDate: '2012-02-07', toDate: '2012-02-07', fromTime: '02:00', toTime: '06:00', leave_comments: "Assigning her a holiday"}
+  2: {empName: 'Ashley Abel', leaveTypeName: Annual, fromDate: '2012-02-07', toDate: '2012-02-07', fromTime: '06:00', toTime: '10:00', leave_comments: "Assigning her another holiday"}
+  3: {fromDate: '2012-02-07', toDate: '2012-02-07', leaveStatus: true, empName: 'Ashley Abel', NumberOfDays: '0.50', Status: 'Scheduled', Action: 'Cancel'}
+  4: {fromDate: '2012-02-07', toDate: '2012-02-07', leaveStatus: true, empName: 'Ashley Abel', NumberOfDays: '0.50', Status: 'Scheduled', Action: 'Cancel'}
+  5: {empName: 'Ashley Abel', leaveTypeName: 'Annual', leavePeriod: '2012-01-01 to 2012-12-31', expectedLeaveScheduled: '1.00'}
+
+

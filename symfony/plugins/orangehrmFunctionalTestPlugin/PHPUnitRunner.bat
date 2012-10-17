@@ -1,0 +1,3 @@
+cd test
+cls
+phpunit AllModuleFunctionalPluginTests.php

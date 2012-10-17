@@ -1,0 +1,18 @@
+SearchCriteria:
+  Test1: { TestName: "ID_Name_EmployeStatus",Username: "ashan", UserType: "All", EmployeeName: "", Status: "All" }
+
+  
+Results:
+  ID_Name_EmployeStatus: {Username: "ashan","User Type": "ESS" ,"Employee Name": "Ashan Kumara Perera" , "Status": "Enabled"}
+
+
+
+
+
+
+
+ 
+ 
+
+
+
