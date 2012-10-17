@@ -1,16 +1,16 @@
 ExternalDependenciesCreated:
-  recruitment: true
+  recruitment: false
   pim: false
   leave: false
   time: false
   admin: false
 Login:
-  url: NEWUI/new
+  url: NEWUI/TestAutomation/2012-ui
 SystemConfig:
   os: Ubuntu
 TestSettings:
   timeOut: 15
-  absolutePath: /var/www/NEWUI/new/symfony/plugins/orangehrmFunctionalTestPlugin/test
+  absolutePath: /var/www/NEWUI/TestAutomation/2012-ui/symfony/plugins/orangehrmFunctionalTestPlugin/test
   browserURL: 'http://localhost/'
   browserPath: etc/firefox
   currentBrowser: firefox

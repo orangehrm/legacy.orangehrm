@@ -16,7 +16,9 @@ class NewPimPrerequisiteHandler {
         public function ensurePrerequisites($prerequisiteFixturePath) {
 
         $fixturePath = sfConfig::get('sf_plugins_dir') . "/orangehrmFunctionalTestPlugin/test/newpim/testdata/" . $prerequisiteFixturePath;
+        
         TestDataService::populate($fixturePath);
+        
     } 
     
     

@@ -4473,10 +4473,8 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NewAdminFunctionalPl
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/UsersListTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/testdata/NewAdminPrerequisites.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/testdata/UsersList.yml -text
-symfony/plugins/orangehrmFunctionalTestPlugin/test/newpim/EmployeeInformationTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newpim/EmployeeListTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newpim/NewPimFunctionalPluginAllTests.php -text
-symfony/plugins/orangehrmFunctionalTestPlugin/test/newpim/newEmptyPHP.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newpim/testdata/EmployeeList.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newpim/testdata/EmployeeListSupervisor.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newpim/testdata/NewPIMPrerequisites.yml -text

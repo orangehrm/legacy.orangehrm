@@ -166,6 +166,18 @@ class Menu {
         $selenium->selectFrame("relative=top");
         return new UsersListPage($selenium);
     }
+    
+        public static function goToEmployeeList(FunctionalTestcase $selenium) {
+        $selenium->selectFrame();
+        $selenium->session->execute(array(
+             'script' => "var elements = window.document.getElementById('menu_pim_viewPimModule').click();",
+             'args' => array()));
+        $selenium->selectFrame("relative=top");
+        return new UsersListPage($selenium);
+    }
+    
+    
+    
 
     public static function goToEmailConfiguration(FunctionalTestcase $selenium) {
         $selenium->selectFrame();
@@ -338,22 +350,22 @@ class Menu {
         return new ApplyForLeavePageObject($selenium);
     }
 
-    public static function goToEmployeeList(FunctionalTestcase $selenium) {
-        $selenium->selectFrame();
-        try{
-        $selenium->session->execute(array(
-             'script' => "var elements = window.document.getElementById('pim').getElementsByTagName('a');  elements[7].click();",
-             'args' => array()));
-        } catch(Exception $e)
-        {
-            $selenium->session->execute(array(
-             'script' => "var elements = window.document.getElementById('pim').getElementsByTagName('a');  elements[1].click();",
-             'args' => array()));
-        }
-        //$selenium->waitForPageToLoad(self::$config->getTimeoutValue());
-        $selenium->selectFrame("relative=top");
-        return new EmployeeInformation($selenium);
-    }
+//    public static function goToEmployeeList(FunctionalTestcase $selenium) {
+//        $selenium->selectFrame();
+//        try{
+//        $selenium->session->execute(array(
+//             'script' => "var elements = window.document.getElementById('pim').getElementsByTagName('a');  elements[7].click();",
+//             'args' => array()));
+//        } catch(Exception $e)
+//        {
+//            $selenium->session->execute(array(
+//             'script' => "var elements = window.document.getElementById('pim').getElementsByTagName('a');  elements[1].click();",
+//             'args' => array()));
+//        }
+//        //$selenium->waitForPageToLoad(self::$config->getTimeoutValue());
+//        $selenium->selectFrame("relative=top");
+//        return new EmployeeInformation($selenium);
+//    }
 
     public static function goToEssTab(FunctionalTestcase $selenium) {
         $selenium->selectFrame();

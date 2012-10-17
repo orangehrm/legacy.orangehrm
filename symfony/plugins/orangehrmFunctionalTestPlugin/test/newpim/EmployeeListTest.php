@@ -66,8 +66,7 @@ class EmployeeListTest extends FunctionalTestcase{
            
         public function testSearchCombinationSupervisor(){
             Helper::loginUser($this, "chuck", "chuck");
-            $employeeInformation = new EmployeeListPage($this);
-            $employeeInformation->goToNewEmployeeList() ;
+            Menu::goToEmployeeList($this);
             $searchEmploye = new EmployeeListPage($this);
             $searchTesterYML = sfYaml::load(sfConfig::get('sf_plugins_dir') . "/orangehrmFunctionalTestPlugin/test/newpim/testdata/EmployeeListSupervisor.yml");
             $criteria = $searchTesterYML["SearchCriteria"];
@@ -145,7 +144,8 @@ class EmployeeListTest extends FunctionalTestcase{
     }
     
     public function testSortBySupervisor() {
-        $employeeInformation = Helper::loginUser($this, "admin", "admin");
+        Helper::loginUser($this, "admin", "admin");
+        Menu::goToEmployeeList($this);
         $employeeInformation->sortByFieldName("Supervisor");
         $emplist = array("Saman Nishan", "Pasindu Malin" ,"Saman Kumara", "Ashan Kumara", "Chuck Neel");
         $this->assertTrue($employeeInformation->list->verifySortingOrder($emplist, "First (& Middle) Name"));
@@ -156,18 +156,17 @@ class EmployeeListTest extends FunctionalTestcase{
     }
 
         public function testEmployeeListSupervisorRights() {
-        $employeeInformation = Helper::loginUser($this, "chuck ", "chuck");
-        $employeeInformation = new EmployeeListPage($this);
-        $employeeInformation->goToNewEmployeeList() ;
+        Helper::loginUser($this, "chuck", "chuck");
+        Menu::goToEmployeeList($this);
         $this->assertFalse($this->isVisible($employeeInformation->btnDelete));
         $this->assertFalse($this->isVisible($employeeInformation->btnAdd));
         Helper::logOutIfLoggedIn($this);
     }
 
       public function testSortByIdAsSupervisor() {
-        $employeeInformation = Helper::loginUser($this, "chuck ", "chuck");
+        Helper::loginUser($this, "chuck", "chuck");
+        Menu::goToEmployeeList($this);
         $employeeInformation = new EmployeeListPage($this);
-        $employeeInformation->goToNewEmployeeList() ;
         $employeeInformation->sortByFieldName("Id");
         $emplist = array("Ashan Kumara", "Saman Kumara");
         $this->assertTrue($employeeInformation->list->verifySortingOrder($emplist, "First (& Middle) Name"));
@@ -177,9 +176,9 @@ class EmployeeListTest extends FunctionalTestcase{
         Helper::logOutIfLoggedIn($this);
     }
  public function testSortBySubUnitAsSupervisor() {
-        $employeeInformation = Helper::loginUser($this, "chuck ", "chuck");
+        Helper::loginUser($this, "chuck", "chuck");
+        Menu::goToEmployeeList($this);
         $employeeInformation = new EmployeeListPage($this);
-        $employeeInformation->goToNewEmployeeList() ;
         $employeeInformation->sortByFieldName("Sub Unit");
         $emplist = array("Saman Kumara", "Ashan Kumara");
         $this->assertTrue($employeeInformation->list->verifySortingOrder($emplist, "First (& Middle) Name"));

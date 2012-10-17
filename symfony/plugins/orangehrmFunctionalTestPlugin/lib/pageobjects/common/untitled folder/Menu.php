@@ -155,12 +155,12 @@ class Menu {
         return new ViewNationalitiesPageObject($selenium);
     }
 
-    public static function goToUsers(FunctionalTestcase $selenium) {
-        $selenium->selectFrame();
-        $selenium->click(self::$mnuViewSystemUsers);
-        //$selenium->waitForPageToLoad(self::$config->getTimeoutValue());
-        return new ViewSystemUsersPageObject($selenium);
-    }
+//    public static function goToUsers(FunctionalTestcase $selenium) {
+//        $selenium->selectFrame();
+//        $selenium->click(self::$mnuViewSystemUsers);
+//        //$selenium->waitForPageToLoad(self::$config->getTimeoutValue());
+//        return new ViewSystemUsersPageObject($selenium);
+//    }
 
     public static function goToEmailConfiguration(FunctionalTestcase $selenium) {
         $selenium->selectFrame();
