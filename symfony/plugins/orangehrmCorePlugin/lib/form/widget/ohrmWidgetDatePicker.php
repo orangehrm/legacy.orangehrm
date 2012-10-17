@@ -27,6 +27,10 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
         } else {
             $attributes['class'] = 'calendar';
         }
+        
+        if (!isset($attributes['id']) && isset($this->attributes['id'])) {
+            $attributes['id'] = $this->attributes['id'];
+        }
 
         $html = parent::render($name, $value, $attributes, $errors);
 

@@ -46,11 +46,12 @@ class ohrmDateValidator extends sfValidatorBase {
      */
     protected function doClean($value) {
 
-        $date = null;
-        $valid = false;
-
         $trimmedValue = trim($value);
         $pattern = $this->getOption('date_format');
+        
+        if (empty($pattern)) {
+            $pattern = sfContext::getInstance()->getUser()->getDateFormat();
+        }
 
         // If not required and empty or the format pattern, return valid.
         if (!$this->getOption('required') &&
