@@ -69,7 +69,7 @@ class UsersListTest extends FunctionalTestcase {
     }
     
      public function testCancelDeleteEmployeeAndVerify() {
-        Helper::loginUser($this, "admin", "admin");
+        $SystemUsers = Helper::loginUser($this, "admin", "admin");
         $Users = new UsersListPage($this);
         $Users = Menu::goToUsers($this);
         $SystemUsers->list->select("Username", "ashan");

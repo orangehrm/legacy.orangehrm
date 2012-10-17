@@ -144,8 +144,7 @@ class EmployeeListTest extends FunctionalTestcase{
     }
     
     public function testSortBySupervisor() {
-        Helper::loginUser($this, "admin", "admin");
-        Menu::goToEmployeeList($this);
+        $employeeInformation = Helper::loginUser($this, "admin", "admin");
         $employeeInformation->sortByFieldName("Supervisor");
         $emplist = array("Saman Nishan", "Pasindu Malin" ,"Saman Kumara", "Ashan Kumara", "Chuck Neel");
         $this->assertTrue($employeeInformation->list->verifySortingOrder($emplist, "First (& Middle) Name"));
