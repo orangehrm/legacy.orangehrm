@@ -36,12 +36,6 @@ $(document).ready(function() {
             'organization[note]' : {
                 maxlength: lang_exceed255Chars
             }
-        },
-
-        errorElement : 'label',
-        errorPlacement: function(error, element) {
-            error.appendTo( element.prev('label') );
-            error.appendTo(element.next('div.errorHolder'));
         }
     });
 

@@ -87,11 +87,6 @@ function isValidForm(){
                 maxlength: lang_exceed255Charactors
             }
 
-        },
-
-        errorPlacement: function(error, element) {
-            error.appendTo(element.next('div.errorHolder'));
-
         }
 
     });

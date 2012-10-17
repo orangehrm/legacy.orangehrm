@@ -118,11 +118,6 @@ $(document).ready(function() {
                 uniqueName: lang_uniqueName
             }
 
-        },
-
-        errorPlacement: function(error, element) {
-            error.appendTo(element.next('div.errorHolder'));
-
         }
 
     });

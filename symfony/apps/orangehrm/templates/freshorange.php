@@ -9,7 +9,8 @@ $cultureElements = explode('_', $sf_user->getCulture());
     <?php include_http_metas() ?>
     <?php include_metas() ?>
     <?php include_title() ?>
-
+        
+        <script type="text/javascript" src="<?php echo public_path('../../scripts/archive.js');?>"></script>
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery-1.7.2.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/validate/jquery.validate.js')?>"></script>
         <?php use_javascript(public_path('js/orangehrm.validate.js')); ?>

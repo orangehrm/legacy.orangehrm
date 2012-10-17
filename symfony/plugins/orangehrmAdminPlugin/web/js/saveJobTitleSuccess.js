@@ -55,11 +55,6 @@ $(document).ready(function() {
             'jobTitle[note]' : {
                 maxlength: lang_exceed400Chars
             }
-        },
-
-        errorPlacement: function(error, element) {
-            error.appendTo(element.prev('label'));
-            error.appendTo(element.next('div.errorHolder'));
         }
     });
 

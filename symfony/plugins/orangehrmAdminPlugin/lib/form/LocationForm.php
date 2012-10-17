@@ -84,6 +84,9 @@ class LocationForm extends BaseForm {
 		if ($this->locationId != null) {
 			$this->setDefaultValues($this->locationId);
 		}
+        
+        $this->getWidgetSchema()->setLabels($this->getFormLabels());
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
 	}
 	
 	private function setDefaultValues($locationId) {
@@ -169,6 +172,27 @@ class LocationForm extends BaseForm {
 		}
 		return json_encode($list);
 	}
+    
+    /**
+     * 
+     * @return string 
+     */
+    public function getFormLabels() {
+        $requiredMarker = ' <em>*</em>';
+        $labels = array(
+            'name' => __('Name') . $requiredMarker,
+            'country' => __('Country') . $requiredMarker,
+            'state' => __('State'),
+		    'province' => __('Province'),
+		    'city' => __('City'),
+		    'address' => __('Address'),
+		    'zipCode' => __('Zip/Postal Code'),
+		    'phone' => __('Phone'),
+		    'fax' => __('Fax'),
+		    'notes' => __('Notes'),
+        );
+        return $labels;
+    }
 }
 
 ?>

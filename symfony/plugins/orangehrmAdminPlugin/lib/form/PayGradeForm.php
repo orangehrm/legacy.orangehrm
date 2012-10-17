@@ -61,6 +61,8 @@ class PayGradeForm extends BaseForm {
 		if ($this->payGradeId != null) {
 			$this->setDefaultValues($this->payGradeId);
 		}
+        $this->getWidgetSchema()->setLabels($this->getFormLabels());
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
 	}
 
 	private function setDefaultValues($payGradeId) {
@@ -113,6 +115,18 @@ class PayGradeForm extends BaseForm {
 		}
 		return json_encode($list);
 	}
+    
+    /**
+     * 
+     * @return string 
+     */
+    public function getFormLabels() {
+        $requiredMarker = ' <em>*</em>';
+        $labels = array(
+            'name' => __('Name') . $requiredMarker,
+        );
+        return $labels;
+    }
 }
 
 ?>

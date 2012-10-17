@@ -21,9 +21,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess');
                     <?php echo $form->render(); ?>
                 </ol>
                 
-                <input type="hidden" name="pageNo" id="pageNo" value="<?php //echo $form->pageNo; ?>" />
-                <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
-                
                 <p>
                     <input type="button" class="addbutton" name="btnSave" id="btnSearch" value="<?php echo __("Search"); ?>" title="<?php echo __("Search"); ?>"/>
                     <input type="button" class="reset" name="btnReset" id="btnReset" value="<?php echo __("Reset"); ?>" title="<?php echo __("Reset"); ?>"/>
@@ -31,6 +28,11 @@ use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess');
                 
             </fieldset>
             
+        </form>
+        
+        <form name="frmHiddenParam" id="frmHiddenParam" method="post" action="<?php echo url_for('admin/viewLocations'); ?>">
+            <input type="hidden" name="pageNo" id="pageNo" value="<?php //echo $form->pageNo; ?>" />
+            <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
         </form>
         
     </div>

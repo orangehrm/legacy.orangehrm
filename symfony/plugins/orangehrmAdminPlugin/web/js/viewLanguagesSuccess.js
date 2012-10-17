@@ -34,11 +34,6 @@ function validateData() {
                 /*remote: lang_nameExists*/
             }
 
-        },
-
-        errorPlacement: function(error, element) {
-            error.appendTo(element.next('div.errorHolder'));
-
         }
 
     });

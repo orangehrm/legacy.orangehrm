@@ -44,12 +44,16 @@ function setCountryState() {
     var hide = "display:none;";
     var show = "display:block;";
 
-    $("#location_state").hide();
-    $("#location_province").show();
-
     if($("#location_country").val() == 'US') {
         $("#location_state").show();
+        $('label[for="location_state"]').css('display', 'block');
         $("#location_province").hide();
+        $('label[for="location_province"]').css('display', 'none');
+    } else {
+        $("#location_state").hide();
+        $('label[for="location_state"]').css('display', 'none');
+        $("#location_province").show();
+        $('label[for="location_province"]').css('display', 'block');
     }
 }
     
@@ -155,10 +159,6 @@ function isValidForm(){
                 maxlength: lang_Max255Chars
             }
 
-        },
-
-        errorPlacement: function(error, element) {
-            error.appendTo(element.next('div.errorHolder'));
         }
 
     });

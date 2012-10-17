@@ -75,11 +75,6 @@ function validateData() {
                 maxlength: lang_descLengthExceeded
             }
 
-        },
-
-        errorPlacement: function(error, element) {
-            error.appendTo(element.next('div.errorHolder'));
-
         }
 
     });

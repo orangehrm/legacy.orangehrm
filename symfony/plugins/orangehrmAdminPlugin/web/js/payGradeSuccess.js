@@ -63,7 +63,7 @@ $(document).ready(function() {
         $('#addPaneCurrency').show();
         $('#actionButtons').show();
         $('#addDeleteBtnDiv').hide();
-        $('.checkboxCurr').hide();
+        $('.check').hide();
         validatorCurr.resetForm();
         $('#currencyHeading').text(lang_addCurrency);
         $('#payGradeCurrency_currencyName').each(function(){
@@ -89,7 +89,7 @@ $(document).ready(function() {
         $('#actionButtons').hide();
         $('#addDeleteBtnDiv').show();
         $('#currencyHeading').text(lang_assignedCurrency);
-        $('.checkboxCurr').show();
+        $('.check').show();
         validatorCurr.resetForm();
     });
     
@@ -114,7 +114,7 @@ $(document).ready(function() {
         
         $('#addPaneCurrency').show();
         $('#actionButtons').show();
-        $('.checkboxCurr').hide();
+        $('.check').hide();
         $('#addDeleteBtnDiv').hide();
        
     });
@@ -188,10 +188,6 @@ $(document).ready(function() {
                 maxlength: lang_exceed50Charactors,
                 uniquePayGradeName: lang_uniquePayGradeName
             }
-        },
-        errorPlacement: function(error, element) {
-            error.appendTo(element.next('div.errorHolder'));
-
         }
 
     });
@@ -330,10 +326,6 @@ $(document).ready(function() {
                 max:lang_tooLargeAmount,
                 validSalaryRange: lang_validSalaryRange
             }
-        },
-        errorPlacement: function(error, element) {
-            error.appendTo(element.next('div.errorHolder'));
-
         }
 
     });

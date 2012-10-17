@@ -66,3 +66,17 @@ viewLocationsSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]
+payGradeSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+locationSuccess:
+  layout: freshorange
+viewOrganizationGeneralInformationSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+saveJobTitleSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]

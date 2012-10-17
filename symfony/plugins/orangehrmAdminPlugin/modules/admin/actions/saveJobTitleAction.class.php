@@ -26,6 +26,9 @@ class saveJobTitleAction extends sfAction {
     }
 
     public function execute($request) {
+        
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewJobTitleList');
 
         $usrObj = $this->getUser()->getAttribute('user');
         if (!($usrObj->isAdmin())) {
