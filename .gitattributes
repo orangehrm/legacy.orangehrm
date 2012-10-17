@@ -4492,10 +4492,13 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/time/testdata/TimeSheetExtern
 symfony/plugins/orangehrmLeavePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/list_component.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/routing.yml -text
+symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByEmployee.sql -text
+symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByLeaveType.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/upgrade.sql -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveEntitlementDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/NewLeaveTypeDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/event/LeaveEvents.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveBalanceReportForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementAddForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementBulkAssignFilterForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementForm.php -text
