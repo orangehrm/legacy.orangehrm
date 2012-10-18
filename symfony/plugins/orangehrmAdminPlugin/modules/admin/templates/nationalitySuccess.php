@@ -3,7 +3,7 @@
 use_javascript('../orangehrmAdminPlugin/js/nationalitySuccess'); 
 ?>
 
-<div id="nationality" class="box single double">
+<div id="nationality" class="box single">
     
     <div class="head"><h1 id="nationalityHeading"><?php echo __("Add Nationality"); ?></h1></div>
     
@@ -20,13 +20,14 @@ use_javascript('../orangehrmAdminPlugin/js/nationalitySuccess');
                         <?php echo $form['name']->renderLabel(__('Name'). ' <em>*</em>'); ?>
                         <?php echo $form['name']->render(array("class" => "formInput", "maxlength" => 100)); ?>
                     </li>
-                    <li class="required"><em>*</em> required field</li>
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
                 </ol>
-                <br class="clear"/>
                 
                 <p>
-                    <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
-                    <input type="button" class="delete" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel");?>"/>
+                    <input type="button" class="savebutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel");?>"/>
                 </p>
             </fieldset>
         </form>

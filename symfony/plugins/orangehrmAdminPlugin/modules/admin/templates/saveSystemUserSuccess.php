@@ -1,15 +1,10 @@
 
 <?php
-use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
+use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
 use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+use_javascript('../orangehrmAdminPlugin/js/systemUserSuccess'); 
+use_javascript('../orangehrmAdminPlugin/js/password_strength'); 
 ?>
-<?php use_stylesheet('../orangehrmAdminPlugin/css/systemUserSuccess'); ?>
-<?php use_javascript('../orangehrmAdminPlugin/js/systemUserSuccess'); ?>
-<?php use_javascript('../orangehrmAdminPlugin/js/password_strength'); ?>
 
 <div id="systemUser" class="box single">
     
@@ -27,6 +22,10 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                 
                 <ol>
                     <?php echo $form->render(); ?>
+                    
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
                 </ol>
                 
                 <p>

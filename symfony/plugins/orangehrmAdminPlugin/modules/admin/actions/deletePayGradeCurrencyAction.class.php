@@ -49,7 +49,7 @@ class deletePayGradeCurrencyAction extends sfAction {
 				}				
 			}
 
-            $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::DELETE_SUCCESS)));
+            $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
 			
 		}
 

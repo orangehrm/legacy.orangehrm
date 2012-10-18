@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    
+    var state_li = "location_state_li";
+    var province_li = "location_province_li";
+    $('#location_state').parent('li').prop('id', state_li);    
+    $('#location_province').parent('li').prop('id', province_li); 
+    
     setCountryState();
     
     //on changing of country
@@ -45,15 +51,13 @@ function setCountryState() {
     var show = "display:block;";
 
     if($("#location_country").val() == 'US') {
-        $("#location_state").show();
-        $('label[for="location_state"]').css('display', 'block');
-        $("#location_province").hide();
-        $('label[for="location_province"]').css('display', 'none');
+        $('#location_state_li').show();
+        $('#location_province_li').hide();
+        
     } else {
-        $("#location_state").hide();
-        $('label[for="location_state"]').css('display', 'none');
-        $("#location_province").show();
-        $('label[for="location_province"]').css('display', 'block');
+        $('#location_state_li').hide();
+        $('#location_province_li').show();
+        
     }
 }
     

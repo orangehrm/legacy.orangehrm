@@ -78,7 +78,6 @@ class SystemUserForm extends BaseForm {
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'saveSystemUser', 'SystemUserForm');
 
-        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
         $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 

@@ -9,8 +9,7 @@ $(document).ready(function() {
     
     $('#btnAdd').click(function() {
         $('#jobCategory').show();
-        $('#btnDelete').hide();
-        $('#btnAdd').hide();
+        $('.top').hide();
         $('#jobCategory_name').val('');
         $('#jobCategory_jobCategoryId').val('');
         $('#jobCategoryHeading').html(lang_addJobCat);
@@ -19,7 +18,7 @@ $(document).ready(function() {
     
     $('#btnCancel').click(function() {
         $('#jobCategory').hide();
-        $('#btnDelete').show();
+        $('.top').show();
         $('#btnAdd').show();
         validator.resetForm();
     });
@@ -130,7 +129,6 @@ function getJobCatInfo(url){
 		$('#jobCategory_name').val(data.name);
 		$('#jobCategory').show();
 		$(".messageBalloon_success").remove();
-        $('#btnDelete').hide();
-		$('#btnAdd').hide();
+        $('.top').hide();
 	});
 }

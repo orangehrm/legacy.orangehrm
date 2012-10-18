@@ -3,7 +3,7 @@
 use_javascript('../orangehrmAdminPlugin/js/membershipSuccess');
 ?>
 
-<div id="membership" class="box single double">
+<div id="membership" class="box single">
     
     <div class="head"><h1 id="membershipHeading"><?php echo __("Add Membership"); ?></h1></div>
     
@@ -18,12 +18,15 @@ use_javascript('../orangehrmAdminPlugin/js/membershipSuccess');
                         <?php echo $form['name']->renderLabel(__('Name') . ' <em>*</em>'); ?>
                         <?php echo $form['name']->render(array("class" => "block default editable valid", "maxlength" => 100)); ?>
                     </li>
-                    <li class="required"><em>*</em> required field</li>
+                    
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>                    
                 </ol> 
                 
                 <p>
-                    <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
-                    <input type="button" class="delete" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel");?>"/>
+                    <input type="button" class="savebutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel");?>"/>
                 </p>
             </fieldset>
         </form>

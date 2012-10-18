@@ -1,12 +1,15 @@
 
-<?php // use_stylesheet('../orangehrmAdminPlugin/css/payGradeSuccess'); ?>
-<?php use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess'); ?>
-<?php use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css'); ?>
-<?php use_javascript('../../../scripts/jquery/jquery.autocomplete.js'); ?>
+<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.form.js')?>"></script>
+
+<?php 
+use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess'); 
+use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
+use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+?>
 
 <?php $hasCurrencies = count($currencyList) > 0; ?>
 
-<div id="payGrade" class="box single double">
+<div id="payGrade" class="box single">
     
     <div class="head">
         <h1 id="payGradeHeading"><?php echo __("Add Pay Grade"); ?></h1>
@@ -21,14 +24,18 @@
             <fieldset>
 
                 <ol>
+                    
                     <?php echo $form->render(); ?>
                     
-                    <li class="required"><em>*</em> required field</li>
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
+                    
                 </ol>
 
                 <p>
                     <input type="button" class="addbutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
-                    <input type="button" class="reset tiptip" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>" title="<?php echo __("Cancel"); ?>"/>
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
                 
             </fieldset>
@@ -41,7 +48,7 @@
 
 <?php if ($payGradeId > 0) {
  ?>
-<div id="currency" class="box single double">
+<div id="addEditCurrency" class="box single">
     
     <div class="head">
         <h1 id="currencyHeading"><?php echo __("Assigned Currencies"); ?></h1>
@@ -88,49 +95,71 @@
 
         </form>
         
+    </div>
+    
+</div>
+
+<div id="currency" class="box miniList">
+    
+    <div class="head">
+        <h1 id="currencyListHeading"><?php echo __("Assigned Currencies"); ?></h1>
+    </div>
+    
+    <div class="inner"> 
+        
         <form name="frmDelCurrencies" id="frmDelCurrencies" method="post" action="<?php echo url_for('admin/deletePayGradeCurrency?payGradeId=' . $payGradeId); ?>">
             
             <?php echo $deleteForm['_csrf_token']; ?>
             
             <p id="addDeleteBtnDiv">
-                <input type="button" class="addbutton tiptip" id="btnAddCurrency" value="<?php echo __("Add"); ?>" title="<?php echo __("Add"); ?>"/>
+                <input type="button" class="addbutton" id="btnAddCurrency" value="<?php echo __("Add"); ?>"/>
                 <?php if ($hasCurrencies) { ?>
                 
-                <input type="button" class="delete tiptip" id="btnDeleteCurrency" value="<?php echo __("Delete"); ?>" title="<?php echo __("Delete"); ?>"/>
+                <input type="button" class="delete" id="btnDeleteCurrency" value="<?php echo __("Delete"); ?>"/>
                     
                 <?php } ?>
             </p>
             
-            <?php if ($hasCurrencies) { ?>
-                <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="tblCurrencies">
-                    <thead>
-                        <tr>
-                            <th class="check" width="2%"><input type="checkbox" id="currencyCheckAll" class="checkboxCurr"/></th>
-                            <th width="40%"><?php echo __("Currency") ?></th>
-                            <th width="34%"><?php echo __("Minimum Salary") ?></th>
-                            <th width="34%"><?php echo __("Maximum Salary") ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $row = 0;
-                        foreach ($currencyList as $currency) {
-                            $cssClass = ($row % 2) ? 'even' : 'odd';
-                        ?>
+            <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="tblCurrencies">
+                <thead>
+                    <tr>
+                        <th class="check" width="2%"><input type="checkbox" id="currencyCheckAll" class="checkboxCurr"/></th>
+                        <th width="40%"><?php echo __("Currency") ?></th>
+                        <th width="34%"><?php echo __("Minimum Salary") ?></th>
+                        <th width="34%"><?php echo __("Maximum Salary") ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                if ($hasCurrencies) {
+                    $row = 0;
+                    $cssClass = ($row % 2) ? 'even' : 'odd';
+                    foreach ($currencyList as $currency) {
+                        $cssClass = ($row % 2) ? 'even' : 'odd';
+                ?>
                         <tr class="<?php echo $cssClass; ?>">
                             <td class="check"><input type='checkbox' class='checkboxCurr' name='delCurrencies[]' value="<?php echo $currency->currency_id; ?>"/></td>
                             <td><a href="#" class="editLink"><?php echo __($currency->getCurrencyType()->getCurrencyName()); ?></a></td>
                             <td class=""><?php echo number_format($currency->minSalary, 2, '.', ','); ?></td>
                             <td class=""><?php echo number_format($currency->maxSalary, 2, '.', ','); ?></td>
                         </tr>
-                        <?php
+                <?php
                         $row++;
-                        } ?>
-                    </tbody>
-                </table>
-                <?php } else { ?>
+                    }
+                } else {
+                ?>
+                    <tr class="<?php echo $cssClass; ?>">
+                        <td class="check"></td>
+                        <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                <?php
+                }
+                ?>
+                </tbody>
+            </table>
             
-            <?php } ?>
         </form>
         
     </div>

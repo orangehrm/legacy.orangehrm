@@ -22,30 +22,29 @@
 ?>
 
 <?php 
-use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 use_javascript('../orangehrmAdminPlugin/js/emailNotificationSuccess'); 
 ?>
-
-
-<?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error') || $sf_user->hasFlash('warning')) : ?>
-    <div class="box simple">
-        <?php include_partial('global/form_errors', array('form' => $form)); ?>
-        <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
-    </div>
-<?php endif; ?>
 
 <div id="EmailNotificationList">
     <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 </div>
 
-<div class="paddingLeftRequired">
-    <span class="required">*</span> <?php echo __('Click on a notification type to add subscribers') ?>
-</div>
+
+<!-- help messages are added after the list table printes -->
+<fieldset id="helper_message">
+    <ol>
+        <li class="required">
+            <em>*</em><?php echo __(' Click on a notification type to add subscribers') ?>
+        </li>
+        <li class="required">
+            <em>*</em><?php echo __(' Click on Edit button to enable notifications') ?>
+        </li>
+    </ol>
+</fieldset>
 
 <script type="text/javascript">
-    	var notificationIds = <?php echo str_replace('&#039;', "'", $form->getEnabledNotificationIdListAsJson()) ?> ;
-        var notificationIdList = eval(notificationIds);
+    var notificationIds = <?php echo str_replace('&#039;', "'", $form->getEnabledNotificationIdListAsJson()) ?> ;
+    var notificationIdList = eval(notificationIds);
 	var lang_NameRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
 	var lang_exceed50Charactors = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 100)); ?>';
 	var nationalityInfoUrl = "<?php echo url_for("admin/getNationalityJson?id="); ?>";

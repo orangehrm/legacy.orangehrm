@@ -48,7 +48,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess');
                 <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
                 
                 <p>
-                    <input type="button" class="" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />
+                    <input type="button" class="searchbutton" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />
                     <input type="button" class="reset" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />
                 </p>
                 

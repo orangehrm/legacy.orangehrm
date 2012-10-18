@@ -41,52 +41,62 @@
                     
                     <li>
                         <?php echo $form['jobTitle']->renderLabel(__('Job Title') . ' <em>*</em>'); ?>
-                        <?php echo $form['jobTitle']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
+                        <?php echo $form['jobTitle']->render(array("maxlength" => 100)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['jobDescription']->renderLabel(__('Job Description')); ?>
-                        <?php echo $form['jobDescription']->render(array("class" => "formInputTextArea", "maxlength" => 400)); ?>
+                        <?php echo $form['jobDescription']->render(array("maxlength" => 400)); ?>
                     </li>
                     
+                    <?php
+                        if (empty($form->attachment->id)) {
+                    ?>
                     <li>
                         <?php
-                        if (empty($form->attachment->id)) {
-                            echo $form['jobSpec']->renderLabel(__('Job Specification'), array("class " => "formInputFileUpload"));
-                            echo $form['jobSpec']->render(array("class " => "duplexBox", "size" => 32));
+                            echo $form['jobSpec']->renderLabel(__('Job Specification'), array());
+                            echo "<span>";
+                            echo $form['jobSpec']->render();
                             echo __(CommonMessages::FILE_LABEL_SIZE);
-                        } else {
+                            echo "</span>";
+                        ?>
+                    </li>      
+                    
+                    <?php } else { ?>
+                    <li>
+                        <?php
                             $attachment = $form->attachment;
-                            $linkHtml = "<span id=\"fileLink\"><a target=\"_blank\" class=\"fileLink\" href=\"";
+                            $linkHtml = "<span id=\"fileLink\"><a target=\"_blank\" href=\"";
                             $linkHtml .= url_for('admin/viewJobSpec?attachId=' . $attachment->getId());
                             $linkHtml .= "\">{$attachment->getFileName()}</a></span>";
 
                             echo $form['jobSpecUpdate']->renderLabel(__('Job Specification'));
                             echo $linkHtml;
-                            echo "<br class=\"clear\"/>";
                             echo "<span id=\"radio\">";
-                            echo $form['jobSpecUpdate']->render(array("class" => ""));
-                            echo "<br class=\"clear\"/>";
+                            echo $form['jobSpecUpdate']->render();
                             echo "</span>";
                             echo "<span id=\"fileUploadSection\">";
                             echo $form['jobSpec']->renderLabel(' ');
-                            echo $form['jobSpec']->render(array("class " => "duplexBox", "size" => 32));
-                            echo "<br class=\"clear\"/>";
-                            echo "<span id=\"cvHelp\" class=\"helpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</span>";
+                            echo $form['jobSpec']->render();
+                            echo "<span>" . __(CommonMessages::FILE_LABEL_SIZE) . "</span>";
                             echo "</span>";
-                        }
                         ?>
                     </li>
+                    <?php } ?>
                     
                     <li>
                         <?php echo $form['note']->renderLabel(__('Note')); ?>
-                        <?php echo $form['note']->render(array("class" => "formInputTextArea", "maxlength" => 400)); ?>
+                        <?php echo $form['note']->render(); ?>
+                    </li>
+                    
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                     
                 </ol>
                 
                 <p>
-                    <input type="button" class="addbutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
                     <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
                 

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $('#addEditCurrency').hide();
    
     $('#btnSave').click(function() {  
         
@@ -59,7 +60,9 @@ $(document).ready(function() {
     
     ///// JQuery for currency list
     
-    $('#btnAddCurrency').click(function() {  
+    $('#btnAddCurrency').click(function() {
+        $('#addEditCurrency').show();
+        
         $('#addPaneCurrency').show();
         $('#actionButtons').show();
         $('#addDeleteBtnDiv').hide();
@@ -85,6 +88,8 @@ $(document).ready(function() {
     });
     
     $('#cancelButton').click(function(){
+        $('#addEditCurrency').hide();
+        
         $('#addPaneCurrency').hide();
         $('#actionButtons').hide();
         $('#addDeleteBtnDiv').show();
@@ -101,6 +106,7 @@ $(document).ready(function() {
     });
     
     $('.editLink').click(function(event) {
+        $('#addEditCurrency').show();
 		
         event.preventDefault();
         

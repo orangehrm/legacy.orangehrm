@@ -2,7 +2,7 @@
 <?php
 use_javascript('../orangehrmAdminPlugin/js/employmentStatusSuccess'); ?>
 
-<div class="box single double" id="empStatus">
+<div class="box single" id="empStatus">
     
     <div class="head">
             <h1 id="empStatusHeading"><?php echo __('Add Employment Status'); ?></h1>
@@ -31,8 +31,8 @@ use_javascript('../orangehrmAdminPlugin/js/employmentStatusSuccess'); ?>
                 </ol>
                 
                 <p>
-                    <input type="button" class="savebutton tiptip" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>" title="<?php echo __("Save"); ?>"/>
-                    <input type="button" class="reset tiptip" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>" title="<?php echo __("Cancel"); ?>"/>
+                    <input type="button" class="savebutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
                 
             </fieldset>

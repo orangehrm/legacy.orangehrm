@@ -27,7 +27,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 use_javascript('../orangehrmAdminPlugin/js/jobCategorySuccess'); 
 ?>
 
-<div class="box single double" id="jobCategory">
+<div class="box single" id="jobCategory">
     
     <div class="head">
         <h1 id="jobCategoryHeading"><?php echo __("Job Category") ?></h1>
@@ -50,14 +50,14 @@ use_javascript('../orangehrmAdminPlugin/js/jobCategorySuccess');
                     </li>
                     
                     <li class="required">
-                        <em>*</em> required field
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                     
                 </ol>
                 
                 <p>
-                    <input type="button" class="addbutton tiptip" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>" title="<?php echo __("Save"); ?>"/>
-                    <input type="button" class="reset tiptip" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>" title="<?php echo __("Cancel"); ?>"/>
+                    <input type="button" class="addbutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
                 
             </fieldset>

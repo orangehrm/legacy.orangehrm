@@ -1,12 +1,7 @@
 
 <?php use_javascript('../orangehrmAdminPlugin/js/locationSuccess'); ?>
 
-<?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-<div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >
-    <span><?php echo isset($message) ? $message : ''; ?></span>
-</div>
-
-<div id="location" class="box single double">
+<div id="location" class="box single">
     
     <div class="head">
         <h1 id="locationHeading"><?php echo __("Add Location"); ?></h1>
@@ -23,12 +18,14 @@
                 <ol>
                     <?php echo $form->render(); ?>
                     
-                    <li class="required"><em>*</em> required field</li>
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
                 </ol>
 
                 <p>
                     <input type="button" class="addbutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
-                    <input type="button" class="reset tiptip" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>" title="<?php echo __("Cancel"); ?>"/>
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
                 
             </fieldset>

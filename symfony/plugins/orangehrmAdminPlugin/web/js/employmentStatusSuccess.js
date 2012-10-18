@@ -8,9 +8,9 @@ $(document).ready(function() {
     $('#empStatus').hide();
     
     $('#btnAdd').click(function() {
+        $('.top').hide();
+        
         $('#empStatus').show();
-        $('#btnDelete').hide();
-        $('#btnAdd').hide();
         $('#empStatus_name').val('');
         $('#empStatus_empStatusId').val('');
         $('#empStatusHeading').html(lang_addEmpStatus);
@@ -18,9 +18,9 @@ $(document).ready(function() {
     });
     
     $('#btnCancel').click(function() {
+        $('.top').show();
+        
         $('#empStatus').hide();
-        $('#btnDelete').show();
-        $('#btnAdd').show();
         validator.resetForm();
     });
     
@@ -129,7 +129,6 @@ function getEmploymentInfo(url){
         $('#empStatus_name').val(data.name);
         $('#empStatus').show();
         $(".messageBalloon_success").remove();
-        $('#btnDelete').hide();
-        $('#btnAdd').hide();
+        $('.top').hide();
     });
 }

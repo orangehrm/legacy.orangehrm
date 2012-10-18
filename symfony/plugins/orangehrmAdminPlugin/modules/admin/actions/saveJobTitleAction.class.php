@@ -43,8 +43,10 @@ class saveJobTitleAction extends sfAction {
         if ($request->isMethod('post')) {
             $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
             $file = $request->getFiles($this->form->getName());
+           
             if ($_FILES['jobTitle']['size']['jobSpec'] > 1024000) {
-                $this->templateMessage = array('WARNING', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
+                 
+                $this->getUser()->setFlash('warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
             }
             if ($this->form->isValid()) {
                 $result = $this->form->save();

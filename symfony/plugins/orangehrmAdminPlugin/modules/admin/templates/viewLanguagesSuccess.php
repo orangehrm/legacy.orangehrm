@@ -23,7 +23,7 @@
 use_javascript('../orangehrmAdminPlugin/js/viewLanguagesSuccess');
 ?>
 
-<div class="box single double" id="saveFormDiv">
+<div class="box single" id="saveFormDiv">
     <div class="head">
             <h1 id="saveFormHeading">Add Language</h1>
     </div>
@@ -52,8 +52,8 @@ use_javascript('../orangehrmAdminPlugin/js/viewLanguagesSuccess');
                 </ol>
                 
                 <p>
-                    <input type="button" class="addbutton tiptip" name="btnSave" id="btnSave" value="<?php echo __('Save'); ?>" title="<?php echo __('Save'); ?>"/>
-                    <input type="button" id="btnCancel" class="reset tiptip" value="<?php echo __('Cancel'); ?>" title="<?php echo __('Cancel'); ?>"/>
+                    <input type="button" class="addbutton" name="btnSave" id="btnSave" value="<?php echo __('Save'); ?>"/>
+                    <input type="button" id="btnCancel" class="reset" value="<?php echo __('Cancel'); ?>"/>
                 </p>
                 
             </fieldset>
@@ -66,7 +66,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewLanguagesSuccess');
 
 <!-- Listi view -->
 
-<div id="recordsListDiv" class="box">
+<div id="recordsListDiv" class="box miniList">
     <div class="head">
             <h1><?php echo __('Languages'); ?></h1>
     </div>
@@ -78,8 +78,8 @@ use_javascript('../orangehrmAdminPlugin/js/viewLanguagesSuccess');
         <form name="frmList" id="frmList" method="post" action="<?php echo url_for('admin/deleteLanguages'); ?>">
 
             <p id="listActions">
-                <input type="button" class="addbutton tiptip" id="btnAdd" value="<?php echo __('Add'); ?>" title="<?php echo __('Add'); ?>"/>
-                <input type="button" class="delete tiptip" id="btnDel"value="<?php echo __('Delete'); ?>" title="<?php echo __('Delete'); ?>"/>
+                <input type="button" class="addbutton" id="btnAdd" value="<?php echo __('Add'); ?>"/>
+                <input type="button" class="delete" id="btnDel"value="<?php echo __('Delete'); ?>"/>
             </p>
             
             <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="recordsListTable">
