@@ -29,6 +29,8 @@ class LeaveBalanceReportForm extends BaseForm {
     
     protected $leaveTypeService;    
     
+    protected $leavePeriodService;
+    
     public function getLeaveTypeService() {
         if (!isset($this->leaveTypeService)) {
             $this->leaveTypeService = new LeaveTypeService();
@@ -40,6 +42,17 @@ class LeaveBalanceReportForm extends BaseForm {
     public function setLeaveTypeService(LeaveTypeService $leaveTypeService) {
         $this->leaveTypeService = $leaveTypeService;
     }    
+    
+    public function getLeavePeriodService() {
+        if (!isset($this->leavePeriodService)) {
+            $this->leavePeriodService = new LeavePeriodService();
+        }        
+        return $this->leavePeriodService;
+    }
+
+    public function setLeavePeriodService($leavePeriodService) {
+        $this->leavePeriodService = $leavePeriodService;
+    }
     
     public function configure() {
 
@@ -70,6 +83,8 @@ class LeaveBalanceReportForm extends BaseForm {
             'from_date' => new ohrmDateValidator(array('required' => true)),
             'to_date' => new ohrmDateValidator(array('required' => true))
         )));
+        
+        $this->setDefaultDates();
         
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'viewLeaveBalanceReport', 'LeaveBalanceReportForm');
@@ -117,6 +132,27 @@ class LeaveBalanceReportForm extends BaseForm {
         
         return $labels;
     }
+    
+    protected function setDefaultDates() {
+        $now = time();
+        
+        // If leave period defined, use leave period start and end date
+        $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod($now);        
+        if (!empty($leavePeriod)) {
+            $fromDate = $leavePeriod->getStartDate();
+            $toDate = $leavePeriod->getEndDate();
+        } else {
+            // else use this year as the period
+            $year = date('Y', $now);
+            $fromDate = $year . '-1-1';
+            $toDate = $year . '-12-31';
+        }        
+        
+        $this->setDefault('date', array(
+            'from' => set_datepicker_date_format($fromDate),
+            'to' => set_datepicker_date_format($toDate)));
+
+    }    
     
 }
 

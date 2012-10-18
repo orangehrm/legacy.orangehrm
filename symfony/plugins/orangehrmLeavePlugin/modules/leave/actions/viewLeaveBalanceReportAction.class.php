@@ -48,12 +48,13 @@ class viewLeaveBalanceReportAction extends sfAction {
                     $offset = $this->pager->getOffset();
                     $offset = empty($offset) ? 0 : $offset;
                     $limit = $this->pager->getMaxPerPage();
-
         
                     $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
                     $this->reportName = $this->getReportName($reportId);
 
-                    $this->tableHeaders = $reportBuilder->getDisplayHeaders($reportId);
+                    $headers = $reportBuilder->getDisplayHeaders($reportId);
+                    $this->tableHeaders = $this->fixTableHeaders($reportType, $headers);
+
                     $this->headerInfo = $reportBuilder->getHeaderInfo($reportId);
                     $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);                    
 
@@ -62,6 +63,48 @@ class viewLeaveBalanceReportAction extends sfAction {
         }
     }
     
+    /**
+     * Fix table headings
+     * TODO: Improve report engine to support customizable headers (eg: have a variable in the header)
+     * and grouping fields from multiple tables.
+     * @param type $headers
+     * @return string
+     */
+    protected function fixTableHeaders($reportType, $headers) {
+
+        $nameKey = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 'personalDetails' : 'leavetype';
+      
+        $nameHeader = $headers[$nameKey];
+        $firstHeader = $headers['g1'];
+        $lastHeader = $headers['g6'];
+        
+        unset($headers[$nameKey]);
+        unset($headers['g1']);
+        unset($headers['g6']);
+        
+        $date = $this->form->getValue('date');
+        $firstHeader['groupHeader'] = __('As of') . ' ' . set_datepicker_date_format($date['from']);
+        $lastHeader['groupHeader'] = __('As of') . ' ' . set_datepicker_date_format(date(time()));         
+
+        
+        $otherHeaders = array('groupHeader' => __('From') . ' ' . set_datepicker_date_format($date['from']) . 
+                __('To') . ' ' . set_datepicker_date_format($date['to']));
+        
+        foreach ($headers as $header) {
+            foreach ($header as $key => $label) {
+                if ($key != 'groupHeader') {
+                    $otherHeaders[$key] = $label;                    
+                }
+            }
+        }
+        
+        $tableHeaders = array('first' => $nameHeader,
+                              'second' => $firstHeader,
+                              'rest' => $otherHeaders,
+                              'last' => $lastHeader);
+        
+        return $tableHeaders;
+    }
     private function getReportName($reportId) {
         $dao = new ReportDefinitionDao();
         $report = $dao->getReport($reportId);

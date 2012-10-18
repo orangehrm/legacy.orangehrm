@@ -19,14 +19,15 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
-        <form id="frmLeaveBalanceReport" name="frmLeaveBalanceReport" method="post" action="">
+        <form id="frmLeaveBalanceReport" name="frmLeaveBalanceReport" method="post" 
+              action="<?php echo url_for('leave/viewLeaveBalanceReport') ?>">
 
             <fieldset>                
                 <ol>
                     <?php echo $form->render(); ?>
                 </ol>                   
                 <p>
-                    <input type="submit" name="submit" id="viewBtn" value="<?php echo __('View');?>"/>                    
+                    <input type="button" name="view" id="viewBtn" value="<?php echo __('View');?>"/>                    
                 </p>
             </fieldset>
         </form>
@@ -37,13 +38,11 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 <?php if (!empty($resultsSet)) { ?>
     <div id="report-results" class="box simple" style="display: inline-block">
         <div class="inner">
-            <div class="top">
             <?php if ($pager->haveToPaginate()):?>
-
-                <div style="float: left;display: inline-block;"><?php include_partial('report/report_paging', array('pager' => $pager));?></div>                
-
-            <?php endif; ?> 
+            <div class="top" style="padding-top:25px;">
+                <?php include_partial('report/report_paging', array('pager' => $pager));?>                
             </div>
+            <?php endif; ?> 
             <table class="table" width="<?php echo $tableWidthInfo["tableWidth"];?>" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
 
             <?php $headers = $sf_data->getRaw('tableHeaders');
@@ -119,6 +118,11 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';    
     
+    function submitPage(pageNo) {
+        var actionUrl = $('#frmLeaveBalanceReport').attr('action') + '?pageNo=' + pageNo;
+        $('#frmLeaveBalanceReport').attr('action', actionUrl).submit(); 
+    }
+    
     function toggleReportType(reportType) {
         
         var reportType = $("#leave_balance_report_type").val();
@@ -148,6 +152,10 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     $(document).ready(function() {        
         
         toggleReportType();
+        
+        $('#viewBtn').click(function() {
+            $('#frmLeaveBalanceReport').submit();
+        });
         
         $("#leave_balance_report_type").change(function() {          
             toggleReportType();
