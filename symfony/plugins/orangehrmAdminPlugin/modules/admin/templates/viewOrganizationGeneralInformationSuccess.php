@@ -21,7 +21,7 @@
 
 <?php echo javascript_include_tag('../orangehrmAdminPlugin/js/viewOrganizationGeneralInformationSuccess'); ?>
 
-<div id="general-info" class="box single double twoColumn">
+<div id="general-info" class="box single twoColumn">
         
     <div class="head">
         <h1 id="genInfoHeading"><?php echo __('General Information'); ?></h1>
