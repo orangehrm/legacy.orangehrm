@@ -841,37 +841,47 @@ body.rtl .formError .formErrorArrow {
 
 input.error { border: 1px solid red; }
 
-#general-info label {
+/* ================ .twoColumn styles: Begin ================ */
+
+.twoColumn form ol li label {
 	width:150px;
 }
 
-#general-info ol {
+.twoColumn form ol {
 	margin-bottom:10px;
 }
 
-#general-info li {
+.twoColumn form ol li {
 	width:50%;
 }
 
-#general-info select {
+.twoColumn select {
 	width:239px;
 }
 
-#general-info input[type="radio"], #general-info input[type="checkbox"] {
+.twoColumn form p {
+	padding-top: 0;
+}
+
+/* Seems to specific CSS styles
+.twoColumn input[type="radio"], .twoColumn input[type="checkbox"] {
 	width:auto;
 }
 
-#general-info label[for="Male"], #general-info label[for="Is_Terminated"]{
+.twoColumn label[for="Male"], .twoColumn label[for="Is_Terminated"]{
 	width:250px;
 }
 
-#general-info label[for="Gender"]{
+.twoColumn label[for="Gender"]{
 	height:50px;
 }
+*/
 
-#general-info .full-width {
+.twoColumn .full-width {
 	width:100%;
 }
+
+/* ================ .twoColumn styles: End ================ */
 
 form select.validation-error,
 form input.validation-error {
