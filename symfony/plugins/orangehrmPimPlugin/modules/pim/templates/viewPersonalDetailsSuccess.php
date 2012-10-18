@@ -79,8 +79,8 @@
                             <?php echo $form['DOB']->render(array("class"=>"editable")); ?>
                         </li>
                         <?php if(!$showDeprecatedFields) : ?>
-                        <li class="required">
-                            <em>*</em> required field
+                        <li class="required new">
+                            <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                         </li>
                         <?php endif; ?>
                     </ol>    
@@ -94,18 +94,18 @@
                             <label for="personal_chkSmokeFlag"><?php echo __('Smoker'); ?></label>
                             <?php echo $form['chkSmokeFlag']->render(array("class" => "editable")); ?>
                         </li>
-                        <li>
+                        <li class="new">
                             <label for="personal_txtMilitarySer"><?php echo __("Military Service"); ?></label>
                             <?php echo $form['txtMilitarySer']->render(array("maxlength" => 30, "class" => "editable")); ?>
                         </li>
-                        <li class="required">
+                        <li class="required new">
                             <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                         </li>                    
                     </ol>
                     <?php endif; ?>                        
 
                     <?php  if ($personalInformationPermission->canUpdate()) : ?>
-                    <p class="normal"><input type="button" id="btnSave" value="<?php echo __("Edit"); ?>" /></p>
+                    <p><input type="button" id="btnSave" value="<?php echo __("Edit"); ?>" /></p>
                     <?php endif; ?>
 
                 </fieldset>
