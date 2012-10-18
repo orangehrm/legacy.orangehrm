@@ -11,31 +11,36 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 <?php use_javascript('../orangehrmAdminPlugin/js/systemUserSuccess'); ?>
 <?php use_javascript('../orangehrmAdminPlugin/js/password_strength'); ?>
 
-<?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-<div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >
-    <span><?php echo isset($message) ? $message : ''; ?></span>
-</div>
+<div id="systemUser" class="box single">
+    
+    <div class="head">
+        <h1 id="UserHeading"><?php echo __("Add User"); ?></h1>
+    </div>
+        
+    <div class="inner">
+        
+        <?php include_partial('global/flash_messages'); ?>
 
-<div id="systemUser">
-    <div class="outerbox">
-
-        <div class="mainHeading"><h2 id="UserHeading"><?php echo __("Add User"); ?></h2></div>
         <form name="frmSystemUser" id="frmSystemUser" method="post" action="" >
 
-            <?php echo $form->render(); ?>
-            <br class="clear"/>
-
-            <div class="formbuttons">
-                <input type="button" class="savebutton" name="btnSave" id="btnSave"
-                       value="<?php echo __("Save"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                <input type="button" class="cancelbutton" name="btnCancel" id="btnCancel"
-                       value="<?php echo __("Cancel"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-            </div>
+            <fieldset>
+                
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>
+                
+                <p>
+                    <input type="button" class="addbutton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel"value="<?php echo __("Cancel"); ?>"/>
+                </p>
+                
+            </fieldset>
 
         </form>
+        
     </div>
+    
 </div>
-<div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
 
 <script type="text/javascript">
 	

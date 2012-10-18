@@ -79,7 +79,7 @@ class SystemUserForm extends BaseForm {
         $formExtension->mergeForms($this, 'saveSystemUser', 'SystemUserForm');
 
         sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 
     private function setDefaultValues($locationId) {
@@ -194,13 +194,14 @@ class SystemUserForm extends BaseForm {
      * @return array
      */
     protected function getFormLabels() {
+        $required = '<em>*</em>';
         $labels = array(
-            'userType' => __('User Type') . '<span class="required">*</span>',
-            'employeeName' => __('Employee Name') . '<span class="required">*</span>',
-            'userName' => __('Username') . '<span class="required">*</span>',
-            'password' => __('Password') . '<span class="required passwordRequired">*</span>',
-            'confirmPassword' => __('Confirm Password') . '<span class="required passwordRequired">*</span>',
-            'status' => __('Status') . ' <span class="required">*</span>',
+            'userType' => __('User Type') . $required,
+            'employeeName' => __('Employee Name') . $required,
+            'userName' => __('Username') . $required,
+            'password' => __('Password') . $required,
+            'confirmPassword' => __('Confirm Password') . $required,
+            'status' => __('Status') . $required,
             'chkChangePassword' => __('Change Password'),
         );
 

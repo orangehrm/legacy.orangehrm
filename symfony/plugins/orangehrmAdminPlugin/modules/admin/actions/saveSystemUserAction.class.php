@@ -38,7 +38,9 @@ class saveSystemUserAction extends sfAction {
     }
 
     public function execute($request) {
-
+        
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewSystemUsers');
 
         $this->userId = $request->getParameter('userId');
         $values = array('userId' => $this->userId, 'sessionUser' => $this->getUser()->getAttribute('user'));

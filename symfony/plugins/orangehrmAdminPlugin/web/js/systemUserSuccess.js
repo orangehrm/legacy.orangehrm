@@ -19,10 +19,8 @@ $(document).ready(function() {
     $('#systemUser_secondaryPassword').after('<label class="scoreSec"/>');
 
     if (isEditMode) {
-        $('.passwordDiv').hide();
-        $('.passwordDiv').next('br').hide();
-        $('.secPasswordDiv').hide();
-        $('.secPasswordDiv').next('br').hide();
+        $('.passwordDiv').css("display", "none");
+        $('.secPasswordDiv').css("display", "none");
         $("label[for='systemUser_chkChangePassword']").show();
         $("label[for='systemUser_chkChangeSecPassword']").show();
         $("#systemUser_chkChangePassword").show();
@@ -38,23 +36,19 @@ $(document).ready(function() {
     
     $('#systemUser_chkChangePassword').click(function(){
         $("#systemUser_password").val('');
-        if($(this).attr('checked') == true) {
+        if($(this).is(':checked')) {
             $('.passwordDiv').show();
-            $('.passwordDiv').next('br').show();
         } else {
             $('.passwordDiv').hide();
-            $('.passwordDiv').next('br').hide();
         }
     });
     
     $('#systemUser_chkChangeSecPassword').click(function(){
         $("#systemUser_secondaryPassword").val('');
-        if($(this).attr('checked') == true) {
+        if($(this).is(':checked')) {
             $('.secPasswordDiv').show();
-            $('.secPasswordDiv').next('br').show();
         } else {
             $('.secPasswordDiv').hide();
-            $('.secPasswordDiv').next('br').hide();
         }
     });
     

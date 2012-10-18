@@ -80,3 +80,5 @@ saveJobTitleSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]
+saveSystemUserSuccess:
+  layout: freshorange
