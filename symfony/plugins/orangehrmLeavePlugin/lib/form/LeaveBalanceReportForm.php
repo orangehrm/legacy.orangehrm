@@ -24,12 +24,28 @@
  */
 class LeaveBalanceReportForm extends BaseForm {
     
+    const REPORT_TYPE_LEAVE_TYPE = 1;    
+    const REPORT_TYPE_EMPLOYEE = 2;
+    
+    protected $leaveTypeService;    
+    
+    public function getLeaveTypeService() {
+        if (!isset($this->leaveTypeService)) {
+            $this->leaveTypeService = new LeaveTypeService();
+            $this->leaveTypeService->setLeaveTypeDao(new NewLeaveTypeDao());
+        }
+        return $this->leaveTypeService;
+    }
+
+    public function setLeaveTypeService(LeaveTypeService $leaveTypeService) {
+        $this->leaveTypeService = $leaveTypeService;
+    }    
     
     public function configure() {
 
         $reportTypes = array(0 => 'Please Select', 
-                             3 => 'Leave Type', 
-                             2 => 'Employee');
+                            self::REPORT_TYPE_LEAVE_TYPE => 'Leave Type', 
+                            self::REPORT_TYPE_EMPLOYEE => 'Employee');
         
         // Valid report types, skip 0 option
         $validReportTypes = array_slice(array_keys($reportTypes), 1);
@@ -39,6 +55,11 @@ class LeaveBalanceReportForm extends BaseForm {
                 array('invalid' => CommonMessages::REQUIRED_FIELD,
                       'required' => true)));        
            
+        $this->setWidget('employee', new ohrmWidgetEmployeeNameAutoFill(array('loadingMethod'=>'ajax')));
+        $this->setValidator('employee', new ohrmValidatorEmployeeNameAutoFill());
+        
+        $this->_setLeaveTypeWidget();        
+        
         $this->setWidget('date', new ohrmWidgetFormDateRange(array(
                     'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_from')),
                     'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_to')))
@@ -58,12 +79,42 @@ class LeaveBalanceReportForm extends BaseForm {
         $this->getWidgetSchema()->setFormFormatterName('ListFields');
     }
     
+    private function _setLeaveTypeWidget() {
+
+        $choices = array();
+        
+        $leaveTypeList = $this->getLeaveTypeService()->getLeaveTypeList();
+        $defaultLeaveTypeId = NULL;
+        
+        if (count($leaveTypeList) == 0) {
+            $choices[''] = __('No leave types defined');
+        } else {
+            foreach ($leaveTypeList as $leaveType) {
+                if (is_null($defaultLeaveTypeId)) {
+                    $defaultLeaveTypeId = $leaveType->getId();
+                }
+                $choices[$leaveType->getId()] = $leaveType->getName();            
+            }
+        }
+
+        $this->setWidget('leave_type', new sfWidgetFormChoice(array('choices' => $choices)));
+        $this->setValidator('leave_type', new sfValidatorChoice(array('choices' => array_keys($choices))));
+        
+        if (!is_null($defaultLeaveTypeId)) {
+            $this->setDefault('leave_type', $defaultLeaveTypeId);
+        }        
+        
+    }
+    
     protected function getFormLabels() {
 
         $labels = array(
-            'report_type' => __('Generate For'),
+            'report_type' => 'Generate For',
+            'employee' => 'Employee',
+            'leave_type' => 'Leave Type',
             'date' => 'From'
         );
+        
         return $labels;
     }
     
