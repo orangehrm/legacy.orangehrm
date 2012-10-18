@@ -1,6 +1,6 @@
-DELETE FROM ohrm_advanced_report where id = 3;
+DELETE FROM ohrm_advanced_report where id = 4;
 INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
-(3, 'Leave Balance Report', '
+(4, 'Leave Balance Report', '
 <report>
     <settings>
         <csv>
@@ -188,7 +188,7 @@ ORDER BY ohrm_leave_entitlement.emp_number
         <join_by sub_report="subTable4" id="empNumber"></join_by>  
         <join_by sub_report="subTable5" id="empNumber"></join_by> 
     </join>
-    <page_limit>100</page_limit>
+    <page_limit>20</page_limit>
     <decorators>
         <decorator>
             <decorator_name>ChangeCase1</decorator_name>

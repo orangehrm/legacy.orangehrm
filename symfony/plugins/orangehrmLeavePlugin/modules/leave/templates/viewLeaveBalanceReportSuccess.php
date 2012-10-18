@@ -34,9 +34,81 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     </div> <!-- inner -->    
 </div> 
 
-<div id="report_content">
-<?php //echo $report_content;?>    
-</div>
+<?php if (!empty($resultsSet)) { ?>
+    <div id="report-results" class="box simple" style="display: inline-block">
+        <div class="inner">
+            <div class="top">
+            <?php if ($pager->haveToPaginate()):?>
+
+                <div style="float: left;display: inline-block;"><?php include_partial('report/report_paging', array('pager' => $pager));?></div>                
+
+            <?php endif; ?> 
+            </div>
+            <table class="table" width="<?php echo $tableWidthInfo["tableWidth"];?>" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
+
+            <?php $headers = $sf_data->getRaw('tableHeaders');
+                  $headerInfo = $sf_data->getRaw('headerInfo');?>
+
+                <thead class="fixedHeader">
+                <tr class="heading">
+                    <?php 
+                          foreach($headers as $mainHeader => $subHeaders):  
+                              $subHead = array_shift($subHeaders);
+                    ?>                      
+                    <th class="header" colspan="<?php echo count($subHeaders);?>" style="text-align: center;"><?php echo __($subHead);?></th>
+                    <?php endforeach;?>
+                </tr>
+                <tr class="subHeading">
+                    <?php $i = 0; foreach($headers as $subHeaders): array_shift($subHeaders);?>
+
+                            <?php foreach($subHeaders as $subHeader):?>
+                    <th class="header" style="text-align: center;" width="<?php echo $tableWidthInfo["columnWidth"][$i]; $i++;?>"><?php echo __($subHeader);?></th>
+                            <?php endforeach;?>                    
+                    <?php endforeach;?>
+                </tr>
+                </thead>
+                <?php                
+                    $rowCssClass = "even";
+                    $results = $sf_data->getRaw('resultsSet');?>                
+                <tbody class="scrollContent"> 
+                <?php foreach ($results as $row):              
+                        $rowCssClass = ($rowCssClass === 'odd') ? 'even' : 'odd';?>                      
+                <tr class="<?php echo $rowCssClass;?>">
+                <?php foreach ($row as $key => $column):                            
+                         $info = $headerInfo[$key];
+                         if(is_array($column)):
+                            foreach ($column as $colKey => $colVal):
+                                $headInf = $info[$colKey];                                                                            
+                                if(($headInf["groupDisp"] == "true") && ($headInf["display"] == "true")):?>
+                                    <!--<td><table>-->
+                                    <td width="<?php echo ($headInf["width"] ); ?>"><ul>                                      
+                                        <ul>                                         
+                                        <?php foreach($colVal as $data):?>
+                                               <!--<tr style="height: 10px;"><td headers="10"><?php // echo __($data);?></td></tr>-->                                               
+                                               <li><?php echo __($data);?></li>                                        
+                                        <?php endforeach;?>
+                                        </ul>                                    
+                                     </td>
+                                     <!--</table></td>-->
+                            <?php endif;                                                                                      
+                             endforeach;
+                         else:
+                            if(($info["groupDisp"] == "true") && ($info["display"] == "true")):?>
+                            <td width="<?php echo ($info["width"]);?>"><?php if(($column == "") || is_null($column)):
+                                    echo "---";
+                                else :
+                                    echo __($column);
+                                endif;?></td>
+                      <?php endif;
+                         endif;?>                            
+                 <?php endforeach;?>
+                 </tr>             
+                 <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>    
+    </div>
+<?php } ?>
 
 <script type="text/javascript">
     var employeeReport = <?php echo LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE;?>;

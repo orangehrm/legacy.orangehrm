@@ -1,6 +1,6 @@
-DELETE FROM ohrm_advanced_report where id = 2;
+DELETE FROM ohrm_advanced_report where id = 3;
 INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
-(2, 'Leave Balance Report', '
+(3, 'Leave Balance Report', '
 <report>
     <settings>
         <csv>

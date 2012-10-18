@@ -34,10 +34,39 @@ class viewLeaveBalanceReportAction extends sfAction {
             if ($this->form->isValid()) {
                 $reportType = $this->form->getValue('report_type');
                 if ($reportType != 0) {
-                    //$this->$report_content = $this->getController()->getPresentationFor('report', 'viewReport');
+                    $values = array();
+                    $reportId = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 4 : 3;
+                    $reportBuilder = new ReportBuilder();
+                    $numOfRecords = $reportBuilder->getNumOfRecords($reportId, $values);
+                    $maxPageLimit = $reportBuilder->getMaxPageLimit($reportId);
+                    
+                    $this->pager = new SimplePager('Report', $maxPageLimit);
+                    $this->pager->setPage(($request->getParameter('pageNo') != '') ? $request->getParameter('pageNo') : 0);
+
+                    $this->pager->setNumResults($numOfRecords);
+                    $this->pager->init();
+                    $offset = $this->pager->getOffset();
+                    $offset = empty($offset) ? 0 : $offset;
+                    $limit = $this->pager->getMaxPerPage();
+
+        
+                    $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
+                    $this->reportName = $this->getReportName($reportId);
+
+                    $this->tableHeaders = $reportBuilder->getDisplayHeaders($reportId);
+                    $this->headerInfo = $reportBuilder->getHeaderInfo($reportId);
+                    $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);                    
+
                 }
             }
         }
     }
-
+    
+    private function getReportName($reportId) {
+        $dao = new ReportDefinitionDao();
+        $report = $dao->getReport($reportId);
+        $reportName = $report->getName();
+        return $reportName;
+    }
+    
 }
