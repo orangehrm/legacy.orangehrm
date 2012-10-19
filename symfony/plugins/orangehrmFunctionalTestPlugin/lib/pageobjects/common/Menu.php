@@ -142,13 +142,6 @@ class Menu {
         return new ViewWorkShiftPageObject($selenium);
     }
 
-    public static function goToMemberships(FunctionalTestcase $selenium) {
-        $selenium->selectFrame();
-        $selenium->click(self::$mnuViewMemberships);
-        //$selenium->waitForPageToLoad(self::$config->getTimeoutValue());
-        return new ViewMembershipPageObject($selenium);
-    }
-
     public static function goToNationalities(FunctionalTestcase $selenium) {
         $selenium->selectFrame();
         $selenium->click(self::$mnuViewNationalities);
@@ -171,6 +164,15 @@ class Menu {
         $selenium->selectFrame();
         $selenium->session->execute(array(
              'script' => "var elements = window.document.getElementById('menu_pim_viewPimModule').click();",
+             'args' => array()));
+        $selenium->selectFrame("relative=top");
+        return new UsersListPage($selenium);
+    }
+    
+        public static function goToMemberships(FunctionalTestcase $selenium) {
+        $selenium->selectFrame();
+        $selenium->session->execute(array(
+             'script' => "var elements = window.document.getElementById('menu_admin_membership').click();",
              'args' => array()));
         $selenium->selectFrame("relative=top");
         return new UsersListPage($selenium);

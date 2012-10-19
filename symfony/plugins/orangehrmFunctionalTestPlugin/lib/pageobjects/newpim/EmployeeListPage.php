@@ -34,12 +34,12 @@ class EmployeeListPage {
          $this->list = new BasicList($this->selenium, "//form[@id='frmList_ohrmListComponent']");
            }
            
-    public function clickDelete(){
-         $this->selenium->click($this->btnDelete);
-         $this->selenium->waitForPageToLoad(10);
-         $this->selenium->click($this->btnDialogDelete);      
-        
-    }        
+//    public function clickDelete(){
+//         $this->selenium->click($this->btnDelete);
+//         $this->selenium->waitForPageToLoad(10);
+//         $this->selenium->click($this->btnDialogDelete);      
+//        
+//    }        
       
      public function clickCancelDelete(){
          $this->selenium->click($this->btnDelete);

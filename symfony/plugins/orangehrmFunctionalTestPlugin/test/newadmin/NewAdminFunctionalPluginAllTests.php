@@ -39,6 +39,7 @@ class NewAdminFunctionalPluginAllTests {
 
         $suite = new PHPUnit_Framework_TestSuite('PHPUnit');
         $suite->addTestFile(dirname(__FILE__) . '/UsersListTest.php');
+          $suite->addTestFile(dirname(__FILE__) . '/MembershipsTest.php');
         return $suite;
     }
 

@@ -30,13 +30,27 @@ class UsersListPage {
            }    
     
         public function searchBy($Username, $UserType, $EmployeeName, $Status ){
-        //$this->selenium->selectFrame("relative=top");
+          $this->selenium->click($this->btnExpand);
+        $this->selenium->type($this->txtUsername, $Username);
+        $this->selenium->select($this->cmbUserType, $UserType);
+        $this->selenium->type($this->txtEmployeeName, $EmployeeName);
+        $this->selenium->select($this->cmbStatus, $Status);
+        $this->selenium->click($this->btnSearch);
+        $this->selenium->waitForPageToLoad(10);
+        
+          
+  }
+  
+        public function searchAndReset($Username, $UserType, $EmployeeName, $Status ){
         $this->selenium->click($this->btnExpand);
         $this->selenium->type($this->txtUsername, $Username);
         $this->selenium->select($this->cmbUserType, $UserType);
         $this->selenium->type($this->txtEmployeeName, $EmployeeName);
         $this->selenium->select($this->cmbStatus, $Status);
         $this->selenium->click($this->btnSearch);
+         $this->selenium->waitForPageToLoad(10);
+        $this->selenium->click($this->btnExpand);
+        $this->selenium->click($this->btnReset);
         $this->selenium->waitForPageToLoad(10);
         
           

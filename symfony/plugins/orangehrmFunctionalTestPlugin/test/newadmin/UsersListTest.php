@@ -56,7 +56,21 @@ class UsersListTest extends FunctionalTestcase {
         $this->assertTrue($SystemUsers->list->verifySortingOrder($usrlist, "Username"));
         Helper::logOutIfLoggedIn($this);
     }
-      public function testDeleteEmployeeAndVerify() {
+   public function testSortByUserType() {
+        Helper::loginUser($this, "admin ", "admin");
+        $Users = new UsersListPage($this);
+        $Users = Menu::goToUsers($this);
+        $SystemUsers = new UsersListPage($this);
+        $SystemUsers->sortByFieldName("User Type");
+        $usrlist = array("admin", "samank", "ashan", "kamal", "chuck" ,"samanf" );
+        $this->assertTrue($SystemUsers->list->verifySortingOrder($usrlist, "Username"));
+        $SystemUsers->sortByFieldName("User Type");
+        $usrlist = array("samanf", "chuck", "kamal", "ashan", "samank" , "admin");
+        $this->assertTrue($SystemUsers->list->verifySortingOrder($usrlist, "Username"));
+     
+
+ }
+      public function testDeleteUserAndVerify() {
         $SystemUsers = Helper::loginUser($this, "admin", "admin");
         $Users = new UsersListPage($this);
         $Users = Menu::goToUsers($this);
@@ -68,7 +82,7 @@ class UsersListTest extends FunctionalTestcase {
         Helper::logOutIfLoggedIn($this);
     }
     
-     public function testCancelDeleteEmployeeAndVerify() {
+     public function testCancelDeleteUserAndVerify() {
         $SystemUsers = Helper::loginUser($this, "admin", "admin");
         $Users = new UsersListPage($this);
         $Users = Menu::goToUsers($this);
@@ -104,6 +118,19 @@ class UsersListTest extends FunctionalTestcase {
         Helper::logOutIfLoggedIn($this);
      
     }   
+    
+    public function testSearchAndReset(){
+        Helper::loginUser($this, "admin", "admin");
+        $Users = new UsersListPage($this);
+        $Users = Menu::goToUsers($this);
+        $Users->searchAndReset("ashan", NULL, NULL, NULL );
+        $usrlist = array("admin",  "ashan", "chuck" ,"kamal", "samanf", "samank");
+        $this->assertTrue($Users->getUsersList()->isOnlyItemsListed($usrlist, "Username"));
+        Helper::logOutIfLoggedIn($this);   
+        
+    }
+    
+    
     
     
     

@@ -84,6 +84,9 @@ class EmployeeListTest extends FunctionalTestcase{
         $employeeInformation->sortByFieldName("Id");
         $emplist = array("Saman Kumara", "Saman Nishan", "Ashan Kumara", "Chuck Neel","Pasindu Malin");
         $this->assertTrue($employeeInformation->list->verifySortingOrder($emplist, "First (& Middle) Name"));
+        $employeeInformation->sortByFieldName("Id");
+        $emplist = array("Pasindu Malin", "Chuck Neel", "Ashan Kumara", "Saman Nishan", "Saman Kumara");
+        $this->assertTrue($employeeInformation->list->verifySortingOrder($emplist, "First (& Middle) Name"));
         Helper::logOutIfLoggedIn($this);
     }
     
