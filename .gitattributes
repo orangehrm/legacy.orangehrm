@@ -4393,6 +4393,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/ViewMyLeaveL
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/WorkingWeekPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/AddSystemUserPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/AddUsersPage.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/MembershipsPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/UsersListPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/ViewSystemUsersPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newpim/AddEmployeePage.php -text
@@ -4470,6 +4471,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testcases/ViewLeaveTest
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeaveModulePrerequisites.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeavePrerequisites.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeaveTestData.yml -text
+symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/MembershipsTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NewAdminFunctionalPluginAllTests.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/UsersListTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/testdata/NewAdminPrerequisites.yml -text
