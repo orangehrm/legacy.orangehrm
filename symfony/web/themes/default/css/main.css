@@ -1315,6 +1315,15 @@ table tfoot tr.total td strong {
 .pimPane form p.required em {
 	color:#aa4935;
 }
+.pimPane form ol li span { /* Used in attachments */
+    margin-top: 0; 
+    width: 250px; 
+    float: none;
+}
+.pimPane form ol li label { /* Used in attachments */
+    margin-top: 0; 
+}
+
 /* ================ PIM Styles: End ================ */
 /* ================ Personal Details Styles: Begin ================ */
 .personalDetails form ol {
