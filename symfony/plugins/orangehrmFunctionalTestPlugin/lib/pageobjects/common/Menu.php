@@ -121,13 +121,7 @@ class Menu {
         return new ViewPayGradePageObject($selenium);
     }
 
-    public static function goToJob_EmploymentStatus(FunctionalTestcase $selenium) {
-        $selenium->selectFrame();
-        $selenium->click(self::$mnuViewEmploymentStatus);
-        //$selenium->waitForPageToLoad(self::$config->getTimeoutValue());
-        return new ViewEmploymentStatusPageObject($selenium);
-    }
-
+  
     public static function goToJob_JobCategories(FunctionalTestcase $selenium) {
         $selenium->selectFrame();
         $selenium->click(self::$mnuViewJobCategories);
@@ -175,6 +169,15 @@ class Menu {
         $selenium->selectFrame();
         $selenium->session->execute(array(
              'script' => "var elements = window.document.getElementById('menu_admin_nationality').click();",
+             'args' => array()));
+        $selenium->selectFrame("relative=top");
+        return new UsersListPage($selenium);
+    }
+    
+        public static function goToJob_EmploymentStatus(FunctionalTestcase $selenium) {
+        $selenium->selectFrame();
+        $selenium->session->execute(array(
+             'script' => "var elements = window.document.getElementById('menu_admin_employmentStatus').click();",
              'args' => array()));
         $selenium->selectFrame("relative=top");
         return new UsersListPage($selenium);

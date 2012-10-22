@@ -82,7 +82,7 @@ class NationalitiesTest extends FunctionalTestcase {
             Helper::loginUser($this, "admin", "admin");
             Menu::goToNationalities($this);
             $ViewNationality = new NationalitiesPage($this);
-            $ViewNationality->deleteAllMemeberships();
+            $ViewNationality->deleteAllNationality();
             $this->assertFalse($ViewNationality->list->isItemPresentInColumn("Nationality", "Albanian"));
             Helper::logOutIfLoggedIn($this);
     
