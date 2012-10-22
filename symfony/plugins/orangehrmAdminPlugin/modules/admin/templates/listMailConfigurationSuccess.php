@@ -1,15 +1,115 @@
 <script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.validate.js')?>"></script>
 <?php use_stylesheet('../orangehrmAdminPlugin/css/listMailConfiguration'); ?>
-<div class="formpage3col">
 
-    <?php echo isset($templateMessage)?templateMessage($templateMessage):''; ?>
+<div class="box single twoColumn">
 
-	<div class="outerbox">
-		<div class="mainHeading"><h2><?php echo __("Mail Configuration")?></h2></div>
+    <div class="head">
+        <h1><?php echo __("Mail Configuration")?></h1>
+    </div>
+    
+	<div class="inner">
+        
+        <?php include_partial('global/flash_messages'); ?>
 
 	    <form action="<?php echo url_for('admin/saveMailConfiguration');?>" onsubmit="" method="post" id="frmSave" name="frmSave">
-                <?php echo $form['_csrf_token']; ?>
-	        <input type="hidden" value="UpdateRecord" name="sqlState"/>
+
+            <?php echo $form['_csrf_token']; ?>
+	        
+            <fieldset>
+            
+                <ol>
+                    
+                    <li>
+                        <label for="txtMailAddress"><?php echo __("Mail Sent As")?><em>*</em></label>
+                        <input type="text"  value="<?php  echo $mailAddress;?>" class="formInputText" id="txtMailAddress" name="txtMailAddress"/>
+                    </li>
+                    
+                    <li>
+                        <label for="cmbMailSendingMethod"><?php echo __("Sending Method")?></label>
+                        <select id="cmbMailSendingMethod" name="cmbMailSendingMethod" class="formSelect">
+                            <option value="sendmail" <?php if($emailType == "sendmail"){ echo "selected";} ?> ><?php echo __("Sendmail") ?></option>
+                            <option value="smtp" <?php if($emailType == "smtp"){ echo "selected";} ?>><?php echo __("SMTP") ?></option>
+                        </select>
+                    </li>
+                    
+                    <li id="divsendmailControls">
+                        <label for="txtSendmailPath"><?php echo __("Path to Sendmail")?></label>
+                        <input type="text" id="txtSendmailPath" name="txtSendmailPath" value="<?php echo $sendMailPath;?>" class="formInputText" />
+                    </li>
+                    
+                </ol>
+                
+                <ol id="divsmtpControls">
+                    
+                    <li>
+                        <label for="txtSmtpHost"><?php echo __("SMTP Host") ?> <span class="required">*</span></label>
+                        <input type="text" name="txtSmtpHost" id="txtSmtpHost"  class="formInputText" value="<?php echo $smtpHost;?>" />
+                    </li>
+                    
+                    <li>
+                        <label for="txtSmtpPort"><?php echo __("SMTP Port"); ?> <span class="required">*</span></label>
+                        <input type="text" name="txtSmtpPort" id="txtSmtpPort" class="formInputText" value="<?php echo $smtpPort;?>"/>
+                    </li>
+                    
+                    <li>
+                        <label><?php echo __("Use SMTP Authentication"); ?></label>
+                        <input type="radio" name="optAuth" id="optAuthNONE" class="formRadio" value="none" <?php if($smtpAuth == '' || $smtpAuth == 'none') { echo "checked";}?> />
+                        <label for="optAuthNONE" class="optionlabel"><?php echo __("No") ?></label>
+                        <input type="radio" name="optAuth" id="optAuthLOGIN" class="formRadio" value="login" <?php if($smtpAuth == 'login') { echo "checked";}?>/>
+                        <label for="optAuthLOGIN" class="optionlabel"><?php echo __("Yes") ?></label>
+                    </li>
+                    
+                    <li>
+                        <label for="txtSmtpUser"><?php echo __("SMTP User") ?></label>
+                        <input type="text" name="txtSmtpUser" id="txtSmtpUser" class="formInputText" value="<?php echo $smtpUser;?>" />
+                    </li>
+                    
+                    <li>
+                        <label for="txtSmtpPass"><?php echo __("SMTP Password") ?></label>
+                        <input type="password" name="txtSmtpPass" id="txtSmtpPass" class="formInputText" value="<?php echo $smtpPass;?>" />
+                    </li>
+                    
+                    <li>
+                        <label><?php echo __("User Secure Connection") ?></label>
+                        <input type="radio" name="optSecurity" id="optSecurityNONE" class="formRadio" value="none" <?php if($smtpSecurity == 'none') { echo "checked";}?> />
+                        <label for="optSecurityNONE"  class="optionlabel"><?php echo __("No"); ?></label>
+        
+                        <input type="radio" name="optSecurity" id="optSecuritySSL" class="formRadio" value="ssl" <?php if($smtpSecurity == 'ssl') { echo "checked";}?> />
+                        <label for="optSecuritySSL" class="optionlabel"><?php echo __("SSL") ?></label>
+        
+                        <input type="radio" name="optSecurity" id="optSecurityTLS" class="formRadio" value="tls" <?php if($smtpSecurity == 'tls') { echo "checked";}?> />
+                        <label for="optSecurityTLS" class="optionlabel"><?php echo __("TLS") ?></label>
+                    </li>
+                    
+                </ol>
+
+                <ol>
+                    
+                    <li>
+                        <label for="chkSendTestEmail"><?php echo __("Send Test Email")?></label>
+                        <input type="checkbox" id="chkSendTestEmail" name="chkSendTestEmail"
+                        value="Yes" />
+                    </li>
+                    
+                    <li>
+                        <label for="txtTestEmail"><?php echo __("Test Email Address") ?></label>
+                        <input type="text" name="txtTestEmail" id="txtTestEmail" class="formInputText" />
+                    </li>
+                    
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
+                    
+                </ol>
+                
+                <p>
+                    <input type="button" value="<?php echo __("Edit")?>"   id="editBtn" class=""/>
+                    <input type="button" value="<?php echo __("Reset")?>" id="resetBtn"  tabindex="3"  class="reset"/>
+                </p>
+                
+            </fieldset>
+<!--   
+            <input type="hidden" value="UpdateRecord" name="sqlState"/>
            <table cellspacing="0" cellpadding="0" border="0" width="650px">
                 <tr>
                     <td class="mailTableColumn">
@@ -103,12 +203,12 @@
 	        <div class="formbuttons">
 	            <input type="button" value="<?php echo __("Edit")?>"   id="editBtn" class="editbutton"/>
 	            <input type="button" value="<?php echo __("Reset")?>" id="resetBtn"  tabindex="3"  class="clearbutton"/>
-	        </div>
+	        </div>-->
 
-	    </form>
+        </form>
 
-	</div>
-	<div class="requirednotice"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+    </div>
+
 </div>
 
 <script type="text/javascript"><!--

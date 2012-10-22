@@ -41,10 +41,6 @@ class viewModulesAction extends sfAction {
 
         $this->form = new ModuleForm();
         
-		if ($this->getUser()->hasFlash('templateMessage')) {
-            $this->templateMessage = $this->getUser()->getFlash('templateMessage');
-        }
-        
         if ($request->isMethod('post')) {
             
 			$this->form->bind($request->getParameter($this->form->getName()));
@@ -54,8 +50,8 @@ class viewModulesAction extends sfAction {
                 // Flag index.php to load module configuration
                 $_SESSION['load.admin.viewModules'] = true;
                 
-				$templateMessage = $this->form->save();
-				$this->getUser()->setFlash('templateMessage', $templateMessage);                
+				$result = $this->form->save();
+				$this->getUser()->setFlash($result['messageType'], $result['message']);       
                 $this->redirect('admin/viewModules');
             }
             

@@ -82,33 +82,33 @@ $(document).ready(function() {
 
     });
     
-    $("#customerDialog").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 500,
-        height:'auto',
-        position: 'middle'
-    });
-    
-    $("#copyActivity").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 500,
-        height: 'auto',
-        position: 'middle'
-    });
-    
-    $("#dialogCancel").click(function(){
-        $("#customerDialog").dialog("close");
-    });
-    
-    $("#btnCopy").click(function(){
-        $('.activityDiv').remove();
-        $('#errorHolderCopy').text("");
-        $('#projectName').addClass("inputFormatHint").val(lang_typeHint);
-        $("#copyActivity").dialog("open");
-        
-    });
+//    $("#customerDialog").dialog({
+//        autoOpen: false,
+//        modal: true,
+//        width: 500,
+//        height:'auto',
+//        position: 'middle'
+//    });
+//    
+//    $("#copyActivity").dialog({
+//        autoOpen: false,
+//        modal: true,
+//        width: 500,
+//        height: 'auto',
+//        position: 'middle'
+//    });
+//    
+//    $("#dialogCancel").click(function(){
+//        $("#customerDialog").dialog("close");
+//    });
+//    
+//    $("#btnCopy").click(function(){
+//        $('.activityDiv').remove();
+//        $('#errorHolderCopy').text("");
+//        $('#projectName').addClass("inputFormatHint").val(lang_typeHint);
+//        $("#copyActivity").dialog("open");
+//        
+//    });
     
     $('#projectName').keydown(function(){
         if($('#projectName').val() == lang_typeHint){
@@ -125,12 +125,12 @@ $(document).ready(function() {
         validateThickBox();
     });
     
-    $("#btnCopyCancel").click(function(){
-        $("#copyActivity").dialog("close");
-        $('.activityDiv').remove();
-        $('#errorHolderCopy').text("");
-        $('.project').val("");
-    });
+//    $("#btnCopyCancel").click(function(){
+//        $("#copyActivity").dialog("close");
+//        $('.activityDiv').remove();
+//        $('#errorHolderCopy').text("");
+//        $('.project').val("");
+//    });
     
     $('#btnCopyDig').hide();
     
@@ -187,6 +187,8 @@ $(document).ready(function() {
     $('#dialogSave').click(function(){
         if(validateThickBox()){
             saveCustomer(custUrl+'?customerName='+escape($.trim($('#addCustomer_customerName').val()))+'&description='+escape($('#addCustomer_description').val()));
+        } else {
+            
         }
     });
     
@@ -352,11 +354,6 @@ $(document).ready(function() {
                 maxlength: lang_exceed100Chars
             }
 
-        },
-        errorPlacement: function(error, element) {
-
-            error.appendTo(element.next('div.errorHolder'));
-
         }
     });
      
@@ -367,7 +364,7 @@ function openDialogue(){
     $('#errorHolderName').html("");
     $('#addCustomer_description').val("");
     $('#errorHolderDesc').html("");
-    $("#customerDialog").dialog("open")
+//    $("#customerDialog").dialog("open")
 }
 
 function disableWidgets(){
@@ -701,19 +698,8 @@ function isValidForm(){
                 maxlength: lang_exceed255Chars
             }
 
-        },
-
-        errorPlacement: function(error, element) {
-            //error.appendTo(element.prev('label'));
-            error.appendTo(element.next().next().next('div.errorHolder'));
-            if(element.next().hasClass('errorHolder')) {
-                error.appendTo(element.next('div.errorHolder'));
-            } else if(element.next().next().hasClass('errorHolder')) {
-                error.appendTo(element.next().next('div.errorHolder'));
-            }
-
         }
-
+        
     });
     return true;
 }

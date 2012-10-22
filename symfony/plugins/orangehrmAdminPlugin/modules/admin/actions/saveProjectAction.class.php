@@ -49,6 +49,9 @@ class saveProjectAction extends sfAction {
 	}
 
 	public function execute($request) {
+        
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewProjects');
 
 		$usrObj = $this->getUser()->getAttribute('user');
 		if (!($usrObj->isAdmin() || $usrObj->isProjectAdmin())) {
@@ -98,9 +101,9 @@ class saveProjectAction extends sfAction {
 
 				$projectId = $this->form->save();
 				if ($this->form->edited) {
-					$this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::UPDATE_SUCCESS)));
+					$this->getUser()->setFlash('success', __(TopLevelMessages::UPDATE_SUCCESS));
 				} else {
-					$this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
+					$this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
 				}
 				$this->redirect('admin/saveProject?projectId=' . $projectId);
 			}

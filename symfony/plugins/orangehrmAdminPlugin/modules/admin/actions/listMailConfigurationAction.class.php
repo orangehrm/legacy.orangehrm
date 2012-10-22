@@ -34,10 +34,6 @@ class listMailConfigurationAction extends sfAction {
         $this->smtpUser = $emailConfiguration->getSmtpUsername();
         $this->smtpPass = $emailConfiguration->getSmtpPassword();
         $this->emailType = $emailConfiguration->getMailType();
-
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            $this->templateMessage = $this->getUser()->getFlash('templateMessage');
-        }
         
     }
     

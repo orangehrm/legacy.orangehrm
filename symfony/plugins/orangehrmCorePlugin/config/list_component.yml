@@ -258,10 +258,17 @@ ProjectActivity:
   buttons:
     Add:
       label: Add
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
     Delete:
       label: Delete
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
     Copy:
       label: Copy From
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: '#'
@@ -577,8 +584,12 @@ Subscriber:
     Delete:
       label: Delete
       type: submit
+      class: delete
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
     Back:
       label: Back
+      class: reset
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/admin/deleteSubscribers'

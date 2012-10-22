@@ -16,17 +16,67 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
+?>
 
-echo stylesheet_tag('../orangehrmPimPlugin/css/configurePimSuccess'); ?>
-
-<div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" style="margin-left: 16px;width: 470px;">
-	<span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
-</div>
-
-<div class="outerbox">
-    <div class="mainHeading"><h2><?php echo __('Configure PIM'); ?></h2></div>
-    <div>
+<div class="box single">
+    
+    <div class="head">
+        <h1><?php echo __('Configure PIM'); ?></h1>
+    </div>
+    
+    <div class="inner">
+        
+        <?php include_partial('global/flash_messages'); ?>
+        
         <form id="frmConfigPim" name="frmConfigPim" method="post" action="<?php echo url_for('pim/configurePim') ?>" >
+            
+            <fieldset>
+                
+                
+                
+                <ol>
+                    
+                    <li>
+                        <h2><?php echo __('Show Deprecated Fields'); ?></h2>
+                    </li>
+                    
+                    <li class="checkbox">
+                        <?php echo $form['chkDeprecateFields']->render(); ?>
+                        <?php echo $form['chkDeprecateFields']->renderLabel(__('Show Nick Name, Smoker and Military Service in Personal Details')); ?>
+                    </li>
+                    
+                </ol>
+                
+                <ol>
+                    
+                    <li>
+                        <h2><?php echo __('Country Specific Information'); ?></h2>
+                    </li>
+                    
+                    <li class="checkbox">
+                        <?php echo $form['chkShowSSN']->render(); ?>
+                        <?php echo $form['chkShowSSN']->renderLabel(__('Show SSN field in Personal Details')); ?>
+                    </li>
+                    
+                    <li class="checkbox">
+                        <?php echo $form['chkShowSIN']->render(); ?>
+                        <?php echo $form['chkShowSIN']->renderLabel(__('Show SIN field in Personal Details')); ?>
+                    </li>
+                    
+                    <li class="checkbox">
+                        <?php echo $form['chkShowTax']->render(); ?>
+                        <?php echo $form['chkShowTax']->renderLabel(__('Show US Tax Exemptions menu')); ?>
+                    </li>
+                    
+                </ol>
+                
+                <p>
+                    <input type="button" class="" id="btnSave" value="<?php echo __("Edit"); ?>" tabindex="2" />
+                </p>
+                
+            </fieldset>
+            
+<!--            
             <h3><?php echo __('Show Deprecated Fields'); ?></h3>
             
             <?php echo $form['chkDeprecateFields']->render(array("class" => "formCheckbox")); ?>
@@ -53,8 +103,11 @@ echo stylesheet_tag('../orangehrmPimPlugin/css/configurePimSuccess'); ?>
             <div class="formbuttons">
                 <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Edit"); ?>" tabindex="2" />
             </div>
+            -->
         </form>
+    
     </div>
+
 </div>
 
 <script type="text/javascript">
