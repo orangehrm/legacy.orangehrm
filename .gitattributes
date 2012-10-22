@@ -4374,7 +4374,6 @@ symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/common/Login.php -
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/common/Menu.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/common/Page.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/common/TitledList.php -text
-symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/common/untitled[!!-~]folder/Menu.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/AddHolidayPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/ApplyForLeavePageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/AssignLeavePageObject.php -text
@@ -4394,6 +4393,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/WorkingWeekP
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/AddSystemUserPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/AddUsersPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/MembershipsPage.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/NationalitiesPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/UsersListPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/ViewSystemUsersPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newpim/AddEmployeePage.php -text
@@ -4472,6 +4472,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeaveModulePre
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeavePrerequisites.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeaveTestData.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/MembershipsTest.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NationalitiesTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NewAdminFunctionalPluginAllTests.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/UsersListTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/testdata/NewAdminPrerequisites.yml -text

@@ -6,13 +6,13 @@
  */
 
 /**
- * Description of MembershipsPage
+ * Description of NationalitiesPage
  *
  * @author chinthani
  */
-class MembershipsPage {
-    
-    public $txtMembership = "membership_name";
+class NationalitiesPage {
+       
+    public $txtNationality = "nationality_name";
     public $btnSave = "btnSave";
     public $btnCancel = "btnCancel";
     public $btnAdd = "btnAdd";
@@ -20,18 +20,16 @@ class MembershipsPage {
     public $btnDialogDelete = "dialogDeleteBtn";
     public $btnDialogCancel = "//div[@class='modal-footer']/input[@class='btn reset']";
     public $btnSelectAll = "ohrmList_chkSelectAll";
-    
-    
-    
-    
-     public function __construct(FunctionalTestcase $selenium){
+
+
+       public function __construct(FunctionalTestcase $selenium){
         $this->selenium = $selenium;
         $this->list = new BasicList($this->selenium, "//form[@id='frmList_ohrmListComponent']");
            }
            
-       public function addMembership($Membershipname){
+       public function addNationality($Nationalityname){
         $this->selenium->click($this->btnAdd);
-        $this->selenium->type($this->txtMembership, $Membershipname);
+        $this->selenium->type($this->txtNationality, $Nationalityname);
         $this->selenium->click($this->btnSave);
         $this->selenium->waitForPageToLoad(10);
         
@@ -56,9 +54,8 @@ class MembershipsPage {
          $this->selenium->click($this->btnDelete);
          $this->selenium->waitForPageToLoad(10);
          $this->selenium->click($this->btnDialogCancel);      
+         }
         
-    }     
-           
-}
+    }  
 
 ?>

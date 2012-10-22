@@ -50,3 +50,15 @@ SystemUser:
   SystemUser_USR004: { id: 004, user_role_id: 002, user_name: samank, deleted: '0', user_password: eed952ce40ca495e8dff08ebede924a4, emp_number: 1,date_entered: '2011-06-07 00:00:00', date_modified: null, created_by: 001, status: 1}
   SystemUser_USR005: { id: 005, user_role_id: 002, user_name: ashan,deleted: '0', user_password: b3002f382211e6cd5505b623ed833b75,  emp_number: 3, date_entered: '2011-06-07 00:00:00', date_modified: null, created_by: 001,status: 1}
   SystemUser_USR006: { id: 006, user_role_id: 003, user_name: samanf,deleted: '0', user_password: 03514a52086788db8f7df89d47ca93c6,  emp_number: 5, date_entered: '2011-08-07 00:00:00', date_modified: null, created_by: 001,status: 1}
+
+Membership:
+  Membership_MME001: { id: 001, name: 'Lions Club' }
+  Membership_MME002: { id: 002, name: Abc }
+  
+Nationality:
+    Nationality1: {id: 1, name: Afghan}
+    Nationality2: {id: 2, name: Albanian}
+    Nationality3: {id: 3, name: Algerian}
+    Nationality4: {id: 4, name: American}
+    Nationality5: {id: 5, name: Andorran}
+

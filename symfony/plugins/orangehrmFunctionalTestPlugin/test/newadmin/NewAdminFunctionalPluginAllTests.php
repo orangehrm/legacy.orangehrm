@@ -38,8 +38,9 @@ class NewAdminFunctionalPluginAllTests {
     public static function suite() {
 
         $suite = new PHPUnit_Framework_TestSuite('PHPUnit');
-        $suite->addTestFile(dirname(__FILE__) . '/UsersListTest.php');
-          $suite->addTestFile(dirname(__FILE__) . '/MembershipsTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/UsersListTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/MembershipsTest.php');
+        $suite->addTestFile(dirname(__FILE__) . '/NationalitiesTest.php');
         return $suite;
     }
 
