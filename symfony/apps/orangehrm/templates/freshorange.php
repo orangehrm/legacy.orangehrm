@@ -6,9 +6,10 @@ $cultureElements = explode('_', $sf_user->getCulture());
     
     <head>
 
-    <?php include_http_metas() ?>
-    <?php include_metas() ?>
-    <?php include_title() ?>
+        <title>OrangeHRM</title>
+        
+        <?php include_http_metas() ?>
+        <?php include_metas() ?>
         
         <script type="text/javascript" src="<?php echo public_path('../../scripts/archive.js');?>"></script>
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery-1.7.2.min.js')?>"></script>
@@ -23,7 +24,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.tipTip.minified.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/bootstrap-modal.js')?>"></script>
 
-       <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.core.js')) ?>
+        <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.core.js')) ?>
         <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.datepicker.js')) ?>
         
         <link href="<?php echo public_path('../../symfony/web/jquery/jquery-ui-1.8.21.custom.css')?>" rel="stylesheet" type="text/css"/>
