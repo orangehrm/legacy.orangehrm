@@ -141,8 +141,20 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     });
                     $(this).toggleClass("activated");
                 });
-                /* Toggling search form: Ends */                
+                /* Toggling search form: Ends */
 
+                /* Highlighting firstLevelMenu: Begins */
+                $(".firstLevelMenu").click(function () {
+                    
+                    $(".firstLevelMenu").each(function(){
+                        $(this).parent('li').removeClass('current');
+                    });
+                    
+                    $(this).parent('li').addClass('current');
+                
+                });
+                /* Highlighting firstLevelMenu: Ends */
+                
             });
             
         </script>        

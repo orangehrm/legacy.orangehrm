@@ -94,6 +94,19 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 $(this).toggleClass("activated");
                 return false;
             });
+            
+            /* Highlighting firstLevelMenu: Begins */
+            $(".firstLevelMenu").click(function () {
+
+                $(".firstLevelMenu").each(function(){
+                    $(this).parent('li').removeClass('current');
+                });
+
+                $(this).parent('li').addClass('current');
+
+            });
+            /* Highlighting firstLevelMenu: Ends */
+            
 
         });            
 	    

@@ -46,7 +46,7 @@ function getHtmlId($menuItem) {
         
         <?php foreach ($menuItemArray as $firstLevelItem) : ?>
             
-        <li<?php echo getListItemClass($firstLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>" id="<?php echo getHtmlId($firstLevelItem); ?>"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
+        <li<?php echo getListItemClass($firstLevelItem, $currentItemDetails); ?>><a href="<?php echo empty($firstLevelItem['path'])?'':url_for($firstLevelItem['path']) ?>" id="<?php echo getHtmlId($firstLevelItem); ?>" class="firstLevelMenu"><b><?php echo $firstLevelItem['menuTitle'] ?></b></a>
             
             <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>
             
