@@ -254,6 +254,22 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         
     }
     
+    public function testGetValidLeaveEntitlements() {
+        
+        $entitlementList = TestDataService::loadObjectList('LeaveEntitlement', $this->fixture, 'LeaveEntitlement');
+        
+        $empNumber = 1;
+        $leaveTypeId = 2;
+        $fromDate = '2012-06-01';
+        $toDate = '2012-06-05';
+        $orderField = 'from_date';
+        $order = 'ASC';
+        
+        $expected = array($entitlementList[2], $entitlementList[3]);
+        $results = $this->dao->getValidLeaveEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate, $orderField, $order);
+        $this->_compareEntitlements($expected, $results);
+    }
+    
     public function testSaveLeaveEntitlementUpdate() {
         $id = 3;
         $existingEntitlement = Doctrine_Query::create()

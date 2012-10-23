@@ -151,5 +151,34 @@ class LeaveEntitlementDao extends BaseDao {
         
         return $savedCount;
         
-    }    
+    }   
+    
+    public function getValidLeaveEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate, $orderField, $order) {
+        try {
+
+            $params = array(
+                ':leaveTypeId' => $leaveTypeId,
+                ':empNumber' => $empNumber,
+                ':fromDate' => $fromDate,
+                ':toDate' => $toDate                
+            );
+            $q = Doctrine_Query::create()->from('LeaveEntitlement le')
+                    ->addWhere('le.deleted = 0')
+                    ->addWhere('le.leave_type_id = :leaveTypeId')
+                    ->addWhere('le.emp_number = :empNumber')
+                    ->addWhere('(:fromDate BETWEEN le.from_date AND le.to_date) OR ' .
+                               '(:toDate BETWEEN le.from_date AND le.to_date) OR ' .
+                               '(le.from_date BETWEEN :fromDate AND :toDate)');
+
+            $orderClause = $orderField . ' ' . $order;
+            $orderClause = trim($orderClause);
+            
+            $q->addOrderBy($orderClause);
+
+            $results = $q->execute($params);
+            return $results;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }        
+    }
 }
