@@ -92,13 +92,3 @@ viewModulesSuccess:
   layout: freshorange
 saveProjectSuccess:
   layout: freshorange
-configurePimSuccess:
-  layout: freshorange
-listCustomFieldsSuccess:
-  layout: freshorange
-pimCsvImportSuccess:
-  layout: freshorange
-viewReportingMethodsSuccess:
-  layout: freshorange
-viewTerminationReasonsSuccess:
-  layout: freshorange

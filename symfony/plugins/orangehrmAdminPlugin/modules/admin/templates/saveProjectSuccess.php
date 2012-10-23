@@ -27,7 +27,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                     <li>
                         <?php echo $form['customerName']->renderLabel(__('Customer Name') . ' <em>*</em>'); ?>
                         <span>
-                            <?php echo $form['customerName']->render(array("maxlength" => 52)); ?>
+                            <?php echo $form['customerName']->render(array("class" => "formInputCustomer", "maxlength" => 52)); ?>
                             <a class="btn2" data-toggle="modal" href="#customerDialog" ><?php echo __('Add Customer') ?></a>
                         </span>
                     </li>
@@ -42,7 +42,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                         <span>
                             <?php for ($i = 1; $i <= $form->numberOfProjectAdmins; $i++) { ?>
                                 <span class="" id="<?php echo "projectAdmin_" . $i ?>">
-                                    <?php echo $form['projectAdmin_' . $i]->render(array("maxlength" => 100)); ?>
+                                    <?php echo $form['projectAdmin_' . $i]->render(array("class" => "formInputProjectAdmin", "maxlength" => 100)); ?>
                                     <a class="removeText" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
                                 </span>
                             <?php } ?> 
@@ -76,6 +76,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
 
 <?php if (!empty($projectId)) { ?>
 
+<!-- Add-Activity -->
 <div id="addActivity" class="box single">
     
     <div class="head">
@@ -116,6 +117,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
     </div>
 
 </div>
+<!-- End-of-Add-Project-Activity -->
     
 <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 
@@ -128,17 +130,18 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
         <h3><?php echo __('Add Customer') ?></h3>
     </div>
     <div class="modal-body">
-        <form name="frmAddCustomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
-<!--        <form name="frmname" id="form1">  -->
+        <form name="frmAddCusCtomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
             <fieldset>
                 <ol>
                     <li>
                         <?php echo $customerForm['customerName']->renderLabel(__('Name') . ' <em>*</em>'); ?>
                         <?php echo $customerForm['customerName']->render(array("maxlength" => 52)); ?>
+                        <span id="errorHolderName"></span>
                     </li>
                     <li>
                         <?php echo $customerForm['description']->renderLabel(__('Description')); ?>
                         <?php echo $customerForm['description']->render(array("maxlength" => 255)); ?>
+                        <span id="errorHolderDesc"></span>
                     </li>
                     <li class="required">
                         <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
@@ -148,33 +151,31 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
         </form>
     </div>
     <div class="modal-footer">
-        <button type="submit" id="dialogSave" class="btn" data-dismiss="modal"> <?php echo __('Save'); ?> </button>
-        <button type="button" id="dialogCancel" class="btn reset" data-dismiss="modal"> <?php echo __('Cancel'); ?> </button>
-<!--        
-        <button type="submit" class="btn" data-dismiss="modal">Confirm</button>
-        <button type="button" class="btn reset" data-dismiss="modal">Cancel</button>-->
+        <input type="button"  id="dialogSave" name="dialogSave" class="btn" value="<?php echo __('Save'); ?>" />
+        <input type="button"  id="dialogCancel" name="dialogCancel" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
     </div>
 </div>
 <!-- End-of-Add-customer-window -->
 
 
 <!-- Copy activity -->
-<div class="modal hide" id="copyActivity">
+<div class="modal hide" id="copyActivityModal">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3><?php echo __('Copy Activity') ?></h3>
     </div>
     <div class="modal-body">
-        <form name="frmAddCustomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
-<!--        <form name="frmname" id="form1">  -->
+        <form name="frmCopyAct" id="frmCopyAct" method="post" action="<?php echo url_for('admin/copyActivity?projectId=' . $projectId); ?>">
+            <?php echo $copyActForm['_csrf_token']; ?>
             <fieldset>
                 <ol>
                     <li>
                         <label for="addProjectActivity_activityName"><? echo __("Project Name"); ?> <em>*</em></label>
                         <input type="text" id="projectName" maxlength="52" class="project" name="projectName">
+                        <span id="errorHolderCopy"></span>
                     </li>
-                    <li>
-                        <?php echo $copyActForm['_csrf_token']; ?>
+                    <li id="copyActivityList"> <!-- For adding checkboxes with activities -->
+
                     </li>
                     <li class="required">
                         <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
@@ -184,111 +185,66 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
         </form>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn" name="btnCopyDig" id="btnCopyDig" data-dismiss="modal"><?php echo __("Copy"); ?>"</button>
-        <button type="button" class="btn reset" name="btnCopyCancel" id="btnCopyCancel" data-dismiss="modal"><?php echo __("Cancel"); ?></button>
-<!--        
-        <button type="submit" class="btn" data-dismiss="modal">Confirm</button>
-        <button type="button" class="btn reset" data-dismiss="modal">Cancel</button>-->
+        <input type="button" class="btn" name="btnCopyDig" id="btnCopyDig" value="<?php echo __("Copy"); ?>" />
+        <input type="button" class="btn reset" name="btnCopyCancel" id="btnCopyCancel" data-dismiss="modal" value="<?php echo __("Cancel"); ?>" />
     </div>
 </div>
 <!-- End-of-copy-activity -->
 
-
-<!--
-<div id="customerDialog" title="<?php echo __('Add Customer') ?>"  style="display:none;">
-
-    <div class="dialogButtons">
-        
-        <form name="frmAddCustomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
-
-        <div class="newColumn">
-                <?php echo $customerForm['customerName']->renderLabel(__('Name') . ' <span class="required">*</span>'); ?>
-                <?php echo $customerForm['customerName']->render(array("class" => "formInput", "maxlength" => 52)); ?>
-                <div id="errorHolderName"></div>
+<!-- Delete-confirmation -->
+<div class="modal hide" id="deleteConfModal">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
             </div>
-            <br class="clear"/>
-
-            <div class="newColumn">
-                <?php echo $customerForm['description']->renderLabel(__('Description')); ?>
-                <?php echo $customerForm['description']->render(array("class" => "formInput", "maxlength" => 255)); ?>
-                <div id="errorHolderDesc"></div>
+    <div class="modal-body">
+        <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
             </div>
-            <br class="clear"/>
-        </form>
-        <br class="clear"/>
-        <div class="actionbuttons">
-            <input type="button" id="dialogSave" class="savebutton" value="<?php echo __('Save'); ?>" />
-            <input type="button" id="dialogCancel" class="cancelbutton" value="<?php echo __('Cancel'); ?>" />
-            <br class="clear"/>
+    <div class="modal-footer">
+        <input type="button" class="btn" data-dismiss="modal" id="dialogDeleteBtn" value="<?php echo __('Ok'); ?>" />
+        <input type="button" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
         </div>
-            <div class="DigPaddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
-        </div>
-</div>-->
+</div>
+<!-- Confirmation box HTML: Ends -->
 
-<!--
-<div id="copyActivity" title="<?php echo __('Copy Activity') ?>"  style="display:none;">
-    <br class="clear"/>
-    <label for="addProjectActivity_activityName"><? echo __("Project Name"); ?> <span class="required">*</span></label>
-    <input type="text" id="projectName" maxlength="52" class="project" name="projectName">
-    <div id="errorHolderCopy"></div>
-    <br class="clear">
-    <br class="clear">
-    <form name="frmCopyAct" id="frmCopyAct" method="post" action="<?php echo url_for('admin/copyActivity?projectId=' . $projectId); ?>">
-        <?php echo $copyActForm['_csrf_token']; ?>
-                <div id="copyActivityList">
-
-                </div>
-                <br class="clear">
-                <div class="actionbuttons">
-                    <input type="button" class="savebutton" name="btnCopyDig" id="btnCopyDig"
-                           value="<?php echo __("Copy"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                    <input type="button" class="cancelbutton" name="btnCopyCancel" id="btnCopyCancel"
-                           value="<?php echo __("Cancel"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-
-                </div>
-		<div class="DigPaddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
-            </form>
-        </div>-->
-
-
-        <script type="text/javascript">
-            var employees = <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?> ;
-            var employeeList = eval(employees);
-            var customers = <?php echo str_replace('&#039;', "'", $form->getCustomerListAsJson()); ?> ;
-            var customerList = eval(customers);
-            var customerProjects = <?php echo str_replace('&#039;', "'", $form->getCustomerProjectListAsJson()); ?> ;
-            var customerProjectsList = eval(customerProjects);
-	    <?php if($projectId > 0) { ?>
-	    var activityList = <?php echo str_replace('&#039;', "'", $form->getActivityListAsJson($projectId)); ?>;
-	    <?php } ?>
-            var numberOfProjectAdmins = <?php echo $form->numberOfProjectAdmins; ?>;
-            var lang_typeHint = '<?php echo __("Type for hints") . "..."; ?>';
-            var lang_nameRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
-            var lang_activityNameRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
-            var lang_validCustomer = '<?php echo __(ValidationMessages::INVALID); ?>';
-            var lang_projectRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
-            var lang_exceed50Chars = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 50)); ?>';
-            var lang_exceed255Chars = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>';
-            var lang_exceed100Chars = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 100)); ?>';
-            var custUrl = '<?php echo url_for("admin/saveCustomerJson"); ?>';
-            var projectUrl = '<?php echo url_for("admin/saveProject"); ?>';
-            var urlForGetActivity = '<?php echo url_for("admin/getActivityListJason?projectId="); ?>';
-            var urlForGetProjectList = '<?php echo url_for("admin/getProjectListJson?customerId="); ?>';
-            var deleteActivityUrl = '<?php echo url_for("admin/deleteProjectActivity"); ?>';
-            var cancelBtnUrl = '<?php echo url_for("admin/viewProjects"); ?>';
-            var lang_enterAValidEmployeeName = '<?php echo __(ValidationMessages::INVALID); ?>';
-            var lang_identical_rows = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
-            var lang_noActivities = "<?php echo __("No assigned activities"); ?>";
-            var lang_noActivitiesSelected = "<?php echo __("No activities selected"); ?>";
-            var projectId = '<?php echo $projectId; ?>';
-            var custId = '<?php echo $custId; ?>';
-            var lang_edit = '<?php echo __("Edit"); ?>';
-            var lang_save = "<?php echo __("Save"); ?>";
-            var lang_editProject = '<?php echo __("Edit Project"); ?>';
-            var lang_Project = '<?php echo __("Project"); ?>';
-	    var lang_uniqueCustomer = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
-	    var lang_uniqueName = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
-	    var lang_editActivity = '<?php echo __("Edit Project Activity"); ?>';
-	    var lang_addActivity = '<?php echo __("Add Project Activity"); ?>';
-	    var isProjectAdmin = '<?php echo $isProjectAdmin; ?>';
+<script type="text/javascript">
+    var employees = <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?> ;
+    var employeeList = eval(employees);
+    var customers = <?php echo str_replace('&#039;', "'", $form->getCustomerListAsJson()); ?> ;
+    var customerList = eval(customers);
+    var customerProjects = <?php echo str_replace('&#039;', "'", $form->getCustomerProjectListAsJson()); ?> ;
+    var customerProjectsList = eval(customerProjects);
+    <?php if ($projectId > 0) { ?>
+        var activityList = <?php echo str_replace('&#039;', "'", $form->getActivityListAsJson($projectId)); ?>;
+    <?php } ?>
+    var numberOfProjectAdmins = <?php echo $form->numberOfProjectAdmins; ?>;
+    var lang_typeHint = '<?php echo __("Type for hints") . "..."; ?>';
+    var lang_nameRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
+    var lang_activityNameRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
+    var lang_validCustomer = '<?php echo __(ValidationMessages::INVALID); ?>';
+    var lang_projectRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
+    var lang_exceed50Chars = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 50)); ?>';
+    var lang_exceed255Chars = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>';
+    var lang_exceed100Chars = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 100)); ?>';
+    var custUrl = '<?php echo url_for("admin/saveCustomerJson"); ?>';
+    var projectUrl = '<?php echo url_for("admin/saveProject"); ?>';
+    var urlForGetActivity = '<?php echo url_for("admin/getActivityListJason?projectId="); ?>';
+    var urlForGetProjectList = '<?php echo url_for("admin/getProjectListJson?customerId="); ?>';
+    var deleteActivityUrl = '<?php echo url_for("admin/deleteProjectActivity"); ?>';
+    var cancelBtnUrl = '<?php echo url_for("admin/viewProjects"); ?>';
+    var lang_enterAValidEmployeeName = '<?php echo __(ValidationMessages::INVALID); ?>';
+    var lang_identical_rows = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
+    var lang_noActivities = "<?php echo __("No assigned activities"); ?>";
+    var lang_noActivitiesSelected = "<?php echo __("No activities selected"); ?>";
+    var projectId = '<?php echo $projectId; ?>';
+    var custId = '<?php echo $custId; ?>';
+    var lang_edit = '<?php echo __("Edit"); ?>';
+    var lang_save = "<?php echo __("Save"); ?>";
+    var lang_editProject = '<?php echo __("Edit Project"); ?>';
+    var lang_Project = '<?php echo __("Project"); ?>';
+    var lang_uniqueCustomer = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
+    var lang_uniqueName = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
+    var lang_editActivity = '<?php echo __("Edit Project Activity"); ?>';
+    var lang_addActivity = '<?php echo __("Add Project Activity"); ?>';
+    var isProjectAdmin = '<?php echo $isProjectAdmin; ?>';
 </script>

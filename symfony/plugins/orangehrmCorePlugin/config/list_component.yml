@@ -258,8 +258,6 @@ ProjectActivity:
   buttons:
     Add:
       label: Add
-      data-toggle: modal 
-      data-target: '#deleteConfModal'
     Delete:
       label: Delete
       class: delete
@@ -267,8 +265,9 @@ ProjectActivity:
       data-target: '#deleteConfModal'
     Copy:
       label: Copy From
+      class: reset
       data-toggle: modal 
-      data-target: '#deleteConfModal'
+      data-target: '#copyActivityModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: '#'

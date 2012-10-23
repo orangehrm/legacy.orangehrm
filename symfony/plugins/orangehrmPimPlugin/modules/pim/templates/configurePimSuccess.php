@@ -75,35 +75,7 @@
                 </p>
                 
             </fieldset>
-            
-<!--            
-            <h3><?php echo __('Show Deprecated Fields'); ?></h3>
-            
-            <?php echo $form['chkDeprecateFields']->render(array("class" => "formCheckbox")); ?>
-            <?php echo $form['chkDeprecateFields']->renderLabel(__('Show Nick Name, Smoker and Military Service in Personal Details'),
-                     array('class' => 'chkboxLabel')); ?>                        
-            <br class="clear" />
-            
-            <h3><?php echo __('Country Specific Information'); ?></h3>
-            <?php echo $form['chkShowSSN']->render(array("class" => "formCheckbox")); ?>
-            <?php echo $form['chkShowSSN']->renderLabel(__('Show SSN field in Personal Details'),
-                     array('class' => 'chkboxLabel')); ?>                        
-            <br class="clear" />
 
-            <?php echo $form['chkShowSIN']->render(array("class" => "formCheckbox")); ?>
-            <?php echo $form['chkShowSIN']->renderLabel(__('Show SIN field in Personal Details'),
-                     array('class' => 'chkboxLabel')); ?>                        
-            <br class="clear" />
-
-            <?php echo $form['chkShowTax']->render(array("class" => "formCheckbox")); ?>
-            <?php echo $form['chkShowTax']->renderLabel(__('Show US Tax Exemptions menu'),
-                     array('class' => 'chkboxLabel')); ?>                        
-            <br class="clear" />
-        
-            <div class="formbuttons">
-                <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Edit"); ?>" tabindex="2" />
-            </div>
-            -->
         </form>
     
     </div>
