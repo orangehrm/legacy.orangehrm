@@ -16,39 +16,44 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 
 <?php if (!empty($overlapLeave)) {
 ?>
-    <div id="duplicateWarning" class="confirmBox" style="margin-left:18px;">
-        <div class="confirmInnerBox">
-        <?php echo __('Overlapping Leave Request Found') ?>
-    </div>
-</div>
-
-<table border="0" cellspacing="0" cellpadding="0" style="margin-left: 18px;" class="simpleList">
+<div class="box single">
+    <div class="head"><h1><?php echo __('Overlapping Leave Request Found') ?></h1></div>
+    <div class="inner">
+<table border="0" cellspacing="0" cellpadding="0" class="table">
     <thead>
         <tr>
-            <th width="100px" class="tableMiddleMiddle"><?php echo __("Date") ?></th>
-            <th width="50px" class="tableMiddleMiddle"><?php echo __("No of Hours") ?></th>
-            <th width="100px" class="tableMiddleMiddle"><?php echo __("Leave Period") ?></th>
-            <th width="90px" class="tableMiddleMiddle"><?php echo __("Leave Type") ?></th>
-            <th width="100px" class="tableMiddleMiddle"><?php echo __("Status") ?></th>
-            <th width="150px" class="tableMiddleMiddle"><?php echo __("Comments") ?></th>
+            <tr>
+                <th width="100px"><?php echo __("Date") ?></th>
+                <th width="100px"><?php echo __("No of Hours") ?></th>
+                <th width="100px"><?php echo __("Leave Period") ?></th>
+                <th width="90px"><?php echo __("Leave Type") ?></th>
+                <th width="200px"><?php echo __("Status") ?></th>
+                <th width="150px"><?php echo __("Comments") ?></th>
+            </tr>
         </tr>
     </thead>
     <tbody>
 
-        <?php foreach ($overlapLeave as $leave) {
-        ?>
-            <tr>
-                <td class="odd"><?php echo set_datepicker_date_format($leave->getLeaveDate()) ?></td>
-                <td class="odd"><?php echo $leave->getLeaveLengthHours() ?></td>
-                <td class="odd"><?php echo set_datepicker_date_format($leave->getLeaveRequest()->getLeavePeriod()->getStartDate()) ?></td>
-                <td class="odd"><?php echo $leave->getLeaveRequest()->getLeaveTypeName() ?></td>
-                <td class="odd"><?php echo __($leave->getTextLeaveStatus()); ?></td>
-                <td class="odd"><?php echo $leave->getLeaveComments() ?></td>
+            <?php 
+            $oddRow = true;
+            foreach ($overlapLeave as $leave) {
+                $class = $oddRow ? 'odd' : 'even';
+                $oddRow = !$oddRow;
+            ?>
+            <tr class="<?php echo $class;?>">
+                <td><?php echo set_datepicker_date_format($leave->getLeaveDate()) ?></td>
+                <td><?php echo $leave->getLeaveLengthHours() ?></td>
+                <td><?php echo set_datepicker_date_format($leave->getLeaveRequest()->getLeavePeriod()->getStartDate()) ?></td>
+                <td><?php echo $leave->getLeaveRequest()->getLeaveTypeName() ?></td>
+                <td><?php echo __($leave->getTextLeaveStatus()); ?></td>
+                <td><?php echo $leave->getLeaveComments() ?></td>
             </tr>
         <?php } ?>
 
     </tbody>
 </table>
+    </div>
+</div>
 <?php } ?>
 
 <?php if (count($assignLeaveForm->leaveTypeList) > 1) { ?>
