@@ -99,6 +99,10 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             fromDateBlur($(this).val());
             updateLeaveBalance();
         });
+        
+        $('#applyleave_txtToDate').change(function() {
+            toDateBlur($(this).val());
+        });        
 
         //Show From if same date
         if(trim($("#applyleave_txtFromDate").val()) != displayDateFormat && trim($("#applyleave_txtToDate").val()) != displayDateFormat){
@@ -109,7 +113,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 
         // Bind On change event of From Time
         $('#applyleave_txtFromTime').change(function() {
-            toDateBlur($(this).val());
             fillTotalTime();
         });
 
@@ -153,7 +156,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                     required: true,
                     valid_date: function() {
                         return {
-                            require: true,
+                            required: true,
                             format:datepickerDateFormat,
                             displayFormat:displayDateFormat
                         }
@@ -163,7 +166,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                     required: true,
                     valid_date: function() {
                         return {
-                            retured: true,
+                            required: true,
                             format:datepickerDateFormat,
                             displayFormat:displayDateFormat
                         }
@@ -274,13 +277,9 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         $.each(timeControlIds, function(index, value) {
 
             if (show) {
-                $('#' + value).show();
-                $('label[for="' + value + '"]').show();
-                $('#' + value).next('br').show();
+                $('#' + value).parent('li').show();
             } else {
-                $('#' + value).hide();
-                $('label[for="' + value + '"]').hide();
-                $('#' + value).next('br').hide();
+                $('#' + value).parent('li').hide();
             }
         });
     }
