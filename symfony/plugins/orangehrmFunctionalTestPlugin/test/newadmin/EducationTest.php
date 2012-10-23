@@ -32,6 +32,15 @@ class EducationTest extends FunctionalTestcase {
             Helper::logOutIfLoggedIn($this);
     
     }  
+    public function testAddandCancelEducation() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToQualification_Education($this);
+            $addEducation = new EducationPage($this);
+            $addEducation->addCancelEducation("SSC");
+            $this->assertFalse($addEducation->list->isItemPresentInColumn("Level", "SSC"));
+            Helper::logOutIfLoggedIn($this);
+    
+    }  
     public function testAddSpecialEducation() {
              Helper::loginUser($this, "admin", "admin");
             Menu::goToQualification_Education($this);

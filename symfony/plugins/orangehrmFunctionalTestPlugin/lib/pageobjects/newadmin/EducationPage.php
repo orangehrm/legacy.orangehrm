@@ -67,6 +67,14 @@ class EducationPage {
           
 
     }
+    public function addCancelEducation($Education){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->type($this->txtEducation, $Education);
+        $this->selenium->click($this->btnCancel);
+        $this->selenium->waitForPageToLoad(10);
+        
+          
+  }   
          
          
       }

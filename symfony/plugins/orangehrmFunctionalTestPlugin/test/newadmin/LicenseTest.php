@@ -87,6 +87,16 @@ class LicenseTest extends FunctionalTestcase {
     
     }
     
+        public function testAddandCancelLicenses() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToQualification_Licenses($this);
+            $viewLicenses = new LicensesPage($this);
+            $viewLicenses->addCancelLicenses("SSC");
+            $this->assertFalse($viewLicenses->list->isItemPresentInColumn("Name", "SSC"));
+            Helper::logOutIfLoggedIn($this);
+    
+    } 
+    
 //     public function testCancelDeleteLicensesAndVerify() {
 //        Helper::loginUser($this, "admin", "admin");
 //        Menu::goToQualification_Licenses($this);
