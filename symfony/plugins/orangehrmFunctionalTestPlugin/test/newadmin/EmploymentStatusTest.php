@@ -59,8 +59,8 @@ class EmploymentStatusTest extends FunctionalTestcase {
             Menu::goToJob_EmploymentStatus($this);
             $ViewEmploymentStatus = new EmploymentStatusPage($this);
             $ViewEmploymentStatus->list->clickOnTheItem("Employment Status", "Full Time Contract");
-            $ViewEmploymentStatus->addEmploymentStatus("for month");
-            $this->assertTrue($ViewEmploymentStatus->list->isItemPresentInColumn("Employment Status", "Full Time Contract for month"));
+            $ViewEmploymentStatus->editEmploymentStatus("Temporary");
+            $this->assertTrue($ViewEmploymentStatus->list->isItemPresentInColumn("Employment Status", "Temporary"));
             Helper::logOutIfLoggedIn($this);
     
     }
@@ -97,7 +97,21 @@ class EmploymentStatusTest extends FunctionalTestcase {
         Helper::logOutIfLoggedIn($this);
     }   
     
-    
+//        public function testAddJobCategoriesWithoutData() {
+//            Helper::loginUser($this, "admin", "admin");
+//            Menu::goToJob_EmploymentStatus($this);
+//            $addEmploymentStatus = new EmploymentStatusPage($this);
+//            echo '1';
+//            $addEmploymentStatus->addEmploymentStatusWithOutData();
+//             echo '2';
+//            $this->assertEquals($addEmploymentStatus->getValidationMessage(), "Required");
+//             echo '3';
+//            Helper::logOutIfLoggedIn($this);
+//    
+//   }
+   
+   
+   
 }
 
 ?>

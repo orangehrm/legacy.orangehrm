@@ -122,12 +122,6 @@ class Menu {
     }
 
   
-    public static function goToJob_JobCategories(FunctionalTestcase $selenium) {
-        $selenium->selectFrame();
-        $selenium->click(self::$mnuViewJobCategories);
-        //$selenium->waitForPageToLoad(self::$config->getTimeoutValue());
-        return new ViewJobCategoryPageObject($selenium);
-    }
 
     public static function goToJob_WorkShifts(FunctionalTestcase $selenium) {
         $selenium->selectFrame();
@@ -183,7 +177,32 @@ class Menu {
         return new UsersListPage($selenium);
     }
     
+           public static function goToJob_JobCategories(FunctionalTestcase $selenium) {
+        $selenium->selectFrame();
+        $selenium->session->execute(array(
+             'script' => "var elements = window.document.getElementById('menu_admin_jobCategory').click();",
+             'args' => array()));
+        $selenium->selectFrame("relative=top");
+        return new UsersListPage($selenium);
+    }
     
+               public static function goToQualification_Education(FunctionalTestcase $selenium) {
+        $selenium->selectFrame();
+        $selenium->session->execute(array(
+             'script' => "var elements = window.document.getElementById('menu_admin_viewEducation').click();",
+             'args' => array()));
+        $selenium->selectFrame("relative=top");
+        return new UsersListPage($selenium);
+    }
+    
+                  public static function goToQualification_Licenses(FunctionalTestcase $selenium) {
+        $selenium->selectFrame();
+        $selenium->session->execute(array(
+             'script' => "var elements = window.document.getElementById('menu_admin_viewLicenses').click();",
+             'args' => array()));
+        $selenium->selectFrame("relative=top");
+        return new UsersListPage($selenium);
+    }
     
 
     public static function goToEmailConfiguration(FunctionalTestcase $selenium) {

@@ -4385,12 +4385,14 @@ symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/ViewLeaveSum
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/ViewMyLeaveListPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/leave/WorkingWeekPageObject.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/AddUsersPage.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/EducationPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/EmploymentStatusPage.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/JobCategoriesPage.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/LicensesPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/MembershipsPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/NationalitiesPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/UsersListPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newpim/AddEmployeePage.php -text
-symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newpim/EmployeeInformationPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newpim/EmployeeListPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/recruitment/AddCandidate.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/recruitment/AddVacancy.php -text
@@ -4464,7 +4466,10 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testcases/ViewLeaveTest
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeaveModulePrerequisites.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeavePrerequisites.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/leave/testdata/LeaveTestData.yml -text
+symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/EducationTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/EmploymentStatusTest.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/JobCategoriesTest.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/LicenseTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/MembershipsTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NationalitiesTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NewAdminFunctionalPluginAllTests.php -text

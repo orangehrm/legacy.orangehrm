@@ -61,7 +61,7 @@ class NationalitiesTest extends FunctionalTestcase {
             Menu::goToNationalities($this);
             $ViewNationality = new NationalitiesPage($this);
             $ViewNationality->list->clickOnTheItem("Nationality", "Albanian");
-            $ViewNationality->addNationality("SSC");
+            $ViewNationality->editNationality("SSC");
             $this->assertTrue($ViewNationality->list->isItemPresentInColumn("Nationality", "SSC"));
             Helper::logOutIfLoggedIn($this);
     
@@ -83,7 +83,8 @@ class NationalitiesTest extends FunctionalTestcase {
             Menu::goToNationalities($this);
             $ViewNationality = new NationalitiesPage($this);
             $ViewNationality->deleteAllNationality();
-            $this->assertFalse($ViewNationality->list->isItemPresentInColumn("Nationality", "Albanian"));
+            $nationalitylist = array("Afghan", "Albanian", "Algerian", "American", "Andorran");
+            $this->assertFalse($ViewNationality->list->isOnlyItemsListed($nationalitylist, "Nationality"));
             Helper::logOutIfLoggedIn($this);
     
     }

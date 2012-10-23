@@ -36,7 +36,14 @@ class MembershipsPage {
         $this->selenium->waitForPageToLoad(10);
         
           
-  }    
+  }  
+        public function editMembership($Membershipname){
+        $this->selenium->type($this->txtMembership, $Membershipname);
+        $this->selenium->click($this->btnSave);
+        $this->selenium->waitForPageToLoad(10);
+        
+          
+  }  
   
        public function clickDelete(){
          $this->selenium->click($this->btnDelete);

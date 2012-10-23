@@ -6,13 +6,12 @@
  */
 
 /**
- * Description of EmploymentStatusPage
+ * Description of JobCategoriesPage
  *
  * @author chinthani
  */
-class EmploymentStatusPage {
-           
-    public $txtEmploymentStatus = "empStatus_name";
+class JobCategoriesPage  {
+    public $txtJobCategory = "jobCategory_name";
     public $btnSave = "btnSave";
     public $btnCancel = "btnCancel";
     public $btnAdd = "btnAdd";
@@ -26,43 +25,22 @@ class EmploymentStatusPage {
         $this->list = new BasicList($this->selenium, "//form[@id='frmList_ohrmListComponent']");
            }
            
-       public function addEmploymentStatus($EmploymentStatus){
+       public function addJobCategories($JobCategory){
         $this->selenium->click($this->btnAdd);
-        $this->selenium->type($this->txtEmploymentStatus, $EmploymentStatus);
+        $this->selenium->type($this->txtJobCategory, $JobCategory);
         $this->selenium->click($this->btnSave);
         $this->selenium->waitForPageToLoad(10);
         
           
-  }  
-         public function editEmploymentStatus($EmploymentStatus){
-        $this->selenium->type($this->txtEmploymentStatus, $EmploymentStatus);
+  } 
+        public function editJobCategories($JobCategory){
+        $this->selenium->type($this->txtJobCategory, $JobCategory);
         $this->selenium->click($this->btnSave);
         $this->selenium->waitForPageToLoad(10);
         
           
-  }
-  
-       public function clickDelete(){
-         $this->selenium->click($this->btnDelete);
-         $this->selenium->waitForPageToLoad(10);
-         $this->selenium->click($this->btnDialogDelete);      
-       
-    }
-        public function deleteAllEmploymentStatus() {
-         $this->selenium->click($this->btnSelectAll);
-         $this->selenium->click($this->btnDelete);
-         $this->selenium->waitForPageToLoad(10);
-         $this->selenium->click($this->btnDialogDelete);
-    }
-    
-  
-         public function clickCancelDelete(){
-         $this->selenium->click($this->btnDelete);
-         $this->selenium->waitForPageToLoad(10);
-         $this->selenium->click($this->btnDialogCancel);      
-         }
-            
-         public function addEmploymentStatusWithOutData(){
+  } 
+        public function addJobCategoriesWithOutData(){
         $this->selenium->click($this->btnAdd);
         $this->selenium->click($this->btnSave);
         
@@ -75,6 +53,36 @@ class EmploymentStatusPage {
           echo 'b';
 
     }
+            public  function getStatusMessage(){
+          echo 'a';
+         return $this->selenium->getText("//form[@id='recordsListTable']/tbody/tr/td");
+          echo 'b';
+
+    }
+        
+          
+  
+  
+       public function clickDelete(){
+         $this->selenium->click($this->btnDelete);
+         $this->selenium->waitForPageToLoad(10);
+         $this->selenium->click($this->btnDialogDelete);      
+       
+    }
+        public function deleteAllJobCategories() {
+         $this->selenium->click($this->btnSelectAll);
+         $this->selenium->click($this->btnDelete);
+         $this->selenium->waitForPageToLoad(10);
+         $this->selenium->click($this->btnDialogDelete);
+    }
+    
+  
+         public function clickCancelDelete(){
+         $this->selenium->click($this->btnDelete);
+         $this->selenium->waitForPageToLoad(10);
+         $this->selenium->click($this->btnDialogCancel);      
+         }
+    
     
 }
 

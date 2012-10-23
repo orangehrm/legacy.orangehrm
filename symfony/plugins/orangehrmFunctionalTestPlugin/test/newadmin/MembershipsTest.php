@@ -61,7 +61,7 @@ class MembershipsTest extends FunctionalTestcase {
             Menu::goToMemberships($this);
             $viewMembership = new MembershipsPage($this);
             $viewMembership->list->clickOnTheItem("Membership", "Lions Club");
-            $viewMembership->addMembership("SSC");
+            $viewMembership->editMembership("SSC");
             $this->assertTrue($viewMembership->list->isItemPresentInColumn("Membership", "SSC"));
             Helper::logOutIfLoggedIn($this);
     
@@ -83,8 +83,9 @@ class MembershipsTest extends FunctionalTestcase {
             Menu::goToMemberships($this);
             $viewMembership = new MembershipsPage($this);
             $viewMembership->deleteAllMemeberships();
-            $this->assertFalse($viewMembership->list->isItemPresentInColumn("Membership", "Lions Club"));
-            Helper::logOutIfLoggedIn($this);
+        $membershiplist = array("Abc", "Lions Club");
+        $this->assertFalse($viewMembership->list->isOnlyItemsListed($membershiplist, "Membership"));
+        Helper::logOutIfLoggedIn($this);
     
     }
     
