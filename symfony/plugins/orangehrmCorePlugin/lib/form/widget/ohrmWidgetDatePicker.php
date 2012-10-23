@@ -56,7 +56,10 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
             changeMonth: true,
             changeYear: true,
             yearRange: "-100:+100",
-            firstDay: 1
+            firstDay: 1,
+            onClose: function() {
+                $("#%s").trigger('blur');
+            }            
         });
         
         //$("img.ui-datepicker-trigger").addClass("editable");
@@ -77,6 +80,7 @@ EOF
                         $this->attributes['id'],
                         $this->attributes['id'],
                         public_path('../../symfony/web/themes/default/images/calendar.png'),
+                        $this->attributes['id'],
                         $this->attributes['id']
         );
 
