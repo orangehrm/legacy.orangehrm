@@ -1268,7 +1268,7 @@ CREATE TABLE ohrm_leave_type (
 ) engine=innodb default charset=utf8;
 
 CREATE TABLE ohrm_leave_entitlement (
-  `id` int not null auto_increment,
+  `id` int unsigned not null auto_increment,
   emp_number int(7) not null,
   no_of_days int not null,
   leave_type_id int unsigned not null,
@@ -1282,6 +1282,51 @@ CREATE TABLE ohrm_leave_entitlement (
   created_by_name varchar(255),
   PRIMARY KEY(`id`)
 ) ENGINE = INNODB DEFAULT CHARSET=utf8;
+
+-- Do we need the field duplication here (leave_request and leave)?
+CREATE TABLE `ohrm_leave_request` (
+  `id` int unsigned NOT NULL auto_increment,
+  `leave_type_id` int unsigned NOT NULL,
+  `date_applied` date NOT NULL,
+  `emp_number` int(7) NOT NULL,
+  `leave_comments` varchar(256) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `emp_number` (`emp_number`),
+  KEY `leave_type_id` (`leave_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ohrm_leave` (
+  `id` int(11) NOT NULL,
+  `date` date default NULL,
+  `leave_length_hours` decimal(6,2) unsigned default NULL,
+  `leave_length_days` decimal(4,2) unsigned default NULL,
+  `leave_status` smallint(6) default NULL,
+  `leave_comments` varchar(256) default NULL,
+  `leave_request_id`int unsigned NOT NULL,
+  `leave_type_id` int unsigned NOT NULL,
+  `emp_number` int(7) NOT NULL,
+  `entitlement_id` int unsigned NULL,
+  `start_time` time default NULL,
+  `end_time` time default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `leave_request_type_emp`(`leave_request_id`,`leave_type_id`,`emp_number`),
+  KEY `leave_type_id` (`leave_type_id`),
+  KEY `emp_number` (`emp_number`),
+  KEY `request_status` (`leave_request_id`,`leave_status`),
+  KEY `entitlement_id` (`entitlement_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table ohrm_leave_request
+    add constraint foreign key (emp_number)
+        references hs_hr_employee (emp_number) on delete cascade;
+
+alter table ohrm_leave_request
+    add constraint foreign key (leave_type_id)
+        references ohrm_leave_type (id) on delete cascade;
+
+alter table ohrm_leave
+    add foreign key (leave_request_id)
+        references ohrm_leave_request(id) on delete cascade;
 
 alter table ohrm_leave_type
     add foreign key (operational_country_id)

@@ -24,8 +24,32 @@
  */
 class LeaveEntitlementService extends BaseService {
 
+    protected $leaveConfigService;
     protected $leaveEntitlementDao;
+    protected $leaveEntitlementStrategy;
+    
+    public function getLeaveEntitlementStrategy() {
+        if (!isset($this->leaveEntitlementStrategy)) {
+            
+            $strategyClass = $this->getLeaveConfigService()->getLeaveEntitlementConsumptionStrategy();            
+            $this->leaveEntitlementStrategy = new $strategyClass;
+        }
+        
+        return $this->leaveEntitlementStrategy;
+    }
 
+    public function getLeaveConfigService() {
+        if (!($this->leaveConfigService instanceof LeaveConfigurationService)) {
+            $this->leaveConfigService = new LeaveConfigurationService();
+        }        
+        return $this->leaveConfigService;
+    }
+
+    public function setLeaveConfigService($leaveConfigService) {
+        $this->leaveConfigService = $leaveConfigService;
+    }
+
+    
     public function getLeaveEntitlementDao() {
         if (!($this->leaveEntitlementDao instanceof LeaveEntitlementDao)) {
             $this->leaveEntitlementDao = new LeaveEntitlementDao();
@@ -55,6 +79,14 @@ class LeaveEntitlementService extends BaseService {
     
     public function bulkAssignLeaveEntitlements($employeeNumbers, LeaveEntitlement $leaveEntitlement) {
         return $this->getLeaveEntitlementDao()->bulkAssignLeaveEntitlements($employeeNumbers, $leaveEntitlement);
-    }    
+    }
+    
+    public function getAvailableEntitlements(LeaveParameterObject $leaveParameterObject) {
+        return $this->getLeaveEntitlementStrategy()->getAvailableEntitlements($leaveParameterObject);
+    }
+    
+    public function getValidLeaveEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate, $orderField, $order) {
+        return $this->getLeaveEntitlementDao()->getValidLeaveEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate, $orderField, $order);
+    }
 
 }

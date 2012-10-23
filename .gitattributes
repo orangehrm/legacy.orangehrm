@@ -4499,6 +4499,8 @@ symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByLeaveType.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/upgrade.sql -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveEntitlementDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/NewLeaveTypeDao.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/entitlement/EntitlementConsumptionStrategy.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/entitlement/FIFOEntitlementConsumptionStrategy.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/event/LeaveEvents.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/ApplyLeaveForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/AssignLeaveForm.php -text
@@ -4534,6 +4536,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/applyLeaveSuccess.p
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/assignLeaveSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewLeaveBalanceReportSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewLeaveEntitlementsSuccess.php -text
+symfony/plugins/orangehrmLeavePlugin/test/entitlement/FIFOEntitlementConsumptionStrategyTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveEntitlement.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveType.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php -text
