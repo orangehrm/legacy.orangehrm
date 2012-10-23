@@ -1,19 +1,19 @@
-<link href="<?php echo public_path('../../themes/orange/css/leave.css') ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
 
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<style type="text/css">
-    .error_list {
-        color: #ff0000;
-    }
-</style>
+<?php
 
-<?php use_stylesheets_for_form($applyLeaveForm); ?>
+use_javascripts_for_form($applyLeaveForm);
+use_stylesheets_for_form($applyLeaveForm);
 
-<?php echo stylesheet_tag('../orangehrmCoreLeavePlugin/css/applyLeaveSuccess'); ?>
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
+use_stylesheet(public_path('themes/default/css/jquery/jquery.autocomplete.css'));
+use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+
+?>
+
+<?php if ($applyLeaveForm->hasErrors()): ?>
+    <div class="messagebar">
+        <?php include_partial('global/form_errors', array('form' => $applyLeaveForm)); ?>
+    </div>
+<?php endif; ?>
 
 <?php if (!empty($overlapLeave)) {
 ?>
@@ -22,6 +22,8 @@
         <?php echo __('Overlapping Leave Request Found') ?>
     </div>
 </div>
+
+
 
 <table border="0" cellspacing="0" cellpadding="0" style="margin-left: 18px;" class="simpleList">
     <thead>
@@ -50,34 +52,35 @@
     </tbody>
 </table>
 <?php } ?>
-    <div class="formpage">
-    <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-    <?php if (count($applyLeaveForm->leaveTypeList) > 1) {
-    ?>
-        <div class="outerbox">
-            <div class="mainHeading"><h2 class="paddingLeft"><?php echo __('Apply Leave') ?></h2></div>
-
-        <?php if ($applyLeaveForm->hasErrors()) {
-        ?>
-        <?php echo $applyLeaveForm['txtEmpID']->renderError(); ?>
-        <?php echo $applyLeaveForm['txtLeaveType']->renderError(); ?>
-        <?php echo $applyLeaveForm['txtFromDate']->renderError(); ?>
-        <?php echo $applyLeaveForm['txtToDate']->renderError(); ?>
-        <?php echo $applyLeaveForm['txtLeaveTotalTime']->renderError(); ?>
-        <?php echo $applyLeaveForm['txtComment']->renderError(); ?>
-        <?php echo $applyLeaveForm['txtFromTime']->renderError(); ?>
-        <?php } ?>
+<?php if (count($applyLeaveForm->leaveTypeList) > 1) { ?>
+<div class="box single" id="apply-leave">
+    <div class="head">
+        <h1><?php echo __('Apply Leave') ?></h1>
+    </div>
+    <div class="inner">
+        <?php include_partial('global/flash_messages'); ?>
         <form id="frmLeaveApply" name="frmLeaveApply" method="post" action="">
-            <?php echo $applyLeaveForm->render(); ?>
-            <!-- here we have the button -->
-            <div class="formbuttons paddingLeft">
-                <input type="button" class="applybutton" id="saveBtn" value="<?php echo __('Apply'); ?>" title="<?php echo __('Apply'); ?>"/>
-            </div>
+
+            <fieldset>                
+                <ol>
+                    <?php echo $applyLeaveForm->render(); ?>
+                    <li class="required new">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>                      
+                </ol>            
+                
+                <p>
+                    <input type="button" id="applyBtn" value="<?php echo __("Apply") ?>"/>
+                </p>                
+            </fieldset>
+            
         </form>
-    </div>
-    <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
-    <?php } ?>
-    </div>
+        
+    </div> <!-- inner -->
+    
+</div> <!-- apply leave -->
+<?php } ?>
+
     <script type="text/javascript">
         var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
         var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';
@@ -85,68 +88,16 @@
         var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
         var lang_dateError = '<?php echo __("To date should be after from date") ?>';
 
-        $(document).ready(function() {
-            $.datepicker.setDefaults({showOn: 'click'});
+        $(document).ready(function() {            
 
             showTimeControls(false);
 
-        var rDate = trim($("#applyleave_txtFromDate").val());
-        if (rDate == '') {
-            $("#applyleave_txtFromDate").val(displayDateFormat);
-        }
 
         updateLeaveBalance();
         
         $('#applyleave_txtFromDate').change(function() {
+            fromDateBlur($(this).val());
             updateLeaveBalance();
-        });
-
-        //Bind date picker
-        daymarker.bindElement("#applyleave_txtFromDate",
-        {
-            onSelect: function(date){
-                fromDateBlur(date);
-                updateLeaveBalance();
-            },
-            dateFormat : datepickerDateFormat,
-            onClose: function() {
-                $(this).valid();
-            }
-        });
-
-        $('#applyleave_txtFromDate_Button').click(function(){
-            daymarker.show("#applyleave_txtFromDate");
-
-        });
-        $('#applyleave_txtFromDate').click(function(){
-            daymarker.show("#applyleave_txtFromDate");
-
-        });
-
-        var tDate = trim($("#applyleave_txtToDate").val());
-        if (tDate == '') {
-            $("#applyleave_txtToDate").val(displayDateFormat);
-        }
-
-        //Bind date picker
-        daymarker.bindElement("#applyleave_txtToDate",
-        {
-            onSelect: function(date){
-                toDateBlur(date)
-            },
-            dateFormat : datepickerDateFormat,
-            onClose: function() {
-                $(this).valid();
-            }
-        });
-
-        $('#applyleave_txtToDate_Button').click(function(){
-            daymarker.show("#applyleave_txtToDate");
-
-        });
-        $('#applyleave_txtToDate').click(function(){
-            daymarker.show("#applyleave_txtToDate");
-
         });
 
         //Show From if same date
@@ -158,6 +109,7 @@
 
         // Bind On change event of From Time
         $('#applyleave_txtFromTime').change(function() {
+            toDateBlur($(this).val());
             fillTotalTime();
         });
 
@@ -189,9 +141,9 @@
         }
 
         // Fetch and display available leave when leave type is changed
-            $('#applyleave_txtLeaveType').change(function() {
-                updateLeaveBalance();
-            });
+        $('#applyleave_txtLeaveType').change(function() {
+            updateLeaveBalance();
+        });
 
         //Validation
         $("#frmLeaveApply").validate({
@@ -201,6 +153,7 @@
                     required: true,
                     valid_date: function() {
                         return {
+                            require: true,
                             format:datepickerDateFormat,
                             displayFormat:displayDateFormat
                         }
@@ -210,6 +163,7 @@
                     required: true,
                     valid_date: function() {
                         return {
+                            retured: true,
                             format:datepickerDateFormat,
                             displayFormat:displayDateFormat
                         }
@@ -251,12 +205,6 @@
                 },
                 'applyleave[txtToTime]':{
                     validToTime:"<?php echo __('From time should be less than To time'); ?>"
-                }
-            },
-            errorElement : 'div',
-            errorPlacement: function(error, element) {
-                if (element.css('display') != 'none') {
-                    error.insertAfter(element.next());
                 }
             }
         });
@@ -308,7 +256,7 @@
         });
 
         //Click Submit button
-        $('#saveBtn').click(function(){
+        $('#applyBtn').click(function(){
             if($('#applyleave_txtFromDate').val() == displayDateFormat){
                 $('#applyleave_txtFromDate').val("");
             }

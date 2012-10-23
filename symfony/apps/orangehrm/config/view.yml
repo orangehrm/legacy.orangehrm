@@ -41,4 +41,11 @@ viewMyLeaveBalanceReportSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]         
-  
+applyLeaveSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]      
+assignLeaveSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]        

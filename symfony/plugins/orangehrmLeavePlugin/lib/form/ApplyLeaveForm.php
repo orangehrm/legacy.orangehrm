@@ -46,7 +46,7 @@ class ApplyLeaveForm extends sfForm {
 
         $this->getWidgetSchema()->setNameFormat('applyleave[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
     }
 
     /**
@@ -422,14 +422,14 @@ class ApplyLeaveForm extends sfForm {
         $widgets = array(
             'txtEmpID' => new sfWidgetFormInputHidden(),
             'txtEmpWorkShift' => new sfWidgetFormInputHidden(),
-            'txtLeaveType' => new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeList()), array('class' => 'formSelect')),
+            'txtLeaveType' => new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeList())),
             'leaveBalance' => new ohrmWidgetDiv(),            
-            'txtFromDate' => new ohrmWidgetDatePickerOld(array(), array('id' => 'applyleave_txtFromDate'), array('class' => 'formDateInput')),
-            'txtToDate' => new ohrmWidgetDatePickerOld(array(), array('id' => 'applyleave_txtToDate'), array('class' => 'formDateInput')),
-            'txtFromTime' => new sfWidgetFormChoice(array('choices' => $this->getTimeChoices()), array('class' => 'formSelect')),
-            'txtToTime' => new sfWidgetFormChoice(array('choices' => $this->getTimeChoices()), array('class' => 'formSelect')),
-            'txtLeaveTotalTime' => new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'class' => 'formInputText')),
-            'txtComment' => new sfWidgetFormTextarea(array(), array('rows' => '3', 'cols' => '30')),
+            'txtFromDate' => new ohrmWidgetDatePicker(array(), array('id' => 'applyleave_txtFromDate')),
+            'txtToDate' => new ohrmWidgetDatePicker(array(), array('id' => 'applyleave_txtToDate')),
+            'txtFromTime' => new sfWidgetFormChoice(array('choices' => $this->getTimeChoices())),
+            'txtToTime' => new sfWidgetFormChoice(array('choices' => $this->getTimeChoices())),
+            'txtLeaveTotalTime' => new sfWidgetFormInput(array(), array('readonly' => 'readonly')),
+            'txtComment' => new sfWidgetFormTextarea(array(), array('rows' => '3', 'cols' => '30'))
         );
 
         return $widgets;
@@ -464,7 +464,7 @@ class ApplyLeaveForm extends sfForm {
      * @return array
      */
     protected function getFormLabels() {
-        $requiredMarker = ' <span class="required">*</span>';
+        $requiredMarker = ' <em>*</em>';
         
         $labels = array(
             'txtLeaveType' => __('Leave Type') . $requiredMarker,

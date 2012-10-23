@@ -85,21 +85,11 @@ class applyLeaveAction extends baseLeaveAction {
     public function setLeaveRequestService(LeaveRequestService $service) {
         $this->leaveRequestService = $service;
     }
-
-    /**
-     * @param sfForm $form
-     * @return
-     */
-    public function setForm(sfForm $form) {
-        if (is_null($this->applyLeaveForm)) {
-            $this->applyLeaveForm = $form;
-        }
-    }
-
+    
     public function execute($request) {
 
-        $form = $this->getApplyLeaveForm();
-        $this->setForm($form);
+        $this->applyLeaveForm = $this->getApplyLeaveForm();
+
         $this->overlapLeaves = 0;
 
         //this section is to save leave request
@@ -107,18 +97,18 @@ class applyLeaveAction extends baseLeaveAction {
             $this->applyLeaveForm->bind($request->getParameter($this->applyLeaveForm->getName()));
             if ($this->applyLeaveForm->isValid()) {
                 try {
-                    $leaveParameters = $this->getLeaveParameterObject($form->getValues());
+                    $leaveParameters = $this->getLeaveParameterObject($this->applyLeaveForm->getValues());
 
                     $success = $this->getLeaveApplicationService()->applyLeave($leaveParameters);
 
                     if ($success) {
-                        $this->templateMessage = array('SUCCESS', __('Successfully Submitted'));
+                        $this->getUser()->setFlash('success', __('Successfully Submitted'));
                     } else {
                         $this->overlapLeave = $this->getLeaveApplicationService()->getOverlapLeave();
-                        $this->templateMessage = array('WARNING', __('Failed to Submit'));
+                        $this->getUser()->setFlash('warning', __('Failed to Submit'));
                     }
                 } catch (LeaveAllocationServiceException $e) {
-                    $this->templateMessage = array('WARNING', __($e->getMessage()));
+                    $this->getUser()->setFlash('warning', __($e->getMessage()));
                 }
             }
         }
@@ -154,7 +144,7 @@ class applyLeaveAction extends baseLeaveAction {
         //Check for available leave types
         $leaveTypes = $this->getElegibleLeaveTypes();
         if (count($leaveTypes) == 1) {
-            $this->templateMessage = array('WARNING', __('No Leave Types with Leave Balance'));
+            $this->getUser()->setFlash('warning', __('No Leave Types with Leave Balance'));
         }
         $form = new ApplyLeaveForm(array(), array('leaveTypes' => $leaveTypes), true);
 
