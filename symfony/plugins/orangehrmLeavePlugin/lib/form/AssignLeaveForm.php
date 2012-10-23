@@ -46,7 +46,7 @@ class AssignLeaveForm extends sfForm {
 
         $this->getWidgetSchema()->setNameFormat('assignleave[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
     }        
 
     /**
@@ -187,16 +187,18 @@ class AssignLeaveForm extends sfForm {
      * @return array
      */
     protected function getFormWidgets() {
+        $timeChoices = $this->getTimeChoices();
+        
         $widgets = array(
-            'txtEmployee' => new ohrmWidgetEmployeeNameAutoFill(array('jsonList' => $this->getEmployeeListAsJson()), array('class' => 'formInputText')),
+            'txtEmployee' => new ohrmWidgetEmployeeNameAutoFill(array('jsonList' => $this->getEmployeeListAsJson())),
             'txtEmpWorkShift' => new sfWidgetFormInputHidden(),
-            'txtLeaveType' => new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeList()), array('class' => 'formSelect')),
+            'txtLeaveType' => new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeList())),
             'leaveBalance' => new ohrmWidgetDiv(array(), array('style' => 'float:left;padding-top: 6px;')),
-            'txtFromDate' => new ohrmWidgetDatePickerOld(array(), array('id' => 'assignleave_txtFromDate'), array('class' => 'formDateInput')),
-            'txtToDate' => new ohrmWidgetDatePickerOld(array(), array('id' => 'assignleave_txtToDate'), array('class' => 'formDateInput')),
-            'txtFromTime' => new sfWidgetFormChoice(array('choices' => $this->getTimeChoices()), array('class' => 'formSelect')),
-            'txtToTime' => new sfWidgetFormChoice(array('choices' => $this->getTimeChoices()), array('class' => 'formSelect')),
-            'txtLeaveTotalTime' => new sfWidgetFormInput(array(), array('readonly' => 'readonly', 'class' => 'formInputText')),
+            'txtFromDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtFromDate')),
+            'txtToDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtToDate')),
+            'txtFromTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
+            'txtToTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
+            'txtLeaveTotalTime' => new sfWidgetFormInput(array(), array('readonly' => 'readonly')),
             'txtComment' => new sfWidgetFormTextarea(array(), array('rows' => '3', 'cols' => '30')),
         );
 
@@ -232,7 +234,7 @@ class AssignLeaveForm extends sfForm {
      * @return array
      */
     protected function getFormLabels() {
-        $requiredMarker = ' <span class="required">*</span>';
+        $requiredMarker = ' <em>*</em>';
         
         $labels = array(
             'txtEmployee' => __('Employee Name') . $requiredMarker,
