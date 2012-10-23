@@ -4510,6 +4510,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlementTa
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveType.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveTypeTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/parameterholder/LeaveEntitlementSearchParameterHolder.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveConfigurationService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveEntitlementService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/task/upgradeLeaveModuleTask.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/addLeaveEntitlementAction.class.php -text
@@ -4532,6 +4533,7 @@ symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveEntitlement.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveType.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/NewLeaveTypeDaoTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveConfigurationServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveEntitlementServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/orangehrmLeavePluginAllTests.php -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text
