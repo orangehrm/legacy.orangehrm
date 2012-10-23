@@ -82,7 +82,7 @@ class HomePageService {
             if ($isAdmin || $isSupervisor) {
                 return 'leave/viewLeaveList/reset/1';
             } else {
-                return 'time/viewMyLeaveList';
+                return 'leave/viewMyLeaveList';
             }
             
         } else {

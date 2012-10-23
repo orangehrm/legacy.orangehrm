@@ -4521,6 +4521,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeeCo
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveBalanceReportAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveEntitlementsAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveBalanceReportAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveEntitlementsAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/addLeaveEntitlementSuccess.php -text
