@@ -6,54 +6,55 @@
  */
 
 /**
- * Description of NationalitiesPage
+ * Description of LanguagePage
  *
  * @author chinthani
  */
-class NationalitiesPage {
-       
-    public $txtNationality = "nationality_name";
+class LanguagePage {
+    public $txtLanguage = "language_name";
     public $btnSave = "btnSave";
     public $btnCancel = "btnCancel";
     public $btnAdd = "btnAdd";
-    public $btnDelete = "btnDelete";
+    public $btnDelete = "btnDel";
     public $btnDialogDelete = "dialogDeleteBtn";
     public $btnDialogCancel = "//div[@class='modal-footer']/input[@class='btn reset']";
-    public $btnSelectAll = "ohrmList_chkSelectAll";
-
-
-       public function __construct(FunctionalTestcase $selenium){
+    public $btnSelectAll = "checkAll";
+    
+    
+    
+    
+     public function __construct(FunctionalTestcase $selenium){
         $this->selenium = $selenium;
-        $this->list = new BasicList($this->selenium, "//form[@id='frmList_ohrmListComponent']");
+        $this->list = new BasicList($this->selenium, "//form[@id='frmList']");
            }
            
-       public function addNationality($Nationalityname){
+       public function addLanguage($Language){
         $this->selenium->click($this->btnAdd);
-        $this->selenium->type($this->txtNationality, $Nationalityname);
+        $this->selenium->type($this->txtLanguage, $Language);
         $this->selenium->click($this->btnSave);
         $this->selenium->waitForPageToLoad(10);
         
           
-  }   
-         public function editNationality($Nationalityname){
-        $this->selenium->type($this->txtNationality, $Nationalityname);
+  }  
+        public function editLanguage($Language){
+        $this->selenium->type($this->txtLanguage, $Language);
         $this->selenium->click($this->btnSave);
         $this->selenium->waitForPageToLoad(10);
         
           
-  } 
+  }  
   
        public function clickDelete(){
          $this->selenium->click($this->btnDelete);
-         $this->selenium->waitForPageToLoad(10);
-         $this->selenium->click($this->btnDialogDelete);      
+//         $this->selenium->waitForPageToLoad(10);
+//         $this->selenium->click($this->btnDialogDelete);      
        
     }
-        public function deleteAllNationality() {
+        public function deleteAllLanguage() {
          $this->selenium->click($this->btnSelectAll);
          $this->selenium->click($this->btnDelete);
-         $this->selenium->waitForPageToLoad(10);
-         $this->selenium->click($this->btnDialogDelete);
+//         $this->selenium->waitForPageToLoad(10);
+//         $this->selenium->click($this->btnDialogDelete);
     }
     
   
@@ -61,25 +62,21 @@ class NationalitiesPage {
          $this->selenium->click($this->btnDelete);
          $this->selenium->waitForPageToLoad(10);
          $this->selenium->click($this->btnDialogCancel);      
-         }
-       
-        public  function getStatusMessage(){
-          
-         return $this->selenium->getText("//form[@id='frmList_ohrmListComponent']/table/tbody/tr/td");
+        
+    }     
+          public  function getStatusMessage(){
+          return $this->selenium->getText("//table[@id='recordsListTable']/tbody/tr/td");
           
 
     }
-        public function addCancelNationality($Nationality){
+        public function addCancelLanguage($Language){
         $this->selenium->click($this->btnAdd);
-        $this->selenium->type($this->txtNationality, $Nationality);
+        $this->selenium->type($this->txtLanguage, $Language);
         $this->selenium->click($this->btnCancel);
         $this->selenium->waitForPageToLoad(10);
         
           
   }
-         
-         
-         
-    }  
+}
 
 ?>

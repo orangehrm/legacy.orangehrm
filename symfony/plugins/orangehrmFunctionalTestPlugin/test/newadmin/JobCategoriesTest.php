@@ -83,6 +83,7 @@ class JobCategoriesTest extends FunctionalTestcase {
             $viewJobCategories->deleteAllJobCategories();
             $jobCategoriesist = array("Craft Workers", "Laborers and Helpers", "Office and Clerical Workers", "Officials and Managers", "Operatives", "Professionals");
             $this->assertFalse($viewJobCategories->list->isOnlyItemsListed($jobCategoriesist, "Job Category"));
+            $this->assertEquals($viewJobCategories->getStatusMessage(), "No Records Found");
             Helper::logOutIfLoggedIn($this);
     
     }
@@ -112,7 +113,15 @@ class JobCategoriesTest extends FunctionalTestcase {
 //    
 //   }  
     
+            public function testAddandCancelJobCategories() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToJob_JobCategories($this);
+            $viewJobCategories = new JobCategoriesPage($this);
+            $viewJobCategories->addCancelJobCategories("SSC");
+            $this->assertFalse($viewJobCategories->list->isItemPresentInColumn("Job Category", "SSC"));
+            Helper::logOutIfLoggedIn($this);
     
+    } 
     
     
     

@@ -64,7 +64,22 @@ class MembershipsPage {
          $this->selenium->waitForPageToLoad(10);
          $this->selenium->click($this->btnDialogCancel);      
         
-    }     
+    } 
+    
+       public  function getStatusMessage(){
+        return $this->selenium->getText("//form[@id='frmList_ohrmListComponent']/table/tbody/tr/td");
+        }
+            
+        public function addCancelMemeberships($Memeberships){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->type($this->txtMembership, $Memeberships);
+        $this->selenium->click($this->btnCancel);
+        $this->selenium->waitForPageToLoad(10);
+        
+          
+  }    
+        
+        
            
 }
 

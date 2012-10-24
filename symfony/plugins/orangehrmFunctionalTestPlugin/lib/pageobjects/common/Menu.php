@@ -204,6 +204,14 @@ class Menu {
         return new UsersListPage($selenium);
     }
     
+                      public static function goToQualification_Language(FunctionalTestcase $selenium) {
+        $selenium->selectFrame();
+        $selenium->session->execute(array(
+             'script' => "var elements = window.document.getElementById('menu_admin_viewLanguages').click();",
+             'args' => array()));
+        $selenium->selectFrame("relative=top");
+        return new UsersListPage($selenium);
+    }
 
     public static function goToEmailConfiguration(FunctionalTestcase $selenium) {
         $selenium->selectFrame();

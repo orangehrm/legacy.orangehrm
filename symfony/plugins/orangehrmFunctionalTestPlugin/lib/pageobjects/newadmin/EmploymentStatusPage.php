@@ -75,6 +75,20 @@ class EmploymentStatusPage {
           echo 'b';
 
     }
+       public  function getStatusMessage(){
+          
+         return $this->selenium->getText("//form[@id='frmList_ohrmListComponent']/table/tbody/tr/td");
+          
+
+    }
+        public function addCancelEmploymentStatus($EmploymentStatus){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->type($this->txtEmploymentStatus, $EmploymentStatus);
+        $this->selenium->click($this->btnCancel);
+        $this->selenium->waitForPageToLoad(10);
+        
+          
+  }
     
 }
 

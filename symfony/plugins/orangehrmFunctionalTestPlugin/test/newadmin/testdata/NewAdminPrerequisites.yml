@@ -54,6 +54,9 @@ License:
   Licenses_LIC001: { id: 001, name: 'BCS License' }
   Licenses_LIC002: { id: 002, name: 'Driving License' }
 
+Language:
+  Language_LAN001: { id: 001, name: 'English' }
+  Language_LAN002: { id: 002, name: 'Sinhala' } 
  
 Employee:
   Employee_1: { emp_number: '1', emp_lastname: Herath, emp_firstname: Saman, emp_middle_name: Kumara, emp_nick_name: '', emp_smoker: '0', emp_ssn_num: '', emp_sin_num: '', emp_other_id: '', emp_dri_lice_num: '', emp_military_service: '', emp_street1: Address01, emp_street2: Address02, city_code: City, coun_code: LK, provin_code: Province, employee_id: '0001', emp_birthday: '1987-07-09', emp_gender: null, emp_marital_status: null, emp_dri_lice_exp_date: '2011-01-02', emp_status: 002, job_title_code: 001, work_station: 4, emp_zipcode: '87877', emp_hm_telephone: '0812839108', emp_mobile: '0778291982', emp_work_telephone: '0118297643', emp_work_email: abc@yahoo.com, sal_grd_code: null, joined_date: '2011-01-01', emp_oth_email: cde@yahoo.com, custom1: null, custom2: null, custom3: null, custom4: null, custom5: null, custom6: null, custom7: null, custom8: null, custom9: null, custom10: null }

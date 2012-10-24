@@ -20,7 +20,8 @@ class UsersListPage {
     public $btnAdd = "btnAdd";
     public $btnExpand = "link=>";
     public $btnDelete = "btnDelete";
-    public $dialogDeleteBtn = "dialogDeleteBtn";
+    public $btnDialogDelete = "dialogDeleteBtn";
+   public $btnSelectAll ="ohrmList_chkSelectAll";
     public $dialogCancelBtn = "//div[@class='modal-footer']/input[@class='btn reset']";
     
     
@@ -110,6 +111,13 @@ class UsersListPage {
          return $this->selenium->getText("//form[@id='frmList_ohrmListComponent']/table/tbody/tr/td");
 
     }  
+    
+        public function deleteAllUsers() {
+         $this->selenium->click($this->btnSelectAll);
+         $this->selenium->click($this->btnDelete);
+         //$this->selenium->waitForPageToLoad(10);
+         $this->selenium->click($this->btnDialogDelete);
+    }
     
     
     

@@ -53,15 +53,14 @@ class JobCategoriesPage  {
           echo 'b';
 
     }
-            public  function getStatusMessage(){
-          echo 'a';
-         return $this->selenium->getText("//form[@id='recordsListTable']/tbody/tr/td");
-          echo 'b';
+           public  function getStatusMessage(){
+          
+         return $this->selenium->getText("//form[@id='frmList_ohrmListComponent']/table/tbody/tr/td");
+          
 
     }
         
           
-  
   
        public function clickDelete(){
          $this->selenium->click($this->btnDelete);
@@ -82,7 +81,16 @@ class JobCategoriesPage  {
          $this->selenium->waitForPageToLoad(10);
          $this->selenium->click($this->btnDialogCancel);      
          }
-    
+         
+         
+        public function addCancelJobCategories($JobCategory){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->type($this->txtJobCategory, $JobCategory);
+        $this->selenium->click($this->btnCancel);
+        $this->selenium->waitForPageToLoad(10);
+        
+          
+  }
     
 }
 

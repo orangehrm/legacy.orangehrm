@@ -68,7 +68,7 @@ class LicenseTest extends FunctionalTestcase {
              Helper::loginUser($this, "admin", "admin");
             Menu::goToQualification_Licenses($this);
             $viewLicenses = new LicensesPage($this);
-            $viewLicenses->list->select("Name", "BCS License");
+            $viewLicenses->list->select("Name", "BICT");
             $viewLicenses->clickDelete();
             $this->assertFalse($viewLicenses->list->isItemPresentInColumn("Name", "BICT"));
             Helper::logOutIfLoggedIn($this);

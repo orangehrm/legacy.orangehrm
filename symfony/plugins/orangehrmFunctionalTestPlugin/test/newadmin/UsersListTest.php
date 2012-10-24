@@ -131,7 +131,28 @@ class UsersListTest extends FunctionalTestcase {
     }
     
     
+     public function testDeleteAllUser() {
+        Helper::loginUser($this, "admin", "admin");
+        $Users = new UsersListPage($this);
+        $Users = Menu::goToUsers($this);
+        $Users->deleteAllUsers();
+        $userlist = array("admin");
+        $this->assertTrue($Users->list->isOnlyItemsListed($userlist, "Username"));
+        Helper::logOutIfLoggedIn($this);
     
+    }
+            public function testAddandCancelUsers() {
+            Helper::loginUser($this, "admin", "admin");
+            $Users = new UsersListPage($this);
+            $Users = Menu::goToUsers($this);
+            $Users->goToAddUser();
+            $AddUser = new AddUsersPage($this);
+            $AddUser->cancelAddUser("Admin", "Kamal Harsha Silva", "harsha", "Enabled", "harsha", "harsha");
+            $userlist = array("harsha");
+            $this->assertFalse($Users->list->isOnlyItemsListed($userlist, "Username"));
+            Helper::logOutIfLoggedIn($this);
+    
+    } 
     
     
     

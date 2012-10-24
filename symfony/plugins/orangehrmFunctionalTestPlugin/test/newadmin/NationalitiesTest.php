@@ -85,6 +85,7 @@ class NationalitiesTest extends FunctionalTestcase {
             $ViewNationality->deleteAllNationality();
             $nationalitylist = array("Afghan", "Albanian", "Algerian", "American", "Andorran");
             $this->assertFalse($ViewNationality->list->isOnlyItemsListed($nationalitylist, "Nationality"));
+            $this->assertEquals($ViewNationality->getStatusMessage(), "No Records Found");
             Helper::logOutIfLoggedIn($this);
     
     }
@@ -99,7 +100,15 @@ class NationalitiesTest extends FunctionalTestcase {
         $this->assertTrue($ViewNationality->list->isOnlyItemsListed($nationalitylist, "Nationality"));
         Helper::logOutIfLoggedIn($this);
     }   
+            public function testAddandCancelNationality() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToNationalities($this);
+            $ViewNationality = new NationalitiesPage($this);
+            $ViewNationality->addCancelNationality("SSC");
+            $this->assertFalse($ViewNationality->list->isItemPresentInColumn("Nationality", "SSC"));
+            Helper::logOutIfLoggedIn($this);
     
+    } 
     
     
     }

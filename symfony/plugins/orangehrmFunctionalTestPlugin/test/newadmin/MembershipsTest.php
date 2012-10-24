@@ -85,6 +85,7 @@ class MembershipsTest extends FunctionalTestcase {
             $viewMembership->deleteAllMemeberships();
         $membershiplist = array("Abc", "Lions Club");
         $this->assertFalse($viewMembership->list->isOnlyItemsListed($membershiplist, "Membership"));
+        $this->assertEquals($viewMembership->getStatusMessage(), "No Records Found");
         Helper::logOutIfLoggedIn($this);
     
     }
@@ -99,7 +100,15 @@ class MembershipsTest extends FunctionalTestcase {
         $this->assertTrue($viewMembership->list->isOnlyItemsListed($membershiplist, "Membership"));
         Helper::logOutIfLoggedIn($this);
     }   
+            public function testAddandCancelMembership() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToMemberships($this);
+            $viewMembership = new MembershipsPage($this);
+            $viewMembership->addCancelMemeberships("SSC");
+            $this->assertFalse($viewMembership->list->isItemPresentInColumn("Membership", "SSC"));
+            Helper::logOutIfLoggedIn($this);
     
+    } 
                  
    }
 

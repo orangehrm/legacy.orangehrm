@@ -94,10 +94,11 @@ class EmploymentStatusTest extends FunctionalTestcase {
         $ViewEmploymentStatus->clickCancelDelete();
         $employmentStatuslist = array("Full Time Contract", "Full Time Internship", "Full Time Permanent", "Part Time Contract", "Part Time Internship", "Part Time Permanent", "Terminated");
         $this->assertTrue($ViewEmploymentStatus->list->isOnlyItemsListed($employmentStatuslist, "Employment Status"));
+        $this->assertEquals($ViewEmploymentStatus->getStatusMessage(), "No Records Found");
         Helper::logOutIfLoggedIn($this);
     }   
     
-//        public function testAddJobCategoriesWithoutData() {
+//        public function testAddEmploymentStatusWithoutData() {
 //            Helper::loginUser($this, "admin", "admin");
 //            Menu::goToJob_EmploymentStatus($this);
 //            $addEmploymentStatus = new EmploymentStatusPage($this);
@@ -110,7 +111,15 @@ class EmploymentStatusTest extends FunctionalTestcase {
 //    
 //   }
    
-   
+           public function testAddandCancelEmploymentStatus() {
+           Helper::loginUser($this, "admin", "admin");
+           Menu::goToJob_EmploymentStatus($this);
+           $ViewEmploymentStatus = new EmploymentStatusPage($this);
+            $ViewEmploymentStatus->addCancelEmploymentStatus("SSC");
+            $this->assertFalse($ViewEmploymentStatus->list->isItemPresentInColumn("Employment Status", "SSC"));
+            Helper::logOutIfLoggedIn($this);
+    
+    } 
    
 }
 

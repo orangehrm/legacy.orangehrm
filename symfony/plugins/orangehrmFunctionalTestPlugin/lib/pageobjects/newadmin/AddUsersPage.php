@@ -41,7 +41,16 @@ class AddUsersPage {
     }  
     
     
-    
+        public function cancelAddUser($UserType, $EmployeeName, $Username, $Status,$Password, $ConfirmPassword){
+        $this->selenium->select($this->cmbUserType, $UserType);
+        $this->selenium->type($this->txtEmployeeName, $EmployeeName);
+        $this->selenium->type($this->txtUsername, $Username);
+        $this->selenium->select($this->cmbStatus, $Status);
+        $this->selenium->type($this->txtPassword, $Password);
+        $this->selenium->type($this->txtConfirmPassword, $ConfirmPassword);
+        $this->selenium->click($this->btnCancel);
+        $this->selenium->waitForPageToLoad(10);  
+    } 
     
     
 }
