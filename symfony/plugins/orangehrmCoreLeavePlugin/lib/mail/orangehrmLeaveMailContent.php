@@ -221,14 +221,14 @@ abstract class orangehrmLeaveMailContent extends orangehrmMailContent {
     protected function _populateLeaveReplacements() {
 
         if ($this->leaveRequest instanceof LeaveRequest) {
-            $this->replacements['leaveType'] = $this->leaveRequest->getLeaveTypeName();
+            $this->replacements['leaveType'] = $this->leaveRequest->getLeaveType()->getName();
             $this->replacements['assigneeFullName'] = $this->leaveRequest->getEmployee()->getFirstAndLastNames();
         }
 
         $numberOfDays = 0;
 
         foreach ($this->leaveList as $leave) {
-            $numberOfDays += $leave->getLeaveLengthDays();
+            $numberOfDays += $leave->getLengthDays();
         }
 
         $this->replacements['numberOfDays'] = $numberOfDays;
@@ -248,8 +248,8 @@ abstract class orangehrmLeaveMailContent extends orangehrmMailContent {
 
         foreach ($this->leaveList as $leave) {
 
-            $leaveDate = set_datepicker_date_format($leave->getLeaveDate());
-            $leaveDuration = round($leave->getLeaveLengthHours(), 2);
+            $leaveDate = set_datepicker_date_format($leave->getDate());
+            $leaveDuration = round($leave->getLengthHours(), 2);
 
             if ($leaveDuration > 0) {
 
@@ -268,9 +268,9 @@ abstract class orangehrmLeaveMailContent extends orangehrmMailContent {
         $leaveComment = '';
 
         if ($this->requestType == 'request') {
-            $leaveComment = $this->leaveRequest->getLeaveComments();
+            $leaveComment = $this->leaveRequest->getComments();
         } elseif ($this->requestType == 'single') {
-            $leaveComment = $this->leaveList[0]->getLeaveComments();
+            $leaveComment = $this->leaveList[0]->getComments();
         }    
 
         if (!empty($leaveComment)) {

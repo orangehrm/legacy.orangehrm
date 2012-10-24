@@ -70,14 +70,14 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
         $leaveRequest = $this->generateLeaveRequest($leaveAssignmentData);
 
         $leaveType = $this->getLeaveTypeService()->readLeaveType($leaveAssignmentData->getLeaveType());
-        $leaveRequest->setLeaveTypeName($leaveType->getLeaveTypeName());
-
-        if (is_null($leaveRequest->getLeavePeriodId())) {
-            if ($this->getLeavePeriodService()->isWithinNextLeavePeriod(strtotime($leaveRequest->getDateApplied()))) {
-                $nextLeavePeriod = $this->getLeavePeriodService()->createNextLeavePeriod($leaveRequest->getDateApplied());
-                $leaveRequest->setLeavePeriodId($nextLeavePeriod->getLeavePeriodId());
-            }
-        }
+//        $leaveRequest->setLeaveTypeName($leaveType->getLeaveTypeName());
+//
+//        if (is_null($leaveRequest->getLeavePeriodId())) {
+//            if ($this->getLeavePeriodService()->isWithinNextLeavePeriod(strtotime($leaveRequest->getDateApplied()))) {
+//                $nextLeavePeriod = $this->getLeavePeriodService()->createNextLeavePeriod($leaveRequest->getDateApplied());
+//                $leaveRequest->setLeavePeriodId($nextLeavePeriod->getLeavePeriodId());
+//            }
+//        }
 
         $leaves = $this->createLeaveObjectListForAppliedRange($leaveAssignmentData);
         if ($this->isEmployeeAllowedToApply($leaveType)) {
@@ -85,9 +85,9 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
                 try {
                     $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaves);
 
-                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
-                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaves);
-                    }
+//                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
+//                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaves);
+//                    }
 
                     //sending leave apply notification
                     $this->sendEmail($this->getLoggedInEmployee(), $leaveRequest, $leaves);
@@ -149,26 +149,26 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
         $requestedLeaveDays = array();
         $holidays = array(Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY);
         foreach ($leaveRecords as $k => $leave) {
-            if (in_array($leave->getLeaveStatus(), $holidays)) {
+            if (in_array($leave->getStatus(), $holidays)) {
                 $holidayCount++;
             }
-            $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod(strtotime($leave->getLeaveDate()));
-            if($leavePeriod instanceof LeavePeriod) {
-                $leavePeriodId = $leavePeriod->getLeavePeriodId();
-            } else {
-                $leavePeriodId = null; //todo create leave period?
-            }
-
-            if(key_exists($leavePeriodId, $requestedLeaveDays)) {
-                $requestedLeaveDays[$leavePeriodId] += $leave->getLeaveLengthDays();
-            } else {
-                $requestedLeaveDays[$leavePeriodId] = $leave->getLeaveLengthDays();
-            }
+//            $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod(strtotime($leave->getLeaveDate()));
+//            if($leavePeriod instanceof LeavePeriod) {
+//                $leavePeriodId = $leavePeriod->getLeavePeriodId();
+//            } else {
+//                $leavePeriodId = null; //todo create leave period?
+//            }
+//
+//            if(key_exists($leavePeriodId, $requestedLeaveDays)) {
+//                $requestedLeaveDays[$leavePeriodId] += $leave->getLeaveLengthDays();
+//            } else {
+//                $requestedLeaveDays[$leavePeriodId] = $leave->getLeaveLengthDays();
+//            }
         }
 
-        if ($this->isLeaveRequestNotExceededLeaveBalance($requestedLeaveDays, $leaveRequest) && $this->hasWorkingDays($holidayCount, $leaveRecords)) {
+        //if ($this->isLeaveRequestNotExceededLeaveBalance($requestedLeaveDays, $leaveRequest) && $this->hasWorkingDays($holidayCount, $leaveRecords)) {
             return true;
-        }
+        //}
     }
     
     /**

@@ -25,8 +25,6 @@
  */
 class ApplyLeaveForm extends sfForm {
 
-    public $leaveTypeList = array();
-
     /**
      * Configure ApplyLeaveForm
      *

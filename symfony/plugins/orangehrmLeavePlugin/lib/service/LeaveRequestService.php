@@ -76,8 +76,7 @@ class LeaveRequestService extends BaseService {
      */
     public function getLeaveEntitlementService() {
         if(is_null($this->leaveEntitlementService)) {
-            $this->leaveEntitlementService = new OldLeaveEntitlementService();
-            $this->leaveEntitlementService->setLeaveEntitlementDao(new OldLeaveEntitlementDao());
+            $this->leaveEntitlementService = new LeaveEntitlementService();
         }
         return $this->leaveEntitlementService;
     }
@@ -88,7 +87,6 @@ class LeaveRequestService extends BaseService {
     public function getLeaveTypeService() {
         if(is_null($this->leaveTypeService)) {
             $this->leaveTypeService = new LeaveTypeService();
-            $this->leaveTypeService->setLeaveTypeDao(new LeaveTypeDao());
         }
         return $this->leaveTypeService;
     }
@@ -97,7 +95,7 @@ class LeaveRequestService extends BaseService {
      * Sets LeaveEntitlementService
      * @param OldLeaveEntitlementService $leaveEntitlementService
      */
-    public function setLeaveEntitlementService(OldLeaveEntitlementService $leaveEntitlementService) {
+    public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }
 
@@ -186,9 +184,6 @@ class LeaveRequestService extends BaseService {
     public function getEmployeeAllowedToApplyLeaveTypes(Employee $employee) {
 
         try {
-            $leavePeriodService = $this->getLeavePeriodService();
-            $leavePeriod = $leavePeriodService->getCurrentLeavePeriod();
-
             $leaveEntitlementService    = $this->getLeaveEntitlementService();
             $leaveTypeService           = $this->getLeaveTypeService();
 
@@ -196,7 +191,7 @@ class LeaveRequestService extends BaseService {
             $leaveTypeList  = array();
 
             foreach($leaveTypes as $leaveType) {
-                $entitlementDays = $leaveEntitlementService->getLeaveBalance($employee->getEmpNumber(), $leaveType->getLeaveTypeId(),$leavePeriod->getLeavePeriodId());
+                $entitlementDays = $leaveEntitlementService->getLeaveBalance($employee->getEmpNumber(), $leaveType->getId());
 
                 if($entitlementDays > 0) {
                     array_push($leaveTypeList, $leaveType);

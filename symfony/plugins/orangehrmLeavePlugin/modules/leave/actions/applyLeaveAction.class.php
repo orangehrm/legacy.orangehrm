@@ -88,7 +88,13 @@ class applyLeaveAction extends baseLeaveAction {
     
     public function execute($request) {
 
-        $this->applyLeaveForm = $this->getApplyLeaveForm();
+        $this->leaveTypes = $this->getElegibleLeaveTypes();
+        
+        if (count($this->leaveTypes) <= 1) {
+            $this->getUser()->setFlash('warning', __('No Leave Types with Leave Balance'));
+        }
+        
+        $this->applyLeaveForm = $this->getApplyLeaveForm($this->leaveTypes);
 
         $this->overlapLeaves = 0;
 
@@ -132,22 +138,17 @@ class applyLeaveAction extends baseLeaveAction {
 
         $leaveTypeChoices[''] = '--' . __('Select') . '--';
         foreach ($leaveTypeList as $leaveType) {
-            $leaveTypeChoices[$leaveType->getLeaveTypeId()] = $leaveType->getLeaveTypeName();
+            $leaveTypeChoices[$leaveType->getId()] = $leaveType->getName();
         }
+        
         return $leaveTypeChoices;
     }
 
     /**
      * Creating user forms
      */
-    protected function getApplyLeaveForm() {
-        //Check for available leave types
-        $leaveTypes = $this->getElegibleLeaveTypes();
-        if (count($leaveTypes) == 1) {
-            $this->getUser()->setFlash('warning', __('No Leave Types with Leave Balance'));
-        }
+    protected function getApplyLeaveForm($leaveTypes) {
         $form = new ApplyLeaveForm(array(), array('leaveTypes' => $leaveTypes), true);
-
         return $form;
     }
 

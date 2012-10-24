@@ -88,5 +88,9 @@ class LeaveEntitlementService extends BaseService {
     public function getValidLeaveEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate, $orderField, $order) {
         return $this->getLeaveEntitlementDao()->getValidLeaveEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate, $orderField, $order);
     }
+    
+    public function getLeaveBalance($empNumber, $leaveTypeId) {
+        return 1;
+    }
 
 }
