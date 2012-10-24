@@ -1290,9 +1290,7 @@ CREATE TABLE `ohrm_leave_request` (
   `date_applied` date NOT NULL,
   `emp_number` int(7) NOT NULL,
   `leave_comments` varchar(256) default NULL,
-  PRIMARY KEY  (`id`),
-  KEY `emp_number` (`emp_number`),
-  KEY `leave_type_id` (`leave_type_id`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `ohrm_leave` (
@@ -1310,23 +1308,8 @@ CREATE TABLE `ohrm_leave` (
   `end_time` time default NULL,
   PRIMARY KEY  (`id`),
   KEY `leave_request_type_emp`(`leave_request_id`,`leave_type_id`,`emp_number`),
-  KEY `leave_type_id` (`leave_type_id`),
-  KEY `emp_number` (`emp_number`),
-  KEY `request_status` (`leave_request_id`,`leave_status`),
-  KEY `entitlement_id` (`entitlement_id`)
+  KEY `request_status` (`leave_request_id`,`leave_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-alter table ohrm_leave_request
-    add constraint foreign key (emp_number)
-        references hs_hr_employee (emp_number) on delete cascade;
-
-alter table ohrm_leave_request
-    add constraint foreign key (leave_type_id)
-        references ohrm_leave_type (id) on delete cascade;
-
-alter table ohrm_leave
-    add foreign key (leave_request_id)
-        references ohrm_leave_request(id) on delete cascade;
 
 alter table ohrm_leave_type
     add foreign key (operational_country_id)
@@ -1343,6 +1326,30 @@ alter table ohrm_leave_entitlement
 alter table ohrm_leave_entitlement
     add foreign key (created_by_id)
         references ohrm_user(`id`) on delete set null;
+
+alter table ohrm_leave_request
+    add constraint foreign key (emp_number)
+        references hs_hr_employee (emp_number) on delete cascade;
+
+alter table ohrm_leave_request
+    add constraint foreign key (leave_type_id)
+        references ohrm_leave_type (id) on delete cascade;
+
+alter table ohrm_leave
+    add foreign key (leave_request_id)
+        references ohrm_leave_request(id) on delete cascade;
+
+alter table ohrm_leave
+    add constraint foreign key (leave_type_id)
+        references ohrm_leave_type (id) on delete cascade;
+
+alter table ohrm_leave
+    add constraint foreign key (leave_type_id)
+        references ohrm_leave_type (id) on delete cascade;
+
+alter table ohrm_leave
+    add constraint foreign key (entitlement_id)
+        references ohrm_leave_entitlement (id) on delete cascade;
 
 alter table ohrm_menu_item 
        add constraint foreign key (screen_id)
