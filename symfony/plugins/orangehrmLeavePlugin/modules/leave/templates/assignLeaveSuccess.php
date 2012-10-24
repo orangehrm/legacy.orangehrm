@@ -25,7 +25,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             <tr>
                 <th width="100px"><?php echo __("Date") ?></th>
                 <th width="100px"><?php echo __("No of Hours") ?></th>
-                <th width="100px"><?php echo __("Leave Period") ?></th>
                 <th width="90px"><?php echo __("Leave Type") ?></th>
                 <th width="200px"><?php echo __("Status") ?></th>
                 <th width="150px"><?php echo __("Comments") ?></th>
@@ -41,12 +40,11 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                 $oddRow = !$oddRow;
             ?>
             <tr class="<?php echo $class;?>">
-                <td><?php echo set_datepicker_date_format($leave->getLeaveDate()) ?></td>
-                <td><?php echo $leave->getLeaveLengthHours() ?></td>
-                <td><?php echo set_datepicker_date_format($leave->getLeaveRequest()->getLeavePeriod()->getStartDate()) ?></td>
-                <td><?php echo $leave->getLeaveRequest()->getLeaveTypeName() ?></td>
+                <td><?php echo set_datepicker_date_format($leave->getDate()) ?></td>
+                <td><?php echo $leave->getLengthHours() ?></td>
+                <td><?php echo $leave->getLeaveRequest()->getLeaveType()->getName() ?></td>
                 <td><?php echo __($leave->getTextLeaveStatus()); ?></td>
-                <td><?php echo $leave->getLeaveComments() ?></td>
+                <td><?php echo $leave->getComments() ?></td>
             </tr>
         <?php } ?>
 

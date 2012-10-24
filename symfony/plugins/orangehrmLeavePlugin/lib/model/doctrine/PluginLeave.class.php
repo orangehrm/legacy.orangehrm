@@ -27,7 +27,7 @@ abstract class PluginLeave extends BaseLeave {
     );
 
     public function getTextLeaveStatus() {
-        $status = $this->getLeaveStatus();
+        $status = $this->getStatus();
         if (array_key_exists($status, self::$leaveStatusText)) {            
             return self::$leaveStatusText[$status];
         }
@@ -40,34 +40,30 @@ abstract class PluginLeave extends BaseLeave {
     }
 
     public function canApprove() {
-        if (!$this->getLeaveRequest()->getOldLeaveType()->getAvailableFlag()) {
+        if ($this->getLeaveRequest()->getLeaveType()->getDeleted()) {
             return false;
         }
-        $canApprove = ($this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
-        $canApprove |= ( $this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_HOLIDAY);
+        $canApprove = ($this->getStatus() == self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
+        $canApprove |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_HOLIDAY);
         return $canApprove;
     }
 
     public function canCancel($isAdmin = false) {
 
-        $canCancel = ($this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
-        $canCancel |= ( $this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_HOLIDAY);
-        $canCancel |= ( $this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_WEEKEND);
-        $canCancel |= ( $this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_APPROVED);
-        $canCancel |= ( $this->getLeaveStatus() == self::LEAVE_STATUS_LEAVE_TAKEN && $isAdmin);
+        $canCancel = ($this->getStatus() == self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
+        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_HOLIDAY);
+        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_WEEKEND);
+        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_APPROVED);
+        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_TAKEN && $isAdmin);
 
         return $canCancel;
     }
 
     public function isNonWorkingDay() {
-        if (($this->getLeaveLengthHours() == 0.00) && in_array($this->getLeaveStatus(), $this->nonWorkingDayStatuses)) {
+        if (($this->getLengthHours() == 0.00) && in_array($this->getStatus(), $this->nonWorkingDayStatuses)) {
             return true;
         }
-        //return in_array($this->getLeaveStatus(), $this->nonWorkingDayStatuses);
-    }
-
-    public function getLeavePeriodId() {
-        return $this->getLeaveRequest()->getLeavePeriodId();
+        //return in_array($this->getStatus(), $this->nonWorkingDayStatuses);
     }
 
     public function getNumberOfDays() {
@@ -96,7 +92,7 @@ abstract class PluginLeave extends BaseLeave {
     }
 
     public function getFormattedLeaveDateToView() {
-        return set_datepicker_date_format($this->getLeaveDate());
+        return set_datepicker_date_format($this->getDate());
     }
 
 }

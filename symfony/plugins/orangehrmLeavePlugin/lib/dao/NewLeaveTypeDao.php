@@ -48,6 +48,19 @@ class NewLeaveTypeDao extends LeaveTypeDao {
     }
     
     /**
+     * Get Leave Type by ID
+     * @return LeaveType
+     */
+    public function readLeaveType($id) {
+        try {
+            return Doctrine::getTable('LeaveType')->find($id);
+        } catch (Exception $e) {
+            $this->getLogger()->error("Exception in readLeaveType:" . $e);
+            throw new DaoException($e->getMessage(), 0, $e);
+        }
+    }    
+    
+    /**
      * Get Logger instance. Creates if not already created.
      *
      * @return Logger

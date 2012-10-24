@@ -205,7 +205,7 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      * @param OldLeaveType $leaveType
      * @returns boolean
      */
-    public function isEmployeeAllowedToApply(OldLeaveType $leaveType) {
+    public function isEmployeeAllowedToApply(LeaveType $leaveType) {
         return true;
     }
 
@@ -303,7 +303,7 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      * @param int $employeeNumber
      * @return int 
      */
-    protected function getWorkShiftDurationForEmployee($employeeNumber) {
+    protected function getWorkShiftDurationForEmployee($empNumber) {
         
         $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);
         return $workSchedule->getWorkShiftLength();
