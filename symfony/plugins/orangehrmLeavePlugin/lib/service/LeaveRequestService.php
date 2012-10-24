@@ -72,20 +72,6 @@ class LeaveRequestService extends BaseService {
     }
 
     /**
-     *
-     * @param LeaveRequest $leaveRequest
-     * @param Leave $leave
-     * @return boolean
-     */
-    public function saveLeaveRequest( LeaveRequest $leaveRequest , $leaveList) {
-
-        $this->getLeaveRequestDao()->saveLeaveRequest( $leaveRequest, $leaveList);
-
-        return true ;
-
-    }
-
-    /**
      * @return OldLeaveEntitlementService
      */
     public function getLeaveEntitlementService() {
@@ -178,6 +164,20 @@ class LeaveRequestService extends BaseService {
         return $this->leaveStateManager;
     }
 
+    /**
+     *
+     * @param LeaveRequest $leaveRequest
+     * @param Leave $leave
+     * @return boolean
+     */
+    public function saveLeaveRequest( LeaveRequest $leaveRequest , $leaveList) {
+
+        $this->getLeaveRequestDao()->saveLeaveRequest( $leaveRequest, $leaveList);
+
+        return true ;
+
+    }
+    
     /**
      *
      * @param Employee $employee

@@ -9,7 +9,26 @@ abstract class AbstractLeaveAllocationService extends BaseService {
     protected $workWeekService;
     protected $holidayService;
     protected $overlapLeave;
+    private $workScheduleService;
+    
+    /**
+     * Get work schedule service
+     * @return WorkScheduleService
+     */
+    public function getWorkScheduleService() {
+        if (!($this->workScheduleService instanceof WorkScheduleService)) {
+            $this->workScheduleService = new WorkScheduleService();
+        }
+        return $this->workScheduleService;
+    }
 
+    /**
+     *
+     * @param WorkScheduleService $service 
+     */
+    public function setWorkScheduleService(WorkScheduleService $service) {
+        $this->workScheduleService = $service;
+    }  
     /**
      * 
      * Saves Leave Request and Sends Notification
@@ -197,22 +216,28 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      */
     public function applyMoreThanAllowedForADay(LeaveParameterObject $leaveAssignmentData) {
 
-        $fromTime = date('H:i:s', strtotime($leaveAssignmentData->getFromTime()));
-        $toTime = date('H:i:s', strtotime($leaveAssignmentData->getToTime()));
+//        $fromTime = date('H:i:s', strtotime($leaveAssignmentData->getFromTime()));
+//        $toTime = date('H:i:s', strtotime($leaveAssignmentData->getToTime()));
 
         $totalDuration = 0;
-        if ($leaveAssignmentData->getFromDate() == $leaveAssignmentData->getToDate()) {
-            $totalDuration = $this->getLeaveRequestService()->getTotalLeaveDuration($leaveAssignmentData->getEmployeeNumber(), $leaveAssignmentData->getFromDate());
+        $empNumber = $leaveAssignmentData->getEmployeeNumber();
+        $fromDate = $leaveAssignmentData->getFromDate();
+        $toDate = $leaveAssignmentData->getToDate();
+        
+        if ($fromDate == $toDate) {
+            $totalDuration = $this->getLeaveRequestService()->getTotalLeaveDuration($empNumber, $fromDate);
         }
 
-        if (($totalDuration + $leaveAssignmentData->getLeaveTotalTime()) > $this->getWorkShiftDurationForEmployee($leaveAssignmentData->getEmployeeNumber())) {
+
+        $workShiftLength = $this->getWorkShiftDurationForEmployee($empNumber);
+        if (($totalDuration + $leaveAssignmentData->getLeaveTotalTime()) > $workShiftLength) {
 
             $dateRange = new DateRange();
-            $dateRange->setFromDate($leaveAssignmentData->getFromDate());
-            $dateRange->setToDate($leaveAssignmentData->getToDate());
+            $dateRange->setFromDate($fromDate);
+            $dateRange->setToDate($toDate);
 
             $searchParameters['dateRange'] = $dateRange;
-            $searchParameters['employeeFilter'] = $leaveAssignmentData->getEmployeeNumber();
+            $searchParameters['employeeFilter'] = $empNumber;
 
             $parameter = new ParameterObject($searchParameters);
             $leaveRequests = $this->getLeaveRequestService()->searchLeaveRequests($parameter);
@@ -279,14 +304,9 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      * @return int 
      */
     protected function getWorkShiftDurationForEmployee($employeeNumber) {
-        $workshift = $this->getEmployeeService()->getEmployeeWorkShift($employeeNumber);
-
-        if ($workshift == null) {
-            $definedDuration = sfConfig::get('app_orangehrm_core_leave_plugin_default_work_shift_length_hours');
-        } else {
-            $definedDuration = $workshift->getWorkShift()->getHoursPerDay();
-        }
-        return $definedDuration;
+        
+        $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);
+        return $workSchedule->getWorkShiftLength();
     }
 
     /**

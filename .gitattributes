@@ -3772,7 +3772,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/config/list_component.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/config/routing.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/HolidayDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/LeavePeriodDao.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/LeaveRequestDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/LeaveSummaryDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/LeaveTypeDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/OldLeaveEntitlementDao.php -text
@@ -3830,7 +3829,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/service/HolidayService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveNotificationService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeavePeriodDataHolder.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeavePeriodService.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveRequestService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveSummaryService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveTypeService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/OldLeaveEntitlementService.php -text
@@ -3928,8 +3926,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveEntitlementService.y
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveNotificationService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeavePeriodDao.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeavePeriodService.yml -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestDao.yml -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestDaoSearch.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveSummaryDao.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveTypeDao.yml -text
@@ -3942,7 +3938,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/leaveType.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/HolidayDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeavePeriodDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveRequestDaoSearchTest.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveRequestDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveSummaryDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveTypeDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/OldLeaveEntitlementDaoTest.php -text
@@ -4494,6 +4489,7 @@ symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByEmployee.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByLeaveType.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/upgrade.sql -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveEntitlementDao.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveRequestDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/NewLeaveTypeDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/EntitlementConsumptionStrategy.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/FIFOEntitlementConsumptionStrategy.php -text
@@ -4522,6 +4518,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveApplicationService.php -te
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveAssignmentService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveConfigurationService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveEntitlementService.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveRequestService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/WorkScheduleService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/task/upgradeLeaveModuleTask.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/workshedule/BasicWorkSchedule.php -text
@@ -4545,8 +4542,11 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewLeaveBalanceRep
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewLeaveEntitlementsSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/test/entitlement/FIFOEntitlementConsumptionStrategyTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveEntitlement.yml -text
+symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDao.yml -text
+symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDaoSearch.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveType.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveRequestDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/NewLeaveTypeDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveConfigurationServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveEntitlementServiceTest.php -text
