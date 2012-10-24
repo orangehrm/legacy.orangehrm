@@ -11,7 +11,6 @@
  * @property integer $operationalCountryId
  * @property OperationalCountry $OperationalCountry
  * @property Doctrine_Collection $EmployeeLeaveEntitlement
- * @property Doctrine_Collection $LeaveRequest
  * 
  * @method string              getLeaveTypeId()              Returns the current record's "leaveTypeId" value
  * @method string              getLeaveTypeName()            Returns the current record's "leaveTypeName" value
@@ -19,14 +18,12 @@
  * @method integer             getOperationalCountryId()     Returns the current record's "operationalCountryId" value
  * @method OperationalCountry  getOperationalCountry()       Returns the current record's "OperationalCountry" value
  * @method Doctrine_Collection getEmployeeLeaveEntitlement() Returns the current record's "EmployeeLeaveEntitlement" collection
- * @method Doctrine_Collection getLeaveRequest()             Returns the current record's "LeaveRequest" collection
  * @method OldLeaveType        setLeaveTypeId()              Sets the current record's "leaveTypeId" value
  * @method OldLeaveType        setLeaveTypeName()            Sets the current record's "leaveTypeName" value
  * @method OldLeaveType        setAvailableFlag()            Sets the current record's "availableFlag" value
  * @method OldLeaveType        setOperationalCountryId()     Sets the current record's "operationalCountryId" value
  * @method OldLeaveType        setOperationalCountry()       Sets the current record's "OperationalCountry" value
  * @method OldLeaveType        setEmployeeLeaveEntitlement() Sets the current record's "EmployeeLeaveEntitlement" collection
- * @method OldLeaveType        setLeaveRequest()             Sets the current record's "LeaveRequest" collection
  * 
  * @package    orangehrm
  * @subpackage model\coreleave\base
@@ -64,10 +61,6 @@ abstract class BaseOldLeaveType extends sfDoctrineRecord
              'foreign' => 'id'));
 
         $this->hasMany('EmployeeLeaveEntitlement', array(
-             'local' => 'leaveTypeId',
-             'foreign' => 'leave_type_id'));
-
-        $this->hasMany('LeaveRequest', array(
              'local' => 'leaveTypeId',
              'foreign' => 'leave_type_id'));
     }

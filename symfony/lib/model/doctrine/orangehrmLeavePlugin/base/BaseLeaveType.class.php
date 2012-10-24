@@ -11,6 +11,8 @@
  * @property integer $operational_country_id
  * @property OperationalCountry $OperationalCountry
  * @property Doctrine_Collection $LeaveEntitlement
+ * @property Doctrine_Collection $Leave
+ * @property Doctrine_Collection $LeaveRequest
  * 
  * @method integer             getId()                     Returns the current record's "id" value
  * @method string              getName()                   Returns the current record's "name" value
@@ -18,12 +20,16 @@
  * @method integer             getOperationalCountryId()   Returns the current record's "operational_country_id" value
  * @method OperationalCountry  getOperationalCountry()     Returns the current record's "OperationalCountry" value
  * @method Doctrine_Collection getLeaveEntitlement()       Returns the current record's "LeaveEntitlement" collection
+ * @method Doctrine_Collection getLeave()                  Returns the current record's "Leave" collection
+ * @method Doctrine_Collection getLeaveRequest()           Returns the current record's "LeaveRequest" collection
  * @method LeaveType           setId()                     Sets the current record's "id" value
  * @method LeaveType           setName()                   Sets the current record's "name" value
  * @method LeaveType           setDeleted()                Sets the current record's "deleted" value
  * @method LeaveType           setOperationalCountryId()   Sets the current record's "operational_country_id" value
  * @method LeaveType           setOperationalCountry()     Sets the current record's "OperationalCountry" value
  * @method LeaveType           setLeaveEntitlement()       Sets the current record's "LeaveEntitlement" collection
+ * @method LeaveType           setLeave()                  Sets the current record's "Leave" collection
+ * @method LeaveType           setLeaveRequest()           Sets the current record's "LeaveRequest" collection
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -81,6 +87,14 @@ abstract class BaseLeaveType extends sfDoctrineRecord
              'foreign' => 'id'));
 
         $this->hasMany('LeaveEntitlement', array(
+             'local' => 'id',
+             'foreign' => 'leave_type_id'));
+
+        $this->hasMany('Leave', array(
+             'local' => 'id',
+             'foreign' => 'leave_type_id'));
+
+        $this->hasMany('LeaveRequest', array(
              'local' => 'id',
              'foreign' => 'leave_type_id'));
     }
