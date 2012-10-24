@@ -3826,10 +3826,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/model/doctrine/PluginOldLeaveType.c
 symfony/plugins/orangehrmCoreLeavePlugin/lib/model/doctrine/PluginOldLeaveTypeTable.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/model/doctrine/PluginWorkWeek.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/model/doctrine/PluginWorkWeekTable.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/service/AbstractLeaveAllocationService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/HolidayService.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveApplicationService.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveAssignmentService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveNotificationService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeavePeriodDataHolder.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeavePeriodService.php -text
@@ -4518,6 +4515,9 @@ symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveTable.class.p
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveType.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveTypeTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/parameterholder/LeaveEntitlementSearchParameterHolder.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/service/AbstractLeaveAllocationService.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveApplicationService.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveAssignmentService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveConfigurationService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveEntitlementService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/WorkScheduleService.php -text
