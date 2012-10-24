@@ -145,7 +145,7 @@ Leave:
       fixed: false
       unsigned: false
       primary: true
-      autoincrement: false
+      autoincrement: true
     date:
       type: date(25)
       fixed: false

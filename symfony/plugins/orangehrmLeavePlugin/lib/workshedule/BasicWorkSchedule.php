@@ -29,6 +29,8 @@ class BasicWorkSchedule implements WorkScheduleInterface {
     protected $empNumber;
     
     protected $employeeService;
+    protected $workWeekService;
+    protected $holidayService;    
     
     protected function getEmployeeService() {
         if (!($this->employeeService instanceof EmployeeService)) {
@@ -40,6 +42,44 @@ class BasicWorkSchedule implements WorkScheduleInterface {
     protected function setEmployeeService($employeeService) {
         $this->employeeService = $employeeService;
     }    
+    
+    /**
+     *
+     * @return WorkWeekService
+     */
+    public function getWorkWeekService() {
+        if (!($this->workWeekService instanceof WorkWeekService)) {
+            $this->workWeekService = new WorkWeekService();
+        }
+        return $this->workWeekService;
+    }
+
+    /**
+     *
+     * @param WorkWeekService $service 
+     */
+    public function setWorkWeekService(WorkWeekService $service) {
+        $this->workWeekService = $service;
+    }
+
+    /**
+     *
+     * @return HolidayService
+     */
+    public function getHolidayService() {
+        if (!($this->holidayService instanceof HolidayService)) {
+            $this->holidayService = new HolidayService();
+        }
+        return $this->holidayService;
+    }
+
+    /**
+     *
+     * @param HolidayService $service 
+     */
+    public function setHolidayService(HolidayService $service) {
+        $this->holidayService = $service;
+    }
     
     public function setEmpNumber($empNumber) {
         $this->empNumber = $empNumber;
@@ -56,7 +96,22 @@ class BasicWorkSchedule implements WorkScheduleInterface {
         }
         
         return $workShiftLength;
-
+    }
+    
+    public function isWeekend($day, $fullDay) {
+        return $this->getWorkWeekService()->isWeekend($day, $fullDay);
+    }
+    
+    public function isHalfDay($day) {
+        return $this->getHolidayService()->isHalfDay($day);
+    }
+    
+    public function isHoliday($day) {
+        return $this->getHolidayService()->isHoliday($day);
+    }
+    
+    public function isHalfdayHoliday($day) {
+        return $this->getHolidayService()->isHalfdayHoliday($day);
     }
 
 }

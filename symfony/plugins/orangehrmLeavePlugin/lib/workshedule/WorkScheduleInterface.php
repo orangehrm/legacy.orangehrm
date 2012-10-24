@@ -26,4 +26,8 @@ interface WorkScheduleInterface {
     
     public function setEmpNumber($empNumber);
     public function getWorkShiftLength();
+    public function isWeekend($day, $fullDay);    
+    public function isHalfDay($day);
+    public function isHoliday($day);    
+    public function isHalfdayHoliday($day);
 }

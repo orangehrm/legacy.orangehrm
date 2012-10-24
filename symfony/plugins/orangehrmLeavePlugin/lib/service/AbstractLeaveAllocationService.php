@@ -262,13 +262,13 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      */
     public function isOverlapLeaveRequest(LeaveParameterObject $leaveAssignmentData) {
 
-        $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod(strtotime($leaveAssignmentData->getFromDate()));
-
-        if (!is_null($leavePeriod) && ($leavePeriod instanceof LeavePeriod)) {
-            if ($leaveAssignmentData->getToDate() > $leavePeriod->getEndDate()) {
-                return true;
-            }
-        }
+//        $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod(strtotime($leaveAssignmentData->getFromDate()));
+//
+//        if (!is_null($leavePeriod) && ($leavePeriod instanceof LeavePeriod)) {
+//            if ($leaveAssignmentData->getToDate() > $leavePeriod->getEndDate()) {
+//                return true;
+//            }
+//        }
 
         return false;
     }
@@ -280,20 +280,20 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      */
     protected function generateLeaveRequest(LeaveParameterObject $leaveAssignmentData) {
 
-        $leavePeriodId = null;
-
-        $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod(strtotime($leaveAssignmentData->getFromDate()));
-        if (!is_null($leavePeriod) && ($leavePeriod instanceof LeavePeriod)) {
-            $leavePeriodId = $leavePeriod->getLeavePeriodId();
-        }
+//        $leavePeriodId = null;
+//
+//        $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod(strtotime($leaveAssignmentData->getFromDate()));
+//        if (!is_null($leavePeriod) && ($leavePeriod instanceof LeavePeriod)) {
+//            $leavePeriodId = $leavePeriod->getLeavePeriodId();
+//        }
 
         $leaveRequest = new LeaveRequest();
 
         $leaveRequest->setLeaveTypeId($leaveAssignmentData->getLeaveType());
         $leaveRequest->setDateApplied($leaveAssignmentData->getFromDate());
-        $leaveRequest->setLeavePeriodId($leavePeriodId);
+//        $leaveRequest->setLeavePeriodId($leavePeriodId);
         $leaveRequest->setEmpNumber($leaveAssignmentData->getEmployeeNumber());
-        $leaveRequest->setLeaveComments($leaveAssignmentData->getComment());
+        $leaveRequest->setComments($leaveAssignmentData->getComment());
 
         return $leaveRequest;
     }
@@ -331,13 +331,13 @@ abstract class AbstractLeaveAllocationService extends BaseService {
             $isHalfday = $this->isHalfDay($leaveDate, $leaveAssignmentData);
             $isHalfDayHoliday = $this->isHalfdayHoliday($leaveDate, $leaveAssignmentData);
             
-            $leave->setLeaveDate($leaveDate);
-            $leave->setLeaveComments($leaveAssignmentData->getComment());
-            $leave->setLeaveLengthDays($this->calculateDateDeference($leaveAssignmentData, $isWeekend, $isHoliday, $isHalfday, $isHalfDayHoliday));
+            $leave->setDate($leaveDate);
+            $leave->setComments($leaveAssignmentData->getComment());
+            $leave->setLengthDays($this->calculateDateDeference($leaveAssignmentData, $isWeekend, $isHoliday, $isHalfday, $isHalfDayHoliday));
             $leave->setStartTime(($leaveAssignmentData->getFromTime() != '') ? $leaveAssignmentData->getFromTime() : '00:00');
             $leave->setEndTime(($leaveAssignmentData->getToTime() != '') ? $leaveAssignmentData->getToTime() : '00:00');
-            $leave->setLeaveLengthHours($this->calculateTimeDeference($leaveAssignmentData, $isWeekend, $isHoliday, $isHalfday, $isHalfDayHoliday));
-            $leave->setLeaveStatus($this->getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate));
+            $leave->setLengthHours($this->calculateTimeDeference($leaveAssignmentData, $isWeekend, $isHoliday, $isHalfday, $isHalfDayHoliday));
+            $leave->setStatus($this->getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate));
 
             array_push($leaveList, $leave);
         }
@@ -358,30 +358,39 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      * @return boolean
      */
     public function isHalfDay($day, LeaveParameterObject $leaveAssignmentData) {
+        
+        $empNumber = $leaveAssignmentData->getEmployeeNumber();
+        $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);
 
         /* This is to check weekday half days */
-        $flag = $this->getHolidayService()->isHalfDay($day);
+        $flag = $workSchedule->isHalfDay($day);
 
         if (!$flag) {
             /* This checks for weekend half day */
-            return $this->getWorkWeekService()->isWeekend($day, false);
+            return $workSchedule->isWeekend($day, false);
         }
 
         return $flag;
     }
     
-    protected function isWeekend($day, LeaveParameterObject $leaveAssignmentData) {        
-        $isWeekend = $this->getWorkWeekService()->isWeekend($day, true);
+    protected function isWeekend($day, LeaveParameterObject $leaveAssignmentData) { 
+        $empNumber = $leaveAssignmentData->getEmployeeNumber();
+        $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);        
+        $isWeekend = $workSchedule->isWeekend($day, true);
         return $isWeekend;
     }
     
     protected function isHoliday($day, LeaveParameterObject $leaveAssignmentData) {
-        $isHoliday = $this->getHolidayService()->isHoliday($day);
+        $empNumber = $leaveAssignmentData->getEmployeeNumber();
+        $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);        
+        $isHoliday = $workSchedule->isHoliday($day);
         return $isHoliday;
     }
     
     protected function isHalfdayHoliday($day, LeaveParameterObject $leaveAssignmentData) {
-        $isHalfDayHoliday = $this->getHolidayService()->isHalfdayHoliday($leaveDate);
+        $empNumber = $leaveAssignmentData->getEmployeeNumber();
+        $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);        
+        $isHalfDayHoliday = $workSchedule->isHalfdayHoliday($day);
         return $isHalfDayHoliday;
     }
 

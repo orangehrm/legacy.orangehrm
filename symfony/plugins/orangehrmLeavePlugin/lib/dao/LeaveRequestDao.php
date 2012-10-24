@@ -29,27 +29,14 @@ class LeaveRequestDao extends BaseDao {
      * @param LeaveRequest $leaveRequest
      * @return boolean
      */
-    public function xsaveLeaveRequest(LeaveRequest $leaveRequest, $leaveList) {
+    public function saveLeaveRequest(LeaveRequest $leaveRequest, $leaveList) {
         try {
-            if ($leaveRequest->getLeaveRequestId() == '') {
-
-                $idGenService = new IDGeneratorService();
-                $idGenService->setEntity($leaveRequest);
-                $leaveRequest->setLeaveRequestId($idGenService->getNextID());
-            }
-
             $leaveRequest->save();
 
             foreach ($leaveList as $leave) {
-                if ($leave->getLeaveId() == '') {
-
-                    $idGenService = new IDGeneratorService();
-                    $idGenService->setEntity($leave);
-                    $leave->setLeaveId($idGenService->getNextID());
-                }
-                $leave->setLeaveRequestId($leaveRequest->getLeaveRequestId());
+                $leave->setLeaveRequestId($leaveRequest->getId());
                 $leave->setLeaveTypeId($leaveRequest->getLeaveTypeId());
-                $leave->setEmployeeId($leaveRequest->getEmpNumber());
+                $leave->setEmpNumber($leaveRequest->getEmpNumber());
 
                 $leave->save();
             }
@@ -132,33 +119,33 @@ class LeaveRequestDao extends BaseDao {
      * @param $leaveEndDate
      * @return Leave
      */
-    public function xgetOverlappingLeave($leaveStartDate, $leaveEndDate, $empId, $startTime = '00:00:00', $endTime='23:59:00', $hoursPerday = null) {
+    public function getOverlappingLeave($leaveStartDate, $leaveEndDate, $empId, $startTime = '00:00:00', $endTime='23:59:00', $hoursPerday = null) {
 
         try {
             $q = Doctrine_Query::create()
                     ->from('Leave l');
 
-            $q->andWhere('l.employee_id =' . $empId);
-            $q->andWhereNotIn('l.leave_status', array(Leave::LEAVE_STATUS_LEAVE_CANCELLED, Leave::LEAVE_STATUS_LEAVE_REJECTED, Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY));
+            $q->andWhere('l.emp_number =' . $empId);
+            $q->andWhereNotIn('l.status', array(Leave::LEAVE_STATUS_LEAVE_CANCELLED, Leave::LEAVE_STATUS_LEAVE_REJECTED, Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY));
 
             if ($leaveStartDate == $leaveEndDate) {
 
-                $or [] = "('" . $leaveStartDate . " " . $startTime . "'<= CONCAT(leave_date,' ',start_time) AND CONCAT(leave_date,' ',end_time) <='" . $leaveEndDate . " " . $endTime . "')";
-                $or [] = "(CONCAT(leave_date,' ',start_time) <='" . $leaveStartDate . " " . $startTime . "' AND '" . $leaveEndDate . " " . $endTime . "' <= CONCAT(leave_date,' ',end_time))";
-                $or [] = "('" . $leaveStartDate . " " . $startTime . "'< CONCAT(leave_date,' ',start_time) AND CONCAT(leave_date,' ',start_time) <'" . $leaveEndDate . " " . $endTime . "')";
-                $or [] = "('" . $leaveStartDate . " " . $startTime . "'< CONCAT(leave_date,' ',end_time) AND CONCAT(leave_date,' ',end_time) <'" . $leaveEndDate . " " . $endTime . "')";
-                $or [] = "('" . $leaveStartDate . " " . $startTime . "'= CONCAT(leave_date,' ',end_time) AND CONCAT(leave_date,' ',end_time) ='" . $leaveEndDate . " " . $endTime . "')";
-                $or [] = "((leave_date ='" . $leaveEndDate . "') AND ((start_time = '00:00:00' AND end_time='00:00:00')))";
+                $or [] = "('" . $leaveStartDate . " " . $startTime . "'<= CONCAT(`date`,' ',start_time) AND CONCAT(`date`,' ',end_time) <='" . $leaveEndDate . " " . $endTime . "')";
+                $or [] = "(CONCAT(`date`,' ',start_time) <='" . $leaveStartDate . " " . $startTime . "' AND '" . $leaveEndDate . " " . $endTime . "' <= CONCAT(`date`,' ',end_time))";
+                $or [] = "('" . $leaveStartDate . " " . $startTime . "'< CONCAT(`date`,' ',start_time) AND CONCAT(`date`,' ',start_time) <'" . $leaveEndDate . " " . $endTime . "')";
+                $or [] = "('" . $leaveStartDate . " " . $startTime . "'< CONCAT(`date`,' ',end_time) AND CONCAT(`date`,' ',end_time) <'" . $leaveEndDate . " " . $endTime . "')";
+                $or [] = "('" . $leaveStartDate . " " . $startTime . "'= CONCAT(`date`,' ',end_time) AND CONCAT(`date`,' ',end_time) ='" . $leaveEndDate . " " . $endTime . "')";
+                $or [] = "((`date` ='" . $leaveEndDate . "') AND ((start_time = '00:00:00' AND end_time='00:00:00')))";
 
                 $orString = implode(" OR ", $or);
                 $orString = "(" . $orString . ")";
             } else {
 
-                $or [] = "('" . $leaveStartDate . "'<= leave_date AND leave_date <='" . $leaveEndDate . "')";
-                $or [] = "( leave_date <='" . $leaveStartDate . "' AND '" . $leaveEndDate . "'<= leave_date )";
-                $or [] = "('" . $leaveStartDate . "'< leave_date AND leave_date <'" . $leaveEndDate . "')";
-                $or [] = "('" . $leaveStartDate . "'< leave_date AND leave_date <'" . $leaveEndDate . "')";
-                $or [] = "('" . $leaveStartDate . "'= leave_date OR leave_date ='" . $leaveEndDate . "')";
+                $or [] = "('" . $leaveStartDate . "'<= `date` AND `date` <='" . $leaveEndDate . "')";
+                $or [] = "( `date` <='" . $leaveStartDate . "' AND '" . $leaveEndDate . "'<= `date` )";
+                $or [] = "('" . $leaveStartDate . "'< `date` AND `date` <'" . $leaveEndDate . "')";
+                $or [] = "('" . $leaveStartDate . "'< `date` AND `date` <'" . $leaveEndDate . "')";
+                $or [] = "('" . $leaveStartDate . "'= `date` OR `date` ='" . $leaveEndDate . "')";
 
                 $orString = implode(" OR ", $or);
                 $orString = "(" . $orString . ")";
@@ -326,7 +313,7 @@ class LeaveRequestDao extends BaseDao {
                 ->from('LeaveRequest lr')
                 ->leftJoin('lr.Leave l')
                 ->leftJoin('lr.Employee em')
-                ->leftJoin('lr.OldLeaveType lt');
+                ->leftJoin('lr.LeaveType lt');
 
         $dateRange = $searchParameters->getParameter('dateRange', new DateRange());
         $statuses = $searchParameters->getParameter('statuses');
@@ -343,40 +330,40 @@ class LeaveRequestDao extends BaseDao {
         $toDate = $dateRange->getToDate();
 
         if (!empty($fromDate)) {
-            $q->andWhere("l.leave_date >= '{$fromDate}'");
+            $q->andWhere("l.date >= '{$fromDate}'");
         }
         
         if (!empty($toDate)) {
-            $q->andWhere("l.leave_date <= '{$toDate}'");
+            $q->andWhere("l.date <= '{$toDate}'");
         }
 
         if (!empty($statuses)) {
-            $q->whereIn("l.leave_status", $statuses);
+            $q->whereIn("l.status", $statuses);
         }
         
         if (!empty($employeeFilter)) {
             if (is_numeric($employeeFilter) && $employeeFilter > 0) {
-                $q->andWhere('lr.empNumber = ?', (int) $employeeFilter);
+                $q->andWhere('lr.emp_number = ?', (int) $employeeFilter);
             } elseif ($employeeFilter instanceof Employee) {
-                $q->andWhere('lr.empNumber = ?', $employeeFilter->getEmpNumber());
+                $q->andWhere('lr.emp_number = ?', $employeeFilter->getEmpNumber());
             } elseif (is_array($employeeFilter)) {
                 $empNumbers = array();
                 foreach ($employeeFilter as $employee) {
                     $empNumbers[] = ($employee instanceof Employee) ? $employee->getEmpNumber() : $employee;
                 }
-                $q->whereIn('lr.empNumber', $empNumbers);
+                $q->whereIn('lr.emp_number', $empNumbers);
             }
         } else {
             // empty array does not match any results.
             if (is_array($employeeFilter)) {
-                $q->andWhere('lr.empNumber = ?', -1);
+                $q->andWhere('lr.emp_number = ?', -1);
             }
         }
         
-        if (trim($fromDate) == "" && trim($toDate) == "" && !empty($leavePeriod)) {
-            $leavePeriodId = ($leavePeriod instanceof LeavePeriod) ? $leavePeriod->getLeavePeriodId() : $leavePeriod;
-            $q->andWhere('lr.leave_period_id = ?', (int) $leavePeriodId);
-        }
+//        if (trim($fromDate) == "" && trim($toDate) == "" && !empty($leavePeriod)) {
+//            $leavePeriodId = ($leavePeriod instanceof LeavePeriod) ? $leavePeriod->getLeavePeriodId() : $leavePeriod;
+//            $q->andWhere('lr.leave_period_id = ?', (int) $leavePeriodId);
+//        }
 
         if (!empty($leaveType)) {
             $leaveTypeId = ($leaveType instanceof OldLeaveType) ? $leaveType->getLeaveTypeId() : $leaveType;
@@ -427,7 +414,7 @@ class LeaveRequestDao extends BaseDao {
             $q->andWhereIn('loc.id', $locations);
         }
 
-        $q->orderBy('l.leave_date DESC, em.emp_lastname ASC, em.emp_firstname ASC');
+        $q->orderBy('l.date DESC, em.emp_lastname ASC, em.emp_firstname ASC');
 
         $count = $q->count();
 

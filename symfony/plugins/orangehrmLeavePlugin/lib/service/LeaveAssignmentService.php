@@ -36,21 +36,21 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 
         $leaveRequest = $this->generateLeaveRequest($leaveAssignmentData);
 
-        $leaveType = $this->getLeaveTypeService()->readLeaveType($leaveAssignmentData->getLeaveType());
-        $leaveRequest->setLeaveTypeName($leaveType->getLeaveTypeName());
+          $leaveType = $this->getLeaveTypeService()->readLeaveType($leaveAssignmentData->getLeaveType());
+//        $leaveRequest->setLeaveTypeName($leaveType->getLeaveTypeName());
 
-        if (is_null($leaveRequest->getLeavePeriodId())) {
-            if ($this->getLeavePeriodService()->isWithinNextLeavePeriod(strtotime($leaveRequest->getDateApplied()))) {
-                $nextLeavePeriod = $this->getLeavePeriodService()->createNextLeavePeriod($leaveRequest->getDateApplied());
-                $leaveRequest->setLeavePeriodId($nextLeavePeriod->getLeavePeriodId());
-            }
-        }
+//        if (is_null($leaveRequest->getLeavePeriodId())) {
+//            if ($this->getLeavePeriodService()->isWithinNextLeavePeriod(strtotime($leaveRequest->getDateApplied()))) {
+//                $nextLeavePeriod = $this->getLeavePeriodService()->createNextLeavePeriod($leaveRequest->getDateApplied());
+//                $leaveRequest->setLeavePeriodId($nextLeavePeriod->getLeavePeriodId());
+//            }
+//        }
 
         $leaveDays = $this->createLeaveObjectListForAppliedRange($leaveAssignmentData);
         $holidayCount = 0;
         $holidays = array(Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY);
         foreach ($leaveDays as $k => $leave) {
-            if (in_array($leave->getLeaveStatus(), $holidays)) {
+            if (in_array($leave->getStatus(), $holidays)) {
                 $holidayCount++;
             }
         }
@@ -61,9 +61,9 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
                 try {
                     $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaveDays);
 
-                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
-                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaveDays);
-                    }
+//                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
+//                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaveDays);
+//                    }
 
                     /* Send notification to the when leave is assigned; TODO: Move to action? */
                     $this->sendEmail($leaveRequest, $leaveDays, $_SESSION['empNumber']);
@@ -71,7 +71,7 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 //                    return true;
                     return $leaveRequest;
                 } catch (Exception $e) {
-                    throw new LeaveAllocationServiceException('Leave Period Does Not Exist');
+                    throw new LeaveAllocationServiceException('Error saving leave request');
                 }
             }
         } else {
