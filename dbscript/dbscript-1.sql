@@ -1294,7 +1294,7 @@ CREATE TABLE `ohrm_leave_request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `ohrm_leave` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL  auto_increment,
   `date` date default NULL,
   `length_hours` decimal(6,2) unsigned default NULL,
   `length_days` decimal(4,2) unsigned default NULL,

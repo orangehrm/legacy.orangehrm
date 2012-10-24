@@ -67,7 +67,7 @@ abstract class BaseLeave extends sfDoctrineRecord
              'fixed' => 0,
              'unsigned' => false,
              'primary' => true,
-             'autoincrement' => false,
+             'autoincrement' => true,
              'length' => 4,
              ));
         $this->hasColumn('date', 'date', 25, array(
