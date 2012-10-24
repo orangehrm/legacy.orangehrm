@@ -80,7 +80,7 @@ class LicenseTest extends FunctionalTestcase {
             Menu::goToQualification_Licenses($this);
             $viewLicenses = new LicensesPage($this);
             $viewLicenses->deleteAllLicenses();
-            $Licenseslist = array("BICT", "BIT");
+            $Licenseslist = array("BCS License", "Driving License");
             $this->assertFalse($viewLicenses->list->isOnlyItemsListed($Licenseslist, "Name"));
             $this->assertEquals($viewLicenses->getStatusMessage(), "No Records Found");
             Helper::logOutIfLoggedIn($this);
@@ -106,7 +106,25 @@ class LicenseTest extends FunctionalTestcase {
 //        $Licenseslist = array("BICT", "BIT");
 //        $this->assertTrue($viewLicenses->list->isOnlyItemsListed($Licenseslist, "Name"));
 //        Helper::logOutIfLoggedIn($this);
-//    } 
+//    }
+    
+            public function testAddLicensesWithoutData() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToQualification_Licenses($this);
+            $viewLicenses = new LicensesPage($this);
+            $viewLicenses->addLicensesWithOutData();
+            $this->assertEquals($viewLicenses->getValidationMessage(), "Required");
+            $Licenseslist = array("BCS License", "Driving License");
+            $this->assertTrue($viewLicenses->list->isOnlyItemsListed($Licenseslist, "Name"));
+            Helper::logOutIfLoggedIn($this);
+       }
+    
+    
+    
+    
+    
+    
+    
 }
 
 ?>

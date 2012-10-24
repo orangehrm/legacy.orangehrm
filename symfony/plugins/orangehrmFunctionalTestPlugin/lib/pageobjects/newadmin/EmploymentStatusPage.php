@@ -70,9 +70,9 @@ class EmploymentStatusPage {
         
         
         public  function getValidationMessage(){
-          echo 'a';
-         return $this->selenium->getText("//form[@id='frmSave']/fieldset/ol/li/span");
-          echo 'b';
+          
+         return $this->selenium->getText("//form[@id='frmEmpStatus']/fieldset/ol/li/span");
+          
 
     }
        public  function getStatusMessage(){

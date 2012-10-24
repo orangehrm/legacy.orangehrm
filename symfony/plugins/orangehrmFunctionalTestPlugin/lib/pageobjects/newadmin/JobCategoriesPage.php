@@ -48,9 +48,8 @@ class JobCategoriesPage  {
         
         
         public  function getValidationMessage(){
-          echo 'a';
-         return $this->selenium->getText("//form[@id='frmSave']/fieldset/ol/li/span");
-          echo 'b';
+         return $this->selenium->getText("//form[@id='frmJobCategory']/fieldset/ol/li/span");
+          
 
     }
            public  function getStatusMessage(){

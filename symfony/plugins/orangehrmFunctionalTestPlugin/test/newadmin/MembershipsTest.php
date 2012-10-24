@@ -109,6 +109,18 @@ class MembershipsTest extends FunctionalTestcase {
             Helper::logOutIfLoggedIn($this);
     
     } 
+    
+            public function testAddNationalityWithoutData() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToMemberships($this);
+            $addMembership = new MembershipsPage($this);           
+            $addMembership->addMemebershipsWithOutData();
+            $this->assertEquals($addMembership->getValidationMessage(), "Required");
+            $membershiplist = array("Abc", "Lions Club");
+            $this->assertTrue($addMembership->list->isOnlyItemsListed($membershiplist, "Membership"));
+            Helper::logOutIfLoggedIn($this);
+    
+   } 
                  
    }
 

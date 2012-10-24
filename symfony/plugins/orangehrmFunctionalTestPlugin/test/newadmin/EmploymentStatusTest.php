@@ -82,6 +82,7 @@ class EmploymentStatusTest extends FunctionalTestcase {
             $ViewEmploymentStatus->deleteAllEmploymentStatus();
             $employmentStatuslist = array("Full Time Contract", "Full Time Internship", "Full Time Permanent", "Part Time Contract", "Part Time Internship", "Part Time Permanent", "Terminated");
             $this->assertFalse($ViewEmploymentStatus->list->isOnlyItemsListed($employmentStatuslist, "Employment Status"));
+            $this->assertEquals($ViewEmploymentStatus->getStatusMessage(), "No Records Found");
             Helper::logOutIfLoggedIn($this);
     
     }
@@ -94,22 +95,23 @@ class EmploymentStatusTest extends FunctionalTestcase {
         $ViewEmploymentStatus->clickCancelDelete();
         $employmentStatuslist = array("Full Time Contract", "Full Time Internship", "Full Time Permanent", "Part Time Contract", "Part Time Internship", "Part Time Permanent", "Terminated");
         $this->assertTrue($ViewEmploymentStatus->list->isOnlyItemsListed($employmentStatuslist, "Employment Status"));
-        $this->assertEquals($ViewEmploymentStatus->getStatusMessage(), "No Records Found");
         Helper::logOutIfLoggedIn($this);
     }   
+   
+        public function testAddEmploymentStatusWithoutData() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToJob_EmploymentStatus($this);
+            $ViewEmploymentStatus = new EmploymentStatusPage($this);
+            echo '1';
+            $ViewEmploymentStatus->addEmploymentStatusWithOutData();
+             echo '2';
+            $this->assertEquals($ViewEmploymentStatus->getValidationMessage(), "Required");
+            $employmentStatuslist = array("Full Time Contract", "Full Time Internship", "Full Time Permanent", "Part Time Contract", "Part Time Internship", "Part Time Permanent", "Terminated");
+            $this->assertTrue($ViewEmploymentStatus->list->isOnlyItemsListed($employmentStatuslist, "Employment Status"));
+             echo '3';
+            Helper::logOutIfLoggedIn($this);
     
-//        public function testAddEmploymentStatusWithoutData() {
-//            Helper::loginUser($this, "admin", "admin");
-//            Menu::goToJob_EmploymentStatus($this);
-//            $addEmploymentStatus = new EmploymentStatusPage($this);
-//            echo '1';
-//            $addEmploymentStatus->addEmploymentStatusWithOutData();
-//             echo '2';
-//            $this->assertEquals($addEmploymentStatus->getValidationMessage(), "Required");
-//             echo '3';
-//            Helper::logOutIfLoggedIn($this);
-//    
-//   }
+   }
    
            public function testAddandCancelEmploymentStatus() {
            Helper::loginUser($this, "admin", "admin");

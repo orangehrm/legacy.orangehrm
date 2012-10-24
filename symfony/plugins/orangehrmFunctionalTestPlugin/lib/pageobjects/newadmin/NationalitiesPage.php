@@ -77,7 +77,18 @@ class NationalitiesPage {
         
           
   }
-         
+        public function addNationalityWithOutData(){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->click($this->btnSave);
+        
+        }
+        
+        
+         public  function getValidationMessage(){
+         return $this->selenium->getText("//form[@id='frmNationality']/fieldset/ol/li/span");
+          
+
+    } 
          
          
     }  

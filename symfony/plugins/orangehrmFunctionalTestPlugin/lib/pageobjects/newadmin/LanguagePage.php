@@ -77,6 +77,17 @@ class LanguagePage {
         
           
   }
+  
+        public function addLanguageWithOutData(){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->click($this->btnSave);
+        
+        }
+        
+        
+        public  function getValidationMessage(){
+          return $this->selenium->getText("//form[@id='frmSave']/fieldset/ol/li/span");
+                  }
 }
 
 ?>

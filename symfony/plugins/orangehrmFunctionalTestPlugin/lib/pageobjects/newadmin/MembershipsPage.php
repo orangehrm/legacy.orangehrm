@@ -78,6 +78,18 @@ class MembershipsPage {
         
           
   }    
+          public function addMemebershipsWithOutData(){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->click($this->btnSave);
+        
+        }
+        
+        
+         public  function getValidationMessage(){
+         return $this->selenium->getText("//form[@id='frmMembership']/fieldset/ol/li/span");
+          
+
+    } 
         
         
            

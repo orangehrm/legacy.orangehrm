@@ -98,7 +98,7 @@ class LanguageTest extends FunctionalTestcase {
     } 
     
 //     public function testCancelDeleteLanguageAndVerify() {
-//        Helper::loginUser($this, "admin", "admin");
+//       Helper::loginUser($this, "admin", "admin");
 //        Menu::goToQualification_Language($this);
 //        $viewLanguage = new LanguagePage($this);
 //        $viewLanguage->list->select("Name", "Professionals");
@@ -107,6 +107,19 @@ class LanguageTest extends FunctionalTestcase {
 //        $this->assertTrue($viewLanguage->list->isOnlyItemsListed($Languagelist, "Name"));
 //        Helper::logOutIfLoggedIn($this);
 //    } 
+    
+            public function testAddLanguageWithoutData() {
+             Helper::loginUser($this, "admin", "admin");
+            Menu::goToQualification_Language($this);
+            $viewLanguage = new LanguagePage($this);
+            $viewLanguage->addLanguageWithOutData();
+            $this->assertEquals($viewLanguage->getValidationMessage(), "Required");
+            $Languagelist = array("English", "Sinhala");
+            $this->assertTrue($viewLanguage->list->isOnlyItemsListed($Languagelist, "Name"));
+            Helper::logOutIfLoggedIn($this);
+       }
+    
+    
 }
 
 ?>

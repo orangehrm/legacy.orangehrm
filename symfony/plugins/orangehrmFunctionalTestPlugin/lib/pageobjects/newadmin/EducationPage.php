@@ -75,6 +75,17 @@ class EducationPage {
         
           
   }   
+    
+        public function addEducationWithOutData(){
+        $this->selenium->click($this->btnAdd);
+        $this->selenium->click($this->btnSave);
+        
+        }
+        
+        
+        public  function getValidationMessage(){
+        return $this->selenium->getText("//form[@id='frmSave']/fieldset/ol/li/span");
+          }
          
          
       }

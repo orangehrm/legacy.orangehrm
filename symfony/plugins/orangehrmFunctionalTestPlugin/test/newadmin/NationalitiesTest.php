@@ -109,6 +109,17 @@ class NationalitiesTest extends FunctionalTestcase {
             Helper::logOutIfLoggedIn($this);
     
     } 
+        public function testAddNationalityWithoutData() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToNationalities($this);
+            $addNationality = new NationalitiesPage($this);
+            $addNationality->addNationalityWithOutData();
+            $this->assertEquals($addNationality->getValidationMessage(), "Required");
+            $nationalitylist = array("Afghan", "Albanian", "Algerian", "American", "Andorran");
+            $this->assertTrue($addNationality->list->isOnlyItemsListed($nationalitylist, "Nationality"));
+            Helper::logOutIfLoggedIn($this);
+    
+   } 
     
     
     }

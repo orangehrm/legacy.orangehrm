@@ -85,7 +85,7 @@ class EducationTest extends FunctionalTestcase {
     }
     
     public function testDeleteAllEducation() {
-             Helper::loginUser($this, "admin", "admin");
+            Helper::loginUser($this, "admin", "admin");
             Menu::goToQualification_Education($this);
             $viewEducation = new EducationPage($this);
             $viewEducation->deleteAllEducation();
@@ -106,6 +106,17 @@ class EducationTest extends FunctionalTestcase {
 //        $this->assertTrue($viewEducation->list->isOnlyItemsListed($Educationlist, "Level"));
 //        Helper::logOutIfLoggedIn($this);
 //    } 
+    
+             public function testAddEducationWithoutData() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToQualification_Education($this);
+            $viewEducation = new EducationPage($this);
+            $viewEducation->addEducationWithOutData();
+            $this->assertEquals($viewEducation->getValidationMessage(), "Required");
+            $Educationlist = array("BICT", "BIT");
+            $this->assertTrue($viewEducation->list->isOnlyItemsListed($Educationlist, "Level"));
+            Helper::logOutIfLoggedIn($this);
+       }
 
 }
 

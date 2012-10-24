@@ -100,18 +100,17 @@ class JobCategoriesTest extends FunctionalTestcase {
     } 
     
     
-//    public function testAddJobCategoriesWithoutData() {
-//            Helper::loginUser($this, "admin", "admin");
-//            Menu::goToJob_JobCategories($this);
-//            $addJobCategories = new JobCategoriesPage($this);
-//            echo '1';
-//            $addJobCategories->addJobCategoriesWithOutData();
-//             echo '2';
-//            $this->assertEquals($addJobCategories->getValidationMessage(), "Required");
-//             echo '3';
-//            Helper::logOutIfLoggedIn($this);
-//    
-//   }  
+    public function testAddJobCategoriesWithoutData() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToJob_JobCategories($this);
+            $addJobCategories = new JobCategoriesPage($this);
+            $addJobCategories->addJobCategoriesWithOutData();
+            $this->assertEquals($addJobCategories->getValidationMessage(), "Required");
+            $jobCategoriesist = array("Craft Workers", "Laborers and Helpers", "Office and Clerical Workers", "Officials and Managers", "Operatives", "Professionals");
+            $this->assertTrue($addJobCategories->list->isOnlyItemsListed($jobCategoriesist, "Job Category"));
+            Helper::logOutIfLoggedIn($this);
+    
+   }  
     
             public function testAddandCancelJobCategories() {
             Helper::loginUser($this, "admin", "admin");
