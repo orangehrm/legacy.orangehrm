@@ -34,8 +34,8 @@ class viewLeaveBalanceReportAction extends sfAction {
             if ($this->form->isValid()) {
                 $reportType = $this->form->getValue('report_type');
                 if ($reportType != 0) {
-                    $values = array();
-                    $reportId = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 4 : 3;
+                    $values = $this->convertValues($this->form->getValues());
+                    $reportId = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 5 : 6;
                     $reportBuilder = new ReportBuilder();
                     $numOfRecords = $reportBuilder->getNumOfRecords($reportId, $values);
                     $maxPageLimit = $reportBuilder->getMaxPageLimit($reportId);
@@ -63,6 +63,16 @@ class viewLeaveBalanceReportAction extends sfAction {
         }
     }
     
+    protected function convertValues($values) {
+        
+        $convertedValues = array(
+            'leaveType' => array($values['leave_type']),
+            'empNumber' => array($values['employee']['empId'])
+        );
+        
+        return $convertedValues;
+    }
+    
     /**
      * Fix table headings
      * TODO: Improve report engine to support customizable headers (eg: have a variable in the header)
@@ -87,7 +97,7 @@ class viewLeaveBalanceReportAction extends sfAction {
         $lastHeader['groupHeader'] = __('As of') . ' ' . set_datepicker_date_format(date(time()));         
 
         
-        $otherHeaders = array('groupHeader' => __('From') . ' ' . set_datepicker_date_format($date['from']) . 
+        $otherHeaders = array('groupHeader' => __('From') . ' ' . set_datepicker_date_format($date['from']) . ' ' .
                 __('To') . ' ' . set_datepicker_date_format($date['to']));
         
         foreach ($headers as $header) {

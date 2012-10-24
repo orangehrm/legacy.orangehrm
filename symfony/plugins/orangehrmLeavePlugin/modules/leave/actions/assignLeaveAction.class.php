@@ -73,7 +73,7 @@ class assignLeaveAction extends baseLeaveAction {
                 try {
                     $leaveParameters = $this->getLeaveParameterObject($form->getValues());
                     
-                    $success = true;//$this->getLeaveAssignmentService()->assignLeave($leaveParameters);
+                    $success = $this->getLeaveAssignmentService()->assignLeave($leaveParameters);
                     
                     if ($success) {
                         $this->getUser()->setFlash('success', __('Successfully Assigned'));

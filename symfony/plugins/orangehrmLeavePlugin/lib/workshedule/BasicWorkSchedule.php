@@ -50,6 +50,8 @@ class BasicWorkSchedule implements WorkScheduleInterface {
         if ($workshift != null) {
             $workShiftLength = $workshift->getWorkShift()->getHoursPerDay();
         } else {
+            // TODO
+            // Use $definedDuration = sfConfig::get('app_orangehrm_core_leave_plugin_default_work_shift_length_hours');
             $workShiftLength = self::DEFAULT_WORK_SHIFT_LENGTH;
         }
         

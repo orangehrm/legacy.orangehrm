@@ -12,7 +12,8 @@ class orangehrmLeavePluginAllTests {
 
         /* Dao Test Cases */
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveEntitlementDaoTest.php'); 
-        $suite->addTestFile(dirname(__FILE__) . '/model/dao/NewLeaveTypeDaoTest.php');      
+        $suite->addTestFile(dirname(__FILE__) . '/model/dao/NewLeaveTypeDaoTest.php');    
+        $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveRequestDaoTest.php');  
 
         /* Service Test Cases */
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveEntitlementServiceTest.php');

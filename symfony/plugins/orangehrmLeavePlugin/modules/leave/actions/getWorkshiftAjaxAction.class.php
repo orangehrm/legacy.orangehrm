@@ -38,9 +38,9 @@ class getWorkshiftAjaxAction extends sfAction {
 
     /**
      *
-     * @param EmployeeService $service 
+     * @param WorkScheduleService $service 
      */
-    public function setEmployeeService(EmployeeService $service) {
+    public function setWorkScheduleService(WorkScheduleService $service) {
         $this->workScheduleService = $service;
     }  
     
