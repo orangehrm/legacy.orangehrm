@@ -84,6 +84,7 @@ class viewLeaveListAction extends sfAction {
 
     public function execute($request) {
         
+        $this->setTemplate('viewLeaveList');        
         return;
         
         $this->mode = $mode = $this->getMode();
