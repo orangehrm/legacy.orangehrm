@@ -17,7 +17,7 @@
 --   KEY `type_status` (`leave_request_id`,`leave_status`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-TRUNCATE TABLE ohrm_leave_entitlement;
+DELETE FROM ohrm_leave_entitlement;
 DELETE FROM ohrm_leave_type;
 DELETE FROM ohrm_leave;
 
@@ -35,13 +35,13 @@ INSERT INTO `ohrm_leave_entitlement`(emp_number, no_of_days, leave_type_id, from
             FROM `hs_hr_employee_leave_quota` q LEFT JOIN `hs_hr_leavetype` lt ON lt.leave_type_id = q.leave_type_id
             LEFT JOIN hs_hr_leave_period p ON p.leave_period_id = q.leave_period_id; 
 
-INSERT INTO `ohrm_leave` (`id`, `leave_date`, `leave_length_hours`, `leave_length_days`,
-                  `leave_status`, `leave_comments`, `leave_request_id`,
-                  `leave_type_id`, `employee_id`, `start_time`, `end_time`)
-                   SELECT old_l.`leave_id`, old_l.`leave_date`, old_l.`leave_length_hours`, old_l.`leave_length_days`,
-                          old_l.`leave_status`, old_l.`leave_comments`, old_l.`leave_request_id`,
-                          lt.int_id, old_l.`employee_id`, 
-                          old_l.`start_time`, old_l.`end_time`
-                    FROM `hs_hr_leave` old_l LEFT JOIN `hs_hr_leavetype` lt ON old_l.leave_type_id = lt.leave_type_id;
+-- INSERT INTO `ohrm_leave` (`id`, `leave_date`, `leave_length_hours`, `leave_length_days`,
+--                   `leave_status`, `leave_comments`, `leave_request_id`,
+--                   `leave_type_id`, `employee_id`, `start_time`, `end_time`)
+--                    SELECT old_l.`leave_id`, old_l.`leave_date`, old_l.`leave_length_hours`, old_l.`leave_length_days`,
+--                           old_l.`leave_status`, old_l.`leave_comments`, old_l.`leave_request_id`,
+--                           lt.int_id, old_l.`employee_id`, 
+--                           old_l.`start_time`, old_l.`end_time`
+--                     FROM `hs_hr_leave` old_l LEFT JOIN `hs_hr_leavetype` lt ON old_l.leave_type_id = lt.leave_type_id;
 
 alter table `hs_hr_leavetype` drop column int_id;
