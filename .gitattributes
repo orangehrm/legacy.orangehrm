@@ -3517,7 +3517,6 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/pimCsvImportAction.cl
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/sampleCsvDownloadAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveCustomerJsonAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveJobTitleAction.class.php -text
-symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveMailConfigurationAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/savePayGradeCurrencyAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveProjectAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSubscriberAction.class.php -text

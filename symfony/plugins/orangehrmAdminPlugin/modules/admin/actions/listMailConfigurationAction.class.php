@@ -18,23 +18,37 @@
  * Boston, MA  02110-1301, USA
  */
 class listMailConfigurationAction extends sfAction {
+    
+    public function setForm(sfForm $form) {
+        if (is_null($this->form)) {
+            $this->form = $form;
+        }
+    }
 
     public function execute($request) {
         
         $this->_checkAuthentication();
         
-        $emailConfigurationService = new EmailConfigurationService();
-        $emailConfiguration = $emailConfigurationService->getEmailConfiguration();
-        $this->mailAddress = $emailConfiguration->getSentAs();
-        $this->sendMailPath = $emailConfiguration->getSendmailPath();
-        $this->smtpAuth = $emailConfiguration->getSmtpAuthType();
-        $this->smtpSecurity = $emailConfiguration->getSmtpSecurityType();
-        $this->smtpHost = $emailConfiguration->getSmtpHost();
-        $this->smtpPort = $emailConfiguration->getSmtpPort();
-        $this->smtpUser = $emailConfiguration->getSmtpUsername();
-        $this->smtpPass = $emailConfiguration->getSmtpPassword();
-        $this->emailType = $emailConfiguration->getMailType();
+        $this->setForm(new EmailConfigurationForm());
         
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getParameter($this->form->getName()));            
+            if ($this->form->isValid()) {
+                $this->form->save();
+            }
+            
+            if ($request->getParameter('chkSendTestEmail')) {
+                $emailService = new EmailService();
+                $result = $emailService->sendTestEmail($request->getParameter('txtTestEmail'));
+                if ($result) {
+                    $this->getUser()->setFlash('success', __('Successfully Saved. Test Email Sent'));
+                } else {
+                    $this->getUser()->setFlash('warning', __("Successfully Saved. Test Email Not Sent"));
+                }
+            } else {
+                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+            }
+        }
     }
     
     protected function _checkAuthentication() {
