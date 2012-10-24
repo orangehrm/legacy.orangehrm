@@ -3918,6 +3918,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leav
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/showLeavePeriodNotDefinedWarningSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewHolidayListSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveListSuccess.php -text
+symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveListSuccessOld.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveRequestSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveSummarySuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/actions/ApplyLeaveActionTest.php -text

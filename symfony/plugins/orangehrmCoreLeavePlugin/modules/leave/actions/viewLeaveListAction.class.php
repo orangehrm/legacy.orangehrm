@@ -83,7 +83,9 @@ class viewLeaveListAction extends sfAction {
     }
 
     public function execute($request) {
-
+        
+        return;
+        
         $this->mode = $mode = $this->getMode();
         $this->essMode = $this->isEssMode();
 

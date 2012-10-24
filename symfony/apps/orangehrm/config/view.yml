@@ -48,4 +48,8 @@ applyLeaveSuccess:
 assignLeaveSuccess:
   layout: freshorange
   javascripts:    [-*]
-  stylesheets:    [-*]        
+  stylesheets:    [-*]   
+viewLeaveListSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]   
