@@ -56,7 +56,13 @@ class assignLeaveAction extends baseLeaveAction {
     
     public function execute($request) {
 
-        $form = $this->getAssignLeaveForm();
+        $this->leaveTypes = $this->getElegibleLeaveTypes();
+        
+        if (count($this->leaveTypes) == 0) {
+            $this->getUser()->setFlash('warning', __('No Leave Types with Leave Balance'));
+        }
+        
+        $form = $this->getAssignLeaveForm($this->leaveTypes);
         $this->setForm($form);
         $this->overlapLeave = 0;
 
@@ -67,16 +73,16 @@ class assignLeaveAction extends baseLeaveAction {
                 try {
                     $leaveParameters = $this->getLeaveParameterObject($form->getValues());
                     
-                    $success = $this->getLeaveAssignmentService()->assignLeave($leaveParameters);
+                    $success = true;//$this->getLeaveAssignmentService()->assignLeave($leaveParameters);
                     
                     if ($success) {
-                        $this->templateMessage = array('SUCCESS', __('Successfully Assigned'));
+                        $this->getUser()->setFlash('success', __('Successfully Assigned'));
                     } else {
                         $this->overlapLeave = $this->getLeaveAssignmentService()->getOverlapLeave();
-                        $this->templateMessage = array('WARNING', __('Failed to Assign'));
+                        $this->getUser()->setFlash('warning', __('Failed to Assign'));
                     }
                 } catch (LeaveAllocationServiceException $e) {
-                    $this->templateMessage = array('WARNING', __($e->getMessage()));
+                    $this->getUser()->setFlash('warning', __($e->getMessage()));
                 }
             }
         }
@@ -101,13 +107,9 @@ class assignLeaveAction extends baseLeaveAction {
     /**
      * Creating Assign Leave Form
      */
-    protected function getAssignLeaveForm() {
-        /* Making the optional parameters to create the form */
-        $leaveTypes = $this->getElegibleLeaveTypes();
+    protected function getAssignLeaveForm($leaveTypes) {
 
-        if (count($leaveTypes) == 0) {
-            $this->templateMessage = array('WARNING', __('No Leave Types with Leave Balance'));
-        }
+
         $leaveFormOptions = array('leaveTypes' => $leaveTypes);
         $form = new AssignLeaveForm(array(), $leaveFormOptions, true);
 

@@ -56,13 +56,13 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 </div>
 <?php } ?>
 
-<?php if (count($assignLeaveForm->leaveTypeList) > 1) { ?>
 <div class="box single" id="apply-leave">
     <div class="head">
         <h1><?php echo __('Assign Leave') ?></h1>
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
+<?php if (count($leaveTypes) > 1) : ?>        
         <form id="frmLeaveApply" name="frmLeaveApply" method="post" action="">
 
             <fieldset>                
@@ -79,11 +79,11 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             </fieldset>
             
         </form>
-        
+<?php endif ?>        
     </div> <!-- inner -->
     
 </div> <!-- assign leave -->
-<?php } ?>
+
 
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
