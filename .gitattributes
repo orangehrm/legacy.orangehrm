@@ -546,6 +546,7 @@ symfony/apps/orangehrm/lib/model/exception/DaoException.php -text
 symfony/apps/orangehrm/lib/model/exception/DataDuplicationException.php -text
 symfony/apps/orangehrm/lib/model/exception/DuplicateNameException.php -text
 symfony/apps/orangehrm/lib/model/exception/LeaveServiceException.php -text
+symfony/apps/orangehrm/lib/model/exception/OrangeHRMBaseException.php -text
 symfony/apps/orangehrm/lib/model/exception/PIMException.php -text
 symfony/apps/orangehrm/lib/model/exception/PerformanceServiceException.php -text
 symfony/apps/orangehrm/lib/model/exception/RecruitmentExeption.php -text
@@ -4050,6 +4051,7 @@ symfony/plugins/orangehrmCorePlugin/lib/dao/ConfigDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/dao/DatabaseSessionManager.php -text
 symfony/plugins/orangehrmCorePlugin/lib/dao/MenuDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/dao/ReportableDao.php -text
+symfony/plugins/orangehrmCorePlugin/lib/exception/ConfigurationException.php -text
 symfony/plugins/orangehrmCorePlugin/lib/exception/CoreDaoException.php -text
 symfony/plugins/orangehrmCorePlugin/lib/exception/CoreServiceException.php -text
 symfony/plugins/orangehrmCorePlugin/lib/factory/SimpleUserRoleFactory.php -text

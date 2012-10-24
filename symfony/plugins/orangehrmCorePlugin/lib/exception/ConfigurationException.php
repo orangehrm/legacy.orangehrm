@@ -20,8 +20,8 @@
  */
 
 /**
- * Core Exception class for services
+ * Description of ConfigurationException
  */
-class CoreServiceException extends ServiceException {
+class ConfigurationException extends OrangeHRMBaseException {
     
 }
