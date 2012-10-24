@@ -23,17 +23,17 @@
  */
 class getWorkshiftAjaxAction extends sfAction {
 
-    private $employeeService;
+    private $workScheduleService;
     
     /**
-     *
-     * @return EmployeeService
+     * Get work schedule service
+     * @return WorkScheduleService
      */
-    public function getEmployeeService() {
-        if (!($this->employeeService instanceof EmployeeService)) {
-            $this->employeeService = new EmployeeService();
+    public function getWorkScheduleService() {
+        if (!($this->workScheduleService instanceof WorkScheduleService)) {
+            $this->workScheduleService = new WorkScheduleService();
         }
-        return $this->employeeService;
+        return $this->workScheduleService;
     }
 
     /**
@@ -41,7 +41,7 @@ class getWorkshiftAjaxAction extends sfAction {
      * @param EmployeeService $service 
      */
     public function setEmployeeService(EmployeeService $service) {
-        $this->employeeService = $service;
+        $this->workScheduleService = $service;
     }  
     
     public function execute( $request ){
@@ -50,13 +50,8 @@ class getWorkshiftAjaxAction extends sfAction {
         
         $empNumber = $request->getParameter('empNumber');
         
-        $employeeWorkShift = $this->getEmployeeService()->getEmployeeWorkShift($empNumber);
-        
-        if ($employeeWorkShift != null) {
-            $workShiftLength = $employeeWorkShift->getWorkShift()->getHoursPerDay();
-        } else {
-            $workShiftLength = WorkShift :: DEFAULT_WORK_SHIFT_LENGTH;
-        }
+        $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);        
+        $workShiftLength = $workSchedule->getWorkShiftLength();        
 
         $result = array('workshift' => $workShiftLength);
         $response = $this->getResponse();

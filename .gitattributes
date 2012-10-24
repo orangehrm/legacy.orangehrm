@@ -3860,7 +3860,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getCurrentStartDa
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getHolidayAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getLeaveBalanceAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getWorkWeekAjaxAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getWorkshiftAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/leaveTypeListAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/loadActiveLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/loadDatesforMonthAction.class.php -text
@@ -4521,13 +4520,17 @@ symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveTypeTable.cla
 symfony/plugins/orangehrmLeavePlugin/lib/parameterholder/LeaveEntitlementSearchParameterHolder.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveConfigurationService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveEntitlementService.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/service/WorkScheduleService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/task/upgradeLeaveModuleTask.class.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/workshedule/BasicWorkSchedule.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/workshedule/WorkScheduleInterface.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/addLeaveEntitlementAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/applyLeaveAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/assignLeaveAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/deleteLeaveEntitlementsAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeeCountAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesAjaxAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkshiftAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveBalanceReportAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveEntitlementsAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
@@ -4545,6 +4548,7 @@ symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php 
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/NewLeaveTypeDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveConfigurationServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveEntitlementServiceTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkScheduleServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/orangehrmLeavePluginAllTests.php -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmPimPlugin/config/list_component.yml -text
