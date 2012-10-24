@@ -17,6 +17,7 @@ class orangehrmLeavePluginAllTests {
         /* Service Test Cases */
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveEntitlementServiceTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveConfigurationServiceTest.php');
+        $suite->addTestFile(dirname(__FILE__) . '/model/service/WorkScheduleServiceTest.php');        
         
         /* Other test cases */
         $suite->addTestFile(dirname(__FILE__) . '/entitlement/FIFOEntitlementConsumptionStrategyTest.php');
