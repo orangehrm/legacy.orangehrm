@@ -1289,17 +1289,17 @@ CREATE TABLE `ohrm_leave_request` (
   `leave_type_id` int unsigned NOT NULL,
   `date_applied` date NOT NULL,
   `emp_number` int(7) NOT NULL,
-  `leave_comments` varchar(256) default NULL,
+  `comments` varchar(256) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `ohrm_leave` (
   `id` int(11) NOT NULL,
   `date` date default NULL,
-  `leave_length_hours` decimal(6,2) unsigned default NULL,
-  `leave_length_days` decimal(4,2) unsigned default NULL,
-  `leave_status` smallint(6) default NULL,
-  `leave_comments` varchar(256) default NULL,
+  `length_hours` decimal(6,2) unsigned default NULL,
+  `length_days` decimal(4,2) unsigned default NULL,
+  `status` smallint(6) default NULL,
+  `comments` varchar(256) default NULL,
   `leave_request_id`int unsigned NOT NULL,
   `leave_type_id` int unsigned NOT NULL,
   `emp_number` int(7) NOT NULL,
@@ -1308,7 +1308,7 @@ CREATE TABLE `ohrm_leave` (
   `end_time` time default NULL,
   PRIMARY KEY  (`id`),
   KEY `leave_request_type_emp`(`leave_request_id`,`leave_type_id`,`emp_number`),
-  KEY `request_status` (`leave_request_id`,`leave_status`)
+  KEY `request_status` (`leave_request_id`,`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 alter table ohrm_leave_type

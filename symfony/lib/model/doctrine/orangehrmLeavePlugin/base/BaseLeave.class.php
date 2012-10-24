@@ -7,10 +7,10 @@
  * 
  * @property integer $id
  * @property date $date
- * @property decimal $leave_length_hours
- * @property decimal $leave_length_days
- * @property integer $leave_status
- * @property string $leave_comments
+ * @property decimal $length_hours
+ * @property decimal $length_days
+ * @property integer $status
+ * @property string $comments
  * @property integer $leave_request_id
  * @property integer $leave_type_id
  * @property integer $emp_number
@@ -21,36 +21,36 @@
  * @property LeaveRequest $LeaveRequest
  * @property LeaveType $LeaveType
  * 
- * @method integer          getId()                 Returns the current record's "id" value
- * @method date             getDate()               Returns the current record's "date" value
- * @method decimal          getLeaveLengthHours()   Returns the current record's "leave_length_hours" value
- * @method decimal          getLeaveLengthDays()    Returns the current record's "leave_length_days" value
- * @method integer          getLeaveStatus()        Returns the current record's "leave_status" value
- * @method string           getLeaveComments()      Returns the current record's "leave_comments" value
- * @method integer          getLeaveRequestId()     Returns the current record's "leave_request_id" value
- * @method integer          getLeaveTypeId()        Returns the current record's "leave_type_id" value
- * @method integer          getEmpNumber()          Returns the current record's "emp_number" value
- * @method integer          getEntitlementId()      Returns the current record's "entitlement_id" value
- * @method time             getStartTime()          Returns the current record's "start_time" value
- * @method time             getEndTime()            Returns the current record's "end_time" value
- * @method LeaveEntitlement getLeaveEntitlement()   Returns the current record's "LeaveEntitlement" value
- * @method LeaveRequest     getLeaveRequest()       Returns the current record's "LeaveRequest" value
- * @method LeaveType        getLeaveType()          Returns the current record's "LeaveType" value
- * @method Leave            setId()                 Sets the current record's "id" value
- * @method Leave            setDate()               Sets the current record's "date" value
- * @method Leave            setLeaveLengthHours()   Sets the current record's "leave_length_hours" value
- * @method Leave            setLeaveLengthDays()    Sets the current record's "leave_length_days" value
- * @method Leave            setLeaveStatus()        Sets the current record's "leave_status" value
- * @method Leave            setLeaveComments()      Sets the current record's "leave_comments" value
- * @method Leave            setLeaveRequestId()     Sets the current record's "leave_request_id" value
- * @method Leave            setLeaveTypeId()        Sets the current record's "leave_type_id" value
- * @method Leave            setEmpNumber()          Sets the current record's "emp_number" value
- * @method Leave            setEntitlementId()      Sets the current record's "entitlement_id" value
- * @method Leave            setStartTime()          Sets the current record's "start_time" value
- * @method Leave            setEndTime()            Sets the current record's "end_time" value
- * @method Leave            setLeaveEntitlement()   Sets the current record's "LeaveEntitlement" value
- * @method Leave            setLeaveRequest()       Sets the current record's "LeaveRequest" value
- * @method Leave            setLeaveType()          Sets the current record's "LeaveType" value
+ * @method integer          getId()               Returns the current record's "id" value
+ * @method date             getDate()             Returns the current record's "date" value
+ * @method decimal          getLengthHours()      Returns the current record's "length_hours" value
+ * @method decimal          getLengthDays()       Returns the current record's "length_days" value
+ * @method integer          getStatus()           Returns the current record's "status" value
+ * @method string           getComments()         Returns the current record's "comments" value
+ * @method integer          getLeaveRequestId()   Returns the current record's "leave_request_id" value
+ * @method integer          getLeaveTypeId()      Returns the current record's "leave_type_id" value
+ * @method integer          getEmpNumber()        Returns the current record's "emp_number" value
+ * @method integer          getEntitlementId()    Returns the current record's "entitlement_id" value
+ * @method time             getStartTime()        Returns the current record's "start_time" value
+ * @method time             getEndTime()          Returns the current record's "end_time" value
+ * @method LeaveEntitlement getLeaveEntitlement() Returns the current record's "LeaveEntitlement" value
+ * @method LeaveRequest     getLeaveRequest()     Returns the current record's "LeaveRequest" value
+ * @method LeaveType        getLeaveType()        Returns the current record's "LeaveType" value
+ * @method Leave            setId()               Sets the current record's "id" value
+ * @method Leave            setDate()             Sets the current record's "date" value
+ * @method Leave            setLengthHours()      Sets the current record's "length_hours" value
+ * @method Leave            setLengthDays()       Sets the current record's "length_days" value
+ * @method Leave            setStatus()           Sets the current record's "status" value
+ * @method Leave            setComments()         Sets the current record's "comments" value
+ * @method Leave            setLeaveRequestId()   Sets the current record's "leave_request_id" value
+ * @method Leave            setLeaveTypeId()      Sets the current record's "leave_type_id" value
+ * @method Leave            setEmpNumber()        Sets the current record's "emp_number" value
+ * @method Leave            setEntitlementId()    Sets the current record's "entitlement_id" value
+ * @method Leave            setStartTime()        Sets the current record's "start_time" value
+ * @method Leave            setEndTime()          Sets the current record's "end_time" value
+ * @method Leave            setLeaveEntitlement() Sets the current record's "LeaveEntitlement" value
+ * @method Leave            setLeaveRequest()     Sets the current record's "LeaveRequest" value
+ * @method Leave            setLeaveType()        Sets the current record's "LeaveType" value
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -79,7 +79,7 @@ abstract class BaseLeave extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 25,
              ));
-        $this->hasColumn('leave_length_hours', 'decimal', 6, array(
+        $this->hasColumn('length_hours', 'decimal', 6, array(
              'type' => 'decimal',
              'fixed' => 0,
              'unsigned' => true,
@@ -89,7 +89,7 @@ abstract class BaseLeave extends sfDoctrineRecord
              'length' => 6,
              'scale' => '2',
              ));
-        $this->hasColumn('leave_length_days', 'decimal', 4, array(
+        $this->hasColumn('length_days', 'decimal', 4, array(
              'type' => 'decimal',
              'fixed' => 0,
              'unsigned' => true,
@@ -99,7 +99,7 @@ abstract class BaseLeave extends sfDoctrineRecord
              'length' => 4,
              'scale' => '2',
              ));
-        $this->hasColumn('leave_status', 'integer', 2, array(
+        $this->hasColumn('status', 'integer', 2, array(
              'type' => 'integer',
              'fixed' => 0,
              'unsigned' => false,
@@ -108,7 +108,7 @@ abstract class BaseLeave extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 2,
              ));
-        $this->hasColumn('leave_comments', 'string', 256, array(
+        $this->hasColumn('comments', 'string', 256, array(
              'type' => 'string',
              'fixed' => 0,
              'unsigned' => false,

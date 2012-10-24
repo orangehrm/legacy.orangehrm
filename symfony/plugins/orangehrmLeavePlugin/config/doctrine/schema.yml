@@ -153,28 +153,28 @@ Leave:
       primary: false
       notnull: false
       autoincrement: false
-    leave_length_hours:
+    length_hours:
       type: 'decimal(6, 2)'
       fixed: false
       unsigned: true
       primary: false
       notnull: false
       autoincrement: false
-    leave_length_days:
+    length_days:
       type: 'decimal(4, 2)'
       fixed: false
       unsigned: true
       primary: false
       notnull: false
       autoincrement: false
-    leave_status:
+    status:
       type: integer(2)
       fixed: false
       unsigned: false
       primary: false
       notnull: false
       autoincrement: false
-    leave_comments:
+    comments:
       type: string(256)
       fixed: false
       unsigned: false
@@ -267,7 +267,7 @@ LeaveRequest:
       primary: false
       notnull: true
       autoincrement: false
-    leave_comments:
+    comments:
       type: string(256)
       fixed: false
       unsigned: false
