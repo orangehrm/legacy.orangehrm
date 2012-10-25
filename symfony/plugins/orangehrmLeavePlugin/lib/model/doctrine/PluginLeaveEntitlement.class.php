@@ -13,4 +13,15 @@
 abstract class PluginLeaveEntitlement extends BaseLeaveEntitlement
 {
     const ENTITLEMENT_TYPE_ADD = 1;
+    
+    public function getAvailableDays() {
+        $available = $this->getNoOfDays();        
+        $daysUsed = $this->getDaysUsed();
+        
+        if (!empty($daysUsed)) {
+            $available -= $daysUsed;
+        }
+        
+        return $available;
+    }
 }

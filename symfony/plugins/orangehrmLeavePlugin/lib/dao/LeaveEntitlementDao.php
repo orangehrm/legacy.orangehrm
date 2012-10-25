@@ -166,6 +166,7 @@ class LeaveEntitlementDao extends BaseDao {
                     ->addWhere('le.deleted = 0')
                     ->addWhere('le.leave_type_id = :leaveTypeId')
                     ->addWhere('le.emp_number = :empNumber')
+                    ->addWhere('(le.no_of_days - le.days_used) > 0')
                     ->addWhere('(:fromDate BETWEEN le.from_date AND le.to_date) OR ' .
                                '(:toDate BETWEEN le.from_date AND le.to_date) OR ' .
                                '(le.from_date BETWEEN :fromDate AND :toDate)');
