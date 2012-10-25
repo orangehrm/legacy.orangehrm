@@ -24,4 +24,16 @@ abstract class PluginLeaveEntitlement extends BaseLeaveEntitlement
         
         return $available;
     }
+    
+    public function withinPeriod($date) {
+        $fromTimestamp = strtotime($this->getFromDate());
+        $toTimestamp = strtotime($this->getToDate());
+        $timestamp = strtotime($date);
+        
+        if (($timestamp >= $fromTimestamp) && ($timestamp <= $toTimestamp)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
