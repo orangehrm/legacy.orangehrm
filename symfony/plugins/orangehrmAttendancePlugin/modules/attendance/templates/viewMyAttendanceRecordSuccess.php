@@ -17,10 +17,6 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
 use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 ?>
 
-
-
-
-
 <div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
 <div class="outerbox"  style="width: 500px">
     <div class="maincontent">
@@ -33,8 +29,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
             <table  border="0" cellpadding="0" cellspacing="0" class="employeeTable">
 
                 <tr><td style="width:60px; padding-left: 5px"><?php echo __('Date') ?></td>
-                    <td><?php echo $form['date']->renderError() ?><?php echo $form['date']->render(); ?>&nbsp;</td>
-                    <td><input id="DateBtn" type="button" name="" value="" class="calendarBtn" style="margin: 0px"/></td>
+                    <td><?php echo $form['date']->renderError() ?><?php echo $form['date']->render(); ?></td>
                     <?php echo $form->renderHiddenFields(); ?>
                 </tr>
             </table>

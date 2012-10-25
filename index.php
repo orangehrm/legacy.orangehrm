@@ -83,9 +83,7 @@ if (file_exists('symfony/config/databases.yml')) {
         }
         /* For checking TimesheetPeriodStartDaySet status : Ends */    
         // Check if a user defined user role (isPredefined = false)
-        $systemUserService = new SystemUserService();
-        $user = $systemUserService->getSystemUser($_SESSION['user']);
-        $isPredefinedUserRole = $user->getUserRole()->getIsPredefined();
+        $isPredefinedUserRole = !UserRoleManagerFactory::getUserRoleManager()->userHasNonPredefinedRole();
         
         $allowedToAddEmployee = UserRoleManagerFactory::getUserRoleManager()->isActionAllowed(PluginWorkflowStateMachine::FLOW_EMPLOYEE,
                 Employee::STATE_NOT_EXIST, PluginWorkflowStateMachine::EMPLOYEE_ACTION_ADD);        
@@ -187,7 +185,12 @@ $_SESSION['path'] = ROOT_PATH;
 ?>
 <?php
 /* Default modules */
+$showingDefaultPage = false;
+
 if (!isset($_GET['menu_no_top'])) {
+    
+    $showingDefaultPage = true;
+    
     if ($_SESSION['isAdmin'] == 'Yes') {
         $_GET['menu_no_top'] = "hr";
     } else if ($_SESSION['isSupervisor']) {
@@ -429,9 +432,13 @@ if ($_SESSION['isAdmin'] == 'Yes' || $arrAllRights[Admin]['view']) {
     $subs[] = $sub;
 
     if (is_dir(ROOT_PATH . '/symfony/plugins/orangehrmBaseAuthorizationPlugin')) {
-        $sub = new MenuItem("userRole", $i18n->__("User Roles"), "./symfony/web/index.php/admin/viewUserRoles", "rightMenu");
-        $subsubs = array();
-        $subs[] = $sub;
+        $authMenuHelper = new AuthMenuHelper();
+        $authMenuItem = $authMenuHelper->getMenuItem();
+        
+        if (!empty($authMenuItem)) {
+            $subs[] = $authMenuItem;
+        }
+
     }
     
     $sub = new MenuItem("email", $i18n->__("Email Notifications"), "#");
@@ -746,7 +753,16 @@ if (($_SESSION['empID'] != null) || $arrAllRights[Benefits]['view']) {
 }
    Disabling Benefits module: Ends */
 
+/** Asset Tracker Menu items */
+if (file_exists('symfony/plugins/orangehrmAssetTrackerPlugin/lib/menu/asset_tracker_menu.php')) {    
+    include_once('symfony/plugins/orangehrmAssetTrackerPlugin/lib/menu/asset_tracker_menu.php');
+}
 
+/** Dashboard Menu items */
+if (file_exists('symfony/plugins/orangehrmDashboardPlugin/lib/menu/dashboard_menu.php')) {    
+    include_once('symfony/plugins/orangehrmDashboardPlugin/lib/menu/dashboard_menu.php');
+}
+    
 
 
 
@@ -785,7 +801,7 @@ for ($i=0; $i<$count; $i++) {
 
 $welcomeMessage = preg_replace('/#username/', ((isset($_SESSION['fname'])) ? $_SESSION['fname'] : ''), $i18n->__($lang_index_WelcomeMes));
 
-if (isset($_SESSION['ladpUser']) && $_SESSION['ladpUser'] && $_SESSION['isAdmin'] != "Yes") {
+if (isset($_SESSION['ladpUser']) && $_SESSION['ladpUser']) {
     $optionMenu = array();
 } else {
     $optionMenu[] = new MenuItem("changepassword", $i18n->__($lang_index_ChangePassword),
@@ -794,54 +810,57 @@ if (isset($_SESSION['ladpUser']) && $_SESSION['ladpUser'] && $_SESSION['isAdmin'
 
 $optionMenu[] = new MenuItem("logout", __($lang_index_Logout), './symfony/web/index.php/auth/logout', '_parent');
 
-// Decide on home page
-if (($_GET['menu_no_top'] == "eim") && ($arrRights['view'] || $allowAdminView)) {
-    $uniqcode = isset($_GET['uniqcode']) ? $_GET['uniqcode'] : $defaultAdminView;
-    $isAdmin = isset($_GET['isAdmin']) ? ('&amp;isAdmin=' . $_GET['isAdmin']) : '';
+if (!isset($home)) {
+    
+    // Decide on home page
+    if (($_GET['menu_no_top'] == "eim") && ($arrRights['view'] || $allowAdminView)) {
+        $uniqcode = isset($_GET['uniqcode']) ? $_GET['uniqcode'] : $defaultAdminView;
+        $isAdmin = isset($_GET['isAdmin']) ? ('&amp;isAdmin=' . $_GET['isAdmin']) : '';
 
-    /* TODO: Remove this pageNo variable */
-    $pageNo = isset($_GET['pageNo']) ? '&amp;pageNo=1' : '';
-    if (isset($_GET['uri'])) {
+        /* TODO: Remove this pageNo variable */
+        $pageNo = isset($_GET['pageNo']) ? '&amp;pageNo=1' : '';
+        if (isset($_GET['uri'])) {
+            $uri = (substr($_GET['uri'], 0, 11) == 'performance') ? $_GET['uri'] : 'performance/viewReview/mode/new';
+            $home = './symfony/web/index.php/' . $uri;
+        } else {
+            $home = "./symfony/web/index.php/admin/viewOrganizationGeneralInformation"; //TODO: Use this after fully converted to Symfony
+        }
+    } elseif (($_GET['menu_no_top'] == "hr") && $arrRights['view']) {
+
+        $home = "./symfony/web/index.php/pim/viewEmployeeList/reset/1";
+        if (isset($_GET['uri'])) {
+            $home = $_GET['uri'];
+        } elseif (isset($_GET['id'])) {
+            $home = "./symfony/web/index.php/pim/viewPersonalDetails?empNumber=" . $_GET['id'];
+        }
+    } elseif ($_GET['menu_no_top'] == "ess") {
+        $home = './symfony/web/index.php/pim/viewPersonalDetails?empNumber=' . $_SESSION['empID'];
+    } elseif ($_GET['menu_no_top'] == "leave") {
+        $home = $leaveHomePage;
+    } elseif ($_GET['menu_no_top'] == "time") {
+        $home = $timeHomePage;
+    } elseif ($_GET['menu_no_top'] == "benefits") {
+        $home = $beneftisHomePage;
+    } elseif ($_GET['menu_no_top'] == "recruit") {
+        $home = $recruitHomePage;
+    } elseif ($_GET['menu_no_top'] == "performance") {
         $uri = (substr($_GET['uri'], 0, 11) == 'performance') ? $_GET['uri'] : 'performance/viewReview/mode/new';
         $home = './symfony/web/index.php/' . $uri;
     } else {
-        $home = "./symfony/web/index.php/admin/viewOrganizationGeneralInformation"; //TODO: Use this after fully converted to Symfony
-    }
-} elseif (($_GET['menu_no_top'] == "hr") && $arrRights['view']) {
-
-    $home = "./symfony/web/index.php/pim/viewEmployeeList/reset/1";
-    if (isset($_GET['uri'])) {
-        $home = $_GET['uri'];
-    } elseif (isset($_GET['id'])) {
-        $home = "./symfony/web/index.php/pim/viewPersonalDetails?empNumber=" . $_GET['id'];
-    }
-} elseif ($_GET['menu_no_top'] == "ess") {
-    $home = './symfony/web/index.php/pim/viewPersonalDetails?empNumber=' . $_SESSION['empID'];
-} elseif ($_GET['menu_no_top'] == "leave") {
-    $home = $leaveHomePage;
-} elseif ($_GET['menu_no_top'] == "time") {
-    $home = $timeHomePage;
-} elseif ($_GET['menu_no_top'] == "benefits") {
-    $home = $beneftisHomePage;
-} elseif ($_GET['menu_no_top'] == "recruit") {
-    $home = $recruitHomePage;
-} elseif ($_GET['menu_no_top'] == "performance") {
-    $uri = (substr($_GET['uri'], 0, 11) == 'performance') ? $_GET['uri'] : 'performance/viewReview/mode/new';
-    $home = './symfony/web/index.php/' . $uri;
-} else {
-    $rightsCount = 0;
-    foreach ($arrAllRights as $moduleRights) {
-        foreach ($moduleRights as $right) {
-            if ($right) {
-                $rightsCount++;
+        $rightsCount = 0;
+        foreach ($arrAllRights as $moduleRights) {
+            foreach ($moduleRights as $right) {
+                if ($right) {
+                    $rightsCount++;
+                }
             }
         }
-    }
 
-    if ($rightsCount === 0) {
-        $home = 'message.php?case=no-rights&type=notice';
-    } else {
-        $home = "";
+        if ($rightsCount === 0) {
+            $home = 'message.php?case=no-rights&type=notice';
+        } else {
+            $home = "";
+        }
     }
 }
 

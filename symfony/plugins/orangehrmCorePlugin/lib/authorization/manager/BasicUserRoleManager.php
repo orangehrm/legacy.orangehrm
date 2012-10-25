@@ -68,6 +68,27 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
             }
         }
         
+        
+        foreach ($directoryIterator as $fileInfo) {
+            if ($fileInfo->isDir()) {
+
+                $pluginName = $fileInfo->getFilename();
+                $configuraitonPath = $pluginsPath . '/' . $pluginName . '/config/user_role_decorator.yml';
+
+                if (is_file($configuraitonPath)) {
+                    $configuraiton = sfYaml::load($configuraitonPath);
+
+                    if (!is_array($configuraiton)) {
+                        continue;
+                    }
+
+                    foreach ($configuraiton as $roleName => $roleObj) {
+                        $this->userRoleClasses[$roleName] = new $roleObj['class']($this, $roleName ,$this->userRoleClasses[$roleName]);
+                    }
+                }
+            }
+        }
+        
         // Get non-predefined user roles (or lazy load)
         
     }
@@ -76,16 +97,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
         if (isset($this->userRoleClasses[$roleName])) {
             return $this->userRoleClasses[$roleName];
-        } else {
-            $systemUserService = $this->getSystemUserService();
-            $role = $systemUserService->getUserRole($roleName);
-            if (!$role->getIsPredefined()) {
-                $this->userRoleClasses[$roleName] = new UserDefinedUserRole($roleName, $this);
-                return $this->userRoleClasses[$roleName];
-            }
+        } else {        
+            return null;
         }
-        
-        return null;
     }
 
     public function getLocationService() {
@@ -199,11 +213,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
             $roleClass = $this->getUserRoleClass($role->getName());
 
             if ($roleClass) {
-                switch ($entityType) {
-                    case 'Employee':
-                        $employees = $roleClass->getAccessibleEmployees($operation, $returnType, $requiredPermissions);
-                        break;
-                }
+                $employees = $roleClass->getAccessibleEntities($entityType, $operation, $returnType, $requiredPermissions);
             }
 
             if (count($employees) > 0) {
@@ -232,11 +242,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
             $roleClass = $this->getUserRoleClass($role->getName());
 
             if ($roleClass) {
-                switch ($entityType) {
-                    case 'Employee':
-                        $propertyList = $roleClass->getAccessibleEmployeePropertyList($properties, $orderField, $orderBy, $requiredPermissions);
-                        break;
-                }
+                $propertyList = $roleClass->getAccessibleEntityProperties($entityType, $properties, $orderField, $orderBy, $requiredPermissions);
             }
 
             if (count($propertyList) > 0) {
@@ -271,24 +277,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
             $roleClass = $this->getUserRoleClass($role->getName());
 
             if ($roleClass) {
-
-            switch ($entityType) {
-                case 'Employee':
-                    $ids = $roleClass->getAccessibleEmployeeIds($operation, $returnType, $requiredPermissions);
-                    break;
-                case 'SystemUser':
-                    $ids = $roleClass->getAccessibleSystemUserIds($operation, $returnType);
-                    break;
-                case 'OperationalCountry':
-                    $ids = $roleClass->getAccessibleOperationalCountryIds($operation, $returnType);
-                    break;
-                case 'UserRole':
-                    $ids = $roleClass->getAccessibleUserRoleIds($operation, $returnType);
-                    break;
-                case 'Location':
-                    $ids = $roleClass->getAccessibleLocationIds($operation, $returnType);
-                    break;
-            }
+                $ids = $roleClass->getAccessibleEntityIds($entityType ,$operation, $returnType, $requiredPermissions);
             }
 
             if (count($ids) > 0) {

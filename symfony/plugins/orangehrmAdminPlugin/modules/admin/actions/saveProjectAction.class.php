@@ -19,109 +19,115 @@
  */
 class saveProjectAction extends sfAction {
 
-	private $projectService;
-	private $customerService;
+    private $projectService;
+    private $customerService;
 
-	public function getCustomerService() {
-		if (is_null($this->customerService)) {
-			$this->customerService = new CustomerService();
-			$this->customerService->setCustomerDao(new CustomerDao());
-		}
-		return $this->customerService;
-	}
+    public function getCustomerService() {
+        if (is_null($this->customerService)) {
+            $this->customerService = new CustomerService();
+            $this->customerService->setCustomerDao(new CustomerDao());
+        }
+        return $this->customerService;
+    }
 
-	public function getProjectService() {
-		if (is_null($this->projectService)) {
-			$this->projectService = new ProjectService();
-			$this->projectService->setProjectDao(new ProjectDao());
-		}
-		return $this->projectService;
-	}
+    public function getProjectService() {
+        if (is_null($this->projectService)) {
+            $this->projectService = new ProjectService();
+            $this->projectService->setProjectDao(new ProjectDao());
+        }
+        return $this->projectService;
+    }
 
-	/**
-	 * @param sfForm $form
-	 * @return
-	 */
-	public function setForm(sfForm $form) {
-		if (is_null($this->form)) {
-			$this->form = $form;
-		}
-	}
+    /**
+     * @param sfForm $form
+     * @return
+     */
+    public function setForm(sfForm $form) {
+        if (is_null($this->form)) {
+            $this->form = $form;
+        }
+    }
 
-	public function execute($request) {
+    protected function getUndeleteForm($projectId = '') {
+        return new UndeleteCustomerForm(array(), array('fromAction' => 'saveProject','projectId' => $projectId), true);
+    }
         
+    public function execute($request) {
+
         /* For highlighting corresponding menu item */
         $request->setParameter('initialActionName', 'viewProjects');
+        
+        $usrObj = $this->getUser()->getAttribute('user');
+        if (!($usrObj->isAdmin() || $usrObj->isProjectAdmin())) {
+            $this->redirect('pim/viewPersonalDetails');
+        }
+        $this->isProjectAdmin = false;
+        if ($usrObj->isProjectAdmin()) {
+            $this->isProjectAdmin = true;
+        }
+        $this->projectId = $request->getParameter('projectId');
+        $this->custId = $request->getParameter('custId');
 
-		$usrObj = $this->getUser()->getAttribute('user');
-		if (!($usrObj->isAdmin() || $usrObj->isProjectAdmin())) {
-			$this->redirect('pim/viewPersonalDetails');
-		}
-		$this->isProjectAdmin = false;
-		if ($usrObj->isProjectAdmin()) {
-			$this->isProjectAdmin = true;
-		}
-		$this->projectId = $request->getParameter('projectId');
-		$this->custId = $request->getParameter('custId');
+        $values = array('projectId' => $this->projectId);
+        $this->setForm(new ProjectForm(array(), $values));
+        $this->customerForm = new CustomerForm();
 
-		$values = array('projectId' => $this->projectId);
-		$this->setForm(new ProjectForm(array(), $values));
-		$this->customerForm = new CustomerForm();
+        if ($this->custId > 0) {
+            $customer = $this->getCustomerService()->getCustomerById($this->custId);
+            $customerName = $customer->getName();
+            $this->form->setDefault('customerName', $customerName);
+            print_r($this->customerName);
+            $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
+        }
 
-		if ($this->custId > 0) {
-			$customer = $this->getCustomerService()->getCustomerById($this->custId);
-			$customerName = $customer->getName();
-			$this->form->setDefault('customerName', $customerName);
-			print_r($this->customerName);
-			$this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
-		}
+        if (!empty($this->projectId)) {
+            $this->activityForm = new AddProjectActivityForm();
+            $this->copyActForm = new CopyActivityForm();
+            //For list activities
+            $this->activityList = $this->getProjectService()->getActivityListByProjectId($this->projectId);
+            $this->_setListComponent($this->activityList);
+            $params = array();
+            $this->parmetersForListCompoment = $params;
+        }
 
-		if (!empty($this->projectId)) {
-			$this->activityForm = new AddProjectActivityForm();
-			$this->copyActForm = new CopyActivityForm();
-			//For list activities
-			$this->activityList = $this->getProjectService()->getActivityListByProjectId($this->projectId);
-			$this->_setListComponent($this->activityList);
-			$params = array();
-			$this->parmetersForListCompoment = $params;
-		}
+        if ($this->getUser()->hasFlash('templateMessage')) {
+            list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
+        }
 
-		if ($this->getUser()->hasFlash('templateMessage')) {
-			list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-		}
+        if ($this->getUser()->hasFlash('templateMessageAct')) {
+            list($this->messageTypeAct, $this->messageAct) = $this->getUser()->getFlash('templateMessageAct');
+        }
 
-		if ($this->getUser()->hasFlash('templateMessageAct')) {
-			list($this->messageTypeAct, $this->messageAct) = $this->getUser()->getFlash('templateMessageAct');
-		}
+        if ($request->isMethod('post')) {
 
-		if ($request->isMethod('post')) {
+            $this->form->bind($request->getParameter($this->form->getName()));
+            if ($this->form->isValid()) {
 
-			$this->form->bind($request->getParameter($this->form->getName()));
-			if ($this->form->isValid()) {
-
-				$projectId = $this->form->save();
-				if ($this->form->edited) {
+                $projectId = $this->form->save();
+                if ($this->form->edited) {
 					$this->getUser()->setFlash('success', __(TopLevelMessages::UPDATE_SUCCESS));
-				} else {
+                } else {
 					$this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
-				}
-				$this->redirect('admin/saveProject?projectId=' . $projectId);
-			}
-		}
-	}
+                }
+                $this->redirect('admin/saveProject?projectId=' . $projectId);
+            }
+        } else {
+            $this->undeleteForm = $this->getUndeleteForm($this->projectId);
+        }
+    }
 
-	/**
-	 *
-	 * @param <type> $customerList
-	 * @param <type> $noOfRecords
-	 * @param <type> $pageNumber
-	 */
-	private function _setListComponent($customerList, $noOfRecords, $pageNumber) {
+    /**
+     *
+     * @param <type> $customerList
+     * @param <type> $noOfRecords
+     * @param <type> $pageNumber
+     */
+    private function _setListComponent($customerList, $noOfRecords, $pageNumber) {
 
-		$configurationFactory = new ProjectActivityHeaderFactory();
-		ohrmListComponent::setConfigurationFactory($configurationFactory);
-		ohrmListComponent::setListData($customerList);
-	}
+        $configurationFactory = new ProjectActivityHeaderFactory();
+        ohrmListComponent::setConfigurationFactory($configurationFactory);
+        ohrmListComponent::setListData($customerList);
+    }
 
 }
 

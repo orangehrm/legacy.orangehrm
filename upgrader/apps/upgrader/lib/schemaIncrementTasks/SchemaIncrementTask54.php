@@ -333,6 +333,54 @@ class SchemaIncrementTask54 extends SchemaIncrementTask {
                                                             (3, 39, 1, NULL, 1, 1, 1),
                                                             (3, 40, 1, NULL, NULL, NULL, 1)";
         
+        /* pim report missed display fields */
+        $sql[8] = "INSERT INTO `ohrm_display_field` (`display_field_id`, `report_group_id`, `name`, `label`, `field_alias`, `is_sortable`, `sort_order`, `sort_field`, `element_type`, `element_property`, `width`, `is_exportable`, `text_alignment_style`, `is_value_list`, `display_field_group_id`, `default_value`, `is_encrypted`, `is_meta`) VALUES
+                            (115, 3, 'ohrm_emp_education.institute', 'Institute', 'getInstitute',  'false', null, null, 'label', '<xml><getter>getInstitute</getter></xml>', 80, '0', null, true, 11, '---', false, false),
+                            (116, 3, 'ohrm_emp_education.major', 'Major/Specialization', 'getMajor',  'false', null, null, 'label', '<xml><getter>getMajor</getter></xml>', 80, '0', null, true, 11, '---', false, false),
+                            (117, 3, 'ohrm_emp_education.start_date', 'Start Date', 'getStartDate',  'false', null, null, 'labelDate', '<xml><getter>getStartDate</getter></xml>', 80, '0', null, true, 11, '---', false, false),
+                            (118, 3, 'ohrm_emp_education.end_date', 'End Date', 'getEndDate',  'false', null, null, 'labelDate', '<xml><getter>getEndDate</getter></xml>', 80, '0', null, true, 11, '---', false, false),
+                            (119, 3, 'ohrm_emp_license.license_no', 'License Number', 'getLicenseNo',  'false', null, null, 'label', '<xml><getter>getLicenseNo</getter></xml>', 200, '0', null, true, 14, '---', false, false),
+                            (120, 3, 'ohrm_emp_termination.note', 'Termination Note', 'getNote',  'false', null, null, 'label', '<xml><getter>getNote</getter></xml>', 100, '0', null, true, 6, '---', false, false)";
+        
+        /* job, salary, report to and tax custom fields + attachments read only for ESS and Supervisor */
+        $sql[9]  = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '17'";
+        $sql[10] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '18'";
+        $sql[11] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '20'";
+        $sql[12] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '21'";
+        $sql[13] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '23'";
+        $sql[14] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '24'";
+        $sql[15] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '27'";
+        $sql[16] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '2' AND `data_group_id` = '28'";
+        
+        $sql[17] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '17'";
+        $sql[18] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '18'";
+        $sql[19] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '19'";
+        $sql[20] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '20'";
+        $sql[21] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '21'";
+        $sql[22] = "UPDATE `ohrm_user_role_data_group` SET `can_read` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '19' AND `self`='0'";
+        $sql[23] = "UPDATE `ohrm_user_role_data_group` SET `can_read` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '20' AND `self`='0'";
+        $sql[24] = "UPDATE `ohrm_user_role_data_group` SET `can_read` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '21' AND `self`='0'";
+        $sql[25] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '23'";
+        $sql[26] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '24'";
+        $sql[27] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '27'";
+        $sql[28] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '3' AND `data_group_id` = '28'";
+        
+        $sql[29] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '17' AND `self`='1'";
+        $sql[30] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '18' AND `self`='1'";
+        $sql[31] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '20' AND `self`='1'";
+        $sql[32] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '21' AND `self`='1'";
+        $sql[33] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '23' AND `self`='1'";
+        $sql[34] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '24' AND `self`='1'";
+        $sql[35] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '27' AND `self`='1'";
+        $sql[36] = "UPDATE `ohrm_user_role_data_group` SET `can_create` = '0', `can_update` = '0', `can_delete` = '0' WHERE `user_role_id` = '1' AND `data_group_id` = '28' AND `self`='1'";
+        
+        //label changes
+        $sql[37] = "UPDATE `ohrm_display_field` SET `label` = 'Eligibility Status' WHERE `display_field_id` = 87";
+        $sql[38] = "UPDATE `ohrm_display_field` SET `label` = 'Eligibility Review Date' WHERE `display_field_id` = 89";
+        
+        /* Fix for attendance summary total */
+        $sql[39] = "UPDATE `ohrm_summary_display_field` SET `label` = 'Time (Hours)' WHERE `summary_display_field_id` = 2";
+        
         $this->sql = $sql;
         
     }
