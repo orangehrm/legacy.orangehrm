@@ -4381,6 +4381,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/LanguageP
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/LicensesPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/MembershipsPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/NationalitiesPage.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/SkillsPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newadmin/UsersListPage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newpim/AddEmployeePage.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/lib/pageobjects/newpim/EmployeeListPage.php -text
@@ -4464,6 +4465,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/LicenseTest.php -tex
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/MembershipsTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NationalitiesTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/NewAdminFunctionalPluginAllTests.php -text
+symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/SkillsTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/UsersListTest.php -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/testdata/NewAdminPrerequisites.yml -text
 symfony/plugins/orangehrmFunctionalTestPlugin/test/newadmin/testdata/UsersList.yml -text

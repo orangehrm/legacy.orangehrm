@@ -41,11 +41,12 @@ class NewAdminFunctionalPluginAllTests {
       //  $suite->addTestFile(dirname(__FILE__) . '/UsersListTest.php'); 
     //    $suite->addTestFile(dirname(__FILE__) . '/MembershipsTest.php');
      //   $suite->addTestFile(dirname(__FILE__) . '/NationalitiesTest.php'); 
-       $suite->addTestFile(dirname(__FILE__) . '/EmploymentStatusTest.php');
+     //  $suite->addTestFile(dirname(__FILE__) . '/EmploymentStatusTest.php');
      //    $suite->addTestFile(dirname(__FILE__) . '/JobCategoriesTest.php');
     //   $suite->addTestFile(dirname(__FILE__) . '/EducationTest.php');
     //   $suite->addTestFile(dirname(__FILE__) . '/LicenseTest.php');
     //  $suite->addTestFile(dirname(__FILE__) . '/LanguageTest.php');
+        $suite->addTestFile(dirname(__FILE__) . '/SkillsTest.php');
         return $suite;
     }
 

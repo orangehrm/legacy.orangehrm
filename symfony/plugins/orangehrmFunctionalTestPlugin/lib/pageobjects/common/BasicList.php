@@ -86,10 +86,10 @@ class BasicList {
         //echo " xpath is : " . $this->xpathOfList . "//table/thead/tr/td[1]//.[text()='" . $header . "']";
         for ($columnNumber = 1; $columnNumber <= 10; $columnNumber++) {
 
-            //echo "\n" . $this->xpathOfList . "//table/thead/tr/th[$columnNumber]//.[text()='" . $header . "']";
+            //echo "\n" . $this->xpathOfList . "//table/thead/tr/th[$columnNumber]//.[normalize-space(text())='" . $header . "']";
 
-            if ($this->selenium->isElementPresent($this->xpathOfList . "//table/thead/tr/*[$columnNumber]//.[text()='" . $header . "']")) {
-
+            if ($this->selenium->isElementPresent($this->xpathOfList . "//table/thead/tr/*[$columnNumber]//.[normalize-space(text())='" . $header . "']")) {
+              //  echo $columnNumber;
                 return $columnNumber;
 //            }   else{
 //                    echo "came to false" . $columnNumber .", the xpath is " . $this->xpathOfList . "//table/thead/tr/td[$columnNumber]//.[text()='" . $header . "']";
@@ -160,9 +160,9 @@ class BasicList {
             $columnNumber = $header;
 
         if ($columnNumber != FALSE) {
-          //  echo "xpath for item : " . $this->xpathOfList . "//*/tr/td[$columnNumber]//.[text()='" . $itemName . "']";
+         //  echo "xpath for item : " . $this->xpathOfList . "//*/tr/td[$columnNumber]//.[text()='" . $itemName . "']";
 
-            return $this->selenium->isElementPresent($this->xpathOfList . "//*/tr/td[$columnNumber]//.[text()='" . $itemName . "']");
+            return $this->selenium->isElementPresent($this->xpathOfList . "//*/tr/td[$columnNumber]//.[normalize-space(text())='" . $itemName . "']");
         }
         else
             return FALSE;
@@ -319,13 +319,15 @@ class BasicList {
         $lastRecord = sizeof($array); //size of array passsed
         $newlast=$lastRecord+1;
         if ($this->selenium->isElementPresent($this->xpathOfList . "//table/tbody/tr[" . $newlast . "]")) {
+          //   echo 'isElementPresent';
             return FALSE;
         }
         $columnNumber = $this->getColumnNumber($header);
+      //  echo $columnNumber;
 
         for ($i = $lastRecord; $i > 0; $i--) {
             if (!$this->isItemPresentInColumn($columnNumber, $array[$i - 1])) {
-
+              //  echo 'isItemPresentInColumn';
                 return false;
             }
         }
