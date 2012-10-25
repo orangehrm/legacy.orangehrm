@@ -65,7 +65,7 @@ class UsersListTest extends FunctionalTestcase {
         $usrlist = array("admin", "samank", "ashan", "kamal", "chuck" ,"samanf" );
         $this->assertTrue($SystemUsers->list->verifySortingOrder($usrlist, "Username"));
         $SystemUsers->sortByFieldName("User Type");
-        $usrlist = array("samanf", "chuck", "kamal", "ashan", "samank" , "admin");
+        $usrlist = array( "kamal", "chuck","samanf",  "samank", "ashan" , "admin");
         $this->assertTrue($SystemUsers->list->verifySortingOrder($usrlist, "Username"));
      
 
