@@ -17,18 +17,18 @@
  * Boston, MA  02110-1301, USA
  */ ?>
 
-<div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >
-    <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
-</div>
-    <div class="outerbox" style="width: 35%">
+<div class="box single">
 
-        <div class="mainHeading"><h2 id="defineTimesheet"><?php echo __('Define Timesheet Period'); ?></h2></div>
-            <div>
-		<br class="clear">
-		<b><?php echo __("Timesheet period start day has been set")?></b><br class="clear">
-		<?php echo link_to(__('Proceed with Time Module'),'time/viewEmployeeTimesheet');?>
-		<br class="clear">
-		<br class="clear">
-            </div>
+    <div class="head">
+        <h1 id="defineTimesheet"><?php echo __('Define Timesheet Period'); ?></h1>
     </div>
+    
+    <div class="inner">
+        <p>
+            <strong><?php echo __("Timesheet period start day has been set")?></strong>
+        </p>
+		<?php echo link_to(__('Proceed with Time Module'),'time/viewEmployeeTimesheet');?>        
+    </div>
+    
+</div>
 

@@ -10,8 +10,6 @@ $(document).ready(function(){
 
 		if($('#time_startingDays').val()==""){
 			$('#btnSave').attr('disabled', 'disabled');
-			$('#messagebar').html(required_msge);
-			$('#messagebar').attr('class', "messageBalloon_failure");
 		}else{
 			$('form#definePeriod').attr({
 				action:linkTodefineTimesheetPeriod
@@ -23,12 +21,8 @@ $(document).ready(function(){
 	$('#time_startingDays').change(function() {
 		if($('#time_startingDays').val()==""){
 			$('#btnSave').attr('disabled', 'disabled');
-			$('#messagebar').html(required_msge);
-			$('#messagebar').attr('class', "messageBalloon_failure");
 		}else{
 			$('#btnSave').removeAttr('disabled');
-			$('#messagebar').html("");
-			$(".messageBalloon_failure").remove();
 		}
 	});
 });
