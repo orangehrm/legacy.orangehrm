@@ -329,15 +329,15 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         // Using AsAt
 
         // As at before entitlement start
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-01');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01');
         $this->assertEquals(3, $balance);
                 
         // On Start Date
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-05');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-05');
         $this->assertEquals(3, $balance);
         
         // Between start end
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-10');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-10');
         $this->assertEquals(3, $balance);
         
         // On End date
@@ -349,23 +349,23 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, $balance);
         
         // Using Date - Before
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-01', '2012-08-01');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-08-01');
         $this->assertEquals(0, $balance);
         
         // On Start Date
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-01', '2012-08-05');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-08-05');
         $this->assertEquals(3, $balance);
         
         // Between start end
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-01', '2012-08-10');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-08-10');
         $this->assertEquals(3, $balance);
         
         // On End date
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-01', '2013-09-01');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-09-01');
         $this->assertEquals(3, $balance);
         
         // After End
-        $balance = $this->dao->getLeaveBalance(2, 6, '2012-08-01', '2013-09-02');
+        $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-09-02');
         $this->assertEquals(0, $balance);
         
         // Two entitlements - before both
@@ -422,6 +422,10 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(2, $balance);        
 
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-08-02');
+        $this->assertEquals(0, $balance);        
+        
+        // Non existing leave entitlement type
+        $balance = $this->dao->getLeaveBalance(6, 7, '2012-03-01', '2012-08-02');
         $this->assertEquals(0, $balance);        
         
         

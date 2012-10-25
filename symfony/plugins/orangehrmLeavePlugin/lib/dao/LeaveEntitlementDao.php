@@ -185,7 +185,7 @@ class LeaveEntitlementDao extends BaseDao {
     public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date = NULL) {
         $conn = Doctrine_Manager::connection()->getDbh(); 
         
-        $sql = 'SELECT le.no_of_days - le.days_used FROM ohrm_leave_entitlement le ' . 
+        $sql = 'SELECT sum(le.no_of_days - le.days_used) FROM ohrm_leave_entitlement le ' . 
                'WHERE le.deleted = 0 AND le.emp_number = ? AND le.leave_type_id = ? ' . 
                ' AND le.to_date >= ?';
         
@@ -202,9 +202,13 @@ class LeaveEntitlementDao extends BaseDao {
         if ($result) {
             if ($statement->rowCount() > 0) {
                 $balance = $statement->fetchColumn();
+                
+                if (is_null($balance)) {
+                    $balance = 0;
+                }
             }
         }        
-        
+
         return $balance;    
     }
 }

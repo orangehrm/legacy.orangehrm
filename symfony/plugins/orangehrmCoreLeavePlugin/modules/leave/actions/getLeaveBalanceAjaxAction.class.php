@@ -65,22 +65,20 @@ class getLeaveBalanceAjaxAction extends sfAction {
         $response->setHttpHeader('Expires', '0');
         $response->setHttpHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         $response->setHttpHeader("Cache-Control", "private", false);
-
+        
+        $balance = '--';
+        
         if ($allowed) {
             $localizationService = new LocalizationService();
             $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
-            $startDateTimeStamp = strtotime($localizationService->convertPHPFormatDateToISOFormatDate($inputDatePattern, $request->getParameter("startDate")));
+            $startDate = $localizationService->convertPHPFormatDateToISOFormatDate($inputDatePattern, $request->getParameter("startDate"));
 
-            if ($startDateTimeStamp) {
-                $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod($startDateTimeStamp);
-            } else {
-                $leavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriod();
+            $startDateTimeStamp = strtotime($startDate);
+            if (!$startDateTimeStamp) {
+                $startDate = NULL;
             }
 
-            $balance = '--';
-            if ($leavePeriod instanceof LeavePeriod) {
-                $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, $leavePeriod->getLeavePeriodId());
-            }
+            $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, NULL, $startDate);
 
             echo json_encode($balance);
         }
@@ -109,20 +107,20 @@ class getLeaveBalanceAjaxAction extends sfAction {
     }
 
     /**
-     * @return OldLeaveEntitlementService
+     * @return LeaveEntitlementService
      */
     public function getLeaveEntitlementService() {
         if (is_null($this->leaveEntitlementService)) {
-            $this->leaveEntitlementService = new OldLeaveEntitlementService();
+            $this->leaveEntitlementService = new LeaveEntitlementService();
         }
         return $this->leaveEntitlementService;
     }
 
     /**
      *
-     * @param LeavePeriodService $leavePeriodService
+     * @param LeaveEntitlementService $leaveEntitlementService
      */
-    public function setLeaveEntitlementService(OldLeaveEntitlementService $leaveEntitlementService) {
+    public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }
 
