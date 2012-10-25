@@ -50,6 +50,9 @@ class changeCandidateVacancyStatusAction extends baseRecruitmentAction {
      */
     public function execute($request) {
 
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewCandidates');
+
         $usrObj = $this->getUser()->getAttribute('user');
         if (!($usrObj->isAdmin() || $usrObj->isHiringManager() || $usrObj->isInterviewer())) {
             $this->redirect('pim/viewPersonalDetails');
@@ -111,10 +114,10 @@ class changeCandidateVacancyStatusAction extends baseRecruitmentAction {
             if ($this->form->isValid()) {
                 $result = $this->form->performAction();
                 if (isset($result['messageType'])) {
-                    $this->getUser()->setFlash('templateMessage', array($result['messageType'], $result['message']));
+                    $this->getUser()->setFlash($result['messageType'], $result['message']);
                 } else {
                     $message = __(TopLevelMessages::UPDATE_SUCCESS);
-                    $this->getUser()->setFlash('templateMessage', array('success', $message));
+                    $this->getUser()->setFlash('success', $message);
                 }
                 $this->redirect('recruitment/changeCandidateVacancyStatus?id=' . $this->form->historyId);
             }

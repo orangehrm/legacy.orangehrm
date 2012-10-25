@@ -2,3 +2,5 @@ viewJobVacancySuccess:
   layout: freshorange
 addJobVacancySuccess:
   layout: freshorange
+changeCandidateVacancyStatusSuccess:
+  layout: freshorange

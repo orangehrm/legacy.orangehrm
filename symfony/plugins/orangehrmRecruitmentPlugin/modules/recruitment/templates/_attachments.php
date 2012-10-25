@@ -18,7 +18,12 @@
  *
  */
 ?>
-<?php use_javascript('../orangehrmRecruitmentPlugin/js/attachmentsPartial'); ?>
+
+<?php
+use_stylesheet('../orangehrmRecruitmentPlugin/css/attachmentsPartial');
+use_javascript('../orangehrmRecruitmentPlugin/js/attachmentsPartial');
+?>
+
 <?php
 $hasAttachments = count($attachmentList) > 0;
 ?>
@@ -49,7 +54,7 @@ $hasAttachments = count($attachmentList) > 0;
                     <li class="required"><em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></li>
                 </ol>
                 <p>
-                    <input type="button" name="btnSaveAttachment" id="btnSaveAttachment" value="<?php echo __("Upload");?>" />
+                    <input type="button" name="btnSaveAttachment" id="btnSaveAttachment" value="<?php echo __("Upload"); ?>" />
                     <input type="button" id="btnCommentOnly" value="<?php echo __("Save Comment Only"); ?>" />
                     <input type="button" class="cancel" id="cancelButton" value="<?php echo __("Cancel"); ?>" />
                 </p>
@@ -117,7 +122,7 @@ $hasAttachments = count($attachmentList) > 0;
 <script type="text/javascript">
     //<![CDATA[
     
-    var hideAttachmentListOnAdd = <?php echo $hasAttachments ? 'false' : 'true';?>;
+    var hideAttachmentListOnAdd = <?php echo $hasAttachments ? 'false' : 'true'; ?>;
     var lang_SelectAtLeastOneAttachment = "<?php echo __(TopLevelMessages::SELECT_RECORDS); ?>";
     var id = '<?php echo $id; ?>';
     var clearAttachmentMessages = true;
