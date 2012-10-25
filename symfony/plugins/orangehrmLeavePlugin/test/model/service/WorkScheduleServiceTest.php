@@ -155,5 +155,21 @@ class TestWorkScheduleValidClass implements WorkScheduleInterface {
     public function getEmpNumber() {
         return $this->empNumber;
     }
+
+    public function isHalfDay($day) {
+        
+    }
+
+    public function isHalfdayHoliday($day) {
+        
+    }
+
+    public function isHoliday($day) {
+        
+    }
+
+    public function isWeekend($day, $fullDay) {
+        
+    }
 }
 
