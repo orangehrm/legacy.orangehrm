@@ -189,6 +189,9 @@ JobVacancy:
       function: addJobVacancy
     Delete:
       label: Delete
+      data-toggle: modal
+      data-target: '#deleteConfirmation'
+      class: delete
       type: submit
   buttonsPosition: before-data
   formMethod: post

@@ -4790,6 +4790,7 @@ symfony/plugins/orangehrmPimPlugin/web/js/viewTerminationReasonsSuccess.js -text
 symfony/plugins/orangehrmPimPlugin/web/js/viewUsTaxExemptionsSuccess.js -text
 symfony/plugins/orangehrmRecruitmentPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmRecruitmentPlugin/config/routing.yml -text
+symfony/plugins/orangehrmRecruitmentPlugin/config/view.yml -text
 symfony/plugins/orangehrmRecruitmentPlugin/lib/dao/CandidateDao.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/lib/dao/JobInterviewDao.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/lib/dao/RecruitmentAttachmentDao.php -text

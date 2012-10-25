@@ -25,33 +25,11 @@ $(document).ready(function() {
             $('#btnDelete').attr('disabled','disabled');
         }
     });
-   
-    
-    $('#frmList_ohrmListComponent').submit(function (){
-        $('#deleteConfirmation').dialog('open');
-        return false;
-    });
-   
-   
-    $("#deleteConfirmation").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 325,
-        height: 50,
-        position: 'middle',
-        open: function() {
-            $('#dialogCancelBtn').focus();
-        }
-    });
+     
 
     $('#dialogDeleteBtn').click(function() {
         document.frmList_ohrmListComponent.submit();
     });
-    
-    $('#dialogCancelBtn').click(function() {
-        $("#deleteConfirmation").dialog("close");
-    });
-
 
     $('#btnRst').click(function() {
 
