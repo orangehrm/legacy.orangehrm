@@ -5,6 +5,7 @@ $(document).ready(function() {
     $('#btnDelete').attr('disabled','disabled');
       
     $("#ohrmList_chkSelectAll").click(function() {
+        $('table.table input[id^="ohrmList_chkSelectRecord_"]').attr('checked', ($(this).attr('checked') == 'checked'));
         if($(":checkbox").length == 1) {
             $('#btnDelete').attr('disabled','disabled');
         }
