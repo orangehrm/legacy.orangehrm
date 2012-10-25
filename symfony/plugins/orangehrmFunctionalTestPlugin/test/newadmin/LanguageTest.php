@@ -118,6 +118,17 @@ class LanguageTest extends FunctionalTestcase {
             $this->assertTrue($viewLanguage->list->isOnlyItemsListed($Languagelist, "Name"));
             Helper::logOutIfLoggedIn($this);
        }
+       
+        public function testDuplicateLanguage() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToQualification_Language($this);
+            $addLanguage = new LanguagePage($this);
+            $addLanguage->addLanguage("English");
+            $Languagelist = array("English", "Sinhala");
+            $this->assertTrue($addLanguage->list->isOnlyItemsListed($Languagelist, "Name"));
+            //$this->assertEquals($addLanguage->getValidationMessage(), "Already exists");
+            Helper::logOutIfLoggedIn($this);
+        }
     
     
 }

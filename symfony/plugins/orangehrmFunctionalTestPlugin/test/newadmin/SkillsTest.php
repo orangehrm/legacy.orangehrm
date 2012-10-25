@@ -123,8 +123,24 @@ class SkillsTest extends FunctionalTestcase {
             $this->assertEquals($viewSkills->getValidationMessage(), "Required");
             $Skillslist = array("AI Programming", "Management");
             $this->assertTrue($viewSkills->list->isOnlyItemsListed($Skillslist, "Name"));
+            $Skillslistdescription = array("AI Programming", "Management Skills");
+            $this->assertTrue($viewSkills->list->isOnlyItemsListed($Skillslistdescription, "Description"));  
             Helper::logOutIfLoggedIn($this);
        }
+       
+       public function testDuplicateSkills() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToQualification_Skills($this);
+            $addSkills = new SkillsPage($this);
+            $addSkills->addSkills("Management", "Doing presentations to customers");
+            $this->assertEquals($addSkills->getValidationMessage(), "Already exists");
+            $Skillslistname = array("AI Programming", "Management");
+            $this->assertTrue($addSkills->list->isOnlyItemsListed($Skillslistname, "Name"));
+            $Skillslistdescription = array("AI Programming", "Management Skills");
+            $this->assertTrue($addSkills->list->isOnlyItemsListed($Skillslistdescription, "Description"));       
+            Helper::logOutIfLoggedIn($this);
+    
+    }  
        
 }
 

@@ -102,13 +102,10 @@ class EmploymentStatusTest extends FunctionalTestcase {
             Helper::loginUser($this, "admin", "admin");
             Menu::goToJob_EmploymentStatus($this);
             $ViewEmploymentStatus = new EmploymentStatusPage($this);
-            echo '1';
             $ViewEmploymentStatus->addEmploymentStatusWithOutData();
-             echo '2';
             $this->assertEquals($ViewEmploymentStatus->getValidationMessage(), "Required");
             $employmentStatuslist = array("Full Time Contract", "Full Time Internship", "Full Time Permanent", "Part Time Contract", "Part Time Internship", "Part Time Permanent", "Terminated");
             $this->assertTrue($ViewEmploymentStatus->list->isOnlyItemsListed($employmentStatuslist, "Employment Status"));
-             echo '3';
             Helper::logOutIfLoggedIn($this);
     
    }
@@ -122,6 +119,17 @@ class EmploymentStatusTest extends FunctionalTestcase {
             Helper::logOutIfLoggedIn($this);
     
     } 
+    
+            public function testDuplicateEmploymentStatus() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToJob_EmploymentStatus($this);
+            $addEmploymentStatus = new EmploymentStatusPage($this);
+            $addEmploymentStatus->addEmploymentStatus("Full Time Contract");
+            $this->assertEquals($addEmploymentStatus->getValidationMessage(), "Already exists");
+            $employmentStatuslist = array("Full Time Contract", "Full Time Internship", "Full Time Permanent", "Part Time Contract", "Part Time Internship", "Part Time Permanent", "Terminated");
+            $this->assertTrue($addEmploymentStatus->list->isOnlyItemsListed($employmentStatuslist, "Employment Status"));
+            Helper::logOutIfLoggedIn($this);
+        }
    
 }
 

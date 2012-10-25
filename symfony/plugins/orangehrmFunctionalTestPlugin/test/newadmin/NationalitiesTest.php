@@ -117,9 +117,20 @@ class NationalitiesTest extends FunctionalTestcase {
             $this->assertEquals($addNationality->getValidationMessage(), "Required");
             $nationalitylist = array("Afghan", "Albanian", "Algerian", "American", "Andorran");
             $this->assertTrue($addNationality->list->isOnlyItemsListed($nationalitylist, "Nationality"));
-            Helper::logOutIfLoggedIn($this);
-    
+            Helper::logOutIfLoggedIn($this);     
    } 
+   
+   
+        public function testDuplicateNationality() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToNationalities($this);
+            $addNationality = new NationalitiesPage($this);
+            $addNationality->addNationality("Afghan");
+            $this->assertEquals($addNationality->getValidationMessage(), "Already exists");
+            $nationalitylist = array("Afghan", "Albanian", "Algerian", "American", "Andorran");
+            $this->assertTrue($addNationality->list->isOnlyItemsListed($nationalitylist, "Nationality"));
+            Helper::logOutIfLoggedIn($this);
+        }
     
     
     }

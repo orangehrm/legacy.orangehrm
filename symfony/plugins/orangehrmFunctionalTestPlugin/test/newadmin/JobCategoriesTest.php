@@ -121,7 +121,16 @@ class JobCategoriesTest extends FunctionalTestcase {
             Helper::logOutIfLoggedIn($this);
     
     } 
-    
+            public function testDuplicateJobCategories() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToJob_JobCategories($this);
+            $addJobCategories = new JobCategoriesPage($this);
+            $addJobCategories->addJobCategories("Laborers and Helpers");
+            $this->assertEquals($addJobCategories->getValidationMessage(), "Already exists");
+            $jobCategoriesist = array("Craft Workers", "Laborers and Helpers", "Office and Clerical Workers", "Officials and Managers", "Operatives", "Professionals");
+            $this->assertTrue($addJobCategories->list->isOnlyItemsListed($jobCategoriesist, "Job Category"));
+            Helper::logOutIfLoggedIn($this);
+        }
     
     
     

@@ -110,7 +110,7 @@ class MembershipsTest extends FunctionalTestcase {
     
     } 
     
-            public function testAddNationalityWithoutData() {
+            public function testAddMembershipWithoutData() {
             Helper::loginUser($this, "admin", "admin");
             Menu::goToMemberships($this);
             $addMembership = new MembershipsPage($this);           
@@ -121,6 +121,17 @@ class MembershipsTest extends FunctionalTestcase {
             Helper::logOutIfLoggedIn($this);
     
    } 
+   
+   public function testDuplicateMembership() {
+            Helper::loginUser($this, "admin", "admin");
+            Menu::goToMemberships($this);
+            $addMembership = new MembershipsPage($this);
+            $addMembership->addMembership("Lions Club");
+            $this->assertEquals($addMembership->getValidationMessage(), "Already exists");
+            $membershiplist = array("Abc", "Lions Club");
+            $this->assertTrue($addMembership->list->isOnlyItemsListed($membershiplist, "Membership"));
+            Helper::logOutIfLoggedIn($this);
+        }
                  
    }
 
