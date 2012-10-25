@@ -6,6 +6,8 @@ $(document).ready(function() {
         $("#addJobVacancy_hiringManager").attr('disabled', 'disabled');
         $("#addJobVacancy_noOfPositions").attr('disabled', 'disabled');
         $("#addJobVacancy_description").attr('disabled', 'disabled');
+        $("#addJobVacancy_status").attr('disabled', 'disabled');
+        $("#addJobVacancy_publishedInFeed").attr('disabled', 'disabled');
     }
     //Auto complete
     $("#addJobVacancy_hiringManager").autocomplete(hiringManagers, {
@@ -29,6 +31,8 @@ $(document).ready(function() {
             $("#addJobVacancy_hiringManager").removeAttr("disabled");
             $("#addJobVacancy_noOfPositions").removeAttr("disabled");
             $("#addJobVacancy_description").removeAttr("disabled");
+            $("#addJobVacancy_status").removeAttr("disabled");
+            $("#addJobVacancy_publishedInFeed").removeAttr("disabled");
             
             $("#btnSave").attr('value', lang_save);
             $("#btnBack").attr('value', lang_cancel);
