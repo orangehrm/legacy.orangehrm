@@ -4989,6 +4989,7 @@ symfony/plugins/orangehrmRecruitmentPlugin/web/js/viewJobsSuccess.js -text
 symfony/plugins/orangehrmTimePlugin/config/configurations_by_plugins.yml -text
 symfony/plugins/orangehrmTimePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmTimePlugin/config/list_component.yml -text
+symfony/plugins/orangehrmTimePlugin/config/view.yml -text
 symfony/plugins/orangehrmTimePlugin/lib/dao/TimesheetDao.php -text
 symfony/plugins/orangehrmTimePlugin/lib/dao/TimesheetPeriodDao.php -text
 symfony/plugins/orangehrmTimePlugin/lib/data/timesheetPeriod.xml -text
