@@ -16,32 +16,14 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */ ?>
-<?php if (!((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))))))) : ?>
 
-    <body id="b" onload="JavaScript:timedRefresh(1);">
-    <?php endif; ?>
-    <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/punchTimeSuccess'); ?>
+<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/punchTimeSuccess'); ?>
 
-        <!--
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
+<!-- 
+TODO: Use field level validation 
+For top level messages, use new styles
 -->
-    <?php //echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<?php //echo javascript_include_tag('orangehrm.datepicker.js') ?>
-
-    <!--
-    <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" style="margin-left: 16px; width: 470px">
-        <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
-    </div>
-    -->
-
-    <div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
-    
-    
-
-    
-    
+<div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
     
 <?php
 
@@ -51,8 +33,25 @@
     $isEditable = (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions'))) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions')));
     $isPunchInAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions'));
     $isPunchOutAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'));
-?>
     
+    $punchInDisplayNote = '';
+    
+    if ($isPunchOutAllowed) {
+        
+        $punchInDisplayNote = "<li>\n";
+        $dateTimeArray = explode(" ", $punchInTime);
+        $punchInDisplayNote .= __("Last punch in time") . " : " . set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1];
+        
+        if (!empty($punchInNote)) {
+            $punchInDisplayNote .= "<br>\n";
+            $punchInDisplayNote .=  __("Note") . " : " . $punchInNote;
+        }
+        
+        $punchInDisplayNote .= "</li>\n";
+        
+    }
+    
+?>
     
 <div class="box single">
     
@@ -81,6 +80,7 @@
                         <label><?php echo $form['note']->renderLabel() ?></label>
                         <?php echo $form['note']->render(); ?>
                     </li>
+                    <?php echo $punchInDisplayNote; ?>
                     <?php else : ?>
                     <?php echo $attendanceFormToImplementCsrfToken['_csrf_token']; ?>
                     <li>
@@ -94,7 +94,8 @@
                     <li>
                         <label><?php echo __('Note'); ?></label>
                         <textarea id="note" class="note" name="note" rows="5" cols="50"></textarea>
-                    </li>                    
+                    </li>
+                    <?php echo $punchInDisplayNote; ?>
                     <?php endif; ?>
                 </ol> 
                 
@@ -113,86 +114,9 @@
     </div>
 </div>    
     
-    
-    
-        <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
-        <?php $dateTimeArray = explode(" ", $punchInTime) ?>
-                                        <div>&nbsp; <?php echo __("Last punch in time")." : "; ?><?php echo set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1]; ?></div>
-        <?php if (!empty($punchInNote)): ?>
-                                            <br class="clear">
-                                            <div style="width:60px; padding-left: 5px; float:left"><?php echo __("Note")." : "; ?></div><div style="float:left"><?php echo $punchInNote; ?></div>
-        <?php endif; ?>
-        <?php endif; ?>    
-    
-    
-    
-    
-<!--    
-    <div class="outerbox"  style="width: 500px">
-        <div class="maincontent">
-
-        <?php if (isset($actionPunchIn)): ?>
-            <div class="mainHeading">
-                <h2><?php echo __('Punch In'); ?></h2>
-            </div>
-        <?php endif; ?>
-
-        <?php if (isset($actionPunchOut)): ?>
-                <div class="mainHeading">
-                    <h2><?php echo __('Punch Out'); ?></h2>
-                </div>
-        <?php endif; ?>
-
-                <br class="clear">
-                <form  id="punchTimeForm" method="post">
-                    <table class="punchTable" border="0" cellpadding="5" cellspacing="0">
-                        <tbody>
-                    <?php echo $form['_csrf_token']; ?>
-                    <?php if ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions'))) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions')))) : ?>
-                        <tr>
-                            <td><?php echo $form['date']->renderLabel() ?></td>
-                            <td> <?php echo $form['date']->renderError() ?><?php echo $form['date']->render(); ?></td></tr>
-                        <tr><td> <?php echo $form['time']->renderLabel() ?></td><td><?php echo $form['time']->renderError() ?><?php echo $form['time']->render(); ?><span class="timeFormatHint">HH:MM</span></td></tr>
-                        <tr><td style="vertical-align: top" > <?php echo $form['note']->renderLabel() ?></td><td><?php echo $form['note']->renderError() ?><?php echo $form['note']->render(); ?></td></tr>
-                    <?php else: ?>
-                    <?php echo $attendanceFormToImplementCsrfToken['_csrf_token']; ?>
-
-                            <tr><td> <?php echo __('Date'); ?></td><td>&nbsp;<span id="currentDate"></span><input type="hidden" class="date"name="date" value=""/></td></tr>
-                            <tr><td>  <?php echo __('Time'); ?></td><td>&nbsp;<span id="currentTime"></span><input  type="hidden" class="time"name="time" value="">&nbsp;&nbsp;&nbsp;&nbsp;<span class="timeFormatHint">HH:MM</span></td></tr>
-
-                            <tr><td id="noteLable"><?php echo __('Note'); ?></td><td>&nbsp;<textarea id="note" class="note" name="note" rows="5" cols="50"></textarea> </td></tr>
-                    <?php endif; ?>
-
-
-                    <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions'))) : ?>
-                                <tr> <td></td> <td> <input type="button" class="punchInbutton" name="button" id="btnPunch"
-                                                           onmouseover="moverButton(this);" onmouseout="moutButton(this); "
-                                                           value="<?php echo __('In'); ?>" /></td></tr>
-                        <?php endif; ?>
-
-                    <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
-                                    <tr><td></td> <td><input type="button" class="punchOutbutton" name="button" id="btnPunch"
-                                                             onmouseover="moverButton(this);" onmouseout="moutButton(this);"
-                                                             value="<?php echo __('Out'); ?>" /></td></tr>
-                        <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </form>
-
-        <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
-        <?php $dateTimeArray = explode(" ", $punchInTime) ?>
-                                        <div>&nbsp; <?php echo __("Last punch in time")." : "; ?><?php echo set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1]; ?></div>
-        <?php if (!empty($punchInNote)): ?>
-                                            <br class="clear">
-                                            <div style="width:60px; padding-left: 5px; float:left"><?php echo __("Note")." : "; ?></div><div style="float:left"><?php echo $punchInNote; ?></div>
-        <?php endif; ?>
-        <?php endif; ?><br class="clear">
-                                        </div>
-
-
-                                    </div> -->
-
-<?php if (((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))))))) : ?>
+<?php 
+//TODO: Kept the 'if' condition as it was. Better to move to a meaningful variable
+if (((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))))))) : ?>
 <?php $editmode = true; ?>
 <?php endif; ?>
 

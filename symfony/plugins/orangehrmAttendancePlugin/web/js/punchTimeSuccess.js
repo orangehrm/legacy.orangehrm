@@ -58,26 +58,6 @@ $(document).ready(function()
             $("#attendance_date").val(datepickerDateFormat);
         }
 
-        //Bind date picker
-        daymarker.bindElement("#attendance_date",
-        {
-            onSelect: function(date){
-
-
-                $("#attendance_date").trigger('change');
-            },
-            dateFormat:datepickerDateFormat
-        });
-
-        $('#DateBtn').click(function(){
-
-
-            daymarker.show("#attendance_date");
-
-
-        });
-
-
         function strToTime(str, format) {
 
             yearVal = '';
