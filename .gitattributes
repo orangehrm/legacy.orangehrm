@@ -3744,6 +3744,7 @@ symfony/plugins/orangehrmAdminPlugin/web/js/viewSystemUserSuccess.js -text
 symfony/plugins/orangehrmAdminPlugin/web/js/workShiftSuccess.js -text
 symfony/plugins/orangehrmAttendancePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmAttendancePlugin/config/list_component.yml -text
+symfony/plugins/orangehrmAttendancePlugin/config/view.yml -text
 symfony/plugins/orangehrmAttendancePlugin/lib/dao/AttendanceDao.php -text
 symfony/plugins/orangehrmAttendancePlugin/lib/form/AttendanceForm.php -text
 symfony/plugins/orangehrmAttendancePlugin/lib/form/AttendanceFormToImplementCsrfToken.php -text

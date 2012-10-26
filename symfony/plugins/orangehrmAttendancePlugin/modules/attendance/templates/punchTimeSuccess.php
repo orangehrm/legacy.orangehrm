@@ -20,21 +20,114 @@
 
     <body id="b" onload="JavaScript:timedRefresh(1);">
     <?php endif; ?>
-    <?php echo stylesheet_tag('../orangehrmAttendancePlugin/css/punchTimeSuccess'); ?>
     <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/punchTimeSuccess'); ?>
 
+        <!--
 <link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
 <script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
+-->
+    <?php //echo stylesheet_tag('orangehrm.datepicker.css') ?>
+<?php //echo javascript_include_tag('orangehrm.datepicker.js') ?>
 
+    <!--
     <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" style="margin-left: 16px; width: 470px">
         <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
     </div>
-
+    -->
 
     <div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
+    
+    
+
+    
+    
+    
+<?php
+
+    $heading = __('Punch In');
+    $heading = isset($actionPunchOut)?__('Punch Out'):$heading;
+    
+    $isEditable = (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions'))) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions')));
+    $isPunchInAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions'));
+    $isPunchOutAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'));
+?>
+    
+    
+<div class="box single">
+    
+    <div class="head"><h1><?php echo $heading; ?></h1></div>
+    
+    <div class="inner">
+        
+        <?php include_partial('global/flash_messages'); ?>
+        
+        <form  id="punchTimeForm" method="post">
+            
+            <?php echo $form['_csrf_token']; ?>
+            
+            <fieldset>
+                <ol>
+                    <?php if ($isEditable) : ?>
+                    <li>
+                        <label><?php echo $form['date']->renderLabel() ?></label>
+                        <?php echo $form['date']->render(); ?>
+                    </li>
+                    <li>
+                        <label><?php echo $form['time']->renderLabel() ?></label>
+                        <?php echo $form['time']->render(); ?> <span>HH:MM</span>
+                    </li>
+                    <li>
+                        <label><?php echo $form['note']->renderLabel() ?></label>
+                        <?php echo $form['note']->render(); ?>
+                    </li>
+                    <?php else : ?>
+                    <?php echo $attendanceFormToImplementCsrfToken['_csrf_token']; ?>
+                    <li>
+                        <label><?php echo __('Date'); ?></label>
+                        <span id="currentDate"></span><input type="hidden" class="date"name="date" value=""/>
+                    </li>
+                    <li>
+                        <label><?php echo __('Time'); ?></label>
+                        <span id="currentTime"></span><input  type="hidden" class="time"name="time" value=""> <span>HH:MM</span>
+                    </li>
+                    <li>
+                        <label><?php echo __('Note'); ?></label>
+                        <textarea id="note" class="note" name="note" rows="5" cols="50"></textarea>
+                    </li>                    
+                    <?php endif; ?>
+                </ol> 
+                
+                <?php if ($isPunchInAllowed) : ?>
+                    <p>
+                        <input type="button" name="button" class="punchInbutton" id="btnPunch" value="<?php echo __('In'); ?>" />
+                    </p>
+                <?php endif; ?>                
+                <?php if ($isPunchOutAllowed) : ?>
+                    <p>
+                        <input type="button" name="button" class="punchOutbutton" id="btnPunch" value="<?php echo __('Out'); ?>" />
+                    </p>
+                <?php endif; ?> 
+            </fieldset>
+        </form>
+    </div>
+</div>    
+    
+    
+    
+        <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
+        <?php $dateTimeArray = explode(" ", $punchInTime) ?>
+                                        <div>&nbsp; <?php echo __("Last punch in time")." : "; ?><?php echo set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1]; ?></div>
+        <?php if (!empty($punchInNote)): ?>
+                                            <br class="clear">
+                                            <div style="width:60px; padding-left: 5px; float:left"><?php echo __("Note")." : "; ?></div><div style="float:left"><?php echo $punchInNote; ?></div>
+        <?php endif; ?>
+        <?php endif; ?>    
+    
+    
+    
+    
+<!--    
     <div class="outerbox"  style="width: 500px">
         <div class="maincontent">
 
@@ -97,7 +190,7 @@
                                         </div>
 
 
-                                    </div>
+                                    </div> -->
 
 <?php if (((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))))))) : ?>
 <?php $editmode = true; ?>
