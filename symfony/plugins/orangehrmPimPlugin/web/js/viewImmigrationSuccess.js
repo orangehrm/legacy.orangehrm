@@ -1,5 +1,6 @@
 $(document).ready(function() {
-
+    
+    $('#immigrationDataPane').hide();
     var issuedDate = "";
     var passportIssueDate = $("#immigration_passport_issue_date");
     var passportExpireDate = $("#immigration_passport_expire_date");
@@ -44,27 +45,14 @@ $(document).ready(function() {
             'immigration[passport_expire_date]' : {valid_date: lang_invalidDate, date_range: lang_issuedGreaterExpiry},
             'immigration[i9_review_date]' : {valid_date: lang_invalidDate},
             'immigration[comments]': {maxlength: lang_commentLength}
-        },
-
-        errorElement : 'label',
-        errorPlacement: function(error, element) {
-            error.appendTo(element.prev('label'));
-            error.insertBefore(element.next(".clear"));
-
         }
     });
   
     //enable, dissable views on loading
     //this is to findout whether passport details already entered
-    if(havePassports) {
-        $(".paddingLeftRequired").hide();
-        $("#immigrationDataPane").hide();
-    } else {
-        $("#btnCancel").hide();
+    if(!(havePassports)) {
+        $(".check").hide();
         $("#immigrationHeading").text(lang_addImmigrationHeading);
-        $(".paddingLeftRequired").show();
-        $("#immigrationDataPane").show();
-        $("#immidrationList").hide();
     }
 
     //on clicking of add button
@@ -74,8 +62,8 @@ $(document).ready(function() {
         $("#immigrationHeading").text(lang_addImmigrationHeading);
         $(".paddingLeftRequired").show();
         $("#immigrationDataPane").show();
-        $('form#frmImmigrationDelete table.data-table input.checkbox').hide();
-        $("form#frmImmigrationDelete div.actionbar").hide();
+        $('.check').hide();
+        $("#listActions").hide();
         removeEditLinks();
         $("#messagebar").attr("class", "").text('');                
     });
@@ -93,8 +81,8 @@ $(document).ready(function() {
 
         $(".paddingLeftRequired").hide();
         $("#immigrationDataPane").hide();
-        $('form#frmImmigrationDelete table.data-table input.checkbox').show();
-        $("form#frmImmigrationDelete div.actionbar").show();
+        $('.check').show();
+        $("#listActions").show();
         if(canUpdate){
             addEditLinks();
         }
@@ -119,8 +107,8 @@ $(document).ready(function() {
         
         var code = $(this).closest("tr").find('input.checkbox:first').val();
         fillDataToImmigrationDataPane(code);
-        $('form#frmImmigrationDelete table.data-table input.checkbox').hide();
-        $("form#frmImmigrationDelete div.actionbar").hide();
+        $('.check').hide();
+        $("#listActions").hide();
         $("#messagebar").attr("class", "").text('');        
         
         loadDefaultDateMasks();

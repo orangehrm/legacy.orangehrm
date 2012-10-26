@@ -10,3 +10,13 @@ viewReportingMethodsSuccess:
   layout: freshorange
 viewTerminationReasonsSuccess:
   layout: freshorange
+contactDetailsSuccess:
+  layout: freshorange
+viewEmergencyContactsSuccess:
+  layout: freshorange
+viewDependentsSuccess:
+  layout: freshorange
+viewImmigrationSuccess:
+  layout: freshorange
+viewJobDetailsSuccess:
+  layout: freshorange

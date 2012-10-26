@@ -29,6 +29,15 @@ class contactDetailsAction extends basePimAction {
     }
     
     public function execute($request) {
+        
+        /* For highlighting corresponding menu item */
+        $initialActionName = $request->getParameter('initialActionName', '');
+        if (empty($initialActionName)) {
+            $request->setParameter('initialActionName', 'viewEmployeeList');
+        } else {
+            $request->setParameter('initialActionName', $initialActionName);
+        }
+        
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
         
         $contact = $request->getParameter('contact');
@@ -45,9 +54,6 @@ class contactDetailsAction extends basePimAction {
         $param = array('empNumber' => $empNumber,  'contactDetailsPermission' => $this->contactDetailsPermission);
         $this->setForm(new EmployeeContactDetailsForm(array(), $param, true));
 
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-        }
         if ($this->contactDetailsPermission->canUpdate()){
             if ($request->isMethod('post')) {
 
@@ -55,7 +61,7 @@ class contactDetailsAction extends basePimAction {
             if ($this->form->isValid()) {
                 $employee = $this->form->getEmployee();
                 $this->getEmployeeService()->saveEmployee($employee);
-                $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
+                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
                 $this->redirect('pim/contactDetails?empNumber='. $empNumber);
             }
         }

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    
     //form validation
     $("#frmEmpContactDetails").validate({
         rules: {
@@ -28,11 +28,6 @@ $(document).ready(function() {
                 email: incorrectOtherEmail,
                 uniqueOtherEmail: lang_emailExistmsg
             }
-        },
-
-        errorElement : 'label',
-        errorPlacement: function(error, element) {
-            error.insertBefore(element.next(".clear"));
         }
     });
 
@@ -133,19 +128,12 @@ $(document).ready(function() {
     
     //on form loading
     $("form#frmEmpContactDetails .formInputText").attr("disabled", "disabled");
-    $(".txtBox").attr("disabled", "disabled");
-    $(".drpDown").attr("disabled", "disabled");
-    $(".txtBoxSmall").attr("disabled", "disabled");
-
     setCountryState();
 
     $("#btnSave").click(function() {
         //if user clicks on Edit make all fields editable
         if($("#btnSave").attr('value') == edit) {
             $(".formInputText").removeAttr("disabled");
-            $(".txtBox").removeAttr("disabled");
-            $(".drpDown").removeAttr("disabled");
-            $(".txtBoxSmall").removeAttr("disabled");
             $("#btnSave").attr('value', save);
             return;
         }
