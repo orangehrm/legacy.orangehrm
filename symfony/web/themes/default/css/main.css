@@ -393,11 +393,13 @@ form ol li {
 	float:left;
 	margin:3px 0 12px 0;
 }
+/*
 .single form ol li span {
 	float:left;
 	width:225px;
 	margin-top:9px;
 }
+*/    
 form ol li.required {
 	float:left;
 	width:425px;
@@ -428,7 +430,7 @@ form ol li label em {
 	color:#5d5d5d;
 	width:120px;
 	float:left;
-	margin:6px 0 0 0;
+	/*margin:6px 0 0 0;*/
 }
 .single form ol li .label {
 	height:50px;
