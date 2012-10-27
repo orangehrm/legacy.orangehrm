@@ -64,7 +64,7 @@ class changeCandidateVacancyStatusAction extends baseRecruitmentAction {
         if ($this->getUser()->hasFlash('templateMessage')) {
             list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
         }
-
+        
         $id = $request->getParameter('id');
         if (!empty($id)) {
             $history = $this->getCandidateService()->getCandidateHistoryById($id);
@@ -73,7 +73,7 @@ class changeCandidateVacancyStatusAction extends baseRecruitmentAction {
             if ($action == WorkflowStateMachine::RECRUITMENT_APPLICATION_ACTION_SHEDULE_INTERVIEW || $action == WorkflowStateMachine::RECRUITMENT_APPLICATION_ACTION_SHEDULE_2ND_INTERVIEW) {
                 if ($this->getUser()->hasFlash('templateMessage')) {
                     list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-                    $this->getUser()->setFlash('templateMessage', array($this->messageType, $this->message));
+                    $this->getUser()->setFlash($this->messageType, $this->message);
                 }
                 $this->redirect('recruitment/jobInterview?historyId=' . $id . '&interviewId=' . $this->interviewId);
             }

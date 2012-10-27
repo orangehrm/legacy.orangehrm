@@ -46,7 +46,6 @@ $(document).ready(function() {
     });
    
     $('.formInputInterviewer').one('focus', function() {
-        
         if ($(this).hasClass("inputFormatHint")) {
             $(this).val("");
             $(this).removeClass("inputFormatHint");
@@ -56,8 +55,11 @@ $(document).ready(function() {
 
     if($("#saveBtn").attr('value') == lang_edit) {
         $(".formInputInterviewer").attr('disabled', 'disabled');
-        $(".formInputText").attr('disabled', 'disabled');
-        $(".calendarBtn").attr('disabled', 'disabled');
+        $("#jobInterview_name").attr('disabled', 'disabled');
+        $(".calendar").attr('disabled', 'disabled');
+        $(".ui-datepicker-trigger").attr('disabled', 'disabled');
+        $("#jobInterview_time").attr('disabled', 'disabled');
+        $("#jobInterview_note").attr('disabled', 'disabled');
         $(".addText").hide();
         $(".removeText").hide();
 
@@ -71,13 +73,18 @@ $(document).ready(function() {
         if($("#saveBtn").attr('value') == lang_edit) {
             $('#jobInterviewHeading').text(lang_editInterviewDetails)
             $(".formInputInterviewer").removeAttr("disabled");
-            $(".formInputText").removeAttr("disabled");
-            $(".calendarBtn").removeAttr("disabled");
+            $("#jobInterview_name").removeAttr("disabled");
+            $(".calendar").removeAttr("disabled");
+            $(".ui-datepicker-trigger").removeAttr("disabled");
+            $("#jobInterview_time").removeAttr("disabled");
+            $("#jobInterview_note").removeAttr("disabled");
             if (counter < 5){
                 $(".addText").show();
             }
             $(".removeText").show();
-            if($('.interviewer').filter(function(){return ( $(this).css('display') === 'block' );}).length == 1) {
+            if($('.interviewer').filter(function(){
+                return ( $(this).css('display') === 'block' );
+            }).length == 1) {
                 $('#removeButton1').hide();
             }
             $("#saveBtn").attr('value', lang_save);
@@ -120,7 +127,9 @@ $(document).ready(function() {
         }
     });
 
-    if($('.interviewer').filter(function(){return ( $(this).css('display') === 'block' );}).length <=1) {
+    if($('.interviewer').filter(function(){
+        return ( $(this).css('display') === 'block' );
+    }).length <=1) {
         $('#removeButton1').hide();
     }
     
@@ -164,12 +173,9 @@ function validateInterviewerNames(){
 
     var flag = true;
     $(".messageBalloon_success").remove();
-    //$(".messageBalloon_failure").remove()
-    $('#interviewerNameError').removeAttr('class');
-    $('#interviewerNameError').html("");
+//    $("li#interviewerList > .validation-error").remove();
 
-    var errorStyle = "background-color:#FFDFDF;";
-    var normalStyle = "background-color:#FFFFFF;";
+    var errorClass = "validation-error";
     var interviewerNameArray = new Array();
     var errorElements = new Array();
     var index = 0;
@@ -177,7 +183,7 @@ function validateInterviewerNames(){
 
     $('.formInputInterviewer').each(function(){
         element = $(this);
-        $(element).attr('style', normalStyle);
+        $(element).removeClass(errorClass);
         if((element.val() != "") && (element.val() != lang_typeHint)){
             interviewerNameArray[index] = $(element);
             index++;
@@ -186,20 +192,19 @@ function validateInterviewerNames(){
 
     for(var i=0; i<interviewerNameArray.length; i++){
         var currentElement = interviewerNameArray[i];
+        
         for(var j=1+i; j<interviewerNameArray.length; j++){
-
             if(currentElement.val() == interviewerNameArray[j].val() ){
                 errorElements[num] = currentElement;
                 errorElements[++num] = interviewerNameArray[j];
                 num++;
-                $('#interviewerNameError').html(lang_identical_rows);
+//                interviewerNameArray[j].after('<span class="validation-error">'+lang_identical_rows+'</span>');
                 flag = false;
-
             }
         }
+        
         for(var k=0; k<errorElements.length; k++){
-
-            errorElements[k].attr('style', errorStyle);
+            errorElements[k].attr('class', errorClass);
         }
     }
 
@@ -348,22 +353,10 @@ function isValidForm(){
             'jobInterview[time]' : {
                 timeValidation: lang_validTimeRequired
             }
-        },
-
-        errorPlacement: function(error, element) {
-            error.appendTo(element.prev('label'));
-            
-            if(element.next().hasClass('errorHolder')) {
-                error.appendTo(element.next('div.errorHolder'));
-            } else if(element.next().next().hasClass('errorHolder')) {
-                error.appendTo(element.next().next('div.errorHolder'));
-            }
-            
         }
-
     });
-    return true;
     
+    return true;   
 }
 
 function isSheduledTimeFreeJson(shedulingDate, shedulingTime) {

@@ -75,7 +75,7 @@ class JobInterviewForm extends BaseForm {
 //creating widgets
         $this->setWidgets(array(
             'name' => new sfWidgetFormInputText(),
-            'date' => new ohrmWidgetDatePickerNew(array(), array('id' => 'jobInterview_date')),
+            'date' => new ohrmWidgetDatePicker(array(), array('id' => 'jobInterview_date')),
             'time' => new sfWidgetFormInputText(),
             'note' => new sfWidgetFormTextArea(),
             'selectedInterviewerList' => new sfWidgetFormInputHidden()
