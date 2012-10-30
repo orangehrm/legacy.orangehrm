@@ -23,29 +23,124 @@ function isTaxMenuEnabled() {
     
 }
 
+$employeeService = new EmployeeService();
+$userRoleManager = sfContext::getInstance()->getUserRoleManager();
+$entities = array('Employee' => $empNumber);
+$self = false;
+
+if($empNumber == sfContext::getInstance()->getUser()->getAttribute('auth.empNumber')) {
+    $self = true;
+}
+
 ?>
 
 <div id="sidebar">
 
-    <div id="profile-pic">
-        <h1><?php echo htmlspecialchars($form->fullName); ?></h1>
-        <img src="<?php echo public_path('../../symfony/web/themes/default/images/profile-pic.png')?>" width="201" height="208" alt="">
-    </div>
+    <?php 
 
+        $empPicture = $employeeService->getEmployeePicture($empNumber);
+
+        $width = '200';
+        $height = '200';
+        
+        $photographPermissions = $userRoleManager->getDataGroupPermissions(array('photograph'), array(), array(), $self, $entities);
+        
+        if ((!empty($empPicture)) && ($photographPermissions->canRead())) {
+            $width = $empPicture->width;
+            $height = $empPicture->height;
+        }    
+                        
+        include_partial('photo', array('empNumber' => $empNumber,
+                        'width' => $width, 'height' => $height,
+                        'editMode' => isset($editPhotoMode) ? $editPhotoMode : false,
+                        'fullName' => htmlspecialchars($form->fullName), 'photographPermissions' => $photographPermissions));
+       
+    ?>        
+        
     <ul id="sidenav">
-        <li<?php echo getListClassHtml('viewPersonalDetails'); ?>><a href="<?php echo url_for('pim/viewPersonalDetails?empNumber=' . $empNumber); ?>">Personal Details</a></li>
-        <li<?php echo getListClassHtml('contactDetails'); ?>><a href="<?php echo url_for('pim/contactDetails?empNumber=' . $empNumber); ?>">Contact Details</a></li>
-        <li<?php echo getListClassHtml('viewEmergencyContacts'); ?>><a href="<?php echo url_for('pim/viewEmergencyContacts?empNumber=' . $empNumber); ?>">Emergency Contacts</a></li>
-        <li<?php echo getListClassHtml('viewDependents'); ?>><a href="<?php echo url_for('pim/viewDependents?empNumber=' . $empNumber); ?>">Dependents</a></li>
-        <li<?php echo getListClassHtml('viewImmigration'); ?>><a href="<?php echo url_for('pim/viewImmigration?empNumber=' . $empNumber); ?>">Immigration</a></li>
-        <li<?php echo getListClassHtml('viewJobDetails'); ?>><a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>">Job</a></li>
-        <li<?php echo getListClassHtml('viewSalaryList'); ?>><a href="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber);?>">Salary</a></li>
-        <?php if (isTaxMenuEnabled()) : ?>
-        <li<?php echo getListClassHtml('viewUsTaxExemptions'); ?>><a href="<?php echo url_for('pim/viewUsTaxExemptions?empNumber=' . $empNumber);?>"><?php echo __("Tax Exemptions"); ?></a></li>
+        
+        <?php // viewPersonalDetails
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('personal_information','personal_attachment','personal_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>
+            <li<?php echo getListClassHtml('viewPersonalDetails'); ?>><a href="<?php echo url_for('pim/viewPersonalDetails?empNumber=' . $empNumber); ?>"><?php echo __("Personal Details"); ?></a></li>
         <?php endif; ?>
-        <li<?php echo getListClassHtml('viewReportToDetails'); ?>><a href="<?php echo url_for('pim/viewReportToDetails?empNumber=' . $empNumber);?>">Report-to</a></li>
-        <li<?php echo getListClassHtml('viewQualifications'); ?>><a href="<?php echo url_for('pim/viewQualifications?empNumber=' . $empNumber); ?>">Qualifications</a></li>
-        <li<?php echo getListClassHtml('viewMemberships'); ?>><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>">Membership</a></li>
+
+        <?php // contactDetails
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('contact_details','contact_attachment','contact_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>
+            <li<?php echo getListClassHtml('contactDetails'); ?>><a href="<?php echo url_for('pim/contactDetails?empNumber=' . $empNumber); ?>"><?php echo __("Contact Details"); ?></a></li>
+        <?php endif; ?>
+        
+        <?php // viewEmergencyContacts
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('emergency_contacts','emergency_attachment','emergency_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewEmergencyContacts'); ?>><a href="<?php echo url_for('pim/viewEmergencyContacts?empNumber=' . $empNumber); ?>"><?php echo __("Emergency Contacts"); ?></a></li>
+        <?php endif; ?>
+        
+        <?php // viewDependents
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('dependents','dependents_attachment','dependents_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewDependents'); ?>><a href="<?php echo url_for('pim/viewDependents?empNumber=' . $empNumber); ?>"><?php echo __("Dependents"); ?></a></li>
+        <?php endif; ?>
+        
+        <?php // viewImmigration
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('immigration','immigration_attachment','immigration_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewImmigration'); ?>><a href="<?php echo url_for('pim/viewImmigration?empNumber=' . $empNumber); ?>"><?php echo __("Immigration"); ?></a></li>
+        <?php endif; ?>
+        
+        <?php // viewJobDetails
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('job_details','job_attachment','job_custom_fields'), array(), array(), $self, $entities);
+            $employee = $employeeService->getEmployee($empNumber);
+            $allowedActions = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_EMPLOYEE, $employee->getState());
+            $allowActivate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE, $allowedActions);
+            $allowTerminate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_TERMINATE, $allowedActions);
+            
+            if($dataGroupPermission->canRead() || $allowTerminate || $allowActivate) :
+        ?>        
+            <li<?php echo getListClassHtml('viewJobDetails'); ?>><a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>"><?php echo __("Job"); ?></a></li>
+        <?php endif; ?>        
+        
+        <?php // viewSalaryList
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('salary_details','salary_attachment','salary_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewSalaryList'); ?>><a href="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber);?>"><?php echo __("Salary"); ?></a></li>
+        <?php endif; ?>
+        
+        <?php // viewUsTaxExemptions
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('tax_exemptions','tax_attachment','tax_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead() && isTaxMenuEnabled()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewUsTaxExemptions'); ?>><a href="<?php echo url_for('pim/viewUsTaxExemptions?empNumber=' . $empNumber);?>"><?php echo __("Tax Exemptions"); ?></a></li>
+        <?php endif; ?>
+        
+        <?php // viewReportToDetails
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('supervisor','subordinates','report-to_attachment','report-to_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewReportToDetails'); ?>><a href="<?php echo url_for('pim/viewReportToDetails?empNumber=' . $empNumber);?>"><?php echo __("Report-to"); ?></a></li>
+        <?php endif; ?>        
+        
+        <?php // viewQualifications
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('qualification_work','qualification_education','qualification_skills','qualification_languages','qualification_license','qualifications_attachment','qualifications_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewQualifications'); ?>><a href="<?php echo url_for('pim/viewQualifications?empNumber=' . $empNumber); ?>"><?php echo __("Qualifications"); ?></a></li>
+        <?php endif; ?>        
+        
+        <?php // viewMemberships
+            $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('membership','membership_attachment','membership_custom_fields'), array(), array(), $self, $entities);
+            if($dataGroupPermission->canRead()) :
+        ?>        
+            <li<?php echo getListClassHtml('viewMemberships'); ?>><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>"><?php echo __("Membership"); ?></a></li>
+        <?php endif; ?>
+    
     </ul>
 
 </div> <!-- sidebar -->

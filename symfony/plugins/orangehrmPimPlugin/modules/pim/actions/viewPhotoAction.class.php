@@ -57,8 +57,7 @@ class viewPhotoAction extends basePimAction {
             $fileSize = $empPicture->size;
             $fileName = $empPicture->filename;
         } else {
-            $fileName = 'default_employee_image.gif';
-            $tmpName = ROOT_PATH . '/themes/beyondT/pictures/' . $fileName;
+            $tmpName = ROOT_PATH . '/symfony/web/themes/default/images/profile-pic.png';
             $fp = fopen($tmpName,'r');
             $fileSize = filesize($tmpName);
             $contents = fread($fp, $fileSize);
