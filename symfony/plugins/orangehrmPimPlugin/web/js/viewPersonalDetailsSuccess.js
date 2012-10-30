@@ -24,7 +24,7 @@ $(document).ready(function() {
         //if user clicks on Edit make all fields editable
         if($("#btnSave").attr('value') == edit) {
             
-            $(".editable").each(function(){
+            $("#pdMainContainer .editable").each(function(){
                 $(this).removeAttr("disabled");
             });            
             

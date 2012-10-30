@@ -5,7 +5,7 @@
     
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
     
-    <div class="personalDetails">
+    <div class="personalDetails" id="pdMainContainer">
         
         <div class="head">
             <h1><?php echo __('Personal Details'); ?></h1>
@@ -117,9 +117,10 @@
 
         </div> <!-- inner -->
         
-    </div> <!-- pimStyle1 -->
+    </div> <!-- pdMainContainer -->
 
     
+    <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => CustomField::SCREEN_PERSONAL_DETAILS));?>
     <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => EmployeeAttachment::SCREEN_PERSONAL_DETAILS));?>
     
 </div> <!-- employee-details -->
@@ -144,9 +145,5 @@
 
     //]]>
 </script>
-
-<?php //echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => CustomField::SCREEN_PERSONAL_DETAILS));?>
-
-
 
 <?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewPersonalDetailsSuccess'); ?>
