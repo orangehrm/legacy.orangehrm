@@ -866,6 +866,7 @@ form input.validation-error {
 	position:absolute;
 	top:21px;
 	left:120px;
+    margin-top: 6px;
 }
 /* Don't use this class. To be removed.
 .double form ol li span.validation-error {
