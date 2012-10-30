@@ -1,3 +1,17 @@
+<?php
+
+function getListClassHtml($action) {
+    
+    if ($action == sfContext::getInstance()->getActionName()) {
+        return ' class="selected"';
+    }
+    
+    return '';
+    
+}
+
+?>
+
 <div id="sidebar">
 
     <div id="profile-pic">
@@ -6,16 +20,16 @@
     </div>
 
     <ul id="sidenav">
-        <li class="selected"><a href="<?php echo url_for('pim/viewPersonalDetails?empNumber=' . $empNumber); ?>">Personal Details</a></li>
-        <li><a href="<?php echo url_for('pim/contactDetails?empNumber=' . $empNumber); ?>">Contact Details</a></li>
-        <li><a href="<?php echo url_for('pim/viewEmergencyContacts?empNumber=' . $empNumber); ?>">Emergency Contacts</a></li>
-        <li><a href="<?php echo url_for('pim/viewDependents?empNumber=' . $empNumber); ?>">Dependents</a></li>
-        <li><a href="<?php echo url_for('pim/viewImmigration?empNumber=' . $empNumber); ?>">Immigration</a></li>
-        <li><a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>">Job</a></li>
-        <li><a href="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber);?>">Salary</a></li>
-        <li><a href="<?php echo url_for('pim/viewReportToDetails?empNumber=' . $empNumber);?>">Report-to</a></li>
-        <li><a href="<?php echo url_for('pim/viewQualifications?empNumber=' . $empNumber); ?>">Qualifications</a></li>
-        <li><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>">Membership</a></li>
+        <li<?php echo getListClassHtml('viewPersonalDetails'); ?>><a href="<?php echo url_for('pim/viewPersonalDetails?empNumber=' . $empNumber); ?>">Personal Details</a></li>
+        <li<?php echo getListClassHtml('contactDetails'); ?>><a href="<?php echo url_for('pim/contactDetails?empNumber=' . $empNumber); ?>">Contact Details</a></li>
+        <li<?php echo getListClassHtml('viewEmergencyContacts'); ?>><a href="<?php echo url_for('pim/viewEmergencyContacts?empNumber=' . $empNumber); ?>">Emergency Contacts</a></li>
+        <li<?php echo getListClassHtml('viewDependents'); ?>><a href="<?php echo url_for('pim/viewDependents?empNumber=' . $empNumber); ?>">Dependents</a></li>
+        <li<?php echo getListClassHtml('viewImmigration'); ?>><a href="<?php echo url_for('pim/viewImmigration?empNumber=' . $empNumber); ?>">Immigration</a></li>
+        <li<?php echo getListClassHtml('viewJobDetails'); ?>><a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>">Job</a></li>
+        <li<?php echo getListClassHtml('viewSalaryList'); ?>><a href="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber);?>">Salary</a></li>
+        <li<?php echo getListClassHtml('viewReportToDetails'); ?>><a href="<?php echo url_for('pim/viewReportToDetails?empNumber=' . $empNumber);?>">Report-to</a></li>
+        <li<?php echo getListClassHtml('viewQualifications'); ?>><a href="<?php echo url_for('pim/viewQualifications?empNumber=' . $empNumber); ?>">Qualifications</a></li>
+        <li<?php echo getListClassHtml('viewMemberships'); ?>><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>">Membership</a></li>
     </ul>
 
 </div> <!-- sidebar -->
