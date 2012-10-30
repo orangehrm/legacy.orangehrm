@@ -10,6 +10,19 @@ function getListClassHtml($action) {
     
 }
 
+function isTaxMenuEnabled() {
+    
+    $sfUser = sfContext::getInstance()->getUser();
+    
+    if (!$sfUser->hasAttribute('pim.leftMenu.isTaxMenuEnabled')) {
+        $isTaxMenuEnabled = OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_PIM_SHOW_TAX_EXEMPTIONS);
+        $sfUser->setAttribute('pim.leftMenu.isTaxMenuEnabled', $isTaxMenuEnabled);
+    }
+    
+    return $sfUser->getAttribute('pim.leftMenu.isTaxMenuEnabled');
+    
+}
+
 ?>
 
 <div id="sidebar">
@@ -27,6 +40,9 @@ function getListClassHtml($action) {
         <li<?php echo getListClassHtml('viewImmigration'); ?>><a href="<?php echo url_for('pim/viewImmigration?empNumber=' . $empNumber); ?>">Immigration</a></li>
         <li<?php echo getListClassHtml('viewJobDetails'); ?>><a href="<?php echo url_for('pim/viewJobDetails?empNumber=' . $empNumber);?>">Job</a></li>
         <li<?php echo getListClassHtml('viewSalaryList'); ?>><a href="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber);?>">Salary</a></li>
+        <?php if (isTaxMenuEnabled()) : ?>
+        <li<?php echo getListClassHtml('viewUsTaxExemptions'); ?>><a href="<?php echo url_for('pim/viewUsTaxExemptions?empNumber=' . $empNumber);?>"><?php echo __("Tax Exemptions"); ?></a></li>
+        <?php endif; ?>
         <li<?php echo getListClassHtml('viewReportToDetails'); ?>><a href="<?php echo url_for('pim/viewReportToDetails?empNumber=' . $empNumber);?>">Report-to</a></li>
         <li<?php echo getListClassHtml('viewQualifications'); ?>><a href="<?php echo url_for('pim/viewQualifications?empNumber=' . $empNumber); ?>">Qualifications</a></li>
         <li<?php echo getListClassHtml('viewMemberships'); ?>><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>">Membership</a></li>
