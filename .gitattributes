@@ -3889,7 +3889,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveStateManager.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveStateManagerInerface.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveTakenState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveWeekendState.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/baseLeaveAction.php -text
+symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/baseCoreLeaveAction.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/changeLeaveStatusAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/defineHolidayAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/defineLeavePeriodAction.class.php -text
@@ -4586,6 +4586,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/workshedule/WorkScheduleInterface.php -
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/addLeaveEntitlementAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/applyLeaveAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/assignLeaveAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/baseLeaveAction.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/deleteLeaveEntitlementsAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeeCountAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesAjaxAction.class.php -text

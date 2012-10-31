@@ -1,6 +1,6 @@
 <?php
 
-class saveLeaveEntitlementsAction extends baseLeaveAction {
+class saveLeaveEntitlementsAction extends baseCoreLeaveAction {
 
     public $form;
 

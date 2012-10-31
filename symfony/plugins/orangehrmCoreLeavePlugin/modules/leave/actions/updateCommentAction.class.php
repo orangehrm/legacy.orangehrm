@@ -24,7 +24,7 @@
 /**
  * updateComment
  */
-class updateCommentAction extends baseLeaveAction {
+class updateCommentAction extends baseCoreLeaveAction {
 
     public function execute($request) {
 

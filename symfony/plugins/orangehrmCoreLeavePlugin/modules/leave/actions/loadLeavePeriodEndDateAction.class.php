@@ -24,7 +24,7 @@
 /**
  * loadLeavePeriodEndDate
  */
-class loadLeavePeriodEndDateAction extends baseLeaveAction {
+class loadLeavePeriodEndDateAction extends baseCoreLeaveAction {
 
     public function execute($request) {
 

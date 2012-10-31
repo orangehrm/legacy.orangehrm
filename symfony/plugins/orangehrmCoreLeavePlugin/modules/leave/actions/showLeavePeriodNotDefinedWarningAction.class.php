@@ -26,7 +26,7 @@
  *
  * @param sfWebRequest $request
  */
-class showLeavePeriodNotDefinedWarningAction extends baseLeaveAction {
+class showLeavePeriodNotDefinedWarningAction extends baseCoreLeaveAction {
 
     public function execute($request) {
         

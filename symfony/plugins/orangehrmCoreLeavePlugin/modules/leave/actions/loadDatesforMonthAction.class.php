@@ -24,7 +24,7 @@
 /**
  * Load Dates for Month
  */
-class loadDatesforMonthAction extends baseLeaveAction {
+class loadDatesforMonthAction extends baseCoreLeaveAction {
 
     public function execute($request) {
 

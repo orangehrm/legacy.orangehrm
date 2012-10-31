@@ -24,7 +24,7 @@
 /**
  * getCurrentStartDate
  */
-class getCurrentStartDateAction extends baseLeaveAction {
+class getCurrentStartDateAction extends baseCoreLeaveAction {
 
     public function execute($request) {
 

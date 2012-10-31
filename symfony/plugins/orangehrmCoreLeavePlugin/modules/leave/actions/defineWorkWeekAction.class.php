@@ -1,6 +1,6 @@
 <?php
 
-class defineWorkWeekAction extends baseLeaveAction {
+class defineWorkWeekAction extends baseCoreLeaveAction {
 
     public function execute($request) {
 

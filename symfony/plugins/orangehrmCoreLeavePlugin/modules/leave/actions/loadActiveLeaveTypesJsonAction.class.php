@@ -1,6 +1,6 @@
 <?php
 
-class loadActiveLeaveTypesJsonAction extends baseLeaveAction {
+class loadActiveLeaveTypesJsonAction extends baseCoreLeaveAction {
 
     public function execute($request) {
         $activeLeaveTypesList = $this->getLeaveTypeNames();
