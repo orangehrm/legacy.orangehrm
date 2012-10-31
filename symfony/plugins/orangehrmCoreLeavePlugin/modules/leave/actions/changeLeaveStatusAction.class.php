@@ -24,7 +24,7 @@
 /**
  * changeLeaveStatus
  */
-class changeLeaveStatusAction extends baseLeaveAction {
+class changeLeaveStatusAction extends baseCoreLeaveAction {
 
     public function execute($request) {
 
