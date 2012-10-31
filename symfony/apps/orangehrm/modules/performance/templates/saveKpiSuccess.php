@@ -1,14 +1,16 @@
 <div class="box single" >
     
-        <?php if(count($listJobTitle) == 0){?>
-			<div id="messageBalloon_notice" class="messageBalloon_notice">
-				<?php echo __("No Defined Job Titles")?> <a href="<?php echo url_for('admin/viewJobTitleList') ?>"><?php echo __("Define Now")?></a>
-			</div>
-		<?php }?>
-    
     <div class="head"><h1><?php echo __("Add Key Performance Indicator") ?></h1></div>
     
 	<div class="inner">
+        
+        <?php if(count($listJobTitle) == 0) : ?>
+            <div class="message warning">
+                <?php echo __("No Defined Job Titles") ?> 
+                <a href="<?php echo url_for('admin/viewJobTitleList') ?>"><?php echo __("Define Now") ?></a>
+                <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
+            </div>
+        <?php endif; ?>        
         
         <?php include_partial('global/flash_messages'); ?>
         
