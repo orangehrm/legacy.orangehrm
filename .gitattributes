@@ -5219,6 +5219,7 @@ symfony/web/themes/default/css/main.css -text
 symfony/web/themes/default/css/tipTip.css -text
 symfony/web/themes/default/images/calendar.png -text
 symfony/web/themes/default/images/close.png -text
+symfony/web/themes/default/images/default-photo.png -text
 symfony/web/themes/default/images/h1-bg.png -text
 symfony/web/themes/default/images/help-down.png -text
 symfony/web/themes/default/images/help-up.png -text
@@ -5228,7 +5229,6 @@ symfony/web/themes/default/images/paging-first.png -text
 symfony/web/themes/default/images/paging-last.png -text
 symfony/web/themes/default/images/paging-next.png -text
 symfony/web/themes/default/images/paging-previous.png -text
-symfony/web/themes/default/images/profile-pic.png -text
 symfony/web/themes/default/images/sidebar-nav-bg.png -text
 symfony/web/themes/default/images/sub-nav-arrow-s.png -text
 symfony/web/themes/default/images/sub-nav-arrow.png -text
