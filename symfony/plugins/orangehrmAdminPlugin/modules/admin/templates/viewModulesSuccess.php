@@ -68,11 +68,6 @@
                         <?php echo $form['performance']->render(); ?>
                     </li>
                     
-                    <li class="checkbox">
-                        <?php echo $form['help']->renderLabel(__('Enable Help') . ' <em>*</em>'); ?>
-                        <?php echo $form['help']->render(); ?>
-                    </li>
-                    
                     <li class="required">
                         <em>*</em> <?php echo __('compulsory'); ?>
                     </li>
@@ -100,7 +95,6 @@
     
     var lang_edit = "<?php echo __('Edit'); ?>";
     var lang_save = "<?php echo __('Save'); ?>";
-    var reloadParent = <?php echo isset($templateMessage)?'true':'false'; ?>;
     
 //]]>	
 </script>

@@ -46,13 +46,12 @@ class viewModulesAction extends sfAction {
 			$this->form->bind($request->getParameter($this->form->getName()));
 
 			if ($this->form->isValid()) {
-                $this->_resetModulesSavedInSession();
-                // Flag index.php to load module configuration
-                $_SESSION['load.admin.viewModules'] = true;
                 
+                $this->_resetModulesSavedInSession();                
 				$result = $this->form->save();
 				$this->getUser()->setFlash($result['messageType'], $result['message']);       
                 $this->redirect('admin/viewModules');
+                
             }
             
         }
@@ -72,7 +71,7 @@ class viewModulesAction extends sfAction {
     protected function _resetModulesSavedInSession() {
         
         $this->getUser()->getAttributeHolder()->remove('admin.disabledModules'); 
-        unset($_SESSION['admin.disabledModules']);
+        $this->getUser()->getAttributeHolder()->remove('mainMenu.menuItemArray');
         
     }    
     
