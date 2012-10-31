@@ -4115,6 +4115,7 @@ symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetFormDateRange.clas
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetOperationalCountryLocationDropDown.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetSelectableGroupDropDown.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetSubUnitDropDown.php -text
+symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetTimeDropDown.php -text
 symfony/plugins/orangehrmCorePlugin/lib/import/CsvDataImport.php -text
 symfony/plugins/orangehrmCorePlugin/lib/import/CsvDataImportFactory.php -text
 symfony/plugins/orangehrmCorePlugin/lib/import/PimCsvDataImport.php -text

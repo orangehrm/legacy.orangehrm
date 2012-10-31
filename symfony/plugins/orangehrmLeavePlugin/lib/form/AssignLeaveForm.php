@@ -60,23 +60,6 @@ class AssignLeaveForm extends sfForm {
     }
 
     /**
-     * Get Time Choices
-     * @return unknown_type
-     */
-    private function getTimeChoices() {
-        $startTime = strtotime("00:00");
-        $endTime = strtotime("23:59");
-        $interval = 60 * 15;
-        $timeChoices = array();
-        $timeChoices[''] = '';
-        for ($i = $startTime; $i <= $endTime; $i+=$interval) {
-            $timeVal = date('H:i', $i);
-            $timeChoices[$timeVal] = $timeVal;
-        }
-        return $timeChoices;
-    }
-
-    /**
      * Post validation
      * @param $validator
      * @param $values
@@ -161,8 +144,10 @@ class AssignLeaveForm extends sfForm {
      * @return array
      */
     protected function getFormWidgets() {
-        $timeChoices = $this->getTimeChoices();
 
+        $fromTimeWidget = new ohrmWidgetTimeDropDown();
+        $toTimeWidget = new ohrmWidgetTimeDropDown();
+        
         $widgets = array(
             'txtEmployee' => new ohrmWidgetEmployeeNameAutoFill(array('jsonList' => $this->getEmployeeListAsJson())),
             'txtEmpWorkShift' => new sfWidgetFormInputHidden(),
@@ -170,8 +155,11 @@ class AssignLeaveForm extends sfForm {
             'leaveBalance' => new ohrmWidgetDiv(array(), array('style' => 'float:left;padding-top: 6px;')),
             'txtFromDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtFromDate')),
             'txtToDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtToDate')),
-            'txtFromTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
-            'txtToTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
+            //'txtFromTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
+            //'txtToTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
+            'txtFromTime' => $fromTimeWidget,
+            'txtToTime' => $toTimeWidget,            
+            
             'txtLeaveTotalTime' => new sfWidgetFormInput(array(), array('readonly' => 'readonly')),
             'txtComment' => new sfWidgetFormTextarea(array(), array('rows' => '3', 'cols' => '30')),
         );
@@ -186,17 +174,13 @@ class AssignLeaveForm extends sfForm {
     protected function getFormValidators() {
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
 
-        $leaveTypeIds = array_keys($this->getLeaveTypeChoices());
-
-        // Remove the -- Select -- option
-        array_shift($leaveTypeIds);
-        
-        $timeChoices = array_keys($this->getTimeChoices());
+        $leaveTypeIds = array_keys($this->getLeaveTypeChoices());        
+        $timeChoices = $this->getWidget('txtFromTime')->getChoices();        
 
         $validators = array(
             'txtEmployee' => new ohrmValidatorEmployeeNameAutoFill(),
             'txtEmpWorkShift' => new sfValidatorString(array('required' => false)),
-            'txtLeaveType' => new sfValidatorChoice(array('choices' => $leaveTypeIds)),
+            'txtLeaveType' => new sfValidatorChoice(array('choices' => $leaveTypeIds, 'required' => true)),
             'txtFromDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true),
                     array('invalid' => 'Date format should be ' . $inputDatePattern)),
             'txtToDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true),
