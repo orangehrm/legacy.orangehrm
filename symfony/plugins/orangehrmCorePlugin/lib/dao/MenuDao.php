@@ -44,6 +44,7 @@ class MenuDao {
                     ->leftJoin('sc.Module mo')
                     ->leftJoin('sc.ScreenPermission sp')
                     ->leftJoin('sp.UserRole ur')
+                    ->andWhere('mo.status = ?', Module::ENABLED)
                     ->andWhere('mi.status = ?', MenuItem::STATUS_ENABLED)
                     ->andWhere('sp.can_read = 1')
                     ->whereIn('ur.name', $roleNames)
