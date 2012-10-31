@@ -24,9 +24,9 @@ $messageTypes = array('success', 'warning', 'error');
 foreach ($messageTypes as $messageType) :
     if ($sf_user->hasFlash($messageType)) : 
 ?>
-<div class="message <?php echo $messageType;?>">
+<div class="message <?php echo $messageType;?> fadable">
     <?php echo $sf_user->getFlash($messageType);?>
-    <a href="#"><?php echo __('Close');?></a>
+    <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
 </div>
 <?php
     endif; 

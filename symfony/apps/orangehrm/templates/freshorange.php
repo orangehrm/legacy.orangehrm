@@ -120,13 +120,13 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 });
 
                 /* Fading out main messages */
-                $(".message a").click(function() {
-                    $(".message").fadeOut("slow");
+                $(".message a.messageCloseButton").click(function() {
+                    $(this).parent('div.message').fadeOut("slow");
                 });
                 
                 setTimeout(function(){
-                    $("div.message").fadeOut("slow", function () {
-                        $("div.message").remove();
+                    $("div.fadable").fadeOut("slow", function () {
+                        $("div.fadable").remove();
                     });
                 }, 2000);
 

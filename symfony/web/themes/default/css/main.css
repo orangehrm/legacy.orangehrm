@@ -663,7 +663,7 @@ table.tablesorter thead tr .headerSortDown {
 	position:relative;
 	letter-spacing:1px;
 }
-.message a {
+.message a.messageCloseButton {
 	text-indent:-9999px;
 	width:23px;
 	height:23px;
@@ -677,7 +677,11 @@ table.tablesorter thead tr .headerSortDown {
 	background-color:#fff4c7;
 }
 .warning a {
+    color:#e79400;
+}
+.warning a.messageCloseButton {
 	background:url(../images/warning-btn.png) no-repeat;
+    color:#e79400;
 }
 .error {
 	border:1px solid #d48574;

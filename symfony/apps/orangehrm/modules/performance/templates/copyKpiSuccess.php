@@ -1,22 +1,25 @@
 <div class="box single" >
         
-        <?php if (count($listJobTitle) == 0) {
-        ?>
-            <div id="messageBalloon_notice" class="messageBalloon_notice">
-                <?php echo __("No Defined Job Titles") ?> <a href="<?php echo url_for('admin/viewJobTitleList') ?>"><?php echo __("Define Now") ?></a>
-            </div>
-        <?php } ?>
-        <?php if ($confirm) {
- ?>
-            <div id="messageBalloon_notice" class="messageBalloon_notice">
-                <?php echo __("KPI Already Exists, This Operation Deletes Existing KPI") ?> &nbsp;&nbsp;<a href="javascript:confirmOverwrite();"><?php echo __("Ok") ?></a> &nbsp;&nbsp;<a href="javascript:cancelOverwrite();"><?php echo __("Cancel") ?></a>
-            </div>
-<?php } ?>
-    
     <div class="head"><h1><?php echo __("Copy Key Performance Indicators") ?></h1></div>
 
     <div class="inner">
 
+        <?php if (count($listJobTitle) == 0) : ?>
+            <div class="message warning">
+                <?php echo __("No Defined Job Titles") ?> 
+                <a href="<?php echo url_for('admin/viewJobTitleList') ?>"><?php echo __("Define Now") ?></a>
+                <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
+            </div>
+        <?php endif; ?>
+        <?php if ($confirm) : ?>
+            <div class="message warning">
+                <?php echo __("KPI Already Exists, This Operation Deletes Existing KPI") ?> 
+                <a href="javascript:confirmOverwrite();"><?php echo __("Ok") ?></a> 
+                <a href="javascript:cancelOverwrite();"><?php echo __("Cancel") ?></a> 
+                <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
+            </div>
+        <?php endif; ?>        
+        
         <?php include_partial('global/flash_messages'); ?>
 
         <form id="frmSave" method="post">
@@ -59,7 +62,7 @@
                 </ol>
 
                 <p>
-                    <input type="button" id="saveBtn" value="<?php echo __('Save') ?>" tabindex="3" />
+                    <input type="button" id="saveBtn" value="<?php echo __('Copy') ?>" tabindex="3" />
                     <input type="button" class="reset" id="resetBtn" value="<?php echo __('Reset') ?>" tabindex="4" />
                 </p>
 
