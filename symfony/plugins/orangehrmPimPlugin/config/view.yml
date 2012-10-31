@@ -26,3 +26,5 @@ viewSalaryListSuccess:
   layout: freshorange
 viewMembershipsSuccess:
   layout: freshorange
+viewQualificationsSuccess:
+  layout: freshorange
