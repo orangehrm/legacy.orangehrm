@@ -428,7 +428,7 @@ form ol li label em {
 .single form ol li label, .single form ol li .label {
 	display:block;
 	color:#5d5d5d;
-	width:120px;
+	width:150px; /* Changed from 120px to 150px since most labels seemed to need more width  */
 	float:left;
 	/*margin:6px 0 0 0;*/
 }
