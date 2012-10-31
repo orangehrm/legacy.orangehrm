@@ -23,6 +23,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <!--<script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.functions.js')?>"></script>-->
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.tipTip.minified.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/bootstrap-modal.js')?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('../../symfony/web/jquery/jquery.form.js')?>"></script>
 
         <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.core.js')) ?>
         <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.datepicker.js')) ?>

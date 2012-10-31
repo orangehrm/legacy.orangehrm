@@ -5181,6 +5181,7 @@ symfony/web/jquery/bootstrap-modal.js -text
 symfony/web/jquery/jquery-1.7.2.min.js -text
 symfony/web/jquery/jquery-1.8.0.min.js -text
 symfony/web/jquery/jquery-ui-1.8.21.custom.css -text
+symfony/web/jquery/jquery.form.js -text
 symfony/web/jquery/jquery.functions.js -text
 symfony/web/jquery/jquery.tipTip.minified.js -text
 symfony/web/jquery/jquery.ui.core.js -text

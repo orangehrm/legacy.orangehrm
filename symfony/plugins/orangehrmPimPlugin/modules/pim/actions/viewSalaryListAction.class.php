@@ -24,6 +24,14 @@
 class viewSalaryListAction extends basePimAction {
 
     public function execute($request) {
+        
+        /* For highlighting corresponding menu item */
+        $initialActionName = $request->getParameter('initialActionName', '');
+        if (empty($initialActionName)) {
+            $request->setParameter('initialActionName', 'viewEmployeeList');
+        } else {
+            $request->setParameter('initialActionName', $initialActionName);
+        }
 
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
         $loggedInUserName = $_SESSION['fname'];
@@ -44,11 +52,6 @@ class viewSalaryListAction extends basePimAction {
 
         if (!$this->IsActionAccessible($empNumber)) {
             $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
-        }
-
-
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
         }
 
         $employee = $this->getEmployeeService()->getEmployee($empNumber);
@@ -92,7 +95,7 @@ class viewSalaryListAction extends basePimAction {
                                 }
                             }
 
-                            $this->getUser()->setFlash('templateMessage', array('warning', $validationMsg));
+                            $this->getUser()->setFlash('warning', $validationMsg);
                             $directDebitOk = false;
                         }
                     } else {
@@ -105,7 +108,7 @@ class viewSalaryListAction extends basePimAction {
                         $this->setOperationName('UPDATE SALARY');
                         $service->saveEmployeeSalary($salary);                
 
-                        $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));  
+                        $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));  
                     }
                 }
             } else {
@@ -116,7 +119,7 @@ class viewSalaryListAction extends basePimAction {
                     }
                 }
 
-                $this->getUser()->setFlash('templateMessage', array('warning', $validationMsg));
+                $this->getUser()->setFlash('warning', $validationMsg);
             }
             $this->redirect('pim/viewSalaryList?empNumber=' . $empNumber);  
         } else {

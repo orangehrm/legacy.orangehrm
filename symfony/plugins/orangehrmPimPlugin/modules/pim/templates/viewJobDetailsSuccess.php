@@ -101,13 +101,12 @@
                             <?php echo $form['contract_end_date']->renderLabel(__('End Date')); ?>
                             <?php echo $form['contract_end_date']->render(array("class" => "formDateInput")); ?>
                         </li>
-                        <li>
-                            <span id="contractEdidMode">
+                        <li id="contractEdidMode">
                             <?php
                             if (empty($form->attachment)) {
                                 echo $form['contract_file']->renderLabel('Contract Details');
-                                echo $form['contract_file']->render(array("class" => ""));
-                                echo "<p class=\"commonUploadHelp\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</p>";
+                                echo $form['contract_file']->render();
+                                echo "<span>" . __(CommonMessages::FILE_LABEL_SIZE) . "</span>";
                             } else {
                                 $attachment = $form->attachment;
                                 $linkHtml = "<a title=\"{$attachment->description}\" target=\"_blank\" class=\"fileLink\" href=\"";
@@ -115,19 +114,20 @@
                                 $linkHtml .= "\">{$attachment->filename}</a>";
                                 echo $form['contract_update']->renderLabel(__('Contract Details'));
                                 echo $linkHtml;
-                                echo "<br class=\"clear\"/>";
-                                echo $form['contract_update']->render(array("class" => ""));
-                                echo "<br class=\"clear\"/>";
+                                
+                                echo "<span id=\"radio\">";
+                                echo $form['contract_update']->render();
+                                echo "</span>";
+                                
                                 echo "<span id=\"fileUploadSection\">";
-                                echo $form['contract_file']->renderLabel(' ');
-                                echo $form['contract_file']->render(array("class" => ""));
-                                echo "<p class=\"commonUploadHelp\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</p>";
+                                    echo $form['contract_file']->renderLabel(' ');
+                                    echo $form['contract_file']->render();
+                                    echo "<span>" . __(CommonMessages::FILE_LABEL_SIZE) . "</span>";
                                 echo "</span>";
                             }
                             ?>
-                            </span> <!-- End of contractEdidMode -->    
-                            
-                            <span id="contractReadMode">
+                        </li> <!-- End of contractEdidMode -->    
+                        <li id="contractReadMode">
                             <?php
                             echo "<label>" . __('Contract Details') . "</label>";
                             if (empty($form->attachment)) {
@@ -136,14 +136,13 @@
                                 echo $linkHtml;
                             }
                             ?>
-                            </span> <!-- End of contractReadMode -->
-                        </li>
+                        </li> <!-- End of contractReadMode -->
                     </ol>
                     <?php endif; ?>
                     
                     <p>
                         <?php if ($jobInformationPermission->canUpdate()) : ?>
-                        <input type="button" class="" id="btnSave" style="padding-left: 5px; float: left" value="<?php echo __("Edit"); ?>" />
+                        <input type="button" class="" id="btnSave" value="<?php echo __("Edit"); ?>" />
                         <?php endif; ?>  
                         <?php
                         $empTermination = $form->empTermination;
@@ -159,24 +158,24 @@
                         }
                         ?>
                         <?php if ($allowed) { ?>
-                            <input type="button" class="terminateButton" id="btnTerminateEmployement" value="<?php echo $btnTitle; ?>" />
+                        <input type="button" class="reset" id="btnTerminateEmployement" value="<?php echo $btnTitle; ?>" />
+                        <a id="terminateModal" class="btn2" data-toggle="modal" href="#terminateEmployement" target="_blank"></a>
                         <?php } ?>
                         <?php if ($allowActivate) { ?>
                             <label id="terminatedDate">
-                                <a href="javascript:openTerminateEmploymentDialog()"><?php echo $label; ?></a>
+                                <a class="btn2" data-toggle="modal" href="#terminateEmployement" ><?php echo $label; ?></a>
                             </label>      
                         <?php } else {
                             if ($jobInformationPermission->canRead()) {
                             ?>
                             <label id="terminatedDate">
-                                <a href="javascript:openTerminateEmploymentDialog()"><?php echo $label; ?></a>
+                                <a class="btn2" data-toggle="modal" href="#terminateEmployement" ><?php echo $label; ?></a>
                             </label>      
                         <?php 
                             }
                         }
                         ?>
                     </p>
-                    
                 </fieldset>
             </form>
             
@@ -193,191 +192,48 @@
     
 </div> <!-- Box -->
 
-
-<!-- common table structure to be followed -->
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-    <tr>
-        <td width="5">&nbsp;</td>
-        <td colspan="2">&nbsp;</td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <!-- this space is reserved for menus - dont use -->
-        <td width="200" valign="top">
-            <?php include_partial('leftmenu', array('empNumber' => $empNumber, 'form' => $form)); ?></td>
-        <td valign="top">
-            <table cellspacing="0" cellpadding="0" border="0" width="90%">
-                <tr>
-                    <td valign="top" width="750">
-                        <!-- this space is for contents -->
-                        <?php if (!empty($message)) : ?>
-                            <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" style="margin-left: 16px;width: 700px;">
-                                <span style="font-weight: bold;"><?php echo $message; ?></span>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($allowTerminate || $allowActivate || $jobInformationPermission->canRead()) { ?>
-                            <div class="outerbox">
-                                <div class="mainHeading"><h2><?php echo __('Job'); ?></h2></div>
-                                <div>
-                                    <form id="frmEmpJobDetails" method="post" enctype="multipart/form-data"
-                                          action="<?php echo url_for('pim/viewJobDetails'); ?>">
-                                        
-                                    <?php if ($jobInformationPermission->canRead()) { ?>
-                                        
-                                        <?php echo $form['_csrf_token']; ?>
-                                          <?php echo $form['emp_number']->render(); ?>
-                                          
-                                    <br class="clear"/>
-
-                                    <br class="clear"/>
-                                    
-                                          <br class="clear"/>
-
-                                          <div id="terminatedDetails">
-                                        <?php echo $form['terminated_date']->renderLabel(__('Terminated Date')); ?>
-                                        <?php echo $form['terminated_date']->render(array("class" => "formDateInput")); ?>
-                                          <br class="clear"/>
-                                        <?php echo $form['termination_reason']->renderLabel(__('Terminated Reason')); ?>
-                                        <?php echo $form['termination_reason']->render(); ?>
-                                          <label class="error" id="terminatedReason"></label>
-                                          <br class="clear"/>
-                                      </div> <!-- End of terminatedDetails -->
-
-                                    
-                                          <br class="clear"/>
-
-                                    
-                                          <br class="clear"/>
-
-                                    
-                                          <br class="clear"/>
-
-                                    
-                                          <br class="clear"/>
-
-                                          <div><h4><?php echo __('Employment Contract'); ?></h4></div>
-
-                                    
-                                          <br class="clear"/>
-
-                                    
-                                          <br class="clear"/>
-
-                                          <div id="contractEdidMode">
-                                        <?php
-                                          if (empty($form->attachment)) {
-
-                                              echo $form['contract_file']->renderLabel('Contract Details');
-                                              echo $form['contract_file']->render(array("class" => ""));
-                                              echo "<p class=\"commonUploadHelp\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</p>";
-                                          } else {
-
-                                              $attachment = $form->attachment;
-                                              $linkHtml = "<a title=\"{$attachment->description}\" target=\"_blank\" class=\"fileLink\" href=\"";
-                                              $linkHtml .= url_for('pim/viewAttachment?empNumber=' . $empNumber . '&attachId=' . $attachment->attach_id);
-                                              $linkHtml .= "\">{$attachment->filename}</a>";
-
-                                              echo $form['contract_update']->renderLabel(__('Contract Details'));
-                                              echo $linkHtml;
-                                              echo "<br class=\"clear\"/>";
-                                              echo $form['contract_update']->render(array("class" => ""));
-                                              echo "<br class=\"clear\"/>";
-                                              echo "<div id=\"fileUploadSection\">";
-                                              echo $form['contract_file']->renderLabel(' ');
-                                              echo $form['contract_file']->render(array("class" => ""));
-                                              echo "<p class=\"commonUploadHelp\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</p>";
-                                              echo "</div>";
-                                          }
-                                        ?>
-                                      </div> <!-- End of contractEdidMode -->
-
-                                      <div id="contractReadMode">
-                                        <?php
-                                          echo "<label>" . __('Contract Details') . "</label>";
-
-                                          if (empty($form->attachment)) {
-
-                                              echo "<label id=\"notDefinedLabel\">" . __('Not Defined') . "</label>";
-                                          } else {
-
-                                              echo $linkHtml;
-                                          }
-                                        ?>
-                                      </div> <!-- End of contractReadMode -->
-                                    <?php } ?>
-                                    <div class="formbuttons">
-                                        <?php if ($jobInformationPermission->canUpdate()) : ?>
-                                              <input type="button" class="savebutton" id="btnSave" style="padding-left: 5px; float: left" value="<?php echo __("Edit"); ?>" />
-                                        <?php endif; ?>                                              
-                                        <?php 
-                                              $empTermination = $form->empTermination;
-                                              $allowed = FALSE;
-                                              
-                                              if (!empty($empTermination)) {
-                                                  $allowed = $allowActivate;
-                                                  $terminatedId = $empTermination->getId();
-                                                  $btnTitle = __("Activate Employment");
-                                                  $label = __("Terminated on")." : ". set_datepicker_date_format($empTermination->getDate());
-                                              } else {
-                                                  $allowed = $allowTerminate;
-                                                  $btnTitle = __("Terminate Employment");
-                                              }
-                                        ?>
-                                            <?php if ($allowed) { ?>
-                                                <input type="button" class="terminateButton" id="btnTerminateEmployement" style="margin-left: 5px; float: left;" value="<?php echo $btnTitle; ?>" />
-                                            <?php } ?>
-                                            <?php if ($allowActivate) { ?>
-                                                <label id="terminatedDate" style="width: 250px; float: left"><a href="javascript:openTerminateEmploymentDialog()"><?php echo $label; ?></a></label>      
-                                            <?php } else {  
-                                                if ($jobInformationPermission->canRead()) { ?>
-                                                    <label id="terminatedDate" style="width: 250px; float: left"><a href="javascript:openTerminateEmploymentDialog()"><?php echo $label; ?></a></label>      
-                                            <?php }
-                                            } ?>
-                                            <br class="clear"/>
-                                          </div>
-                                   
-                                      </form>
-                                </div>
-                            </div>
-                        <?php } ?>
-
-<?php echo include_component('pim', 'customFields', array('empNumber' => $empNumber, 'screen' => CustomField::SCREEN_JOB)); ?>
-<?php echo include_component('pim', 'attachments', array('empNumber' => $empNumber, 'screen' => EmployeeAttachment::SCREEN_JOB)); ?>
-
-                                          </td>
-                                          <td valign="top" align="center">
-                                          </td>
-                                      </tr>
-                                  </table>
-                              </td>
-                          </tr>
-                      </table>
-
-                <?php if ($allowTerminate || $allowActivate || $jobInformationPermission->canRead()) { ?>
-                    <div id="terminateEmployement" title="<?php echo __("Terminate Employment"); ?>"  style="display:none;">
-                        <form id="frmTerminateEmployement" method="post" 
-                              action="<?php echo url_for('pim/terminateEmployement?empNumber=' . $empNumber.'&terminatedId='.$terminatedId); ?>">
-                            <?php echo $employeeTerminateForm['_csrf_token']; ?>
-                            <?php echo $employeeTerminateForm['reason']->renderLabel(__('Reason') . ' <span class="required">*</span>'); ?>
-                            <?php echo $employeeTerminateForm['reason']->render(array("class" => "formSelect")); ?>
-                            <br class="clear"/>
-                            <?php echo $employeeTerminateForm['date']->renderLabel(__('Date') . ' <span class="required">*</span>'); ?>
-                            <?php echo $employeeTerminateForm['date']->render(array("class" => "formDateInput")); ?>
-                            <br class="clear"/>
-                            <?php echo $employeeTerminateForm['note']->renderLabel(__('Note')); ?>
-                            <?php echo $employeeTerminateForm['note']->render(array("class" => "formTxtArea")); ?>
-                            <div class="errorHolder"></div>
-                            <br class="clear"/>
-                        </form>
-                        <div class="formbuttons">
-                            <?php if ($allowTerminate || $allowActivate) { ?>
-                            <input type="button" id="dialogConfirm" class="savebutton" value="<?php echo __('Confirm'); ?>" />
-                            <?php } ?>
-                            <input type="button" id="dialogCancel" class="savebutton" value="<?php echo __('Cancel'); ?>" />
-                        </div>
-                        <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
-                    </div>  
-                <?php } ?>
+<!-- Terminate Employment box HTML: Begins -->
+<?php if ($allowTerminate || $allowActivate || $jobInformationPermission->canRead()) { ?>
+<div class="modal hide" id="terminateEmployement">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3><?php echo __('Terminate Employment') ?></h3>
+    </div>
+    <div class="modal-body">
+        <form id="frmTerminateEmployement" method="post" 
+              action="<?php echo url_for('pim/terminateEmployement?empNumber=' . $empNumber.'&terminatedId='.$terminatedId); ?>">
+            <?php echo $employeeTerminateForm['_csrf_token']; ?>
+            <fieldset>
+                <ol>
+                    <li>
+                        <?php echo $employeeTerminateForm['reason']->renderLabel(__('Reason') . ' <em>*</em>'); ?>
+                        <?php echo $employeeTerminateForm['reason']->render(array("class" => "formSelect")); ?>
+                    </li>
+                    <li>
+                        <?php echo $employeeTerminateForm['date']->renderLabel(__('Date') . ' <em>*</em>'); ?>
+                        <?php echo $employeeTerminateForm['date']->render(array("class" => "formDateInput")); ?>
+                    </li>
+                    <li>
+                        <?php echo $employeeTerminateForm['note']->renderLabel(__('Note')); ?>
+                        <?php echo $employeeTerminateForm['note']->render(array("class" => "formTxtArea")); ?>
+                    </li>
+                    <span id="errorHolder"></span>
+                    <li class="required">
+                        <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
+                </ol>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <?php if ($allowTerminate || $allowActivate) { ?>
+        <input type="button" id="dialogConfirm" class="btn" value="<?php echo __('Confirm'); ?>" />
+        <?php } ?>
+        <input type="button"  id="dialogCancel" name="dialogCancel" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+    </div>
+</div>
+<?php } ?>
+<!-- Terminate Employment box HTML: Ends -->
 
 <script type="text/javascript">
     //<![CDATA[
@@ -415,24 +271,17 @@
     function openTerminateEmploymentDialog(){
         $('#ui-dialog-title-terminateEmployement').text(lang_editTerminateEmployement);
         $('#terminate_date_Button').removeAttr('disabled');
-        $('#terminateEmployement').dialog('open');
+        $('#terminateModal').click();
     }
     
     $(document).ready(function() {
-        
-        $("#terminateEmployement").dialog({
-            autoOpen: false,
-            modal: true,
-            width: 550,
-            height: 290,
-            position: 'middle'
-        });
         
         $('#btnTerminateEmployement').click(function(){
             if($(this).val() == lang_terminateEmployement){
                 clearErrors()
                 $('#terminate_date_Button').removeAttr('disabled')
-                $('#terminateEmployement').dialog('open');}
+               $('#terminateModal').click();
+            }
             else{
                 window.location.replace(activateEmployementUrl);
             }
@@ -444,12 +293,11 @@
             }
             if($('#frmTerminateEmployement').valid()){
                 $('#frmTerminateEmployement').submit()
-                $("#terminateEmployement").dialog("close")}
+            }
         });
         
         $('#dialogCancel').click(function(){
             clearErrors()
-            $("#terminateEmployement").dialog("close")
         });
         
         $("#job_job_title").change(function() {
@@ -513,11 +361,13 @@
         
         
         var readonlyFlag = 0;
-<?php if (!$jobInformationPermission->canUpdate()) { ?>
+        <?php if (!$jobInformationPermission->canUpdate()) { ?>
             readonlyFlag = 1;
-<?php } ?>
+        <?php } ?>
         
-        var list = new Array('#job_job_title', '#job_emp_status', '#job_terminated_date', '.calendarBtn', '#job_termination_reason', '#job_eeo_category',
+        var list = new Array(
+        '#job_job_title', '#job_emp_status', '#job_terminated_date', 
+        '.calendarBtn', '#job_termination_reason', '#job_eeo_category',
         '#job_joined_date', '#job_sub_unit', '#job_location',
         '#contract_file', 'ul.radio_list input',
         '#job_contract_start_date', '#job_contract_end_date',
@@ -525,21 +375,22 @@
         for(i=0; i < list.length; i++) {
             $(list[i]).attr("disabled", "disabled");
         }
-<?php if (empty($form->attachment)) { ?>
+        <?php if (empty($form->attachment)) { ?>
             $('#job_contract_update_3').attr('checked', 'checked');
-<?php } ?>
+        <?php } ?>
         
         $('#fileUploadSection').hide();
         
-        $("input[name=job[contract_update]]").click(function () {
-            
-            if ($('#job_contract_update_3').attr("checked")) {
-                $('#fileUploadSection').show();
-            } else {
-                $('#fileUploadSection').hide();
-            }
+        $("#job_contract_update_3").click(function () {
+            $('#fileUploadSection').show();
         });
-        
+        $("#job_contract_update_2").click(function () {
+            $('#fileUploadSection').hide();
+        });
+        $("#job_contract_update_1").click(function () {
+            $('#fileUploadSection').hide();
+        });
+                
         $('#contractEdidMode').hide();
         
         $("#btnSave").click(function() {
@@ -556,11 +407,11 @@
                     
                     $("#btnSave").attr('value', save);
                     
-<?php if (empty($form->attachment)) { ?>
+                    <?php if (empty($form->attachment)) { ?>
                         $('#job_contract_update_1').attr('disabled', 'disabled');
                         $('#job_contract_update_2').attr('disabled', 'disabled');
                         $('#job_contract_update_3').attr('checked', 'checked');
-<?php } ?>
+                    <?php } ?>
                     
                     return;
                 }

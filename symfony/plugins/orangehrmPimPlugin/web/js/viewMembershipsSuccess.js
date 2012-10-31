@@ -30,8 +30,6 @@ $(document).ready(function() {
     
     // Edit a membership detail in the list
     $('#frmEmpDelMemberships a').live('click', function() {
-        
-        $('#membership_membership').hide();
         $('#nameContainer').show();
 
         validator.resetForm();
@@ -67,6 +65,7 @@ $(document).ready(function() {
         // hide validation error messages
    
         $('#listActions').hide();
+        $('.check').hide();
         $('#mem_list td.check').hide();
         $('#addPaneMembership').css('display', 'block');
 
@@ -77,6 +76,7 @@ $(document).ready(function() {
         clearAddForm();
         $('#addPaneMembership').css('display', 'none');
         $('#listActions').show();
+        $('.check').show();
         $('#mem_list td.check').show();
         addEditLinks(); 
         $('div#messagebar').hide();
@@ -100,6 +100,7 @@ $(document).ready(function() {
 
         // Hide list action buttons and checkbox
         $('#listActions').hide();
+        $('.check').hide();
         $('#mem_list td.check').hide();
         removeEditLinks();
         $('div#messagebar').hide();
@@ -178,11 +179,7 @@ $(document).ready(function() {
                 date_range: dateError
             }
 
-        },
-        errorPlacement: function(error, element) {
-            error.appendTo( element.prev('label') );
         }
-
     });
 
 });

@@ -56,6 +56,14 @@ class viewMembershipsAction extends basePimAction {
     }
 
     public function execute($request) {
+        
+        /* For highlighting corresponding menu item */
+        $initialActionName = $request->getParameter('initialActionName', '');
+        if (empty($initialActionName)) {
+            $request->setParameter('initialActionName', 'viewEmployeeList');
+        } else {
+            $request->setParameter('initialActionName', $initialActionName);
+        }
 
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
 
@@ -68,10 +76,6 @@ class viewMembershipsAction extends basePimAction {
 
         if (!$this->IsActionAccessible($empNumber)) {
             $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
-        }
-
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
         }
         
         $essMode = !$adminMode && !empty($loggedInEmpNum) && ($empNumber == $loggedInEmpNum);
