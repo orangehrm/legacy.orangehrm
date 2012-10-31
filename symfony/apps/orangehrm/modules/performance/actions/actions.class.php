@@ -214,10 +214,7 @@ class performanceActions extends sfActions {
         $kpiService = $this->getKpiService();
         $this->defaultRate = $kpiService->getKpiDefaultRate();
         
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            $this->templateMessage = $this->getUser()->getFlash('templateMessage');
-        }
-
+        
         if ($request->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
@@ -248,11 +245,11 @@ class performanceActions extends sfActions {
 
                     $kpiService->saveKpi($defineKpi);
 
-                    $this->getUser()->setFlash('templateMessage', array('SUCCESS', __(TopLevelMessages::SAVE_SUCCESS).' <a href="listDefineKpi">'.__('View KPI List').'</a>'));
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
                     $this->redirect('performance/saveKpi');
                 } catch (Doctrine_Validator_Exception $e) {
 
-                    $this->setMessage('WARNING', array($e->getMessage()));
+                    $this->setMessage('warning', array($e->getMessage()));
                     $this->errorMessage = $e->getMessage();
                 }
             }
@@ -265,6 +262,9 @@ class performanceActions extends sfActions {
      * @return unknown_type
      */
     public function executeUpdateKpi(sfWebRequest $request) {
+        
+        /* For highlighting corresponding menu item */  
+        $request->setParameter('initialActionName', 'listDefineKpi'); 
 
         $this->listJobTitle = $this->getJobTitleService()->getJobTitleList("", "", false);
 
@@ -298,7 +298,7 @@ class performanceActions extends sfActions {
             }
 
             $kpiService->saveKpi($kpi);
-            $this->getUser()->setFlash('templateMessage', array('SUCCESS', __(TopLevelMessages::UPDATE_SUCCESS)));
+            $this->getUser()->setFlash('templateMessage', array('sucess', __(TopLevelMessages::UPDATE_SUCCESS)));
             $this->redirect('performance/listDefineKpi');
         }
     }

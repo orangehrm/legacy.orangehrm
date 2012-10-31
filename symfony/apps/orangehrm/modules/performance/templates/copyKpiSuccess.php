@@ -1,6 +1,5 @@
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.validate.js'); ?>"></script>
-<div id="content">
-    <div id="contentContainer">
+<div class="box single" >
+        
         <?php if (count($listJobTitle) == 0) {
         ?>
             <div id="messageBalloon_notice" class="messageBalloon_notice">
@@ -13,75 +12,64 @@
                 <?php echo __("KPI Already Exists, This Operation Deletes Existing KPI") ?> &nbsp;&nbsp;<a href="javascript:confirmOverwrite();"><?php echo __("Ok") ?></a> &nbsp;&nbsp;<a href="javascript:cancelOverwrite();"><?php echo __("Cancel") ?></a>
             </div>
 <?php } ?>
+    
+    <div class="head"><h1><?php echo __("Copy Key Performance Indicators") ?></h1></div>
 
-        <div class="outerbox">
-            <div id="formHeading" class="mainHeading"><h2><?php echo __("Copy Key Performance Indicators") ?></h2></div>
-            <form action="#" id="frmSave" class="content_inner" method="post">
+    <div class="inner">
 
-<?php echo $form['_csrf_token']; ?>
+        <?php include_partial('global/flash_messages'); ?>
 
-                <input type="hidden" id="txtConfirm" name="txtConfirm" value="0">
+        <form id="frmSave" method="post">
 
-                <div id="formWrapper">
-                    <label for="txtLocationCode"><?php echo __("Copy From") ?><span class="required">*</span></label>
-                    <select name="txtJobTitle" id="txtJobTitle" class="formSelect" tabindex="1">
-                        <option value="">--<?php echo __("Select") ?>--</option>
-<?php foreach ($listAllJobTitle as $jobTitle) { ?>
-                        <option value="<?php echo $jobTitle->getId() ?>" <?php
-                        if ($fromJobTitle == $jobTitle->getId()) {
-                            print("selected");
-                        }
-?>><?php echo htmlspecialchars_decode($jobTitle->getJobTitleName()) ?><?php echo ($jobTitle->getIsDeleted() == JobTitle::DELETED) ? ' ('.__('Deleted').')' : '' ?></option>
-<?php } ?>
-                    </select>
-                    <br class="clear"/>
-                    <label for="txtLocationCode"><?php echo __("Copy To") ?><span class="required">*</span></label>
-                    <select name="txtCopyJobTitle" id="txtCopyJobTitle" class="formSelect" tabindex="1">
-                        <option value="">--<?php echo __("Select") ?>--</option>
-                                <?php foreach ($listJobTitle as $jobTitle) {
- ?>
-                            <option value="<?php echo $jobTitle->getId() ?>" <?php
-                                    if ($toJobTitle == $jobTitle->getId()) {
-                                        print("selected");
-                                    }
-                                ?>><?php echo htmlspecialchars_decode($jobTitle->getJobTitleName()) ?></option>
-<?php } ?>
-                    </select>
-                    <br class="clear"/>
-                    <br class="clear"/>
-                </div>
-                <div id="buttonWrapper" class="formbuttons">
-                    <input type="button" class="savebutton" id="saveBtn"
-                           value="<?php echo __('Save')?>" tabindex="6" />
+            <?php echo $form['_csrf_token']; ?>
+                
+            <fieldset>
 
-                    <input type="button" class="savebutton" id="resetBtn"
-                           value="<?php echo __('Reset')?>" tabindex="7" />
+                <ol>
 
-                </div>
+                    <li>
+                        <input type="hidden" id="txtConfirm" name="txtConfirm" value="0">
+                        <label for="txtLocationCode"><?php echo __("Copy From" . ' <em>*</em>') ?></label>
+                        <select name="txtJobTitle" id="txtJobTitle" tabindex="1">
+                         <option value="">--<?php echo __("Select") ?>--</option>
+                          <?php foreach ($listAllJobTitle as $jobTitle) { ?>
+                         <option value="<?php echo $jobTitle->getId() ?>" <?php if ($fromJobTitle == $jobTitle->getId()) { print("selected"); } ?>>
+                          <?php echo htmlspecialchars_decode($jobTitle->getJobTitleName()) ?>
+                          <?php echo ($jobTitle->getIsDeleted() == JobTitle::DELETED) ? ' ('.__('Deleted').')' : '' ?>
+                         </option>
+                        <?php } ?>
+                        </select>
+                    </li>
 
-            </form>
-        </div>
-        <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+                    <li> 
+                        <label for="txtLocationCode"><?php echo __("Copy To" . ' <em>*</em>') ?></label>
+                        <select name="txtCopyJobTitle" id="txtCopyJobTitle" tabindex="1">
+                         <option value="">--<?php echo __("Select") ?>--</option>
+                          <?php foreach ($listJobTitle as $jobTitle) { ?>
+                         <option value="<?php echo $jobTitle->getId() ?>"<?php if ($toJobTitle == $jobTitle->getId()) { print("selected"); } ?>>
+                         <?php echo htmlspecialchars_decode($jobTitle->getJobTitleName()) ?></option>
+                         <?php } ?>              
+                        </select>
+                    </li>
+
+                   <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                   </li>
+
+                </ol>
+
+                <p>
+                    <input type="button" id="saveBtn" value="<?php echo __('Save') ?>" tabindex="3" />
+                    <input type="button" class="reset" id="resetBtn" value="<?php echo __('Reset') ?>" tabindex="4" />
+                </p>
+
+            </fieldset>  
+                
+        </form>            
     </div>
+</div>
 
-    <style type="text/css">
-        form#frmSave.content_inner div#formWrapper .formSelect{
-            width: 200px;
-        }
-    </style>
-
-
-    <script type="text/javascript">
-	    
-
-        if (document.getElementById && document.createElement) {
-            roundBorder('outerbox');
-            //roundBorder('outerboxList');
-        }
-	
-    </script>
-
-    <script type="text/javascript">
+     <script type="text/javascript">
 
         $(document).ready(function() {
 
