@@ -1154,6 +1154,7 @@ color:#fff;
     
 }
 
+/* ================ Timesheet styles: Begin ================ */
 #timesheet .top h3 {
 	font-size:18px;
 	float:left;
@@ -1217,6 +1218,7 @@ color:#fff;
 #edit-timesheet .bottom .required em {
 	color:#aa4935;
 }
+/* ================ Timesheet styles: End ================ */
 
 .search2col form ol input.calendar {
 	width:165px;
