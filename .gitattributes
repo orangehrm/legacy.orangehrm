@@ -4542,6 +4542,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/time/testdata/TimeSheetExtern
 symfony/plugins/orangehrmLeavePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/list_component.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/routing.yml -text
+symfony/plugins/orangehrmLeavePlugin/config/view.yml -text
 symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByEmployee.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByEmployee_1.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByLeaveType.sql -text

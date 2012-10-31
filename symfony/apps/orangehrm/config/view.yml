@@ -25,31 +25,3 @@ viewEmployeeListSuccess:
   javascripts:    [-*]
   stylesheets:    [-*]  
   
-viewLeaveEntitlementsSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]  
-addLeaveEntitlementSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]     
-viewLeaveBalanceReportSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]   
-viewMyLeaveBalanceReportSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]         
-applyLeaveSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]      
-assignLeaveSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]   
-viewLeaveListSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]   
