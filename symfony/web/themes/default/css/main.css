@@ -865,7 +865,7 @@ form input.validation-error {
 	z-index:9999;
 	position:absolute;
 	top:21px;
-	left:120px;
+	left:150px;
     margin-top: 6px;
 }
 /* Don't use this class. To be removed.
