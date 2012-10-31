@@ -20,23 +20,15 @@
  */
 
 /**
- * Displaying AssignLeave UI and saving data
+ * Action used to assign Leave to an Employee
  */
 class assignLeaveAction extends baseLeaveAction {
 
     protected $leaveAssignmentService;
 
     /**
-     * @param sfForm $form
-     */
-    public function setForm(sfForm $form) {
-        if (is_null($this->assignLeaveForm)) {
-            $this->assignLeaveForm = $form;
-        }
-    }
-
-    /**
-     *
+     * Get leave assignment service instance
+     * 
      * @return LeaveAssignmentService
      */
     public function getLeaveAssignmentService() {
@@ -47,7 +39,7 @@ class assignLeaveAction extends baseLeaveAction {
     }
 
     /**
-     *
+     * Set leave assignmente service instance
      * @param LeaveAssignmentService $service 
      */
     public function setLeaveAssignmentService(LeaveAssignmentService $service) {
@@ -62,16 +54,14 @@ class assignLeaveAction extends baseLeaveAction {
             $this->getUser()->setFlash('warning', __('No Leave Types with Leave Balance'));
         }
         
-        $form = $this->getAssignLeaveForm($this->leaveTypes);
-        $this->setForm($form);
+        $this->form = $this->getAssignLeaveForm($this->leaveTypes);        
         $this->overlapLeave = 0;
 
-        /* This section is to save leave request */
         if ($request->isMethod('post')) {
-            $this->assignLeaveForm->bind($request->getParameter($this->assignLeaveForm->getName()));
-            if ($this->assignLeaveForm->isValid()) {
+            $this->form->bind($request->getParameter($this->form->getName()));
+            if ($this->form->isValid()) {
                 try {
-                    $leaveParameters = $this->getLeaveParameterObject($form->getValues());
+                    $leaveParameters = $this->getLeaveParameterObject($this->form->getValues());
                     
                     $success = $this->getLeaveAssignmentService()->assignLeave($leaveParameters);
                     
@@ -88,6 +78,11 @@ class assignLeaveAction extends baseLeaveAction {
         }
     }
     
+    /**
+     * @todo Move to form?
+     * @param array $formValues
+     * @return LeaveParameterObject
+     */
     protected function getLeaveParameterObject(array $formValues) {
         
         $empData = $formValues['txtEmployee'];
@@ -97,7 +92,8 @@ class assignLeaveAction extends baseLeaveAction {
     }
     
     /**
-     * Retrieve Leave Type List
+     * Retrieve List of Eligible Leave Types
+     * @return Array of leave type objects
      */
     protected function getElegibleLeaveTypes() {
         $leaveTypeList = $this->getLeaveTypeService()->getLeaveTypeList();
@@ -105,10 +101,9 @@ class assignLeaveAction extends baseLeaveAction {
     }
 
     /**
-     * Creating Assign Leave Form
+     * Get the Assign leave form.
      */
     protected function getAssignLeaveForm($leaveTypes) {
-
 
         $leaveFormOptions = array('leaveTypes' => $leaveTypes);
         $form = new AssignLeaveForm(array(), $leaveFormOptions, true);

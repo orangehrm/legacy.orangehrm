@@ -4596,6 +4596,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveEntitlements
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveBalanceReportAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveEntitlementsAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/_overlapping_leave.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/addLeaveEntitlementSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/applyLeaveSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/assignLeaveSuccess.php -text

@@ -2,6 +2,28 @@
 
 class LeaveAssignmentService extends AbstractLeaveAllocationService {
 
+    protected $leaveEntitlementService;
+
+    /**
+     * Get LeaveEntitlementService
+     * @return LeaveEntitlementService
+     * 
+     */
+    public function getLeaveEntitlementService() {
+        if (!($this->leaveEntitlementService instanceof LeaveEntitlementService)) {
+            $this->leaveEntitlementService = new LeaveEntitlementService();
+        }
+        return $this->leaveEntitlementService;
+    }
+    
+    /**
+     * Set LeaveEntitlementService
+     * @param LeaveEntitlementService $service 
+     */
+    public function setLeaveEntitlementService(LeaveEntitlementService $service) {
+        $this->leaveEntitlementService = $service;
+    }
+    
     /**
      *
      * @param array $leaveAssignmentData
@@ -47,6 +69,13 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 //        }
 
         $leaveDays = $this->createLeaveObjectListForAppliedRange($leaveAssignmentData);
+        
+        $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();
+        
+        $empNumber = $leaveAssignmentData->getEmployeeNumber();
+        
+        $strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDays);
+        
         $holidayCount = 0;
         $holidays = array(Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY);
         foreach ($leaveDays as $k => $leave) {

@@ -1,60 +1,17 @@
 <?php
-use_javascripts_for_form($assignLeaveForm);
-use_stylesheets_for_form($assignLeaveForm);
-
-use_stylesheet(public_path('themes/default/css/jquery/jquery.autocomplete.css'));
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-
+use_javascripts_for_form($form);
+use_stylesheets_for_form($form);
 ?>
 
-<?php if ($assignLeaveForm->hasErrors()): ?>
+<?php if ($form->hasErrors()): ?>
     <div class="messagebar">
-        <?php include_partial('global/form_errors', array('form' => $assignLeaveForm)); ?>
+        <?php include_partial('global/form_errors', array('form' => $form)); ?>
     </div>
 <?php endif; ?>
 
+<?php include_partial('overlapping_leave', array('overlapLeave' => $overlapLeave));?>
 
-<?php if (!empty($overlapLeave)) {
-?>
-<div class="box single">
-    <div class="head"><h1><?php echo __('Overlapping Leave Request Found') ?></h1></div>
-    <div class="inner">
-<table border="0" cellspacing="0" cellpadding="0" class="table">
-    <thead>
-        <tr>
-            <tr>
-                <th width="100px"><?php echo __("Date") ?></th>
-                <th width="100px"><?php echo __("No of Hours") ?></th>
-                <th width="90px"><?php echo __("Leave Type") ?></th>
-                <th width="200px"><?php echo __("Status") ?></th>
-                <th width="150px"><?php echo __("Comments") ?></th>
-            </tr>
-        </tr>
-    </thead>
-    <tbody>
-
-            <?php 
-            $oddRow = true;
-            foreach ($overlapLeave as $leave) {
-                $class = $oddRow ? 'odd' : 'even';
-                $oddRow = !$oddRow;
-            ?>
-            <tr class="<?php echo $class;?>">
-                <td><?php echo set_datepicker_date_format($leave->getDate()) ?></td>
-                <td><?php echo $leave->getLengthHours() ?></td>
-                <td><?php echo $leave->getLeaveRequest()->getLeaveType()->getName() ?></td>
-                <td><?php echo __($leave->getTextLeaveStatus()); ?></td>
-                <td><?php echo $leave->getComments() ?></td>
-            </tr>
-        <?php } ?>
-
-    </tbody>
-</table>
-    </div>
-</div>
-<?php } ?>
-
-<div class="box single" id="apply-leave">
+<div class="box single" id="assign-leave">
     <div class="head">
         <h1><?php echo __('Assign Leave') ?></h1>
     </div>
@@ -62,33 +19,36 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
         <?php include_partial('global/flash_messages'); ?>
 <?php if (count($leaveTypes) > 1) : ?>        
         <form id="frmLeaveApply" name="frmLeaveApply" method="post" action="">
-
             <fieldset>                
                 <ol>
-                    <?php echo $assignLeaveForm->render(); ?>
+                    <?php echo $form->render(); ?>
                     <li class="required new">
                         <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>                      
-                </ol>            
-                
+                </ol>                            
                 <p>
                     <input type="button" id="assignBtn" value="<?php echo __("Assign") ?>"/>
                 </p>                
-            </fieldset>
-            
+            </fieldset>            
         </form>
 <?php endif ?>        
     </div> <!-- inner -->
     
 </div> <!-- assign leave -->
 
+<?php
+    $dateFormat = get_datepicker_date_format($sf_user->getDateFormat());
+    $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
+?>
 
 <script type="text/javascript">
-    var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
-    var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';
+    var datepickerDateFormat = '<?php echo $dateFormat; ?>';
+    var displayDateFormat = '<?php echo $displayDateFormat; ?>';
     var leaveBalanceUrl = '<?php echo url_for('leave/getLeaveBalanceAjax'); ?>';
-    var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
+    var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => $displayDateFormat)) ?>';
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';
+    
+    
     $(document).ready(function() {
         
         showTimeControls(false);
