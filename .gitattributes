@@ -5241,6 +5241,7 @@ symfony/web/themes/default/images/tablesorter-bg.png -text
 symfony/web/themes/default/images/toggle-down.png -text
 symfony/web/themes/default/images/toggle-up.png -text
 symfony/web/themes/default/images/top-nav-selected.png -text
+symfony/web/themes/default/images/warning-btn.png -text
 symfony/web/themes/default/images/welcome.png -text
 /sysinfo.php -text
 themes/beyondT/css/compstruct.css -text
