@@ -11,118 +11,115 @@ $haveEducation = count($form->empEducationList) > 0;
 <div id="educationMessagebar" class="<?php echo $tmpMsgClass; ?>">
     <span style="font-weight: bold;"><?php echo $tmpMsg; ?></span>
 </div>                                 
+    
+<?php if (($educationPermissions->canCreate()) || ($haveEducation && $educationPermissions->canUpdate() )) { ?>
+<div id="changeEducation">
+    <div class="head">
+        <h1 id="headChangeEducation"><?php echo __('Add Education'); ?></h1>
+    </div>
+    <div class="inner">
+        <form id="frmEducation" action="<?php echo url_for('pim/saveDeleteEducation?empNumber=' . 
+                $empNumber . "&option=save"); ?>" method="post">
+            <?php echo $form['_csrf_token']; ?>
+            <?php echo $form['id']->render(); ?>
+            <?php echo $form['emp_number']->render(); ?>
+            <fieldset>
+                <ol>
+                    <li>
+                        <?php echo $form['code']->renderLabel(__('Level') . ' <em>*</em>'); ?>
+                        <?php echo $form['code']->render(array("class" => "formSelect")); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['institute']->renderLabel(__('Institute')); ?>
+                        <?php echo $form['institute']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['major']->renderLabel(__('Major/Specialization')); ?>
+                        <?php echo $form['major']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['year']->renderLabel(__('Year')); ?>
+                        <?php echo $form['year']->render(array("class" => "formInputText", "maxlength" => 4)); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['gpa']->renderLabel(__('GPA/Score')); ?>
+                        <?php echo $form['gpa']->render(array("class" => "formInputText", "maxlength" => 25)); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['start_date']->renderLabel(__('Start Date')); ?>
+                        <?php echo $form['start_date']->render(array("class" => "formInputText")); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['end_date']->renderLabel(__('End Date')); ?>
+                        <?php echo $form['end_date']->render(array("class" => "formInputText")); ?>
+                    </li>
+                </ol>
+                <p>
+                    <input type="button" class="" id="btnEducationSave" value="<?php echo __("Save"); ?>" />
+                    <input type="button" class="reset" id="btnEducationCancel" value="<?php echo __("Cancel"); ?>" />
+                </p>
+            </fieldset>
+        </form>
+    </div>
+</div> <!-- changeEducation -->
+<?php } ?>
+    
+<div class="miniList" id="">
 
+    <div class="head">
+        <h1><?php echo __('Education'); ?></h1>
+    </div>
+    
+    <div class="inner">
 
-<div class="box single pimPane">
-    
-    <?php if (($educationPermissions->canCreate()) || ($haveEducation && $educationPermissions->canUpdate() )) { ?>
-        <div id="changeEducation">
-            <div class="head">
-                <h1 id="headChangeEducation"><?php echo __('Add Education'); ?></h1>
-            </div>
-            <div class="inner">
-                <form id="frmEducation" action="<?php echo url_for('pim/saveDeleteEducation?empNumber=' . 
-                        $empNumber . "&option=save"); ?>" method="post">
-                    <?php echo $form['_csrf_token']; ?>
-                    <?php echo $form['id']->render(); ?>
-                    <?php echo $form['emp_number']->render(); ?>
-                    <fieldset>
-                        <ol>
-                            <li>
-                                <?php echo $form['code']->renderLabel(__('Level') . ' <em>*</em>'); ?>
-                                <?php echo $form['code']->render(array("class" => "formSelect")); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['institute']->renderLabel(__('Institute')); ?>
-                                <?php echo $form['institute']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['major']->renderLabel(__('Major/Specialization')); ?>
-                                <?php echo $form['major']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['year']->renderLabel(__('Year')); ?>
-                                <?php echo $form['year']->render(array("class" => "formInputText", "maxlength" => 4)); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['gpa']->renderLabel(__('GPA/Score')); ?>
-                                <?php echo $form['gpa']->render(array("class" => "formInputText", "maxlength" => 25)); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['start_date']->renderLabel(__('Start Date')); ?>
-                                <?php echo $form['start_date']->render(array("class" => "formInputText")); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['end_date']->renderLabel(__('End Date')); ?>
-                                <?php echo $form['end_date']->render(array("class" => "formInputText")); ?>
-                            </li>
-                        </ol>
-                        <p>
-                            <input type="button" class="" id="btnEducationSave" value="<?php echo __("Save"); ?>" />
-                            <input type="button" class="reset" id="btnEducationCancel" value="<?php echo __("Cancel"); ?>" />
-                        </p>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-    <?php } ?>
-    
-    <div class="miniList" id="">
-        
-        <div class="head">
-            <h1><?php echo __('Education'); ?></h1>
-        </div>
-    
-        <div class="inner">
-            
-            <?php if ($educationPermissions->canRead()) : ?>
-            
-            <?php include_partial('global/flash_messages'); ?>
-            
-            <form id="frmDelEducation" action="<?php echo url_for('pim/saveDeleteEducation?empNumber=' . $empNumber . "&option=delete"); ?>" method="post">
-                <div class="outerbox" id="tblEducation">
-                    <p id="actionEducation">
-                        <?php if ($educationPermissions->canCreate()) { ?>
-                        <input type="button" value="<?php echo __("Add"); ?>" class="" id="addEducation" />
-                        <?php } ?>
-                        <?php if ($educationPermissions->canDelete()) { ?>
-                        <input type="button" value="<?php echo __("Delete"); ?>" class="delete" id="delEducation" />
-                        <?php } ?>
-                    </p>                    
-                    <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter">
-                        <thead>
-                            <tr>
-                                <?php if ($educationPermissions->canDelete()) { ?>
-                                <th class="check" width="2%"><input type="checkbox" id="educationCheckAll" /></th>
-                                <?php } else { ?>
-                                <th width="2%"> </th>
-                                <?php } ?>
-                                <th><?php echo __('Level'); ?></th>
-                                <th><?php echo __('Year'); ?></th>
-                                <th><?php echo __('GPA/Score'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!$haveEducation) { ?>
-                                <tr>
-                                    <?php if ($educationPermissions->canDelete()) { ?>
-                                    <td class="check"></td>
-                                    <?php } ?>
-                                    <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            <?php } else { ?>         
-                            <?php
-                            $educations = $form->empEducationList;
-                            $row = 0;
-                            foreach ($educations as $education) :
-                                $cssClass = ($row % 2) ? 'even' : 'odd';
-                                $startDate = set_datepicker_date_format($education->startDate);
-                                $endDate = set_datepicker_date_format($education->endDate);
-                                $eduDesc = htmlspecialchars($education->Education->name);
-                                ?>
-                                <tr class="<?php echo $cssClass; ?>">
+        <?php if ($educationPermissions->canRead()) : ?>
+
+        <?php include_partial('global/flash_messages'); ?>
+
+        <form id="frmDelEducation" action="<?php echo url_for('pim/saveDeleteEducation?empNumber=' . 
+                $empNumber . "&option=delete"); ?>" method="post">
+            <div id="tblEducation">
+                <p id="actionEducation">
+                    <?php if ($educationPermissions->canCreate()) { ?>
+                    <input type="button" value="<?php echo __("Add"); ?>" class="" id="addEducation" />
+                    <?php } ?>
+                    <?php if ($educationPermissions->canDelete()) { ?>
+                    <input type="button" value="<?php echo __("Delete"); ?>" class="delete" id="delEducation" />
+                    <?php } ?>
+                </p>                    
+                <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter">
+                    <thead>
+                        <tr>
+                            <?php if ($educationPermissions->canDelete()) { ?>
+                            <th class="check" width="2%"><input type="checkbox" id="educationCheckAll" /></th>
+                            <?php } ?>
+                            <th><?php echo __('Level'); ?></th>
+                            <th><?php echo __('Year'); ?></th>
+                            <th><?php echo __('GPA/Score'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!$haveEducation) { ?>
+                        <tr>
+                            <?php if ($educationPermissions->canDelete()) { ?>
+                            <td class="check"></td>
+                            <?php } ?>
+                            <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <?php } else { ?>         
+                        <?php
+                        $educations = $form->empEducationList;
+                        $row = 0;
+                        foreach ($educations as $education) :
+                            $cssClass = ($row % 2) ? 'even' : 'odd';
+                            $startDate = set_datepicker_date_format($education->startDate);
+                            $endDate = set_datepicker_date_format($education->endDate);
+                            $eduDesc = htmlspecialchars($education->Education->name);
+                            ?>
+                            <tr class="<?php echo $cssClass; ?>">
+                                <td class="check">
                                     <input type="hidden" id="code_<?php echo $education->id; ?>" 
                                            value="<?php echo htmlspecialchars($education->educationId); ?>" />
                                     <input type="hidden" id="id_<?php echo $education->id; ?>" 
@@ -141,40 +138,40 @@ $haveEducation = count($form->empEducationList) > 0;
                                            value="<?php echo $startDate; ?>" />
                                     <input type="hidden" id="end_date_<?php echo $education->id; ?>" 
                                            value="<?php echo $endDate; ?>" />
-                                    <td class="check">
-                                        <?php if ($educationPermissions->canDelete()) {?>
-                                            <input type="checkbox" class="chkbox" value="<?php echo $education->id; ?>" 
-                                                   name="delEdu[]"/>
-                                        <?php } else { ?>
-                                            <input type="hidden" class="chkbox" value="<?php echo $education->id;?>" 
-                                                   name="delEdu[]"/>
-                                        <?php } ?>
-                                    </td>
-                                    <td class="program">
-                                        <?php if ($educationPermissions->canUpdate()) { ?>
-                                        <a href="#" class="edit"><?php echo htmlspecialchars($eduDesc); ?></a>
-                                        <?php } else { 
-                                            echo htmlspecialchars($eduDesc);
-                                        } ?>
-                                    </td>
-                                    <td><?php echo htmlspecialchars($education->year); ?></td>
-                                    <td><?php echo htmlspecialchars($education->score); ?></td>
-                                </tr>
+                                    <?php if ($educationPermissions->canDelete()) {?>
+                                    <input type="checkbox" class="chkbox" value="<?php echo $education->id; ?>" name="delEdu[]"/>
+                                    <?php } else { ?>
+                                    <input type="hidden" class="chkbox" value="<?php echo $education->id;?>" name="delEdu[]"/>
+                                    <?php } ?>
+                                </td>
+                                <td class="program">
+                                    <?php if ($educationPermissions->canUpdate()) { ?>
+                                    <a href="#" class="edit"><?php echo htmlspecialchars($eduDesc); ?></a>
+                                    <?php } else { 
+                                        echo htmlspecialchars($eduDesc);
+                                    } ?>
+                                </td>
+                                <td><?php echo htmlspecialchars($education->year); ?></td>
+                                <td><?php echo htmlspecialchars($education->score); ?></td>
+                            </tr>
                             <?php
-                                $row++;
-                            endforeach;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </form>
-            <?php endif; ?>
-        </div> <!-- inner -->
-        
-    </div><!-- miniList -->
+                            $row++;
+                        endforeach;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </form>
 
-</div> <!-- box -->
+        <?php else : ?>
+            <div><?php echo __(CommonMessages::DONT_HAVE_ACCESS); ?></div>
+        <?php endif; ?>
+
+    </div> <!-- inner -->
+        
+</div><!-- miniList -->
+
 <script type="text/javascript">
     //<![CDATA[
     var fileModified = 0;
@@ -202,7 +199,7 @@ $haveEducation = count($form->empEducationList) > 0;
         $("#educationRequiredNote").hide();
 
         //hiding the data table if records are not available
-        if($("div#tblEducation table.data-table .chkbox").length == 0) {
+        if($("div#tblEducation .chkbox").length == 0) {
             $("#editEducation").hide();
             $("#delEducation").hide();
         }
@@ -309,15 +306,18 @@ $haveEducation = count($form->empEducationList) > 0;
             educationValidator.resetForm();
             $('div#changeEducation label.error').hide();
             $("div#tblEducation .chkbox").removeAttr("checked").show();
-        
+
             //hiding action button section
             $("#actionEducation").show();
             $("#changeEducation").hide();
             $("#educationRequiredNote").hide();
             $("#educationCheckAll").show();
-        
+
             // remove any options already in use
             $('#static_education_code').hide().val("");
+
+            //remove if disabled while edit
+            $('#education_code').removeAttr('disabled');
         });
    
         $('form#frmDelEducation a.edit').live('click', function(event) {
@@ -336,7 +336,7 @@ $haveEducation = count($form->empEducationList) > 0;
             $("#changeEducation").show();
             var code = $(this).closest("tr").find('input.chkbox:first').val();
             $('#static_education_code').text($("#code_desc_" + code).val()).show();
-            $('#education_code').val($("#code_" + code).val()).hide();
+            $('#education_code').val($("#code_" + code).val()).attr('disabled','disabled');
             $("#education_id").val(code);
             $("#education_institute").val($("#institute_" + code).val());
             $("#education_major").val($("#major_" + code).val());

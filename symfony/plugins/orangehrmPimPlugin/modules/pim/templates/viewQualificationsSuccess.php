@@ -8,17 +8,13 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
 <div class="box single pimPane">
 
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form)); ?>
-    
+<!--    
     <div class="head">
         <h1><?php echo __('Qualifications'); ?></h1>
     </div>
-    
-    <?php
-    if ($workExperiencePermissions->canRead() || $educationPermissions->canRead() ||
-            $skillPermissions->canRead() || $languagePermissions->canRead() ||
-            $licensePermissions->canRead()) {
-        ?>
+    -->
         
+    <!-- this is work experience section -->
     <?php if ($workExperiencePermissions->canCreate() || ($haveWorkExperience && $workExperiencePermissions->canUpdate())) { ?>
         <div id="changeWorkExperience">
             <div class="head">
@@ -73,7 +69,6 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
     <?php } ?>
         
     <div class="miniList" id="sectionWorkExperience">
-        <!-- this is work experience section -->
         <a name="workexperience"></a>
         <?php
         if (($section == 'workexperience') && isset($message) && isset($messageType)) {
@@ -89,11 +84,11 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
         </div>
             
         <div class="inner">
-            
+
             <?php if ($workExperiencePermissions->canRead()) : ?>
-                    
+
                 <?php include_partial('global/flash_messages'); ?>
-            
+
                 <form id="frmDelWorkExperience" action="<?php echo url_for('pim/saveDeleteWorkExperience?empNumber=' . 
                         $empNumber . "&option=delete"); ?>" method="post">
                     <p id="actionWorkExperience">
@@ -139,17 +134,17 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                     $toDate = set_datepicker_date_format($workExperience->to_date);
                                     ?>
                                     <tr class="<?php echo $cssClass;?>">
-                                        <input type="hidden" id="employer_<?php echo $workExperience->seqno; ?>" 
-                                               value="<?php echo htmlspecialchars($workExperience->employer); ?>" />
-                                        <input type="hidden" id="jobtitle_<?php echo $workExperience->seqno; ?>" 
-                                               value="<?php echo htmlspecialchars($workExperience->jobtitle); ?>" />
-                                        <input type="hidden" id="fromDate_<?php echo $workExperience->seqno; ?>" 
-                                               value="<?php echo $fromDate; ?>" />
-                                        <input type="hidden" id="toDate_<?php echo $workExperience->seqno; ?>" 
-                                               value="<?php echo $toDate; ?>" />
-                                        <input type="hidden" id="comment_<?php echo $workExperience->seqno; ?>" 
-                                               value="<?php echo htmlspecialchars($workExperience->comments); ?>" />
                                         <td class="check">
+                                            <input type="hidden" id="employer_<?php echo $workExperience->seqno; ?>" 
+                                                   value="<?php echo htmlspecialchars($workExperience->employer); ?>" />
+                                            <input type="hidden" id="jobtitle_<?php echo $workExperience->seqno; ?>" 
+                                                   value="<?php echo htmlspecialchars($workExperience->jobtitle); ?>" />
+                                            <input type="hidden" id="fromDate_<?php echo $workExperience->seqno; ?>" 
+                                                   value="<?php echo $fromDate; ?>" />
+                                            <input type="hidden" id="toDate_<?php echo $workExperience->seqno; ?>" 
+                                                   value="<?php echo $toDate; ?>" />
+                                            <input type="hidden" id="comment_<?php echo $workExperience->seqno; ?>" 
+                                                   value="<?php echo htmlspecialchars($workExperience->comments); ?>" />
                                             <?php if ($workExperiencePermissions->canDelete()) {?>
                                             <input type="checkbox" class="chkbox1" value="<?php echo $workExperience->seqno;?>" 
                                                    name="delWorkExp[]"/>
@@ -177,33 +172,45 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                         </tbody>
                     </table>
                 </form>
-            
+
             <?php else : ?>
                 <div><?php echo __(CommonMessages::DONT_HAVE_ACCESS); ?></div>
             <?php endif; ?>
+
         </div>
         
-        <?Php } ?>
     </div> <!-- miniList-sectionWorkExperience -->
     
     <!-- this is education section -->
-    <?php if ($educationPermissions->canRead()) { ?>
-        <a name="education"></a>
-        <?php
-        include_partial('education', array('empNumber' => $empNumber, 'form' => $educationForm,
-            'message' => $message, 'messageType' => $messageType,
-            'section' => $section, 'educationPermissions' => $educationPermissions));
-    } 
+    <a name="education"></a>
+    <?php
+    include_partial('education', array('empNumber' => $empNumber, 'form' => $educationForm, 
+        'message' => $message, 'messageType' => $messageType,
+        'section' => $section, 'educationPermissions' => $educationPermissions));
     ?>
 
     <!-- this is skills section -->
-    <?php if ($skillPermissions->canRead()) { ?>
-        <a name="skill"></a>
-        <?php
-        include_partial('skill', array('empNumber' => $empNumber, 'form' => $skillForm,
-            'message' => $message, 'messageType' => $messageType,
-            'section' => $section, 'skillPermissions' => $skillPermissions));
-    }
+    <a name="skill"></a>
+    <?php
+    include_partial('skill', array('empNumber' => $empNumber, 'form' => $skillForm, 
+        'message' => $message, 'messageType' => $messageType, 
+        'section' => $section, 'skillPermissions' => $skillPermissions));
+    ?>
+    
+    <!-- this is Languages section -->
+    <a name="language"></a>
+    <?php
+    include_partial('language', array('empNumber' => $empNumber, 'form' => $languageForm, 
+        'message' => $message, 'messageType' => $messageType, 
+        'section' => $section, 'languagePermissions' => $languagePermissions));
+    ?>
+    
+    <!-- this is Licenses section -->
+    <a name="license"></a>
+    <?php
+    include_partial('license', array('empNumber' => $empNumber, 'form' => $licenseForm, 
+        'message' => $message, 'messageType' => $messageType,
+        'section' => $section, 'licensePermissions' => $licensePermissions));
     ?>
         
 </div> <!-- Box -->

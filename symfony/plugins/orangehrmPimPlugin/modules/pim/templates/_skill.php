@@ -9,145 +9,141 @@ if (($section == 'skill') && isset($message) && isset($messageType)) {
 
 $haveSkills = count($form->empSkillList)>0;
 ?>
-
-<div class="box single pimPane">
-        
-    <?php if ($skillPermissions->canCreate() || ($haveSkills && $skillPermissions->canUpdate())) { ?>
-        <div id="changeSkill">
-            <div class="head">
-                <h1 id="headChangeSkill"><?php echo __('Add Skill'); ?></h1>
-            </div>
+       
+<?php if ($skillPermissions->canCreate() || ($haveSkills && $skillPermissions->canUpdate())) { ?>
+<div id="changeSkill">
+    <div class="head">
+        <h1 id="headChangeSkill"><?php echo __('Add Skill'); ?></h1>
+    </div>
                 
-            <div class="inner">
-                <form id="frmSkill" action="<?php echo url_for('pim/saveDeleteSkill?empNumber=' . 
-                        $empNumber . "&option=save"); ?>" method="post">
-                    <?php echo $form['_csrf_token']; ?>
-                    <?php echo $form['emp_number']->render(); ?>
-                    <fieldset>
-                        <ol>
-                            <li>
-                                <?php echo $form['code']->renderLabel(__('Skill') . ' <em>*</em>'); ?>
-                                <?php echo $form['code']->render(array("class" => "formSelect")); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['years_of_exp']->renderLabel(__('Years of Experience')); ?>
-                                <?php echo $form['years_of_exp']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
-                            </li>
-                            <li>
-                                <?php echo $form['comments']->renderLabel(__('Comments')); ?>
-                                <?php echo $form['comments']->render(array("class" => "formInputText")); ?>
-                            </li>
-                            <li class="required">
-                                <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
-                            </li>
-                        </ol>
-                        <p>
-                            <input type="button" class="" id="btnSkillSave" value="<?php echo __("Save"); ?>" />
-                            <?php if ((!$haveSkills) || ($haveSkills && $skillPermissions->canCreate()) || 
-                                    ($skillPermissions && $skillPermissions->canUpdate())) { ?>
-                            <input type="button" class="reset" id="btnSkillCancel" value="<?php echo __("Cancel"); ?>" />
-                            <?php } ?>
-                        </p>
-                    </fieldset>
-                </form>
-            </div>
-        </div> <!-- changeSkill -->
-    <?php } ?>
+    <div class="inner">
+        <form id="frmSkill" action="<?php echo url_for('pim/saveDeleteSkill?empNumber=' . 
+                $empNumber . "&option=save"); ?>" method="post">
+            <?php echo $form['_csrf_token']; ?>
+            <?php echo $form['emp_number']->render(); ?>
+            <fieldset>
+                <ol>
+                    <li>
+                        <?php echo $form['code']->renderLabel(__('Skill') . ' <em>*</em>'); ?>
+                        <?php echo $form['code']->render(array("class" => "formSelect")); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['years_of_exp']->renderLabel(__('Years of Experience')); ?>
+                        <?php echo $form['years_of_exp']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['comments']->renderLabel(__('Comments')); ?>
+                        <?php echo $form['comments']->render(array("class" => "formInputText")); ?>
+                    </li>
+                    <li class="required">
+                        <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
+                </ol>
+                <p>
+                    <input type="button" class="" id="btnSkillSave" value="<?php echo __("Save"); ?>" />
+                    <?php if ((!$haveSkills) || ($haveSkills && $skillPermissions->canCreate()) || 
+                            ($skillPermissions && $skillPermissions->canUpdate())) { ?>
+                    <input type="button" class="reset" id="btnSkillCancel" value="<?php echo __("Cancel"); ?>" />
+                    <?php } ?>
+                </p>
+            </fieldset>
+        </form>
+    </div>
+</div> <!-- changeSkill -->
+<?php } ?>
         
-    <div class="miniList" id="sectionSkill">
-        <div class="head">
-            <h1><?php echo __("Skills"); ?></h1>
-        </div>
+<div class="miniList" id="tblSkill">
+    <div class="head">
+        <h1><?php echo __("Skills"); ?></h1>
+    </div>
             
-        <div class="inner">
-            <?php if ($skillPermissions->canRead()) : ?>
-            
-                <?php include_partial('global/flash_messages'); ?>
-            
-                <form id="frmDelSkill" action="<?php echo url_for('pim/saveDeleteSkill?empNumber=' . 
-                        $empNumber . "&option=delete"); ?>" method="post">
-                    <p id="actionSkill">
-                        <?php if ($skillPermissions->canCreate() ) { ?>
-                        <input type="button" value="<?php echo __("Add");?>" class="" id="addSkill" />
+    <div class="inner">
+
+        <?php if ($skillPermissions->canRead()) : ?>
+
+        <?php include_partial('global/flash_messages'); ?>
+
+        <form id="frmDelSkill" action="<?php echo url_for('pim/saveDeleteSkill?empNumber=' . 
+                $empNumber . "&option=delete"); ?>" method="post">
+            <p id="actionSkill">
+                <?php if ($skillPermissions->canCreate() ) { ?>
+                <input type="button" value="<?php echo __("Add");?>" class="" id="addSkill" />
+                <?php } ?>
+                <?php if ($skillPermissions->canDelete() ) { ?>
+                <input type="button" value="<?php echo __("Delete");?>" class="delete" id="delSkill" />
+                <?php } ?>
+            </p>
+            <table id="" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                <thead>
+                    <tr>
+                        <?php if ($skillPermissions->canDelete()) { ?>
+                        <th class="check" width="2%"><input type="checkbox" id="skillCheckAll" /></th>
                         <?php } ?>
-                        <?php if ($skillPermissions->canDelete() ) { ?>
-                        <input type="button" value="<?php echo __("Delete");?>" class="delete" id="delSkill" />
+                        <th><?php echo __('Skill'); ?></th>
+                        <th><?php echo __('Years of Experience'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!$haveSkills) { ?>
+                    <tr>
+                        <?php if ($skillPermissions->canDelete()) { ?>
+                        <td class="check"></td>
                         <?php } ?>
-                    </p>
-                    <table id="" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
-                        <thead>
-                            <tr>
+                        <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
+                        <td></td>
+                    </tr>
+                    <?php } else { ?>                        
+                    <?php
+                    $skills = $form->empSkillList;
+                    $row = 0;
+                    foreach ($skills as $skill) :
+                        $cssClass = ($row % 2) ? 'even' : 'odd';
+                        $skillName = $skill->getSkill()->getName();
+                        ?>
+                        <tr class="<?php echo $cssClass; ?>">
+                            <td class="check">
+                                <input type="hidden" id="code_<?php echo $skill->skillId; ?>" 
+                                       value="<?php echo htmlspecialchars($skill->skillId); ?>" />
+                                <input type="hidden" id="skill_name_<?php echo $skill->skillId; ?>" 
+                                       value="<?php echo htmlspecialchars($skillName); ?>" />
+                                <input type="hidden" id="years_of_exp_<?php echo $skill->skillId; ?>" 
+                                       value="<?php echo htmlspecialchars($skill->years_of_exp); ?>" />
+                                <input type="hidden" id="comments_<?php echo $skill->skillId; ?>" 
+                                       value="<?php echo htmlspecialchars($skill->comments); ?>" />
                                 <?php if ($skillPermissions->canDelete()) { ?>
-                                <th class="check" width="2%"><input type="checkbox" id="skillCheckAll" /></th>
-                                <?php }else{?>
-                                <th width="2%"></th>
-                                <?php }?>
-                                <th><?php echo __('Skill');?></th>
-                                <th><?php echo __('Years of Experience');?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!$haveSkills) { ?>
-                                <tr>
-                                    <?php if ($skillPermissions->canDelete()) { ?>
-                                        <td class="check"></td>
-                                    <?php } ?>
-                                    <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
-                                    <td></td>
-                                </tr>
-                            <?php } else { ?>                        
-                            <?php
-                                $skills = $form->empSkillList;
-                                $row = 0;
-                                foreach ($skills as $skill) :
-                                    $cssClass = ($row % 2) ? 'even' : 'odd';
-                                    $skillName = $skill->getSkill()->getName();
-                                    ?>
-                                    <tr class="<?php echo $cssClass; ?>">
-                                        <input type="hidden" id="code_<?php echo $skill->skillId; ?>" 
-                                               value="<?php echo htmlspecialchars($skill->skillId); ?>" />
-                                        <input type="hidden" id="skill_name_<?php echo $skill->skillId; ?>" 
-                                               value="<?php echo htmlspecialchars($skillName); ?>" />
-                                        <input type="hidden" id="years_of_exp_<?php echo $skill->skillId; ?>" 
-                                               value="<?php echo htmlspecialchars($skill->years_of_exp); ?>" />
-                                        <input type="hidden" id="comments_<?php echo $skill->skillId; ?>" 
-                                               value="<?php echo htmlspecialchars($skill->comments); ?>" />
-                                        <td class="check">
-                                            <?php if ($skillPermissions->canDelete()) { ?>
-                                            <input type="checkbox" class="chkbox" value="<?php echo $skill->skillId; ?>" 
-                                                   name="delSkill[]"/>
-                                            <?php } else { ?>
-                                            <input type="hidden" class="chkbox" value="<?php echo $skill->skillId; ?>" 
-                                                   name="delSkill[]"/>
-                                            <?php } ?>
-                                        </td>
-                                        <td class="name">
-                                            <?php if ($skillPermissions->canUpdate()) { ?>
-                                            <a href="#" class="edit"><?php echo htmlspecialchars($skillName); ?></a>
-                                            <?php
-                                            } else {
-                                                echo htmlspecialchars($skillName);
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?php echo htmlspecialchars($skill->years_of_exp); ?></td>
-                                    </tr>
-                                    <?php
-                                    $row++;
-                                endforeach;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </form>
-            
-            <?php else : ?>
-                <div><?php echo __(CommonMessages::DONT_HAVE_ACCESS); ?></div>
-            <?php endif; ?>
-        </div>
-    </div> <!-- miniList-sectionSkill -->
-        
-</div> <!-- Box -->
+                                <input type="checkbox" class="chkbox" value="<?php echo $skill->skillId; ?>" 
+                                       name="delSkill[]"/>
+                                <?php } else { ?>
+                                <input type="hidden" class="chkbox" value="<?php echo $skill->skillId; ?>" 
+                                       name="delSkill[]"/>
+                                <?php } ?>
+                            </td>
+                            <td class="name">
+                                <?php if ($skillPermissions->canUpdate()) { ?>
+                                <a href="#" class="edit"><?php echo htmlspecialchars($skillName); ?></a>
+                                <?php
+                                } else {
+                                    echo htmlspecialchars($skillName);
+                                }
+                                ?>
+                            </td>
+                            <td><?php echo htmlspecialchars($skill->years_of_exp); ?></td>
+                        </tr>
+                        <?php
+                        $row++;
+                    endforeach;
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </form>
+
+        <?php else : ?>
+            <div><?php echo __(CommonMessages::DONT_HAVE_ACCESS); ?></div>
+        <?php endif; ?>
+
+    </div>
+</div> <!-- miniList-tblSkill -->
 
 <script type="text/javascript">
     //<![CDATA[
@@ -184,7 +180,7 @@ $haveSkills = count($form->empSkillList)>0;
         $("#skillRequiredNote").hide();
         
         //hiding the data table if records are not available
-        if($("div#tblSkill table.data-table .chkbox").length == 0) {
+        if($("div#tblSkill .chkbox").length == 0) {
             //$("#tblSkill").hide();
             $("#editSkill").hide();
             $("#delSkill").hide();
@@ -287,6 +283,9 @@ $haveSkills = count($form->empSkillList)>0;
             // remove any options already in use
             $("#skill_code option[class='added']").remove();
             $('#static_skill_code').hide().val("");
+            
+            //remove if disabled while edit
+            $('#skill_code').removeAttr('disabled');
         });
         
         $('form#frmDelSkill a.edit').live('click', function(event) {
@@ -314,11 +313,11 @@ $haveSkills = count($form->empSkillList)>0;
             // remove any options already in use
             $("#skill_code option[class='added']").remove();
             
-            $('#skill_code').hide().
+            $('#skill_code').
                 append($("<option class='added'></option>").
                 attr("value", code).
                 text($("#skill_name_" + code).val())); 
-            $('#skill_code').val(code);
+            $('#skill_code').val(code).attr('disabled','disabled');
             
             $("#skill_years_of_exp").val($("#years_of_exp_" + code).val());
             $("#skill_comments").val($("#comments_" + code).val());
