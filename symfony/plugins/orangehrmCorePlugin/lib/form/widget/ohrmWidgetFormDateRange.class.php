@@ -38,7 +38,7 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
    *                 Available placeholders: %to_id%, %to_label%
    * 
    *  * template:    The template to use to render the widget
-   *                 Available placeholders: %from_date%, %to_date%
+   *                 Available placeholders: %from_date%, %to_date% %from_label% %to_label%
    *
    *  also see options in sfWidgetFormDateRange
    * 
