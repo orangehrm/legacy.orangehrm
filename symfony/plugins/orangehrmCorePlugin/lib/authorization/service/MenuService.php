@@ -99,61 +99,61 @@ class MenuService {
         foreach ($firstLevelItems as $firstLevelItem) {   
             
             $secondLevelItems = $firstLevelItem->getSubMenuItems();
-            $b = array();
+            $secondLevelHolder = array();
             
             if (!empty($secondLevelItems)) {
                 
                 foreach ($secondLevelItems as $secondLevelItem) {
                     
                     $thirdLevelItems = $secondLevelItem->getSubMenuItems();
-                    $c = array();
+                    $thirdLevelHolder = array();
                     
                     if (!empty($thirdLevelItems)) {
                         
                         foreach ($thirdLevelItems as $thirdLevelItem) {
                             
-                            $cc = $this->_abc($thirdLevelItem);
+                            $tempHolder = $this->_extractMenuItemToArray($thirdLevelItem);
                             
-                            $parentIdArray[$cc['id']] = $thirdLevelItem->getParentId();
-                            $levelArray[$cc['id']] = $cc['level'];
+                            $parentIdArray[$tempHolder['id']] = $thirdLevelItem->getParentId();
+                            $levelArray[$tempHolder['id']] = $tempHolder['level'];
                             
-                            if (!empty($cc['module']) && !empty($cc['action'])) {
-                                $actionArray[$cc['module'] . '_' . $cc['action']] = $cc['id'];
+                            if (!empty($tempHolder['module']) && !empty($tempHolder['action'])) {
+                                $actionArray[$tempHolder['module'] . '_' . $tempHolder['action']] = $tempHolder['id'];
                             }                            
                             
-                            $c[] = $cc;
+                            $thirdLevelHolder[] = $tempHolder;
                             
                         }                      
                         
                     }
                     
-                    $bb = $this->_abc($secondLevelItem);
-                    $bb['subMenuItems'] = $c;
+                    $tempHolder = $this->_extractMenuItemToArray($secondLevelItem);
+                    $tempHolder['subMenuItems'] = $thirdLevelHolder;
                     
-                    $parentIdArray[$bb['id']] = $secondLevelItem->getParentId();
-                    $levelArray[$bb['id']] = $bb['level'];
+                    $parentIdArray[$tempHolder['id']] = $secondLevelItem->getParentId();
+                    $levelArray[$tempHolder['id']] = $tempHolder['level'];
 
-                    if (!empty($bb['module']) && !empty($bb['action'])) {
-                        $actionArray[$bb['module'] . '_' . $bb['action']] = $bb['id'];
+                    if (!empty($tempHolder['module']) && !empty($tempHolder['action'])) {
+                        $actionArray[$tempHolder['module'] . '_' . $tempHolder['action']] = $tempHolder['id'];
                     }                    
                     
-                    $b[] = $bb;
+                    $secondLevelHolder[] = $tempHolder;
                     
                 }
                 
             }
             
-            $a = $this->_abc($firstLevelItem);
-            $a['subMenuItems'] = $b;
+            $tempHolder = $this->_extractMenuItemToArray($firstLevelItem);
+            $tempHolder['subMenuItems'] = $secondLevelHolder;
             
-            $parentIdArray[$a['id']] = $firstLevelItem->getParentId();
-            $levelArray[$a['id']] = $a['level'];
+            $parentIdArray[$tempHolder['id']] = $firstLevelItem->getParentId();
+            $levelArray[$tempHolder['id']] = $tempHolder['level'];
 
-            if (!empty($a['module']) && !empty($a['action'])) {
-                $actionArray[$a['module'] . '_' . $a['action']] = $a['id'];
+            if (!empty($tempHolder['module']) && !empty($tempHolder['action'])) {
+                $actionArray[$tempHolder['module'] . '_' . $tempHolder['action']] = $tempHolder['id'];
             }            
             
-            $menuArray[] = $a;
+            $menuArray[] = $tempHolder;
             
         }
         
@@ -202,7 +202,7 @@ class MenuService {
         return $this->getMenuDao()->enableModuleMenuItems($moduleName);
     }
 
-    private function _abc(MenuItem $menuItem) {
+    private function _extractMenuItemToArray(MenuItem $menuItem) {
         
         $menu['id'] = $menuItem->getId();
         $menu['menuTitle'] = $menuItem->getMenuTitle();
