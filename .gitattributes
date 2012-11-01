@@ -4111,6 +4111,7 @@ symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetDatePickerNew.php 
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetDiv.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetEmployeeNameAutoFill.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetFormDateRange.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetFormTimeRange.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetOperationalCountryLocationDropDown.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetSelectableGroupDropDown.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetSubUnitDropDown.php -text
