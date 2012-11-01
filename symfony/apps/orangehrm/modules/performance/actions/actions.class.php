@@ -298,7 +298,7 @@ class performanceActions extends sfActions {
             }
 
             $kpiService->saveKpi($kpi);
-            $this->getUser()->setFlash('templateMessage', array('sucess', __(TopLevelMessages::UPDATE_SUCCESS)));
+            $this->getUser()->setFlash('success', __(TopLevelMessages::UPDATE_SUCCESS));
             $this->redirect('performance/listDefineKpi');
         }
     }
@@ -336,7 +336,7 @@ class performanceActions extends sfActions {
 
                     $kpiService->copyKpi($toJobTitle, $fromJobTitle);
 
-                    $this->getUser()->setFlash('templateMessage', array('SUCCESS', __('Successfully Copied')));
+                    $this->getUser()->setFlash('success', __('Successfully Copied'));
                     $this->redirect('performance/listDefineKpi');
                 } else {
 
@@ -364,7 +364,7 @@ class performanceActions extends sfActions {
                 $kpiService = $this->getKpiService();
                 $kpiService->deleteKpi($request->getParameter('chkKpiID'));
 
-                $this->getUser()->setFlash('templateMessage', array('SUCCESS', __(TopLevelMessages::DELETE_SUCCESS)));
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
             }
         }
 

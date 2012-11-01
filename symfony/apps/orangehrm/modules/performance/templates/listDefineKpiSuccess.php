@@ -1,148 +1,160 @@
-
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.validate.js');?>"></script>
-
-<div id="content">
-	<div id="contentContainer">
-		<?php if(count($listJobTitle) == 0){?>
+<div class="box toggableForm">
+			<?php if(count($listJobTitle) == 0){?>
 			<div id="messageBalloon_notice" class="messageBalloon_notice">
                             <?php echo __("No Defined Job Titles")?> <a href="<?php echo url_for('admin/viewJobTitleList') ?>"><?php echo __("Define Now")?></a>
 			</div>
 		<?php }?>
 		<?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-        <div class="outerbox">
-            <div id="formHeading" class="mainHeading"><h2><?php echo __("Search Key Performance Indicators")?></h2></div>
-			
-			<form action="#" id="frmSearch" name="frmSearch" class="content_inner" method="post">
-			<input type="hidden" name="mode" value="search" />
-              	<div id="formWrapper">
-                       <label for="txtLocationCode"><?php echo __('Job Title')?></label>
-                     <select name="txtJobTitle" id="txtJobTitle" class="formSelect" tabindex="1" >
-                     	<option value="all"><?php echo __('All')?></option>
-	                     <?php foreach($listJobTitle as $jobTitle){?>
-                        <option value="<?php echo $jobTitle->getId()?>" <?php if(isset($searchJobTitle) && $jobTitle->getId()== $searchJobTitle->getId()){ echo 'selected';}?>><?php echo htmlspecialchars_decode($jobTitle->getJobTitleName()); if(!$jobTitle->getIsDeleted() == JobTitle::ACTIVE) { echo ' ('.__('Deleted').')'; } ?></option>
-	                     <?php }?>
-                     </select>
-                   <br class="clear"/>
-                </div>
-				<div id="buttonWrapper" class="formbuttons">
-                    <input type="button" class="savebutton" id="searchBtn"
-                        value="<?php echo __('Search')?>" tabindex="2" />
-                </div>  
-              
-            </form>
-        </div>
- 	</div>
-   <br class="clear"/>
-   
-   <div id="errorContainer" class="hide">
-	 
-   </div>
-   
-   	<div id="contentContainer">
-	   <div  class="outerbox">
-	   			<div id="formHeading" class="mainHeading"><h2><?php echo __("Key Performance Indicators for Job Title")?>: <?php if(isset($searchJobTitle) ){ echo htmlspecialchars_decode($searchJobTitle->getJobTitleName());}?></h2></div>
-				<div class="navigationHearder">
-	                   <?php if ($pager->haveToPaginate()) { ?>
+        <?php include_partial('global/form_errors', array('form' => $form)); ?>
+    
+    <div id="formHeading" class="head"><h1><?php echo __("Search Key Performance Indicators")?></h1></div>
+    <div class="inner">
+        <form action="#" id="frmSearch" name="frmSearch" method="post">
+            <input type="hidden" name="mode" value="search" >
+            <fieldset>	
+                <ol>
+                    <li>
+                        <label for="txtLocationCode"><?php echo __('Job Title') ?></label>
+                        <select name="txtJobTitle" id="txtJobTitle" tabindex="1" >
+                            <option value="all"><?php echo __('All') ?></option>
+                            <?php foreach ($listJobTitle as $jobTitle) { ?>
+                                <option value="<?php echo $jobTitle->getId() ?>" <?php if (isset($searchJobTitle) && $jobTitle->getId() == $searchJobTitle->getId()) {
+                                echo 'selected';
+                            } ?>><?php echo htmlspecialchars_decode($jobTitle->getJobTitleName());
+                            if (!$jobTitle->getIsDeleted() == JobTitle::ACTIVE) {
+                                echo ' (' . __('Deleted') . ')';
+                            } ?></option>
+<?php } ?>
+                        </select>
+                    </li>
+                </ol>
+                <p>
+                    <input type="button" class="searchbutton" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />
+                </p>  
+            </fieldset>
+        </form>			
+    </div>
+    
+    <a href="#" class="toggle tiptip" title="Expand for options">&gt;</a>
+    
+</div> <!-- end-of-searchKPI -->
 
-							<div  class="pagingbar" >
-								<?php include_partial('global/paging_links', array('pager' => $pager, 'url'=>'@kpi_list'));?>
-							</div>
-							
-						
-						<?php } ?> 
-	                    <input type="button" class="savebutton" id="addKpiBut"
-	                       
-	                        value="<?php echo __('Add')?>" tabindex="2" />
-	                        <?php if($hasKpi){?>
-	                    <input type="button" class="clearbutton"  id="deleteKpiBut"
-	                         value="<?php echo __('Delete')?>" tabindex="3" />
-	                         
-						<input type="button" class="clearbutton"  id="copyKpiBut"
-	                         value="<?php echo __('Copy')?>" tabindex="4" />
-	                        <?php }?>
-	                        
-	                      
-	        	</div>
+ <div class="box simple" id="search-results">
+	   			
 				
-			<?php if($hasKpi){?>
-	   		<form action="<?php echo url_for('performance/deleteDefineKpi') ?>" name="frmList" id="frmList" method="post">
+			
+    <form action="<?php echo url_for('performance/deleteDefineKpi') ?>" name="frmList" id="frmList" method="post">
 
             <?php echo $form['_csrf_token']; ?>
 			
-	   		 <div id="tableWrapper">
-	   		
-				 
+            <div id="tableWrapper">
+                 
+               
+            
+            <?php include_partial('global/flash_messages'); ?>
+            
+                    <div class="inner">
+                        
+                        <div class="top">
+                            
+                            <div class="navigationHearder">
+                                <?php if ($pager->haveToPaginate()) { ?>
+                                    <div  class="pagingbar" >
+                                        <?php include_partial('global/paging_links', array('pager' => $pager, 'url' => '@kpi_list')); ?>
+                                    </div>
+                                <?php } ?>      
+                            </div>
+                            
+                            <input type="button" class="" id="addKpiBut" value="<?php echo __('Add')?>" tabindex="2"  />
+                                <?php if($hasKpi){?>
+                            <input type="button" class="delete"  id="deleteKpiBut"
+                                value="<?php echo __('Delete')?>" tabindex="3" />
+	                         <input type="button" class=""  id="copyKpiBut"
+                                value="<?php echo __('Copy')?>" tabindex="4" />
+	                        <?php }?>
+                        </div>
+                        <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                            <thead>
+                                <tr>
+                                    <th width="2%" class="tdcheckbox">
+                                        <input type="checkbox"  name="allCheck" value="" id="allCheck" />
+                                    </th>
+                                    <th> 
+                                        <?php echo __('Key Performance Indicator') ?>
+                                    </th> 
+                                    <th>
+                                        <?php echo __('Job Title') ?>
+                                    </th>
+                                    <th> 
+                                        <?php echo __('Min Rate') ?>
+                                    </th>
+                                    <th> 
+                                        <?php echo __('Max Rate') ?>
+                                    </th>
+                                    <th> 
+                                        <?php echo __('Is Default') ?>
+                                    </th>   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (!$hasKpi) { ?>
+                                    <tr>
+                                        <td></td>
+                                        <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                <?php } else { ?>
+                                    <?php
+                                    $row = 0;
+                                    foreach ( $kpiList as $kpi ) {
+                                        $cssClass = ($row % 2) ? 'even' : 'odd';
+                                        $row = $row + 1;
+                                    ?>
+                                    <tr class="<?php echo $cssClass?>">
+                                        
+                                        <td class="tdcheckbox">
+                                            <input type='checkbox' class='innercheckbox' name='chkKpiID[]' id="chkLoc" value='<?php echo  $kpi->getId()?>' />
+                                        </td>
+                                        <td class="">
+                                            <a href="<?php echo url_for('performance/updateKpi?id='.$kpi->getId()) ?>"><?php echo  $kpi->getDesc()?></a>
+                                        </td>
+                                        <td class="">
+                                            <?php echo  htmlspecialchars_decode($kpi->getJobTitle()->getJobTitleName())?>
+                                        </td>
+                                        <td class="">
+                                            <?php echo  ($kpi->getRateMin()!='')?$kpi->getRateMin():'-'?>
+                                        </td><td class="">
+                                            <?php echo  ($kpi->getRateMax() !='')?$kpi->getRateMax():'-'?>
+                                        </td><td class="">
+                                            <?php echo  ($kpi->getDefault()==1)?__('Yes'):'-'?>
+                                        </td>
+                                        
+                                    </tr>
+                                    
+                                <?php }
+                                }
+                                ?>
 				
-				<table id="sortTable" cellpadding="0" cellspacing="0" class="data-table" align="center">
-					<thead>
-            		<tr>
-            			<td width="50" class="tdcheckbox">
-							<input type="checkbox"  name="allCheck" value="" id="allCheck" />
-						</td>
-            			<td scope="col" > 
-						 <?php echo __('Key Performance Indicator')?>
-						</td> 
-						<td width="150" scope="col">
-						 <?php echo __('Job Title')?>
-						</td>
-						
-						<td scope="col" > 
-						 <?php echo __('Min Rate')?>
-						</td>
-						<td scope="col"> 
-						 <?php echo __('Max Rate')?>
-						</td>
-						<td scope="col"> 
-						 <?php echo __('Is Default')?>
-						</td>
-            		</tr>
-    			</thead>
-            	<tbody>
-            	<?php
-						$row = 0;
-						foreach ( $kpiList as $kpi ) {
-							$cssClass = ($row % 2) ? 'even' : 'odd';
-							$row = $row + 1;
-						?>
-            		<tr class="<?php echo $cssClass?>">
-		       				<td class="tdcheckbox">
-								<input type='checkbox' class='innercheckbox' name='chkKpiID[]' id="chkLoc" value='<?php echo  $kpi->getId()?>' />
-							</td>
-							<td class="">
-				 				<a href="<?php echo url_for('performance/updateKpi?id='.$kpi->getId()) ?>"><?php echo  $kpi->getDesc()?></a>
-				 			</td>
-				 			
-							<td class="">
-				 				<?php echo  htmlspecialchars_decode($kpi->getJobTitle()->getJobTitleName())?>
-				 			</td>
-				 			
-				 			<td class="">
-				 				<?php echo  ($kpi->getRateMin()!='')?$kpi->getRateMin():'-'?>
-				 			</td>
-				 			<td class="">
-				 				<?php echo  ($kpi->getRateMax() !='')?$kpi->getRateMax():'-'?>
-				 			</td>
-				 			<td class="">
-				 			
-				 				<?php echo  ($kpi->getDefault()==1)?__('Yes'):'-'?>
-				 			</td>
-				 	</tr>
-				 	<?php }?>
-				
-            	 </tbody>
- 			</table>
- 			</form>
-			</div>
-			<?php }?>		
-	   </div>
-	 </div>
- </div>
+                            </tbody>
+                 
+                    </table> 
+                    
+                </div>
+                
+                        
+        </div>
+                
+    </form>
+           
+</div>
+			
+			<?php // }?>		
+	   
 
-<style type="text/css">
-        form#frmSearch.content_inner div#formWrapper .formSelect{
-            width: 200px;
-        }
-    </style>
+
 <script type="text/javascript">
 
 		$(document).ready(function() {
