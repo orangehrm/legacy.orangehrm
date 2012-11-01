@@ -24,7 +24,9 @@ class MenuService {
     
     protected $menuDao;
     protected $numberOfLevels = 3;
-
+    protected $actionArray = array();
+    protected $parentIdArray = array();
+    protected $levelArray = array();    
 
     public function getMenuDao() {
         
@@ -91,10 +93,7 @@ class MenuService {
     public function getMenuItemDetails($userRoleList) {
         
         $firstLevelItems = $this->getMenuItemCollection($userRoleList);
-        $menuArray = array();
-        $actionArray = array();
-        $parentIdArray = array();
-        $levelArray = array();
+        $firstLevelHolder = array();
         
         foreach ($firstLevelItems as $firstLevelItem) {   
             
@@ -112,55 +111,45 @@ class MenuService {
                         
                         foreach ($thirdLevelItems as $thirdLevelItem) {
                             
-                            $tempHolder = $this->_extractMenuItemToArray($thirdLevelItem);
-                            
-                            $parentIdArray[$tempHolder['id']] = $thirdLevelItem->getParentId();
-                            $levelArray[$tempHolder['id']] = $tempHolder['level'];
-                            
-                            if (!empty($tempHolder['module']) && !empty($tempHolder['action'])) {
-                                $actionArray[$tempHolder['module'] . '_' . $tempHolder['action']] = $tempHolder['id'];
-                            }                            
-                            
-                            $thirdLevelHolder[] = $tempHolder;
+                            $menuItemDetails = $this->_extractMenuItemToArray($thirdLevelItem);
+                            $this->_populateMenuInfoArrays($thirdLevelItem, $menuItemDetails);
+                            $thirdLevelHolder[] = $menuItemDetails;
                             
                         }                      
                         
                     }
-                    
-                    $tempHolder = $this->_extractMenuItemToArray($secondLevelItem);
-                    $tempHolder['subMenuItems'] = $thirdLevelHolder;
-                    
-                    $parentIdArray[$tempHolder['id']] = $secondLevelItem->getParentId();
-                    $levelArray[$tempHolder['id']] = $tempHolder['level'];
 
-                    if (!empty($tempHolder['module']) && !empty($tempHolder['action'])) {
-                        $actionArray[$tempHolder['module'] . '_' . $tempHolder['action']] = $tempHolder['id'];
-                    }                    
-                    
-                    $secondLevelHolder[] = $tempHolder;
+                    $menuItemDetails = $this->_extractMenuItemToArray($secondLevelItem);
+                    $menuItemDetails['subMenuItems'] = $thirdLevelHolder;                    
+                    $this->_populateMenuInfoArrays($secondLevelItem, $menuItemDetails);                    
+                    $secondLevelHolder[] = $menuItemDetails;
                     
                 }
                 
             }
             
-            $tempHolder = $this->_extractMenuItemToArray($firstLevelItem);
-            $tempHolder['subMenuItems'] = $secondLevelHolder;
-            
-            $parentIdArray[$tempHolder['id']] = $firstLevelItem->getParentId();
-            $levelArray[$tempHolder['id']] = $tempHolder['level'];
-
-            if (!empty($tempHolder['module']) && !empty($tempHolder['action'])) {
-                $actionArray[$tempHolder['module'] . '_' . $tempHolder['action']] = $tempHolder['id'];
-            }            
-            
-            $menuArray[] = $tempHolder;
+            $menuItemDetails = $this->_extractMenuItemToArray($firstLevelItem);
+            $menuItemDetails['subMenuItems'] = $secondLevelHolder;                    
+            $this->_populateMenuInfoArrays($firstLevelItem, $menuItemDetails);            
+            $firstLevelHolder[] = $menuItemDetails;
             
         }
         
-        return array('menuItemArray' => $menuArray, 
-                     'actionArray' => $actionArray, 
-                     'parentIdArray' => $parentIdArray, 
-                     'levelArray' => $levelArray);
+        return array('menuItemArray' => $firstLevelHolder, 
+                     'actionArray' => $this->actionArray, 
+                     'parentIdArray' => $this->parentIdArray, 
+                     'levelArray' => $this->levelArray);
+        
+    }
+    
+    private function _populateMenuInfoArrays($menuItem, $menuItemDetails) {
+        
+        $this->parentIdArray[$menuItemDetails['id']] = $menuItem->getParentId();
+        $this->levelArray[$menuItemDetails['id']] = $menuItemDetails['level'];
+
+        if (!empty($menuItemDetails['module']) && !empty($menuItemDetails['action'])) {
+            $this->actionArray[$menuItemDetails['module'] . '_' . $menuItemDetails['action']] = $menuItemDetails['id'];
+        }        
         
     }
     
