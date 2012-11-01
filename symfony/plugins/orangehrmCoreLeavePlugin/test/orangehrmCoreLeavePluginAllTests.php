@@ -18,7 +18,7 @@ class orangehrmCoreLeavePluginAllTests {
         //$suite->addTestFile(dirname(__FILE__) . '/model/dao/OldLeaveEntitlementDaoTest.php');
         //$suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveRequestDaoTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveSummaryDaoTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveRequestDaoSearchTest.php');        
+        //$suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveRequestDaoSearchTest.php');        
 
         /* Service Test Cases */
         $suite->addTestFile(dirname(__FILE__) . '/model/service/WorkWeekServiceTest.php');
@@ -27,8 +27,8 @@ class orangehrmCoreLeavePluginAllTests {
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceGenerateStartDateTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveTypeServiceTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/service/OldLeaveEntitlementServiceTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveRequestServiceTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/model/service/OldLeaveEntitlementServiceTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveRequestServiceTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveSummaryServiceTest.php');
 //
 //        /* Action Test Cases */
