@@ -101,41 +101,14 @@ function printButtonEventBindings($buttons) {
 ?>
          </div> <!-- top -->
             
-        
-        
-        
         <div id="helpText" class="helpText"></div>
-        <?php if ($pager->haveToPaginate()) {
- ?>
-            <!--
-            <div class="navigationHearder">
-                <div class="pagingbar"><?php include_partial('global/paging_links_js', array('pager' => $pager)); ?></div>
-                <br class="clear" />
-            </div>
-            -->
-            
-            <ul class="paging top">
-                <?php include_partial('global/paging_links_new', array('pager' => $pager)); ?>
-            </ul>
-            
-            
-<?php } ?>
-
-        <!-- <table style="border-collapse: collapse; width: <?php echo $tableWidth; ?>; text-align: left;" class="data-table"> -->
+        <?php 
+            if ($pager->haveToPaginate()) {
+                include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'top'));
+            }
+        ?>
         <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
             
-            <!--
-            <colgroup align="right">
-<?php if ($hasSelectableRows) { ?>
-                    <col width="50" />
-<?php } ?>
-                <?php foreach ($columns as $header) {
- ?>
-                    <col width="<?php echo $header->getWidth(); ?>" />
-                <?php } ?>
-            </colgroup>
-            -->
-
                     <?php
                     
                     $headerRow1 = '';
@@ -210,11 +183,6 @@ function printButtonEventBindings($buttons) {
                                 );
                             }
                             
-                            /*
-                            $headerCellHtml = '<th style="text-align: ' . $header->getTextAlignmentStyleForHeader() . '"' .
-                                              ' rowspan="' . $rowspan .
-                                              '">' . $headerCell->__toString() . "</th>\n";
-                             */
                             $headerCellClassHtml = $header->isSortable()?' class="header"':'';
                             $headerCellHtml = '<th rowspan="' . $rowspan . '" width="' . $header->getWidth() . '"' . $headerCellClassHtml . '>' . $headerCell->__toString() . "</th>\n";                            
                             
@@ -318,7 +286,6 @@ function printButtonEventBindings($buttons) {
                                     $aggregateValue = $summary['summaryLabel'] . ':' . $aggregateValue;
                                     $firstHeader = false;
                                 }
-                                //echo tag('td', $aggregateValue);
                                 echo "<td class='right'>" . $aggregateValue . '</td>';
                             } else {
                                 $tdValue = '&nbsp;';
@@ -327,7 +294,6 @@ function printButtonEventBindings($buttons) {
                                     $tdValue = $summary['summaryLabel'];
                                     $firstHeader = false;                                    
                                 }
-                                //echo tag('td', $tdValue);
                                 echo "<td>" . $tdValue . '</td>';
                             }
                         }
@@ -339,21 +305,11 @@ function printButtonEventBindings($buttons) {
 
 <?php renderActionBar($buttons, $buttonsPosition === ohrmListConfigurationFactory::AFTER_TABLE); ?>
 
-<?php if ($pager->haveToPaginate()) { ?>
-            <!--        
-            <div class="navigationHearder">
-                <div class="pagingbar"><?php include_partial('global/paging_links_js', array('pager' => $pager)); ?></div>
-                <br class="clear" />
-            </div>
-            -->    
-               
-            <ul class="paging bottom">
-                <?php include_partial('global/paging_links_new', array('pager' => $pager)); ?>
-            </ul>
-            
-                    
-                    
-<?php } ?>
+<?php 
+    if ($pager->haveToPaginate()) {
+        include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'bottom'));
+    }
+?>
 
         </form> <!-- frmList_ohrmListComponent --> 
         

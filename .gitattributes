@@ -663,7 +663,6 @@ symfony/apps/orangehrm/templates/_flash_messages.php -text
 symfony/apps/orangehrm/templates/_form_errors.php -text
 symfony/apps/orangehrm/templates/_paging_links.php -text
 symfony/apps/orangehrm/templates/_paging_links_js.php -text
-symfony/apps/orangehrm/templates/_paging_links_new.php -text
 symfony/apps/orangehrm/templates/freshorange.php -text
 symfony/apps/orangehrm/templates/layout.php -text
 symfony/apps/orangehrm/templates/mail/performance_approve.txt -text

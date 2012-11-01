@@ -59,14 +59,12 @@
                     <div class="inner">
                         
                         <div class="top">
-                            
-                            <div class="navigationHearder">
-                                <?php if ($pager->haveToPaginate()) { ?>
-                                    <div  class="pagingbar" >
-                                        <?php include_partial('global/paging_links', array('pager' => $pager, 'url' => '@kpi_list')); ?>
-                                    </div>
-                                <?php } ?>      
-                            </div>
+
+                            <?php 
+                                if ($pager->haveToPaginate()) {
+                                    include_partial('global/paging_links', array('pager' => $pager, 'url' => url_for('performance/listDefineKpi'), 'location' => 'top'));
+                                }
+                            ?>
                             
                             <input type="button" class="" id="addKpiBut" value="<?php echo __('Add')?>" tabindex="2"  />
                                 <?php if($hasKpi){?>
@@ -144,6 +142,12 @@
                             </tbody>
                  
                     </table> 
+                        
+                    <?php 
+                        if ($pager->haveToPaginate()) {
+                            include_partial('global/paging_links', array('pager' => $pager, 'url' => url_for('performance/listDefineKpi'), 'location' => 'bottom'));
+                        }
+                    ?>                        
                     
                 </div>
                 
