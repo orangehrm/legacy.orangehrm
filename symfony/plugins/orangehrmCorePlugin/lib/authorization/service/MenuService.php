@@ -200,22 +200,15 @@ class MenuService {
         $menu['action'] = '';
         $menu['subMenuItems'] = array();
         
-        $path = '';
         $screen = $menuItem->getScreen();
         
         if ($screen instanceof Screen) {
             
             $menu['module'] = $screen->getModule()->getName();
-            $menu['action'] = $screen->getActionUrl();            
-            
-            $module = $screen->getModule()->getName();
-            $action = $screen->getActionUrl();
-            $urlExtras = $menuItem->getUrlExtras();
-            $path = $module . '/' . $action . $urlExtras;
+            $menu['action'] = $screen->getActionUrl();
+            $menu['urlExtras'] = $menuItem->getUrlExtras();
             
         }
-        
-        $menu['path'] = $path;        
         
         return $menu;
         
