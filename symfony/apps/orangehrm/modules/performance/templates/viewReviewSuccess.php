@@ -1,4 +1,5 @@
 <?php
+
 /* For formatting date */
 $formatData['currentFormat'] = 'yyyy-mm-dd';
 $formatData['newFormat'] = 'dd/mm/yyyy';
@@ -6,43 +7,49 @@ $formatData['currentSeparater'] = '-';
 $formatData['newSeparater'] = '/';
 ?>
 
-<link href="<?php echo public_path('../../themes/orange/css/jquery/jquery.autocomplete.css') ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
+<?php 
+use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
+use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
+?>
 
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.autocomplete.js') ?>"></script>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
+<div class="box toggableForm search2col">     
 
-<div id="content">
+  <div id="formHeading" class="head"><h1><?php echo __('Search Performance Reviews')?></h1></div>
+    <div class="inner">
 
-    <div id="contentContainer">
-
-        <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-
-        <div class="outerbox">
-
-            <div id="formHeading" class="mainHeading"><h2><?php echo __('Search Performance Reviews')?></h2></div>
-
-            <form method="post" action="#" id="frmSearch" name="frmSearch" class="content_inner">
-
-                <div id="formWrapper">
-
+            <form action="#" id="frmSearch" name="frmSearch" method="post">
+            <input type="hidden" name="mode" value="search" >
+             <fieldset>	
+                <ol>
+                    <li>
                     <label for="txtPeriodFromDate"><?php echo __('From')?> </label>
-                    <input id="txtPeriodFromDate" name="txtPeriodFromDate" type="text" class="date-pick formInputText"
+                    <?php
+                    
+                    $fromDate = new ohrmWIdgetDatePicker(array(), array('id' => 'txtPeriodFromDate'));
+                    echo $fromDate->render();
+                    ?>
+                    <!-- <input id="txtPeriodFromDate" name="txtPeriodFromDate" type="text" class="calendar hasDatepicker"
                            value="<?php echo isset($clues['from']) ? set_datepicker_date_format($clues['from']) : ''; ?>" tabindex="1" />
                     <input id="fromButton" name="fromButton" class="calendarBtn" type="button" value="   " />
+                    -->
                     <div class="errorDiv"></div>
-                    <br class="clear"/>
-
+                    </li>
+                    <li>
+                        
+                        
+                        
                     <label for="txtPeriodToDate"><?php echo __('To')?> </label>
-                    <input id="txtPeriodToDate" name="txtPeriodToDate" type="text" class="date-pick formInputText"
+                    <?php
+                    $toDate = new ohrmWIdgetDatePicker(array(), array('id' => 'txtPeriodToDate'));
+                    echo $toDate->render();
+                     ?>
+<!--                    <input id="txtPeriodToDate" name="txtPeriodToDate" type="text" class="calendar hasDatepicker"
                            value="<?php echo isset($clues['to']) ? set_datepicker_date_format($clues['to']) : ''; ?>" tabindex="2" />
-                    <input id="toButton" name="toButton" class="calendarBtn" type="button" value="   " />
+                    <input id="toButton" name="toButton" class="calendarBtn" type="button" value="   " />-->
                     <div class="errorDiv"></div>
-                    <br class="clear"/>
+                    </li>
 
+                    <li>
                     <label for="txtJobTitleCode"><?php echo __('Job Title')?></label>
                     <select id="txtJobTitleCode" name="txtJobTitleCode" class="formSelect" tabindex="3">
                         <option value="0"><?php echo __('All')?></option>
@@ -65,8 +72,9 @@ $formatData['newSeparater'] = '/';
                         }
                         ?>
                     </select>
-                    <br class="clear"/>
+                    </li>
 
+                    <li>
                     <label for="txtSubDivisionId"><?php echo __('Sub Division')?></label>
                     <select id="txtSubDivisionId" name="txtSubDivisionId" class="formSelect" tabindex="4">
                         <option value="0"><?php echo __('All')?></option>
@@ -83,19 +91,26 @@ $formatData['newSeparater'] = '/';
                         }
                         ?>
                     </select>
-                    <br class="clear"/>
-
+                    </li>
+                    <li>
                     <?php if ($loggedAdmin || $loggedReviewer) {
- ?>
+                        ?>
                             <label for="txtEmpName"><?php echo __('Employee')?></label>
-                            <input id="txtEmpName" name="txtEmpName" type="text" class="formInputText"
+                            <?php 
+                            echo $form['_csrf_token']; 
+                            echo $form->renderHiddenFields();
+                            
+                                 $form->render('employee_name');
+                                 $form->render('id');
+                            ?>
+<!--                            <input id="txtEmpName" name="txtEmpName" type="text" class="formInputText"
                                    value="<?php echo isset($clues['empName']) ? $clues['empName'] : __('Type for hints').'...' ?>" tabindex="5" onblur="autoFill('txtEmpName', 'hdnEmpId', <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?>);"/>
                             <input type="text" name="hdnEmpId" id="hdnEmpId"
-                                   value="<?php echo isset($clues['empId']) ? $clues['empId'] : '0' ?>" style="visibility:hidden;">
+                                   value="<?php echo isset($clues['empId']) ? $clues['empId'] : '0' ?>" style="visibility:hidden;">-->
                             <div class="errorDiv"></div>
-                            <br class="clear"/>
+                            </li>
 <?php } // $loggedAdmin || $loggedReviewer:Ends   ?>
-
+                            <li>
                     <?php if ($loggedAdmin) { ?>
                             <label for="txtReviewerName"><?php echo __('Reviewer')?></label>
                             <input id="txtReviewerName"  name="txtReviewerName" type="text" class="formInputText"
@@ -105,90 +120,86 @@ $formatData['newSeparater'] = '/';
                             <div class="errorDiv"></div>
                             <br class="clear"/>
                     <?php } // $loggedAdmin:Ends   ?>
+                           </li> 
+                             </ol>
+                 <p>
+                    <input type="button" class="savebutton" id="searchButton" value="<?php echo __("Search") ?>" tabindex="7"/>
+                    <input type="button" class="reset" id="clearBtn" value="<?php echo __('Clear')?>" tabindex="8"/>
+                </p> 
+                            </fieldset>
+              </form>	
+                    </div> <!-- Inner:Ends -->
 
-                    </div> <!-- formWrapper:Ends -->
+                    
+<a href="#" class="toggle tiptip" title="Expand for options">&gt;</a>
+  </div> <!-- box:Ends -->
+  
+  
+ <div class="box simple" id="search-results">
 
-                    <div id="buttonWrapper" class="formbuttons">
-                        <input type="button" class="savebutton" id="searchButton" value="<?php echo __('Search')?>" tabindex="7" />
-                        <input type="button" class="savebutton" id="clearBtn" value="<?php echo __('Clear')?>" tabindex="8" />
-                    </div>
+     <?php include_partial('global/flash_messages'); ?>
 
-                </form>
-
-            </div> <!-- outerbox:Ends -->
-
-        </div> <!-- contentContainer:Ends -->
-        <br class="clear"/>
-
-        <div id="errorContainer" class="hide">
-
-        </div>
-
-    <?php
-                        if (count($reviews) > 0) {
-    ?>
-
-                            <div class="outerbox">
-
-                                <form method="post" action="#" id="frmList" name="frmList" class="content_inner">
+    <div class="inner">
+        <form method="post" action="#" id="frmList" name="frmList">
 
             <?php echo $form['_csrf_token']; ?>
 
-                            <div class="navigationHearder">
-                <?php if ($loggedAdmin) {
-                ?>
-                                <input type="button" class="savebutton" id="addReview" value="<?php echo __('Add')?>" tabindex="9" />
-                                <input type="submit" class="savebutton" name="editReview" id="editReview" value="<?php echo __('Edit')?>" tabindex="10" disabled />
-                                <input type="button" class="clearbutton" id="deleteReview" value="<?php echo __('Delete')?>" tabindex="11" disabled />
-                <?php } ?>
-
-                <?php if ($pager->haveToPaginate()) {
-                ?>
-                                <div class="pagingbar">
-                    <?php include_partial('global/paging_links', array('pager' => $pager, 'url' => '@performance_reviews')); ?>
-                            </div>
-                <?php } ?>
-
-                        </div>
-
                         <div id="tableWrapper">
-
-                            <table cellpadding="0" cellspacing="0" class="data-table" align="center">
+                            <div class="top">
+                                 <?php 
+                                if ($pager->haveToPaginate()) {
+                                    include_partial('global/paging_links', array('pager' => $pager, 'url' => url_for('performance/viewReview'), 'location' => 'top'));
+                                }
+                                  ?>
+                            
+                                 <?php if ($loggedAdmin) {
+                ?>                       
+                            <input type="button" class="" id="addReview" value="<?php echo __('Add')?>" tabindex="9"  />
+                            <input type="submit" class="addbutton"  name="editReview" id="editReview" value="<?php echo __('Edit')?>" tabindex="10" disabled />
+	                        <input type="button" class="delete" id="deleteReview" value="<?php echo __('Delete')?>" tabindex="11" disabled />
+	                      
+                             
+                             <?php } ?>
+                               
+                             </div>
+                             <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
 
                                 <thead>
                                     <tr>
-                                        <td width="50" class="tdcheckbox">
-                                            <input type="checkbox" name="allCheck" value="" id="allCheck" <?php echo ($loggedAdmin) ? '' : 'disabled'; ?> />
-                                        </td>
+                                       <th width="2%" class="tdcheckbox">
+                                        <input type="checkbox"  name="allCheck" value="" id="allCheck" <?php echo ($loggedAdmin) ? '' : 'disabled'; ?> />
+                                        </th>
 
-                                        <td scope="col">
-                                                                                                							<?php echo __('Employee')?>
-                                        </td>
+                                        <th>
+                                        <?php echo __('Employee')?>
+                                        </th>
 
-                                        <td scope="col">
-                                                                                                							<?php echo __('Job Title')?>
-                                        </td>
+                                        <th>
+                                         <?php echo __('Job Title')?>
+                                        </th>
 
-                                        <td scope="col">
-                                                                                                							<?php echo __('Review Period')?>
-                                        </td>
+                                        <th>
+                                         <?php echo __('Review Period')?>
+                                        </th>
 
-                                        <td scope="col">
-                                                                                                							<?php echo __('Due Date')?>
-                                        </td>
+                                        <th>
+                                         <?php echo __('Due Date')?>
+                                        </th>
 
-                                        <td scope="col">
-                                                                                                							<?php echo __('Status')?>
-                                        </td>
+                                        <th>
+                                        <?php echo __('Status')?>
+                                        </th>
 
-                                        <td scope="col">
-                                                                                                							<?php echo __('Reviewer')?>
-                                        </td>
+                                        <th>
+                                        <?php echo __('Reviewer')?>
+                                        </th>
 
                                     </tr>
                                 </thead>
 
                                 <tbody>
+                                    
+                                    <?php if (count($reviews) > 0) { ?>                                    
 
                         <?php
                             $i = 0;
@@ -270,10 +281,27 @@ $formatData['newSeparater'] = '/';
                                 } // End of if condition
                              } // End of foreach
                         ?>
-
-                               </tbody>
+                               <?php } else { // End of checking $reviews count ?>
+                               <tr>
+                                   <td></td>
+                                   <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                               </tr>
+                               <?php } ?>
+                               
+                                </tbody>
 
                            </table>
+                            
+                              <?php 
+                        if ($pager->haveToPaginate()) {
+                            include_partial('global/paging_links', array('pager' => $pager, 'url' => url_for('performance/viewReview'), 'location' => 'bottom'));
+                        }
+                    ?> 
 
                        </div> <!-- tableWrapper:Ends -->
 
@@ -291,22 +319,10 @@ $formatData['newSeparater'] = '/';
 
                    </form> <!-- #frmList:Ends -->
 
-               </div> <!-- outerbox:Ends -->
+    </div> <!-- inner:Ends -->
+</div> <!-- box simple Ends -->
 
-    <?php
-                               } // End of checking $reviews count
-    ?>
-
-                           </div> <!-- content: Ends -->
-
-                           <style type="text/css">
-                               form#frmSearch.content_inner div#formWrapper .formSelect{
-                                   width: 210px;
-                               }
-                               form#frmSearch.content_inner div#formWrapper .formInputText{
-                                   width: 200px;
-                               }
-                           </style>
+                           
 
                            <script type="text/javascript">
 
@@ -515,11 +531,6 @@ error.appendTo(element.next().next());
 });
 		
 }); // ready():Ends
-
-/* Applying rounding box style */ 
-if (document.getElementById && document.createElement) {
-roundBorder('outerbox');
-}
 
 </script>
 

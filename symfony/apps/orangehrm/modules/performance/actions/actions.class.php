@@ -548,7 +548,7 @@ class performanceActions extends sfActions {
             /* Showing update form: Begins */
 
             if ($request->getParameter('editReview') && count($request->getParameter('chkReview')) == 0) {
-                $this->getUser()->setFlash('templateMessage', array('WARNING', __('Select a review to edit')));
+                $this->getUser()->setFlash('warning', __('Select a review to edit'));
                 $this->redirect('performance/viewReview');
             }
 
@@ -557,7 +557,7 @@ class performanceActions extends sfActions {
                 $reviewIds = $request->getParameter('chkReview');
 
                 if (count($reviewIds) > 1) {
-                    $this->getUser()->setFlash('templateMessage', array('WARNING', __('Select only one review at a time for editing')));
+                    $this->getUser()->setFlash('warning', __('Select only one review at a time for editing'));
                     $this->redirect('performance/viewReview');
                 }
 
@@ -784,7 +784,7 @@ class performanceActions extends sfActions {
         $this->getUser()->setFlash('prClues', $clues);
 
         if (empty($delReviews)) {
-            $this->getUser()->setFlash('templateMessage', array('WARNING', __(TopLevelMessages::SELECT_RECORDS)));
+            $this->getUser()->setFlash('warning', __(TopLevelMessages::SELECT_RECORDS));
             $this->redirect('performance/viewReview');
         }
 
@@ -796,7 +796,7 @@ class performanceActions extends sfActions {
 
                 $performanceReviewService = $this->getPerformanceReviewService();
                 $performanceReviewService->deletePerformanceReview($request->getParameter('chkReview'));
-                $this->getUser()->setFlash('templateMessage', array('SUCCESS', __(TopLevelMessages::DELETE_SUCCESS)));
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
             }
         }
 

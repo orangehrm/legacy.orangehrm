@@ -9,3 +9,6 @@ copyKpiSuccess:
 
 listDefineKpiSuccess:
   layout: freshorange
+  
+viewReviewSuccess:
+  layout: freshorange
