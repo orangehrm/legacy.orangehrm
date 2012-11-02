@@ -894,6 +894,16 @@ form input.validation-error {
     margin-left: 20px;
     margin-right: 10px;
 }
+.single form ol li label.time_range_label {
+    width:auto;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+.single form ol li select.timepicker {
+    width: 70px;
+    margin-left: 0px;
+    margin-right: 10px;
+}
 
 /* ================ .twoColumn styles: Begin ================ */
 
