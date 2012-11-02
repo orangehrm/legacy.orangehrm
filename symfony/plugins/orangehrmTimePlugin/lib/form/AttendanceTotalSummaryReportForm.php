@@ -38,8 +38,8 @@ class AttendanceTotalSummaryReportForm extends sfForm {
         $this->setWidgets(array(
             'empName' => new sfWidgetFormInputText(array(), array('id' => 'employee_name')),
             'employeeId' => new sfWidgetFormInputHidden(),
-            'fromDate' => new ohrmWidgetDatePickerNew(array(), array('id' => 'from_date')),
-            'toDate' => new ohrmWidgetDatePickerNew(array(), array('id' => 'to_date'))
+            'fromDate' => new ohrmWidgetDatePicker(array(), array('id' => 'from_date')),
+            'toDate' => new ohrmWidgetDatePicker(array(), array('id' => 'to_date'))
         ));
 
 //        Setting job titles

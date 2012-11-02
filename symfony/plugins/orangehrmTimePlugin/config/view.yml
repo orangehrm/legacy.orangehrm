@@ -4,3 +4,5 @@ proceedTimesheetPeriodSuccess:
   layout: freshorange
 viewEmployeeTimesheetSuccess:
   layout: freshorange
+displayAttendanceSummaryReportCriteriaSuccess:
+  layout: freshorange
