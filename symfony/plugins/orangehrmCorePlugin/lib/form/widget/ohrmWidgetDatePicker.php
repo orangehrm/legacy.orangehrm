@@ -79,7 +79,7 @@ EOF
                         $this->attributes['id'],
                         $this->attributes['id'],
                         $this->attributes['id'],
-                        public_path('../../symfony/web/themes/default/images/calendar.png'),
+                        theme_path('images/calendar.png'),
                         $this->attributes['id'],
                         $this->attributes['id']
         );

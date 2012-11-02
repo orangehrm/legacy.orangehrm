@@ -29,8 +29,8 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <?php use_javascript(public_path('../../symfony/web/jquery/jquery.ui.datepicker.js')) ?>
         
         <link href="<?php echo public_path('../../symfony/web/jquery/jquery-ui-1.8.21.custom.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo public_path('../../symfony/web/themes/default/css/main.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo public_path('../../symfony/web/themes/default/css/tipTip.css')?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo theme_path('css/main.css')?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo theme_path('css/tipTip.css')?>" rel="stylesheet" type="text/css"/>
         
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -43,7 +43,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <div id="wrapper">
 
             <div id="branding">
-                <img src="<?php echo public_path('../../symfony/web/themes/default/images/logo.png')?>" width="283" height="56" alt="OrangeHRM"/>
+                <img src="<?php echo theme_path('images/logo.png')?>" width="283" height="56" alt="OrangeHRM"/>
                 <a href="http://www.orangehrm.com/user-survey-registration.php" class="subscribe" target="_blank"><?php echo __('Join OrangeHRM Community'); ?></a>
                 <a href="#" id="welcome"><?php echo __('Welcome') . ' ' . $sf_user->getAttribute('auth.firstName'); ?></a>
                 <div id="welcome-menu">

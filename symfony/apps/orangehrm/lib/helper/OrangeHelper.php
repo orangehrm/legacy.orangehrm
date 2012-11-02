@@ -183,3 +183,20 @@ function displayMainMessage($messageType, $message) {
     return "<div class=\"message $type\">$message<a href=\"#\">Close</a></div>";
     
 }
+
+function theme_path($path) {
+    
+    $sfUser = sfContext::getInstance()->getUser();
+    
+    if (!$sfUser->hasAttribute('meta.themeName')) {
+        $sfUser->setAttribute('meta.themeName', OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_THEME_NAME));
+    }
+    
+    $themeName = $sfUser->getAttribute('meta.themeName'); 
+    
+    $themePath = public_path() . 'themes/' . $themeName . '/';
+    $themePath = empty($path)?$themePath:$themePath . $path;
+    
+    return $themePath;
+    
+}

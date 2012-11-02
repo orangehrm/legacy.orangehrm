@@ -57,7 +57,7 @@ class viewPhotoAction extends basePimAction {
             $fileSize = $empPicture->size;
             $fileName = $empPicture->filename;
         } else {
-            $tmpName = ROOT_PATH . '/symfony/web/themes/default/images/default-photo.png';
+            $tmpName = ROOT_PATH . '/symfony/web/themes/' . $this->_getThemeName() . '/images/default-photo.png';
             $fp = fopen($tmpName,'r');
             $fileSize = filesize($tmpName);
             $contents = fread($fp, $fileSize);
@@ -90,4 +90,18 @@ class viewPhotoAction extends basePimAction {
 
         return sfView::NONE;
     }
+    
+    protected function _getThemeName() {
+        
+        $sfUser = $this->getUser();
+
+        if (!$sfUser->hasAttribute('meta.themeName')) {
+            $sfUser->setAttribute('meta.themeName', OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_THEME_NAME));
+        }
+
+        return $sfUser->getAttribute('meta.themeName');     
+        
+    }
+    
+    
 }

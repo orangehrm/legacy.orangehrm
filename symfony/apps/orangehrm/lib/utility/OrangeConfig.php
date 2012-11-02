@@ -108,6 +108,9 @@ class OrangeConfig {
             case ConfigService::KEY_LEAVE_PERIOD_START_DATE:
                 return $configService->getLeavePeriodStartDate();
                 break;
+            case ConfigService::KEY_THEME_NAME:
+                return $configService->getThemeName();
+                break;            
             default:
                 throw new Exception("Getting {$key} is not implemented yet");
                 break;
@@ -143,6 +146,9 @@ class OrangeConfig {
                 break;
             case ConfigService::KEY_LEAVE_PERIOD_START_DATE:
                 return $configService->setLeavePeriodStartDate($value);
+                break;
+            case ConfigService::KEY_THEME_NAME:
+                return $configService->setThemeName($value);
                 break;            
             default:
                 throw new Exception("Setting {$key} is not implemented yet");

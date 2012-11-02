@@ -516,7 +516,8 @@ INSERT INTO `hs_hr_config`(`key`, `value`) VALUES ('ldap_server', ''),
     ('authorize_user_role_manager_class', 'BasicUserRoleManager'),
     ('include_supervisor_chain', 'No'),
     ('leave.entitlement_consumption_algorithm', 'FIFOEntitlementConsumptionStrategy'),
-    ('leave.work_schedule_implementation', 'BasicWorkSchedule');
+    ('leave.work_schedule_implementation', 'BasicWorkSchedule'),
+    ('themeName', 'default');
 
 INSERT INTO `ohrm_emp_reporting_method`(`reporting_method_id`, `reporting_method_name`) VALUES(1, 'Direct'),
       (2, 'Indirect');
