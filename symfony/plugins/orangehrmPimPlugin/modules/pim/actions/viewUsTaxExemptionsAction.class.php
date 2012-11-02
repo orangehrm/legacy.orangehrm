@@ -41,6 +41,14 @@ class viewUsTaxExemptionsAction extends basePimAction {
     }
 
     public function execute($request) {
+        
+        /* For highlighting corresponding menu item */
+        $initialActionName = $request->getParameter('initialActionName', '');
+        if (empty($initialActionName)) {
+            $request->setParameter('initialActionName', 'viewEmployeeList');
+        } else {
+            $request->setParameter('initialActionName', $initialActionName);
+        }
 
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
 
@@ -70,7 +78,7 @@ class viewUsTaxExemptionsAction extends basePimAction {
                 if ($this->form->isValid()) {
                     $empUsTaxExemption = $this->form->getEmpUsTaxExemption();
                     $this->getEmployeeService()->saveEmployeeTaxExemptions($empUsTaxExemption, false);
-                    $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
                     $this->redirect('pim/viewUsTaxExemptions?empNumber='. $empUsTaxExemption->getEmpNumber());
                 }
             }

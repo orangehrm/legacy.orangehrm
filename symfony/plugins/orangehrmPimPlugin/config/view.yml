@@ -28,3 +28,7 @@ viewMembershipsSuccess:
   layout: freshorange
 viewQualificationsSuccess:
   layout: freshorange
+viewReportToDetailsSuccess:
+  layout: freshorange
+viewUsTaxExemptionsSuccess:
+  layout: freshorange
