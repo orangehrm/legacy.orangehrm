@@ -9,10 +9,6 @@ default:
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [main.css,module.report.css]
-
-  javascripts:    [orangehrm.core.js, orangehrm.admin.js, orangehrm.validate.js]
-
   has_layout:     true
   layout:         layout
 

@@ -87,17 +87,5 @@ EOF
         return $html . $javaScript;
     }
     
-    
-    public function getStylesheets() {
-        return array(public_path('../../symfony/web/jquery/jquery-ui-1.8.21.custom.css') => 'all');
-    }
-    
-    public function getJavaScripts() {
-        return array(public_path('../../symfony/web/jquery/jquery.ui.core.js'));
-    }
-    
-
-    
-
 }
 
