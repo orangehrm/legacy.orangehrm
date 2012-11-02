@@ -77,7 +77,17 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
     $value = array_merge(array('from' => '', 'to' => ''), is_array($value) ? $value : array());
 
     $fromWidget = $this->getOption('from_date');
-    $toWidget = $this->getOption('to_date');
+    $fromId = $fromWidget->getAttribute('id');
+    if (empty($fromId)) {
+        $fromId = $this->generateId($name . '_from');
+        $fromWidget->setAttribute('id', $fromId);
+    }
+    $toWidget = $this->getOption('to_date');                
+    $toId = $toWidget->getAttribute('id');   
+    if (empty($toId)) {
+        $toId = $this->generateId($name . '_to');
+        $toWidget->setAttribute('id', $toId);
+    }    
     
     $fromLabelHtml = '';
     $fromLabel = $this->getOption('from_label');
@@ -85,7 +95,7 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
         
        
         $fromLabelHtml = strstr($this->getOption('from_label_template'), array(
-            '%from_id%' => $fromWidget->getAttribute('id'),
+            '%from_id%' => $fromId,
             '%from_label%' => $this->translate($fromLabel)
         ));
     }
@@ -95,7 +105,7 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
     if (!empty($toLabel)) {
 
         $toLabelHtml = strtr($this->getOption('to_label_template'), array(
-            '%to_id%' => $toWidget->getAttribute('id'),
+            '%to_id%' => $toId,
             '%to_label%' => $this->translate($toLabel)
         ));
 

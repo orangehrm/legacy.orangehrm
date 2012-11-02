@@ -133,9 +133,6 @@ class AssignLeaveForm extends sfForm {
     public function getStylesheets() {
         $styleSheets = parent::getStylesheets();
 
-        $styleSheets['/orangehrmCoreLeavePlugin/css/assignLeaveSuccess.css'] = 'all';
-        $styleSheets['/orangehrmCoreLeavePlugin/css/common.css'] = 'all';
-
         return $styleSheets;
     }
 
@@ -157,8 +154,12 @@ class AssignLeaveForm extends sfForm {
             'txtToDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtToDate')),
             //'txtFromTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
             //'txtToTime' => new sfWidgetFormChoice(array('choices' => $timeChoices)),
-            'txtFromTime' => $fromTimeWidget,
-            'txtToTime' => $toTimeWidget,            
+            'time' => new ohrmWidgetFormTimeRange(array(
+                    'from_time' => new ohrmWidgetTimeDropDown(),
+                    'to_time' => new ohrmWidgetTimeDropDown())
+            ),
+            //'txtFromTime' => $fromTimeWidget,
+            //'txtToTime' => $toTimeWidget,            
             
             'txtLeaveTotalTime' => new sfWidgetFormInput(array(), array('readonly' => 'readonly')),
             'txtComment' => new sfWidgetFormTextarea(array(), array('rows' => '3', 'cols' => '30')),
@@ -175,7 +176,7 @@ class AssignLeaveForm extends sfForm {
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
 
         $leaveTypeIds = array_keys($this->getLeaveTypeChoices());        
-        $timeChoices = $this->getWidget('txtFromTime')->getChoices();        
+        $timeChoices = array();//$this->getWidget('txtFromTime')->getChoices();        
 
         $validators = array(
             'txtEmployee' => new ohrmValidatorEmployeeNameAutoFill(),

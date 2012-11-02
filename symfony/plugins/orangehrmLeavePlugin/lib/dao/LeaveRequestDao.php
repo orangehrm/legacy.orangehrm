@@ -39,6 +39,12 @@ class LeaveRequestDao extends BaseDao {
                 $leave->setEmpNumber($leaveRequest->getEmpNumber());
 
                 $leave->save();
+                
+//		$q = Doctrine_Query::create()
+//			->update('LeaveEntitlement le')
+//			->set('le.days_used = le.days_used + ?', $leave->getLengthDays())
+//			->where('le.id = ?', $leave->getEntitlementId());
+//		return $q->execute();                
             }
 
             return true;

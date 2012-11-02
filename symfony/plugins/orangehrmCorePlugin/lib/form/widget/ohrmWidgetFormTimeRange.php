@@ -63,8 +63,8 @@ class ohrmWidgetFormTimeRange extends sfWidgetForm {
 
         $this->addOption('from_label_template', "<label for='%for_id%' class='time_range_label'>%label%</label>");
         $this->addOption('to_label_template', "<label for='%for_id%' class='time_range_label'>%label%</label>");
-        $this->addOption('duration_label_template', "<label class='time_range_duration'>%label%</label>");
-        $this->addOption('duration_template', '%duration%');
+        $this->addOption('duration_label_template', "<label class='time_range_label'>%label%</label>");
+        $this->addOption('duration_template', "<input disabled='disabled' type='text' class='time_range_duration' value='%duration%'/>");
 
         $this->addOption('template', '%from_label% %from_time% %to_label% %to_time% %duration_label% %duration%');
     }
@@ -86,9 +86,17 @@ class ohrmWidgetFormTimeRange extends sfWidgetForm {
 
         $fromWidget = $this->getOption('from_time');
         $fromId = $fromWidget->getAttribute('id');
+        if (empty($fromId)) {
+            $fromId = $this->generateId($name . '_from');
+            $fromWidget->setAttribute('id', $fromId);
+        }        
         
         $toWidget = $this->getOption('to_time');
         $toId = $toWidget->getAttribute('id');
+        if (empty($toId)) {
+            $toId = $this->generateId($name . '_to');
+            $toWidget->setAttribute('id', $toId);
+        }          
         
         $fromLabelHtml = '';
         $fromLabel = $this->getOption('from_label');
@@ -117,11 +125,17 @@ class ohrmWidgetFormTimeRange extends sfWidgetForm {
                         '%label%' => $this->translate($durationLabel)
                     ));
         }        
+        
+        $duration = '';
+        $durationHtml = strtr($this->getOption('duration_template'), array(
+                        '%duration%' => $this->translate($duration)
+                    ));
 
         return strtr($this->translate($this->getOption('template')), array(
                     '%from_label%' => $fromLabelHtml,
                     '%to_label%' => $toLabelHtml,
                     '%duration_label%' => $durationLabelHtml,
+                    '%duration%' => $durationHtml,
                     '%from_time%' => $fromWidget->render($name . '[from]', $value['from']),
                     '%to_time%' => $toWidget->render($name . '[to]', $value['to']),
                 ));

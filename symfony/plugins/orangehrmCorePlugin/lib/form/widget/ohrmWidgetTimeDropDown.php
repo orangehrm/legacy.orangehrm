@@ -65,6 +65,12 @@ class ohrmWidgetTimeDropDown extends sfWidgetForm {
      */
     public function render($name, $value = null, $attributes = array(), $errors = array()) {
         
+        if (array_key_exists('class', $attributes)) {
+            $attributes['class'] .= ' timepicker';
+        } else {
+            $attributes['class'] = 'timepicker';
+        }
+        
         // convert value to an array
         $default = array('hour' => null, 'minute' => null);
         if (is_array($value)) {
