@@ -864,7 +864,7 @@ form input.validation-error {
     font-size: 12px;
     color: #aa4935;
 	display:block;
-	z-index:9999;
+	/*z-index:9999; This makes error to appear over menu */
 	position:absolute;
 	top:21px;
 	left:150px;
