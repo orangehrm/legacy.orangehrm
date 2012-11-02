@@ -5185,6 +5185,7 @@ symfony/web/index.php -text
 symfony/web/jquery/bootstrap-modal.js -text
 symfony/web/jquery/jquery-1.7.2.min.js -text
 symfony/web/jquery/jquery-1.8.0.min.js -text
+symfony/web/jquery/jquery.autocomplete.js -text
 symfony/web/jquery/jquery.form.js -text
 symfony/web/jquery/jquery.functions.js -text
 symfony/web/jquery/jquery.tipTip.minified.js -text
@@ -5219,7 +5220,7 @@ symfony/web/orangehrm_dev.php -text
 symfony/web/robots.txt -text
 symfony/web/sfDoctrinePlugin -text
 symfony/web/themes/default/css/header.css -text
-symfony/web/themes/default/css/jquery-ui-1.8.21.custom.css -text
+symfony/web/themes/default/css/jquery/jquery-ui-1.8.21.custom.css -text
 symfony/web/themes/default/css/jquery/jquery.autocomplete.css -text
 symfony/web/themes/default/css/main.css -text
 symfony/web/themes/default/css/reset.css -text

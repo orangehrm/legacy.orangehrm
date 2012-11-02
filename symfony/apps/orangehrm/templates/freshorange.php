@@ -15,6 +15,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <link href="<?php echo theme_path('css/reset.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo theme_path('css/tipTip.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo theme_path('css/jquery-ui-1.8.21.custom.css')?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo theme_path('css/jquery/jquery.autocomplete.css')?>" rel="stylesheet" type="text/css"/>
         
         <!-- Custom CSS files -->
         <link href="<?php echo theme_path('css/main.css')?>" rel="stylesheet" type="text/css"/>        
@@ -23,6 +24,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery-1.7.2.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/validate/jquery.validate.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.core.js')?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.autocomplete.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.datepicker.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.form.js')?>"></script>        
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tipTip.minified.js')?>"></script>

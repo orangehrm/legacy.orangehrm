@@ -18,11 +18,6 @@
  */
 ?>
 
-<?php
-use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-?>
-
 <?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error') || $sf_user->hasFlash('warning')): ?>
     <div class="box simple">
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
