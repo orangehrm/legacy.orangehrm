@@ -189,9 +189,13 @@ function theme_path($path) {
     $sfUser = sfContext::getInstance()->getUser();
     
     if (!$sfUser->hasAttribute('meta.themeName')) {
-        $sfUser->setAttribute('meta.themeName', OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_THEME_NAME));
+        $themeName = OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_THEME_NAME);
+        if (empty($themeName)) {
+            $themeName = 'default';
+        }
+        $sfUser->setAttribute('meta.themeName', $themeName);
     }
-    
+
     $themeName = $sfUser->getAttribute('meta.themeName'); 
     
     $themePath = public_path() . 'themes/' . $themeName . '/';
