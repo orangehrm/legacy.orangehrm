@@ -7,11 +7,6 @@ $formatData['currentSeparater'] = '-';
 $formatData['newSeparater'] = '/';
 ?>
 
-<?php 
-use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-?>
-
 <div class="box toggableForm search2col">     
 
   <div id="formHeading" class="head"><h1><?php echo __('Search Performance Reviews')?></h1></div>

@@ -68,9 +68,6 @@
 use_javascripts_for_form($form);
 use_stylesheets_for_form($form);
 
-use_stylesheet(public_path('themes/default/css/jquery/jquery.autocomplete.css'));
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-
 ?>
 
 <?php if ($form->hasErrors()): ?>

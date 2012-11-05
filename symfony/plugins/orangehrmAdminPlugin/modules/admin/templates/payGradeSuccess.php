@@ -3,8 +3,6 @@
 
 <?php 
 use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess'); 
-use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 ?>
 
 <?php $hasCurrencies = count($currencyList) > 0; ?>

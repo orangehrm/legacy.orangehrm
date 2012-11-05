@@ -215,13 +215,5 @@ EOF
         return strcmp($employee1['name'], $employee2['name']);
     }
 
-    public function getStylesheets() {
-        return array(public_path('themes/default/css/jquery/jquery.autocomplete.css') => 'all');
-    }
-    
-    public function getJavaScripts() {
-        return array(public_path('../../scripts/jquery/jquery.autocomplete.js'));
-    }
-    
 }
 
