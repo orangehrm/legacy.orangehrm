@@ -14,7 +14,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <!-- Library CSS files -->
         <link href="<?php echo theme_path('css/reset.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo theme_path('css/tipTip.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo theme_path('css/jquery-ui-1.8.21.custom.css')?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo theme_path('css/jquery/jquery-ui-1.8.21.custom.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo theme_path('css/jquery/jquery.autocomplete.css')?>" rel="stylesheet" type="text/css"/>
         
         <!-- Custom CSS files -->
