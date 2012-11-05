@@ -10,3 +10,11 @@ displayProjectReportCriteriaSuccess:
   layout: freshorange
 displayEmployeeReportCriteriaSuccess:
   layout: freshorange
+displayEmployeeReportSuccess:
+  layout: freshorange
+displayProjectReportSuccess:
+  layout: freshorange
+displayProjectActivityDetailsReportSuccess:
+  layout: freshorange
+displayAttendanceSummaryReportSuccess:
+  layout: freshorange
