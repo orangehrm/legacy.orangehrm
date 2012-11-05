@@ -1,73 +1,33 @@
+<div class="box single">
+    <div class="head"><h1 id="reportToHeading"><?php echo __($reportName); ?></h1></div>
+    <div class="inner">
+            <?php include_partial('global/flash_messages'); ?>
+            <form action="<?php echo url_for("time/displayEmployeeReportCriteria?reportId=2"); ?>" id="reportForm" method="post">
+                <?php echo $form['_csrf_token']; ?>
+                 <fieldset>
+                <ol>             
+                 <?php foreach ($sf_data->getRaw('runtimeFilterFieldWidgetNamesAndLabelsList') as $label): ?>
+                 <?php echo $reportForm->renderHiddenFields(); ?>
+                <li>   
+                    <?php echo $reportForm[$label['labelName']]->renderLabel(); ?>
+                    <?php echo $reportForm[$label['labelName']]->render(); ?><?php echo $reportForm[$label['labelName']]->renderError(); ?>
+                </li>
+                    <?php endforeach; ?>
+                <li class="required">
+                    <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                </li>
 
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
-<?php
-use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
+                </ol>
+                    <p>
+                    <input type="button" id="viewbutton" value="<?php echo __('View') ?>" />
+                    </p>
 
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-?>
-<div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
-<div class="outerbox" id="outerbox" style="width: 60%">
-    <div class="mainHeading"><h2 id="reportToHeading"><?php echo __($reportName); ?></h2></div>
-    <form action="<?php echo url_for("time/displayEmployeeReportCriteria?reportId=2"); ?>" id="reportForm" method="post">
-
-        <div class="employeeTable">
-            <br class="clear"/>
-
-            <?php foreach ($sf_data->getRaw('runtimeFilterFieldWidgetNamesAndLabelsList') as $label): ?>
-            <?php echo $reportForm[$label['labelName']]->renderLabel(); ?>
-            <?php echo $reportForm[$label['labelName']]->render(); ?><?php echo $reportForm[$label['labelName']]->renderError(); ?>
-                <div class="errorDiv"></div>
-                <br class="clear"/>
-                <br class="clear"/>
-            <?php endforeach; ?>
-            <?php echo $reportForm->renderHiddenFields(); ?>
-            </div>
-
-            <div class="formbuttons">
-                <td colspan="2"><input type="button" id="viewbutton" class="viewbutton" value="<?php echo __('View') ?>"/></td>
-            </div>
-        </form>
+                </fieldset> 
+          </form>
     </div>
-    <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+</div>
 
-    <style type="text/css">
-        form#reportForm label {
-            margin-top: 6px;
-            width: 140px;
-            font-weight: normal;
-        }
-        #time_activity_name{
-            width: 160px;
-        }
-        #time_project_name{
-            width: 160px;
-        }
-
-        .errorDiv {
-            padding-left: 20px;
-        }
-        .viewbutton {
-            margin-left: 20px;
-        }
-
-        .paddingLeftRequired{
-            font-size: 8pt;
-            padding-left: 15px;
-            padding-top: 5px;
-        }
-        label.error{
-            width: 230px !important;
-        }
-    </style>
-
-    <script type="text/javascript">
+     <script type="text/javascript">
             var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
             var lang_dateError = '<?php echo __("To date should be after from date") ?>';
             var lang_validDateMsg = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
@@ -131,13 +91,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                     date_range:lang_dateError
                 }
 
-            },
-            errorPlacement: function(error, element) {
-                error.appendTo(element.prev('label'));
-                error.appendTo(element.next().next().next('div.errorDiv'));}
-            //                    error.appendTo(element.prev().prev().prev().prev('label'));}
-
-
+            }
         });
     });
 

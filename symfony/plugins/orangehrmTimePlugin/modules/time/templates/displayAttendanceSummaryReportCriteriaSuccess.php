@@ -1,11 +1,3 @@
-
-<?php 
-use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-?>
-
-<div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
-
 <div class="box single" id="attendance-summary">
        <div class="head"><h1><?php echo __('Attendance Total Summary Report'); ?></h1></div>
         <div class="inner">
@@ -171,9 +163,6 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
                     valid_date: lang_invalidDate ,
                     date_range: lang_dateError
                 }
-            },
-            errorPlacement: function(error, element) {
-                error.appendTo(element.siblings(".errorContainer"));
             }
         });
 

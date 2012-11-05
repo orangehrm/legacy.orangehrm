@@ -6,3 +6,7 @@ viewEmployeeTimesheetSuccess:
   layout: freshorange
 displayAttendanceSummaryReportCriteriaSuccess:
   layout: freshorange
+displayProjectReportCriteriaSuccess:
+  layout: freshorange
+displayEmployeeReportCriteriaSuccess:
+  layout: freshorange
