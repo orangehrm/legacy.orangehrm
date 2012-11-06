@@ -17,9 +17,6 @@
  * Boston, MA  02110-1301, USA
  */
 ?>
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/configure'); ?>
-
-
 
 <div class="box single">
          
@@ -32,25 +29,24 @@
         <?php include_partial('global/flash_messages'); ?>
             
         <form  id="configureForm" action=""  method="post">
-            
+            <?php echo $form['_csrf_token']; ?>
             <fieldset>
                 <ol>
                    <li class="checkbox">
-                        <?php echo $form['_csrf_token']; ?>
-                        <?php echo $form['configuration1']->render(); ?>
                         <?php echo $form['configuration1']->renderLabel(__('Employee can change current time when punching in/out')); ?>
-                    </li>
+                        <?php echo $form['configuration1']->render(); ?>
+                        </li>
                         
                                             
                     <li class="checkbox">
-                        <?php echo $form['configuration2']->render(); ?>
                         <?php echo $form['configuration2']->renderLabel(__('Employee can edit/delete own attendance records')); ?>
-                    </li>
+                        <?php echo $form['configuration2']->render(); ?>
+                        </li>
                         
                     <li class="checkbox">
-                         <?php echo $form['configuration3']->render(); ?>
                          <?php echo $form['configuration3']->renderLabel(__('Supervisor can add/edit/delete attendance records of subordinates')); ?>
-                     </li>
+                         <?php echo $form['configuration3']->render(); ?>
+                         </li>
                                                                  
                 </ol>
                 <p>
