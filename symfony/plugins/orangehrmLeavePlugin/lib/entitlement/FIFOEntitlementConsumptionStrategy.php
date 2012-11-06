@@ -118,6 +118,7 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
                             }
                         }                        
 
+                        //echo('leaveLength = ' . $leaveLength . "\n");
                         if ($leaveLength <= 0) {
                             //var_dump("leaveLength = 0");
                             $getNextDate = true;
@@ -131,7 +132,11 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
                             $entitlement->days_used += $leaveLength;
                             $availableDays -= $leaveLength;
                             
-                            $current[$leaveDate->getDate()] = array($entitlement->id => $leaveLength);
+                            if (!isset($current[$leaveDate->getDate()])) {
+                                $current[$leaveDate->getDate()] = array();
+                            }
+                            $current[$leaveDate->getDate()][$entitlement->id] = $leaveLength;
+                            
                             $getNextDate = true;                            
                             
                             $skipTemp = false;
@@ -148,10 +153,15 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
                             $entitlement->days_used = $entitlement->no_of_days;
                             $leaveLength -= $availableDays;
                             
-                            $current[$leaveDate->getDate()] = array($entitlement->id => $availableDays);
+                            if (!isset($current[$leaveDate->getDate()])) {
+                                $current[$leaveDate->getDate()] = array();
+                            }
+                            $current[$leaveDate->getDate()][$entitlement->id] = $availableDays;
+                            
                             $availableDays = 0;
                             
                             $getNextDate = false;
+                            //echo('LESS leaveLength = ' . $leaveLength . "\n");
                         }
                     }
 

@@ -755,16 +755,13 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
         $this->assertTrue($results !== false);
         $current = array_combine(array('2012-09-13', '2012-09-14', '2012-09-15', '2012-09-16'), 
-                array(array(2=>1), array(3=>1), array(1=>0.5, 3=>0.5), array(3=>0.5, 4=>0.5)));
+                array(array(2=>1), array(3=>1), array(1=>0.5, 3=>0.5), array(3=>0.5, 5=>0.5)));
         
         $changes = array();
                 
         $this->verifyEntitlements($results, $current, $changes);       
     }    
     
-    /**
-     * Partial date leave request
-     */
     
     /**
      * Verify entitlement results
