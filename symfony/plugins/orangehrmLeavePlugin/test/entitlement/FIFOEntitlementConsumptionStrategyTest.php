@@ -878,7 +878,7 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $current = array_combine(array('2012-09-13', '2012-09-14'), 
                 array(array(2=>1), array(3=>1)));
         
-        $changes = array_combine(array('2012-09-15', '2012-09-16'), 
+        $changes = array_combine(array(3, 4), 
                 array(array(1=>0.5, 3=>0.5), array(3=>0.5, 5=>0.5)));
                 
         $this->verifyEntitlements($results, $current, $changes);       

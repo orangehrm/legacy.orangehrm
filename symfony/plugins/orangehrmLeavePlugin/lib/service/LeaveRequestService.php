@@ -168,9 +168,9 @@ class LeaveRequestService extends BaseService {
      * @param Leave $leave
      * @return boolean
      */
-    public function saveLeaveRequest( LeaveRequest $leaveRequest , $leaveList) {
+    public function saveLeaveRequest( LeaveRequest $leaveRequest , $leaveList, $entitlements) {
 
-        $this->getLeaveRequestDao()->saveLeaveRequest( $leaveRequest, $leaveList);
+        $this->getLeaveRequestDao()->saveLeaveRequest( $leaveRequest, $leaveList, $entitlements);
 
         return true ;
 

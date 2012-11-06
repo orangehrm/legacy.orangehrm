@@ -199,10 +199,20 @@ class LeaveEntitlementDao extends BaseDao {
     } 
     
     
+    /**
+     * TODO: Test for leave without entitlements as well.
+     * 
+     * @param type $empNumber
+     * @param type $leaveTypeId
+     * @param type $asAtDate
+     * @param type $date
+     * @return int
+     */
     public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date = NULL) {
         $conn = Doctrine_Manager::connection()->getDbh(); 
         
-        $sql = 'SELECT sum(le.no_of_days - le.days_used) FROM ohrm_leave_entitlement le ' . 
+        $sql = 'SELECT sum(le.no_of_days - le.days_used - COALESCE(lle.length_days,0) ) FROM ohrm_leave_entitlement le LEFT JOIN ohrm_leave_leave_entitlement lle' .
+               ' ON le.id = lle.entitlement_id '. 
                'WHERE le.deleted = 0 AND le.emp_number = ? AND le.leave_type_id = ? ' . 
                ' AND le.to_date >= ?';
         

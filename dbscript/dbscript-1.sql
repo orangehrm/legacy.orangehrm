@@ -181,7 +181,7 @@ create table `hs_hr_emp_passport` (
   `emp_number` int(7) not null default 0,
   `ep_seqno` decimal(2,0) not null default '0',
   `ep_passport_num` varchar(100) not null default '',
-  `ep_passportissueddate` datetime default null,
+  `ep_passportissueddate` datetime default null,hs
   `ep_passportexpiredate` datetime default null,
   `ep_comments` varchar(255) default null,
   `ep_passport_type_flg` smallint(6) default null,
@@ -1312,6 +1312,14 @@ CREATE TABLE `ohrm_leave` (
   KEY `request_status` (`leave_request_id`,`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create TABLE `ohrm_leave_leave_entitlement` (
+    `id` int(11) NOT NULL   auto_increment,
+    `leave_id` int(11) NOT NULL,
+    `entitlement_id` int unsigned NOT NULL,
+    `length_days` decimal(4,2) unsigned default NULL,
+    PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 alter table ohrm_leave_type
     add foreign key (operational_country_id)
         references ohrm_operational_country(id) on delete set null;
@@ -1351,6 +1359,15 @@ alter table ohrm_leave
 alter table ohrm_leave
     add constraint foreign key (entitlement_id)
         references ohrm_leave_entitlement (id) on delete cascade;
+
+alter table ohrm_leave_leave_entitlement
+    add constraint foreign key (entitlement_id)
+        references ohrm_leave_entitlement (id) on delete cascade;
+
+alter table ohrm_leave_leave_entitlement
+    add constraint foreign key (leave_id)
+        references ohrm_leave (id) on delete cascade;
+
 
 alter table ohrm_menu_item 
        add constraint foreign key (screen_id)

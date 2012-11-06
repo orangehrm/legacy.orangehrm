@@ -29,10 +29,15 @@ class LeaveRequestDao extends BaseDao {
      * @param LeaveRequest $leaveRequest
      * @return boolean
      */
-    public function saveLeaveRequest(LeaveRequest $leaveRequest, $leaveList) {
+    public function saveLeaveRequest(LeaveRequest $leaveRequest, $leaveList, $entitlements) {
         try {
             $leaveRequest->save();
-
+            
+            $current = array();
+            if (isset($entitlements['current'])) {
+                $current = $entitlements['current'];
+            }
+            
             foreach ($leaveList as $leave) {
                 $leave->setLeaveRequestId($leaveRequest->getId());
                 $leave->setLeaveTypeId($leaveRequest->getLeaveTypeId());
@@ -40,11 +45,38 @@ class LeaveRequestDao extends BaseDao {
 
                 $leave->save();
                 
-//		$q = Doctrine_Query::create()
-//			->update('LeaveEntitlement le')
-//			->set('le.days_used = le.days_used + ?', $leave->getLengthDays())
-//			->where('le.id = ?', $leave->getEntitlementId());
-//		return $q->execute();                
+                $leaveId = $leave->getId();
+                
+                if (isset($current[$leave->getDate()])) {
+                    $entitlementsForDate = $current[$leave->getDate()];
+                    foreach($entitlementsForDate as $entitlementId => $length) {
+                        $le = new LeaveLeaveEntitlement();
+                        $le->setLeaveId($leaveId);
+                        $le->setEntitlementId($entitlementId);
+                        $le->setLengthDays($length);
+                        $le->save();
+                    }
+                }        
+            }            
+            
+            if (isset($entitlements['change'])) {
+                $changes = $entitlements['change'];
+                
+                foreach($changes as $leaveId => $change) {
+                    Doctrine_Query::create()
+                            ->delete('LeaveLeaveEntitlement l')
+                            ->where('l.leave_id = ?', $leaveId)
+                            ->execute();
+                    
+                    foreach($change as $entitlementId => $length) {
+                        $le = new LeaveLeaveEntitlement();
+                        $le->setLeaveId($leaveId);
+                        $le->setEntitlementId($entitlementId);
+                        $le->setLengthDays($length);
+                        $le->save();                        
+                    } 
+                }
+                
             }
 
             return true;

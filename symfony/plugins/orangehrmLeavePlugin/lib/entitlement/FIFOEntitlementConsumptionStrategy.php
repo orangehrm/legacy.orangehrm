@@ -88,14 +88,18 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
             $entitlementsOk = true;
 
             if (!is_null($fromDate)) {
-                $entitlements = $this->getLeaveEntitlementService()->getValidLeaveEntitlements($empNumber, $leaveType, $fromDate, $toDate, 'to_date', 'ASC');            
-                        
-                // TODO Get currently assigned leave dates and add to $leaveDates
-                $entitlementIds = array();
-                foreach($entitlements as $entitlement) {
-                    $entitlementIds[] = $entitlement->getId();
-                }
+
                 
+                $newentitlements = $this->getLeaveEntitlementService()->getValidLeaveEntitlements($empNumber, $leaveType->getId(), $fromDate, $toDate, 'to_date', 'ASC');            
+                
+                // TODO Get currently assigned leave dates and add to $leaveDates
+                $entitlements = array();
+                $entitlementIds = array();
+                foreach($newentitlements as $entitlement) {
+                    $entitlementIds[] = $entitlement->getId();
+                    $entitlements[] = $entitlement;
+                }
+
                 $statuses = array(
                     Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL,
                     Leave::LEAVE_STATUS_LEAVE_APPROVED);
@@ -111,11 +115,11 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
                 $entitlementsOk = false;
                 
                 $entitlement = array_shift($entitlements);
-                
                 $tmpArray = array();
                 $skipTemp = false;
                 
                 while (!is_null($entitlement)) {
+                    
                     $availableDays = $entitlement->getAvailableDays();
 
                     if ($availableDays > 0) {                       
@@ -154,10 +158,10 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
                                 }
                                 $current[$leaveDate->getDate()][$entitlement->id] = $leaveLength;
                             } else {
-                                if (!isset($change[$leaveDate->getDate()])) {
-                                    $change[$leaveDate->getDate()] = array();
+                                if (!isset($change[$leaveDate->getId()])) {
+                                    $change[$leaveDate->getId()] = array();
                                 }
-                                $change[$leaveDate->getDate()][$entitlement->id] = $leaveLength;                                
+                                $change[$leaveDate->getId()][$entitlement->id] = $leaveLength;                                
                             }
                             $getNextDate = true;                            
                             
@@ -183,10 +187,10 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
                                 }
                                 $current[$leaveDate->getDate()][$entitlement->id] = $availableDays;                                
                             } else {
-                                if (!isset($change[$leaveDate->getDate()])) {
-                                    $change[$leaveDate->getDate()] = array();
+                                if (!isset($change[$leaveDate->getId()])) {
+                                    $change[$leaveDate->getId()] = array();
                                 }
-                                $change[$leaveDate->getDate()][$entitlement->id] = $availableDays;                                 
+                                $change[$leaveDate->getId()][$entitlement->id] = $availableDays;                                 
                             }
 
                             
