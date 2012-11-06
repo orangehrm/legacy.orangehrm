@@ -17,7 +17,7 @@
  * Boston, MA  02110-1301, USA
  */
 ?>
-
+<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/configure'); ?>
 
 
 

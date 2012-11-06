@@ -92,3 +92,5 @@ viewModulesSuccess:
   layout: freshorange
 saveProjectSuccess:
   layout: freshorange
+changeUserPasswordSuccess:
+  layout: freshorange

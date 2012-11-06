@@ -46,7 +46,7 @@ class ChangeUserPasswordForm extends BaseForm {
         $formExtension->mergeForms($this, 'changeUserPassword', 'ChangeUserPasswordForm');
 
         sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 
     /**
@@ -54,12 +54,13 @@ class ChangeUserPasswordForm extends BaseForm {
      * @return array
      */
     protected function getFormLabels() {
+        $requiredMarker = ' <em> *</em>';
         $labels = array(
             'userId' => false,
-            'currentPassword' => __('Current Password') . '<span class="required">*</span>',
-            'newPassword' => __('New Password') . '<span class="required">*</span>',
-            'confirmNewPassword' => __('Confirm New Password') . '<span class="required">*</span>',
-            'currentPassword' => __('Current Password') . '<span class="required">*</span>',
+            'currentPassword' => __('Current Password')  . $requiredMarker,
+            'newPassword' => __('New Password') . $requiredMarker,
+            'confirmNewPassword' => __('Confirm New Password') . $requiredMarker,
+            'currentPassword' => __('Current Password') . $requiredMarker,
         );
 
         return $labels;
