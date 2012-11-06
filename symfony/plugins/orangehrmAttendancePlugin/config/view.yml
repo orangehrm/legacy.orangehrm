@@ -2,3 +2,5 @@ punchTimeSuccess:
   layout: freshorange
 viewAttendanceRecordSuccess:
   layout: freshorange
+configureSuccess:
+  layout: freshorange
