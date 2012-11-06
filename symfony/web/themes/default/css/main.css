@@ -865,9 +865,11 @@ form input.validation-error {
     color: #aa4935;
 	display:block;
 	/*z-index:9999; This makes error to appear over menu */
-	position:absolute;
+	/*position:absolute;
 	top:21px;
-	left:150px;
+	left:150px; These rules lead to place error inside text areas */
+    clear: both;
+    margin-left: 150px;
     margin-top: 6px;
 }
 /* Don't use this class. To be removed.
