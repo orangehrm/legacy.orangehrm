@@ -85,12 +85,12 @@ use_stylesheets_for_form($form);
         }
         
         // Bind On change event of From Time
-        $('#assignleave_txtFromTime').change(function() {
+        $('#assignleave_time_from').change(function() {
             fillTotalTime();
         });
         
         // Bind On change event of To Time
-        $('#assignleave_txtToTime').change(function() {
+        $('#assignleave_time_to').change(function() {
             fillTotalTime();
         });
         
@@ -101,7 +101,6 @@ use_stylesheets_for_form($form);
         
         $("#assignleave_txtFromTime").datepicker({
             onClose: function() {
-                console.log("Closing");
                 $("#assignleave_txtFromTime").valid();
             }
         });
@@ -162,7 +161,8 @@ use_stylesheets_for_form($form);
                     }
                 },
                 'assignleave[txtComment]': {maxlength: 250},
-                'assignleave[time][from]':{ required: false, validWorkShift : true, validTotalTime: true, validToTime: true}
+                'assignleave[time][from]':{ required: false, validWorkShift : true, validTotalTime: true, validToTime: true},
+                'assignleave[time][to]':{ required: false,validTotalTime: true}
             },
             messages: {
                 'assignleave[txtEmployee][empName]':{
@@ -185,8 +185,11 @@ use_stylesheets_for_form($form);
                 },
                 'assignleave[time][from]':{
                     validTotalTime : "<?php echo __(ValidationMessages::REQUIRED); ?>",
-                    validWorkShift : "<?php echo __('Should be less than work shift length'); ?>",
+                    validWorkShift : "<?php echo __('Duration should be less than work shift length'); ?>",
                     validToTime:"<?php echo __('From time should be less than To time'); ?>"
+                },
+                'assignleave[time][to]':{
+                    validTotalTime : "<?php echo __(ValidationMessages::REQUIRED); ?>"
                 }
             }
         });
@@ -197,9 +200,8 @@ use_stylesheets_for_form($form);
             var todate = $('#assignleave_txtToDate').val();
             
             if (fromdate == todate) {
-                var fromTime = $('#assignleave_time_from');
-                var toTime = $('#assignleave_time_to');
-                if ((fromTime == '') || (toTime == '')) {
+                             
+                if (value == '') {
                     valid = false;
                 }
             }
@@ -308,7 +310,11 @@ use_stylesheets_for_form($form);
     //Calculate Total time
     function fillTotalTime() {        
         var total = getTotalTime();
-        $('#assignleave_time_to').next('input.time_range_duration').val(total);
+        if (isNaN(total)) {
+            total = '';
+        }
+
+        $('input.time_range_duration').val(total);
     }
     
     function getTotalTime() {
