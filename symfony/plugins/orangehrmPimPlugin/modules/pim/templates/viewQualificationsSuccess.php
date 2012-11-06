@@ -13,7 +13,8 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
         <h1><?php echo __('Qualifications'); ?></h1>
     </div>
     -->
-        
+    
+    <a name="workexperience"></a>
     <!-- this is work experience section -->
     <?php if ($workExperiencePermissions->canCreate() || ($haveWorkExperience && $workExperiencePermissions->canUpdate())) { ?>
         <div id="changeWorkExperience">
@@ -69,16 +70,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
     <?php } ?>
         
     <div class="miniList" id="sectionWorkExperience">
-        <a name="workexperience"></a>
-        <?php
-        if (($section == 'workexperience') && isset($message) && isset($messageType)) {
-            $tmpMsgClass = "messageBalloon_{$messageType}";
-            $tmpMsg = $message;
-        } else {
-            $tmpMsgClass = '';
-            $tmpMsg = '';
-        }
-        ?>
+
         <div class="head">
             <h1><?php echo __("Work Experience"); ?></h1>
         </div>
@@ -87,7 +79,11 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
 
             <?php if ($workExperiencePermissions->canRead()) : ?>
 
-                <?php include_partial('global/flash_messages'); ?>
+                <?php 
+                if ($section == 'workexperience') {
+                    include_partial('global/flash_messages'); 
+                }
+                ?>
 
                 <form id="frmDelWorkExperience" action="<?php echo url_for('pim/saveDeleteWorkExperience?empNumber=' . 
                         $empNumber . "&option=delete"); ?>" method="post">
@@ -182,34 +178,26 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
     </div> <!-- miniList-sectionWorkExperience -->
     
     <!-- this is education section -->
-    <a name="education"></a>
     <?php
     include_partial('education', array('empNumber' => $empNumber, 'form' => $educationForm, 
-        'message' => $message, 'messageType' => $messageType,
         'section' => $section, 'educationPermissions' => $educationPermissions));
     ?>
 
     <!-- this is skills section -->
-    <a name="skill"></a>
     <?php
     include_partial('skill', array('empNumber' => $empNumber, 'form' => $skillForm, 
-        'message' => $message, 'messageType' => $messageType, 
         'section' => $section, 'skillPermissions' => $skillPermissions));
     ?>
     
     <!-- this is Languages section -->
-    <a name="language"></a>
     <?php
     include_partial('language', array('empNumber' => $empNumber, 'form' => $languageForm, 
-        'message' => $message, 'messageType' => $messageType, 
         'section' => $section, 'languagePermissions' => $languagePermissions));
     ?>
     
     <!-- this is Licenses section -->
-    <a name="license"></a>
     <?php
     include_partial('license', array('empNumber' => $empNumber, 'form' => $licenseForm, 
-        'message' => $message, 'messageType' => $messageType,
         'section' => $section, 'licensePermissions' => $licensePermissions));
     ?>
         

@@ -93,8 +93,11 @@ $allowEdit = true;
             <div class="inner">
                 <?php if ($reportToSupervisorPermission->canRead()) : ?>
 
-                    <?php include_partial('global/flash_messages'); ?>
-
+                    <?php 
+                    if ($section == 'supervisor') {
+                        include_partial('global/flash_messages'); 
+                    } 
+                    ?>
                     <form name="frmEmpDelSupervisors" id="frmEmpDelSupervisors" method="post" 
                           action="<?php echo url_for('pim/deleteReportToSupervisor?empNumber=' . $empNumber); ?>">
                         <?php echo $deleteSupForm['_csrf_token']->render(); ?>
@@ -176,7 +179,11 @@ $allowEdit = true;
             <div class="inner">
                 <?php if ($reportToSubordinatePermission->canRead()) : ?>
 
-                    <?php include_partial('global/flash_messages'); ?>
+                    <?php
+                    if ($section == 'subordinates') {
+                        include_partial('global/flash_messages');
+                    }
+                    ?>
 
                     <form name="frmEmpDelSubordinates" id="frmEmpDelSubordinates" method="post" 
                           action="<?php echo url_for('pim/deleteReportToSubordinate?empNumber=' . $empNumber); ?>">

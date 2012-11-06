@@ -30,6 +30,7 @@ $(document).ready(function() {
 
     //hiding the data table if records are not available
     if($(".chkbox1").length == 0) {
+        $('div#sectionWorkExperience .check').hide();
         $("#editWorkExperience").hide();
         $("#delWorkExperience").hide();
     }

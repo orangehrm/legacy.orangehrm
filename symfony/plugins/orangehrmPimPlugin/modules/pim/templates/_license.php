@@ -1,17 +1,8 @@
 <?php  
-if (($section == 'license') && isset($message) && isset($messageType)) {
-    $tmpMsgClass = "messageBalloon_{$messageType}";
-    $tmpMsg = $message;
-} else {
-    $tmpMsgClass = '';
-    $tmpMsg = '';
-}
 $haveLicense = count($form->empLicenseList) > 0;
 ?>
-<div id="licenseMessagebar" class="<?php echo $tmpMsgClass; ?>">
-    <span style="font-weight: bold;"><?php echo $tmpMsg; ?></span>
-</div>
 
+<a name="license"></a>
 <?php if ($licensePermissions->canCreate() || ($haveLicense && $licensePermissions->canUpdate())) { ?>
     <div id="changeLicense">
         <div class="head">
@@ -48,8 +39,11 @@ $haveLicense = count($form->empLicenseList) > 0;
 
         <?php if ($licensePermissions->canRead()) : ?>
 
-            <?php include_partial('global/flash_messages'); ?>
-
+        <?php 
+        if ($section == 'license') {
+            include_partial('global/flash_messages'); 
+        } 
+        ?>
             <form id="frmDelLicense" action="<?php echo url_for('pim/saveDeleteLicense?empNumber=' . 
                     $empNumber . "&option=delete"); ?>" method="post">
                 <p id="actionLicense">
@@ -159,6 +153,8 @@ $haveLicense = count($form->empLicenseList) > 0;
 //<![CDATA[
 
 $(document).ready(function() {
+    //To hide unchanged element into hide and show the value in span while editing
+    $('#license_code').after('<span id="static_license_code" style="display:none;"></span>');
 
 var issuedDate = "";
     function addEditLinks() {
@@ -180,6 +176,7 @@ var issuedDate = "";
     //hiding the data table if records are not available
     if($("div#tblLicense .chkbox").length == 0) {
         //$("#tblLicense").hide();
+        $('div#tblLicense .check').hide();
         $("#editLicense").hide();
         $("#delLicense").hide();
     }
@@ -319,7 +316,7 @@ var issuedDate = "";
               attr("value", code).
               text($("#code_desc_" + code).val())); 
 
-        $('#license_code').val(code).attr('disabled','disabled');
+        $('#license_code').val(code).hide();
 
         $("#license_license_no").val($("#license_no_" + code).val());
         $("#license_date").val($("#start_date_" + code).val());

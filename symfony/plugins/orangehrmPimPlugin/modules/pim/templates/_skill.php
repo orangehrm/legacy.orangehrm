@@ -1,15 +1,8 @@
 <?php  
-if (($section == 'skill') && isset($message) && isset($messageType)) {
-    $tmpMsgClass = "messageBalloon_{$messageType}";
-    $tmpMsg = $message;
-} else {
-    $tmpMsgClass = '';
-    $tmpMsg = '';
-}
-
 $haveSkills = count($form->empSkillList)>0;
 ?>
        
+<a name="skill"></a>
 <?php if ($skillPermissions->canCreate() || ($haveSkills && $skillPermissions->canUpdate())) { ?>
 <div id="changeSkill">
     <div class="head">
@@ -61,7 +54,11 @@ $haveSkills = count($form->empSkillList)>0;
 
         <?php if ($skillPermissions->canRead()) : ?>
 
-        <?php include_partial('global/flash_messages'); ?>
+        <?php 
+        if ($section == 'skill') {
+            include_partial('global/flash_messages'); 
+        }
+        ?>
 
         <form id="frmDelSkill" action="<?php echo url_for('pim/saveDeleteSkill?empNumber=' . 
                 $empNumber . "&option=delete"); ?>" method="post">
@@ -163,6 +160,9 @@ $haveSkills = count($form->empSkillList)>0;
     //<![CDATA[
     
     $(document).ready(function() {
+        //To hide unchanged element into hide and show the value in span while editing
+        $('#skill_code').after('<span id="static_skill_code" style="display:none;"></span>');
+
         function addEditLinks() {
             // called here to avoid double adding links - When in edit mode and cancel is pressed.
             removeEditLinks();
@@ -182,6 +182,7 @@ $haveSkills = count($form->empSkillList)>0;
         //hiding the data table if records are not available
         if($("div#tblSkill .chkbox").length == 0) {
             //$("#tblSkill").hide();
+            $('div#tblSkill .check').hide();
             $("#editSkill").hide();
             $("#delSkill").hide();
         }
@@ -317,7 +318,7 @@ $haveSkills = count($form->empSkillList)>0;
                 append($("<option class='added'></option>").
                 attr("value", code).
                 text($("#skill_name_" + code).val())); 
-            $('#skill_code').val(code).attr('disabled','disabled');
+            $('#skill_code').val(code).hide();
             
             $("#skill_years_of_exp").val($("#years_of_exp_" + code).val());
             $("#skill_comments").val($("#comments_" + code).val());

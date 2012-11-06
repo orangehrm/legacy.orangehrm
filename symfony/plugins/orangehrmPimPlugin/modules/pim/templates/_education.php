@@ -1,17 +1,8 @@
 <?php
-if (($section == 'education') && isset($message) && isset($messageType)) {
-    $tmpMsgClass = "messageBalloon_{$messageType}";
-    $tmpMsg = $message;
-} else {
-    $tmpMsgClass = '';
-    $tmpMsg = '';
-}
 $haveEducation = count($form->empEducationList) > 0;
 ?>
-<div id="educationMessagebar" class="<?php echo $tmpMsgClass; ?>">
-    <span style="font-weight: bold;"><?php echo $tmpMsg; ?></span>
-</div>                                 
-    
+
+<a name="education"></a>
 <?php if (($educationPermissions->canCreate()) || ($haveEducation && $educationPermissions->canUpdate() )) { ?>
 <div id="changeEducation">
     <div class="head">
@@ -74,7 +65,11 @@ $haveEducation = count($form->empEducationList) > 0;
 
         <?php if ($educationPermissions->canRead()) : ?>
 
-        <?php include_partial('global/flash_messages'); ?>
+        <?php 
+        if (($section == 'education')) {
+            include_partial('global/flash_messages'); 
+        } 
+        ?>
 
         <form id="frmDelEducation" action="<?php echo url_for('pim/saveDeleteEducation?empNumber=' . 
                 $empNumber . "&option=delete"); ?>" method="post">
@@ -193,6 +188,8 @@ $haveEducation = count($form->empEducationList) > 0;
     //<![CDATA[
     var startDate = "";
     $(document).ready(function() {
+        
+        $('#education_code').after('<span id="static_education_code" style="display:none;"></span>');
 
         //hide add section
         $("#changeEducation").hide();
@@ -200,6 +197,7 @@ $haveEducation = count($form->empEducationList) > 0;
 
         //hiding the data table if records are not available
         if($("div#tblEducation .chkbox").length == 0) {
+            $('div#tblEducation .check').hide();
             $("#editEducation").hide();
             $("#delEducation").hide();
         }
@@ -336,7 +334,7 @@ $haveEducation = count($form->empEducationList) > 0;
             $("#changeEducation").show();
             var code = $(this).closest("tr").find('input.chkbox:first').val();
             $('#static_education_code').text($("#code_desc_" + code).val()).show();
-            $('#education_code').val($("#code_" + code).val()).attr('disabled','disabled');
+            $('#education_code').val($("#code_" + code).val()).hide();
             $("#education_id").val(code);
             $("#education_institute").val($("#institute_" + code).val());
             $("#education_major").val($("#major_" + code).val());

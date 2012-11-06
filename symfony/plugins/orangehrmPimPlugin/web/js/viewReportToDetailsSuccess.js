@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    //hide adding part...
+    $("#addPaneReportTo").hide();
     
     //Remove check box fields if NO_RECORDS
     if (!haveSupervisors) {
@@ -57,16 +59,6 @@ $(document).ready(function() {
             $(".checkboxSup").removeAttr('checked');
         }
     });
-
-    if (haveSupervisors || haveSubordinates) {
-        $(".paddingLeftRequired").hide();
-        $("#addPaneReportTo").hide();
-    } else {
-        $("#btnCancel").hide();
-        $(".paddingLeftRequired").show();
-        $("#addPaneReportTo").show();
-        $("#listReportToDetails").hide();
-    }
 
     $(".checkboxSup").click(function() {
         $("#checkAllSup").removeAttr('checked');
@@ -193,7 +185,7 @@ $(document).ready(function() {
         $("#reportto_previousRecord").val(primarykey);
         $('#reportto_type_flag_1').attr('checked', 'checked');
         $('#reportto_supervisorName_empName').val(name);
-        $('#reportto_subordinateName_empName').attr('disabled','disabled');
+        $('#reportto_subordinateName_empName').hide();
         $('label[for="reportto_subordinateName"]').hide();
         $('label[for="reportto_supervisorName"]').show();
         $('#reportto_supervisorName_empName').attr('disabled','disabled');
@@ -201,7 +193,7 @@ $(document).ready(function() {
 
         $('#name').text(name);
         $('#name').show();
-        $('#reportto_reportingMethodType').val(reportingMethodType);
+        $('#reportto_reportingMethodType').val(tempArray[2]);
 
         $(".paddingLeftRequired").show();
         $("#reportToHeading").text(editSupervisor);
@@ -238,12 +230,12 @@ $(document).ready(function() {
         $('#reportto_supervisorName_empName').hide();
         $('label[for="reportto_supervisorName"]').hide();
         $('label[for="reportto_subordinateName"]').show();
-        $('#reportto_subordinateName_empName').hide();
+        $('#reportto_subordinateName_empName').attr('disabled','disabled').show();
         $('.radio_list').hide();
 
         $('#name').text(name1);
         $('#name').show();
-        $('#reportto_reportingMethodType').val(reportingMethodType);
+        $('#reportto_reportingMethodType').val(tempArray[2]);
 
         $(".paddingLeftRequired").show();
         $("#reportToHeading").text(editSubordinate);

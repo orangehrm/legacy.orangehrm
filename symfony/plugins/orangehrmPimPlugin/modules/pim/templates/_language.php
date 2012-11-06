@@ -1,18 +1,8 @@
 <?php  
-if (($section == 'language') && isset($message) && isset($messageType)) {
-    $tmpMsgClass = "messageBalloon_{$messageType}";
-    $tmpMsg = $message;
-} else {
-    $tmpMsgClass = '';
-    $tmpMsg = '';
-}
 $haveLanguage = count($form->empLanguageList) > 0;
-?>
-<div id="languageMessagebar" class="<?php echo $tmpMsgClass; ?>">
-    <span style="font-weight: bold;"><?php echo $tmpMsg; ?></span>
-</div>                                 
+?>                         
 
-
+<a name="language"></a>
 <?php if ($languagePermissions->canCreate() || ($haveLanguage && $languagePermissions->canUpdate())) { ?>
     <div id="changeLanguage">
         <div class="head">
@@ -49,7 +39,11 @@ $haveLanguage = count($form->empLanguageList) > 0;
 
         <?php if ($languagePermissions->canRead()) : ?>
 
-            <?php include_partial('global/flash_messages'); ?>
+            <?php 
+            if ($section == 'language') {
+                include_partial('global/flash_messages'); 
+            }
+            ?>
 
             <form id="frmDelLanguage" action="<?php echo url_for('pim/saveDeleteLanguage?empNumber=' . 
                     $empNumber . "&option=delete"); ?>" method="post">
@@ -157,7 +151,10 @@ $haveLanguage = count($form->empLanguageList) > 0;
 //<![CDATA[
 
 $(document).ready(function() {
-
+    
+    $('#language_code').after('<span id="static_language_code" style="display:none;"></span>');
+    $('#language_lang_type').after('<span id="static_lang_type" style="display:none;"></span>');
+    
     function addEditLinks() {
         // called here to avoid double adding links - When in edit mode and cancel is pressed.
         removeEditLinks();
@@ -177,6 +174,7 @@ $(document).ready(function() {
     //hiding the data table if records are not available
     if($("div#tblLanguage .chkbox").length == 0) {
         //$("#tblLanguage").hide();
+        $('div#tblLanguage .check').hide();
         $("#editLanguage").hide();
         $("#delLanguage").hide();
     }
@@ -331,8 +329,8 @@ $(document).ready(function() {
         var langType = parentRow.find('input.lang_type').val();
         var comments = $(this).closest("tr").find('td:last').html();
         
-        $('#language_code').val(code).attr('disabled','disabled');
-        $("#language_lang_type").val(langType).attr('disabled','disabled');
+        $('#language_code').val(code).hide();
+        $("#language_lang_type").val(langType).hide();
         var langTypeText = $("#language_lang_type option:selected").text();
         
         $('#static_language_code').text(parentRow.find('input.language_name').val()).show();

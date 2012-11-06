@@ -108,16 +108,9 @@ class viewQualificationsAction extends basePimAction {
     
     protected function _setMessage() {
         $this->section = '';
-        $this->message = '';
-        $this->messageType = '';
-        
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            if ($this->getUser()->hasFlash('qualificationSection')) {
-                $this->section = $this->getUser()->getFlash('qualificationSection');
-            }
-            
-            list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-        }        
+        if ($this->getUser()->hasFlash('qualificationSection')) {
+            $this->section = $this->getUser()->getFlash('qualificationSection');
+        } 
     }
 }
 ?>
