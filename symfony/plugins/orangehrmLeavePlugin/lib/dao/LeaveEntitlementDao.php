@@ -183,6 +183,22 @@ class LeaveEntitlementDao extends BaseDao {
         }        
     }
     
+    public function getLinkedLeaveRequests($entitlementIds, $statuses) {
+        try {
+            $q = Doctrine_Query::create()->from('Leave l')
+                    ->leftJoin('l.LeaveEntitlements le')
+                    ->andWhereIn('le.id', $entitlementIds)
+                    ->andWhereIn('l.status', $statuses)
+                    ->addOrderBy('l.id ASC');
+
+            $results = $q->execute($params);
+            return $results;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }  
+    } 
+    
+    
     public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date = NULL) {
         $conn = Doctrine_Manager::connection()->getDbh(); 
         

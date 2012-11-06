@@ -431,6 +431,29 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         
     }
     
+    public function testGetLinkedLeaveRequests() {
+        $requests = $this->dao->getLinkedLeaveRequests(array(3, 4), 
+                array(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL, 
+                      Leave::LEAVE_STATUS_LEAVE_REJECTED));
+        
+        $this->assertEquals(0, count($requests));
+        
+        $requests = $this->dao->getLinkedLeaveRequests(array(1, 2, 3, 4, 5), 
+                array(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL, 
+                      Leave::LEAVE_STATUS_LEAVE_REJECTED));        
+        $this->assertEquals(4, count($requests));      
+        $this->assertEquals(1, $requests[0]->getId());
+        $this->assertEquals(2, $requests[1]->getId());
+        $this->assertEquals(3, $requests[2]->getId());
+        $this->assertEquals(4, $requests[3]->getId());
+        
+        $requests = $this->dao->getLinkedLeaveRequests(array(1, 2, 3, 4, 5), 
+                array(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL));        
+        $this->assertEquals(2, count($requests));
+        $this->assertEquals(1, $requests[0]->getId());
+        $this->assertEquals(2, $requests[1]->getId());        
+    }
+    
     protected function _compareEntitlements($expected, $results) {
         $this->assertEquals(count($expected), count($results));
         
