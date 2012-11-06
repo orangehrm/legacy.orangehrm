@@ -182,8 +182,7 @@ class AssignLeaveForm extends sfForm {
             'txtToDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true),
                     array('invalid' => 'Date format should be ' . $inputDatePattern)),
             'txtComment' => new sfValidatorString(array('required' => false, 'trim' => true, 'max_length' => 1000)),
-            'txtFromTime' => new sfValidatorChoice(array('required' => false, 'choices' => $timeChoices)),
-            'txtToTime' => new sfValidatorChoice(array('required' => false, 'choices' => $timeChoices))
+            'time' => new sfValidatorPass()
         );
 
         return $validators;
@@ -202,8 +201,6 @@ class AssignLeaveForm extends sfForm {
             'leaveBalance' => __('Leave Balance'),
             'txtFromDate' => __('From Date') . $requiredMarker,
             'txtToDate' => __('To Date') . $requiredMarker,
-            'txtFromTime' => __('From Time'),
-            'txtToTime' => __('To Time'),
             'txtComment' => __('Comment'),
         );
 

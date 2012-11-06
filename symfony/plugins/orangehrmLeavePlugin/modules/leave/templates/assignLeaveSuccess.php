@@ -162,7 +162,7 @@ use_stylesheets_for_form($form);
                 },
                 'assignleave[txtComment]': {maxlength: 250},
                 'assignleave[time][from]':{ required: false, validWorkShift : true, validTotalTime: true, validToTime: true},
-                'assignleave[time][to]':{ required: false,validTotalTime: true}
+                'assignleave[time][to]':{ required: false, validTotalTime: true}
             },
             messages: {
                 'assignleave[txtEmployee][empName]':{
@@ -231,8 +231,6 @@ use_stylesheets_for_form($form);
             
             var fromdate = $('#assignleave_txtFromDate').val();
             var todate = $('#assignleave_txtToDate').val();
-            var fromTime	=	$('#assignleave_txtFromTime').val();
-            var toTime		=	$('#assignleave_txtToTime').val();
             
             if (fromdate == todate) {
                 var totalTime = getTotalTime();
@@ -315,6 +313,8 @@ use_stylesheets_for_form($form);
         }
 
         $('input.time_range_duration').val(total);
+        $('#assignleave_time_from').valid();
+        $('#assignleave_time_to').valid();
     }
     
     function getTotalTime() {

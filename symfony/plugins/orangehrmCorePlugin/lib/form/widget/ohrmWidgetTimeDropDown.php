@@ -88,8 +88,9 @@ class ohrmWidgetTimeDropDown extends sfWidgetForm {
         $widget = new sfWidgetFormSelect(array('choices' => $this->getChoices(), 
             'id_format' => $this->getOption('id_format')), array_merge($this->attributes, $attributes));
 
-        if (!empty($value['hour']) && !empty($value['minute'])) {
-            $value = $value['hour'] . ':' . $value['minute'];
+        
+        if (is_numeric($value['hour']) && is_numeric($value['minute'])) {
+             $value = sprintf('%02d', $value['hour']) . ':' . sprintf('%02d', $value['minute']);
         } else {
             $value = '';
         }
