@@ -210,13 +210,6 @@ Leave:
       primary: false
       notnull: true
       autoincrement: false
-    entitlement_id:
-      type: integer(4)
-      fixed: false
-      unsigned: true
-      primary: false
-      notnull: false
-      autoincrement: false
     start_time:
       type: time(25)
       fixed: false
@@ -232,10 +225,12 @@ Leave:
       notnull: false
       autoincrement: false
   relations:
-    LeaveEntitlement:
-      local: entitlement_id
-      foreign: id
-      type: one
+    LeaveEntitlements:
+      class: LeaveEntitlement
+      refClass: LeaveLeaveEntitlement
+      foreignAlias: leave
+      local: leave_id
+      foreign: entitlement_id
     LeaveRequest:
       local: leave_request_id
       foreign: id
@@ -245,6 +240,37 @@ Leave:
       foreign: id
       type: one
 
+LeaveLeaveEntitlement:
+  tableName: ohrm_leave_leave_entitlement
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    leave_id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false      
+    entitlement_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    length_days:
+      type: 'decimal(4, 2)'
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false      
+      
 LeaveRequest:
   tableName: ohrm_leave_request
   columns:

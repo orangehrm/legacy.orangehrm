@@ -21,7 +21,7 @@
  * @property LeaveType $LeaveType
  * @property Employee $Employee
  * @property SystemUser $SystemUser
- * @property Doctrine_Collection $Leave
+ * @property Doctrine_Collection $leave
  * 
  * @method integer             getId()               Returns the current record's "id" value
  * @method integer             getEmpNumber()        Returns the current record's "emp_number" value
@@ -39,7 +39,7 @@
  * @method LeaveType           getLeaveType()        Returns the current record's "LeaveType" value
  * @method Employee            getEmployee()         Returns the current record's "Employee" value
  * @method SystemUser          getSystemUser()       Returns the current record's "SystemUser" value
- * @method Doctrine_Collection getLeave()            Returns the current record's "Leave" collection
+ * @method Doctrine_Collection getLeave()            Returns the current record's "leave" collection
  * @method LeaveEntitlement    setId()               Sets the current record's "id" value
  * @method LeaveEntitlement    setEmpNumber()        Sets the current record's "emp_number" value
  * @method LeaveEntitlement    setNoOfDays()         Sets the current record's "no_of_days" value
@@ -56,7 +56,7 @@
  * @method LeaveEntitlement    setLeaveType()        Sets the current record's "LeaveType" value
  * @method LeaveEntitlement    setEmployee()         Sets the current record's "Employee" value
  * @method LeaveEntitlement    setSystemUser()       Sets the current record's "SystemUser" value
- * @method LeaveEntitlement    setLeave()            Sets the current record's "Leave" collection
+ * @method LeaveEntitlement    setLeave()            Sets the current record's "leave" collection
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -201,8 +201,9 @@ abstract class BaseLeaveEntitlement extends sfDoctrineRecord
              'local' => 'created_by_id',
              'foreign' => 'id'));
 
-        $this->hasMany('Leave', array(
-             'local' => 'id',
-             'foreign' => 'entitlement_id'));
+        $this->hasMany('Leave as leave', array(
+             'refClass' => 'LeaveLeaveEntitlement',
+             'local' => 'entitlement_id',
+             'foreign' => 'leave_id'));
     }
 }
