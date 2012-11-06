@@ -6,3 +6,7 @@ changeCandidateVacancyStatusSuccess:
   layout: freshorange
 jobInterviewSuccess:
   layout: freshorange
+viewCandidatesSuccess:
+  layout: freshorange
+addCandidateSuccess:
+  layout: freshorange
