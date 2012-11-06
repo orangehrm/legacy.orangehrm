@@ -1,5 +1,8 @@
 <div class="box toggableForm">
     
+    <div id="formHeading" class="head"><h1><?php echo __("Search Key Performance Indicators")?></h1></div>
+    <div class="inner">
+
         <?php if(count($listJobTitle) == 0) : ?>
             <div class="message warning">
                 <?php echo __("No Defined Job Titles") ?> 
@@ -9,9 +12,7 @@
         <?php endif; ?>      
     
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
-    
-    <div id="formHeading" class="head"><h1><?php echo __("Search Key Performance Indicators")?></h1></div>
-    <div class="inner">
+
         <form action="#" id="frmSearch" name="frmSearch" method="post">
             <input type="hidden" name="mode" value="search" >
             <fieldset>	
