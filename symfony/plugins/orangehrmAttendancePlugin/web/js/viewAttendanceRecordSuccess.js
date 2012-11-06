@@ -12,19 +12,8 @@ $(document).ready(function(){
         $("#attendance_date").val(displayDateFormat);
     }
 
-    //Bind date picker
-    daymarker.bindElement("#attendance_date",
-    {
-        dateFormat : datepickerDateFormat,
-        onClose: function() {
-            $(this).valid();
-        }
-    });
-
-    $('#attendance_date_Button').click(function(){
-        daymarker.show("#attendance_date");
-    });
     
+        
     if(trigger){
         autoFillEmpName(employeeId);
         $("#reportForm").submit();     

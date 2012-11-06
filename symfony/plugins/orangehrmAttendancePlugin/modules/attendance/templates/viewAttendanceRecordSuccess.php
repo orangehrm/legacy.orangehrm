@@ -1,76 +1,56 @@
 <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/viewAttendanceRecordSuccess'); ?>
 
-
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.draggable.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.resizable.js') ?>"></script>
-
-<?php
-use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-?>
-
-<?php echo stylesheet_tag('../orangehrmAttendancePlugin/css/getRelatedAttendanceRecordsSuccess'); ?>
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/getRelatedAttendanceRecordsSuccess'); ?>
-
-<div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
-<div class="outerbox"  style="width: 500px">
-    <div class="maincontent">
-        <div class="mainHeading">
-            <h2><?php echo __('View Attendance Record'); ?></h2>
+<div class="box single">
+    <div class="head">
+            <h1><?php echo __('View Attendance Record'); ?></h1>
         </div>
-        <br class="clear">
-        <?php
-        if ($form->hasErrors()) {
-            echo $form['employeeName']->renderError();
-        }
-        ?>
-        <form action="<?php echo url_for("attendance/viewAttendanceRecord"); ?>" id="reportForm" method="post" name="frmAttendanceReport">
-            <?php echo $form->render(); ?>
-            <?php echo $form->renderHiddenFields(); ?>
-
-            <!-- here we have the button -->
-            <div class="formbuttons">
-                <input type="button" class="savebutton" id="btView" value="<?php echo __("View"); ?>" onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>              
-            </div>
-            <input type="hidden" name="pageNo" id="pageNo" value="" />
-            <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
+    <div class="inner">
+         <?php include_partial('global/flash_messages'); ?>
+     
+         <form action="<?php echo url_for("attendance/viewAttendanceRecord"); ?>" id="reportForm" method="post" name="frmAttendanceReport">
+            <fieldset>
+                <ol>
+                    <?php
+                    if ($form->hasErrors()) {
+                        echo $form['employeeName']->renderError();
+                    }
+                    ?>
+                    <?php echo $form->render(); ?>
+                    <?php echo $form->renderHiddenFields(); ?>                
+                        
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
+                </ol>
+                    <p class="formbuttons">
+                    <input type="button" class="savebutton" id="btView" value="<?php echo __('View') ?>" />
+                    <input type="hidden" name="pageNo" id="pageNo" value="" />
+                    <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
+                    </p>
+            </fieldset> 
         </form>
     </div>
 </div>
-<div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
 <div id="recordsTable">
 
-    <br class="clear">
     <div id="msg" ><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
 
     <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 
     <?php if ($showEdit) : ?>
         <div id="formbuttons">
-            <form action="" id="employeeRecordsForm" method="post" style="float: right">
+            <form action="" id="employeeRecordsForm" method="post">
                 <?php if ($allowedActions['Edit']) : ?>
                     <input type="button" class="edit" name="button" id="btnEdit"
-                           onmouseover="moverButton(this);" onmouseout="moutButton(this); "
                            value="<?php echo __('Edit'); ?>" />
                        <?php endif; ?>
                        <?php if ($allowedActions['PunchIn']) : ?>
                     <input type="button" class="punch" name="button" id="btnPunchIn"
-                           onmouseover="moverButton(this);" onmouseout="moutButton(this); "
-                           value="<?php echo __('Add Attendance Records'); ?>" />
+                                                      value="<?php echo __('Add Attendance Records'); ?>" />
                        <?php endif; ?>
                        <?php if ($allowedActions['PunchOut']) : ?>
                     <input type="button" class="punch" name="button" id="btnPunchOut"
-                           onmouseover="moverButton(this);" onmouseout="moutButton(this); "
-                           value="<?php echo __('Add Attendance Records'); ?>" />
+                            value="<?php echo __('Add Attendance Records'); ?>" />
                        <?php endif; ?>
             </form>
         </div>
@@ -82,14 +62,31 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
     <br class="clear">
 </div>
 
-<div id="dialogBox" class="dialogBox" title="<?php echo __('OrangeHRM - Confirmation Required'); ?>">
+<!-- Confirmation box HTML: Begins -->
+<div class="modal hide" id="dialogBox">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
+    </div>
+    <div class="modal-body">
+        <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
+    </div>
+    <div class="modal-footer">
+        <input type="button" class="btn" data-dismiss="modal" id="dialogOk" value="<?php echo __('Ok'); ?>" />
+        <input type="button" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+    </div>
+</div>
+<!-- Confirmation box HTML: Ends -->
+
+
+<!--<div id="dialogBox" class="dialogBox" title="<?php echo __('OrangeHRM - Confirmation Required'); ?>">
     <?php echo __(CommonMessages::DELETE_CONFIRMATION); ?>
 
     <div>
         <br class="clear" />&nbsp;&nbsp;&nbsp;<input type="button" id="dialogOk" class="plainbtn okBtn" value="<?php echo __('Ok'); ?>" />
         <input type="button" id="dialogCancel" class="plainbtn cancelBtn" value="<?php echo __('Cancel'); ?>" /></div>
 
-</div>
+</div>-->
 
 <script type="text/javascript">
     

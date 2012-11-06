@@ -10,6 +10,10 @@ AttendanceRecordList:
   buttons:
     Delete:
       label: Delete
+      data-toggle: modal
+      data-target: '#dialogBox'
+      class: delete
+      type: submit
   buttonsPosition: after-data
   assets: []
   jsInitMethods: [] 
