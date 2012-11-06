@@ -37,6 +37,146 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
         $this->leaveEntitlementService = $leaveEntitlementService;
     }
 
+    /**
+     * Get available entitlements for given leave parameters
+     * 
+     * Returns an array with the following structure:
+     * eg:
+     * array('current' => array(
+     *          '2012-01-01' => array(1 => 1)
+     *          '2012-01-02' => array(4 => 1)),
+     *       'change' => array(
+     *          12 => array(3 => 1), / leave_id => array(entitlement_id => length) /
+     *          13 => array(4 => 0.5))
+     * )
+     * 
+     * If unable to assign the requested leave, will return false
+     * 
+     * Here 'current' contains assignments for the currently requested leave dates
+     * 'change' contains assignments for existing leave requests that need to change.
+     * 
+     * @param $empNumber int Employee Number
+     * @param $leaveType int LeaveType
+     * @param $leaveDates Array Array of LeaveDate => Length (days)
+     * @return Array or false As described above
+     */    
+    public function getAvailableEntitlements($empNumber, $leaveType, $leaveDates) {
+
+        $result = false;
+        $current = array();
+        $change = array();
+        
+        $numDates = count($leaveDates);
+        $leaveLength = 0;
+
+        if ($numDates > 0) {
+
+            $fromDate = NULL;
+            $toDate = NULL;            
+
+            foreach ($leaveDates as $leaveDate) {
+                $length = $leaveDate->getLengthDays();
+                if ($length > 0) {
+                    if (is_null($fromDate)) {
+                        $fromDate = $leaveDate->getDate();
+                    }
+                    $toDate = $leaveDate->getDate();
+                }
+                $leaveLength += $length;
+            }
+
+            $entitlementsOk = true;
+
+            if (!is_null($fromDate)) {
+                $entitlements = $this->getLeaveEntitlementService()->getValidLeaveEntitlements($empNumber, $leaveType, $fromDate, $toDate, 'to_date', 'ASC');            
+                        
+                // TODO Get currently assigned leave dates and add to $leaveDates
+                
+                reset($leaveDates);
+                $leaveNdx = 0;
+                $getNextDate = true;
+                $entitlementsOk = false;
+                
+                $entitlement = array_shift($entitlements);
+                
+                $tmpArray = array();
+                $skipTemp = false;
+                
+                while (!is_null($entitlement)) {
+                    $availableDays = $entitlement->getAvailableDays();
+
+                    if ($availableDays > 0) {                       
+                        
+                        if ($getNextDate) {
+                            $getNextDate = false;
+                            if ($leaveNdx < $numDates) {                                
+                                $leaveDate = $leaveDates[$leaveNdx++];                            
+                                $leaveLength = $leaveDate->getLengthDays();      
+                            } else {
+                                $entitlementsOk = true;
+                                break;
+                            }
+                        }                        
+
+                        if ($leaveLength <= 0) {
+                            //var_dump("leaveLength = 0");
+                            $getNextDate = true;
+                            $skipTemp = false;                           
+                        } else if (!$entitlement->withinPeriod($leaveDate->getDate())) {
+
+                            array_push($tmpArray, $entitlement);                            
+                            $skipTemp = true;
+
+                        } else if ($leaveLength <= $availableDays) {
+                            $entitlement->days_used += $leaveLength;
+                            $availableDays -= $leaveLength;
+                            
+                            $current[$leaveDate->getDate()] = array($entitlement->id => $leaveLength);
+                            $getNextDate = true;                            
+                            
+                            $skipTemp = false;
+                            if ($leaveNdx >= $numDates) {  
+                                 $entitlementsOk = true;
+                            } 
+                            
+                            array_unshift($entitlements, $entitlement);
+                            
+                            //var_dump("WORKED: " . $entitlement->id . ', ' . $entitlement->getAvailableDays());
+                            //var_dump("leaveNdx=" . $leaveNdx . ', NumDates=' . $numDates);
+                        } else {
+                            //var_dump("LESS");
+                            $entitlement->days_used = $entitlement->no_of_days;
+                            $leaveLength -= $availableDays;
+                            
+                            $current[$leaveDate->getDate()] = array($entitlement->id => $availableDays);
+                            $availableDays = 0;
+                            
+                            $getNextDate = false;
+                        }
+                    }
+
+                    if ($entitlementsOk) {
+                        //var_dump("BREAK");
+                        break;
+                    }                   
+                    
+                    if (!$skipTemp && (count($tmpArray) > 0)) {
+                        $entitlement = array_shift($tmpArray);
+                        //var_dump("T");
+                    } else {
+                        //var_dump("E");
+                        $entitlement = array_shift($entitlements);
+                    }
+                }
+            }
+        }
+        
+        if ($entitlementsOk && (count($change) > 0 || count($current) > 0)) {
+            $result = array('current' => $current, 'change' => $change);
+        }
+        
+        return $result;
+    }
     
     /**
      * Get available entitlements for given leave parameters
@@ -54,7 +194,7 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
      * @param $leaveDates Array Array of LeaveDate => Length (days)
      * @return Array of entitlement id => length (days) 
      */
-    public function getAvailableEntitlements($empNumber, $leaveType, $leaveDates) {
+    public function getAvailableEntitlementsOld($empNumber, $leaveType, $leaveDates) {
                 
         $numDates = count($leaveDates);
         
@@ -79,101 +219,7 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
             
             if (!is_null($fromDate)) {
             
-                $entitlements = $this->getLeaveEntitlementService()->getValidLeaveEntitlements($empNumber, $leaveType, $fromDate, $toDate, 'to_date', 'ASC');            
-                        
-                reset($leaveDates);
-                $leaveNdx = 0;
-                $getNext = true;
-                $entitlementsOk = false;
-                
-                $entitlement = array_shift($entitlements);
-                
-                $tmpArray = array();
-                $skipTemp = false;
-                
-                while (!is_null($entitlement)) {
-                    $availableDays = $entitlement->getAvailableDays();
 
-                    if ($availableDays > 0) {                       
-                        
-                        if ($getNext) {
-                            if ($leaveNdx < $numDates) {                                
-                                $leaveDate = $leaveDates[$leaveNdx++];                            
-                                $leaveLength = $leaveDate->getLengthDays();      
-                            } else {
-                                $entitlementsOk = true;
-                                break;
-                            }
-                        }
-//                        var_dump($leaveDate->getDate());
-//                        var_dump($availableDays . ', ' . $leaveLength);
-                        $getNext = false;
-                        //var_dump('xx' . $leaveDate->getDate());
-                        if ($leaveLength <= 0) {
-                            //var_dump("leaveLength = 0");
-                            $getNext = true;
-                            $skipTemp = false;
-                            if (count($tmpArray) > 0) {
-                                array_unshift($tmpArray, $entitlement);
-                            } else {
-                                array_unshift($entitlements, $entitlement);
-                            }                            
-                        } else if (!$entitlement->withinPeriod($leaveDate->getDate())) {
-
-                            //var_dump("H");
-                            array_push($tmpArray, $entitlement);
-                            
-                            $skipTemp = true;
-                            //break;
-
-                        } else if ($leaveLength <= $availableDays) {
-                            $entitlement->days_used += $leaveLength;
-                            $availableDays -= $leaveLength;
-                            $leaveDate->setEntitlementId($entitlement->id);
-                            $getNext = true;                            
-                            
-                            $skipTemp = false;
-                            if ($leaveNdx >= $numDates) {  
-                                 $entitlementsOk = true;
-                            } 
-                            
-                            if ($availableDays > 0) {
-                                if (count($tmpArray) > 0) {
-                                    array_unshift($tmpArray, $entitlement);
-                                } else {
-                                    array_unshift($entitlements, $entitlement);
-                                }
-                            }
-                            
-                            //var_dump("WORKED: " . $entitlement->id . ', ' . $entitlement->getAvailableDays());
-                            //var_dump("leaveNdx=" . $leaveNdx . ', NumDates=' . $numDates);
-                        } else {
-                            //var_dump("LESS");
-                            $entitlement->days_used = $entitlement->no_of_days;
-                            $leaveLength -= $availableDays;
-                            $availableDays = 0;
-                        }
-                    }
-
-//var_dump("1!!");
-                    if ($entitlementsOk) {
-                        //var_dump("BREAK");
-                        break;
-                    }
-                    
-                    //var_dump($skipTemp); 
-                    //var_dump(count($tmpArray));
-                    //var_dump(count($entitlements));
-                    //die;
-                    
-                    if (!$skipTemp && (count($tmpArray) > 0)) {
-                        $entitlement = array_shift($tmpArray);
-                        //var_dump("T");
-                    } else {
-                        //var_dump("E");
-                        $entitlement = array_shift($entitlements);
-                    }
-                }
             }
         }
 

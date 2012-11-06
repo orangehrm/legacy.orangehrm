@@ -33,16 +33,10 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $this->strategy = new FIFOEntitlementConsumptionStrategy();
     }
     
+    /**
+     * No entitlements available for leave type
+     */
     public function testGetAvailableEntitlementsNone() { 
-        
-        $entitlements = array();
-        
-        $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
-        $mockService->expects($this->once())
-                    ->method('getValidLeaveEntitlements')
-                    //->with($ids)
-                    ->will($this->returnValue($entitlements));
-        $this->strategy->setLeaveEntitlementService($mockService);        
         
         $empNumber = 1;
         $leaveType = 2;
@@ -54,37 +48,24 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
                 
         $leaveDates = array($leave1, $leave2);
         
-        $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
-        $this->assertTrue(!$results);
-
-        
-    }
-    
-    public function testGetAvailableEntitlementsOne1() {
-        
-        $entitlement1 = new LeaveEntitlement();
-        $entitlement1->setId(1);
-        $entitlement1->setEmpNumber(1);
-        $entitlement1->setNoOfDays(3);
-        $entitlement1->setLeaveTypeId(2);
-        $entitlement1->setFromDate('2012-09-13');
-        $entitlement1->setToDate('2012-11-28');
-        $entitlement1->setCreditedDate('2012-05-01');
-        $entitlement1->setNote('Created by Unit test');
-        $entitlement1->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
-        $entitlement1->setDeleted(0);        
-        
-        $entitlements = array(
-            $entitlement1
-        );
+        $entitlements = array();
         
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
-        $mockService->expects($this->any())
+        $mockService->expects($this->once())
                     ->method('getValidLeaveEntitlements')
-                    //->with($ids)
+                    ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
                     ->will($this->returnValue($entitlements));
-        $this->strategy->setLeaveEntitlementService($mockService);        
+        $this->strategy->setLeaveEntitlementService($mockService);                
         
+        $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
+        $this->assertTrue(!$results);        
+    }
+    
+    /**
+     * One entitlement available, but not enough for leave request
+     */
+    public function testGetAvailableEntitlementsOne1() {
+                
         $empNumber = 1;
         $leaveType = 2;
         
@@ -95,84 +76,44 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $leave3 = new Leave();
         $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
         $leave4 = new Leave();
-        $leave4->fromArray(array('id' => 2, 'date' => '2012-09-16', 'length_days' => 1)); 
+        $leave4->fromArray(array('id' => 4, 'date' => '2012-09-16', 'length_days' => 1)); 
+        
+        $entitlement1 = new LeaveEntitlement();
+        $entitlement1->fromArray(array(
+            'id' => 1, 
+            'emp_number' => 1,
+            'no_of_days' => 3,
+            'leave_type_id' => 2,
+            'from_date' => '2012-09-13',
+            'to_date' => '2012-11-28',
+            'credited_date' => '2012-05-01',
+            'note' => 'Created by Unit test',
+            'entitlement_type' => LeaveEntitlement::ENTITLEMENT_TYPE_ADD,
+            'deleted' => 0));
+        
+        $entitlements = array(
+            $entitlement1
+        );
+        
+        $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
+        $mockService->expects($this->any())
+                    ->method('getValidLeaveEntitlements')
+                    ->with($empNumber, $leaveType, '2012-09-13', '2012-09-16', 'to_date', 'ASC')
+                    ->will($this->returnValue($entitlements));
+        $this->strategy->setLeaveEntitlementService($mockService);        
         
         $leaveDates = array($leave1, $leave2, $leave3, $leave4);
         
         $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
-        $this->assertTrue($results == false);
-           
+        $this->assertTrue($results == false);           
     }
     
-    public function testGetAvailableEntitlementsOne2() {
-        
-        $entitlement1 = new LeaveEntitlement();
-        $entitlement1->setId(1);
-        $entitlement1->setEmpNumber(1);
-        $entitlement1->setNoOfDays(3);
-        $entitlement1->setLeaveTypeId(2);
-        $entitlement1->setFromDate('2012-09-13');
-        $entitlement1->setToDate('2012-11-28');
-        $entitlement1->setCreditedDate('2012-05-01');
-        $entitlement1->setNote('Created by Unit test');
-        $entitlement1->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
-        $entitlement1->setDeleted(0);        
-        
-        $entitlements = array(
-            $entitlement1
-        );
-        
-        $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
-        $mockService->expects($this->any())
-                    ->method('getValidLeaveEntitlements')
-                    //->with($ids)
-                    ->will($this->returnValue(array_values($entitlements)));
-        $this->strategy->setLeaveEntitlementService($mockService);        
-        
-        $empNumber = 1;
-        $leaveType = 2;
-        
-        $leave1 = new Leave();
-        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-13', 'length_days' => 1));
-        $leave2 = new Leave();
-        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-14', 'length_days' => 1));        
-        $leave3 = new Leave();
-        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
-        $leave4 = new Leave();
-        $leave4->fromArray(array('id' => 2, 'date' => '2012-09-16', 'length_days' => 1)); 
+
+    /**
+     * One entitlement with enough days, but not possible to support given leave dates
+     */    
+    public function testGetAvailableEntitlementsOne21() {
                 
-        $leaveDates2 = array($leave1, $leave2, $leave3);
-        
-        $results2 = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates2);
-        $this->assertTrue($results2 !== false);        
-        $this->verifyEntitlements($results2, $leaveDates2, array(1, 1, 1));           
-    }
-    
-    public function testGetAvailableEntitlementsOne3() {
-        
-        $entitlement1 = new LeaveEntitlement();
-        $entitlement1->setId(1);
-        $entitlement1->setEmpNumber(1);
-        $entitlement1->setNoOfDays(3);
-        $entitlement1->setLeaveTypeId(2);
-        $entitlement1->setFromDate('2012-09-13');
-        $entitlement1->setToDate('2012-11-28');
-        $entitlement1->setCreditedDate('2012-05-01');
-        $entitlement1->setNote('Created by Unit test');
-        $entitlement1->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
-        $entitlement1->setDeleted(0);        
-        
-        $entitlements = array(
-            $entitlement1
-        );
-        
-        $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
-        $mockService->expects($this->any())
-                    ->method('getValidLeaveEntitlements')
-                    //->with($ids)
-                    ->will($this->returnValue(array_values($entitlements)));
-        $this->strategy->setLeaveEntitlementService($mockService);        
-        
         $empNumber = 1;
         $leaveType = 2;
         
@@ -183,22 +124,61 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $leave3 = new Leave();
         $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
         $leave4 = new Leave();
-        $leave4->fromArray(array('id' => 2, 'date' => '2012-09-16', 'length_days' => 1)); 
+        $leave4->fromArray(array('id' => 4, 'date' => '2012-09-16', 'length_days' => 1)); 
                 
-        $leaveDates = array($leave1, $leave2);
-        
-        $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
-        $this->assertTrue($results !== false);        
-        $this->verifyEntitlements($results, $leaveDates, array(1, 1));           
-    }
-    
-    public function testGetAvailableEntitlementsOne4() {
+        $leaveDates = array($leave1, $leave2, $leave3, $leave4);
         
         $entitlement1 = new LeaveEntitlement();
-        $entitlement1->setId(1);
-        $entitlement1->setEmpNumber(1);
-        $entitlement1->setNoOfDays(3);
-        $entitlement1->setLeaveTypeId(2);
+        $entitlement1->setId(2);
+        $entitlement1->setEmpNumber($empNumber);
+        $entitlement1->setNoOfDays(5);
+        $entitlement1->setLeaveTypeId($leaveType);
+        $entitlement1->setFromDate('2012-09-01');
+        $entitlement1->setToDate('2012-09-15');
+        $entitlement1->setCreditedDate('2012-05-01');
+        $entitlement1->setNote('Created by Unit test');
+        $entitlement1->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+        $entitlement1->setDeleted(0);        
+        
+        $entitlements = array(
+            $entitlement1
+        );
+        
+        $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
+        $mockService->expects($this->any())
+                    ->method('getValidLeaveEntitlements')
+                    ->with($empNumber, $leaveType, '2012-09-13', '2012-09-16', 'to_date', 'ASC')
+                    ->will($this->returnValue(array_values($entitlements)));
+        $this->strategy->setLeaveEntitlementService($mockService);                
+        
+        $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
+        $this->assertTrue($results == false);     
+    }
+    
+    /**
+     * One entitlement, enough to satisfy leave request
+     */    
+    public function testGetAvailableEntitlementsOne22() {
+        
+        $empNumber = 1;
+        $leaveType = 2;
+        
+        $leave1 = new Leave();
+        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-13', 'length_days' => 1));
+        $leave2 = new Leave();
+        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-14', 'length_days' => 1));        
+        $leave3 = new Leave();
+        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
+        $leave4 = new Leave();
+        $leave4->fromArray(array('id' => 4, 'date' => '2012-09-16', 'length_days' => 1)); 
+                
+        $leaveDates = array($leave1, $leave2, $leave3, $leave4);
+        
+        $entitlement1 = new LeaveEntitlement();
+        $entitlement1->setId(2);
+        $entitlement1->setEmpNumber($empNumber);
+        $entitlement1->setNoOfDays(5);
+        $entitlement1->setLeaveTypeId($leaveType);
         $entitlement1->setFromDate('2012-09-13');
         $entitlement1->setToDate('2012-11-28');
         $entitlement1->setCreditedDate('2012-05-01');
@@ -213,81 +193,46 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->any())
                     ->method('getValidLeaveEntitlements')
-                    //->with($ids)
+                    ->with($empNumber, $leaveType, '2012-09-13', '2012-09-16', 'to_date', 'ASC')
                     ->will($this->returnValue(array_values($entitlements)));
-        $this->strategy->setLeaveEntitlementService($mockService);        
-        
-        $empNumber = 1;
-        $leaveType = 2;
-        
-        $leave1 = new Leave();
-        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-13', 'length_days' => 1));
-        $leave2 = new Leave();
-        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-14', 'length_days' => 1));        
-        $leave3 = new Leave();
-        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
-        $leave4 = new Leave();
-        $leave4->fromArray(array('id' => 2, 'date' => '2012-09-16', 'length_days' => 1));         
-        
-        $leaveDates = array($leave1, $leave2);
+        $this->strategy->setLeaveEntitlementService($mockService);                
         
         $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
-        $this->assertTrue($results !== false);        
-        $this->verifyEntitlements($results, $leaveDates, array(1, 1));   
+        $this->assertTrue($results !== false);   
+        $current = array_combine(array('2012-09-13', '2012-09-14', '2012-09-15', '2012-09-16'), 
+                array(array(2=>1), array(2=>1), array(2=>1), array(2=>1)));
+        
+        $changes = array();
+                
+        $this->verifyEntitlements($results, $current, $changes);           
     }
     
-    public function testGetAvailableEntitlementsOne5() {
-        
-        $entitlement1 = new LeaveEntitlement();
-        $entitlement1->setId(1);
-        $entitlement1->setEmpNumber(1);
-        $entitlement1->setNoOfDays(3);
-        $entitlement1->setLeaveTypeId(2);
-        $entitlement1->setFromDate('2012-09-13');
-        $entitlement1->setToDate('2012-11-28');
-        $entitlement1->setCreditedDate('2012-05-01');
-        $entitlement1->setNote('Created by Unit test');
-        $entitlement1->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
-        $entitlement1->setDeleted(0);        
-        
-        $entitlements = array(
-            $entitlement1
-        );
-        
-        $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
-        $mockService->expects($this->any())
-                    ->method('getValidLeaveEntitlements')
-                    //->with($ids)
-                    ->will($this->returnValue(array_values($entitlements)));
-        $this->strategy->setLeaveEntitlementService($mockService);        
-        
-        $empNumber = 1;
-        $leaveType = 2;
-        
-        $leave1 = new Leave();
-        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-13', 'length_days' => 1));
-        $leave2 = new Leave();
-        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-14', 'length_days' => 1));        
-        $leave3 = new Leave();
-        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
-        $leave4 = new Leave();
-        $leave4->fromArray(array('id' => 2, 'date' => '2012-09-16', 'length_days' => 1));          
-        
-        $leaveDates = array($leave1);
-        
-        $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
-        $this->assertTrue($results !== false);        
-        $this->verifyEntitlements($results, $leaveDates, array(1));    
-    }    
     
+    /** 
+     * First leave date before entitlement start date
+     */
     public function testGetAvailableEntitlementsOneEdges() {
         
+        $empNumber = 1;
+        $leaveType = 2;
+        
+        $leave1 = new Leave();
+        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-13', 'length_days' => 1));
+        $leave2 = new Leave();
+        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-14', 'length_days' => 1));        
+        $leave3 = new Leave();
+        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
+        $leave4 = new Leave();
+        $leave4->fromArray(array('id' => 4, 'date' => '2012-09-16', 'length_days' => 1)); 
+                
+        $leaveDates = array($leave1, $leave2, $leave3, $leave4);
+        
         $entitlement1 = new LeaveEntitlement();
-        $entitlement1->setId(1);
-        $entitlement1->setEmpNumber(1);
-        $entitlement1->setNoOfDays(3);
-        $entitlement1->setLeaveTypeId(2);
-        $entitlement1->setFromDate('2012-09-13');
+        $entitlement1->setId(2);
+        $entitlement1->setEmpNumber($empNumber);
+        $entitlement1->setNoOfDays(5);
+        $entitlement1->setLeaveTypeId($leaveType);
+        $entitlement1->setFromDate('2012-09-14');
         $entitlement1->setToDate('2012-11-28');
         $entitlement1->setCreditedDate('2012-05-01');
         $entitlement1->setNote('Created by Unit test');
@@ -301,42 +246,38 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->any())
                     ->method('getValidLeaveEntitlements')
-                    //->with($ids)
-                    ->will($this->returnValue($entitlements));
-        $this->strategy->setLeaveEntitlementService($mockService);        
-        
-        $empNumber = 1;
-        $leaveType = 2;
-        
-        $leave1 = new Leave();
-        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-12', 'length_days' => 1));
-        $leave2 = new Leave();
-        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-13', 'length_days' => 1));        
-        $leave3 = new Leave();
-        $leave3->fromArray(array('id' => 3, 'date' => '2012-11-28', 'length_days' => 1));
-        $leave4 = new Leave();
-        $leave4->fromArray(array('id' => 2, 'date' => '2012-11-29', 'length_days' => 1)); 
-        
-        /*$leaveDates = array($leave1, $leave2);
-        
-        $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
-        $this->assertTrue($results === false);*/
-        
-        $leaveDates = array($leave3, $leave4);
+                    ->with($empNumber, $leaveType, '2012-09-13', '2012-09-16', 'to_date', 'ASC')
+                    ->will($this->returnValue(array_values($entitlements)));
+        $this->strategy->setLeaveEntitlementService($mockService);                
         
         $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
         $this->assertTrue($results === false);   
     }
     
+    /**
+     * Two entitlements, verify assigned to first expiring entitlemenmt
+     */
     public function testGetAvailableEntitlementsTwo() {
         
+        $empNumber = 1;
+        $leaveType = 2;
+        
+        $leave1 = new Leave();
+        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-13', 'length_days' => 1));        
+        $leave2 = new Leave();
+        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-14', 'length_days' => 1));        
+        $leave3 = new Leave();
+        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));        
+
+        $leaveDates = array($leave1, $leave2, $leave3);
+        
         $entitlement1 = new LeaveEntitlement();
-        $entitlement1->setId(1);
+        $entitlement1->setId(6);
         $entitlement1->setEmpNumber(1);
-        $entitlement1->setNoOfDays(3);
+        $entitlement1->setNoOfDays(5);
         $entitlement1->setLeaveTypeId(2);
-        $entitlement1->setFromDate('2012-09-13');
-        $entitlement1->setToDate('2012-09-14');
+        $entitlement1->setFromDate('2012-09-11');
+        $entitlement1->setToDate('2012-09-15');
         $entitlement1->setCreditedDate('2012-05-01');
         $entitlement1->setNote('Created by Unit test');
         $entitlement1->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
@@ -345,10 +286,10 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $entitlement2 = new LeaveEntitlement();
         $entitlement2->setId(2);
         $entitlement2->setEmpNumber(1);
-        $entitlement2->setNoOfDays(2);
+        $entitlement2->setNoOfDays(4);
         $entitlement2->setLeaveTypeId(2);
         $entitlement2->setFromDate('2012-09-12');
-        $entitlement2->setToDate('2012-09-15');
+        $entitlement2->setToDate('2012-09-18');
         $entitlement2->setCreditedDate('2012-05-01');
         $entitlement2->setNote('Created by Unit test');
         $entitlement2->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
@@ -361,51 +302,119 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->any())
                     ->method('getValidLeaveEntitlements')
-                    //->with($ids)
+                    ->with($empNumber, $leaveType, '2012-09-13', '2012-09-15', 'to_date', 'ASC')
                     ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);        
+        
+        $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
+        $this->assertTrue($results !== false);
+        $current = array_combine(array('2012-09-13', '2012-09-14', '2012-09-15'), 
+                array(array(6=>1), array(6=>1), array(6=>1)));
+        
+        $changes = array();
+                
+        $this->verifyEntitlements($results, $current, $changes);       
+    }    
+    
+    /**
+     * Two entitlements, first one not enough. Verify assigned first to earlier expiring entitlement and the rest to the 
+     * next entitlement   
+     */
+    public function testGetAvailableEntitlementsTwo1() {
         
         $empNumber = 1;
         $leaveType = 2;
         
         $leave1 = new Leave();
-        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-12', 'length_days' => 1));        
-                
-        $leaveDates = array($leave1);
-        
-        /*$results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
-        $this->assertTrue($results !== false);
-        $this->verifyEntitlements($results, $leaveDates, array(2));
-        */
+        $leave1->fromArray(array('id' => 1, 'date' => '2012-09-13', 'length_days' => 1));
         $leave2 = new Leave();
-        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-13', 'length_days' => 1));        
+        $leave2->fromArray(array('id' => 2, 'date' => '2012-09-14', 'length_days' => 1));        
         $leave3 = new Leave();
-        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-14', 'length_days' => 1));
+        $leave3->fromArray(array('id' => 3, 'date' => '2012-09-15', 'length_days' => 1));
         $leave4 = new Leave();
-        $leave4->fromArray(array('id' => 2, 'date' => '2012-09-15', 'length_days' => 1));         
-
-        $leaveDates = array($leave1, $leave2);
+        $leave4->fromArray(array('id' => 4, 'date' => '2012-09-16', 'length_days' => 1)); 
+                
+        $leaveDates = array($leave1, $leave2, $leave3, $leave4);
+        
+        $entitlement1 = new LeaveEntitlement();
+        $entitlement1->setId(6);
+        $entitlement1->setEmpNumber(1);
+        $entitlement1->setNoOfDays(2);
+        $entitlement1->setLeaveTypeId(2);
+        $entitlement1->setFromDate('2012-09-11');
+        $entitlement1->setToDate('2012-09-15');
+        $entitlement1->setCreditedDate('2012-05-01');
+        $entitlement1->setNote('Created by Unit test');
+        $entitlement1->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+        $entitlement1->setDeleted(0);     
+        
+        $entitlement2 = new LeaveEntitlement();
+        $entitlement2->setId(2);
+        $entitlement2->setEmpNumber(1);
+        $entitlement2->setNoOfDays(4);
+        $entitlement2->setLeaveTypeId(2);
+        $entitlement2->setFromDate('2012-09-12');
+        $entitlement2->setToDate('2012-09-18');
+        $entitlement2->setCreditedDate('2012-05-01');
+        $entitlement2->setNote('Created by Unit test');
+        $entitlement2->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+        $entitlement2->setDeleted(0);    
+        
+        $entitlements = array(
+            $entitlement1, $entitlement2
+        );
+        
+        $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
+        $mockService->expects($this->any())
+                    ->method('getValidLeaveEntitlements')
+                    ->with($empNumber, $leaveType, '2012-09-13', '2012-09-16', 'to_date', 'ASC')
+                    ->will($this->returnValue($entitlements));
+        $this->strategy->setLeaveEntitlementService($mockService);        
+        
         $results = $this->strategy->getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
         $this->assertTrue($results !== false);
-        $this->verifyEntitlements($results, $leaveDates, array(2, 2));        
-    }    
+        $current = array_combine(array('2012-09-13', '2012-09-14', '2012-09-15', '2012-09-16'), 
+                array(array(6=>1), array(6=>1), array(2=>1), array(2=>1)));
+        
+        $changes = array();
+                
+        $this->verifyEntitlements($results, $current, $changes);       
+    }        
     
-    public function verifyEntitlements($results, $leaveDates, $entitlementIds) {
+    /**
+     * Five entitlements, first two does not have enough dates, verify assigned to rest
+     */
+    
+    /**
+     * Five entitlements, first one not available for first date.
+     * First date assigned to second entitlement
+     * Second date assigned to third entitlement
+     * Third date assigned to first entitlement
+     */
+    
+    /**
+     * Five entitlements, first two does not have enough dates, verify assigned to rest
+     */    
+    
+    /**
+     * Partial date leave request
+     */
+    
+    /**
+     * Verify entitlement results
+     * @param type $results
+     * @param type $current
+     * @param type $change
+     */
+    public function verifyEntitlements($results, $current, $change) {
         
-        $numDates = count($leaveDates);
+        $this->assertTrue(isset($results['current']));
+        $this->assertTrue(is_array($results['current']));        
+        $this->assertEquals($current, $results['current']);
         
-        $this->assertEquals($numDates, count($results));
-        $this->assertEquals($numDates, count($entitlementIds));
-        
-        for ($i = 0; $i < $numDates; $i++) {
-            $result = $results[$i];
-            $leaveDate = $leaveDates[$i];
-            $entitlementId = $entitlementIds[$i];
-            $this->assertEquals($leaveDate->getId(), $result->getId());
-            $this->assertEquals($leaveDate->getLengthDays(), $result->getLengthDays());
-            $this->assertEquals($leaveDate->getDate(), $result->getDate());
-            $this->assertEquals($entitlementId, $result->getEntitlementId());
-        }
+        $this->assertTrue(isset($results['change']));
+        $this->assertTrue(is_array($results['change']));        
+        $this->assertEquals($change, $results['change']);
         
     }
 
