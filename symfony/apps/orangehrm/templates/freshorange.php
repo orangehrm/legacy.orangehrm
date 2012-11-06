@@ -140,7 +140,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 }, 2000);
 
                 /* Toggling search form: Begins */
-                $(".toggableForm .inner").hide();
+                //$(".toggableForm .inner").hide(); // Disabling this makes search forms to be expanded by default.
 
                 $(".toggableForm .toggle").click(function () {
                     $(".toggableForm .inner").slideToggle('slow', function() {
