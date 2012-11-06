@@ -126,7 +126,11 @@ class ohrmWidgetFormTimeRange extends sfWidgetForm {
                     ));
         }        
         
-        $duration = '';
+        $from = $value['from'];
+        $to = $value['to'];                
+        
+        $duration = $this->getTimeDifference($from, $to);
+        
         $durationHtml = strtr($this->getOption('duration_template'), array(
                         '%duration%' => $this->translate($duration)
                     ));
@@ -157,6 +161,27 @@ class ohrmWidgetFormTimeRange extends sfWidgetForm {
      */
     public function getJavaScripts() {
         return array_unique(array_merge($this->getOption('from_time')->getJavaScripts(), $this->getOption('to_time')->getJavaScripts()));
+    }
+    
+    public function getTimeDifference($fromTime, $toTime) {
+        $difference = '';
+        
+        if (!empty($fromTime) && !empty($toTime)) {
+            list($fromHours, $fromMinutes) = explode(':', $fromTime);
+            list($toHours, $toMinutes) = explode(':', $toTime);
+            
+            if (is_numeric($fromHours) && is_numeric($fromMinutes) && is_numeric($toHours) && is_numeric($toMinutes)) {
+                $fromMinutes = intval($fromMinutes) + 60 * intval($fromHours);
+                $toMinutes = intval($toMinutes) + 60 * intval($toHours);
+                
+                $diffMinutes = $toMinutes - $fromMinutes;
+                $diffHours = round($diffMinutes / 60, 2);
+                
+                $difference = number_format($diffHours, 2);
+            }
+        }
+        
+        return $difference;
     }
 
 }

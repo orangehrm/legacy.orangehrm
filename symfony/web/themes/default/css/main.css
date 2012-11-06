@@ -881,6 +881,8 @@ form input.validation-error {
 	left:150px;
 }
 */
+/* ================ widget specific styles: Begin ================ */
+
 .ui-datepicker-trigger {
 	margin:2px 0 0 5px;
         display: block;
@@ -902,6 +904,14 @@ form input.validation-error {
     margin-left: 0px;
     margin-right: 10px;
 }
+.single form ol li input.time_range_duration {
+    width: auto;
+    width: 60px;
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+/* ================ widget specific styles: End ================ */
 
 /* ================ .twoColumn styles: Begin ================ */
 

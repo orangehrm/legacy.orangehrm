@@ -65,6 +65,10 @@ class orangehrmCorePluginAllTests {
         
         /* form validators */
         $suite->addTestFile(dirname(__FILE__) . '/form/validate/ohrmValidatorSchemaCompareTest.php');
+        
+        /* form widgets */
+        $suite->addTestFile(dirname(__FILE__) . '/form/widget/ohrmWidgetFormTimeRangeTest.php');
+        
 
         /* Authorization */
         $suite->addTestFile(dirname(__FILE__) . '/authorization/service/UserRoleManagerServiceTest.php');

@@ -4270,6 +4270,7 @@ symfony/plugins/orangehrmCorePlugin/test/fixtures/ScreenPermissionDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/base-service-test-data.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/sample_query_extensions.yml -text
 symfony/plugins/orangehrmCorePlugin/test/form/validate/ohrmValidatorSchemaCompareTest.php -text
+symfony/plugins/orangehrmCorePlugin/test/form/widget/ohrmWidgetFormTimeRangeTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/model/dao/AccessFlowStateMachineDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/model/dao/ReportableDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/model/service/AccessFlowStateMachineServiceTest.php -text

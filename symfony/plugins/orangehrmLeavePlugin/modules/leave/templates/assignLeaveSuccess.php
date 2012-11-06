@@ -162,8 +162,7 @@ use_stylesheets_for_form($form);
                     }
                 },
                 'assignleave[txtComment]': {maxlength: 250},
-                'assignleave[txtLeaveTotalTime]':{ required: false , number: true , min: 0.01, validWorkShift : true,validTotalTime : true},
-                'assignleave[txtToTime]': {validToTime: true}
+                'assignleave[time][from]':{ required: false, validWorkShift : true, validTotalTime: true, validToTime: true}
             },
             messages: {
                 'assignleave[txtEmployee][empName]':{
@@ -184,63 +183,64 @@ use_stylesheets_for_form($form);
                 'assignleave[txtComment]':{
                     maxlength:"<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>"
                 },
-                'assignleave[txtLeaveTotalTime]':{
-                    number:"<?php echo __('Should be a number'); ?>",
-                    min : "<?php echo __("Should be greater than %amount%", array("%amount%" => '0.01')); ?>",
-                    max : "<?php echo __("Should be less than %amount%", array("%amount%" => '24')); ?>"	,
+                'assignleave[time][from]':{
                     validTotalTime : "<?php echo __(ValidationMessages::REQUIRED); ?>",
-                    validWorkShift : "<?php echo __('Should be less than work shift length'); ?>"
-                },
-                'assignleave[txtToTime]':{
+                    validWorkShift : "<?php echo __('Should be less than work shift length'); ?>",
                     validToTime:"<?php echo __('From time should be less than To time'); ?>"
                 }
             }
         });
         
         $.validator.addMethod("validTotalTime", function(value, element) {
-            var totalTime	=	$('#assignleave_txtLeaveTotalTime').val();
-            var fromdate	=	$('#assignleave_txtFromDate').val();
-            var todate		=	$('#assignleave_txtToDate').val();
+            var valid = true;
+            var fromdate = $('#assignleave_txtFromDate').val();
+            var todate = $('#assignleave_txtToDate').val();
             
-            if((fromdate==todate) && (totalTime==''))
-                return false;
-            else
-                return true;
+            if (fromdate == todate) {
+                var fromTime = $('#assignleave_time_from');
+                var toTime = $('#assignleave_time_to');
+                if ((fromTime == '') || (toTime == '')) {
+                    valid = false;
+                }
+            }
             
+            return valid;
         });
         
         $.validator.addMethod("validWorkShift", function(value, element) {
-            var totalTime	=	$('#assignleave_txtLeaveTotalTime').val();
-            var fromdate	=	$('#assignleave_txtFromDate').val();
-            var todate		=	$('#assignleave_txtToDate').val();
-            var workShift	=	$('#assignleave_txtEmpWorkShift').val();
+            var valid = true;
+            var fromdate = $('#assignleave_txtFromDate').val();
+            var todate = $('#assignleave_txtToDate').val();
             
-            if((fromdate==todate) && (parseFloat(totalTime) > parseFloat(workShift)))
-                return false;
-            else
-                return true;
+            if (fromdate == todate) {
+                var totalTime = getTotalTime();
+                var workShift = $('#assignleave_txtEmpWorkShift').val();
+                if (parseFloat(totalTime) > parseFloat(workShift)) {
+                    valid = false;
+                }
+
+            }
             
+            return valid;            
         });
         
         $.validator.addMethod("validToTime", function(value, element) {
+            var valid = true;
             
-            var fromdate	=	$('#assignleave_txtFromDate').val();
-            var todate		=	$('#assignleave_txtToDate').val();
+            var fromdate = $('#assignleave_txtFromDate').val();
+            var todate = $('#assignleave_txtToDate').val();
             var fromTime	=	$('#assignleave_txtFromTime').val();
             var toTime		=	$('#assignleave_txtToTime').val();
             
-            var fromTimeArr = (fromTime).split(":");
-            var toTimeArr = (toTime).split(":");
-            var fromdateArr	=	(fromdate).split("-");
+            if (fromdate == todate) {
+                var totalTime = getTotalTime();
+                if (parseFloat(totalTime) <= 0) {
+                    valid = false;
+                }
+
+            }
             
-            var fromTimeobj	=	new Date(fromdateArr[0],fromdateArr[1],fromdateArr[2],fromTimeArr[0],fromTimeArr[1]);
-            var toTimeobj	=	new Date(fromdateArr[0],fromdateArr[1],fromdateArr[2],toTimeArr[0],toTimeArr[1]);
-            
-            if((fromdate==todate) && (fromTime !='') && (toTime != '') && (fromTimeobj>=toTimeobj))
-                return false;
-            else
-                return true;
-            
+            return valid;  
         });
         
         //Click Submit button
@@ -272,7 +272,7 @@ use_stylesheets_for_form($form);
     
     function showTimeControls(show) {
         
-        var timeControlIds = ['assignleave_txtFromTime', 'assignleave_txtToTime', 'assignleave_txtLeaveTotalTime'];
+        var timeControlIds = ['assignleave_time_from'];
         
         $.each(timeControlIds, function(index, value) {
             
@@ -306,23 +306,26 @@ use_stylesheets_for_form($form);
     }
     
     //Calculate Total time
-    function fillTotalTime(){
-        var fromTime = ($('#assignleave_txtFromTime').val()).split(":");
+    function fillTotalTime() {        
+        var total = getTotalTime();
+        $('#assignleave_time_to').next('input.time_range_duration').val(total);
+    }
+    
+    function getTotalTime() {
+        var total = 0;
+        var fromTime = ($('#assignleave_time_from').val()).split(":");
         var fromdate = new Date();
         fromdate.setHours(fromTime[0],fromTime[1]);
         
-        var toTime = ($('#assignleave_txtToTime').val()).split(":");
+        var toTime = ($('#assignleave_time_to').val()).split(":");
         var todate = new Date();
-        todate.setHours(toTime[0],toTime[1]);
+        todate.setHours(toTime[0],toTime[1]);        
         
+        var difference = todate - fromdate;
+        var floatDeference	=	parseFloat(difference/3600000) ;
+        total = Math.round(floatDeference*Math.pow(10,2))/Math.pow(10,2);
         
-        if (fromdate < todate) {
-            var difference = todate - fromdate;
-            var floatDeference	=	parseFloat(difference/3600000) ;
-            $('#assignleave_txtLeaveTotalTime').val(Math.round(floatDeference*Math.pow(10,2))/Math.pow(10,2));
-        }
-        
-        $("#assignleave_txtToTime").valid();
+        return total;        
     }
     
     function fromDateBlur(date){
