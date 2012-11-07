@@ -21,7 +21,10 @@ class validateCredentialsAction extends sfAction {
                 
                 if ($success) {
                     
-                    $this->redirect($this->getHomePageService()->getHomePagePath());
+                    $referer    = $request->getReferer();
+                    $host       = $request->getHost();   
+                    
+                    $this->redirect($this->getHomePageService()->getPathAfterLoggingIn($referer, $host));
                     
                 } else {
                     $this->getUser()->setFlash('message', __('Invalid credentials'), true);

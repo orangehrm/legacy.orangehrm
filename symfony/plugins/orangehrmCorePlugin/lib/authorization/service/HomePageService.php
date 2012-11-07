@@ -24,7 +24,8 @@ class HomePageService {
 
     protected $userSession;
     protected $configService;
-    
+    protected $loginPath = 'auth/login';
+
     public function getConfigService() {
         
         if (!$this->configService instanceof ConfigService) {
@@ -131,6 +132,32 @@ class HomePageService {
     public function getPerformanceModuleDefaultPath() {
         
         return 'performance/viewReview';
+        
+    }
+    
+    public function getPathAfterLoggingIn($referer, $host) {
+        
+        $redirectToReferer = true;
+        
+        if (strpos($referer, $this->loginPath)) { // Check whether referer is login page
+            
+            $redirectToReferer = false;
+            
+        } else {
+            
+            if (!strpos($referer, $host)) { // Check whether from same host
+                
+                $redirectToReferer = false;
+                
+            }
+            
+        }
+        
+        if ($redirectToReferer) {
+            return $referer;
+        }
+        
+        return $this->getHomePagePath();
         
     }
     
