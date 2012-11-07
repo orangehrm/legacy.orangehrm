@@ -483,7 +483,7 @@ form ol li.radio label, form ol li.checkbox label {
 .single form ol li.checkbox label {
 	display:block;
 	margin:0 0 10px 0;
-	width:70%;
+	width:40%;
 }
 form p {
 	text-align:left;
