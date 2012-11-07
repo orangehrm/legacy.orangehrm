@@ -181,7 +181,7 @@ create table `hs_hr_emp_passport` (
   `emp_number` int(7) not null default 0,
   `ep_seqno` decimal(2,0) not null default '0',
   `ep_passport_num` varchar(100) not null default '',
-  `ep_passportissueddate` datetime default null,hs
+  `ep_passportissueddate` datetime default null,
   `ep_passportexpiredate` datetime default null,
   `ep_comments` varchar(255) default null,
   `ep_passport_type_flg` smallint(6) default null,
