@@ -4558,6 +4558,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveRequestDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/NewLeaveTypeDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/EntitlementConsumptionStrategy.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/FIFOEntitlementConsumptionStrategy.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/entitlement/LeaveBalance.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/event/LeaveEvents.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/ApplyLeaveForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/AssignLeaveForm.php -text

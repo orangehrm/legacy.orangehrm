@@ -25,12 +25,19 @@ class LeaveRequestDao extends BaseDao {
     private static $doneMarkingApprovedLeaveAsTaken = false;
 
     /**
-     *
-     * @param LeaveRequest $leaveRequest
+     * Save leave request 
+     * 
+     * @param LeaveRequest $leaveRequest Leave request object
+     * @param Array $leaveList Array of leave objects linked to the leave request
+     * @param Array $entitlements Array of entitlements to be modified 
      * @return boolean
      */
     public function saveLeaveRequest(LeaveRequest $leaveRequest, $leaveList, $entitlements) {
         try {
+            $conn = Doctrine_Manager::connection();
+            
+            $conn->beginTransaction();
+                    
             $leaveRequest->save();
             
             $current = array();
@@ -79,8 +86,10 @@ class LeaveRequestDao extends BaseDao {
                 
             }
 
+            $conn->commit();
             return true;
         } catch (Exception $e) {
+            $conn->rollback();
             throw new DaoException($e->getMessage());
         }
     }
