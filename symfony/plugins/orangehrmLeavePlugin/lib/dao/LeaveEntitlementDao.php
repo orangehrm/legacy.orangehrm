@@ -191,7 +191,7 @@ class LeaveEntitlementDao extends BaseDao {
                     ->andWhereIn('l.status', $statuses)
                     ->addOrderBy('l.id ASC');
 
-            $results = $q->execute($params);
+            $results = $q->execute();
             return $results;
         } catch (Exception $e) {
             throw new DaoException($e->getMessage(), 0, $e);
@@ -200,38 +200,60 @@ class LeaveEntitlementDao extends BaseDao {
     
     
     /**
-     * TODO: Test for leave without entitlements as well.
+     * Get leave balance as a LeaveBalance object with the following components
+     *    * entitlements
+     *    * used (taken)
+     *    * scheduled
+     *    * pending approval
+     *    * leave without entitlements
      * 
-     * @param type $empNumber
-     * @param type $leaveTypeId
-     * @param type $asAtDate
-     * @param type $date
-     * @return int
+     * @param int $empNumber Employee Number
+     * @param int $leaveTypeId Leave Type ID
+     * @param date $asAtDate Balance as at given date
+     * @return LeaveBalance Returns leave balance object
      */
     public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date = NULL) {
         $conn = Doctrine_Manager::connection()->getDbh(); 
         
-        $sql = 'SELECT sum(le.no_of_days - le.days_used - COALESCE(lle.length_days,0) ) FROM ohrm_leave_entitlement le LEFT JOIN ohrm_leave_leave_entitlement lle' .
-               ' ON le.id = lle.entitlement_id '. 
+        $sql = 'SELECT le.no_of_days AS entitled, ' . 
+                      'le.days_used AS used, ' .
+                      'sum(IF(l.status = 2, lle.length_days, 0)) AS scheduled, ' .
+                      'sum(IF(l.status = 1, lle.length_days, 0)) AS pending ' . 
+               'FROM ohrm_leave_entitlement le LEFT JOIN ' . 
+                    'ohrm_leave_leave_entitlement lle ON le.id = lle.entitlement_id LEFT JOIN '.
+                    'ohrm_leave l ON l.id = lle.leave_id ' .
                'WHERE le.deleted = 0 AND le.emp_number = ? AND le.leave_type_id = ? ' . 
                ' AND le.to_date >= ?';
         
         $parameters = array($empNumber, $leaveTypeId, $asAtDate); 
         
         if (!empty($date)) {
-            $sql .= ' AND ? BETWEEN le.from_date AND le.to_date';
+            $sql .= ' AND ? BETWEEN le.from_date AND le.to_date ';
             $parameters[] = $date;            
         }
         
+        $sql .= 'GROUP BY le.id';
+        
+        $sql = 'SELECT sum(a.entitled) as entitled, sum(a.used) as used, sum(a.scheduled) as scheduled, sum(a.pending) as pending ' .
+               ' FROM (' . $sql . ') as a';
+        
         $statement = $conn->prepare($sql);
         $result = $statement->execute($parameters);
-        $balance = 0;
+        $balance = new LeaveBalance();
         if ($result) {
             if ($statement->rowCount() > 0) {
-                $balance = $statement->fetchColumn();
-                
-                if (is_null($balance)) {
-                    $balance = 0;
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                if (!empty($result['entitled'])) {
+                    $balance->setEntitled($result['entitled']);
+                }
+                if (!empty($result['used'])) {
+                    $balance->setUsed($result['used']);
+                }
+                if (!empty($result['scheduled'])) {
+                    $balance->setScheduled($result['scheduled']);
+                }                
+                if (!empty($result['pending'])) {
+                    $balance->setPending($result['pending']);
                 }
             }
         }        

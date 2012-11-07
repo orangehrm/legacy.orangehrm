@@ -328,106 +328,161 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         
         // Using AsAt
 
-        // As at before entitlement start
+        // As at before entitlement start:         
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
+        $this->assertEquals($expected, $balance);
                 
         // On Start Date
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-05');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
+        $this->assertEquals($expected, $balance);
         
         // Between start end
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-10');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
+        $this->assertEquals($expected, $balance);
         
         // On End date
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-09-01');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
+        $this->assertEquals($expected, $balance);
         
         // After End
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-09-02');
-        $this->assertEquals(0, $balance);
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
         // Using Date - Before
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-08-01');
-        $this->assertEquals(0, $balance);
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
         // On Start Date
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-08-05');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
+        $this->assertEquals($expected, $balance);
         
         // Between start end
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-08-10');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
+        $this->assertEquals($expected, $balance);
         
         // On End date
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-09-01');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
+        $this->assertEquals($expected, $balance);
         
         // After End
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01', '2013-09-02');
-        $this->assertEquals(0, $balance);
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
         // Two entitlements - before both
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
+        // First day of one entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-04-04');
-        $this->assertEquals(3, $balance);
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
+        // After first day of first entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-05-01');
-        $this->assertEquals(3, $balance);        
-        
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
+
+        // First day of second entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-05-05');
-        $this->assertEquals(3, $balance);        
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
 
+        // After First day of second entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-05-09');
-        $this->assertEquals(3, $balance);        
 
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
+
+        // Last day of first entitlement        
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-06-01');
-        $this->assertEquals(3, $balance);        
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
+        // After first entitlement                
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-06-02');
-        $this->assertEquals(2, $balance);        
+        $expected = new LeaveBalance(2, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
 
+        // On last day of second entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-08-01');
-        $this->assertEquals(2, $balance);        
+        $expected = new LeaveBalance(2, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
 
+        // After second entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-08-02');
-        $this->assertEquals(0, $balance);        
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
-        // With date
+        // With date - before first entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-03-01');
-        $this->assertEquals(0, $balance);
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
+        // on start date of first entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-04-04');
-        $this->assertEquals(1, $balance);
+        $expected = new LeaveBalance(1, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);
         
+        // after first date of first entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-05-01');
-        $this->assertEquals(1, $balance);        
+        $expected = new LeaveBalance(1, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);      
         
+        // on first date of second entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-05-05');
-        $this->assertEquals(3, $balance);        
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);        
 
+        // after first date of second entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-05-09');
-        $this->assertEquals(3, $balance);        
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);        
 
+        // on last date of first entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-06-01');
-        $this->assertEquals(3, $balance);        
-        
+        $expected = new LeaveBalance(3, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);        
+
+        // after last date of first entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-06-02');
-        $this->assertEquals(2, $balance);        
+        $expected = new LeaveBalance(2, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);        
 
+        // last date of second entitlement
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-08-01');
-        $this->assertEquals(2, $balance);        
+        $expected = new LeaveBalance(2, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);        
 
+        // after both entitlements end dates
         $balance = $this->dao->getLeaveBalance(1, 2, '2012-03-01', '2012-08-02');
-        $this->assertEquals(0, $balance);        
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);        
         
-        // Non existing leave entitlement type
+        // leave type with no leave entitlement
         $balance = $this->dao->getLeaveBalance(6, 7, '2012-03-01', '2012-08-02');
-        $this->assertEquals(0, $balance);        
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);      
         
+        // Checking values for scheduled and pending
+        $balance = $this->dao->getLeaveBalance(1, 1, '2012-03-01', '2012-07-02');
+        $expected = new LeaveBalance(3, 0, 0.75, 0.5, 0);
+        $this->assertEquals($expected, $balance);   
+        
+        // No entitlements for employee
+        $balance = $this->dao->getLeaveBalance(3, 1, '2012-03-01', '2012-07-02');
+        $expected = new LeaveBalance(0, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);   
         
     }
     
@@ -441,11 +496,12 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $requests = $this->dao->getLinkedLeaveRequests(array(1, 2, 3, 4, 5), 
                 array(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL, 
                       Leave::LEAVE_STATUS_LEAVE_REJECTED));        
-        $this->assertEquals(4, count($requests));      
+        $this->assertEquals(5, count($requests));      
         $this->assertEquals(1, $requests[0]->getId());
         $this->assertEquals(2, $requests[1]->getId());
         $this->assertEquals(3, $requests[2]->getId());
         $this->assertEquals(4, $requests[3]->getId());
+        $this->assertEquals(5, $requests[4]->getId());
         
         $requests = $this->dao->getLinkedLeaveRequests(array(1, 2, 3, 4, 5), 
                 array(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL));        
