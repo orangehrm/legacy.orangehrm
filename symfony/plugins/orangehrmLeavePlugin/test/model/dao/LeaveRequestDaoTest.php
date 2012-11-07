@@ -347,97 +347,10 @@
         return array($leaveRequest, array($leave1, $leave2));
 
     }
-
-    protected function getLeaveRequestIdsFromDb() {
-        $conn = Doctrine_Manager::connection()->getDbh();
-        
-        $query = "SELECT id from ohrm_leave_request";
-        $statement = $conn->query($query);
-        $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
-        return $ids;        
-    }
-
-    protected function getLeaveIdsFromDb() {
-        $conn = Doctrine_Manager::connection()->getDbh();
-        
-        $query = "SELECT id from ohrm_leave";
-        $statement = $conn->query($query);
-        $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
-        return $ids;        
-    }
-    
-    protected function getLeaveLeaveEntitlementIdsFromDb() {
-        $conn = Doctrine_Manager::connection()->getDbh();
-        
-        $query = "SELECT id from ohrm_leave_leave_entitlement";
-        $statement = $conn->query($query);
-        $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
-        return $ids;        
-    }    
-
-    protected function getNewLeaveRequests($existingIds) {
-        $q = Doctrine_Query::create()->from('LeaveRequest l')
-                ->whereNotIn('l.id', $existingIds)
-                ->addOrderBy('l.id ASC');
-
-        return $q->execute();
-    }
-
-    protected function getNewLeave($existingIds) {
-        $q = Doctrine_Query::create()->from('Leave l')
-                ->whereNotIn('l.id', $existingIds)
-                ->addOrderBy('l.id ASC');
-
-        return $q->execute();        
-    }
-    
-    protected function getNewEntitlements($existingIds) {
-        
-    }
-    
-    protected function compareLeaveRequest(LeaveRequest $expected, LeaveRequest $result) {
-        $this->assertTrue($result instanceof LeaveRequest);
-        
-        $expectedId = $expected->getId();
-        
-        if (!empty($expectedId)) {
-            $this->assertEquals($expectedId, $result->getId());
-        } else {
-            $leaveRequestId = $result->getId();
-            $this->assertTrue(!empty($leaveRequestId));            
-        }
-        
-        $this->assertEquals($expected->getLeaveTypeId(), $result->getLeaveTypeId());
-        $this->assertEquals($expected->getDateApplied(), $result->getDateApplied());
-        $this->assertEquals($expected->getEmpNumber(), $result->getEmpNumber());
-        $this->assertEquals($expected->getComments(), $result->getComments());        
-    }
-    
-    protected function compareLeave(Leave $expected, Leave $result) {
-        $this->assertTrue($result instanceof Leave);
-        
-        $expectedId = $expected->getId();
-        
-        if (!empty($expectedId)) {
-            $this->assertEquals($expectedId, $result->getId());
-        } else {
-            $leaveId = $result->getId();
-            $this->assertTrue(!empty($leaveId));            
-        }
-                
-        $this->assertEquals($expected->getLeaveTypeId(), $result->getLeaveTypeId());
-        $this->assertEquals($expected->getDate(), $result->getDate());
-        $this->assertEquals($expected->getEmpNumber(), $result->getEmpNumber());
-        $this->assertEquals($expected->getComments(), $result->getComments());        
-        $this->assertEquals($expected->getLengthHours(), $result->getLengthHours());        
-        $this->assertEquals($expected->getLengthDays(), $result->getLengthDays());        
-        $this->assertEquals($expected->getStatus(), $result->getStatus());        
-        $this->assertEquals($expected->getLeaveRequestId(), $result->getLeaveRequestId());    
-    }    
     
     /* Tests for saveLeaveRequest() */
 
-    public function testSaveLeaveRequestNewRequestNoEntitlementChanges() {
+    public function testSaveLeaveRequestNewRequestNoEntitlement() {
 
         $leaveRequestIds = $this->getLeaveRequestIdsFromDb();
         $leaveIds = $this->getLeaveIdsFromDb();
@@ -472,7 +385,189 @@
             $this->compareLeave($expected, $actual);
         }        
     }
+    
+    public function testSaveLeaveRequestNewRequestWithEntitlement() {
 
+        $leaveRequestIds = $this->getLeaveRequestIdsFromDb();
+        $leaveIds = $this->getLeaveIdsFromDb();
+        
+        // These are the leave requests defined in the fixture (LeaveRequestDao.yml
+        $expected = range(1,20);
+        $this->assertEquals($expected, $leaveRequestIds);
+        
+        $leaveRequestData = $this->_getLeaveRequestData();
+        $request = $leaveRequestData[0];
+        $leave = $leaveRequestData[1];
+
+        $entitlementAssignmentIds = $this->getEntitlementAssignmentIdsFromDb();
+        
+        // entitlements to be assigned to leave
+        $entitlements = array('current' => array(
+            '2010-12-01' => array(1 => 0.4, 2 => 0.6),
+            '2010-12-02' => array(1 => 1)
+        ));
+        
+        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements));
+        
+        $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
+        $this->assertEquals(1, count($leaveRequestList));  
+        $leaveRequest = $leaveRequestList[0];
+        $this->compareLeaveRequest($request, $leaveRequest);
+
+        $newEntitlements = $this->getNewEntitlementAssignements($entitlementAssignmentIds);
+        $this->assertEquals(3, count($newEntitlements));
+        
+        $leaveList = $this->getNewLeave($leaveIds);
+        
+        $this->assertEquals(count($leave), count($leaveList));
+
+        // update leave type, leave request id , emp number in leave requests
+        for ($i = 0; $i < count($leave); $i++) {
+            $expected = $leave[$i];
+            $actual = $leaveList[$i];
+            $expected->setLeaveTypeId($request->getLeaveTypeId());
+            $expected->setEmpNumber($request->getEmpNumber());
+            $expected->setLeaveRequestId($request->getId());
+            
+            $this->compareLeave($expected, $actual);
+            
+            //echo "Leave for date: " . $actual->getDate() . ", id: " . $actual->getId() . "\n";
+            
+            // verify entitlement assignments
+            $leaveId = $actual->getId();
+            $leaveEntitlements = $entitlements['current'][$expected->getDate()];
+            $newEntitlementsForThisLeave = $this->filterEntitlementsForLeave($leaveId, $newEntitlements);
+            $this->validateLeaveEntitlementAssignment($leaveId, $leaveEntitlements, $newEntitlementsForThisLeave);
+        }                
+        
+    }    
+    
+    public function testSaveLeaveRequestNewRequestWithEntitlementChanges() {
+
+        $leaveRequestIds = $this->getLeaveRequestIdsFromDb();
+        $leaveIds = $this->getLeaveIdsFromDb();
+        
+        // These are the leave requests defined in the fixture (LeaveRequestDao.yml
+        $expected = range(1,20);
+        $this->assertEquals($expected, $leaveRequestIds);
+        
+        $leaveRequestData = $this->_getLeaveRequestData();
+        $request = $leaveRequestData[0];
+        $leave = $leaveRequestData[1];
+
+        $entitlementAssignmentIds = $this->getEntitlementAssignmentIdsFromDb();
+        
+        // entitlements to be assigned to leave
+        $entitlements = array('current' => array(
+                    '2010-12-01' => array(1 => 0.4, 2 => 0.6),
+                    '2010-12-02' => array(4 => 1)
+                ),
+                'change' => array(
+                    34 => array(2 => 1, 3 => 0.4, 4 => 1), // new entitlements for leave without any
+                    1 => array(1 => 1, 2 => 1, 4 => 0.5), // changes to existing values + new
+                    2 => array(4 => 1, 3 => 1, 2 => 1), // no changes to existing, new ones added
+                    4 => array() // no entitlements
+                )
+            );
+        
+        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements));
+        
+        $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
+        $this->assertEquals(1, count($leaveRequestList));  
+        $leaveRequest = $leaveRequestList[0];
+        $this->compareLeaveRequest($request, $leaveRequest);
+
+        $newEntitlements = $this->getNewEntitlementAssignements($entitlementAssignmentIds);
+        $this->assertEquals(12, count($newEntitlements));
+        
+        $leaveList = $this->getNewLeave($leaveIds);
+        
+        $this->assertEquals(count($leave), count($leaveList));
+
+        // update leave type, leave request id , emp number in leave requests
+        for ($i = 0; $i < count($leave); $i++) {
+            $expected = $leave[$i];
+            $actual = $leaveList[$i];
+            $expected->setLeaveTypeId($request->getLeaveTypeId());
+            $expected->setEmpNumber($request->getEmpNumber());
+            $expected->setLeaveRequestId($request->getId());
+            
+            $this->compareLeave($expected, $actual);
+            
+            //echo "Leave for date: " . $actual->getDate() . ", id: " . $actual->getId() . "\n";
+            
+            // verify entitlement assignments
+            $leaveId = $actual->getId();
+            $leaveEntitlements = $entitlements['current'][$expected->getDate()];
+            $newEntitlementsForThisLeave = $this->filterEntitlementsForLeave($leaveId, $newEntitlements);
+            $this->validateLeaveEntitlementAssignment($leaveId, $leaveEntitlements, $newEntitlementsForThisLeave);            
+        }                
+        
+        // verify entitlement changes
+        foreach($entitlements['change'] as $leaveId => $change) {
+            $entitlementsForThisLeave = $this->getEntitlementAssignmentsForLeave($leaveId);
+            $this->validateLeaveEntitlementAssignment($leaveId, $change, $entitlementsForThisLeave);
+        }
+        
+    }        
+
+    public function testSaveLeaveRequestAbortTransaction() {
+
+        // Get current records
+        $leaveRequestIds = $this->getLeaveRequestIdsFromDb();
+        $leaveIds = $this->getLeaveIdsFromDb();
+        $entitlementAssignmentIds = $this->getEntitlementAssignmentIdsFromDb();
+        
+        // These are the leave requests defined in the fixture (LeaveRequestDao.yml
+        $expected = range(1,20);
+        $this->assertEquals($expected, $leaveRequestIds);
+        
+        $leaveRequestData = $this->_getLeaveRequestData();
+        $request = $leaveRequestData[0];
+        $leave = $leaveRequestData[1];
+        
+        // entitlements to be assigned to leave
+        $entitlements = array('current' => array(
+                    '2010-12-01' => array(1 => 0.4, 2 => 0.6),
+                    '2010-12-02' => array(4 => 1)
+                ),
+                'change' => array(
+                    34 => array(2 => 1, 3 => 0.4, 4 => 1), // new entitlements for leave without any
+                    1 => array(111 => 1, 2 => 1, 4 => 0.5), // Transaction should abort because of this non-existing
+                                                            // entitlement id (111)
+                    2 => array(4 => 1, 3 => 1, 2 => 1), // no changes to existing, new ones added
+                    4 => array() // no entitlements
+                )
+            );
+        
+        try {
+            $this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements);
+            $this->fail("Exception expected");
+        } catch (Exception $e) {
+            
+        }
+        
+        // verify no new records created.        
+        $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
+        $this->assertEquals(0, count($leaveRequestList));  
+        
+        $leaveList = $this->getNewLeave($leaveIds);        
+        $this->assertEquals(0, count($leaveList));
+        
+        $entitlementList = $this->getNewEntitlementAssignements($entitlementAssignmentIds);
+        $this->assertEquals(0, count($entitlementList));
+        
+        // verify old records still exist      
+        $leaveRequestList = $this->getLeaveRequests($leaveRequestIds);
+        $this->assertEquals(count($leaveRequestIds), count($leaveRequestList));  
+        
+        $leaveList = $this->getLeave($leaveIds);        
+        $this->assertEquals(count($leaveIds), count($leaveList));
+        
+        $entitlementList = $this->getEntitlementAssignements($entitlementAssignmentIds);
+        $this->assertEquals(count($entitlementAssignmentIds), count($entitlementList));        
+    }        
+    
     /*public function testSaveLeaveRequestUpdateRequest() {
 
         $leaveRequest = TestDataService::fetchObject('LeaveRequest', 1);
@@ -1298,6 +1393,170 @@
         }
         
         return $cmp;
+    }
+
+    protected function getLeaveRequestIdsFromDb() {
+        $conn = Doctrine_Manager::connection()->getDbh();
+        
+        $query = "SELECT id from ohrm_leave_request";
+        $statement = $conn->query($query);
+        $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $ids;        
+    }
+
+    protected function getLeaveIdsFromDb() {
+        $conn = Doctrine_Manager::connection()->getDbh();
+        
+        $query = "SELECT id from ohrm_leave";
+        $statement = $conn->query($query);
+        $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $ids;        
+    }
+    
+    protected function getEntitlementAssignmentIdsFromDb() {
+        $conn = Doctrine_Manager::connection()->getDbh();
+        
+        $query = "SELECT id from ohrm_leave_leave_entitlement";
+        $statement = $conn->query($query);
+        $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $ids;        
+    }    
+
+    protected function getNewLeaveRequests($existingIds) {
+        $q = Doctrine_Query::create()->from('LeaveRequest l')
+                ->whereNotIn('l.id', $existingIds)
+                ->addOrderBy('l.id ASC');
+
+        return $q->execute();
+    }
+    
+    protected function getLeaveRequests($ids) {
+        $q = Doctrine_Query::create()->from('LeaveRequest l')
+                ->whereIn('l.id', $ids)
+                ->addOrderBy('l.id ASC');
+
+        return $q->execute();
+    }
+
+    protected function getNewLeave($existingIds) {
+        $q = Doctrine_Query::create()->from('Leave l')
+                ->whereNotIn('l.id', $existingIds)
+                ->addOrderBy('l.id ASC');
+
+        return $q->execute();        
+    }
+    
+    protected function getLeave($ids) {
+        $q = Doctrine_Query::create()->from('Leave l')
+                ->whereIn('l.id', $ids)
+                ->addOrderBy('l.id ASC');
+
+        return $q->execute();        
+    }    
+    
+    protected function getNewEntitlementAssignements($existingIds) {
+        $q = Doctrine_Query::create()->from('LeaveLeaveEntitlement l')
+                ->whereNotIn('l.id', $existingIds)
+                ->addOrderBy('l.id ASC');
+
+        return $q->execute();         
+    }
+    
+    protected function getEntitlementAssignements($ids) {
+        $q = Doctrine_Query::create()->from('LeaveLeaveEntitlement l')
+                ->whereIn('l.id', $ids)
+                ->addOrderBy('l.id ASC');
+
+        return $q->execute();         
+    }    
+    
+    protected function getEntitlementAssignmentsForLeave($leaveId) {
+        $q = Doctrine_Query::create()->from('LeaveLeaveEntitlement l')
+                ->where('l.leave_id = ?', $leaveId)
+                ->addOrderBy('l.id ASC');
+
+        return $q->execute();                 
+    }
+    
+    protected function compareLeaveRequest(LeaveRequest $expected, LeaveRequest $result) {
+        $this->assertTrue($result instanceof LeaveRequest);
+        
+        $expectedId = $expected->getId();
+        
+        if (!empty($expectedId)) {
+            $this->assertEquals($expectedId, $result->getId());
+        } else {
+            $leaveRequestId = $result->getId();
+            $this->assertTrue(!empty($leaveRequestId));            
+        }
+        
+        $this->assertEquals($expected->getLeaveTypeId(), $result->getLeaveTypeId());
+        $this->assertEquals($expected->getDateApplied(), $result->getDateApplied());
+        $this->assertEquals($expected->getEmpNumber(), $result->getEmpNumber());
+        $this->assertEquals($expected->getComments(), $result->getComments());        
+    }
+    
+    protected function compareLeave(Leave $expected, Leave $result) {
+        $this->assertTrue($result instanceof Leave);
+        
+        $expectedId = $expected->getId();
+        
+        if (!empty($expectedId)) {
+            $this->assertEquals($expectedId, $result->getId());
+        } else {
+            $leaveId = $result->getId();
+            $this->assertTrue(!empty($leaveId));            
+        }
+                
+        $this->assertEquals($expected->getLeaveTypeId(), $result->getLeaveTypeId());
+        $this->assertEquals($expected->getDate(), $result->getDate());
+        $this->assertEquals($expected->getEmpNumber(), $result->getEmpNumber());
+        $this->assertEquals($expected->getComments(), $result->getComments());        
+        $this->assertEquals($expected->getLengthHours(), $result->getLengthHours());        
+        $this->assertEquals($expected->getLengthDays(), $result->getLengthDays());        
+        $this->assertEquals($expected->getStatus(), $result->getStatus());        
+        $this->assertEquals($expected->getLeaveRequestId(), $result->getLeaveRequestId());    
+    }    
+    
+    protected function validateLeaveEntitlementAssignment($leaveId, $expectedEntitlements, $newEntitlements) {
+        
+        $this->assertEquals(count($expectedEntitlements), count($newEntitlements));
+        
+        $usedEntitlements = array();
+        
+        foreach($expectedEntitlements as $entitlementId => $length) {
+            $found = false;
+            
+            // echo "Looking at $entitlementId => $length \n";
+            foreach($newEntitlements as $new) {
+                
+                if (!in_array($new->getEntitlementId(), $usedEntitlements)) {
+                    $this->assertEquals($leaveId, $new->getLeaveId());
+
+                    // echo "New: "; print_r($new->toArray()); echo "\n";
+                    if ($new->getEntitlementId() == $entitlementId) {
+
+                        // echo "Found\n";
+                        $found = true;
+                        $usedEntitlements[] = $new->getEntitlementId();                    
+                        $this->assertEquals($length, $new->getLengthDays());
+                        break;
+                    }
+                }
+            }
+            
+            $this->assertTrue($found);
+        }
+    }    
+    
+    protected function filterEntitlementsForLeave($leaveId, $newEntitlements) {
+        $filteredEntitlements = array();
+        foreach($newEntitlements as $entitlement) {
+            if ($entitlement->getLeaveId() == $leaveId) {
+                $filteredEntitlements[] = $entitlement;
+            }
+        }
+        return $filteredEntitlements;
     }
  }
 
