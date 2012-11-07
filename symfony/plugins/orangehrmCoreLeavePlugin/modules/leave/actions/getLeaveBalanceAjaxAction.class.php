@@ -74,13 +74,22 @@ class getLeaveBalanceAjaxAction extends sfAction {
             $startDate = $localizationService->convertPHPFormatDateToISOFormatDate($inputDatePattern, $request->getParameter("startDate"));
 
             $startDateTimeStamp = strtotime($startDate);
+            
+            // If not start date, show balance as of today
             if (!$startDateTimeStamp) {
-                $startDate = NULL;
+                $startDate = date('Y-m-d');
             }
 
-            $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, NULL, $startDate);
+            $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
 
-            echo json_encode($balance);
+            $asAtDate = set_datepicker_date_format($startDate);
+            
+            $result = array(
+                'balance' => $balance,
+                'asAtDate' => $asAtDate
+            );
+            
+            echo json_encode($result);
         }
 
         return sfView::NONE;

@@ -1,6 +1,7 @@
 <?php
 use_javascripts_for_form($applyLeaveForm);
 use_stylesheets_for_form($applyLeaveForm);
+use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
 ?>
 
 <?php if ($applyLeaveForm->hasErrors()): ?>
@@ -39,6 +40,47 @@ use_stylesheets_for_form($applyLeaveForm);
     
 </div> <!-- apply leave -->
 
+<!-- leave balance details HTML: Begins -->
+<div class="modal hide" id="balance_details">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('OrangeHRM - Leave Balance Details'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p><?php echo __('As of date:'); ?> <span id="balance_as_of"></span></p>
+    <table border="0" cellspacing="0" cellpadding="0" class="table">
+        <tbody>
+                <tr class="odd">
+                    <td><?php echo __('Entitled'); ?></td>
+                    <td id="balance_entitled">0</td>
+                </tr>
+                <tr class="even">
+                    <td><?php echo __('Used'); ?></td>
+                    <td id="balance_used">0</td>
+                </tr>
+                <tr class="odd">
+                    <td><?php echo __('Scheduled'); ?></td>
+                    <td id="balance_scheduled">0</td>
+                </tr>
+                <tr class="even">
+                    <td><?php echo __('Pending Approval'); ?></td>
+                    <td id="balance_pending">0</td>
+                </tr>                    
+        </tbody>
+        <tfoot>
+            <tr class="total">
+                <td><?php echo __('Total');?></td>
+                <td id="balance_total"></td>
+            </tr>
+        </tfoot>     
+    </table>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="closeButton" value="<?php echo __('Ok'); ?>" />
+  </div>
+</div>
+<!-- leave balance details HTML: Ends -->
+
     <script type="text/javascript">
     //<![CDATA[        
         var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
@@ -46,7 +88,8 @@ use_stylesheets_for_form($applyLeaveForm);
         var leaveBalanceUrl = '<?php echo url_for('leave/getLeaveBalanceAjax');?>';
         var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
         var lang_dateError = '<?php echo __("To date should be after from date") ?>';
-
+        var lang_details = '<?php echo __("view details") ?>';
+    
         $(document).ready(function() {            
 
             showTimeControls(false);
@@ -83,20 +126,33 @@ use_stylesheets_for_form($applyLeaveForm);
         function updateLeaveBalance() {
             var leaveType = $('#applyleave_txtLeaveType').val();
             var startDate = $('#applyleave_txtFromDate').val();
+            var endDate =  $('#applyleave_txtToDate').val();
+            $('#assignleave_leaveBalance').text('--');
+            $('#leaveBalance_details_link').remove();  
+            
             if (leaveType == "") {
-                $('#applyleave_leaveBalance').text('--');
+                //$('#applyleave_leaveBalance').text('--');
             } else {
                 $('#applyleave_leaveBalance').append('');
                 $.ajax({
                     type: 'GET',
                     url: leaveBalanceUrl,
-                    data: '&leaveType=' + leaveType + '&startDate=' + startDate,
+                    data: '&leaveType=' + leaveType + '&startDate=' + startDate + '&endDate=' + endDate,
                     dataType: 'json',
                     success: function(data) {
-                        if ($('#leaveBalance').length == 0) {
-                           $('#applyleave_leaveBalance').text(data);
-                       }
-
+                        var balance = data.balance;
+                        var asAtDate = data.asAtDate;
+                        var balanceDays = balance.entitled - balance.used - balance.scheduled - balance.pending;
+                        $('#applyleave_leaveBalance').text(balanceDays)
+                            .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
+                                lang_details + '</a>');
+                            
+                        $('#balance_as_of').text(asAtDate);
+                        $('#balance_entitled').text(balance.entitled);
+                        $('#balance_used').text(balance.used);
+                        $('#balance_scheduled').text(balance.scheduled);
+                        $('#balance_pending').text(balance.pending);
+                        $('#balance_total').text(balanceDays);
                     }
                 });
            }
