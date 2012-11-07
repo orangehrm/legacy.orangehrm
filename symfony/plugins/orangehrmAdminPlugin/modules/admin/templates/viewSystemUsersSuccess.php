@@ -31,7 +31,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess');
     </div>
     
     <?php include_partial('global/form_errors', array('form' => $form)); ?>
-    <?php include_partial('global/flash_messages'); ?>
     
     <div class="inner">
         <form id="search_form" name="frmUserSearch" method="post" action="<?php echo url_for('admin/viewSystemUsers'); ?>">

@@ -67,8 +67,7 @@ function printButtonEventBindings($buttons) {
     
 <?php if (!empty($title)) { ?>
         
-        <?php include_partial('global/flash_messages'); ?>
-
+        
 <?php if ($partial != null): ?>
         <div style="padding-left: 5px; padding-top: 5px;">
 <?php
@@ -100,7 +99,9 @@ function printButtonEventBindings($buttons) {
     include_component('core', 'ohrmPluginPannel', array('location' => 'list-component-before-table-action-bar'));
 ?>
          </div> <!-- top -->
-            
+
+        <?php include_partial('global/flash_messages'); ?>
+         
         <div id="helpText" class="helpText"></div>
         <?php 
             if ($pager->haveToPaginate()) {
