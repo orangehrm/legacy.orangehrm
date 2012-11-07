@@ -42,7 +42,7 @@ use_stylesheets_for_form($form);
     </div>
 <?php endif; ?>
 
-<div class="box search2col" id="leave-entitlementsSearch">
+<div class="box searchForm" id="leave-entitlementsSearch">
     <div class="head">
         <h1><?php echo __($title);?></h1>
     </div>

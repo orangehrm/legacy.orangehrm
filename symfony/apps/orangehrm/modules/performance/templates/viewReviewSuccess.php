@@ -7,7 +7,7 @@ $formatData['currentSeparater'] = '-';
 $formatData['newSeparater'] = '/';
 ?>
 
-<div class="box toggableForm search2col">     
+<div class="box toggableForm searchForm">     
 
   <div id="formHeading" class="head"><h1><?php echo __('Search Performance Reviews')?></h1></div>
     <div class="inner">
