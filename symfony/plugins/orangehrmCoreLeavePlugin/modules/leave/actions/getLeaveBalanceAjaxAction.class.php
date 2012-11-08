@@ -79,6 +79,15 @@ class getLeaveBalanceAjaxAction extends sfAction {
             if (!$startDateTimeStamp) {
                 $startDate = date('Y-m-d');
             }
+            
+            $endDate = $localizationService->convertPHPFormatDateToISOFormatDate($inputDatePattern, $request->getParameter("endDate"));
+
+            $endDateTimeStamp = strtotime($endDate);
+            
+            if ($endDateTimeStamp) {
+                // TODO: Check for entitlement availability for this period
+                // may need to call: createLeaveObjectListForAppliedRange()
+            }            
 
             $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
 
