@@ -446,6 +446,9 @@ form ol li input, form ol li select,  form ol li textarea {
 	width:80%;
     background-color: #FFF;
 }
+form ol li input:disabled, form ol li select:disabled,  form ol li textarea:disabled {
+    background-color: #DDD;
+}
 .single form ol li input, .single form ol li select {
 	float:left;
 	width:225px;
