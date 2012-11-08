@@ -33,7 +33,7 @@ $(document).ready(function() {
         if(vacancyString.trim() != "" && result < vacancyList.length){
             if($("#btnSave").attr('value') == lang_edit){
             }else{
-                $('#deleteConfirmation').dialog('open');
+//                $('#deleteConfirmation').dialog('open');
             }
         }
         else{
@@ -52,8 +52,8 @@ $(document).ready(function() {
     $('#btnSave').click(function() {
         var isExistedVacancyGoingToBeDeleted = 0;
         if($("#btnSave").attr('value') == lang_edit) {
-            $('#addCandidateHeading').hide();
-            $('#addCandidate .mainHeading').append('<h2>' + lang_editCandidateTitle + '</h2>');
+            $('#addCandidateHeading').html(lang_editCandidateTitle);
+//            $('#addCandidate .mainHeading').append('<h2>' + lang_editCandidateTitle + '</h2>');
             for(i=0; i < widgetList.length; i++) {
                 $(widgetList[i]).removeAttr("disabled");
             }
@@ -74,7 +74,7 @@ $(document).ready(function() {
                 getVacancy();
                 if(candidateId != "") {
                     if($('#addCandidate_vacancy').val() != vacancyId && vacancyId != "") {
-                        $('#deleteConfirmationForSave').dialog('open');
+//                        $('#deleteConfirmationForSave').dialog('open');
                     } else {
                         $('form#frmAddCandidate').submit();
                     }
@@ -86,7 +86,7 @@ $(document).ready(function() {
 
     });
    
-    $("input[name=addCandidate[resumeUpdate]]").click(function () {
+    $("input.fileEditOptions").click(function () {
         if(attachment != "" && !$('#addCandidate_resumeUpdate_3').attr("checked")){
             $('#addCandidate_resume').val("");
         }
@@ -158,36 +158,14 @@ $(document).ready(function() {
         }
     });
 
-    $('#deleteConfirmation').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 325,
-        height: 50,
-        position: 'middle',
-        open: function() {
-            $('#dialogCancelBtn').focus();
-        }
-    });
-    
-    $('#deleteConfirmationForSave').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 325,
-        height: 50,
-        position: 'middle',
-        open: function() {
-            $('#dialogCancelButton').focus();
-        }
-    });
-
     $('#dialogSaveButton').click(function() {
-        $("#deleteConfirmationForSave").dialog("close");
+//        $("#deleteConfirmationForSave").dialog("close");
         $('form#frmAddCandidate').submit();
     });
     
     $('#dialogCancelButton').click(function() {
         $('#addCandidate_vacancy').val(vacancyId);
-        $("#deleteConfirmationForSave").dialog("close");
+//        $("#deleteConfirmationForSave").dialog("close");
         $('#actionPane').show();
     });
 

@@ -19,23 +19,10 @@
  */
 ?>
 
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
-<?php use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css'); ?>
-<?php use_javascript('../../../scripts/jquery/ui/ui.core.js'); ?>
-<?php use_javascript('../../../scripts/jquery/ui/ui.dialog.js'); ?>
-<?php use_stylesheet('../orangehrmRecruitmentPlugin/css/addCandidateSuccess'); ?>
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/addCandidateSuccess'); ?>
 <?php $browser = $_SERVER['HTTP_USER_AGENT']; ?>
 <?php if (strstr($browser, "MSIE 8.0")): ?>
-<?php $keyWrdWidth = 'width: 276px' ?>
-<?php $resumeWidth = 37 ?>
 <?php else: ?>
-<?php $keyWrdWidth = 'width: 271px' ?>
-<?php $resumeWidth = 38; ?>
 <?php endif; ?>
 <?php $title = ($candidateId > 0) ? __('Candidate') : __('Add Candidate'); ?>
 <?php
@@ -59,162 +46,149 @@
             }
         }
 ?>
-<?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-
-        <div id="messagebar" class="<?php echo isset($messageType) ? "messageBalloon_{$messageType}" : ''; ?>" >
-            <span style="font-weight: bold;"><?php echo isset($message) ? $message : ''; ?></span>
-        </div>
-
-        <div id="addCandidate">
-            <div class="outerbox">
-
-                <div class="mainHeading"><h2 id="addCandidateHeading"><?php echo $title; ?></h2></div>
+<div class="box single" id="addCandidate">
+    
+      <div class="head"><h1 id="addCandidateHeading"><?php echo $title; ?></h1></div>
+          <div class="inner">
+                <?php include_partial('global/flash_messages'); ?>
                 <form name="frmAddCandidate" id="frmAddCandidate" method="post" action="<?php echo url_for('recruitment/addCandidate?id=' . $candidateId); ?>" enctype="multipart/form-data">
 
             <?php echo $form['_csrf_token']; ?>
-            <br class="clear"/>
-
-            <div class="nameColumn" id="firstNameDiv">
+            <fieldset>
+                <ol>
+                    <li class="line">
+            
                 <label><?php echo __('Full Name'); ?></label>
-            </div>
-            <div class="column">
+           
+          
                 <?php echo $form['firstName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
-                <div class="errorHolder"></div>
-                <br class="clear"/>
-                <label id="frmDate" class="helpText"><?php echo __('First Name'); ?><span class="required">*</span></label>
-            </div>
-            <div class="column" id="middleNameDiv">
+                
+<!--               <label id="frmDate" class="helpText"><?php echo __('First Name'. ' <em>*</em>'); ?></label>-->
+           
                 <?php echo $form['middleName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
-                <div class="errorHolder"></div>
-                <br class="clear"/>
-                <label id="toDate" class="helpText"><?php echo __('Middle Name'); ?></label>
-            </div>
-            <div class="column" id="middleNameDiv">
+                
+<!--                <label id="toDate" class="helpText"><?php echo __('Middle Name'); ?></label>-->
+           
                 <?php echo $form['lastName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
-                <div class="errorHolder"></div>
-                <br class="clear"/>
-                <label id="toDate" class="helpText"><?php echo __('Last Name'); ?><span class="required">*</span></label>
-            </div>
-            <br class="clear"/>
-            <br class="clear"/>
-            <div class="newColumn">
-                <?php echo $form['email']->renderLabel(__('Email') . ' <span class="required">*</span>'); ?>
-                <?php echo $form['email']->render(array("class" => "formInputText")); ?>
-                <div class="errorHolder below"></div>
-            </div>
-            <div class="newColumn">
-                <?php echo $form['contactNo']->renderLabel(__('Contact No'), array("class " => "contactNoLable")); ?>
-                <?php echo $form['contactNo']->render(array("class" => "contactNo")); ?>
-                <div class="errorHolder cntact"></div>
-            </div>
-            <br class="clear" />
+                
+<!--                <label id="toDate" class="helpText"><?php echo __('Last Name'. ' <em>*</em>'); ?></label>-->
+           
+                    </li>
+                    
+                    <li>
 
-            <div class="hrLine" ></div>
+                        <?php echo $form['email']->renderLabel(__('Email' . ' <em>*</em>')); ?>
+                        <?php echo $form['email']->render(array("class" => "formInputText")); ?>
+                    </li>
+                    <li>
+                        <?php echo $form['contactNo']->renderLabel(__('Contact No'), array("class " => "contactNoLable")); ?>
+                        <?php echo $form['contactNo']->render(array("class" => "contactNo")); ?>
+                    </li>
+              </ol>
+              <ol>  
+            
+                    <li  class="line">
+                        <?php echo $form['vacancy']->renderLabel(__('Job Vacancy'),array("class" => "vacancyDrpLabel")); ?>
+                        <?php echo $form['vacancy']->render(array("class" => "vacancyDrp")); ?>
 
-            <div class="newColumn">
-                <?php echo $form['vacancy']->renderLabel(__('Job Vacancy'),array("class" => "vacancyDrpLabel")); ?>
-                <?php echo $form['vacancy']->render(array("class" => "vacancyDrp")); ?>
-                <div class="errorHolder vacancy"></div>
-            </div>
 
-            <?php if ($candidateId > 0) : ?>
-            <?php $existingVacancyList = $actionForm->candidate->getJobCandidateVacancy(); ?>
-            <?php if ($existingVacancyList[0]->getVacancyId() > 0) : ?>
-                        <div id="actionPane" style="float:left; width:400px; padding-top:0px">
-                <?php $i = 0 ?>
-                <?php foreach ($existingVacancyList as $candidateVacancy) {
-                ?>
-                            <div id="<?php echo $i ?>" style="height: 18px; padding-top: 11px">
-                    <?php
-                                $widgetName = $candidateVacancy->getId();
-                                echo $actionForm[$widgetName]->render(array("class" => "actionDrpDown"));
-                    ?>
-                                <span class="status" style="font-weight: bold"><?php echo __("Status") . ": " . __(ucwords(strtolower($candidateVacancy->getStatus()))); ?></span>
-                    <?php
-                            }
-                            $i++;
-                    ?></div>
-                        <br class="clear" />
-                <?php //} ?>
-                    </div>
-            <?php endif; ?>
-            <?php endif; ?>
-                        <br class="clear" />            
-                        <!-- Resume block : Begins -->
-                        <div>
+                    <?php if ($candidateId > 0) : ?>
+                    <?php $existingVacancyList = $actionForm->candidate->getJobCandidateVacancy(); ?>
+                    <?php if ($existingVacancyList[0]->getVacancyId() > 0) : ?>
 
-                <?php
-                        if ($form->attachment == "") {
-                            echo $form['resume']->renderLabel(__('Resume'), array("class " => "resume"));
-                            echo $form['resume']->render(array("class " => "duplexBox", "size" => $resumeWidth));
-                            echo "<br class=\"clear\"/>";
-                            echo "<span id=\"cvHelp\" class=\"helpText\">" . __(CommonMessages::FILE_LABEL_DOC) . "</span>";
-                        } else {
-                            $attachment = $form->attachment;
-                            $linkHtml = "<div id=\"fileLink\"><a target=\"_blank\" class=\"fileLink\" href=\"";
-                            $linkHtml .= url_for('recruitment/viewCandidateAttachment?attachId=' . $attachment->getId());
-                            $linkHtml .= "\">{$attachment->getFileName()}</a></div>";
+                        <?php $i = 0 ?>
+                        <?php foreach ($existingVacancyList as $candidateVacancy) {
+                        ?>
 
-                            echo $form['resumeUpdate']->renderLabel(__('Resume'));
-                            echo $linkHtml;
-                            echo "<br class=\"clear\"/>";
-                            echo "<div id=\"radio\">";
-                            echo $form['resumeUpdate']->render(array("class" => ""));
-                            echo "<br class=\"clear\"/>";
-                            echo "</div>";
-                            echo "<div id=\"fileUploadSection\">";
-                            echo $form['resume']->renderLabel(' ');
-                            echo $form['resume']->render(array("class " => "duplexBox", "size" => $resumeWidth));
-                            echo "<br class=\"clear\"/>";
-                            echo "<span id=\"cvHelp\" class=\"helpText\">" . __(CommonMessages::FILE_LABEL_DOC) . "</span>";
-                            echo "</div>";
-                        }
-                ?>
-                    </div>
+                            <?php
+                                        $widgetName = $candidateVacancy->getId();
+                                        echo $actionForm[$widgetName]->render(array("class" => "actionDrpDown"));
+                            ?> 
 
-                    <!-- Resume block : Ends -->
+                                        <?php echo __("Status") . ": " . __(ucwords(strtolower($candidateVacancy->getStatus()))); ?>
+                            <?php
+                                    }
+                                    $i++;
+                            ?>
 
-                    <div>
-                <?php echo $form['keyWords']->renderLabel(__('Keywords'), array("class " => "keywrd")); ?>
-                <?php echo $form['keyWords']->render(array("class" => "keyWords", "style" => $keyWrdWidth)); ?>
-                        <div class="errorHolder below"></div>
-                    </div>
-                    <br class="clear" />
-                    <div>
-                <?php echo $form['comment']->renderLabel(__('Comment'), array("class " => "comment")); ?>
-                <?php echo $form['comment']->render(array("class" => "formInputText", "cols" => 35, "rows" => 4)); ?>
-                        <div class="errorHolder below"></div>
-                    </div>
-                    <br class="clear" />
-                    <div>
-                <?php echo $form['appliedDate']->renderLabel(__('Date of Application'), array("class " => "appDate")); ?>
-                <?php echo $form['appliedDate']->render(array("class" => "formDateInput")); ?>
-                        <div class="errorHolder below"></div>
-                    </div>
-                    <br class="clear" />
-                    <div class="formbuttons">
-                <?php if ($edit): ?>
-                            <input type="button" class="savebutton" name="btnSave" id="btnSave"
-                                   value="<?php echo __("Save"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                       <?php endif; ?>
-                       <?php if ($candidateId > 0): ?>
-                         <input type="button" class="backbutton" name="btnBack" id="btnBack"
-                                value="<?php echo __("Back"); ?>"onmouseover="moverButton(this);" onmouseout="moutButton(this);"/>
-                       <?php endif; ?>
-                     </div>
+                        <?php //} ?>
+
+                    <?php endif; ?>
+                    <?php endif; ?>
+                        </li>
+
+                                <!-- Resume block : Begins -->
+
+                        <li>    
+
+                        <?php
+                                if ($form->attachment == "") {
+                                    echo $form['resume']->renderLabel(__('Resume'), array("class " => "resume"));
+                                    echo $form['resume']->render(array("class " => "duplexBox"));
+                                    echo "<br class=\"clear\"/>";
+                                    echo "<span id=\"cvHelp\" class=\"helpText\">" . __(CommonMessages::FILE_LABEL_DOC) . "</span>";
+                                } else {
+                                    $attachment = $form->attachment;
+                                    $linkHtml = "<div id=\"fileLink\"><a target=\"_blank\" class=\"fileLink\" href=\"";
+                                    $linkHtml .= url_for('recruitment/viewCandidateAttachment?attachId=' . $attachment->getId());
+                                    $linkHtml .= "\">{$attachment->getFileName()}</a></div>";
+
+                                    echo $form['resumeUpdate']->renderLabel(__('Resume'));
+                                    echo $linkHtml;
+                                    echo "<br class=\"clear\"/>";
+                                    echo "<div id=\"radio\">";
+                                    echo $form['resumeUpdate']->render(array("class" => "fileEditOptions"));
+                                    echo "<br class=\"clear\"/>";
+                                    echo "</div>";
+                                    echo "<div id=\"fileUploadSection\">";
+                                    echo $form['resume']->renderLabel(' ');
+                                    echo $form['resume']->render(array("class " => "duplexBox"));
+                                    echo "<br class=\"clear\"/>";
+                                    echo "<span id=\"cvHelp\" class=\"helpText\">" . __(CommonMessages::FILE_LABEL_DOC) . "</span>";
+                                    echo "</div>";
+                                }
+                        ?>
+                                </li>
+
+                            <!-- Resume block : Ends -->
+
+                            <li>
+                        <?php echo $form['keyWords']->renderLabel(__('Keywords'), array("class " => "keywrd")); ?>
+                        <?php echo $form['keyWords']->render(array("class" => "keyWords")); ?>
+                            </li>
+                            <li>
+                        <?php echo $form['comment']->renderLabel(__('Comment'), array("class " => "comment")); ?>
+                        <?php echo $form['comment']->render(array("class" => "formInputText", "cols" => 35, "rows" => 4)); ?>
+                            </li>
+                            <li>
+                        <?php echo $form['appliedDate']->renderLabel(__('Date of Application'), array("class " => "appDate")); ?>
+                        <?php echo $form['appliedDate']->render(array("class" => "formDateInput")); ?>
+                            </li>
+                            <li class="required new">
+                                    <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                                </li>
+                </ol>
+                        <p>
+                    
+                            <?php if ($edit): ?>
+                         <input type="button"id="btnSave" value="<?php echo __("Save"); ?>"/>
+                            <?php endif; ?>
+                            <?php if ($candidateId > 0): ?>
+                         <input type="button" id="btnBack" value="<?php echo __("Back"); ?>"/>
+                            <?php endif; ?>
+                     
+                        </p>
+                    </fieldset>
                  </form>
              </div>
-         </div>
-         <div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
-         <br class="clear" />
-         <br class="clear" />
 
+         </div>
+         
 <?php if ($candidateId > 0) : ?>
 <?php $existingVacancyList = $actionForm->candidate->getJobCandidateVacancy(); ?>
-                                    <div id="candidateHistoryResults">
-    <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
-                                </div>
+<?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 <?php endif; ?>
+
 
                                     <!-- confirmation box for removing vacancies-->
                                     <div id="deleteConfirmation" title="<?php echo __('OrangeHRM - Confirmation Required'); ?>" style="display: none;">
