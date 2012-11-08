@@ -20,7 +20,6 @@
 ?>
 
 <?php
-use_stylesheet('../orangehrmRecruitmentPlugin/css/attachmentsPartial');
 use_javascript('../orangehrmRecruitmentPlugin/js/attachmentsPartial');
 ?>
 
@@ -43,9 +42,14 @@ $hasAttachments = count($attachmentList) > 0;
 
             <fieldset>
                 <ol>
-                    <li>
+                    <li id="currentFileLi">
+                        <label><?php echo __("Current File")?></label>
+                        <span id="currentFileSpan"></span>
+                    </li>                     
+                    <li class="fileBrowser">
                         <label><span id="selectFileSpan"><?php echo __("Select File") ?></span> <em>*</em></label>
-                        <?php echo $form['ufile']->render(array("class" => "atachment", "size" => 28)); ?>
+                        <?php echo $form['ufile']->render(array("class" => "atachment")); ?>
+                        <div class="fileHelpText"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></div>
                     </li>
                     <li>
                         <?php echo $form['comment']->renderLabel(__('Comment')); ?>
