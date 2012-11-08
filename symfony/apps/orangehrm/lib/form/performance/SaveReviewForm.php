@@ -21,16 +21,80 @@
  * Form class for Save Education
  */
 class SaveReviewForm extends BaseForm {
+    
+    private $performanceReviewService = null;
+
+    /**
+        * 
+        * @return type 
+        */
+    public function getPerformanceReviewService() {
+        if (is_null($this->performanceReviewService)) {
+            $this->performanceReviewService = new PerformanceReviewService();
+            $this->performanceReviewService->setPerformanceReviewDao(new PerformanceReviewDao());
+        }
+        return $this->performanceReviewService;
+    }
 	
-     public function configure() {
+    public function configure() {
+        $this->setWidgets(array(
+            'reviewId' => new sfWidgetFormInputHidden(),
+            'employeeName' => new ohrmWidgetEmployeeNameAutoFill(),
+            'reviewerName' => new ohrmWidgetEmployeeNameAutoFill(),
+            'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_from')), 
+            'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_to')),
+            'dueDate' => new ohrmWIdgetDatePicker(array(), array('id' => 'due_date')),
+        ));
 
+        $this->setValidators(array(
+            'reviewId' => new sfValidatorString(array('required' => false)),
+            'employeeName' => new ohrmValidatorEmployeeNameAutoFill(array('required' => true)),
+            'reviewerName' => new ohrmValidatorEmployeeNameAutoFill(array('required' => true)),
+            'from_date' => new ohrmDateValidator(array('required' => true)),
+            'to_date' => new ohrmDateValidator(array('required' => true)),
+            'dueDate' => new ohrmDateValidator(array('required' => true)),
+        ));
+        
+        $this->__setDefaultValues();
+        
+        $this->getWidgetSchema()->setLabels($this->getFormLabels());
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
         $this->widgetSchema->setNameFormat('saveReview[%s]');
-
-     }
+    }
      
-     public function getEmployeeListAsJson() {
-         $companyService = new CompanyService();
-         return $companyService->getEmployeeListAsJson();
-     }
+    private function __setDefaultValues() {
+        $reviewId = $this->getOption('reviewId');
+        if (!empty($reviewId)) {
+            $review = $this->getPerformanceReviewService()->readPerformanceReview($reviewId);
+            $this->setDefaults(array(
+                'reviewId' => $review->getId(),
+                'employeeName' => $review->getEmployee()->getFirstName() . " " . $review->getEmployee()->getLastName(),
+                'reviewerName' => $review->getReviewer()->getFirstName() . " " . $review->getReviewer()->getLastName(),
+                'from_date' => $review->getPeriodFrom(),
+                'to_date' => $review->getPeriodTo(),
+                'dueDate' => $review->getDueDate(),
+            ));
+        }
+    }
+    
+    protected function getFormLabels() {
+        $required = '<em> *</em>';
+        $labels = array(
+            'employeeName' => __('Employee Name') . $required,
+            'reviewerName' => __('Reviewer Name') . $required,
+            'from_date' => __('From') . $required,
+            'to_date' => __('To') . $required,
+            'dueDate' => __('Due Date')  . $required,
+        );
+        return $labels;
+    }
 
+    public function getEmployeeListAsJson() {
+        $companyService = new CompanyService();
+        return $companyService->getEmployeeListAsJson();
+    }
+    
+    public function save() {
+        
+    }
 }

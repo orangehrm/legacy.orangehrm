@@ -12,3 +12,6 @@ listDefineKpiSuccess:
   
 viewReviewSuccess:
   layout: freshorange
+
+saveReviewSuccess:
+  layout: freshorange
