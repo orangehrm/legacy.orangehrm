@@ -67,7 +67,8 @@ use_stylesheets_for_form($form);
                     $rowCssClass = "even";
                     $results = $sf_data->getRaw('resultsSet');?>                
                 <tbody class="scrollContent"> 
-                <?php foreach ($results as $row):              
+                <?php foreach ($results as $row):      
+                    
                         $rowCssClass = ($rowCssClass === 'odd') ? 'even' : 'odd';?>                      
                 <tr class="<?php echo $rowCssClass;?>">
                 <?php foreach ($row as $key => $column):                            
@@ -89,12 +90,15 @@ use_stylesheets_for_form($form);
                             <?php endif;                                                                                      
                              endforeach;
                          else:
+                             //echo $key . '-' . $column;
                             if(($info["groupDisp"] == "true") && ($info["display"] == "true")):?>
                             <td width="<?php echo ($info["width"]);?>"><?php if(($column == "") || is_null($column)):
                                     echo "---";
                                 else :
                                     echo __($column);
                                 endif;?></td>
+                      <?php else: ?>
+                            <input type="hidden" name="<?php echo $key;?>[]" value="<?php echo $column;?>"/>
                       <?php endif;
                          endif;?>                            
                  <?php endforeach;?>
@@ -145,10 +149,31 @@ use_stylesheets_for_form($form);
             viewBtn.hide();
         }        
     }
+    
+    function createLinks() {
+        $('#report-results').find('table.table td:nth-child(3)').each(function(){
+            if ($(this).text() != '---') {
+                $(this).wrapInner("<a href='#' class='asof'/>");
+            }
+        });
+        
+        $('#report-results').find('table.table td:nth-child(4)').each(function(){
+            if ($(this).text() != '---') {
+                $(this).wrapInner("<a href='#' class='total'/>");
+            }
+        });        
+    }    
    
     $(document).ready(function() {        
         
+        $('a.total').live('click', function(){
+            
+        });
+        
         toggleReportType();
+        
+        // create links for 2nd and 3rd column
+        createLinks();
         
         $('#viewBtn').click(function() {
             $('#frmLeaveBalanceReport').submit();
