@@ -96,8 +96,8 @@ ORDER BY ohrm_leave_entitlement.leave_type_id
 
 <sub_report type="sql" name="subTable3">
 <query>
-FROM ohrm_leave WHERE $X{=,employee_id,empNumber} AND
-leave_status = 3
+FROM ohrm_leave WHERE $X{=,emp_number,empNumber} AND
+status = 3
 GROUP BY leave_type_id
 ORDER BY ohrm_leave.leave_type_id
 </query>
@@ -113,7 +113,7 @@ ORDER BY ohrm_leave.leave_type_id
                         <width>1</width>
                     </field>                                
                     <field display="true">
-                        <field_name>sum(leave_length_days)</field_name>
+                        <field_name>sum(length_days)</field_name>
                         <field_alias>taken</field_alias>
                         <display_name>Leave Taken</display_name>
                         <width>120</width>
@@ -125,8 +125,8 @@ ORDER BY ohrm_leave.leave_type_id
 
 <sub_report type="sql" name="subTable4">
 <query>
-FROM ohrm_leave WHERE $X{=,employee_id,empNumber} AND
-leave_status = 3
+FROM ohrm_leave WHERE $X{=,emp_number,empNumber} AND
+status = 3
 GROUP BY leave_type_id
 ORDER BY ohrm_leave.leave_type_id
 </query>
@@ -142,7 +142,7 @@ ORDER BY ohrm_leave.leave_type_id
                         <width>1</width>
                     </field>                                
                     <field display="true">
-                        <field_name>sum(leave_length_days)</field_name>
+                        <field_name>sum(length_days)</field_name>
                         <field_alias>scheduled</field_alias>
                         <display_name>Leave Scheduled</display_name>
                         <width>120</width>

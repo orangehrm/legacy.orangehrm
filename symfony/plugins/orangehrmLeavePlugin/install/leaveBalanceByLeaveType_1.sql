@@ -98,9 +98,9 @@ ORDER BY emp_number
 <sub_report type="sql" name="subTable3">
 <query>
 FROM ohrm_leave WHERE $X{=,leave_type_id,leaveType} AND
-leave_status = 3
-GROUP BY employee_id
-ORDER BY ohrm_leave.employee_id
+status = 3
+GROUP BY emp_number
+ORDER BY ohrm_leave.emp_number
 </query>
     <id_field>empNumber</id_field>
     <display_groups>
@@ -108,13 +108,13 @@ ORDER BY ohrm_leave.employee_id
                 <group_header></group_header>
                 <fields>
                     <field display="false">
-                        <field_name>ohrm_leave.employee_id</field_name>
+                        <field_name>ohrm_leave.emp_number</field_name>
                         <field_alias>empNumber</field_alias>
                         <display_name>Emp Number</display_name>
                         <width>1</width>
                     </field>                                
                     <field display="true">
-                        <field_name>SUM(leave_length_days)</field_name>
+                        <field_name>SUM(length_days)</field_name>
                         <field_alias>taken</field_alias>
                         <display_name>Leave Taken</display_name>
                         <width>120</width>
@@ -127,9 +127,9 @@ ORDER BY ohrm_leave.employee_id
 <sub_report type="sql" name="subTable4">
 <query>
 FROM ohrm_leave WHERE $X{=,leave_type_id,leaveType} AND
-leave_status = 3
-GROUP BY employee_id
-ORDER BY ohrm_leave.employee_id
+status = 3
+GROUP BY emp_number
+ORDER BY ohrm_leave.emp_number
 </query>
     <id_field>empNumber</id_field>
     <display_groups>
@@ -137,13 +137,13 @@ ORDER BY ohrm_leave.employee_id
                 <group_header></group_header>
                 <fields>
                     <field display="false">
-                        <field_name>ohrm_leave.employee_id</field_name>
+                        <field_name>ohrm_leave.emp_number</field_name>
                         <field_alias>empNumber</field_alias>
                         <display_name>Emp Number</display_name>
                         <width>1</width>
                     </field>                                
                     <field display="true">
-                        <field_name>SUM(leave_length_days)</field_name>
+                        <field_name>SUM(length_days)</field_name>
                         <field_alias>scheduled</field_alias>
                         <display_name>Leave Scheduled</display_name>
                         <width>120</width>
