@@ -139,11 +139,25 @@ ORDER BY A.leave_type_id
 </sub_report>
 
 <sub_report type="sql" name="balanceQuery">
-                    <query>
-FROM ohrm_leave_entitlement WHERE $X{=,emp_number,empNumber} AND
-from_date &lt; curdate()
-GROUP BY leave_type_id
-ORDER BY ohrm_leave_entitlement.leave_type_id
+<query>
+FROM (
+SELECT le.leave_type_id AS leave_type_id,
+       le.no_of_days AS entitled, 
+       sum(IF(l.status = 2, lle.length_days, 0)) AS scheduled, 
+       sum(IF(l.status = 3, lle.length_days, 0)) AS taken 
+FROM ohrm_leave_entitlement le LEFT JOIN 
+     ohrm_leave_leave_entitlement lle ON le.id = lle.entitlement_id LEFT JOIN
+     ohrm_leave l ON l.id = lle.leave_id
+WHERE le.deleted = 0 AND $X{=,le.emp_number,empNumber} AND 
+      $X{&lt;=,le.from_date,asOfDate} AND
+      $X{&gt;=,le.to_date,asOfDate} 
+
+GROUP BY le.id
+) AS B
+
+GROUP BY B.leave_type_id
+ORDER BY B.leave_type_id
+
 </query>
     <id_field>leaveTypeId</id_field>
     <display_groups>
@@ -151,13 +165,13 @@ ORDER BY ohrm_leave_entitlement.leave_type_id
                 <group_header></group_header>
                 <fields>
                     <field display="false">
-                        <field_name>ohrm_leave_entitlement.leave_type_id</field_name>
+                        <field_name>B.leave_type_id</field_name>
                         <field_alias>leaveTypeId</field_alias>
                         <display_name>Leave Type ID</display_name>
                         <width>1</width>
                     </field>                                
                     <field display="true">
-                        <field_name>sum(no_of_days)</field_name>
+                        <field_name>sum(B.entitled) - sum(B.scheduled) - sum(B.taken)</field_name>
                         <field_alias>balance</field_alias>
                         <display_name>Leave Balance as of Date</display_name>
                         <width>120</width>
@@ -170,7 +184,8 @@ ORDER BY ohrm_leave_entitlement.leave_type_id
 <sub_report type="sql" name="scheduledQuery">
 <query>
 FROM ohrm_leave WHERE $X{=,emp_number,empNumber} AND
-status = 3
+status = 2 AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 GROUP BY leave_type_id
 ORDER BY ohrm_leave.leave_type_id
 </query>
@@ -199,7 +214,8 @@ ORDER BY ohrm_leave.leave_type_id
 <sub_report type="sql" name="takenQuery">
 <query>
 FROM ohrm_leave WHERE $X{=,emp_number,empNumber} AND
-status = 3
+status = 3 AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 GROUP BY leave_type_id
 ORDER BY ohrm_leave.leave_type_id
 </query>
