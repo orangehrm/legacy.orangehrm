@@ -176,11 +176,7 @@ function escapeHtml($value) {
 
 function displayMainMessage($messageType, $message) {
     
-    if ($messageType == 'success') {
-        $type = 'success';
-    }
-    
-    return "<div class=\"message $type\">$message<a href=\"#\">Close</a></div>";
+    return "<div class=\"message $messageType fadable\">$message<a href=\"#\" class=\"messageCloseButton\">Close</a></div>";
     
 }
 
