@@ -50,12 +50,15 @@ class viewLeaveBalanceReportAction extends sfAction {
                     $limit = $this->pager->getMaxPerPage();
         
                     $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
+                    
+                    //var_dump($this->resultsSet[1]);
                     $this->reportName = $this->getReportName($reportId);
 
                     $headers = $reportBuilder->getDisplayHeaders($reportId);
                     $this->tableHeaders = $this->fixTableHeaders($reportType, $headers);
 
                     $this->headerInfo = $reportBuilder->getHeaderInfo($reportId);
+
                     $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);                    
 
                 }
@@ -65,9 +68,31 @@ class viewLeaveBalanceReportAction extends sfAction {
     
     protected function convertValues($values) {
         
+        $today = date('Y-m-d');
+        $todayTimestamp = strtotime($today);
+        
+        $fromDate = $values['date']['from'];
+        $fromTimestamp = strtotime($fromDate);
+        
+        $toDate = $values['date']['to'];
+        $toTimestamp = strtotime($toDate);
+        
+        if ($todayTimestamp < $fromTimestamp) {
+            $asOfDate = $today;
+        } else if ($todayTimestamp > $toTimestamp) {
+            $asOfDate = $toDate;
+        } else {
+            $asOfDate = $today;
+        }
+        $this->asOfDate = $asOfDate;
+        
+        
         $convertedValues = array(
             'leaveType' => array($values['leave_type']),
-            'empNumber' => array($values['employee']['empId'])
+            'empNumber' => array($values['employee']['empId']),
+            'fromDate' => array($fromDate),
+            'toDate' => array($toDate),
+            'asOfDate' => array($asOfDate),            
         );
         
         return $convertedValues;
@@ -82,7 +107,9 @@ class viewLeaveBalanceReportAction extends sfAction {
      */
     protected function fixTableHeaders($reportType, $headers) {
 
-        $nameKey = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 'personalDetails' : 'leavetype';
+        $tableHeaders = $headers;
+        
+        /*$nameKey = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 'personalDetails' : 'leavetype';
       
         $nameHeader = $headers[$nameKey];
         $firstHeader = $headers['g1'];
@@ -112,7 +139,18 @@ class viewLeaveBalanceReportAction extends sfAction {
                               'second' => $firstHeader,
                               'rest' => $otherHeaders,
                               'last' => $lastHeader);
+        //print_r($tableHeaders);
         
+        $tableHeaders = array(
+            'leavetype' => array('groupHeader' => '', 'leaveType' => 'Leave Type'),
+            'g1' => array('groupHeader' => '', 'entitlement' => 'Entitlements valid as of ' . set_datepicker_date_format($this->asOfDate)), 
+            'g2' => array('groupHeader' => '',  'entitlement2' => 'Total Entitlments valid for the period'),
+            'g3' => array('groupHeader' => '',  'closing' => 'Leave Balance as of ' . set_datepicker_date_format($this->asOfDate)),
+            'g4' => array('groupHeader' => '',  'scheduled' => 'Leave Scheduled'),
+            'g5' => array('groupHeader' => '',  'taken' => 'Leave Taken')            
+        );
+        
+        */
         return $tableHeaders;
     }
     private function getReportName($reportId) {
