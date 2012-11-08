@@ -906,9 +906,9 @@ form input.validation-error {
 /* ================ widget specific styles: Begin ================ */
 
 .ui-datepicker-trigger {
-	margin:2px 0 0 5px;
-        display: block;
-        float: left;
+	margin: 0 0 0 5px;
+    display: block;
+    float: left;
 }
 
 .single form ol li label.date_range_label {
