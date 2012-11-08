@@ -33,7 +33,11 @@ to setup a leave period and create leave types.
 
    Note that this command deletes all records in new tables before upgrading data. Therefore,
    any leave entitlements created using the new UI's will not be available afterwards.
-
+6. Install Report Engine Addon
+   source the symfony/plugins/orangehrmReportEngine/install/dbscript.sql file
+7. Source the reports used by 'Leave Balance Report' in symfony/plugins/orangehrmLeavePlugin/install directory
+   i. leaveBalanceByEmployee.sql
+   ii. leaveBalanceByLeaveType.sql
 
 Deprecated Notes
 ----------------
