@@ -87,6 +87,8 @@ class applyLeaveAction extends baseLeaveAction {
     }
     
     public function execute($request) {
+        
+        $this->getLeaveRequestService()->markApprovedLeaveAsTaken();
 
         $this->leaveTypes = $this->getElegibleLeaveTypes();
         

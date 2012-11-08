@@ -20,13 +20,11 @@ LeaveEntitlement:
       notnull: true
       autoincrement: false
     days_used:
-      type: integer(4)
+      type: 'decimal(4, 2)'
       fixed: false
-      unsigned: false
       primary: false
-      default: '0'
-      notnull: true
-      autoincrement: false      
+      notnull: false
+      autoincrement: false    
     leave_type_id:
       type: integer(4)
       fixed: false

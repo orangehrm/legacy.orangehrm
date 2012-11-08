@@ -456,6 +456,11 @@
         $leave = $leaveRequestData[1];
 
         $entitlementAssignmentIds = $this->getEntitlementAssignmentIdsFromDb();
+
+        $savedEntitlements = $this->getEntitlementsFromDb();
+        
+        // Verify all entitlements in fixture retrieved.
+        $this->assertEquals(4, count($savedEntitlements));
         
         // entitlements to be assigned to leave
         $entitlements = array('current' => array(
@@ -509,8 +514,125 @@
             $this->validateLeaveEntitlementAssignment($leaveId, $change, $entitlementsForThisLeave);
         }
         
+        // Verify no entitlement has changed - since leave request status is: pending approval
+        $savedEntitlementsAfter = $this->getEntitlementsFromDb();       
+        $this->assertEquals(count($savedEntitlements), count($savedEntitlementsAfter));
+        
+        for ($i = 0; $i < count($savedEntitlements); $i++) {
+            $this->compareEntitlement($savedEntitlements[$i], $savedEntitlementsAfter[$i]);
+        }
+        
     }        
 
+    public function testSaveLeaveRequestNewRequestWithEntitlementChangesAndTakenLeave() {
+
+        $leaveRequestIds = $this->getLeaveRequestIdsFromDb();
+        $leaveIds = $this->getLeaveIdsFromDb();
+        
+        // These are the leave requests defined in the fixture (LeaveRequestDao.yml
+        $expected = range(1,20);
+        $this->assertEquals($expected, $leaveRequestIds);
+        
+        $leaveRequestData = $this->_getLeaveRequestData();
+        $request = $leaveRequestData[0];
+        $leave = $leaveRequestData[1];
+        
+        // convert first leave request to taken
+        $leave[0]->setStatus(Leave::LEAVE_STATUS_LEAVE_TAKEN);
+
+        $entitlementAssignmentIds = $this->getEntitlementAssignmentIdsFromDb();
+
+        $savedEntitlements = $this->getEntitlementsFromDb();
+        
+        // Verify all entitlements in fixture retrieved.
+        $this->assertEquals(4, count($savedEntitlements));
+        
+        // entitlements to be assigned to leave
+        $entitlements = array('current' => array(
+                    '2010-12-01' => array(1 => 0.4, 2 => 0.6),
+                    '2010-12-02' => array(4 => 1)
+                ),
+                'change' => array(
+                    34 => array(2 => 1, 3 => 0.4, 4 => 1), // new entitlements for leave without any
+                    1 => array(1 => 1, 2 => 1, 4 => 0.5), // changes to existing values + new
+                    2 => array(4 => 1, 3 => 1, 2 => 1), // no changes to existing, new ones added
+                    4 => array() // no entitlements
+                )
+            );
+        
+        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements));
+        
+        $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
+        $this->assertEquals(1, count($leaveRequestList));  
+        $leaveRequest = $leaveRequestList[0];
+        $this->compareLeaveRequest($request, $leaveRequest);
+
+        $newEntitlements = $this->getNewEntitlementAssignements($entitlementAssignmentIds);
+        $this->assertEquals(12, count($newEntitlements));
+        
+        $leaveList = $this->getNewLeave($leaveIds);
+
+        $this->assertEquals(count($leave), count($leaveList));
+
+        $takenLeaveId = null;
+        
+        // update leave type, leave request id , emp number in leave requests
+        for ($i = 0; $i < count($leave); $i++) {
+            $expected = $leave[$i];
+            $actual = $leaveList[$i];
+            $expected->setLeaveTypeId($request->getLeaveTypeId());
+            $expected->setEmpNumber($request->getEmpNumber());
+            $expected->setLeaveRequestId($request->getId());
+            
+            $this->compareLeave($expected, $actual);
+            
+            //echo "Leave for date: " . $actual->getDate() . ", id: " . $actual->getId() . "\n";
+            
+            // verify entitlement assignments
+            $leaveId = $actual->getId();
+            
+            if ($i == 1) {
+                $takenLeaveId = $leaveId;
+            }
+            
+            $leaveEntitlements = $entitlements['current'][$expected->getDate()];
+            $newEntitlementsForThisLeave = $this->filterEntitlementsForLeave($leaveId, $newEntitlements);
+            $this->validateLeaveEntitlementAssignment($leaveId, $leaveEntitlements, $newEntitlementsForThisLeave);            
+        }                
+        
+        // verify entitlement changes
+        foreach($entitlements['change'] as $leaveId => $change) {
+            $entitlementsForThisLeave = $this->getEntitlementAssignmentsForLeave($leaveId);
+            $this->validateLeaveEntitlementAssignment($leaveId, $change, $entitlementsForThisLeave);
+        }
+        
+        // Verify days_used for entitlement for taken leave is updated
+        $this->assertTrue(!is_null($takenLeaveId));
+        
+        $entitlementChangesForTakenLeave = $entitlements['current']['2010-12-01'];
+        
+        $savedEntitlementsAfter = $this->getEntitlementsFromDb();       
+        $this->assertEquals(count($savedEntitlements), count($savedEntitlementsAfter));
+        
+        for ($i = 0; $i < count($savedEntitlements); $i++) {
+            $saved = $savedEntitlements[$i];
+            $after = $savedEntitlementsAfter[$i];
+            
+            if (!in_array($saved['id'], array_keys($entitlementChangesForTakenLeave))) {
+                $this->compareEntitlement($saved, $after);
+            } else {
+                // verify used_days incremented
+                $change = $entitlementChangesForTakenLeave[$saved['id']];
+                $this->assertEquals($saved['days_used'] + $change, $after['days_used']);
+                
+                // Compare other fields
+                $saved['days_used'] = $saved['days_used'] + $change;
+                $this->compareEntitlement($saved, $after);
+            }
+        }
+        
+    }        
+    
     public function testSaveLeaveRequestAbortTransaction() {
 
         // Get current records
@@ -1421,7 +1543,32 @@
         $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
         return $ids;        
     }    
+    
+    protected function getEntitlementIdsFromAssignmentIds($assignmentIds) {
+        $assignments = $this->getEntitlementAssignements($assignmentIds);
+        $entitlementIds = array();
+        foreach ($assignments as $assignment) {
+            $entitlementIds[] = $assignment->getEntitlementId();
+        }
+        return $entitlementIds;
+    }
 
+    protected function getEntitlementsFromDb() {
+
+        $conn = Doctrine_Manager::connection()->getDbh();
+        
+        $query = "SELECT * from ohrm_leave_entitlement order by id ASC";
+        $statement = $conn->query($query);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        
+//        $q = Doctrine_Query::create()->from('LeaveEntitlement e')
+//                ->addOrderBy('e.id ASC');
+//
+//        return $q->execute();       
+    }    
+
+    
     protected function getNewLeaveRequests($existingIds) {
         $q = Doctrine_Query::create()->from('LeaveRequest l')
                 ->whereNotIn('l.id', $existingIds)
@@ -1558,6 +1705,23 @@
         }
         return $filteredEntitlements;
     }
+    
+    protected function compareEntitlement($expected, $actual) {
+        $this->assertEquals($expected['id'], $actual['id']);
+        $this->assertEquals($expected['emp_number'], $actual['emp_number']);
+        $this->assertEquals($expected['no_of_days'], $actual['no_of_days']);
+        $this->assertEquals($expected['days_used'], $actual['days_used']);
+        $this->assertEquals($expected['leave_type_id'], $actual['leave_type_id']);
+        $this->assertEquals($expected['from_date'], $actual['from_date']);
+        $this->assertEquals($expected['to_date'], $actual['to_date']);
+        $this->assertEquals($expected['credited_date'], $actual['credited_date']);
+        $this->assertEquals($expected['note'], $actual['note']);
+        $this->assertEquals($expected['entitlement_type'], $actual['entitlement_type']);
+        $this->assertEquals($expected['deleted'], $actual['deleted']);
+        $this->assertEquals($expected['created_by_id'], $actual['created_by_id']);
+        $this->assertEquals($expected['created_by_name'], $actual['created_by_name']);
+        
+    }    
  }
 
 

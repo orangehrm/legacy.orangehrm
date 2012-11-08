@@ -1271,7 +1271,7 @@ CREATE TABLE ohrm_leave_entitlement (
   `id` int unsigned not null auto_increment,
   emp_number int(7) not null,
   no_of_days int not null,
-  days_used int not null default 0,
+  days_used decimal(4,2) not null default 0,
   leave_type_id int unsigned not null,
   from_date datetime not null,
   to_date datetime,

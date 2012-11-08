@@ -8,7 +8,7 @@
  * @property integer $id
  * @property integer $emp_number
  * @property decimal $no_of_days
- * @property integer $days_used
+ * @property decimal $days_used
  * @property integer $leave_type_id
  * @property timestamp $from_date
  * @property timestamp $to_date
@@ -26,7 +26,7 @@
  * @method integer             getId()               Returns the current record's "id" value
  * @method integer             getEmpNumber()        Returns the current record's "emp_number" value
  * @method decimal             getNoOfDays()         Returns the current record's "no_of_days" value
- * @method integer             getDaysUsed()         Returns the current record's "days_used" value
+ * @method decimal             getDaysUsed()         Returns the current record's "days_used" value
  * @method integer             getLeaveTypeId()      Returns the current record's "leave_type_id" value
  * @method timestamp           getFromDate()         Returns the current record's "from_date" value
  * @method timestamp           getToDate()           Returns the current record's "to_date" value
@@ -92,15 +92,14 @@ abstract class BaseLeaveEntitlement extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 6,
              ));
-        $this->hasColumn('days_used', 'integer', 4, array(
-             'type' => 'integer',
+        $this->hasColumn('days_used', 'decimal', 4, array(
+             'type' => 'decimal',
              'fixed' => 0,
-             'unsigned' => false,
              'primary' => false,
-             'default' => '0',
-             'notnull' => true,
+             'notnull' => false,
              'autoincrement' => false,
              'length' => 4,
+             'scale' => '2',
              ));
         $this->hasColumn('leave_type_id', 'integer', 4, array(
              'type' => 'integer',

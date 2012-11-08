@@ -93,7 +93,7 @@ class LeaveEntitlementService extends BaseService {
         return $this->getLeaveEntitlementDao()->getLinkedLeaveRequests($entitlementIds, $statuses);
     }    
     
-    public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date = NULL) {
+    public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate = NULL, $date = NULL) {
         if (empty($asAtDate)) {
             $asAtDate = date('Y-m-d', time());
         }

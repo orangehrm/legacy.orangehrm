@@ -69,7 +69,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
         </tbody>
         <tfoot>
             <tr class="total">
-                <td><?php echo __('Total');?></td>
+                <td><?php echo __('Balance');?></td>
                 <td id="balance_total"></td>
             </tr>
         </tfoot>     

@@ -25,6 +25,7 @@
 class assignLeaveAction extends baseLeaveAction {
 
     protected $leaveAssignmentService;
+    protected $leaveRequestService;
 
     /**
      * Get leave assignment service instance
@@ -46,8 +47,29 @@ class assignLeaveAction extends baseLeaveAction {
         $this->leaveAssignmentService = $service;
     }
     
+    /**
+     *
+     * @return LeaveRequestService
+     */
+    public function getLeaveRequestService() {
+        if (!($this->leaveRequestService instanceof LeaveRequestService)) {
+            $this->leaveRequestService = new LeaveRequestService();
+        }
+        return $this->leaveRequestService;
+    }
+
+    /**
+     *
+     * @param LeaveRequestService $service 
+     */
+    public function setLeaveRequestService(LeaveRequestService $service) {
+        $this->leaveRequestService = $service;
+    }
+    
     public function execute($request) {
 
+        $this->getLeaveRequestService()->markApprovedLeaveAsTaken();
+        
         $this->leaveTypes = $this->getElegibleLeaveTypes();
         
         if (count($this->leaveTypes) == 0) {

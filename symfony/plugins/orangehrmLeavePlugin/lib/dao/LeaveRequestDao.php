@@ -52,6 +52,8 @@ class LeaveRequestDao extends BaseDao {
 
                 $leave->save();
                 
+                $taken = $leave->getStatus() == Leave::LEAVE_STATUS_LEAVE_TAKEN;
+                
                 $leaveId = $leave->getId();
                 
                 if (isset($current[$leave->getDate()])) {
@@ -62,6 +64,15 @@ class LeaveRequestDao extends BaseDao {
                         $le->setEntitlementId($entitlementId);
                         $le->setLengthDays($length);
                         $le->save();
+                        
+                        if ($taken) {
+
+                            Doctrine_Query::create()
+                            ->update('LeaveEntitlement e')
+                            ->set('e.days_used', 'e.days_used + ?', $length)
+                            ->where('e.id = ?', $entitlementId)
+                            ->execute();                     
+                        }
                     }
                 }        
             }            
@@ -571,21 +582,54 @@ class LeaveRequestDao extends BaseDao {
         return $record['scheduledSum'];
     }
 
+    public function markApprovedLeaveAsTaken() {
+        $this->_markApprovedLeaveAsTaken();
+    }
+    
     private function _markApprovedLeaveAsTaken() {
         if (self::$doneMarkingApprovedLeaveAsTaken) {
             return;
         } else {
 
             $date = date('Y-m-d');
+            
+            $conn = Doctrine_Manager::connection()->getDbh();        
+            $query = "SELECT l.id from ohrm_leave l WHERE l.`date` < ? AND l.status = ?";
+            $statement = $conn->prepare($query);
+            $result = $statement->execute(array($date, Leave::LEAVE_STATUS_LEAVE_APPROVED));
 
-            $q = Doctrine_Query::create()
-                    ->update('Leave l')
-                    ->set('l.status', Leave::LEAVE_STATUS_LEAVE_TAKEN)
-                    ->where('l.status = ?', Leave::LEAVE_STATUS_LEAVE_APPROVED)
-                    ->andWhere('l.date < ?', $date);
+            if ($result) {
+                $ids = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
 
-            $q->execute();
+                if (count($ids) > 0) {
+                    
+                    $q = Doctrine_Query::create()
+                            ->update('Leave l')
+                            ->set('l.status', Leave::LEAVE_STATUS_LEAVE_TAKEN)
+                            ->whereIn('l.id', $ids);
 
+                    $q->execute();
+                    
+                    // TODO: Optimize
+                    $query = "SELECT le.entitlement_id, le.length_days FROM ohrm_leave_leave_entitlement le " . 
+                        "WHERE le.leave_id IN (" . implode(',', $ids) . ")";
+                    
+                    $statement = $conn->prepare($query);
+                    $result = $statement->execute();
+                    if ($result) {
+                        
+                        $updateQuery = "UPDATE ohrm_leave_entitlement e " . 
+                            "SET e.days_used = e.days_used + ? " .
+                            "WHERE e.id = ?";
+
+                        $updateStatement = $conn->prepare($updateQuery);
+                        
+                        while ($row = $statement->fetch()) {
+                            $updateStatement->execute(array($row['length_days'], $row['entitlement_id']));
+                        }
+                    }
+                }
+            }
             self::$doneMarkingApprovedLeaveAsTaken = true;
         }
     }

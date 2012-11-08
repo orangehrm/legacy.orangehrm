@@ -743,4 +743,7 @@ class LeaveRequestService extends BaseService {
         return $this->getLeaveRequestDao()->getDetailedLeaveRequestSearchResultAsArray($searchParameters);
     }
 
+    public function markApprovedLeaveAsTaken() {
+        return $this->getLeaveRequestDao()->markApprovedLeaveAsTaken();
+    }
 }
