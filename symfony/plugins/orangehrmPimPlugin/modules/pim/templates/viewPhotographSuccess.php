@@ -23,7 +23,7 @@
                         <li>
                             <?php echo $form['photofile']->renderLabel(__('Select a Photograph')); ?>
                             <?php echo $form['photofile']->render(); ?> 
-                            <span class="helpText"><?php echo __(CommonMessages::FILE_LABEL_IMAGE); ?></span>
+                            <div class="fileHelpText"><?php echo __(CommonMessages::FILE_LABEL_IMAGE); ?></div>
                         </li>
                     </ol>
                     <p>

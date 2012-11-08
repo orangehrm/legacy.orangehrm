@@ -106,7 +106,7 @@
                             if (empty($form->attachment)) {
                                 echo $form['contract_file']->renderLabel('Contract Details');
                                 echo $form['contract_file']->render();
-                                echo "<span>" . __(CommonMessages::FILE_LABEL_SIZE) . "</span>";
+                                echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                             } else {
                                 $attachment = $form->attachment;
                                 $linkHtml = "<a title=\"{$attachment->description}\" target=\"_blank\" class=\"fileLink\" href=\"";
@@ -122,7 +122,7 @@
                                 echo "<span id=\"fileUploadSection\">";
                                     echo $form['contract_file']->renderLabel(' ');
                                     echo $form['contract_file']->render();
-                                    echo "<span>" . __(CommonMessages::FILE_LABEL_SIZE) . "</span>";
+                                    echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                                 echo "</span>";
                             }
                             ?>

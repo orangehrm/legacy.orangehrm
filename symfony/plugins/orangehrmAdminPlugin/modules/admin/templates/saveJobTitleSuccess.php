@@ -55,10 +55,8 @@
                     <li>
                         <?php
                             echo $form['jobSpec']->renderLabel(__('Job Specification'), array());
-                            echo "<span>";
                             echo $form['jobSpec']->render();
-                            echo __(CommonMessages::FILE_LABEL_SIZE);
-                            echo "</span>";
+                            echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                         ?>
                     </li>      
                     
@@ -78,7 +76,7 @@
                             echo "<span id=\"fileUploadSection\">";
                             echo $form['jobSpec']->renderLabel(' ');
                             echo $form['jobSpec']->render();
-                            echo "<span>" . __(CommonMessages::FILE_LABEL_SIZE) . "</span>";
+                            echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                             echo "</span>";
                         ?>
                     </li>

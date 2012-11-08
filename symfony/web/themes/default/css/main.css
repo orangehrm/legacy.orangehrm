@@ -503,6 +503,9 @@ form button, input[type="button"], input[type="submit"] {
 	border-radius: 3px;
 	margin-right:4px;
 }
+.single form ol li input[type="file"] {
+    margin-bottom: 10px;
+}
 .single form button {
 	margin-left:0;
 }
@@ -873,6 +876,9 @@ form input.validation-error {
 .single form ol li.largeTextBox span.validation-error {
     top:85px;
 }
+.single form ol li.fileBrowser span.validation-error {
+    top:31px;
+}
 /* Don't use this class. To be removed.
 .double form ol li span.validation-error {
     font-size: 12px;
@@ -884,6 +890,15 @@ form input.validation-error {
 	left:150px;
 }
 */
+
+.fileHelpText {
+	position:absolute;
+	top:25px;
+	left:150px;   
+    margin-bottom: 10px;
+    color: #A9A9A9;
+}
+
 /* ================ widget specific styles: Begin ================ */
 
 .ui-datepicker-trigger {
