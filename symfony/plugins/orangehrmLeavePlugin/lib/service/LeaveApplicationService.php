@@ -19,8 +19,8 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
      * 
      */
     public function getLeaveEntitlementService() {
-        if (!($this->leaveEntitlementService instanceof OldLeaveEntitlementService)) {
-            $this->leaveEntitlementService = new OldLeaveEntitlementService();
+        if (!($this->leaveEntitlementService instanceof LeaveEntitlementService)) {
+            $this->leaveEntitlementService = new LeaveEntitlementService();
         }
         return $this->leaveEntitlementService;
     }
@@ -29,7 +29,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
      * Set LeaveEntitlementService
      * @param OldLeaveEntitlementService $service 
      */
-    public function setLeaveEntitlementService(OldLeaveEntitlementService $service) {
+    public function setLeaveEntitlementService(LeaveEntitlementService $service) {
         $this->leaveEntitlementService = $service;
     }
 
@@ -79,11 +79,38 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
 //            }
 //        }
 
+        // TODO: Move into if block
         $leaves = $this->createLeaveObjectListForAppliedRange($leaveAssignmentData);
+        
         if ($this->isEmployeeAllowedToApply($leaveType)) {
-            if ($this->isValidLeaveRequest($leaveRequest, $leaves)) {
+            
+            $nonHolidayLeaveDays = array();
+
+            $holidayCount = 0;
+            $holidays = array(Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY);
+            foreach ($leaves as $k => $leave) {
+                if (in_array($leave->getStatus(), $holidays)) {
+                    $holidayCount++;
+                } else {
+                    $nonHolidayLeaveDays[] = $leave;
+                }
+            }  
+            
+            if (count($nonHolidayLeaveDays) > 0) {
+                $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();     
+                $employee = $this->getLoggedInEmployee();
+                $empNumber = $employee->getEmpNumber();
+                $entitlements = $strategy->getAvailableEntitlements($empNumber, $leaveType, $nonHolidayLeaveDays);
+
+                if ($entitlements == false) {
+                    throw new LeaveAllocationServiceException('Leave Balance Exceeded');
+                }
+            }            
+        
+            if ($holidayCount != count($leaves)) {
+            //if ($this->isValidLeaveRequest($leaveRequest, $leaves)) {
                 try {
-                    $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaves);
+                    $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaves, $entitlements);
 
 //                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
 //                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaves);
@@ -96,6 +123,8 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
                 } catch (Exception $e) {
                     throw new LeaveAllocationServiceException('Leave Quota will Exceed');
                 }
+            } else {
+                throw new LeaveAllocationServiceException('No working days in leave request');
             }
         }
         

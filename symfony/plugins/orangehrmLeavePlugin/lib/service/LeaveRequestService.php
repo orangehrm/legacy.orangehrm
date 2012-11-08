@@ -191,9 +191,9 @@ class LeaveRequestService extends BaseService {
             $leaveTypeList  = array();
 
             foreach($leaveTypes as $leaveType) {
-                $entitlementDays = $leaveEntitlementService->getLeaveBalance($employee->getEmpNumber(), $leaveType->getId());
+                $balance = $leaveEntitlementService->getLeaveBalance($employee->getEmpNumber(), $leaveType->getId());
 
-                if($entitlementDays > 0) {
+                if($balance->getEntitled() > 0) {
                     array_push($leaveTypeList, $leaveType);
                 }
             }

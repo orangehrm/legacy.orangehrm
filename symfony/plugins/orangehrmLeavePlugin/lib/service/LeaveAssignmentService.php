@@ -68,9 +68,7 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 //            }
 //        }
 
-        $leaveDays = $this->createLeaveObjectListForAppliedRange($leaveAssignmentData);
-        
-        $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();
+        $leaveDays = $this->createLeaveObjectListForAppliedRange($leaveAssignmentData);        
         
         $empNumber = $leaveAssignmentData->getEmployeeNumber();
         
@@ -87,6 +85,7 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
         }        
                 
         if (count($nonHolidayLeaveDays) > 0) {
+            $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();            
             $entitlements = $strategy->getAvailableEntitlements($empNumber, $leaveType, $nonHolidayLeaveDays);
 
             if ($entitlements == false) {
@@ -96,7 +95,7 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 
         /* This is to see whether employee applies leave only during weekends or standard holidays */
         if ($holidayCount != count($leaveDays)) {
-            if ($this->isEmployeeAllowedToApply($leaveType)) {
+            if ($this->isEmployeeAllowedToApply($leaveType)) { // TODO: Should this be checked on Assign??
                 try {
                     $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaveDays, $entitlements);
 
