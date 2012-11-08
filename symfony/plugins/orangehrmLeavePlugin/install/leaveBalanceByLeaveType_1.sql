@@ -247,8 +247,8 @@ ORDER BY ohrm_leave.emp_number
         <join_by sub_report="entitlementsAsOf" id="empNumber"></join_by>               
         <join_by sub_report="entitlementsTotal" id="empNumber"></join_by> 
         <join_by sub_report="balanceQuery" id="empNumber"></join_by>   
-        <join_by sub_report="takenQuery" id="empNumber"></join_by>  
         <join_by sub_report="scheduledQuery" id="empNumber"></join_by>
+        <join_by sub_report="takenQuery" id="empNumber"></join_by>  
     </join>
     <page_limit>20</page_limit>
     <decorators>

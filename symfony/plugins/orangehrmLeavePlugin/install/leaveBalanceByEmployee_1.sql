@@ -248,8 +248,8 @@ ORDER BY ohrm_leave.leave_type_id
         <join_by sub_report="entitlementsAsOf" id="leaveTypeId"></join_by>               
         <join_by sub_report="entitlementsTotal" id="leaveTypeId"></join_by> 
         <join_by sub_report="balanceQuery" id="leaveTypeId"></join_by>   
-        <join_by sub_report="takenQuery" id="leaveTypeId"></join_by>  
         <join_by sub_report="scheduledQuery" id="leaveTypeId"></join_by>  
+        <join_by sub_report="takenQuery" id="leaveTypeId"></join_by>  
     </join>
     <page_limit>100</page_limit>
     <decorators>
