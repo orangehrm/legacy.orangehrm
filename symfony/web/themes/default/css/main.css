@@ -1232,13 +1232,20 @@ color:#fff;
 	text-align:right;
 	margin-top:-10px;
 }
+/*
 #edit-timesheet input {
 	width:40px;
 }
+*/
+#edit-timesheet input.timeBox {
+	width:40px;
+}
+/*
 #edit-timesheet input.main-input {
 	width:150px;
 	float:left;
 }
+*/
 #edit-timesheet select, #edit-timesheet .checkbox-input {
 	float:left;
 }
