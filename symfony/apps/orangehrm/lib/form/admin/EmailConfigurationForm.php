@@ -59,18 +59,21 @@ class EmailConfigurationForm extends BaseForm {
                         )),
             'txtSmtpUser' => new sfWidgetFormInputText(),
             'txtSmtpPass' => new sfWidgetFormInputText(),
-            'optSecurity' => new sfWidgetFormSelect(
-                    array('choices' => array(
-                        'none' => 'No', 
-                        'ssl' => 'SSL', 
-                        'tls'  => 'TLS'))),
+            'optSecurity' => new sfWidgetFormChoice(
+                    array(
+                        'expanded' => true, 
+                        'choices' => array(
+                            'none' => 'No', 
+                            'ssl' => 'SSL',
+                            'tls'  => 'TLS')
+                        )),            
             'chkSendTestEmail' => new sfWidgetFormInputCheckbox(),
             'txtTestEmail' => new sfWidgetFormInputText(),
         ));
         
         // validators
         $this->setValidators(array(
-            'txtMailAddress' => new sfValidatorEmail(array('required' => true, 'max_length' => 100)),
+            'txtMailAddress' => new sfValidatorString(array('required' => true, 'max_length' => 100)),
             'cmbMailSendingMethod' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'txtSendmailPath' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'txtSmtpHost' => new sfValidatorString(array('required' => false, 'max_length' => 30)),

@@ -39,7 +39,7 @@
                         <?php echo $form['txtSmtpPort']->renderLabel(__("SMTP Port")); ?>
                         <?php echo $form['txtSmtpPort']->render(array("maxlength" => 100)); ?>
                     </li>               
-                    <li>
+                    <li class="line radio">
                         <?php echo $form['optAuth']->renderLabel(__("Use SMTP Authentication")); ?>
                         <?php echo $form['optAuth']->render(); ?>
                     </li>               
@@ -51,7 +51,7 @@
                         <?php echo $form['txtSmtpPass']->renderLabel(__("SMTP Password")); ?>
                         <?php echo $form['txtSmtpPass']->render(array("maxlength" => 100)); ?>
                     </li>        
-                    <li>
+                    <li class="line radio">
                         <?php echo $form['optSecurity']->renderLabel(__("User Secure Connection")); ?>
                         <?php echo $form['optSecurity']->render(array("maxlength" => 100)); ?>
                     </li>  
@@ -115,10 +115,10 @@
 		//Validate the form
 		$("#frmSave").validate({
 			 rules: {
-			 	'emailConfigurationForm_txtMailAddress': { required: true }
+			 	'emailConfigurationForm[txtMailAddress]': { required: true }
 		 	 },
 		 	 messages: {
-		 		'emailConfigurationForm_txtMailAddress': '<?php echo __(ValidationMessages::REQUIRED); ?>'
+		 		'emailConfigurationForm[txtMailAddress]': '<?php echo __(ValidationMessages::REQUIRED); ?>'
 		 	 }
 		 });
         
