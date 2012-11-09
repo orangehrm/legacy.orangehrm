@@ -4032,6 +4032,7 @@ symfony/plugins/orangehrmCorePlugin/config/configurations_by_plugins.yml -text
 symfony/plugins/orangehrmCorePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmCorePlugin/config/list_component.yml -text
 symfony/plugins/orangehrmCorePlugin/config/user_role.yml -text
+symfony/plugins/orangehrmCorePlugin/config/view.yml -text
 symfony/plugins/orangehrmCorePlugin/lib/action/displayReportAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/displayReportCriteriaAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/ohrmExportableAction.php -text
