@@ -63,7 +63,7 @@
                     </ol>
                     <ol>
                         <li class="radio">
-                            <label for="personal_optGender" class="block"><?php echo __("Gender"); ?></label>
+                            <label for="personal_optGender"><?php echo __("Gender"); ?></label>
                             <?php echo $form['optGender']->render(array("class"=>"editable")); ?>
                         </li>
                         <li>
