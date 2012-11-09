@@ -57,14 +57,14 @@ $(document).ready(function() {
 });
 
 function disableWidgets(){
-    $('.txtBox').attr('disabled', 'disabled')
-    $('.drpDown').attr('disabled', 'disabled')
-    $('.txtArea').attr('disabled', 'disabled')
+    $('input[type=text]').attr('disabled', 'disabled')
+    $('select').attr('disabled', 'disabled')
+    $('textarea').attr('disabled', 'disabled')
 }
 
 function enableWidgets(){
-    $('.txtBox').removeAttr('disabled')
-    $('.drpDown').removeAttr('disabled')
-    $('.txtArea').removeAttr('disabled')
+    $('input[type=text]').removeAttr('disabled')
+    $('select').removeAttr('disabled')
+    $('textarea').removeAttr('disabled')
 }
 

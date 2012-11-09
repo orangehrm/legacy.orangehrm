@@ -41,12 +41,12 @@
                     
                     <li>
                         <?php echo $form['name']->renderLabel(__('Organization Name') . ' <em>*</em>'); ?>
-                        <?php echo $form['name']->render(array("class" => "txtBox", "maxlength" => 100)); ?>
+                        <?php echo $form['name']->render(array("maxlength" => 100)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['taxId']->renderLabel(__('Tax ID')); ?>
-                        <?php echo $form['taxId']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['taxId']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                     <li>
@@ -56,7 +56,7 @@
                     
                     <li>
                         <?php echo $form['registraionNumber']->renderLabel(__('Registration Number')); ?>
-                        <?php echo $form['registraionNumber']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['registraionNumber']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                 </ol>
@@ -65,17 +65,17 @@
                     
                     <li>
                         <?php echo $form['phone']->renderLabel(__('Phone')); ?>
-                        <?php echo $form['phone']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['phone']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['fax']->renderLabel(__('Fax')); ?>
-                        <?php echo $form['fax']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['fax']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['email']->renderLabel(__('Email')); ?>
-                        <?php echo $form['email']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['email']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                 </ol>
@@ -84,27 +84,27 @@
                     
                     <li>
                         <?php echo $form['street1']->renderLabel(__('Address Street 1')); ?>
-                        <?php echo $form['street1']->render(array("class" => "txtBox", "maxlength" => 100)); ?>
+                        <?php echo $form['street1']->render(array("maxlength" => 100)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['province']->renderLabel(__('State/Province')); ?>
-                        <?php echo $form['province']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['province']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['street2']->renderLabel(__('Address Street 2')); ?>
-                        <?php echo $form['street2']->render(array("class" => "txtBox", "maxlength" => 100)); ?>
+                        <?php echo $form['street2']->render(array("maxlength" => 100)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['zipCode']->renderLabel(__('Zip/Postal Code')); ?>
-                        <?php echo $form['zipCode']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['zipCode']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                     <li>
                         <?php echo $form['city']->renderLabel(__('City')); ?>
-                        <?php echo $form['city']->render(array("class" => "txtBox", "maxlength" => 30)); ?>
+                        <?php echo $form['city']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                     <li>
