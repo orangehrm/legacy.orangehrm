@@ -19,13 +19,21 @@
 ?>
 
 <?php
+
 $messageTypes = array('success', 'warning', 'error');
 
 foreach ($messageTypes as $messageType) :
-    if ($sf_user->hasFlash($messageType)) : 
+
+    $flashName = $messageType;
+
+    if (isset($prefix)) {
+        $flashName = $prefix . '.' . $messageType;
+    }    
+    
+    if ($sf_user->hasFlash($flashName)) : 
 ?>
 <div class="message <?php echo $messageType;?> fadable">
-    <?php echo $sf_user->getFlash($messageType);?>
+    <?php echo $sf_user->getFlash($flashName);?>
     <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
 </div>
 <?php
