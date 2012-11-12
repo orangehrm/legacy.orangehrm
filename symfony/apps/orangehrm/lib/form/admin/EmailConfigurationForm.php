@@ -58,7 +58,7 @@ class EmailConfigurationForm extends BaseForm {
                             'login' => 'Yes')
                         )),
             'txtSmtpUser' => new sfWidgetFormInputText(),
-            'txtSmtpPass' => new sfWidgetFormInputText(),
+            'txtSmtpPass' => new sfWidgetFormInputPassword(),
             'optSecurity' => new sfWidgetFormChoice(
                     array(
                         'expanded' => true, 
@@ -73,16 +73,16 @@ class EmailConfigurationForm extends BaseForm {
         
         // validators
         $this->setValidators(array(
-            'txtMailAddress' => new sfValidatorString(array('required' => true, 'max_length' => 100)),
+            'txtMailAddress' => new sfValidatorEmail(array('required' => true, 'max_length' => 100)),
             'cmbMailSendingMethod' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'txtSendmailPath' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'txtSmtpHost' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'txtSmtpPort' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
+            'txtSmtpPort' => new sfValidatorNumber(array('required' => false)),
             'optAuth' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'txtSmtpUser' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'txtSmtpPass' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'optSecurity' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'chkSendTestEmail' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
+            'chkSendTestEmail' => new sfValidatorEmail(array('required' => false, 'max_length' => 30)),
             'txtTestEmail' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
         ));
 

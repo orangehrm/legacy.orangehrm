@@ -37,9 +37,9 @@ class listMailConfigurationAction extends sfAction {
                 $this->form->save();
             }
             
-            if ($request->getParameter('chkSendTestEmail')) {
+            if ($this->form->getValue('chkSendTestEmail') == 'on') {
                 $emailService = new EmailService();
-                $result = $emailService->sendTestEmail($request->getParameter('txtTestEmail'));
+                $result = $emailService->sendTestEmail($this->form->getValue('txtTestEmail'));
                 if ($result) {
                     $this->getUser()->setFlash('success', __('Successfully Saved. Test Email Sent'));
                 } else {

@@ -85,6 +85,9 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+        
+        $('#emailConfigurationForm_chkSendTestEmail').attr('checked', false);
+        $('#emailConfigurationForm_txtTestEmail').val(' ');
 
 		var mode	=	'edit';
 
@@ -107,7 +110,6 @@
 				mode = 'save';
 			}else
 			{
-
 				$('#frmSave').submit();
 			}
 		});
