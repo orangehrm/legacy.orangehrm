@@ -630,6 +630,7 @@ symfony/apps/orangehrm/modules/auth/actions/validateCredentialsAction.class.php 
 symfony/apps/orangehrm/modules/auth/config/security.yml -text
 symfony/apps/orangehrm/modules/auth/templates/loginSuccess.php -text
 symfony/apps/orangehrm/modules/default/actions/actions.class.php -text
+symfony/apps/orangehrm/modules/default/config/view.yml -text
 symfony/apps/orangehrm/modules/default/templates/error404Success.php -text
 symfony/apps/orangehrm/modules/default/templates/indexSuccess.php -text
 symfony/apps/orangehrm/modules/default/templates/secureSuccess.php -text
