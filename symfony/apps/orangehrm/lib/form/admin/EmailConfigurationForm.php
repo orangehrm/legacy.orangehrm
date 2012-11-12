@@ -82,8 +82,8 @@ class EmailConfigurationForm extends BaseForm {
             'txtSmtpUser' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'txtSmtpPass' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
             'optSecurity' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'chkSendTestEmail' => new sfValidatorEmail(array('required' => false, 'max_length' => 30)),
-            'txtTestEmail' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
+            'chkSendTestEmail' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
+            'txtTestEmail' => new sfValidatorEmail(array('required' => false, 'max_length' => 30)),
         ));
 
         // Set Default valuse
