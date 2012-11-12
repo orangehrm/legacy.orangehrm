@@ -61,23 +61,29 @@
                     </li>      
                     
                     <?php } else { ?>
-                    <li>
                         <?php
                             $attachment = $form->attachment;
                             $linkHtml = "<span id=\"fileLink\"><a target=\"_blank\" href=\"";
                             $linkHtml .= url_for('admin/viewJobSpec?attachId=' . $attachment->getId());
                             $linkHtml .= "\">{$attachment->getFileName()}</a></span>";
+                            ?>
+                    <li>
 
+<?php
                             echo $form['jobSpecUpdate']->renderLabel(__('Job Specification'));
                             echo $linkHtml;
-                            echo "<span id=\"radio\">";
+                            ?>
+                    </li>
+                    <li class="radio" id="radio"><label></label>
+                        <?php
                             echo $form['jobSpecUpdate']->render();
-                            echo "</span>";
-                            echo "<span id=\"fileUploadSection\">";
+                        ?>
+                    </li>
+                    <li id="fileUploadSection">
+                        <?php 
                             echo $form['jobSpec']->renderLabel(' ');
                             echo $form['jobSpec']->render();
                             echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
-                            echo "</span>";
                         ?>
                     </li>
                     <?php } ?>
