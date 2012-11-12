@@ -90,7 +90,7 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
             if (!is_null($fromDate)) {
 
                 
-                $newentitlements = $this->getLeaveEntitlementService()->getValidLeaveEntitlements($empNumber, $leaveType->getId(), $fromDate, $toDate, 'to_date', 'ASC');            
+                $newentitlements = $this->getLeaveEntitlementService()->getValidLeaveEntitlements($empNumber, $leaveType, $fromDate, $toDate, 'to_date', 'ASC');            
                 
                 // TODO Get currently assigned leave dates and add to $leaveDates
                 $entitlements = array();

@@ -100,7 +100,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
                 $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();     
                 $employee = $this->getLoggedInEmployee();
                 $empNumber = $employee->getEmpNumber();
-                $entitlements = $strategy->getAvailableEntitlements($empNumber, $leaveType, $nonHolidayLeaveDays);
+                $entitlements = $strategy->getAvailableEntitlements($empNumber, $leaveType->getId(), $nonHolidayLeaveDays);
 
                 if ($entitlements == false) {
                     throw new LeaveAllocationServiceException('Leave Balance Exceeded');
