@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-    disableWidgets()
     //form validation
     $("#frmGenInfo").validate({
         rules: {
@@ -46,7 +45,6 @@ $(document).ready(function() {
     $('#btnSaveGenInfo').click(function() {
         //if user clicks on Edit make all fields editable
         if($("#btnSaveGenInfo").attr('value') == edit) {
-            enableWidgets()
             $("#btnSaveGenInfo").attr('value', save)
         }
         else {
@@ -55,16 +53,3 @@ $(document).ready(function() {
     });
     
 });
-
-function disableWidgets(){
-    $('input[type=text]').attr('disabled', 'disabled')
-    $('select').attr('disabled', 'disabled')
-    $('textarea').attr('disabled', 'disabled')
-}
-
-function enableWidgets(){
-    $('input[type=text]').removeAttr('disabled')
-    $('select').removeAttr('disabled')
-    $('textarea').removeAttr('disabled')
-}
-

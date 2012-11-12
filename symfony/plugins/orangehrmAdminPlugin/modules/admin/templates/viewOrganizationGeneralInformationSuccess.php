@@ -31,7 +31,7 @@
         
         <?php include_partial('global/flash_messages'); ?>
         
-        <form name="frmGenInfo" id="frmGenInfo" method="post" action="<?php echo url_for('admin/viewOrganizationGeneralInformation'); ?>">
+        <form name="frmGenInfo" id="frmGenInfo" method="post" action="<?php echo url_for('admin/viewOrganizationGeneralInformation'); ?>" class="clickToEditForm">
 
             <?php echo $form['_csrf_token']; ?>
             
@@ -124,7 +124,7 @@
                 </ol>
                 
                 <p>
-                    <input type="button" class="addbutton" name="btnSaveGenInfo" id="btnSaveGenInfo" value="<?php echo __("Edit"); ?>"/>
+                    <input type="button" class="addbutton editButton" name="btnSaveGenInfo" id="btnSaveGenInfo" value="<?php echo __("Edit"); ?>"/>
                 </p>
                 
             </fieldset>

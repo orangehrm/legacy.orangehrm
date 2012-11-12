@@ -31,7 +31,7 @@
         
         <?php include_partial('global/flash_messages'); ?>
         
-        <form name="frmSavejobTitle" id="frmSavejobTitle" method="post" action="<?php echo url_for('admin/saveJobTitle?jobTitleId=' . $form->jobTitleId); ?>" enctype="multipart/form-data">
+        <form name="frmSavejobTitle" id="frmSavejobTitle" method="post" action="<?php echo url_for('admin/saveJobTitle?jobTitleId=' . $form->jobTitleId); ?>" enctype="multipart/form-data" class="clickToEditForm">
 
             <?php echo $form['_csrf_token']; ?>
             
@@ -100,7 +100,7 @@
                 </ol>
                 
                 <p>
-                    <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="editButton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
                     <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
                 
