@@ -96,9 +96,11 @@
                 </thead>
                 <tbody>
                     
-                    <?php foreach($records as $record): ?>
-                    
-                    <tr>
+                    <?php 
+                    $i=0;
+                    foreach($records as $record): 
+                        ?>
+                    <tr class="<?php echo ($i & 1) ? 'even' : 'odd' ?>">
                         <td class="check">
                             <input type="checkbox" class="checkbox" name="chkListRecord[]" value="<?php echo $record->getId(); ?>" />
                         </td>
@@ -107,7 +109,10 @@
                         </td>
                     </tr>
                     
-                    <?php endforeach; ?>
+                    <?php 
+                    $i++;
+                    endforeach; 
+                    ?>
                     
                     <?php if (count($records) == 0) : ?>
                     <tr>

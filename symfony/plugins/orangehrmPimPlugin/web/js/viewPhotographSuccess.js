@@ -43,6 +43,6 @@ $(document).ready(function() {
     });
 
     $("#btnYes").click(function() {
-        navigateUrl(deleteUrl);
+        window.location.href = deleteUrl;
     });
 });
