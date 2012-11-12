@@ -35,7 +35,7 @@ use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess');
                 </ol>
                     
                 <p>
-                    <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="" name="btnSave" data-toggle="modal" id="btnSave" value="<?php echo __("Save"); ?>"/>
                     <input type="button" class="btn reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
             
@@ -47,9 +47,39 @@ use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess');
     
 </div> <!-- End-addCustomer -->
 
+<form name="frmUndeleteCustomer" id="frmUndeleteCustomer" method="post" action="<?php echo url_for('admin/undeleteCustomer'); ?>">
+    <?php echo $undeleteForm; ?>
+</form>
+
+<a id="undeleteDialogLink" data-toggle="modal" href="#undeleteDialog" ></a>
+<div class="modal hide" id="undeleteDialog">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
+    </div>
+    <div class="modal-body">
+        <p><?php echo __('This is a deleted customer. Reactivate again?'); ?></p>
+        <p></p>
+        <p><?php echo __('Yes'); ?> - <?php echo __('Customer will be undeleted'); ?></p>
+        <p>
+            <?php echo __('No'); ?> - 
+            <?php
+            echo $form->isUpdateMode() ? __('This customer will be renamed to the same name as the deleted customer') :
+                    __('A new customer will be created with same name');
+            ?>
+        </p>
+        <p><?php echo __('Cancel'); ?> - <?php echo __('Will take no action'); ?></p>
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="undeleteYes" class="btn" data-dismiss="modal" value="<?php echo __('Yes'); ?>" />
+        <input type="button" id="undeleteNo" class="btn" data-dismiss="modal" value="<?php echo __('No'); ?>" />
+        <input type="button" id="undeleteCancel" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+    </div>
+</div> <!-- undeleteDialog -->
+
 <script type="text/javascript">
 	var customers = <?php echo str_replace('&#039;', "'", $form->getCustomerListAsJson()) ?> ;
-        var customerList = eval(customers);
+    var customerList = eval(customers);
 	var lang_customerNameRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
 	var lang_exceed50Charactors = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 50)); ?>';
 	var lang_exceed255Charactors = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>';
@@ -59,4 +89,5 @@ use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess');
 	var lang_save = "<?php echo __("Save"); ?>";
 	var customerId = '<?php echo $customerId;?>';
 	var cancelBtnUrl = '<?php echo url_for('admin/viewCustomers'); ?>';
+    var deletedCustomers = <?php echo str_replace('&#039;', "'", $form->getDeletedCustomerListAsJson()) ?> ;
 </script>

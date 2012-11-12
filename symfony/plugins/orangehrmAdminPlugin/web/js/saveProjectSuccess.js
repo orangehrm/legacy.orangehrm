@@ -1,6 +1,8 @@
 var countArray = new Array();
 var customerProjectList;
 $(document).ready(function() {
+    
+    isValidAddCustomerForm();
 
     counter = 1;
     //Auto complete
@@ -88,21 +90,20 @@ $(document).ready(function() {
             $('#projectName').removeClass("inputFormatHint");
         }
     });
-   
-    $('#addCustomer_customerName').keyup(function(){
-        validateThickBox();
+    // undeleteDialog    
+    $("#undeleteYes").click(function(){
+        $('#frmUndeleteCustomer').submit();
+        $("#undeleteDialog").toggle();
     });
-   
-    $('#addCustomer_description').keyup(function(){
-        validateThickBox();
+
+    $("#undeleteNo").click(function(){
+        $('#frmAddCustomer').submit();
+        $("#undeleteDialog").toggle();
     });
-    
-//    $("#btnCopyCancel").click(function(){
-//        $("#copyActivity").dialog("close");
-//        $('.activityDiv').remove();
-//        $('#errorHolderCopy').text("");
-//        $('.project').val("");
-//    });
+
+    $("#undeleteCancel").click(function(){
+        $("#undeleteDialog").toggle();
+    });
     
     $('#btnCopyDig').hide();
     
@@ -157,10 +158,23 @@ $(document).ready(function() {
     });
     
     $('#dialogSave').click(function(){
-        if(validateThickBox()){
-            saveCustomer(custUrl+'?customerName='+escape($.trim($('#addCustomer_customerName').val()))+'&description='+
-                escape($('#addCustomer_description').val()));
+        var deletedId = isDeletedCustomer();
+        if (deletedId) {
+            $('#undeleteCustomer_undeleteId').val(deletedId);
+            $("#undeleteDialog").toggle();
+            isValid = false;
+        }else {
+            if($("#frmAddCustomer").valid()){
+                $('#frmAddCustomer').submit();
+            }   
         }
+    });
+    
+    $('#frmAddCustomer').submit(function(event) {
+        
+        saveCustomer(custUrl+'?customerName='+escape($.trim($('#addCustomer_customerName').val()))+'&description='+
+            escape($('#addCustomer_description').val()));        
+        event.preventDefault();
     });
     
     if(projectId>0){
@@ -380,7 +394,7 @@ function removeTypeHints() {
 function validateThickBox(){
     
     $('#addCustomer_customerName').removeClass("validation-error");
-    ('#addCustomer_description').removeClass("validation-error");
+    $('#addCustomer_description').removeClass("validation-error");
     $('#errorHolderName').removeClass("validation-error");
     $('#errorHolderName').html('');
     $('#errorHolderDesc').removeClass("validation-error");
@@ -676,5 +690,71 @@ function isValidForm(){
         }
         
     });
+    return true;
+}
+
+/**
+ * Checks if current customer name value matches a deleted customer.
+ * 
+ * @return Customer ID if it matches a deleted customer else false.
+ */
+function isDeletedCustomer() {
+    for (var i = 0; i < deletedCustomers.length; i++) {
+        if (deletedCustomers[i].name.toLowerCase() == $.trim($('#addCustomer_customerName').val()).toLowerCase()) {
+            return deletedCustomers[i].id;
+        }
+    }
+    return false;
+}
+
+function isValidAddCustomerForm(){
+    
+    var validator = $("#frmAddCustomer").validate({
+        rules: {
+            'addCustomer[customerName]' : {
+                required:true,
+                maxlength: 50,
+                uniqueCustomerName: true
+            },
+            'addCustomer[description]' : {
+                maxlength: 255
+            }
+        },
+        messages: {
+            'addCustomer[customerName]' : {
+                required: lang_nameRequired,
+                maxlength: lang_exceed50Chars,
+                uniqueCustomerName: lang_uniqueCustomer                
+            },
+            'addCustomer[description]' : {
+                maxlength: lang_exceed255Chars
+            }            
+        },
+        submitHandler: function(form) {            
+            var deletedId = isDeletedCustomer();
+            if (deletedId) {
+                $('#undeleteCustomer_undeleteId').val(deletedId);               
+                $("#undeleteDialog").toggle();
+            } else {
+                form.submit();
+            }
+        }
+    });
+    
+    $.validator.addMethod("uniqueCustomerName", function() {
+        var temp = true;
+        var vcCount = customerList.length;
+        var i;
+        vcName = $.trim($('#addCustomer_customerName').val()).toLowerCase();
+        for (i=0; i < vcCount; i++) {
+            arrayName = customerList[i].name.toLowerCase();
+            if (vcName == arrayName) {
+                temp = false
+                break;
+            }
+        }
+        return temp;
+    });
+    
     return true;
 }

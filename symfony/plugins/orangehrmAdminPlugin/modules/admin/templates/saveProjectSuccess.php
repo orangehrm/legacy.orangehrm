@@ -127,18 +127,16 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
         <h3><?php echo __('Add Customer') ?></h3>
     </div>
     <div class="modal-body">
-        <form name="frmAddCusCtomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
+        <form name="frmAddCustomer" id="frmAddCustomer" method="post" action="" >
             <fieldset>
                 <ol>
                     <li>
                         <?php echo $customerForm['customerName']->renderLabel(__('Name') . ' <em>*</em>'); ?>
                         <?php echo $customerForm['customerName']->render(array("maxlength" => 52)); ?>
-                        <span id="errorHolderName"></span>
                     </li>
                     <li>
                         <?php echo $customerForm['description']->renderLabel(__('Description')); ?>
                         <?php echo $customerForm['description']->render(array("maxlength" => 255)); ?>
-                        <span id="errorHolderDesc"></span>
                     </li>
                     <li class="required">
                         <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
@@ -149,11 +147,39 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
     </div>
     <div class="modal-footer">
         <input type="button"  id="dialogSave" name="dialogSave" class="btn" value="<?php echo __('Save'); ?>" />
-        <input type="button"  id="dialogCancel" name="dialogCancel" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+        <input type="button"  id="dialogCancel" name="dialogCancel" class="btn reset" data-dismiss="modal" 
+               value="<?php echo __('Cancel'); ?>" />
     </div>
 </div>
 <!-- End-of-Add-customer-window -->
 
+<!-- undeleted project form -->
+<form name="frmUndeleteCustomer" id="frmUndeleteCustomer" action="<?php echo url_for('admin/undeleteCustomer'); ?>" method="post">
+    <?php echo $undeleteForm; ?>
+</form>
+
+<!-- undelete message dialog -->
+<div class="modal hide" id="undeleteDialog">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
+    </div>
+    <div class="modal-body">
+        <p><?php echo __('This is a deleted customer. Reactivate again?'); ?></p>
+        <p></p>
+        <p><?php echo __('Yes'); ?> - <?php echo __('Customer will be undeleted'); ?></p>
+        <p>
+            <?php echo __('No'); ?> - 
+            <?php echo __('A new customer will be created with same name'); ?>
+        </p>
+        <p><?php echo __('Cancel'); ?> - <?php echo __('Will take no action'); ?></p>
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="undeleteYes" class="btn" data-dismiss="modal" value="<?php echo __('Yes'); ?>" />
+        <input type="button" id="undeleteNo" class="btn" data-dismiss="modal" value="<?php echo __('No'); ?>" />
+        <input type="button" id="undeleteCancel" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+    </div>
+</div> <!-- undeleteDialog -->
 
 <!-- Copy activity -->
 <div class="modal hide" id="copyActivityModal">
@@ -211,6 +237,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
     var customerList = eval(customers);
     var customerProjects = <?php echo str_replace('&#039;', "'", $form->getCustomerProjectListAsJson()); ?> ;
     var customerProjectsList = eval(customerProjects);
+    var deletedCustomers = <?php echo str_replace('&#039;', "'", $customerForm->getDeletedCustomerListAsJson()) ?> ;
     <?php if ($projectId > 0) { ?>
         var activityList = <?php echo str_replace('&#039;', "'", $form->getActivityListAsJson($projectId)); ?>;
     <?php } ?>
