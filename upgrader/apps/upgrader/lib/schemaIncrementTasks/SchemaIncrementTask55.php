@@ -181,9 +181,11 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                add constraint foreign key (screen_id)
                                      references ohrm_screen(id) on delete cascade;";        
 
-        $sql[] = "INSERT INTO `hs_hr_config`(`key`, `value`) VALUES ('themeName', 'default')
+        $sql[] = "INSERT INTO `hs_hr_config`(`key`, `value`) VALUES ('themeName', 'default'),
                     ('leave.entitlement_consumption_algorithm', 'FIFOEntitlementConsumptionStrategy'),
                     ('leave.work_schedule_implementation', 'BasicWorkSchedule');";
+        
+        $sql[] = "DELETE FROM `ohrm_user_role` WHERE id = 6;";
         
         $sql[] = "INSERT INTO `ohrm_user_role` (`id`, `name`, `display_name`, `is_assignable`, `is_predefined`) VALUES
                 (6, 'HiringManager', 'HiringManager', 0, 1),
@@ -334,8 +336,8 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                     (80, 'My Leave Balance', 79, 78, 3, 200, NULL, 0);";
 
         /** TODO: Improve here to support upgrading installs with modified user role tables. */        
-        $sql[] = "DELETE FROM ohrm_user_role";
-        $sql[] = "ALTER TABLE ohrm_user_role AUTO_INCREMENT = 0";
+        $sql[] = "DELETE FROM ohrm_user_role_screen";
+        $sql[] = "ALTER TABLE ohrm_user_role_screen AUTO_INCREMENT = 0";
         $sql[] = "INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
                     (1, 1, 1, 1, 1, 1),
                     (1, 2, 1, 1, 1, 1),

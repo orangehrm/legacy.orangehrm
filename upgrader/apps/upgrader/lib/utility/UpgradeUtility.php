@@ -200,6 +200,14 @@ CONFCONT;
     public function getVersionAndIncrementerNumbers() {
         
         /*
+         * NOTE: The increment numbers listed here
+         * are the schema increment to start with when upgrading the given
+         * version. 
+         * 
+         * Not the schema increment number that corresponds to that versions db schema.
+         * 
+         */
+        /*
         $a['2.6']       = zz;
         $a['2.6.0.1']   = zz;
         $a['2.6.0.2']   = zz;
@@ -223,7 +231,7 @@ CONFCONT;
         $a['2.6.12']    = 49;
         $a['2.6.12.1']  = 50;
         $a['2.7']       = 51;
-        $a['2.7.1']     = 54;
+        $a['2.7.1']     = 55;
         
         return $a;
         
@@ -234,7 +242,7 @@ CONFCONT;
      */
     public function getNewVersion() {
         
-        return '2.3';
+        return '3.0';
         
     }
     
