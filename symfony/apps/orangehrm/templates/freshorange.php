@@ -155,6 +155,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 /* Toggling search form: Ends */
 
                 /* Highlighting firstLevelMenu: Begins */
+                /*
                 $(".firstLevelMenu").click(function () {
                     
                     $(".firstLevelMenu").each(function(){
@@ -164,6 +165,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
                     $(this).parent('li').addClass('current');
                 
                 });
+                */
                 /* Highlighting firstLevelMenu: Ends */
                 
             });
