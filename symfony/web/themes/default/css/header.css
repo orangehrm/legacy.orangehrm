@@ -6,7 +6,9 @@ body {
 	color:#5d5d5d;
 }
 */
-
+li {
+    list-style-type: none;
+}
 a {
 	outline:none;
     color:#5d5d5d;
@@ -22,6 +24,7 @@ a {
 #branding img {
 	margin:14px 0 0 0;
 }
+/* ================ Main menu styles: Begin ================ */
 .menu {
 	height:40px;
 	background:url(../images/nav-bg.png) left bottom repeat-x;
@@ -46,7 +49,6 @@ a {
 .menu > ul > li {
 	float:left;
 	margin-right:5px;
-    list-style: none;
 }
 .menu > ul > li > a {
 	display:block;
@@ -79,7 +81,7 @@ a {
 	position:absolute;
 	left:-9999px;
 	height:36px;
-	background:url(../images/sub-nav.png) left bottom repeat-x;
+    background:#d8d8d8;
 	opacity:0;
 	padding:4px 0 0 25px;
 	width:100%;
@@ -89,12 +91,37 @@ a {
 	-webkit-transition: opacity 0.5s;
 	transition: opacity 0.5s;
 }
+.menu > ul > li.current > ul {
+    position:absolute;
+    left:-9999px;
+    height:36px;
+    background:url(../images/sub-nav.png) left bottom repeat-x;
+    opacity:0;
+    padding:4px 0 0 25px;
+    width:100%;
+    -moz-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
 .menu > ul > li > ul > li {
 	float:left;
 	position:relative;
-    list-style: none;
 }
 .menu > ul > li > ul > li > a {
+	display:block;
+    color:#333;
+	line-height:30px;
+	text-decoration:none;
+	padding:0 10px;
+	font-size:14px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	margin-right:5px;
+}
+.menu > ul > li.current > ul > li > a {
 	display:block;
 	color:#fff;
 	line-height:30px;
@@ -108,19 +135,23 @@ a {
 }
 .menu > ul > li > ul > li > a.arrow {
 	padding: 0 20px 0 10px;
+    background:url(../images/sub-nav-arrow-n.png) no-repeat 92% 48%;
+}
+.menu > ul > li.current > ul > li > a.arrow {
+	padding: 0 20px 0 10px;
 	background:url(../images/sub-nav-arrow.png) no-repeat 92% 48%;
 }
 .menu > ul > li > ul > li > ul {
 	position:absolute;
 	left:-9999px;
 	background:#555657;
-	padding:10px; 
+	padding:10px;
 	-moz-border-radius-topright: 3px;
 	-webkit-border-top-right-radius: 3px;
 	border-top-right-radius: 3px;
 	-moz-border-radius-bottomright: 3px;
 	-webkit-border-bottom-right-radius: 3px;
-	border-bottom-right-radius: 3px
+	border-bottom-right-radius: 3px;
 	-moz-border-radius-bottomleft: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
@@ -135,21 +166,19 @@ a {
 	line-height:20px;
 }
 .menu > ul > li:hover > a {
-	background:url(../images/top-nav-selected.png);
+	background:url(../images/top-nav-selected1.png);
 	color:#333;
 }
 .menu > ul > li:hover > a b {
-	background:url(../images/top-nav-selected.png);
+	background:url(../images/top-nav-selected1.png);
 }
 .menu ul li:hover {
 	direction:ltr;
 }
-/*
 .menu > ul > li:hover > ul {
 	left:0;
 	opacity:1;
 }
-*/
 .menu > ul > li > ul > li:hover > a {
 	color:#fff; background:#555657;
 }
@@ -185,11 +214,9 @@ a {
 .menu > ul:hover > li.current > a b {
 	background:#f28c38;
 }
-/*
 .menu > ul:hover > li.current > ul {
 	left:-9999px;
 }
-*/
 .menu > ul:hover > li.current:hover > a {
 	background:#f28c38;
 }
@@ -214,6 +241,7 @@ a {
 	left:0;
 	opacity:1;
 }
+/* ================ Main menu styles: End ================ */
 .close {
 	position:absolute;
 	right:10px;
