@@ -33,7 +33,7 @@ use_stylesheets_for_form($form);
 </div> 
 
 <?php if (!empty($resultsSet)) { ?>
-    <div id="report-results" class="box simple" style="display: inline-block">
+    <div id="report-results" class="box noHeader" style="display: inline-block">
         <div class="inner">
             <?php if ($pager->haveToPaginate()):?>
             <div class="top" style="padding-top:25px;">

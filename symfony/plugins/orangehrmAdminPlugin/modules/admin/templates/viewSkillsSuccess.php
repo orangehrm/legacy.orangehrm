@@ -23,10 +23,6 @@
 use_javascript('../orangehrmAdminPlugin/js/viewSkillsSuccess');
 ?>
 
-<!--<div class="box simple">
-    
-</div>-->
-
 <div class="box single" id="saveFormDiv">
     
     <div class="head">

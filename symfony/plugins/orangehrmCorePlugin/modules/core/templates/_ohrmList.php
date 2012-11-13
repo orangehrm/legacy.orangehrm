@@ -57,7 +57,7 @@ function printButtonEventBindings($buttons) {
     }
 }
 ?>
-<div class="box simple" id="search-results">
+<div class="box noHeader" id="search-results">
     
     <?php if (!empty($title)) { ?>
         <div class="head"><h1><?php echo __($title); ?></h1></div>

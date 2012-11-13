@@ -115,7 +115,7 @@ $formatData['newSeparater'] = '/';
 
 </div> <!-- box:Ends -->
 
-<div class="box simple" id="search-results">
+<div class="box noHeader" id="search-results">
 
     <?php include_partial('global/flash_messages'); ?>
 
@@ -284,7 +284,7 @@ $formatData['newSeparater'] = '/';
             
     </div> <!-- inner:Ends -->
     
-</div> <!-- box simple Ends -->
+</div> <!-- box noHeader Ends -->
 
 <script type="text/javascript">
     

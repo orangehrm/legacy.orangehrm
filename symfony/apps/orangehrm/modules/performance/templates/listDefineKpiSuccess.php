@@ -43,7 +43,7 @@
     
 </div> <!-- end-of-searchKPI -->
 
- <div class="box simple" id="search-results">
+ <div class="box noHeader" id="search-results">
 	   			
 				
 			

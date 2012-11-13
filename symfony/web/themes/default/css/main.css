@@ -1,4 +1,4 @@
-/* ================ General styles: Begin ================ */
+/* ================ HTML element styles: Begin ================ */
 body {
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:13px;
@@ -8,7 +8,7 @@ a {
 	outline:none;
     color:#5d5d5d;
 }
-/* ================ General styles: End ================ */
+/* ================ HTML element styles: End ================ */
 
 /* ================ Application header styles: Begin ================ */
 #branding {
@@ -117,12 +117,14 @@ a {
 	position:relative;
 	z-index:10;
 }
+/*
 .nocurrent {
 	z-index:30;
 }
 .homecurrent {
 	z-index:20;
 }
+*/
 .menu ul {
 	padding:0;
 	margin:0;
@@ -385,7 +387,7 @@ a {
 	-webkit-border-top-right-radius: 3px;
 	border-top-right-radius: 3px;
 }
-.simple .inner {
+.noHeader .inner {
 	border:1px solid #dedede;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -613,7 +615,13 @@ input.reset, input.cancel {
 input.delete {
 	background:#aa4935;
 }
+/*
 .searchForm form ol input.calendar {
+	width:165px;
+	float:left;
+}
+*/
+form ol input.calendar {
 	width:165px;
 	float:left;
 }
@@ -848,7 +856,7 @@ form ol li.largeTextBox span.validation-error {
 form ol li.fileBrowser span.validation-error {
     top:31px;
 }
-.searchForm form ol li span.validation-error {
+.searchForm form ol li span.validation-error { /* Check the usage */
     font-size: 12px;
     color: #aa4935;
     display:block;

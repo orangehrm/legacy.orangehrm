@@ -33,7 +33,7 @@ use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet');
 
 <!-- Employee-pending-submited-timesheets -->
 <?php if (!($pendingApprovelTimesheets == null)): ?>
-<div class="box simple">
+<div class="box noHeader">
     
     <div class="head">
         <h1><?php echo __("Timesheets Pending Action"); ?></h1>
