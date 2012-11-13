@@ -949,7 +949,9 @@ form input.validation-error {
 	left:150px;
 }
 */
-
+.inputFormatHint {
+    color: #A9A9A9;
+}
 .fileHelpText {
 	position:absolute;
 	top:25px;
