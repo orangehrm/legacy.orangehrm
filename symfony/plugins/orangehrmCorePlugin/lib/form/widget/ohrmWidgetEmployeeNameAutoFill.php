@@ -41,8 +41,9 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
 
     public function render($name, $value = null, $attributes = array(), $errors = array()) {
 
-        $empNameValue   = isset($value['empName'])?$value['empName']:'';
-        $empIdValue     = isset($value['empId'])?$value['empId']:'';        
+        $empNameValue       = isset($value['empName'])?$value['empName']:'';
+        $empIdValue         = isset($value['empId'])?$value['empId']:'';
+        $attributes['type'] = 'text';
         
         $html           = parent::render($name . '[empName]', $empNameValue, $attributes, $errors);
         $typeHint       = $this->getOption('typeHint');
