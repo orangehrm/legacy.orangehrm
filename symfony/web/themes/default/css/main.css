@@ -1,5 +1,5 @@
+/* ================ General styles: Begin ================ */
 body {
-	/*font-family: 'Signika', sans-serif;*/
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:13px;
 	color:#5d5d5d;
@@ -8,22 +8,15 @@ a {
 	outline:none;
     color:#5d5d5d;
 }
-#wrapper {
-	min-width:940px;
-	overflow:hidden;
-}
+/* ================ General styles: End ================ */
+
+/* ================ Application header styles: Begin ================ */
 #branding {
 	height:91px;
 	padding:0 25px 0 25px;
 }
 #branding img {
 	margin:14px 0 0 0;
-}
-.close {
-	position:absolute;
-	right:10px;
-	bottom:80px;
-	display:none;
 }
 .subscribe {
 	padding:10px 15px 12px 15px;
@@ -115,6 +108,8 @@ a {
 #help-menu li a:hover {
 	text-decoration:underline;
 }
+/* ================ Application header styles: End ================ */
+
 /* ================ Main menu styles: Begin ================ */
 .menu {
 	height:40px;
@@ -333,8 +328,20 @@ a {
 	opacity:1;
 }
 /* ================ Main menu styles: End ================ */
+
+/* ================ Main div styles: Begin ================ */
+#wrapper {
+	min-width:940px;
+	overflow:hidden;
+}
 #content {
 	padding-top:35px;
+}
+#footer {
+	text-align:center;
+	padding:0 0 30px 0;
+	color:#777;
+	font-size:12px;
 }
 .box {
 	margin:20px;
@@ -399,6 +406,48 @@ a {
 .box .toggle.activated	{
 	background: url(../images/toggle-up.png) no-repeat 99% 50%;
 }
+.box ul.top {
+	position:absolute;
+	top:25px;
+	right:20px;
+}
+.box ul.bottom {
+	float:right;
+	padding:15px 0 0 ;
+}
+.miniList p {
+    margin-bottom: 10px;
+    padding-top: 0;
+}
+/* ================ Main div styles: End ================ */
+
+/* ================ General class styles: Begin ================ */
+.hide {display:none;}
+
+.show {
+  display: block;
+}
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+     -moz-transition: opacity 0.15s linear;
+      -ms-transition: opacity 0.15s linear;
+       -o-transition: opacity 0.15s linear;
+          transition: opacity 0.15s linear;
+}
+.inputFormatHint {
+    color: #A9A9A9;
+}
+.fileHelpText {
+	position:absolute;
+	top:25px;
+	left:150px;   
+    margin-bottom: 10px;
+    color: #A9A9A9;
+}
+/* ================ General class styles: End ================ */
+
+/* ================ Form styles: Begin ================ */
 form ol {
 	border-bottom:1px solid #dedede;
 	overflow:hidden;
@@ -417,13 +466,6 @@ form ol li {
 	float:left;
 	margin:3px 0 12px 0;
 }
-/*
-.single form ol li span {
-	float:left;
-	width:225px;
-	margin-top:9px;
-}
-*/    
 form ol li.required {
 	float:left;
 	width:425px;
@@ -551,7 +593,7 @@ form p {
 .single form p {
 	text-align:left;
 }
-form button, input[type="button"], input[type="submit"] {
+input[type="button"], input[type="submit"] {
 	background:#33ac3f;
 	color:#fff;
 	font-size:15px;
@@ -565,34 +607,50 @@ form button, input[type="button"], input[type="submit"] {
 .single form ol li input[type="file"] {
     margin-bottom: 10px;
 }
-.single form button {
-	margin-left:0;
-}
-form button.reset, input.reset, input.cancel {
+input.reset, input.cancel {
 	background:#848484;
 }
-form button.delete, input.delete {
+input.delete {
 	background:#aa4935;
 }
-form button.edit {
-	background:#db7018;
+.searchForm form ol input.calendar {
+	width:165px;
+	float:left;
 }
-.simple form button {
-	margin-left:0;
-	margin-right:10px;
+/* ================ Form styles: End ================ */
+
+/* ================ Two column styles: Begin ================ */
+
+.twoColumn form ol li label {
+	width:150px;
 }
-.errorBorder {
-	border:1px solid #aa4935;
+.twoColumn form ol {
+	margin-bottom:10px;
 }
-.box ul.top {
-	position:absolute;
-	top:25px;
-	right:20px;
+.twoColumn form ol li {
+	width:50%;
 }
-.box ul.bottom {
-	float:right;
-	padding:15px 0 0 ;
+.twoColumn form ol li.line {
+	width:100%;
 }
+.twoColumn select {
+	width:239px;
+}
+.twoColumn form p {
+	padding-top: 0;
+}
+
+.twoColumn .full-width {
+	width:100%;
+}
+
+.twoColumn form ol li span.validation-error {
+	left:150px;
+}
+
+/* ================ Two column styles: End ================ */
+
+/* ================ Paging styles: Begin ================ */
 .paging li {
 	display:inline;
 }
@@ -639,6 +697,9 @@ form button.edit {
 	margin:3px 0 0 0;
 	padding-right:10px;
 }
+/* ================ Paging styles: End ================ */
+
+/* ================ Table styles: Begin ================ */
 table.table th {
 	background:#f28c38;
 	color:#fff;
@@ -646,12 +707,10 @@ table.table th {
 	border:1px solid #fff;
 	text-align:left;
 }
-
 table.table th a {
 	color:#fff;
     text-decoration: none;
 }
-
 table.table th.center, table.table td.center {
 	text-align:center;
 }
@@ -688,29 +747,33 @@ table tbody tr.total td strong {
 	font-weight:bold;
 	color:#fff;
 }
-
 table.tablesorter thead tr .headerSortUp {
 	background-image: url(../images/tablesorter-asc.png);
 }
 table.tablesorter thead tr .headerSortDown {
 	background-image: url(../images/tablesorter-dsc.png);
 }
-.emergency table {
-	margin-top:45px;
+table.table th.checkbox-col {
+    width: 10px;
 }
-#footer {
-	text-align:center;
-	padding:0 0 30px 0;
-	color:#777;
-	font-size:12px;
+table.table td.right {
+    text-align: right;
 }
+table tfoot tr.total td {
+	background-color:#555657;
+	color:#fff;
+}
+table tfoot tr td strong {
+	color:#333;
+	font-weight:bold;
+}
+table tfoot tr.total td strong {
+	font-weight:bold;
+	color:#fff;
+}
+/* ================ Table styles: End ================ */
 
-.autocomplete-w1 { background:url(../images/shadow.png) no-repeat bottom right; position:absolute; top:0px; left:0px; margin:8px 0 0 6px; /* IE6 fix: */ _background:none; _margin:0; }
-.autocomplete { border:1px solid #999; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; }
-.autocomplete .selected { background:#F0F0F0; }
-.autocomplete div { padding:2px 5px; }
-.autocomplete strong { font-weight:normal; color:#2b9135; }
-
+/* ================ Top level message styles: Begin ================ */
 .message {
 	border:1px solid #d2d1d1;
 	color:#5d5d5d;
@@ -759,170 +822,17 @@ table.tablesorter thead tr .headerSortDown {
 .success a {
 	background:url(../images/success-btn.png) no-repeat;
 }
+/* ================ Top level message styles: End ================ */
 
-/* Z-INDEX */
- .formError { z-index: 990; }
-    .formError .formErrorContent { z-index: 991; }
-    .formError .formErrorArrow { z-index: 996; }
-    
-    .formErrorInsideDialog.formError { z-index: 5000; }
-    .formErrorInsideDialog.formError .formErrorContent { z-index: 5001; }
-    .formErrorInsideDialog.formError .formErrorArrow { z-index: 5006; }
-
-.formErrorOuter{
-
-}
-.inputContainer {
-	position: relative;
-	float: left;
-}
-
-.formError {
-	position: absolute;
-	top: 300px;
-	left: 300px;
-	display: block;
-	cursor: pointer;
-}
-
-.ajaxSubmit {
-	padding: 20px;
-	background: #55ea55;
-	border: 1px solid #999;
-	display: none
-}
-
-.formError .formErrorContent {
-	width: 100%;
-	background: #aa4935;
-	position:relative;
-	color: #fff;
-	font-size: 13px;
-	padding: 8px 10px 8px 10px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-}
-
-.greenPopup .formErrorContent {
-	background: #33be40;
-}
-
-.blackPopup .formErrorContent {
-	background: #393939;
-	color: #FFF;
-}
-
-.formError .formErrorArrow {
-	width: 15px;
-	margin: -2px 0 0 13px;
-	position:relative;
-}
-body[dir='rtl'] .formError .formErrorArrow,
-body.rtl .formError .formErrorArrow {
-	margin: -2px 13px 0 0;
-}
-
-.formError .formErrorArrowBottom {
-	box-shadow: none;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	margin: 0px 0 0 12px;
-	top:2px;
-}
-
-.formError .formErrorArrow div {
-	font-size: 0px;
-	height: 1px;
-	background: #aa4935;
-	margin: 0 auto;
-	line-height: 0;
-	font-size: 0;
-	display: block;
-}
-
-.formError .formErrorArrowBottom div {
-	box-shadow: none;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-}
-
-.greenPopup .formErrorArrow div {
-	background: #33be40;
-}
-
-.blackPopup .formErrorArrow div {
-	background: #393939;
-	color: #FFF;
-}
-
-.formError .formErrorArrow .line10 {
-	width: 15px;
-	border: none;
-}
-
-.formError .formErrorArrow .line9 {
-	width: 13px;
-	border: none;
-}
-
-.formError .formErrorArrow .line8 {
-	width: 11px;
-}
-
-.formError .formErrorArrow .line7 {
-	width: 9px;
-}
-
-.formError .formErrorArrow .line6 {
-	width: 7px;
-}
-
-.formError .formErrorArrow .line5 {
-	width: 5px;
-}
-
-.formError .formErrorArrow .line4 {
-	width: 3px;
-}
-
-.formError .formErrorArrow .line3 {
-	width: 1px;
-	border-left: 2px solid #ddd;
-	border-right: 2px solid #ddd;
-	border-bottom: 0 solid #ddd;
-}
-
-.formError .formErrorArrow .line2 {
-	width: 3px;
-	border: none;
-	background: #ddd;
-}
-
-.formError .formErrorArrow .line1 {
-	width: 1px;
-	border: none;
-	background: #ddd;
-}
-
-input.error { border: 1px solid red; }
-
+/* ================ Field level message styles: Begin ================ */
 form select.validation-error,
-form input.validation-error {
+form input.validation-error,
+form textarea.validation-error {
     border-color: #aa4935;
     color: #aa4935;
     background: #FFFFFE;
 }
-
-.searchForm form ol li span.validation-error {
-    font-size: 12px;
-    color: #aa4935;
-    display:block;
-    float:left;
-    z-index:9999;
-    margin-top: 1px;
-}
-.single form ol li span.validation-error {
+form ol li span.validation-error {
     font-size: 12px;
     color: #aa4935;
 	display:block;
@@ -932,36 +842,23 @@ form input.validation-error {
 	left:150px;
     margin-top: 6px; 
 }
-.single form ol li.largeTextBox span.validation-error {
+form ol li.largeTextBox span.validation-error {
     top:85px;
 }
-.single form ol li.fileBrowser span.validation-error {
+form ol li.fileBrowser span.validation-error {
     top:31px;
 }
-/* Don't use this class. To be removed.
-.double form ol li span.validation-error {
+.searchForm form ol li span.validation-error {
     font-size: 12px;
     color: #aa4935;
-	display:block;
-	z-index:9999;
-	position:absolute;
-	top:21px;
-	left:150px;
+    display:block;
+    float:left;
+    /*z-index:9999;*/
+    margin-top: 1px;
 }
-*/
-.inputFormatHint {
-    color: #A9A9A9;
-}
-.fileHelpText {
-	position:absolute;
-	top:25px;
-	left:150px;   
-    margin-bottom: 10px;
-    color: #A9A9A9;
-}
+/* ================ Field level message styles: End ================ */
 
-/* ================ widget specific styles: Begin ================ */
-
+/* ================ Widget specific styles: Begin ================ */
 .ui-datepicker-trigger {
 	margin: 0 0 0 5px;
     display: block;
@@ -989,60 +886,15 @@ form input.validation-error {
     margin-left: 0px;
     margin-right: 10px;
 }
+/* ================ Widget specific styles: End ================ */
 
-/* ================ widget specific styles: End ================ */
-
-/* ================ .twoColumn styles: Begin ================ */
-
-.twoColumn form ol li label {
-	width:150px;
+/* ================ Modal box styles: Begin ================ */
+.close {
+	position:absolute;
+	right:10px;
+	bottom:80px;
+	display:none;
 }
-.twoColumn form ol {
-	margin-bottom:10px;
-}
-.twoColumn form ol li {
-	width:50%;
-}
-.twoColumn form ol li.line {
-	width:100%;
-}
-.twoColumn select {
-	width:239px;
-}
-.twoColumn form p {
-	padding-top: 0;
-}
-
-/* Seems to specific CSS styles. To be removed.
-.twoColumn input[type="radio"], .twoColumn input[type="checkbox"] {
-	width:auto;
-}
-
-.twoColumn label[for="Male"], .twoColumn label[for="Is_Terminated"]{
-	width:250px;
-}
-
-.twoColumn label[for="Gender"]{
-	height:50px;
-}
-*/
-
-.twoColumn .full-width {
-	width:100%;
-}
-
-.twoColumn form ol li span.validation-error {
-	left:150px;
-}
-
-/* ================ .twoColumn styles: End ================ */
-
-/* ================ Mini list styles: Begin ================ */
-.miniList p {
-    margin-bottom: 10px;
-    padding-top: 0;
-}
-/* ================ Mini list styles: End ================ */
 .modal-open .dropdown-menu {
   z-index: 2050;
 }
@@ -1194,36 +1046,6 @@ color:#fff;
   margin-left: -1px;
 }
 
-.hide {display:none;}
-
-.show {
-  display: block;
-}
-.fade {
-  opacity: 0;
-  -webkit-transition: opacity 0.15s linear;
-     -moz-transition: opacity 0.15s linear;
-      -ms-transition: opacity 0.15s linear;
-       -o-transition: opacity 0.15s linear;
-          transition: opacity 0.15s linear;
-}
-
-
-.modal button {
-	background:#33ac3f;
-	color:#fff;
-	font-size:15px;
-	padding:8px 20px;
-	border:none;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	margin-left:10px;
-}
-.modal button.reset {
-	background:#848484;
-}
-
 .modal form ol {
 	border-bottom:none;
 	margin:0;
@@ -1257,10 +1079,7 @@ color:#fff;
 	left:15px;
 	bottom:65px;
 }
-
-#search-results a {
-    
-}
+/* ================ Modal box styles: End ================ */
 
 /* ================ Timesheet styles: Begin ================ */
 #timesheet .top h3 {
@@ -1335,31 +1154,7 @@ color:#fff;
 }
 /* ================ Timesheet styles: End ================ */
 
-.searchForm form ol input.calendar {
-	width:165px;
-	float:left;
-}
-
-table.table th.checkbox-col {
-    width: 10px;
-}
-table.table td.right {
-    text-align: right;
-}
-
-table tfoot tr.total td {
-	background-color:#555657;
-	color:#fff;
-}
-table tfoot tr td strong {
-	color:#333;
-	font-weight:bold;
-}
-table tfoot tr.total td strong {
-	font-weight:bold;
-	color:#fff;
-}
-/* ================ PIM Sidebar styles: Begin ================ */
+/* ================ PIM sidebar styles: Begin ================ */
 #sidebar {
 	width:202px;
 	overflow:hidden;
@@ -1395,8 +1190,9 @@ table tfoot tr.total td strong {
 	color:#fff;
 	border-bottom:none;
 }
-/* ================ PIM Sidebar styles: End ================ */
-/* ================ PIM Styles: Begin ================ */
+/* ================ PIM sidebar styles: End ================ */
+
+/* ================ PIM styles: Begin ================ */
 .pimPane {
 	width:97%;
 	float:left;
@@ -1444,8 +1240,9 @@ table tfoot tr.total td strong {
     margin-top: 0; 
 }
 
-/* ================ PIM Styles: End ================ */
-/* ================ Personal Details Styles: Begin ================ */
+/* ================ PIM styles: End ================ */
+
+/* ================ Personal Details styles: Begin ================ */
 div.personalDetails {
     min-width: 1190px;
 }
@@ -1490,24 +1287,7 @@ div.personalDetails {
 .personalDetails form ol li .defaulttext {
 	color:#a4a4a4;
 }
-/*
-.personalDetails form ol li.radio {
-	margin-bottom:0;
-}
-.personalDetails form ol li.radio label {
-    width: 132px;
-    margin-top: 0px;
-}
-.personalDetails form ol li.radio ul.radio_list li {
-    display: inline;
-    width: 120px;
-}
-.personalDetails form ol li.radio ul.radio_list li label {
-    width: 50px;
-    margin-top: 0;
-}
-*/
 .personalDetails form p {
 	padding-top: 0px;
 }
-/* ================ Personal Details Styles: End ================ */
+/* ================ Personal Details styles: End ================ */
