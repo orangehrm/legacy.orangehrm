@@ -112,7 +112,7 @@
                         <?php echo $form['country']->render(array("class" => "drpDown", "maxlength" => 30)); ?>
                     </li>
                     
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['note']->renderLabel(__('Note')); ?>
                         <?php echo $form['note']->render(array("class" => "txtArea", "maxlength" => 255)); ?>
                     </li>
