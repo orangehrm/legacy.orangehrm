@@ -511,7 +511,7 @@ form ol li input[type=text] {
     height:15px;
 }
 form ol li input[type=checkbox] {
-    margin: 0;
+    margin-left: 0;
 }
 form ol li input[type="file"] {
     margin-bottom: 10px;
