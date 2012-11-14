@@ -22,17 +22,14 @@
  */
 
 /**
- * Load Dates for Month
+ * Displays a warning for non admin users if Leave Period is not defined
+ *
+ * @param sfWebRequest $request
  */
-class loadDatesforMonthAction extends baseCoreLeaveAction {
+class showLeavePeriodNotDefinedWarningAction extends baseCoreLeaveAction {
 
     public function execute($request) {
-
-        $month = (int) $request->getParameter('month');
-        $isLeapYear = ($request->getParameter('isLeapYear') !== 'false');
-
-        $this->getResponse()->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
-        return $this->renderText(json_encode($this->getLeavePeriodService()->getListOfDates($month, $isLeapYear)));
+        
     }
 
 }

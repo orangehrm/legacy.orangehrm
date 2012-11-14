@@ -538,7 +538,7 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES
     (0, 'hs_hr_hsp_payment_request', 'id'),
     (0, 'hs_hr_kpi', 'id'),
     (0, 'hs_hr_performance_review', 'id'),
-    (0, 'hs_hr_leave_period', 'leave_period_id'),
+    (0, 'ohrm_leave_period', 'leave_period_id'),
     (2, 'ohrm_emp_reporting_method', 'reporting_method_id'),
     (0, 'ohrm_timesheet', 'timesheet_id'),
     (0, 'ohrm_timesheet_action_log', 'timesheet_action_log_id'),

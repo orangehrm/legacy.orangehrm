@@ -20,7 +20,7 @@
  * @method LeavePeriod         setEmployeeLeaveEntitlement() Sets the current record's "EmployeeLeaveEntitlement" collection
  * 
  * @package    orangehrm
- * @subpackage model\coreleave\base
+ * @subpackage model\leave\base
  * @author     Your name here
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
@@ -28,7 +28,7 @@ abstract class BaseLeavePeriod extends sfDoctrineRecord
 {
     public function setTableDefinition()
     {
-        $this->setTableName('hs_hr_leave_period');
+        $this->setTableName('ohrm_leave_period');
         $this->hasColumn('leave_period_id as leavePeriodId', 'integer', null, array(
              'type' => 'integer',
              'primary' => true,

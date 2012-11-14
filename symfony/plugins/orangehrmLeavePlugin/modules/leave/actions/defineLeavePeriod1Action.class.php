@@ -22,7 +22,7 @@
 /**
  * defineLeavePeriodAction
  */
-class defineLeavePeriodAction extends sfAction {
+class defineLeavePeriod1Action extends baseLeaveAction {
 
     private $leavePeriodService;
     private $leaveRequestService;
@@ -75,6 +75,7 @@ class defineLeavePeriodAction extends sfAction {
     }
 
     public function execute($request) {
+        
         if (!Auth::instance()->hasRole(Auth::ADMIN_ROLE)) {
             $this->forward('leave', 'showLeavePeriodNotDefinedWarning');
         }

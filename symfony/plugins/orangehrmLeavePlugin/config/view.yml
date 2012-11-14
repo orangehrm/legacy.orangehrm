@@ -25,4 +25,8 @@ assignLeaveSuccess:
 viewLeaveListSuccess:
   layout: freshorange
   javascripts:    [-*]
-  stylesheets:    [-*]   
+  stylesheets:    [-*]
+defineLeavePeriodSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]

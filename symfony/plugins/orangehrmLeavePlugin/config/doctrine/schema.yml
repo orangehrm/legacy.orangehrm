@@ -1,3 +1,17 @@
+LeavePeriod:
+  tableName: ohrm_leave_period
+  columns:
+    leave_period_id:
+      name: leave_period_id as leavePeriodId
+      type: integer
+      primary: true
+    leave_period_start_date:
+      name: leave_period_start_date as startDate
+      type: date
+    leave_period_end_date:
+      name: leave_period_end_date as endDate
+      type: date
+
 LeaveEntitlement:
   tableName: ohrm_leave_entitlement
   columns:
