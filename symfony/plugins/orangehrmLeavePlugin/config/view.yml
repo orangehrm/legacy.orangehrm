@@ -30,3 +30,7 @@ defineLeavePeriodSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]
+showLeavePeriodNotDefinedWarningSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]

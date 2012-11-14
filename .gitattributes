@@ -3904,7 +3904,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/leaveTypeListActi
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/loadActiveLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/loadDeletedLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/saveLeaveEntitlementsAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/showLeavePeriodNotDefinedWarningAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/undeleteLeaveTypeAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/updateCommentAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewHolidayListAction.class.php -text
@@ -3958,7 +3957,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leav
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubject.txt -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberBody.txt -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberSubject.txt -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/showLeavePeriodNotDefinedWarningSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewHolidayListSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveListSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveListSuccessOld.php -text

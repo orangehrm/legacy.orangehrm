@@ -1,3 +1,11 @@
-<div id='messageBalloon_notice' class='messageBalloon_notice'>
-<?php echo __("Leave Period Not Defined"); ?>
+<div id="location" class="box single">
+
+    <div class="head">
+        <h1 id="locationHeading"><?php echo __("Leave Period"); ?></h1>
+    </div>
+
+    <div class="inner">
+        <?php echo __("Leave Period Not Defined"); ?>
+    </div>
 </div>
+
