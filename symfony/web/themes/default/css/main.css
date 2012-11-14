@@ -1071,66 +1071,66 @@ color:#fff;
 /* ================ Modal box styles: End ================ */
 
 /* ================ Timesheet styles: Begin ================ */
-#timesheet .top h3 {
+.timesheet .top h3 {
 	font-size:18px;
 	float:left;
 	margin-top:5px;
 }
-#edit-timesheet .top h3 {
+.editTimesheet .top h3 {
 	font-size:18px;
 	float:left;
 	margin:0 0 10px 0;
 }
-#timesheet .top select {
+.timesheet .top select {
 	width:200px;
 	float:left;
 	height:28px;
 	margin:3px 0 0 10px;
 }
-#timesheet .top button {
+.timesheet .top button {
 	float:left;
 	margin:0 0 5px 10px;
 }
-#timesheet .bottom {
+.timesheet .bottom {
 	border-top:1px solid #dedede;
 	margin-top:10px;
 	padding-top:10px;
 }
-#timesheet .bottom em {
+.timesheet .bottom em {
 	font-size:14px;
 	float:left;
 }
-#timesheet .bottom p {
+.timesheet .bottom p {
 	text-align:right;
 	margin-top:-10px;
 }
 /*
-#edit-timesheet input {
+.editTimesheet input {
 	width:40px;
 }
 */
-#edit-timesheet input.timeBox {
+.editTimesheet input.timeBox {
 	width:40px;
 }
 /*
-#edit-timesheet input.main-input {
+.editTimesheet input.main-input {
 	width:150px;
 	float:left;
 }
 */
-#edit-timesheet select, #edit-timesheet .checkbox-input {
+.editTimesheet select, .editTimesheet .checkbox-input {
 	float:left;
 }
-#edit-timesheet .checkbox-input {
+.editTimesheet .checkbox-input {
 	clear:both;
 	margin:0 0 10px 7px;
 }
-#edit-timesheet .bottom {
+.editTimesheet .bottom {
 	border-top:1px solid #dedede;
 	margin-top:10px;
 	padding-top:10px;
 }
-#edit-timesheet .bottom .required {
+.editTimesheet .bottom .required {
 	float:left;
 	width:425px;
 	margin-top:-9px;
@@ -1138,7 +1138,7 @@ color:#fff;
 	font-size:11px;
 	text-align:left;
 }
-#edit-timesheet .bottom .required em {
+.editTimesheet .bottom .required em {
 	color:#aa4935;
 }
 /* ================ Timesheet styles: End ================ */
