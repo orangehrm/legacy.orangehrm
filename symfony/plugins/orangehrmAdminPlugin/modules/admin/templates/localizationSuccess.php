@@ -65,7 +65,7 @@
         </ul>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn" data-dismiss="modal">OK</button>
+        <input type="button" class="btn" data-dismiss="modal" value="<?php echo __('Ok'); ?>" />
     </div>
 </div>
 <!-- End-of-msg -->
