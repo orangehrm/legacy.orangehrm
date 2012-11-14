@@ -2,7 +2,7 @@
 use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess'); 
 ?>
 
-<div id="location-information" class="box toggableForm">
+<div id="location-information" class="box searchForm toggableForm">
     
     <div class="head">
         <h1 id="searchLocationHeading"><?php echo __("Locations") ?></h1>

@@ -1,4 +1,4 @@
-<div class="box toggableForm">
+<div class="box searchForm toggableForm">
     
     <div id="formHeading" class="head"><h1><?php echo __("Search Key Performance Indicators")?></h1></div>
     <div class="inner">

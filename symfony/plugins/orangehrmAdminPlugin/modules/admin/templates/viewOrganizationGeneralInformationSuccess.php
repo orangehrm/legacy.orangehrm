@@ -21,7 +21,7 @@
 
 <?php echo javascript_include_tag('../orangehrmAdminPlugin/js/viewOrganizationGeneralInformationSuccess'); ?>
 
-<div id="general-info" class="box single twoColumn">
+<div id="general-info" class="box twoColumn">
         
     <div class="head">
         <h1 id="genInfoHeading"><?php echo __('General Information'); ?></h1>
@@ -117,7 +117,7 @@
                         <?php echo $form['note']->render(array("class" => "txtArea", "maxlength" => 255)); ?>
                     </li>
                     
-                    <li class="required full-width">
+                    <li class="required line">
                           <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                     

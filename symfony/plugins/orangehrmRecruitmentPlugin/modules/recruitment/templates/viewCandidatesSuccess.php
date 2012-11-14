@@ -20,7 +20,7 @@
 ?>
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/viewCandidatesSuccess'); ?>
 
-<div class="box toggableForm search2col" id="srchCandidates">
+<div class="box searchForm toggableForm" id="srchCandidates">
     <div class="head">
         <h1><?php echo __('Candidates'); ?></h1>
     </div>

@@ -19,7 +19,7 @@
  */
 ?>
 
-<div class="box toggableForm" id="srchVacancy">
+<div class="box searchForm toggableForm" id="srchVacancy">
     
     <div class="head">
         <h1><?php echo __('Vacancies'); ?></h1>

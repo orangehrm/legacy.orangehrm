@@ -25,7 +25,7 @@
 use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess'); 
 ?>
 
-<div id="systemUser-information" class="box toggableForm">
+<div id="systemUser-information" class="box searchForm toggableForm">
     <div class="head">
         <h1><?php echo __("System Users") ?></h1>
     </div>

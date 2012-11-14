@@ -25,7 +25,7 @@
     </div>
 <?php endif; ?>
 
-<div class="box toggableForm" id="employee-information">
+<div class="box searchForm toggableForm" id="employee-information">
     <div class="head">
         <h1><?php echo __("Employee Information") ?></h1>
     </div>
