@@ -1,5 +1,5 @@
 
-<div class="box single pimPane">
+<div class="box pimPane">
     
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
     

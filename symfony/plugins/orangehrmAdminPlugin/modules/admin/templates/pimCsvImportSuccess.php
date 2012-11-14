@@ -1,7 +1,7 @@
 
 <?php use_javascript('../orangehrmAdminPlugin/js/pimCsvImport'); ?>
 
-<div id="pimCsvImport" class="box single">
+<div id="pimCsvImport" class="box">
     
     <div class="head">
         <h1 id="pimCsvImportHeading"><?php echo __("CSV Data Import"); ?></h1>

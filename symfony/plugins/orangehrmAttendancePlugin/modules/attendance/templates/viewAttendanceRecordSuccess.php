@@ -1,6 +1,6 @@
 <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/viewAttendanceRecordSuccess'); ?>
 
-<div class="box single">
+<div class="box">
     <div class="head">
             <h1><?php echo __('View Attendance Record'); ?></h1>
         </div>

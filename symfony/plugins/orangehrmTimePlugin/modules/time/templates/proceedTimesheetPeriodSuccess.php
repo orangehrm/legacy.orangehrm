@@ -17,7 +17,7 @@
  * Boston, MA  02110-1301, USA
  */ ?>
 
-<div class="box single">
+<div class="box">
 
     <div class="head">
         <h1 id="defineTimesheet"><?php echo __('Define Timesheet Period'); ?></h1>

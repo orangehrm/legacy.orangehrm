@@ -2,7 +2,7 @@
 $dateFormat = get_datepicker_date_format($sf_user->getDateFormat());  
 $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
 ?>
-<div class="box single">
+<div class="box">
 
     <div class="head">
         <h1 id="formHeading">

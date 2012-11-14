@@ -23,7 +23,7 @@
 
 <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
 
-<div id="saveFormDiv" class="box single">
+<div id="saveFormDiv" class="box">
     
     <div class="head">
         <h1 id="saveFormHeading">Add Reporting Method</h1>

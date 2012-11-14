@@ -1,7 +1,7 @@
 
 <?php use_javascript('../orangehrmAdminPlugin/js/saveSubscriberSuccess'); ?>
 
-<div id="subscriber" class="box single">
+<div id="subscriber" class="box">
     
     <div class="head">
         <h1 id="subscriberHeading"><?php echo __("Add Subscriber"); ?></h1>

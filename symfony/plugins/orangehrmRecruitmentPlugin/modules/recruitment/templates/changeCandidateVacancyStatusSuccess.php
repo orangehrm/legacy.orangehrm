@@ -21,7 +21,7 @@
 <?php use_stylesheet('../orangehrmRecruitmentPlugin/css/changeCandidateVacancyStatusSuccess'); ?>
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/changeCandidateVacancyStatusSuccess'); ?>
 
-<div class="box single" id="addJobVacancy">
+<div class="box" id="addJobVacancy">
 
     <div class="head">
         <h1><?php echo __($form->actionName); ?></h1>

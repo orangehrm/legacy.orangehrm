@@ -7,7 +7,7 @@ use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess');
 
 <?php $hasCurrencies = count($currencyList) > 0; ?>
 
-<div id="payGrade" class="box single">
+<div id="payGrade" class="box">
     
     <div class="head">
         <h1 id="payGradeHeading"><?php echo __("Add Pay Grade"); ?></h1>
@@ -46,7 +46,7 @@ use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess');
 
 <?php if ($payGradeId > 0) {
  ?>
-<div id="addEditCurrency" class="box single">
+<div id="addEditCurrency" class="box">
     
     <div class="head">
         <h1 id="currencyHeading"><?php echo __("Assigned Currencies"); ?></h1>

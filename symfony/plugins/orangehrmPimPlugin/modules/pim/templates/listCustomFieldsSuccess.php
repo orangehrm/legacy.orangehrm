@@ -19,7 +19,7 @@
  */            
 ?>  
 
-<div id="customFieldAddPane" style="display: none;" class="box single">
+<div id="customFieldAddPane" style="display: none;" class="box">
   
     <div class="head">
         <h1 id="heading"><?php echo __('Add Custom Field'); ?></h1>

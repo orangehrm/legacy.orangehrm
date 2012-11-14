@@ -26,7 +26,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewEducationSuccess');
 
 <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
 
-<div class="box single" id="saveFormDiv">
+<div class="box" id="saveFormDiv">
     <div class="head">
             <h1 id="saveFormHeading">Add Education</h1>
     </div>

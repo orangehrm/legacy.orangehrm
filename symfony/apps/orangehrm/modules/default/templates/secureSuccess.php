@@ -1,9 +1,9 @@
-<div class="box single">    
+<div class="box">    
       
     
 <div class="message warning">
     <?php echo __("Credentials Required") ?> 
-    <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
+    <a href="#"><?php echo __('Close');?></a>
 </div>
         <?php include_partial('global/flash_messages'); ?>
         

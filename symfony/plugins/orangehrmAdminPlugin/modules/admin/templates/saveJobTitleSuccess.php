@@ -20,7 +20,7 @@
 ?>
 <?php use_javascript('../orangehrmAdminPlugin/js/saveJobTitleSuccess'); ?>
 
-<div id="saveHobTitle" class="box single">
+<div id="saveHobTitle" class="box">
     
     <div class="head">
         <?php $heading = (empty($form->jobTitleId)) ? __("Add Job Title") : __("Edit Job Title") ?>

@@ -23,7 +23,7 @@
 </script>
 
 
-<div class="box single pimPane" id="">
+<div class="box pimPane" id="">
     
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
     

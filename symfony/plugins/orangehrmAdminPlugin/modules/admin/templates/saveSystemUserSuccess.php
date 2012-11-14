@@ -3,7 +3,7 @@ use_javascript('../orangehrmAdminPlugin/js/systemUserSuccess');
 use_javascript('../orangehrmAdminPlugin/js/password_strength'); 
 ?>
 
-<div id="systemUser" class="box single">
+<div id="systemUser" class="box">
     
     <div class="head">
         <h1 id="UserHeading"><?php echo __("Add User"); ?></h1>

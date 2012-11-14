@@ -46,7 +46,7 @@
             }
         }
 ?>
-<div class="box single" id="addCandidate">
+<div class="box" id="addCandidate">
     
       <div class="head"><h1 id="addCandidateHeading"><?php echo $title; ?></h1></div>
           <div class="inner">

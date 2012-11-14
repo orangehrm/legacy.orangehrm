@@ -1,7 +1,7 @@
 
 <?php use_javascript('../orangehrmAdminPlugin/js/localizationSuccess'); ?>
 
-<div id="localization" class="box single">
+<div id="localization" class="box">
     
     <div class="head">
         <h1 id="localizationHeading"><?php echo __('Localization'); ?></h1>

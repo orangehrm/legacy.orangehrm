@@ -3,7 +3,7 @@
 use_javascript('../orangehrmAdminPlugin/js/nationalitySuccess'); 
 ?>
 
-<div id="nationality" class="box single">
+<div id="nationality" class="box">
     
     <div class="head"><h1 id="nationalityHeading"><?php echo __("Add Nationality"); ?></h1></div>
     

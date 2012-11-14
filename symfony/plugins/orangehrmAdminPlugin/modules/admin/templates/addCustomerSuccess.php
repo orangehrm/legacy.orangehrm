@@ -2,7 +2,7 @@
 use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess'); 
 ?>
 
-<div class="box single"  id="addCustomer">
+<div class="box"  id="addCustomer">
     <div class="head">
         <h1 id="addCustomerHeading"><?php echo __("Add Customer"); ?></h1>
     </div>

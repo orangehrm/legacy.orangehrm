@@ -23,7 +23,7 @@
 use_javascript('../orangehrmAdminPlugin/js/viewSkillsSuccess');
 ?>
 
-<div class="box single" id="saveFormDiv">
+<div class="box" id="saveFormDiv">
     
     <div class="head">
             <h1 id="saveFormHeading">Add Skill</h1>

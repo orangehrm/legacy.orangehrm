@@ -1,7 +1,7 @@
 <?php use_javascripts_for_form($form) ?>
 <?php use_stylesheets_for_form($form) ?>
 
-<div class="box single pimPane" id="employee-details">
+<div class="box pimPane" id="employee-details">
     
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
     

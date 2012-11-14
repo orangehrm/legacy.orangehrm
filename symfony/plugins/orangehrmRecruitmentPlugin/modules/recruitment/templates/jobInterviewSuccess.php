@@ -24,7 +24,7 @@ use_javascript('../orangehrmRecruitmentPlugin/js/jobInterviewSuccess');
 use_stylesheet('../orangehrmRecruitmentPlugin/css/jobInterviewSuccess');
 ?>
 
-<div class="box single" id="jobInterview">
+<div class="box" id="jobInterview">
     <div class="head">
         <h1><?php echo __("Schedule Interview"); ?></h1>
     </div>

@@ -76,7 +76,7 @@ use_stylesheets_for_form($form);
     </div>
 <?php endif; ?>
 
-<div class="box single" id="add-leave-entitlement">
+<div class="box" id="add-leave-entitlement">
     <div class="head">
         <h1><?php echo $addMode ? __("Add Leave Entitlement") : __('Edit Leave Entitlement');?></h1>
     </div>

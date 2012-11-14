@@ -12,7 +12,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
 
 <?php include_partial('overlapping_leave', array('overlapLeave' => $overlapLeave));?>
 
-<div class="box single" id="apply-leave">
+<div class="box" id="apply-leave">
     <div class="head">
         <h1><?php echo __('Apply Leave') ?></h1>
     </div>

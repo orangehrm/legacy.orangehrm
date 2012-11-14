@@ -10,7 +10,7 @@ use_stylesheets_for_form($form);
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
     </div>
 <?php endif; ?>
-<div class="box single" id="leave-balance-report">
+<div class="box" id="leave-balance-report">
     <div class="head">
         <h1><?php echo __("Leave Balance Report");?></h1>
     </div>

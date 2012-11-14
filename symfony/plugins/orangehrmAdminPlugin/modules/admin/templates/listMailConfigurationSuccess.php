@@ -1,5 +1,5 @@
 
-<div class="box single twoColumn">
+<div class="box twoColumn">
 
     <div class="head">
         <h1><?php echo __("Mail Configuration")?></h1>

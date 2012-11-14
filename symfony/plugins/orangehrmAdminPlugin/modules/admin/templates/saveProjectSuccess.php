@@ -2,7 +2,7 @@
 use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess'); 
 ?>
 
-<div id="addProject" class="box single">
+<div id="addProject" class="box">
     
     <div class="head">
         <h1 id="addProjectHeading"><?php echo __("Add Project"); ?></h1>
@@ -74,7 +74,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
 <?php if (!empty($projectId)) { ?>
 
 <!-- Add-Activity -->
-<div id="addActivity" class="box single">
+<div id="addActivity" class="box">
     
     <div class="head">
         <h1 id="addActivityHeading"><?php echo __("Add Project Activity"); ?></h1>

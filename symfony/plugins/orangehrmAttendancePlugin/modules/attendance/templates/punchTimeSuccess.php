@@ -53,7 +53,7 @@ For top level messages, use new styles
     
 ?>
     
-<div class="box single">
+<div class="box">
     
     <div class="head"><h1><?php echo $heading; ?></h1></div>
     

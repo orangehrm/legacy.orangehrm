@@ -21,7 +21,7 @@
 
 <?php use_javascript('../orangehrmPimPlugin/js/viewTerminationReasonsSuccess'); ?>
 
-<div id="saveFormDiv" class="box single">
+<div id="saveFormDiv" class="box">
     
     <div class="head">
         <h1 id="saveFormHeading">Add Termination Reason</h1>

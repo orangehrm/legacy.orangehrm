@@ -20,7 +20,7 @@
 ?>
 
 
-<div id="saveFormDiv" class="box single">
+<div id="saveFormDiv" class="box">
     
     <div class="head">
         <h1 id="saveFormHeading"> <?php echo __('Module Configuration') ?> </h1>

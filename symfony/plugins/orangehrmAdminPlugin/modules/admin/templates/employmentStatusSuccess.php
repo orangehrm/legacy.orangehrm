@@ -2,7 +2,7 @@
 <?php
 use_javascript('../orangehrmAdminPlugin/js/employmentStatusSuccess'); ?>
 
-<div class="box single" id="empStatus">
+<div class="box" id="empStatus">
     
     <div class="head">
             <h1 id="empStatusHeading"><?php echo __('Add Employment Status'); ?></h1>

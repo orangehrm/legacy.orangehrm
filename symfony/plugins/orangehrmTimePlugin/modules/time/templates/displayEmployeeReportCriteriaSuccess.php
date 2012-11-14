@@ -1,4 +1,4 @@
-<div class="box single">
+<div class="box">
     <div class="head"><h1 id="reportToHeading"><?php echo __($reportName); ?></h1></div>
     <div class="inner">
             <?php include_partial('global/flash_messages'); ?>

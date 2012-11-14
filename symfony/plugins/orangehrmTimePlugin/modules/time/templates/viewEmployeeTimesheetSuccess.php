@@ -5,7 +5,7 @@ use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
 use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet'); 
 ?>
 
-<div class="box single">
+<div class="box">
     <div class="head">
         <h1><?php echo __("Select Employee");?></h1>
     </div>

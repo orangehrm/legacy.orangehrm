@@ -3,7 +3,7 @@
 use_javascript('../orangehrmAdminPlugin/js/membershipSuccess');
 ?>
 
-<div id="membership" class="box single">
+<div id="membership" class="box">
     
     <div class="head"><h1 id="membershipHeading"><?php echo __("Add Membership"); ?></h1></div>
     

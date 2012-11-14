@@ -24,7 +24,7 @@ use_stylesheet('../orangehrmRecruitmentPlugin/css/addJobVacancySuccess');
 use_javascript('../orangehrmRecruitmentPlugin/js/addJobVacancySuccess');
 ?>
 
-<div class="box single" id="addJobVacancy">
+<div class="box" id="addJobVacancy">
 
     <div class="head">
         <h1><?php echo isset($vacancyId) ? __('Edit Job Vacancy') : __('Add Job Vacancy'); ?></h1>

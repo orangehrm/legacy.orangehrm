@@ -19,7 +19,7 @@
 ?>
 <?php echo javascript_include_tag('../orangehrmTimePlugin/js/defineTimesheetPeriod'); ?>
 
-<div class="box single">
+<div class="box">
     
     <div class="head">
         <h1 id="defineTimesheet"><?php echo __('Define Timesheet Period'); ?></h1>

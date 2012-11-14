@@ -3,7 +3,7 @@
 <?php use_javascript('../orangehrmAdminPlugin/js/password_strength'); ?>
 
    
-<div id="systemUser"class="box single">
+<div id="systemUser"class="box">
         <div class="head"><h1 id="UserHeading"><?php echo __("Change Password"); ?></h1></div>
         <div class="inner">
             <?php include_partial('global/flash_messages'); ?>

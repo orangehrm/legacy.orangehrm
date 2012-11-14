@@ -25,7 +25,7 @@
 use_javascript('../orangehrmAdminPlugin/js/jobCategorySuccess'); 
 ?>
 
-<div class="box single" id="jobCategory">
+<div class="box" id="jobCategory">
     
     <div class="head">
         <h1 id="jobCategoryHeading"><?php echo __("Job Category") ?></h1>

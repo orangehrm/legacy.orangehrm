@@ -30,7 +30,7 @@ $allowDel = true;
 $allowEdit = true;
 ?>
 
-<div class="box single pimPane">
+<div class="box pimPane">
     
     <?php include_partial('global/form_errors', array('form' => $form)); ?>
 

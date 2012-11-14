@@ -1,6 +1,6 @@
 <?php use_javascript('../orangehrmAdminPlugin/js/workShiftSuccess'); ?>
 
-<div id="workShift" class="box single">
+<div id="workShift" class="box">
     
     <div class="head">
         <h1 id="workShiftHeading"><?php echo __("Work Shift"); ?></h1>

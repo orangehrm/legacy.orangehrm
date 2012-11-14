@@ -1,7 +1,7 @@
 
 <?php use_javascript('../orangehrmAdminPlugin/js/locationSuccess'); ?>
 
-<div id="location" class="box single">
+<div id="location" class="box">
     
     <div class="head">
         <h1 id="locationHeading"><?php echo __("Add Location"); ?></h1>

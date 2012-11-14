@@ -22,7 +22,7 @@ $havePassports = $numContacts>0;
 </script>
 <?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewImmigrationSuccess'); ?>
 
-<div class="box single pimPane">
+<div class="box pimPane">
     
     <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
     
