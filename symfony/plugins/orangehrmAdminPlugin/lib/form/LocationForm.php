@@ -183,7 +183,7 @@ class LocationForm extends BaseForm {
             'name' => __('Name') . $requiredMarker,
             'country' => __('Country') . $requiredMarker,
             'state' => __('State'),
-		    'province' => __('Province'),
+		    'province' => __('State/Province'),
 		    'city' => __('City'),
 		    'address' => __('Address'),
 		    'zipCode' => __('Zip/Postal Code'),
