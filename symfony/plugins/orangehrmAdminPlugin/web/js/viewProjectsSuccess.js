@@ -62,7 +62,7 @@ $(document).ready(function() {
             $(this).removeClass("inputFormatHint");
         }
     });
-    addTypeForHints()
+    addTypeForHints();
 
     $('#btnReset').click(function(){
         window.location.replace(viewProjectUrl);
@@ -94,17 +94,23 @@ $(document).ready(function() {
     });
     /* Delete confirmation controls: End */
     
+    $('.inputFormatHint').one('focus', function() {
+        $(this).val("");
+        $(this).removeClass("inputFormatHint");        
+    });
+    
+    
 });
 
 function addTypeForHints(){
-    $('.txtBox').each(function(){
+    $('.ac_input').each(function(){
         if ($(this).val() == '') {
             $(this).addClass("inputFormatHint").val(lang_typeForHints);
         }
     });
 }
 function removeTypeForHints(){
-    $('.txtBox').each(function(){
+    $('.ac_input').each(function(){
         if ($(this).hasClass("inputFormatHint")) {
             $(this).val("");
             $(this).removeClass("inputFormatHint");

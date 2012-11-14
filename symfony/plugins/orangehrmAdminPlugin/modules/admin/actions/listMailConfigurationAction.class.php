@@ -32,21 +32,22 @@ class listMailConfigurationAction extends sfAction {
         $this->setForm(new EmailConfigurationForm());
         
         if ($request->isMethod('post')) {
-            $this->form->bind($request->getParameter($this->form->getName()));            
+            $this->form->bind($request->getParameter($this->form->getName()));      
             if ($this->form->isValid()) {
                 $this->form->save();
-            }
-            
-            if ($this->form->getValue('chkSendTestEmail') == 'on') {
-                $emailService = new EmailService();
-                $result = $emailService->sendTestEmail($this->form->getValue('txtTestEmail'));
-                if ($result) {
-                    $this->getUser()->setFlash('success', __('Successfully Saved. Test Email Sent'));
+                
+                if ($this->form->getValue('chkSendTestEmail') == 'on') {
+                    $emailService = new EmailService();
+                    $result = $emailService->sendTestEmail($this->form->getValue('txtTestEmail'));
+                    if ($result) {
+                        $this->getUser()->setFlash('success', __('Successfully Saved. Test Email Sent'));
+                    } else {
+                        $this->getUser()->setFlash('warning', __("Successfully Saved. Test Email Not Sent"));
+                    }
                 } else {
-                    $this->getUser()->setFlash('warning', __("Successfully Saved. Test Email Not Sent"));
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
                 }
-            } else {
-                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                $this->redirect('admin/listMailConfiguration');
             }
         }
     }

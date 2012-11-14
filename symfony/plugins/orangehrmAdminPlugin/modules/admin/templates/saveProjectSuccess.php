@@ -10,7 +10,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
     
     <div class="inner">
 
-        <?php include_partial('global/flash_messages'); ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'project')); ?>
         
         <form name="frmAddProject" id="frmAddProject" method="post" action="<?php echo url_for('admin/saveProject'); ?>" >
 
@@ -34,19 +34,18 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                         <?php echo $form['projectName']->render(array("maxlength" => 52)); ?>
                     </li>
                     
-                    <li>
-                        <label class="firstLabel"><?php echo __('Project Admin'); ?></label>
-                        <span>
-                            <?php for ($i = 1; $i <= $form->numberOfProjectAdmins; $i++) { ?>
-                                <span class="" id="<?php echo "projectAdmin_" . $i ?>">
-                                    <?php echo $form['projectAdmin_' . $i]->render(array("class" => "formInputProjectAdmin", "maxlength" => 100)); ?>
-                                    <a class="removeText" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
-                                </span>
-                            <?php } ?> 
+                    <?php for ($i=1; $i <= $form->numberOfProjectAdmins; $i++) { ?>
+                    <li id="<?php echo "projectAdmin_" . $i ?>">
+                        <label><?php echo ($i == 1) ? __('Project Admin') : __(' '); ?></label>
+                        <?php echo $form['projectAdmin_' . $i]->render(array("class" => "formInputProjectAdmin", "maxlength" => 100)); ?>
+                        <?php if($i != 1) { ?>
+                            <a class="removeText" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
+                        <?php } else { ?>
                             <a class="addText" id='addButton'><?php echo __('Add Another'); ?></a>
-                        </span>
+                        <?php } ?>
                     </li>
-                    
+                    <?php } ?>
+                        
                     <li>
                         <?php echo $form['description']->renderLabel(__('Description')); ?>
                         <?php echo $form['description']->render(array("maxlength" => 256)); ?>
@@ -115,7 +114,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
 
 </div>
 <!-- End-of-Add-Project-Activity -->
-    
+<a id="ProjectActivities"></a>
 <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 
 <?php } ?>

@@ -33,7 +33,7 @@ class addProjectActivityAction extends sfAction {
 				} else {
 					$this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
 				}
-				$this->redirect('admin/saveProject?projectId='.$projectId);
+				$this->redirect('admin/saveProject?projectId=' . $projectId . '#ProjectActivities');
 			}
 		}
 		$this->redirect('admin/viewProjects');

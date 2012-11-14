@@ -74,17 +74,19 @@ class EmailConfigurationForm extends BaseForm {
         // validators
         $this->setValidators(array(
             'txtMailAddress' => new sfValidatorEmail(array('required' => true, 'max_length' => 100)),
-            'cmbMailSendingMethod' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'txtSendmailPath' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'txtSmtpHost' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
+            'cmbMailSendingMethod' => new sfValidatorString(array('required' => false, 'max_length' => 100)),
+            'txtSendmailPath' => new sfValidatorString(array('required' => false, 'max_length' => 100)),
+            'txtSmtpHost' => new sfValidatorString(array('required' => false, 'max_length' => 100)),
             'txtSmtpPort' => new sfValidatorNumber(array('required' => false)),
-            'optAuth' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'txtSmtpUser' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'txtSmtpPass' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'optSecurity' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'chkSendTestEmail' => new sfValidatorString(array('required' => false, 'max_length' => 30)),
-            'txtTestEmail' => new sfValidatorEmail(array('required' => false, 'max_length' => 30)),
+            'optAuth' => new sfValidatorString(array('required' => false, 'max_length' => 100)),
+            'txtSmtpUser' => new sfValidatorString(array('required' => false, 'max_length' => 100)),
+            'txtSmtpPass' => new sfValidatorString(array('required' => false, 'max_length' => 100)),
+            'optSecurity' => new sfValidatorString(array('required' => false, 'max_length' => 100)),
+            'chkSendTestEmail' => new sfValidatorPass(array('required' => false)),
+            'txtTestEmail' => new sfValidatorEmail(array('required' => false, 'max_length' => 100)),
         ));
+        
+        $this->widgetSchema['txtSmtpPass']->setOption('always_render_empty', false);
 
         // Set Default valuse
         $this->emailConfiguration= $this->getEmailConfigurationService()->getEmailConfiguration();
@@ -105,6 +107,7 @@ class EmailConfigurationForm extends BaseForm {
              'txtSmtpUser' => $emailConfiguration->getSmtpUsername(),
              'txtSmtpPass' => $emailConfiguration->getSmtpPassword(),
              'optSecurity' => $emailConfiguration->getSmtpSecurityType(),
+             'txtTestEmail' => '',
          ));
     }
     

@@ -53,7 +53,7 @@ class deletePayGradeCurrencyAction extends sfAction {
 			
 		}
 
-		$this->redirect('admin/payGrade?payGradeId='.$payGradeId);
+		$this->redirect('admin/payGrade?payGradeId='.$payGradeId . '#Currencies');
 	}
 
 }

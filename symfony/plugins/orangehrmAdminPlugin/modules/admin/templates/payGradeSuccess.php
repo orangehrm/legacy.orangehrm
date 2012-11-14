@@ -15,7 +15,7 @@ use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess');
     
     <div class="inner">
         
-        <?php include_partial('global/flash_messages'); ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'paygrade')); ?>
 
         <form name="frmPayGrade" id="frmPayGrade" method="post" action="<?php echo url_for('admin/payGrade'); ?>" >
             
@@ -97,6 +97,7 @@ use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess');
     
 </div>
 
+<a id="Currencies"></a>
 <div id="currency" class="box miniList">
     
     <div class="head">
@@ -104,6 +105,8 @@ use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess');
     </div>
     
     <div class="inner"> 
+        
+        <?php include_partial('global/flash_messages'); ?>
         
         <form name="frmDelCurrencies" id="frmDelCurrencies" method="post" action="<?php echo url_for('admin/deletePayGradeCurrency?payGradeId=' . $payGradeId); ?>">
             

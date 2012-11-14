@@ -25,7 +25,7 @@
 use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess'); 
 ?>
 
-<div id="searchProject" class="box toggableForm">
+<div id="searchProject" class="box searchForm toggableForm">
     <div class="head">
             <h1 id="searchProjectHeading"><?php echo __("Projects"); ?></h1>
     </div>
@@ -38,9 +38,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
                 <ol>
                     <?php echo $form->render(); ?>
                 </ol>
-                
-                <input type="hidden" name="pageNo" id="pageNo" value="<?php //echo $form->pageNo;                 ?>" />
-                <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
                 
                 <p>
                     <input type="button" class="" name="btnSave" id="btnSearch" value="<?php echo __("Search"); ?>"/>
@@ -55,6 +52,11 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
 <div id="customerList">
     <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 </div>
+
+<form name="frmHiddenParam" id="frmHiddenParam" method="post" action="<?php echo url_for('admin/viewProjects'); ?>">
+    <input type="hidden" name="pageNo" id="pageNo" value="<?php //echo $form->pageNo;                  ?>" />
+    <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
+</form>
 
 <!-- Confirmation box HTML: Begins -->
 <div class="modal hide" id="deleteConfModal">

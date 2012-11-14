@@ -65,7 +65,7 @@ class payGradeAction extends sfAction {
 			$this->form->bind($request->getParameter($this->form->getName()));
 			if ($this->form->isValid()) {
 				$payGradeId = $this->form->save();
-				$this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+				$this->getUser()->setFlash('paygrade.success', __(TopLevelMessages::SAVE_SUCCESS));
 				$this->redirect('admin/payGrade?payGradeId='.$payGradeId);
 			}
 		}

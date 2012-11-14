@@ -8,6 +8,7 @@
 	<div class="inner">
         
         <?php include_partial('global/flash_messages'); ?>
+        <?php include_partial('global/form_errors', array('form' => $form)); ?>
 
 	    <form action="<?php echo url_for('admin/listMailConfiguration');?>" onsubmit="" method="post" id="frmSave" name="frmSave">
 
@@ -84,10 +85,13 @@
 </div>
 
 <script type="text/javascript">
+    var requiredMsg = '<?php echo __(ValidationMessages::REQUIRED); ?>';
+    var validEmailMsg = '<?php echo __(ValidationMessages::EMAIL_INVALID); ?>';
+    
 	$(document).ready(function() {
         
         $('#emailConfigurationForm_chkSendTestEmail').attr('checked', false);
-        $('#emailConfigurationForm_txtTestEmail').val(' ');
+        $('#emailConfigurationForm_txtTestEmail').val('');
 
 		var mode	=	'edit';
 
@@ -117,10 +121,16 @@
 		//Validate the form
 		$("#frmSave").validate({
 			 rules: {
-			 	'emailConfigurationForm[txtMailAddress]': { required: true }
+			 	'emailConfigurationForm[txtMailAddress]': { 
+                    required: true,
+                    email: true
+                }
 		 	 },
 		 	 messages: {
-		 		'emailConfigurationForm[txtMailAddress]': '<?php echo __(ValidationMessages::REQUIRED); ?>'
+		 		'emailConfigurationForm[txtMailAddress]': {
+                    required: requiredMsg,
+                    email: validEmailMsg
+                }
 		 	 }
 		 });
         
@@ -177,7 +187,7 @@
             $("#emailConfigurationForm_txtSmtpHost").rules("add", {
                   required: true,
                  messages: {
-                   required: '<?php echo __(ValidationMessages::REQUIRED); ?>'
+                   required: requiredMsg
                  }
              });
             $("#emailConfigurationForm_txtSmtpPort").rules("add", {
@@ -185,7 +195,7 @@
                 number: true,
                 maxlength: 10,
                messages: {
-                 required: '<?php echo __(ValidationMessages::REQUIRED); ?>',
+                 required: requiredMsg,
                  number: '<?php echo __('Should be a number'); ?>',
                  maxlength: '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 10)); ?>'
                }
@@ -203,13 +213,13 @@
             $("#emailConfigurationForm_txtSmtpUser").rules("add", {
                   required: true,
                  messages: {
-                   required: '<?php echo __(ValidationMessages::REQUIRED); ?>'
+                   required: requiredMsg
                  }
              });
             $("#emailConfigurationForm_txtSmtpPass").rules("add", {
                   required: true,
                  messages: {
-                   required: '<?php echo __(ValidationMessages::REQUIRED); ?>'
+                   required: requiredMsg
                  }
              });
         } else {

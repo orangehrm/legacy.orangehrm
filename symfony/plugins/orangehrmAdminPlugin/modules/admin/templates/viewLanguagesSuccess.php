@@ -111,7 +111,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewLanguagesSuccess');
                     <?php endforeach; ?>
                     
                     <?php if (count($records) == 0) : ?>
-                    <tr class="<?php echo $cssClass;?>">
+                    <tr class="<?php echo 'even';?>">
                         <td>
                             <?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?>
                         </td>

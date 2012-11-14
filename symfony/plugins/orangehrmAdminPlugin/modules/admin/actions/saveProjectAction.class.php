@@ -77,7 +77,7 @@ class saveProjectAction extends sfAction {
             $customerName = $customer->getName();
             $this->form->setDefault('customerName', $customerName);
             print_r($this->customerName);
-            $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
+            $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
         }
 
         if (!empty($this->projectId)) {
@@ -90,14 +90,6 @@ class saveProjectAction extends sfAction {
             $this->parmetersForListCompoment = $params;
         }
 
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-        }
-
-        if ($this->getUser()->hasFlash('templateMessageAct')) {
-            list($this->messageTypeAct, $this->messageAct) = $this->getUser()->getFlash('templateMessageAct');
-        }
-
         if ($request->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
@@ -105,9 +97,9 @@ class saveProjectAction extends sfAction {
 
                 $projectId = $this->form->save();
                 if ($this->form->edited) {
-					$this->getUser()->setFlash('success', __(TopLevelMessages::UPDATE_SUCCESS));
+					$this->getUser()->setFlash('project.success', __(TopLevelMessages::UPDATE_SUCCESS));
                 } else {
-					$this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+					$this->getUser()->setFlash('project.success', __(TopLevelMessages::SAVE_SUCCESS));
                 }
                 $this->redirect('admin/saveProject?projectId=' . $projectId);
             }

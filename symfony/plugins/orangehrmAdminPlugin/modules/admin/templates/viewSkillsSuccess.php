@@ -121,7 +121,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewSkillsSuccess');
                     ?>
                     
                     <?php if (count($records) == 0) : ?>
-                    <tr class="odd">
+                    <tr class="<?php echo 'even';?>">
                         <td>
                             <?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?>
                         </td>

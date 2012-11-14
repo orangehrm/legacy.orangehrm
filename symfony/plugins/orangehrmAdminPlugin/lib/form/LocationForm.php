@@ -52,16 +52,16 @@ class LocationForm extends BaseForm {
 
 		$this->setWidgets(array(
 		    'locationId' => new sfWidgetFormInputHidden(),
-		    'name' => new sfWidgetFormInputText(),
-		    'country' => new sfWidgetFormSelect(array('choices' => $countries)),
-		    'state' => new sfWidgetFormSelect(array('choices' => $states)),
-		    'province' => new sfWidgetFormInputText(),
-		    'city' => new sfWidgetFormInputText(),
-		    'address' => new sfWidgetFormTextArea(),
-		    'zipCode' => new sfWidgetFormInputText(),
-		    'phone' => new sfWidgetFormInputText(),
-		    'fax' => new sfWidgetFormInputText(),
-		    'notes' => new sfWidgetFormTextArea(),
+		    'name' => new sfWidgetFormInputText(array(), array('class' => 'formInput')),
+		    'country' => new sfWidgetFormSelect(array('choices' => $countries), array('class' => 'formInput')),
+		    'state' => new sfWidgetFormSelect(array('choices' => $states), array('class' => 'formInput')),
+		    'province' => new sfWidgetFormInputText(array(), array('class' => 'formInput')),
+		    'city' => new sfWidgetFormInputText(array(), array('class' => 'formInput')),
+		    'address' => new sfWidgetFormTextArea(array(), array('class' => 'formInput')),
+		    'zipCode' => new sfWidgetFormInputText(array(), array('class' => 'formInput')),
+		    'phone' => new sfWidgetFormInputText(array(), array('class' => 'formInput')),
+		    'fax' => new sfWidgetFormInputText(array(), array('class' => 'formInput')),
+		    'notes' => new sfWidgetFormTextArea(array(), array('class' => 'formInput')),
 		));
 
 		$this->setValidators(array(

@@ -4,7 +4,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewPayGradesSuccess');
 ?>
 
 <div id="jobTitleList">
-    <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
     <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 </div>
 

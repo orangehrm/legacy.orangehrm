@@ -7,8 +7,6 @@
     </div>
     
     <div class="inner">
-        
-        <?php include_partial('global/flash_messages'); ?>
 
         <form name="frmWorkShift" id="frmWorkShift" method="post" action="<?php echo url_for('admin/workShift'); ?>" >
 
