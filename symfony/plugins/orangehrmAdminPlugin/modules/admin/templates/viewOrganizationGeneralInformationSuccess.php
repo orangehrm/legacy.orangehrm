@@ -118,7 +118,7 @@
                     </li>
                     
                     <li class="required full-width">
-                        <em>*</em> required field
+                          <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                     
                 </ol>
