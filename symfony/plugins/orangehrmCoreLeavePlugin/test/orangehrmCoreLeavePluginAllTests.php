@@ -11,8 +11,7 @@ class orangehrmCoreLeavePluginAllTests {
         $suite = new PHPUnit_Framework_TestSuite('orangehrmCoreLeavePluginAllTest');
 
         /* Dao Test Cases */
-        $suite->addTestFile(dirname(__FILE__) . '/model/dao/WorkWeekDaoTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/dao/HolidayDaoTest.php');
+        
         
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveTypeDaoTest.php');
         //$suite->addTestFile(dirname(__FILE__) . '/model/dao/OldLeaveEntitlementDaoTest.php');
@@ -21,8 +20,7 @@ class orangehrmCoreLeavePluginAllTests {
         //$suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveRequestDaoSearchTest.php');        
 
         /* Service Test Cases */
-        $suite->addTestFile(dirname(__FILE__) . '/model/service/WorkWeekServiceTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/service/HolidayServiceTest.php');
+        
         
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveTypeServiceTest.php');
         //$suite->addTestFile(dirname(__FILE__) . '/model/service/OldLeaveEntitlementServiceTest.php');

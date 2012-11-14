@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    $('.formSelect[name^="WorkWeek[day_length"]').attr('disabled', true);
+   $('#frmWorkWeek select').attr('disabled','disabled');
 
     $('#saveBtn').click(function() {                
         if($(this).val() == lang_Edit) {
-            $('.formSelect').attr('disabled', false);
+            $('#frmWorkWeek select').removeAttr('disabled');
             $(this).val(lang_Save);
             return false;
         }

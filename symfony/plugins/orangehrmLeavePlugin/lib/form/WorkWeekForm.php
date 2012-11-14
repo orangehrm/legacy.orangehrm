@@ -77,7 +77,7 @@ class WorkWeekForm extends sfForm {
 
         $this->validatorSchema->setPostValidator(new sfValidatorCallback(array('callback' => array($this, 'validateWorkWeekValue'))));
         
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 
     /**
@@ -148,8 +148,7 @@ class WorkWeekForm extends sfForm {
 
         foreach ($daysOfWeek as $day) {
             $formWidgets['day_length_' . $day] = new sfWidgetFormSelect(
-                    array('choices' => $dayLengths),
-                    array('class' => 'formSelect')
+                    array('choices' => $dayLengths)
             );
         }
 
@@ -204,8 +203,8 @@ class WorkWeekForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmCoreLeavePlugin/js/defineWorkWeekSuccess.js';
-        $javaScripts[] = '/orangehrmCoreLeavePlugin/js/defineWorkWeekSuccessValidate.js';
+        $javaScripts[] = '/orangehrmLeavePlugin/js/defineWorkWeekSuccess.js';
+        $javaScripts[] = '/orangehrmLeavePlugin/js/defineWorkWeekSuccessValidate.js';
 
         return $javaScripts;
     }    

@@ -28,12 +28,14 @@ class defineWorkWeekAction extends baseCoreLeaveAction {
                     $workWeek->setSun($this->workWeekForm->getValue('day_length_Sunday'));
                     
                     $this->getWorkWeekService()->saveWorkWeek($workWeek);
-                    $this->templateMessage = array('SUCCESS', __(TopLevelMessages::SAVE_SUCCESS));
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                   
                 } catch (Exception $e) {
-                    $this->templateMessage = array('FAILURE', __(TopLevelMessages::SAVE_FAILURE));
+                    $this->getUser()->setFlash('failure', __(TopLevelMessages::SAVE_FAILURE));
+                    
                 }
             } else {
-                $this->templateMessage = array('FAILURE', __(TopLevelMessages::SAVE_FAILURE));
+                $this->getUser()->setFlash('failure', __(TopLevelMessages::SAVE_FAILURE));
             }
         }
     }

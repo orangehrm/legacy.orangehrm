@@ -34,3 +34,11 @@ showLeavePeriodNotDefinedWarningSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]
+defineWorkWeekSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]
+viewHolidayListSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]

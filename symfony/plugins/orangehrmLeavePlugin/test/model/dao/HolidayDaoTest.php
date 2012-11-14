@@ -21,7 +21,7 @@
  */
 
 /**
- * @group CoreLeave 
+ * @group Leave 
  */
 class HolidayDaoTest extends PHPUnit_Framework_TestCase {
 
@@ -30,7 +30,7 @@ class HolidayDaoTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp() {
         $this->holidayDao = new HolidayDao();
-        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/HolidayDao.yml';
+        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/HolidayDao.yml';
         TestDataService::populate($this->fixture);
     }
 

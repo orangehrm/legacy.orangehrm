@@ -72,7 +72,7 @@ class HolidayListSearchForm extends sfForm {
         $this->widgetSchema->setLabels(array('leave_period' => __("Leave Period")));
         
         $this->widgetSchema->setNameFormat('holidayList[%s]');        
-        $this->widgetSchema->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }    
     
     /**
@@ -101,7 +101,7 @@ class HolidayListSearchForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmCoreLeavePlugin/js/viewHolidayListSuccessSearch.js';
+        $javaScripts[] = '/orangehrmLeavePlugin/js/viewHolidayListSuccessSearch.js';
         
         return $javaScripts;
     }    
@@ -110,7 +110,7 @@ class HolidayListSearchForm extends sfForm {
         parent::getStylesheets();
         
         $styleSheets = parent::getStylesheets();
-        $styleSheets['/orangehrmCoreLeavePlugin/css/viewHolidayListSuccessSearch.css'] = 'screen';
+        $styleSheets['/orangehrmLeavePlugin/css/viewHolidayListSuccessSearch.css'] = 'screen';
         
         return $styleSheets;        
     }    

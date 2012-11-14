@@ -20,7 +20,7 @@
 */
 
 /**
- * @group CoreLeave 
+ * @group Leave 
  */
 class WorkWeekServiceTest extends PHPUnit_Framework_TestCase
 {
@@ -30,7 +30,7 @@ class WorkWeekServiceTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/WorkWeekService.yml';
+        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/WorkWeekService.yml';
         $this->workWeekService	=	new WorkWeekService();
     }
 

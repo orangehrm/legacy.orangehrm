@@ -21,7 +21,7 @@
  */
 
 /**
- * @group CoreLeave 
+ * @group Leave 
  */
 class WorkWeekDaoTest extends PHPUnit_Framework_TestCase {
 
@@ -30,10 +30,10 @@ class WorkWeekDaoTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp() {
 
-        $this->testCases = sfYaml::load(sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/WorkWeekDao.yml');
+        $this->testCases = sfYaml::load(sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/WorkWeekDao.yml');
         $this->workWeekDao = new WorkWeekDao();
 
-        TestDataService::populate(sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/WorkWeekDao.yml');
+        TestDataService::populate(sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/WorkWeekDao.yml');
     }
 
     /**

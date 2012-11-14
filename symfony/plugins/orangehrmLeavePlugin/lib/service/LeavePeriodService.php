@@ -59,7 +59,7 @@ class LeavePeriodService extends BaseService {
     public function getListOfMonths() {
         $monthNames = array();
         for ($i = 1; $i <= 12; $i++) {
-            $monthNames[$i] = date('F', mktime(0, 0, 0, ($i + 1), 0, 0));
+            $monthNames[] = date('F', mktime(0, 0, 0, ($i + 1), 0, 0));
         }
 
         return $monthNames;
