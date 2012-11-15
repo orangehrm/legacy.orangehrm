@@ -24,7 +24,7 @@ use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess');
                         <?php echo $form['customerName']->render(array("class" => "block default editable valid", "maxlength" => 52)); ?>
                     </li>
                     
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['description']->renderLabel(__('Description')); ?>
                         <?php echo $form['description']->render(array("class" => "editable", "maxlength" => 255)); ?>
                     </li>

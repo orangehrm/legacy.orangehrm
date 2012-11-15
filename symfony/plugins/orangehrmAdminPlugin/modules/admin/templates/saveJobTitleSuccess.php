@@ -44,7 +44,7 @@
                         <?php echo $form['jobTitle']->render(array("maxlength" => 100)); ?>
                     </li>
                     
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['jobDescription']->renderLabel(__('Job Description')); ?>
                         <?php echo $form['jobDescription']->render(array("maxlength" => 400)); ?>
                     </li>
@@ -88,7 +88,7 @@
                     </li>
                     <?php } ?>
                     
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['note']->renderLabel(__('Note')); ?>
                         <?php echo $form['note']->render(); ?>
                     </li>

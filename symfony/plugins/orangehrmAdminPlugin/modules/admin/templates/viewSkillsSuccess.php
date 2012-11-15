@@ -45,7 +45,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewSkillsSuccess');
                         <?php echo $form['name']->render(array("class" => "block default editable valid", "maxlength" => 120)); ?>
                     </li>
                     
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['description']->renderLabel(__('Description')); ?>
                         <?php echo $form['description']->render(array("class" => "editable")); ?>
                     </li>

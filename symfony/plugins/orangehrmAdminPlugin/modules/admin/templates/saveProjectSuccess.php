@@ -48,7 +48,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                     </li>
                     <?php } ?>
                         
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['description']->renderLabel(__('Description')); ?>
                         <?php echo $form['description']->render(array("maxlength" => 256)); ?>
                     </li>
