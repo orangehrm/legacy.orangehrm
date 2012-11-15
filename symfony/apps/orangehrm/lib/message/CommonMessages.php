@@ -8,6 +8,10 @@ class CommonMessages {
     const FILE_LABEL_IMAGE = "Accepts jpg, .png, .gif up to 1MB";
     const FILE_LABEL_SIZE = "Accepts up to 1MB";
     const DONT_HAVE_ACCESS = "You don't have access to view this";
+    const CREDENTIALS_REQUIRED = "Credentials Required";
+    const EXPAND_OPTIONS = "Expand for Options";
+    const HIDE_OPTIONS = "Hide Options";
+    const TOGGABLE_DEFAULT_MESSAGE = self::HIDE_OPTIONS;
 
 }
 

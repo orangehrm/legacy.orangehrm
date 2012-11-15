@@ -3421,8 +3421,8 @@
     <target>FR_Required</target>
    </trans-unit>
    <trans-unit id="736">
-    <source>required field</source>
-    <target>FR_required field</target>
+    <source>Required field</source>
+    <target>FR_Required field</target>
    </trans-unit>
    <trans-unit id="737">
     <source>Reset</source>
@@ -5226,6 +5226,18 @@
    <trans-unit id="1138">
     <source>Successfully Undeleted</source>
     <target>FR_Successfully Undeleted</target>
+   </trans-unit>
+   <trans-unit id="1139">
+    <source>Credentials Required</source>
+    <target>FR_Credentials Required</target>
+   </trans-unit>
+   <trans-unit id="1140">
+    <source>Expand for Options</source>
+    <target>FR_Expand for Options</target>
+   </trans-unit>
+   <trans-unit id="1141">
+    <source>Hide Options</source>
+    <target>FR_Hide Options</target>
    </trans-unit>
 
   </body>

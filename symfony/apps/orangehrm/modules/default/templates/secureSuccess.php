@@ -2,8 +2,7 @@
       
     
 <div class="message warning">
-    <?php echo __("Credentials Required") ?> 
-    <a href="#"><?php echo __('Close');?></a>
+    <?php echo __(CommonMessages::CREDENTIALS_REQUIRED) ?> 
 </div>
         <?php include_partial('global/flash_messages'); ?>
         
