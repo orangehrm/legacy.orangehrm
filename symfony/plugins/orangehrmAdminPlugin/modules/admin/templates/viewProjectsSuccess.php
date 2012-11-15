@@ -47,7 +47,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
             </fieldset>
         </form>
     </div>
-    <a href="#" class="toggle tiptip" title="Expand for options">&gt;</a>
+    <a href="#" class="toggle tiptip" title="<?php echo __(CommonMessages::TOGGABLE_DEFAULT_MESSAGE); ?>">&gt;</a>
 </div>
 <div id="customerList">
     <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>

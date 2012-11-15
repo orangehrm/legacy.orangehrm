@@ -54,7 +54,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess');
         </form>
     </div> <!-- inner -->
     
-    <a href="#" class="toggle tiptip" title="Expand for options">&gt;</a>
+    <a href="#" class="toggle tiptip" title="<?php echo __(CommonMessages::TOGGABLE_DEFAULT_MESSAGE); ?>">&gt;</a>
     
 </div> <!-- end-of-searchProject -->
 
