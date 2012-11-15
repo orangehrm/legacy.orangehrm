@@ -1,7 +1,26 @@
 $(document).ready(function() {
 
-    //form validation
-    $("#frmGenInfo").validate({
+    $.validator.addMethod("phone", function(value, element) {
+        return (checkPhone(element));
+    });
+
+    $('#btnSaveGenInfo').click(function() {
+        isFormValid();
+        //if user clicks on Edit make all fields editable
+        if($("#btnSaveGenInfo").attr('value') == edit) {
+            $("#btnSaveGenInfo").attr('value', save)
+        }
+        else {
+            isFormValid();
+            $("#frmGenInfo").submit()
+        }
+    });
+    
+});
+
+//form validation
+function isFormValid() {
+    $("#frmGenInfo").validate({ 
         rules: {
             'organization[name]': {
                 required: true
@@ -37,19 +56,5 @@ $(document).ready(function() {
             }
         }
     });
-
-    $.validator.addMethod("phone", function(value, element) {
-        return (checkPhone(element));
-    });
-
-    $('#btnSaveGenInfo').click(function() {
-        //if user clicks on Edit make all fields editable
-        if($("#btnSaveGenInfo").attr('value') == edit) {
-            $("#btnSaveGenInfo").attr('value', save)
-        }
-        else {
-            $("#frmGenInfo").submit()
-        }
-    });
     
-});
+}

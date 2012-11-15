@@ -35,8 +35,10 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                     </li>
                     
                     <?php for ($i=1; $i <= $form->numberOfProjectAdmins; $i++) { ?>
-                    <li id="<?php echo "projectAdmin_" . $i ?>">
-                        <label><?php echo ($i == 1) ? __('Project Admin') : __(' '); ?></label>
+                    <li id="<?php echo "projectAdmin_" . $i ?>" class="<?php echo ($i == 1) ?'':'noLabel'; ?>">
+                        <?php if ($i == 1) : ?>
+                        <label><?php echo __('Project Admin'); ?></label>
+                        <?php endif; ?>
                         <?php echo $form['projectAdmin_' . $i]->render(array("class" => "formInputProjectAdmin", "maxlength" => 100)); ?>
                         <?php if($i != 1) { ?>
                             <a class="removeText" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
