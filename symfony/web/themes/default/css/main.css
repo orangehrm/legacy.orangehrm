@@ -534,6 +534,12 @@ form ol li.line {
 form ol li.new {
 	clear:left;
 }
+form ol li.noLabel { /*TODO: Check whether this is the proper way. Used in 'saveJobTitle' */
+	margin-left: 150px;
+}
+form ol li.noLabel .fileHelpText {
+	left: 0;
+}
 form ol li.required {
 	float:left;
 	width:425px;

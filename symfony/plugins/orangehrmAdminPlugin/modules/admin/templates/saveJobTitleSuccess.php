@@ -74,12 +74,12 @@
                             echo $linkHtml;
                             ?>
                     </li>
-                    <li class="radio" id="radio"><label></label>
+                    <li class="radio noLabel" id="radio"><label></label>
                         <?php
                             echo $form['jobSpecUpdate']->render();
                         ?>
                     </li>
-                    <li id="fileUploadSection">
+                    <li id="fileUploadSection" class="noLabel">
                         <?php 
                             echo $form['jobSpec']->renderLabel(' ');
                             echo $form['jobSpec']->render();
@@ -100,7 +100,7 @@
                 </ol>
                 
                 <p>
-                    <input type="button" class="editButton" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <input type="button" class="editButton" name="btnSave" id="btnSave" value="<?php echo __("Edit"); ?>"/>
                     <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
                 
