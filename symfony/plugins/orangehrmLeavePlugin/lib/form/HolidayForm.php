@@ -35,7 +35,7 @@ class HolidayForm extends sfForm {
 
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
         $this->getWidgetSchema()->setNameFormat('holiday[%s]');
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');
+        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 
     /**
@@ -150,7 +150,7 @@ class HolidayForm extends sfForm {
         $widgets['description'] = new sfWidgetFormInput(array(), array(
                     'class' => 'formInputText',
                 ));
-        $widgets['date'] = new ohrmWidgetDatePickerNew(array(), array(
+        $widgets['date'] = new ohrmWidgetDatePicker(array(), array(
                     'id' => 'holiday_date',
                     'class' => 'formDateInput'
                 ));
@@ -218,8 +218,8 @@ class HolidayForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmCoreLeavePlugin/js/defineHolidaySuccess.js';
-        $javaScripts[] = '/orangehrmCoreLeavePlugin/js/defineHolidaySuccessValidate.js';
+        $javaScripts[] = '/orangehrmLeavePlugin/js/defineHolidaySuccess.js';
+        $javaScripts[] = '/orangehrmLeavePlugin/js/defineHolidaySuccessValidate.js';
 
         return $javaScripts;
     }    

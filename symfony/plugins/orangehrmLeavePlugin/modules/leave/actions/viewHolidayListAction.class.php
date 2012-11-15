@@ -138,10 +138,13 @@ class viewHolidayListAction extends sfAction {
     }
     
     protected function setListComponent($holidayList) {
-
+       
+        
         $configurationFactory = $this->getListConfigurationFactory();
         
-        ohrmListComponent::setActivePlugin('orangehrmCoreLeavePlugin');
+        
+        
+        ohrmListComponent::setActivePlugin('orangehrmLeavePlugin');
         ohrmListComponent::setConfigurationFactory($configurationFactory);
         ohrmListComponent::setListData($holidayList);
         ohrmListComponent::setPageNumber(0);

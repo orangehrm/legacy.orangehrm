@@ -3880,7 +3880,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveTakenState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveWeekendState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/baseCoreLeaveAction.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/changeLeaveStatusAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/defineHolidayAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/defineLeaveTypeAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/deleteHolidayAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/deleteLeaveTypeAction.class.php -text
@@ -3913,7 +3912,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.th_TH.xml -
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.vi_VN.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.zh_CN.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.zz_ZZ.xml -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/defineHolidaySuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/defineLeaveTypeSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/holidayListSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/leaveTypeListSuccess.php -text
@@ -3977,8 +3975,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/web/css/defineWorkWeekSuccess.css -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/css/leaveTypeListSuccess.css -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/css/viewLeaveListSuccess.css -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/css/viewLeaveSummarySuccess.css -text
-symfony/plugins/orangehrmCoreLeavePlugin/web/js/defineHolidaySuccess.js -text
-symfony/plugins/orangehrmCoreLeavePlugin/web/js/defineHolidaySuccessValidate.js -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/js/defineLeaveTypeSuccess.js -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/js/leaveTypeListSuccess.js -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/js/viewLeaveListSuccess.js -text
@@ -4563,6 +4559,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/addLeaveEntitlementAc
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/applyLeaveAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/assignLeaveAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/baseLeaveAction.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/defineHolidayAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/defineLeavePeriodAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/defineWorkWeekAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/deleteLeaveEntitlementsAction.class.php -text
@@ -4583,6 +4580,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/_overlapping_leave.
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/addLeaveEntitlementSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/applyLeaveSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/assignLeaveSuccess.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/defineHolidaySuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/defineLeavePeriodSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/defineWorkWeekSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/showLeavePeriodNotDefinedWarningSuccess.php -text
@@ -4621,6 +4619,8 @@ symfony/plugins/orangehrmLeavePlugin/web/css/assignLeaveSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/defineLeavePeriodSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/viewHolidayListSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/viewHolidayListSuccessSearch.css -text
+symfony/plugins/orangehrmLeavePlugin/web/js/defineHolidaySuccess.js -text
+symfony/plugins/orangehrmLeavePlugin/web/js/defineHolidaySuccessValidate.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineLeavePeriodSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccessValidate.js -text

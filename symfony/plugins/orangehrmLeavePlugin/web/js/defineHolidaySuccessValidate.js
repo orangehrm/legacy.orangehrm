@@ -27,14 +27,6 @@ $(document).ready(function() {
                 required: lang_Required,
                 maxlength: lang_NameIsOverLimit
             }
-        },
-        errorPlacement: function(error, element) {
-            error.appendTo(element.prev('label'));
-            error.appendTo(element.next().next('.errorContainer'));
-            error.appendTo(element.next('.errorContainer'));
-        },
-        invalidHandler: function(form, validator) {
-            clearTemplateMessages();
         }
     });
 });

@@ -42,3 +42,7 @@ viewHolidayListSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]
+defineHolidaySuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]

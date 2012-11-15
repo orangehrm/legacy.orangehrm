@@ -24,14 +24,14 @@ use_stylesheets_for_form($searchForm);
 ?>
 
 
-<div id="location-information" class="box toggableForm">
+<div id="location-information" class="box searchForm toggableForm">
     
     <div class="head">
         <h1 id="searchHolidayHeading"><?php echo __('Holidays'); ?></h1>
     </div>
     
     <div class="inner">
-
+         
         <form id="frmHolidaySearch" name="frmHolidaySearch" method="post" action="<?php echo url_for('leave/viewHolidayList') ?>" > 
             
 
@@ -43,16 +43,13 @@ use_stylesheets_for_form($searchForm);
                 
                 <p>
                     <input type="button" name="btnSearch" id="btnSearch" value="<?php echo __("Search") ?>" class="savebutton" />
+                    <input type="button" class="reset" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />
                 </p>
                 
             </fieldset>
             
         </form>
         
-        <form name="frmHiddenParam" id="frmHiddenParam" method="post" action="<?php echo url_for('admin/viewLocations'); ?>">
-            <input type="hidden" name="pageNo" id="pageNo" value="<?php //echo $form->pageNo; ?>" />
-            <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
-        </form>
         
     </div>
     
