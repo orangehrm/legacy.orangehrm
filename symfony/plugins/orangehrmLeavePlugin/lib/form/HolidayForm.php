@@ -147,21 +147,15 @@ class HolidayForm extends sfForm {
     protected function getFormWidgets() {
         $widgets = array();
         $widgets['id'] = new sfWidgetFormInputHidden();
-        $widgets['description'] = new sfWidgetFormInput(array(), array(
-                    'class' => 'formInputText',
-                ));
+        $widgets['description'] = new sfWidgetFormInput(array());
         $widgets['date'] = new ohrmWidgetDatePicker(array(), array(
-                    'id' => 'holiday_date',
-                    'class' => 'formDateInput'
+                    'id' => 'holiday_date'
                 ));
-        $widgets['recurring'] = new sfWidgetFormInputCheckbox(array(), array(
-                    'class' => 'formCheckbox',
-                ));
+        $widgets['recurring'] = new sfWidgetFormInputCheckbox(array());
         $widgets['length'] = new sfWidgetFormSelect(array(
                     'choices' => $this->getDaysLengthList(),
                         ), array(
-                    'add_empty' => false,
-                    'class' => 'formSelect',
+                    'add_empty' => false
                 ));
 
         return $widgets;
@@ -204,9 +198,10 @@ class HolidayForm extends sfForm {
     protected function getFormLabels() {
         $labels = array();
         
+        
         sfContext::getInstance()->getConfiguration()->loadHelpers('Tag');
 
-        $requiredLabel = content_tag('span', '*', array('class' => 'required'));
+        $requiredLabel = '<em>*</em>';
         
         $labels['description'] = __('Name').' '. $requiredLabel;
         $labels['date'] = __('Date').' '.$requiredLabel;
