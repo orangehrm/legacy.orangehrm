@@ -193,13 +193,13 @@ class SystemUserForm extends BaseForm {
      * @return array
      */
     protected function getFormLabels() {
-        $required = '<em>*</em>';
+        $required = '<em> *</em>';
         $labels = array(
             'userType' => __('User Role') . $required,
             'employeeName' => __('Employee Name') . $required,
             'userName' => __('Username') . $required,
-            'password' => __('Password') . $required,
-            'confirmPassword' => __('Confirm Password') . $required,
+            'password' => __('Password') . '<em class="passwordRequired"> *</em>',
+            'confirmPassword' => __('Confirm Password') . '<em class="passwordRequired"> *</em>',
             'status' => __('Status') . $required,
             'chkChangePassword' => __('Change Password'),
         );

@@ -30,7 +30,7 @@ $(document).ready(function() {
         $('.secPassReq').show();
     }
     
-    if (ldapInstalled) {
+    if (ldapInstalled == 'true') {
         $('.passwordRequired').hide();
     }
     
@@ -127,7 +127,8 @@ function isValidForm(){
             },
             'systemUser[password]' : {
                 required:function(element) {
-                    if(($('#systemUser_chkChangePassword').attr('checked') == true || !isEditMode) && !ldapInstalled)
+                    if(($('#systemUser_chkChangePassword').val() == 'on' || (isEditMode == 'false')) && 
+                            (ldapInstalled == 'false'))
                         return true;
                     else
                         return false;

@@ -1,7 +1,6 @@
-<?php use_stylesheet('../orangehrmAdminPlugin/css/changeUserPasswordSuccess'); ?>
+
 <?php use_javascript('../orangehrmAdminPlugin/js/changeUserPasswordSuccess'); ?>
 <?php use_javascript('../orangehrmAdminPlugin/js/password_strength'); ?>
-
    
 <div id="systemUser"class="box">
         <div class="head"><h1 id="UserHeading"><?php echo __("Change Password"); ?></h1></div>
@@ -26,10 +25,8 @@
                 </ol>
                 
                 <p>
-                <input type="button" class="savebutton" name="btnSave" id="btnSave"
-                       value="<?php echo __("Save"); ?>" />
-                <input type="button" class="cancelbutton" name="btnCancel" id="btnCancel"
-                       value="<?php echo __("Cancel"); ?>" />
+                <input type="button" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>" />
+                <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>" />
             </p>
             </fieldset>
                 </form>

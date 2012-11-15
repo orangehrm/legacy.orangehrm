@@ -55,11 +55,12 @@ use_javascript('../orangehrmAdminPlugin/js/password_strength');
     var user_name_alrady_taken      = '<?php echo __(ValidationMessages::ALREADY_EXISTS); ?>';
     var isUniqueUserUrl             = '<?php echo url_for('admin/isUniqueUserJson'); ?>';
     var viewSystemUserUrl           = '<?php echo url_for('admin/viewSystemUsers'); ?>';
-    var user_UserNameLength         =   '<?php echo __("Should have at least %number% characters", array('%number%' => 5)); ?>';
-    var user_UserPasswordLength     =   '<?php echo __("Should have at least %number% characters", array('%number%' => 4)); ?>';
-    var password_user               =   "<?php echo __("Very Weak").",".__("Weak").",".__("Better").",".__("Medium").",".__("Strong").",".__("Strongest")?>";
-    var isEditMode                  = <?php echo ($form->edited)?'true':'false'; ?>;
-    var ldapInstalled               = <?php echo ($sf_user->getAttribute('ldap.available'))?'true':'false'; ?>;
+    var user_UserNameLength         = '<?php echo __("Should have at least %number% characters", array('%number%' => 5)); ?>';
+    var user_UserPasswordLength     = '<?php echo __("Should have at least %number% characters", array('%number%' => 4)); ?>';
+    var password_user               = "<?php echo __("Very Weak").",".__("Weak").",".__("Better").",".__("Medium").",".
+            __("Strong").",".__("Strongest")?>";
+    var isEditMode                  = '<?php echo ($form->edited)?'true':'false'; ?>';
+    var ldapInstalled               = '<?php echo ($sf_user->getAttribute('ldap.available'))?'true':'false'; ?>';
     var validator = null;
 
 </script>
