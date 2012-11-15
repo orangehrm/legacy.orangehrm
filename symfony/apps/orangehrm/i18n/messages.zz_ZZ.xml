@@ -4498,8 +4498,8 @@
     <target>FR_Wednesday</target>
    </trans-unit>
    <trans-unit id="967">
-    <source>Welcome #username</source>
-    <target>FR_Welcome #username</target>
+    <source>Welcome %username%</source>
+    <target>FR_Welcome %username%</target>
    </trans-unit>
    <trans-unit id="968">
     <source>Welsh</source>
@@ -5238,6 +5238,14 @@
    <trans-unit id="1141">
     <source>Hide Options</source>
     <target>FR_Hide Options</target>
+   </trans-unit>
+   <trans-unit id="1142">
+    <source>Help &amp; Training</source>
+    <target>FR_Help &amp; Training</target>
+   </trans-unit>   
+   <trans-unit id="1143">
+    <source>Join OrangeHRM Community</source>
+    <target>FR_Join OrangeHRM Community</target>
    </trans-unit>
 
   </body>

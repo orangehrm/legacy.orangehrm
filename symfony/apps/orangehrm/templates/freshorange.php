@@ -54,14 +54,14 @@ $cultureElements = explode('_', $sf_user->getCulture());
             <div id="branding">
                 <img src="<?php echo theme_path('images/logo.png')?>" width="283" height="56" alt="OrangeHRM"/>
                 <a href="http://www.orangehrm.com/user-survey-registration.php" class="subscribe" target="_blank"><?php echo __('Join OrangeHRM Community'); ?></a>
-                <a href="#" id="welcome"><?php echo __('Welcome') . ' ' . $sf_user->getAttribute('auth.firstName'); ?></a>
+                <a href="#" id="welcome"><?php echo __("Welcome %username%", array("%username%" => $sf_user->getAttribute('auth.firstName'))); ?></a>
                 <div id="welcome-menu">
                     <ul>
                         <li><a href="<?php echo url_for('admin/changeUserPassword'); ?>"><?php echo __('Change Password'); ?></a></li>
                         <li><a href="<?php echo url_for('auth/logout'); ?>"><?php echo __('Logout'); ?></a></li>
                     </ul>
                 </div>
-                <a href="#" id="help"><?php echo __('Help &amp; Training'); ?></a>
+                <a href="#" id="help"><?php echo __("Help & Training"); ?></a>
                 <div id="help-menu">
                     <ul>
                         <li><a href="http://www.orangehrm.com/support-plans.php?utm_source=application_support&amp;utm_medium=app_url&amp;utm_campaign=orangeapp" target="_blank"><?php echo __('Support'); ?></a></li>
