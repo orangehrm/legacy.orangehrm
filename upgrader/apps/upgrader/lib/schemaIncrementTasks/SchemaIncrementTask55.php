@@ -132,6 +132,13 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                 PRIMARY KEY  (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
         
+         $sql[] = "CREATE TABLE `ohrm_leave_period` (
+                    `leave_period_id` int(11) NOT NULL,
+                    `leave_period_start_date` date NOT NULL,
+                    `leave_period_end_date` date NOT NULL,
+                    PRIMARY KEY (`leave_period_id`)
+                  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        
         $sql[] = "alter table ohrm_leave_type
                 add foreign key (operational_country_id)
                     references ohrm_operational_country(id) on delete set null;";
@@ -470,6 +477,8 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
 
         $sql[] = "alter table `hs_hr_leavetype` drop column int_id;";
 
+        $sql[] = "INSERT INTO `ohrm_leave_period`(leave_period_id, leave_period_start_date, leave_period_end_date) 
+                    SELECT leave_period_id, leave_period_start_date, leave_period_end_date FROM hs_hr_leave_period";
         
         /* TODO: Import rest of leave data - leave requests etc. */
         
