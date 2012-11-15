@@ -349,6 +349,10 @@ a {
 	margin:20px;
 	position:relative;
 }
+.box a {
+    text-decoration: underline;
+    cursor: pointer;
+}
 .box div.top {
 	width:100%;
 	margin-bottom:10px;
@@ -446,6 +450,9 @@ a {
 	left:150px;   
     margin-bottom: 10px;
     color: #A9A9A9;
+}
+.fieldHelp {
+    margin-left: 5px;
 }
 /* ================ General class styles: End ================ */
 
