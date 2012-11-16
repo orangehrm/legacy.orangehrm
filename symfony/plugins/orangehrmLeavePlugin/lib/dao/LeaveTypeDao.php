@@ -1,7 +1,6 @@
 <?php
 
-/*
- *
+/**
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
  * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
@@ -20,8 +19,47 @@
  *
  */
 
-class LeaveTypeDao extends BaseDao {
+/**
+ * Description of NewLeaveTypeDao
+ */
+class LeaveTypeDao {
+    
+    public function getLeaveTypeList($operationalCountryId = null) {
+        try {
+            $q = Doctrine_Query::create()
+                            ->from('LeaveType lt')
+                            ->where('lt.deleted = 0')
+                            ->orderBy('lt.name');
+            
+            if (!is_null($operationalCountryId)) {
+                if (is_array($operationalCountryId)) {
+                    $q->andWhereIn('lt.operational_country_id', $operationalCountryId);
+                } else {
+                    $q->andWhere('lt.operational_country_id = ? ', $operationalCountryId);
+                }
+            }
+            $leaveTypeList = $q->execute();
 
+            return $leaveTypeList;
+        } catch (Exception $e) {
+            $this->getLogger()->error("Exception in getLeaveTypeList:" . $e);
+            throw new DaoException($e->getMessage(), 0, $e);
+        }        
+    }    
+    
+    /**
+     * Get Leave Type by ID
+     * @return LeaveType
+     */
+    public function readLeaveType($id) {
+        try {
+            return Doctrine::getTable('LeaveType')->find($id);
+        } catch (Exception $e) {
+            $this->getLogger()->error("Exception in readLeaveType:" . $e);
+            throw new DaoException($e->getMessage(), 0, $e);
+        }
+    }    
+    
     /**
      * Get Logger instance. Creates if not already created.
      *
@@ -33,22 +71,15 @@ class LeaveTypeDao extends BaseDao {
         }
 
         return($this->logger);
-    }
-
+    }    
+    
     /**
      *
      * @param OldLeaveType $leaveType
      * @return boolean
      */
-    public function saveLeaveType(OldLeaveType $leaveType) {
+    public function saveLeaveType(LeaveType $leaveType) {
         try {
-            if ($leaveType->getLeaveTypeId() == '') {
-
-                $idGenService = new IDGeneratorService();
-                $idGenService->setEntity($leaveType);
-                $leaveType->setLeaveTypeId($idGenService->getNextID());
-            }
-
             $leaveType->save();
 
             return true;
@@ -69,9 +100,9 @@ class LeaveTypeDao extends BaseDao {
         try {
 
             $q = Doctrine_Query::create()
-                            ->update('OldLeaveType lt')
-                            ->set('lt.availableFlag', '?', '0')
-                            ->whereIn('lt.leaveTypeId', $leaveTypeList);
+                            ->update('LeaveType lt')
+                            ->set('lt.deleted', '?', 1)
+                            ->whereIn('lt.id', $leaveTypeList);
             $numDeleted = $q->execute();
             if ($numDeleted > 0) {
                 return true;
@@ -83,44 +114,17 @@ class LeaveTypeDao extends BaseDao {
         }
     }
 
-    /**
-     * Get Leave Type list
-     * @param mixed $operationalCountryId 
-     * @return OldLeaveType Collection
-     */
-    public function getLeaveTypeList($operationalCountryId = null) {
-        try {
-            $q = Doctrine_Query::create()
-                            ->from('OldLeaveType lt')
-                            ->where('lt.availableFlag = 1')
-                            ->orderBy('lt.leaveTypeName');
-            
-            if (!is_null($operationalCountryId)) {
-                if (is_array($operationalCountryId)) {
-                    $q->andWhereIn('lt.operationalCountryId', $operationalCountryId);
-                } else {
-                    $q->andWhere('lt.operationalCountryId = ? ', $operationalCountryId);
-                }
-            }
-            
-            $leaveTypeList = $q->execute();
 
-            return $leaveTypeList;
-        } catch (Exception $e) {
-            $this->getLogger()->error("Exception in getLeaveTypeList:" . $e);
-            throw new DaoException($e->getMessage());
-        }
-    }
 
     public function getDeletedLeaveTypeList($operationalCountryId = null) {
         try {
             $q = Doctrine_Query::create()
-                            ->from('OldLeaveType lt')
-                            ->where('lt.availableFlag = 0')
-                            ->orderBy('lt.leaveTypeId');
+                            ->from('LeaveType lt')
+                            ->where('lt.deleted = 1')
+                            ->orderBy('lt.id');
 
             if (!is_null($operationalCountryId)) {
-                $q->andWhere('lt.operationalCountryId = ? ', $operationalCountryId);
+                $q->andWhere('lt.operational_country_id = ? ', $operationalCountryId);
             }
             
             $leaveTypeList = $q->execute();
@@ -132,25 +136,12 @@ class LeaveTypeDao extends BaseDao {
         }
     }
 
-    /**
-     * Read Leave Type
-     * @return OldLeaveType
-     */
-    public function readLeaveType($leaveTypeId) {
-        try {
-            return Doctrine::getTable('OldLeaveType')->find($leaveTypeId);
-        } catch (Exception $e) {
-            $this->getLogger()->error("Exception in readLeaveType:" . $e);
-            throw new DaoException($e->getMessage());
-        }
-    }
-
     public function readLeaveTypeByName($leaveTypeName) {
         try {
             $q = Doctrine_Query::create()
-                            ->from('OldLeaveType lt')
-                            ->where("lt.leaveTypeName = ?", $leaveTypeName)
-                            ->andWhere('lt.availableFlag = 1');
+                            ->from('LeaveType lt')
+                            ->where("lt.name = ?", $leaveTypeName)
+                            ->andWhere('lt.deleted = 0');
 
             $leaveTypeCollection = $q->execute();
 
@@ -166,9 +157,9 @@ class LeaveTypeDao extends BaseDao {
         try {
 
             $q = Doctrine_Query::create()
-                            ->update('OldLeaveType lt')
-                            ->set('lt.availableFlag', '1')
-                            ->where("lt.leaveTypeId = '" . $leaveTypeId . "'");
+                            ->update('LeaveType lt')
+                            ->set('lt.deleted', 0)
+                            ->where("lt.id = ?", $leaveTypeId);
 
             $numUpdated = $q->execute();
 
@@ -181,6 +172,5 @@ class LeaveTypeDao extends BaseDao {
             $this->getLogger()->error("Exception in undeleteLeaveType:" . $e);
             throw new DaoException($e->getMessage());
         }
-    }
-
+    }    
 }

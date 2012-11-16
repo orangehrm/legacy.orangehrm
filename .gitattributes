@@ -3821,7 +3821,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/config/list_component.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/config/routing.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/HolidayDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/LeaveSummaryDao.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/LeaveTypeDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/OldLeaveEntitlementDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/entity/LeaveParameterObject.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/exception/LeaveAllocationServiceException.php -text
@@ -3866,7 +3865,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/service/HolidayService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveNotificationService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeavePeriodDataHolder.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveSummaryService.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveTypeService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/OldLeaveEntitlementService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveApprovedState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveCancelledState.php -text
@@ -3953,17 +3951,14 @@ symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveEntitlementService.y
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveNotificationService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveSummaryDao.yml -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveTypeDao.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveTypeService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/leaveEntitlement.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/leaveType.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveRequestDaoSearchTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveSummaryDaoTest.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveTypeDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/OldLeaveEntitlementDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/service/LeaveRequestServiceTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/service/LeaveSummaryServiceTest.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/model/service/LeaveTypeServiceTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/service/OldLeaveEntitlementServiceTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/orangehrmCoreLeavePluginAllTests.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/css/applyLeaveSuccess.css -text
@@ -4506,7 +4501,7 @@ symfony/plugins/orangehrmLeavePlugin/install/upgrade.sql -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveEntitlementDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeavePeriodDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveRequestDao.php -text
-symfony/plugins/orangehrmLeavePlugin/lib/dao/NewLeaveTypeDao.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveTypeDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/WorkWeekDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/EntitlementConsumptionStrategy.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/FIFOEntitlementConsumptionStrategy.php -text
@@ -4550,6 +4545,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveConfigurationService.php -
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveEntitlementService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeavePeriodService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveRequestService.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/service/LeaveTypeService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/WorkScheduleService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/service/WorkWeekService.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/task/upgradeLeaveModuleTask.class.php -text
@@ -4596,6 +4592,7 @@ symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeavePeriodService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDaoSearch.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveType.yml -text
+symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveTypeService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/WorkWeekDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/WorkWeekService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/leavePeriod.yml -text
@@ -4603,7 +4600,7 @@ symfony/plugins/orangehrmLeavePlugin/test/model/dao/HolidayDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeavePeriodDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveRequestDaoTest.php -text
-symfony/plugins/orangehrmLeavePlugin/test/model/dao/NewLeaveTypeDaoTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveTypeDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/WorkWeekDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/HolidayServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveConfigurationServiceTest.php -text
@@ -4611,6 +4608,7 @@ symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveEntitlementServiceT
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceGenerateEndDateTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceGenerateStartDateTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveTypeServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkScheduleServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkWeekServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/orangehrmLeavePluginAllTests.php -text
