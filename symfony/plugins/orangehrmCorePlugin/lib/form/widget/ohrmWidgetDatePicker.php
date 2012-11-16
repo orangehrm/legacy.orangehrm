@@ -47,7 +47,8 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
             $("#%s").val(displayDateFormat);
         }
 
-        $("#%s").datepicker({
+        daymarker.bindElement("#%s",
+        {
             showOn: "both",
             dateFormat: datepickerDateFormat,
             buttonImage: "%s",
@@ -65,6 +66,7 @@ class ohrmWidgetDatePicker extends sfWidgetFormInput {
         //$("img.ui-datepicker-trigger").addClass("editable");
         
         $("#%s").click(function(){
+            daymarker.show("#%s");
             if ($(this).val() == displayDateFormat) {
                 $(this).val('');
             }
@@ -80,6 +82,7 @@ EOF
                         $this->attributes['id'],
                         $this->attributes['id'],
                         theme_path('images/calendar.png'),
+                        $this->attributes['id'],
                         $this->attributes['id'],
                         $this->attributes['id']
         );
