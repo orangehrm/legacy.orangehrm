@@ -18,26 +18,26 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header1->populateFromArray(array(
             'name' => 'Date',
-            'width' => '15%',
+            'width' => '7%',
             'isSortable' => false,
             'elementType' => 'link',
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
                 'labelGetter' => array('getLeaveDateRange'),
-                'placeholderGetters' => array('id' => 'getLeaveRequestId'),
+                'placeholderGetters' => array('id' => 'getId'),
                 'urlPattern' => public_path('index.php/leave/viewLeaveRequest/id/{id}'),
             ),
         ));
 
         $header2->populateFromArray(array(
             'name' => 'Employee Name',
-            'width' => '12%',
+            'width' => '20%',
             'isSortable' => false,
             'elementType' => 'link',
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
                 'labelGetter' => array('getEmployee', 'getFullName'),
-                'placeholderGetters' => array('id' => 'getEmployeeId'),
+                'placeholderGetters' => array('id' => 'getEmpNumber'),
                 'urlPattern' => public_path('index.php/pim/viewPersonalDetails/empNumber/{id}'),
             ),
         ));
@@ -79,7 +79,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
                 'labelGetter' => array('getStatus'),
-                'placeholderGetters' => array('id' => 'getLeaveRequestId'),
+                'placeholderGetters' => array('id' => 'getId'),
                 'urlPattern' => public_path('index.php/leave/viewLeaveRequest/id/{id}'),
                 'hasHiddenField' => true,
                 'hiddenFieldName' => 'leaveRequestStatus[{id}]',
@@ -95,14 +95,14 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
             'elementType' => 'comment',
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
-                'getter' => 'getLeaveComments',
+                'getter' => 'getComments',
                 'idPattern' => 'hdnLeaveComment-{id}',
                 'namePattern' => 'leaveComments[{id}]',
-                'placeholderGetters' => array('id' => 'getLeaveRequestId'),
+                'placeholderGetters' => array('id' => 'getId'),
                 'hasHiddenField' => true,
                 'hiddenFieldName' => 'leaveRequest[{id}]',
                 'hiddenFieldId' => 'hdnLeaveRequest_{id}',
-                'hiddenFieldValueGetter' => 'getLeaveRequestId',
+                'hiddenFieldValueGetter' => 'getId',
             ),
         ));
 
@@ -123,15 +123,14 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
                 'namePattern' => 'select_leave_action_{id}',
                 'idPattern' => 'select_leave_action_{id}',
                 'hasHiddenField' => true,
-                'hiddenFieldName' => '{eimId}-{leaveTypeId}-{leavePeriodId}',
-                'hiddenFieldId' => '{eimId}-{leaveTypeId}-{leavePeriodId}',
+                'hiddenFieldName' => '{eimId}-{leaveTypeId}',
+                'hiddenFieldId' => '{eimId}-{leaveTypeId}',
                 'hiddenFieldValueGetter' => 'getNumberOfDays',
                 'hiddenFieldClass' => 'quotaHolder',
                 'placeholderGetters' => array(
-                    'id' => 'getLeaveRequestId',
+                    'id' => 'getId',
                     'eimId' => 'getEmpNumber',
-                    'leaveTypeId' => 'getLeaveTypeId',
-                    'leavePeriodId' => 'getLeavePeriodId',
+                    'leaveTypeId' => 'getLeaveTypeId'
                 ),
             ),
         ));

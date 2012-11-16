@@ -43,7 +43,7 @@ class updateCommentAction extends baseCoreLeaveAction {
             if ($essMode && $statusId != PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL) { //ess can not comment on leaves other than status 'pending'
                 $flag = 0;
             } else {
-                $leaveRequest->setLeaveComments($comment);
+                $leaveRequest->setComments($comment);
                 $leaves = $leaveRequestService->searchLeave($leaveRequestId);
                 $flag = $leaveRequestService->saveLeaveRequest($leaveRequest, $leaves);
             }
@@ -56,7 +56,7 @@ class updateCommentAction extends baseCoreLeaveAction {
             if ($essMode && $statusId != PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL) { //ess can not comment on leaves other than status 'pending'
                 $flag = 0;
             } else {
-                $leave->setLeaveComments($comment);
+                $leave->setComments($comment);
                 $flag = $leaveRequestService->saveLeave($leave);
             }
         }

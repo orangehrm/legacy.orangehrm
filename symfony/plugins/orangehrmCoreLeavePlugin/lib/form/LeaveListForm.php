@@ -54,11 +54,11 @@ class LeaveListForm extends sfForm {
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
         
         // From and To Date
-        $widgets['calFromDate'] = new ohrmWidgetDatePickerNew(array(), array('id' => 'calFromDate'));
+        $widgets['calFromDate'] = new ohrmWidgetDatePicker(array(), array('id' => 'calFromDate'));
         $labels['calFromDate'] = __('From');
         
-        $widgets['calToDate'] = new ohrmWidgetDatePickerNew(array(), array('id' => 'calToDate'));
-        $labels['calToDate'] = __('To');        
+        $widgets['calToDate'] = new ohrmWidgetDatePicker(array(), array('id' => 'calToDate'));
+        $labels['calToDate'] = __('To');                        
         
         // Set default from/to to current leave period.
         $leavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriod();
@@ -130,7 +130,7 @@ class LeaveListForm extends sfForm {
         
         $this->getWidgetSchema()->setNameFormat('leaveList[%s]');
         sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
-        $this->getWidgetSchema()->setFormFormatterName('BreakTags');  
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');  
         
         // Validate that if both from and to date are given, form date is before to date.
         $this->getValidatorSchema()->setPostValidator(
@@ -164,8 +164,8 @@ class LeaveListForm extends sfForm {
      */
     public function getSearchActionButtons() {
         return array(
-            'btnSearch' => new ohrmWidgetButton('btnSearch', 'Search', array('class' => 'searchbutton')),
-            'btnReset' => new ohrmWidgetButton('btnReset', 'Reset', array('class' => 'clearbutton')),
+            'btnSearch' => new ohrmWidgetButton('btnSearch', 'Search', array()),
+            'btnReset' => new ohrmWidgetButton('btnReset', 'Reset', array('class' => 'reset')),
         );
     }
 
@@ -198,16 +198,13 @@ class LeaveListForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmCoreLeavePlugin/js/viewLeaveListSuccess.js';
+        $javaScripts[] = '/orangehrmLeavePlugin/js/viewLeaveListSuccess.js';
         
         return $javaScripts;
     }
     
     public function getStylesheets() {
-        $styleSheets = parent::getStylesheets();
-        $styleSheets['/orangehrmCoreLeavePlugin/css/viewLeaveListSuccess.css'] = 'all';
-        $styleSheets['/orangehrmCoreLeavePlugin/css/common.css'] = 'all';
-        
+        $styleSheets = parent::getStylesheets();        
         return $styleSheets;        
     }    
 

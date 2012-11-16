@@ -493,12 +493,12 @@ class LeaveRequestDao extends BaseDao {
      * @param int $leaveRequestId
      * @return array
      */
-    public function xfetchLeave($leaveRequestId) {
+    public function fetchLeave($leaveRequestId) {
 
         $q = Doctrine_Query::create()
                 ->select('*')
                 ->from('Leave l')
-                ->where('leave_request_id = ?', $leaveRequestId);
+                ->where('l.leave_request_id = ?', $leaveRequestId);
 
         return $q->execute();
     }
@@ -518,13 +518,13 @@ class LeaveRequestDao extends BaseDao {
         return $q->fetchOne();
     }
 
-    public function xfetchLeaveRequest($leaveRequestId) {
+    public function fetchLeaveRequest($leaveRequestId) {
         $this->_markApprovedLeaveAsTaken();
 
         $q = Doctrine_Query::create()
                 ->select('*')
                 ->from('LeaveRequest lr')
-                ->where('leave_request_id = ?', $leaveRequestId);
+                ->where('id = ?', $leaveRequestId);
 
         return $q->fetchOne();
     }

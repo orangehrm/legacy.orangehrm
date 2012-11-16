@@ -3874,9 +3874,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getHolidayAjaxAct
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getLeaveBalanceAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getWorkWeekAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/saveLeaveEntitlementsAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/undeleteLeaveTypeAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/updateCommentAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveListAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveRequestAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveSummaryAction.class.php -text
@@ -3922,8 +3919,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leav
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubject.txt -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberBody.txt -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberSubject.txt -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveListSuccess.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveListSuccessOld.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveRequestSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/viewLeaveSummarySuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/actions/ApplyLeaveActionTest.php -text
@@ -3953,7 +3948,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/web/css/defineLeaveTypeSuccess.css -tex
 symfony/plugins/orangehrmCoreLeavePlugin/web/css/defineWorkWeekSuccess.css -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/css/viewLeaveListSuccess.css -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/css/viewLeaveSummarySuccess.css -text
-symfony/plugins/orangehrmCoreLeavePlugin/web/js/viewLeaveListSuccess.js -text
 symfony/plugins/orangehrmCoreLeavePlugin/web/js/viewLeaveSummarySuccess.js -text
 symfony/plugins/orangehrmCorePlugin/config/configurations_by_plugins.yml -text
 symfony/plugins/orangehrmCorePlugin/config/doctrine/schema.yml -text
@@ -4555,9 +4549,12 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadDatesforMonthActi
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadDeletedLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadLeavePeriodEndDateAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/showLeavePeriodNotDefinedWarningAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/undeleteLeaveTypeAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/updateCommentAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewHolidayListAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveBalanceReportAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveEntitlementsAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveListAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveBalanceReportAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveEntitlementsAction.class.php -text
@@ -4574,6 +4571,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/showLeavePeriodNotD
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewHolidayListSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewLeaveBalanceReportSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewLeaveEntitlementsSuccess.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/viewLeaveListSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/test/entitlement/FIFOEntitlementConsumptionStrategyTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/HolidayDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/HolidayService.yml -text
@@ -4618,6 +4616,7 @@ symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccessValidate.js -te
 symfony/plugins/orangehrmLeavePlugin/web/js/leaveTypeListSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewHolidayListSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewHolidayListSuccessSearch.js -text
+symfony/plugins/orangehrmLeavePlugin/web/js/viewLeaveListSuccess.js -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmPimPlugin/config/list_component.yml -text
 symfony/plugins/orangehrmPimPlugin/config/routing.yml -text

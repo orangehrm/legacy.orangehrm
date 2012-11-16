@@ -44,7 +44,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
             if ((!empty($startTime) && !empty($endTime)) && ("{$startTime} {$endTime}" != '00:00:00 00:00:00')) {
                 return "{$startTime} to {$endTime}";
             } else {
-                $totalDuration = $this->leave[0]->getLeaveLengthHours();
+                $totalDuration = $this->leave[0]->getLengthHours();
                 if (!empty($totalDuration)) {
                     return number_format($totalDuration, 2) . ' hours';
                 } else {
@@ -70,20 +70,22 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
     }
 
     public function getLeaveBalance() {
-        $leaveEntitlementService = new OldLeaveEntitlementService();
+        /*$leaveEntitlementService = new OldLeaveEntitlementService();
         $employeeId = $this->getEmpNumber();
         $leaveTypeId = $this->getLeaveTypeId();
         $leavePeriodId = $this->getLeavePeriodId();
         
         $balance = $leaveEntitlementService->getLeaveBalance($employeeId, $leaveTypeId, $leavePeriodId);
-        
+         * 
+         */
+        $balance = '';
         return $balance;
     }
 
     private function _fetchLeave() {
         if (is_null($this->leave)) {
             $leaveRequestDao = new LeaveRequestDao();
-            $this->leave = $leaveRequestDao->fetchLeave($this->getLeaveRequestId());
+            $this->leave = $leaveRequestDao->fetchLeave($this->getId());
             $this->_parseLeave();
         }
     }
@@ -107,7 +109,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         if ($this->isStatusDiffer()) {
             return self::LEVAE_REQUEST_STATUS_DIFFER;
         } else {
-            return $this->leave[0]->getLeaveStatus();
+            return $this->leave[0]->getStatus();
         }
     }
 
@@ -117,10 +119,10 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         $leaveCount = count($this->leave);
 
         if ($leaveCount == 1) {
-            return set_datepicker_date_format($this->leave[0]->getLeaveDate());
+            return set_datepicker_date_format($this->leave[0]->getDate());
         } else {
-            $leaveRequestStartDate = $this->leave[0]->getLeaveDate();
-            $leaveRequestEndDate = $this->leave[$leaveCount - 1]->getLeaveDate();
+            $leaveRequestStartDate = $this->leave[0]->getDate();
+            $leaveRequestEndDate = $this->leave[$leaveCount - 1]->getDate();
             return sprintf('%s %s %s', set_datepicker_date_format($leaveRequestStartDate), __('to'), set_datepicker_date_format($leaveRequestEndDate));
         }
     }
@@ -138,16 +140,16 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
 
         foreach ($this->leave as $leave) {
             // Calculating number of days and duration
-            $dayLength = (float) $leave->getLeaveLengthDays();
+            $dayLength = (float) $leave->getLengthDays();
 
             //this got changed to fix sf-3019087,3044234 $hourLength = $dayLength * $this->_getWorkShiftHoursPerDay();
-            $hourLength = (float) $leave->getLeaveLengthHours();
+            $hourLength = (float) $leave->getLengthHours();
             if ($dayLength >= 1) {
-                $hourLength = $dayLength * (float) $leave->getLeaveLengthHours();
+                $hourLength = $dayLength * (float) $leave->getLengthHours();
             }
 
             if ($hourLength == 0.0) {
-                $hourLength = (float) $leave->getLeaveLengthHours();
+                $hourLength = (float) $leave->getLengthHours();
             }
 
             $this->leaveDuration += $hourLength;
@@ -182,7 +184,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
 
         //is there any use of this block ?
         /* if ($this->numberOfDays == 1.0) {
-          $this->numberOfDays = $this->leave[0]->getLeaveLengthDays();
+          $this->numberOfDays = $this->leave[0]->getLengthDays();
           } */
 //die();
     }
@@ -206,7 +208,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         $flag = true;
 
         foreach ($this->leave as $leave) {
-            if ($leave->getLeaveStatus() != Leave::LEAVE_STATUS_LEAVE_TAKEN && $leave->getLeaveLengthHours() != '0.00') {
+            if ($leave->getStatus() != Leave::LEAVE_STATUS_LEAVE_TAKEN && $leave->getLengthHours() != '0.00') {
                 $flag = false;
                 break;
             }
@@ -227,7 +229,11 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
     public function getLeaveItems() {
 
         $leaveRequestDao = new LeaveRequestDao();
-        return $leaveRequestDao->fetchLeave($this->getLeaveRequestId());
+        return $leaveRequestDao->fetchLeave($this->getId());
+    }
+    
+    public function getLeaveTypeName() {
+        return $this->getLeaveType()->getName();
     }
 
 }

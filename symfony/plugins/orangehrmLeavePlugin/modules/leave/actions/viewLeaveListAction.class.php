@@ -82,10 +82,7 @@ class viewLeaveListAction extends sfAction {
         return ($userMode == 'ESS');
     }
 
-    public function execute($request) {
-        
-        $this->setTemplate('viewLeaveList');        
-        return;
+    public function execute($request) {        
         
         $this->mode = $mode = $this->getMode();
         $this->essMode = $this->isEssMode();
@@ -252,7 +249,7 @@ class viewLeaveListAction extends sfAction {
     protected function setListComponent($leaveList, $count, $page) {
         
         ohrmListComponent::setConfigurationFactory($this->getListConfigurationFactory());
-        ohrmListComponent::setActivePlugin('orangehrmCoreLeavePlugin');
+        ohrmListComponent::setActivePlugin('orangehrmLeavePlugin');
         ohrmListComponent::setListData($leaveList);
         ohrmListComponent::setItemsPerPage(sfConfig::get('app_items_per_page'));
         ohrmListComponent::setNumberOfRecords($count);      

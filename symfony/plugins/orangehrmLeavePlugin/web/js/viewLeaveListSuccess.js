@@ -38,18 +38,8 @@ $(document).ready(function() {
                 date_range: lang_dateError
             }
 
-        },
-        errorPlacement: function(error, element) {
-            error.appendTo(element.prev('label'));
         }
 
-    });
-
-    // disabling dialog by default
-    $("#commentDialog").dialog({
-        autoOpen: false,
-        width: 350,
-        height: 300
     });
 
     //open when the pencil mark got clicked
@@ -89,13 +79,8 @@ $(document).ready(function() {
         
         $('#leaveOrRequest').val('request');
 
-        $('#commentDialog').dialog('open');
-    });
-    
-    //closes the dialog
-    $("#commentCancel").click(function() {
-        $("#commentDialog").dialog('close');
-    });
+        $('#commentDialog').modal();
+    });    
 
     //on clicking on save button
     $("#commentSave").click(function() {
@@ -118,7 +103,7 @@ $(document).ready(function() {
 
             /* If there is no-change between original and updated comments then don't show success message */
             if($('#hdnLeaveComment-' + $("#leaveId").val()).val().trim() == comment) {
-                $('#commentDialog').dialog('close');
+                $('#commentDialog').modal('hide');
                 return;
             }
 
@@ -147,13 +132,21 @@ $(document).ready(function() {
                         $('#commentContainer-' + id).html(commentLabel);
                         $('#hdnLeaveComment-' + id).val(comment);
                         $('#noActionsSelectedWarning').remove();
-                        $('#ajaxCommentSaveMsg').attr('class', 'messageBalloon_success')
-                        .html(lang_comment_successfully_saved);
+                        
+                        //$('#helpText').before(content);
+                        
+                        //$('#ajaxCommentSaveMsg')
+                        $('#helpText').before('<div class="message success fadable">' + lang_comment_successfully_saved + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');
+                        setTimeout(function(){
+                            $("div.fadable").fadeOut("slow", function () {
+                                $("div.fadable").remove();
+                            });
+                        }, 2000);
                     }
                 }
             });
 
-            $("#commentDialog").dialog('close');
+            $("#commentDialog").modal('hide');
             return;
         }
     });

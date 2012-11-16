@@ -1,44 +1,4 @@
-LeaveRequest:
-  pluginName: orangehrmCoreLeavePlugin
-  hasSelectableRows: false
-  unselectableRowIds: []
-  idValueGetter: getEmployeeId
-  title: ''
-  tableWidth: 100%
-  hasSummary: false
-  summary: []
-  buttons:
-    Save:
-      label: Save
-      function: handleSaveButton
-  buttonsPosition: after-data
-  formMethod: post
-  formAction: 'index.php/leave/changeLeaveStatus'
-  assets: []
-  jsInitMethods: [setPage]
-
-Leave:
-  pluginName: orangehrmCoreLeavePlugin
-  hasSelectableRows: false
-  unselectableRowIds: []
-  idValueGetter: getEmployeeId
-  title: ''
-  tableWidth: 100%
-  hasSummary: false
-  summary: []
-  buttons:
-    Save:
-      label: Save
-      function: handleSaveButton
-    Back:
-      label: Back
-      function: handleBackButton
-  buttonsPosition: after-data
-  formMethod: post
-  formAction: 'index.php/leave/changeLeaveStatus'
-  assets: []
-  jsInitMethods: [] 
-  
+ 
 EmployeeLeaveEntitlement:
   pluginName: orangehrmCoreLeavePlugin
   hasSelectableRows: false

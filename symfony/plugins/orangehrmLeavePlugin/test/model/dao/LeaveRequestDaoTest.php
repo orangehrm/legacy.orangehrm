@@ -43,14 +43,13 @@
     
     /* Tests for fetchLeaveRequest() */
 
-    public function xtestFetchLeaveRequest() {
+    public function testFetchLeaveRequest() {
 
         $leaveRequest = $this->leaveRequestDao->fetchLeaveRequest(1);
 
         $this->assertTrue($leaveRequest instanceof LeaveRequest);
 
-        $this->assertEquals(1, $leaveRequest->getLeavePeriodId(1));
-        $this->assertEquals('LTY001', $leaveRequest->getLeaveTypeId());
+        $this->assertEquals(1, $leaveRequest->getLeaveTypeId());
         $this->assertEquals('Casual', $leaveRequest->getLeaveTypeName());
         $this->assertEquals('2010-08-30', $leaveRequest->getDateApplied());
         $this->assertEquals(1, $leaveRequest->getEmpNumber());
@@ -59,7 +58,7 @@
 
     /* Tests for fetchLeave() */
 
-    public function xtestFetchLeave() {
+    public function testFetchLeave() {
 
         $leaveList = $this->leaveRequestDao->fetchLeave(1);
 
@@ -69,17 +68,17 @@
 
         $this->assertEquals(2, count($leaveList));
 
-        $this->assertEquals(1, $leaveList[0]->getLeaveId());
-        $this->assertEquals('LTY001', $leaveList[0]->getLeaveTypeId());
-        $this->assertEquals(1, $leaveList[0]->getEmployeeId());
-        $this->assertEquals('2010-09-01', $leaveList[0]->getLeaveDate());
-        $this->assertEquals(1, $leaveList[0]->getLeaveStatus());
+        $this->assertEquals(1, $leaveList[0]->getId());
+        $this->assertEquals(1, $leaveList[0]->getLeaveTypeId());
+        $this->assertEquals(1, $leaveList[0]->getEmpNumber());
+        $this->assertEquals('2010-09-01', $leaveList[0]->getDate());
+        $this->assertEquals(1, $leaveList[0]->getStatus());
 
-        $this->assertEquals(2, $leaveList[1]->getLeaveId());
-        $this->assertEquals('LTY001', $leaveList[1]->getLeaveTypeId());
-        $this->assertEquals(1, $leaveList[1]->getEmployeeId());
-        $this->assertEquals('2010-09-02', $leaveList[1]->getLeaveDate());
-        $this->assertEquals(1, $leaveList[1]->getLeaveStatus());
+        $this->assertEquals(2, $leaveList[1]->getId());
+        $this->assertEquals(1, $leaveList[1]->getLeaveTypeId());
+        $this->assertEquals(1, $leaveList[1]->getEmpNumber());
+        $this->assertEquals('2010-09-02', $leaveList[1]->getDate());
+        $this->assertEquals(1, $leaveList[1]->getStatus());
 
     }
 
@@ -91,14 +90,14 @@
 
         $this->assertTrue($leave instanceof Leave);
 
-        $this->assertEquals(1, $leave->getLeaveId());
+        $this->assertEquals(1, $leave->getId());
         $this->assertEquals(8, $leave->getLeaveLengthHours());
         $this->assertEquals(1, $leave->getLeaveLengthDays());
         $this->assertEquals(1, $leave->getLeaveRequestId());
         $this->assertEquals('LTY001', $leave->getLeaveTypeId());
-        $this->assertEquals(1, $leave->getEmployeeId());
-        $this->assertEquals('2010-09-01', $leave->getLeaveDate());
-        $this->assertEquals(1, $leave->getLeaveStatus());
+        $this->assertEquals(1, $leave->getEmpNumber());
+        $this->assertEquals('2010-09-01', $leave->getDate());
+        $this->assertEquals(1, $leave->getStatus());
 
     }
 
@@ -704,23 +703,23 @@
         $leave1 = TestDataService::fetchObject('Leave', 1);
         $leave2 = TestDataService::fetchObject('Leave', 2);
 
-        $this->assertEquals(1, $leave1->getLeaveId());
+        $this->assertEquals(1, $leave1->getId());
         $this->assertEquals(8, $leave1->getLeaveLengthHours());
         $this->assertEquals(1, $leave1->getLeaveLengthDays());
         $this->assertEquals(1, $leave1->getLeaveRequestId());
         $this->assertEquals('LTY001', $leave1->getLeaveTypeId());
-        $this->assertEquals(1, $leave1->getEmployeeId());
-        $this->assertEquals('2010-09-01', $leave1->getLeaveDate());
-        $this->assertEquals(2, $leave1->getLeaveStatus());
+        $this->assertEquals(1, $leave1->getEmpNumber());
+        $this->assertEquals('2010-09-01', $leave1->getDate());
+        $this->assertEquals(2, $leave1->getStatus());
 
-        $this->assertEquals(1, $leave1->getLeaveId());
+        $this->assertEquals(1, $leave1->getId());
         $this->assertEquals(8, $leave1->getLeaveLengthHours());
         $this->assertEquals(1, $leave1->getLeaveLengthDays());
         $this->assertEquals(1, $leave1->getLeaveRequestId());
         $this->assertEquals('LTY001', $leave1->getLeaveTypeId());
-        $this->assertEquals(1, $leave1->getEmployeeId());
-        $this->assertEquals('2010-09-02', $leave1->getLeaveDate());
-        $this->assertEquals(2, $leave1->getLeaveStatus());
+        $this->assertEquals(1, $leave1->getEmpNumber());
+        $this->assertEquals('2010-09-02', $leave1->getDate());
+        $this->assertEquals(2, $leave1->getStatus());
 
     }*/
 
@@ -776,14 +775,12 @@
         $leaveRequestList = TestDataService::fetchLastInsertedRecords('LeaveRequest', 2);
 
         $this->assertEquals(21, $leaveRequestList[0]->getLeaveRequestId());
-        $this->assertEquals(1, $leaveRequestList[0]->getLeavePeriodId());
         $this->assertEquals('LTY001', $leaveRequestList[0]->getLeaveTypeId());
         $this->assertEquals('Casual', $leaveRequestList[0]->getLeaveTypeName());
         $this->assertEquals('2010-12-01', $leaveRequestList[0]->getDateApplied());
         $this->assertEquals(1, $leaveRequestList[0]->getEmpNumber());
 
         $this->assertEquals(22, $leaveRequestList[1]->getLeaveRequestId());
-        $this->assertEquals(2, $leaveRequestList[1]->getLeavePeriodId());
         $this->assertEquals('LTY001', $leaveRequestList[1]->getLeaveTypeId());
         $this->assertEquals('Casual', $leaveRequestList[1]->getLeaveTypeName());
         $this->assertEquals('2010-12-01', $leaveRequestList[1]->getDateApplied());
@@ -791,41 +788,41 @@
 
         $leaveList = TestDataService::fetchLastInsertedRecords('Leave', 4);
 
-        $this->assertEquals(36, $leaveList[0]->getLeaveId());
+        $this->assertEquals(36, $leaveList[0]->getId());
         $this->assertEquals(8, $leaveList[0]->getLeaveLengthHours());
         $this->assertEquals(1, $leaveList[0]->getLeaveLengthDays());
         $this->assertEquals(21, $leaveList[0]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[0]->getLeaveTypeId());
-        $this->assertEquals(1, $leaveList[0]->getEmployeeId());
-        $this->assertEquals('2010-12-30', $leaveList[0]->getLeaveDate());
-        $this->assertEquals(1, $leaveList[0]->getLeaveStatus());
+        $this->assertEquals(1, $leaveList[0]->getEmpNumber());
+        $this->assertEquals('2010-12-30', $leaveList[0]->getDate());
+        $this->assertEquals(1, $leaveList[0]->getStatus());
 
-        $this->assertEquals(37, $leaveList[1]->getLeaveId());
+        $this->assertEquals(37, $leaveList[1]->getId());
         $this->assertEquals(8, $leaveList[1]->getLeaveLengthHours());
         $this->assertEquals(1, $leaveList[1]->getLeaveLengthDays());
         $this->assertEquals(21, $leaveList[1]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[1]->getLeaveTypeId());
-        $this->assertEquals(1, $leaveList[1]->getEmployeeId());
-        $this->assertEquals('2010-12-31', $leaveList[1]->getLeaveDate());
-        $this->assertEquals(1, $leaveList[1]->getLeaveStatus());
+        $this->assertEquals(1, $leaveList[1]->getEmpNumber());
+        $this->assertEquals('2010-12-31', $leaveList[1]->getDate());
+        $this->assertEquals(1, $leaveList[1]->getStatus());
 
-        $this->assertEquals(38, $leaveList[2]->getLeaveId());
+        $this->assertEquals(38, $leaveList[2]->getId());
         $this->assertEquals(8, $leaveList[2]->getLeaveLengthHours());
         $this->assertEquals(1, $leaveList[2]->getLeaveLengthDays());
         $this->assertEquals(22, $leaveList[2]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[2]->getLeaveTypeId());
-        $this->assertEquals(1, $leaveList[2]->getEmployeeId());
-        $this->assertEquals('2011-01-01', $leaveList[2]->getLeaveDate());
-        $this->assertEquals(1, $leaveList[2]->getLeaveStatus());
+        $this->assertEquals(1, $leaveList[2]->getEmpNumber());
+        $this->assertEquals('2011-01-01', $leaveList[2]->getDate());
+        $this->assertEquals(1, $leaveList[2]->getStatus());
 
-        $this->assertEquals(39, $leaveList[3]->getLeaveId());
+        $this->assertEquals(39, $leaveList[3]->getId());
         $this->assertEquals(8, $leaveList[3]->getLeaveLengthHours());
         $this->assertEquals(1, $leaveList[3]->getLeaveLengthDays());
         $this->assertEquals(22, $leaveList[3]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[3]->getLeaveTypeId());
-        $this->assertEquals(1, $leaveList[3]->getEmployeeId());
-        $this->assertEquals('2011-01-02', $leaveList[3]->getLeaveDate());
-        $this->assertEquals(1, $leaveList[3]->getLeaveStatus());
+        $this->assertEquals(1, $leaveList[3]->getEmpNumber());
+        $this->assertEquals('2011-01-02', $leaveList[3]->getDate());
+        $this->assertEquals(1, $leaveList[3]->getStatus());
 
     }
 
@@ -1678,7 +1675,7 @@
             foreach($newEntitlements as $new) {
                 
                 if (!in_array($new->getEntitlementId(), $usedEntitlements)) {
-                    $this->assertEquals($leaveId, $new->getLeaveId());
+                    $this->assertEquals($leaveId, $new->getId());
 
                     // echo "New: "; print_r($new->toArray()); echo "\n";
                     if ($new->getEntitlementId() == $entitlementId) {
@@ -1699,7 +1696,7 @@
     protected function filterEntitlementsForLeave($leaveId, $newEntitlements) {
         $filteredEntitlements = array();
         foreach($newEntitlements as $entitlement) {
-            if ($entitlement->getLeaveId() == $leaveId) {
+            if ($entitlement->getId() == $leaveId) {
                 $filteredEntitlements[] = $entitlement;
             }
         }

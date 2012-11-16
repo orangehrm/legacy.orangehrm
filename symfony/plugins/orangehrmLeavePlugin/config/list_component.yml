@@ -42,7 +42,7 @@ HolidayList:
   jsInitMethods: []  
   
 LeaveTypeList:
-  pluginName: orangehrmCoreLeavePlugin
+  pluginName: orangehrmLeavePlugin
   hasSelectableRows: true
   unselectableRowIds: []
   idValueGetter: getId
@@ -64,3 +64,44 @@ LeaveTypeList:
   formAction: 'index.php/leave/deleteLeaveType'
   assets: []
   jsInitMethods: []
+  
+LeaveRequest:
+  pluginName: orangehrmLeavePlugin
+  hasSelectableRows: false
+  unselectableRowIds: []
+  idValueGetter: getEmpNumber
+  title: ''
+  tableWidth: 100%
+  hasSummary: false
+  summary: []
+  buttons:
+    Save:
+      label: Save
+      function: handleSaveButton
+  buttonsPosition: after-data
+  formMethod: post
+  formAction: 'index.php/leave/changeLeaveStatus'
+  assets: []
+  jsInitMethods: [setPage]
+
+Leave:
+  pluginName: orangehrmCoreLeavePlugin
+  hasSelectableRows: false
+  unselectableRowIds: []
+  idValueGetter: getEmployeeId
+  title: ''
+  tableWidth: 100%
+  hasSummary: false
+  summary: []
+  buttons:
+    Save:
+      label: Save
+      function: handleSaveButton
+    Back:
+      label: Back
+      function: handleBackButton
+  buttonsPosition: after-data
+  formMethod: post
+  formAction: 'index.php/leave/changeLeaveStatus'
+  assets: []
+  jsInitMethods: []   

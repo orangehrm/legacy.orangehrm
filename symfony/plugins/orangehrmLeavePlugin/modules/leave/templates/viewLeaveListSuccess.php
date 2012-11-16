@@ -19,58 +19,46 @@
  *
  */
 
-$messageType = empty($messageType) ? '' : "messageBalloon_{$messageType}";
-$searchActionButtons = $form->getSearchActionButtons();
-
-use_stylesheet('orangehrm.datepicker.css');
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
-
 use_stylesheets_for_form($form);
-
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.datepicker.js');
-use_javascript('../../../scripts/jquery/ui/ui.draggable.js');
-use_javascript('../../../scripts/jquery/ui/ui.resizable.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-use_javascript('orangehrm.datepicker.js');
-
 use_javascripts_for_form($form);
 ?>
+<?php if ($form->hasErrors()): ?>
+    <div class="messagebar">
+        <?php include_partial('global/form_errors', array('form' => $form)); ?>
+    </div>
+<?php endif; ?>
 
-
-<?php if ($messageType == "messageBalloon_notice") { ?>
-    <div class="<?php echo $messageType; ?>"><?php echo $message; ?></div>
-<?php } ?>
-<div class="outerbox">
-    <div class="mainHeading"><h2><?php echo __($form->getTitle()); ?></h2></div>
-
-    <div class="formWrapper">
+<div class="box" id="leave-list-search">
+    <div class="head">
+        <h1><?php echo __($form->getTitle());?></h1>
+    </div>
+    <div class="inner">
         <form id="frmFilterLeave" name="frmFilterLeave" method="post" action="<?php echo url_for($baseUrl); ?>">
 
-            <?php echo $form->render(); ?>
-            <br class="clear" />
-
-            <div class="buttonWrapper">
-                <?php
-                foreach ($searchActionButtons as $id => $button) {
-                    echo $button->render($id), "\n";
-                }
-                ?>
-                <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_1')); ?>
-                <input type="hidden" name="pageNo" id="pageNo" value="<?php echo $form->pageNo; ?>" />
-                <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
-            </div>
+            <fieldset>                
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>            
+                
+                <p>
+                    <?php
+                    $searchActionButtons = $form->getSearchActionButtons();
+                    foreach ($searchActionButtons as $id => $button) {
+                        echo $button->render($id), "\n";
+                    }
+                    ?>                    
+                    <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_1')); ?>
+                    <input type="hidden" name="pageNo" id="pageNo" value="<?php echo $form->pageNo; ?>" />
+                    <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
+                    
+                </p>                
+            </fieldset>
+            
         </form>
-    </div>
-
-</div> <!-- End of outerbox -->
-
-<?php if ($messageType == "messageBalloon_success") {
-    ?>
-    <div id="leaveListActionMsg" class="<?php echo $messageType; ?>"><?php echo $message; ?></div>
-<?php } ?>
+        
+    </div> <!-- inner -->
+    
+</div> <!-- leave-list-search -->
 
 <!--this is ajax message place -->
 <div id="ajaxCommentSaveMsg"></div>
@@ -79,16 +67,27 @@ use_javascripts_for_form($form);
 <?php include_component('core', 'ohrmList'); ?>
 
 <!-- comment dialog -->
-<div id="commentDialog" title="<?php echo __('Leave Comment'); ?>">
+<div class="modal hide" id="commentDialog">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('Leave Comment'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p>
     <form action="updateComment" method="post" id="frmCommentSave">
         <input type="hidden" id="leaveId" />
         <input type="hidden" id="leaveOrRequest" />
         <textarea name="leaveComment" id="leaveComment" cols="40" rows="10" class="commentTextArea"></textarea>
         <br class="clear" />
-        <div class="error" id="commentError"></div>
-        <div><input type="button" id="commentSave" class="plainbtn" value="<?php echo __('Edit'); ?>" />
-            <input type="button" id="commentCancel" class="plainbtn" value="<?php echo __('Cancel'); ?>" /></div>
-    </form>
+        <div id="commentError"></div>
+
+    </form>        
+    </p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" id="commentSave" value="<?php echo __('Edit'); ?>" />
+    <input type="button" class="btn reset" data-dismiss="modal" id="commentCancel" value="<?php echo __('Cancel'); ?>" />
+  </div>
 </div>
 <!-- end of comment dialog-->
 
@@ -105,6 +104,7 @@ use_javascripts_for_form($form);
     var lang_save = '<?php echo __('Save'); ?>';
     var lang_length_exceeded_error = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>';    
     var lang_selectAction = '<?php echo __("Select Action");?>';
+    var lang_Close = '<?php echo __('Close');?>';
     var leave_status_pending = '<?php echo PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL;?>';
     var ess_mode = '<?php echo ($essMode) ? '1' : '0'; ?>';
     
