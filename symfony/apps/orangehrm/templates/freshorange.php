@@ -18,7 +18,8 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <link href="<?php echo theme_path('css/jquery/jquery.autocomplete.css')?>" rel="stylesheet" type="text/css"/>
         
         <!-- Custom CSS files -->
-        <link href="<?php echo theme_path('css/main.css')?>" rel="stylesheet" type="text/css"/>        
+        <link href="<?php echo theme_path('css/main.css')?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo theme_path('css/orangehrm.datepicker.css')?>" rel="stylesheet" type="text/css"/>
         
         <!-- Library JavaScript files -->
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery-1.7.2.min.js')?>"></script>
@@ -32,6 +33,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
 
         <!-- Custom JavaScript files -->
         <script type="text/javascript" src="<?php echo public_path('js/orangehrm.validate.js');?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.datepicker.js');?>"></script>
         <script type="text/javascript" src="<?php echo public_path('js/archive.js');?>"></script>
         
         <?php 

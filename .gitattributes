@@ -5187,7 +5187,6 @@ symfony/web/css/jquery-treeview/jquery.treeview.css -text
 symfony/web/css/jquery-treeview/jquery.treeview_1.css -text
 symfony/web/css/main.css -text
 symfony/web/css/module.report.css -text
-symfony/web/css/orangehrm.datepicker.css -text
 symfony/web/css/performance/performanceReviewSuccess.css -text
 symfony/web/images/calendar.gif -text
 symfony/web/images/callout.png -text
@@ -5249,6 +5248,7 @@ symfony/web/themes/default/css/jquery/images/ui-icons_ffffff_256x240.png -text
 symfony/web/themes/default/css/jquery/jquery-ui-1.8.21.custom.css -text
 symfony/web/themes/default/css/jquery/jquery.autocomplete.css -text
 symfony/web/themes/default/css/main.css -text
+symfony/web/themes/default/css/orangehrm.datepicker.css -text
 symfony/web/themes/default/css/reset.css -text
 symfony/web/themes/default/css/tipTip.css -text
 symfony/web/themes/default/images/calendar.png -text
