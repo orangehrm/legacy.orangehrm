@@ -202,7 +202,7 @@ abstract class AbstractLeaveAllocationService extends BaseService {
 
     /**
      * isEmployeeAllowedToApply
-     * @param OldLeaveType $leaveType
+     * @param LeaveType $leaveType
      * @returns boolean
      */
     public function isEmployeeAllowedToApply(LeaveType $leaveType) {

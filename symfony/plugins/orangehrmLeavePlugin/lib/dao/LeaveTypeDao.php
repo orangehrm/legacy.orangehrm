@@ -75,7 +75,7 @@ class LeaveTypeDao {
     
     /**
      *
-     * @param OldLeaveType $leaveType
+     * @param LeaveType $leaveType
      * @return boolean
      */
     public function saveLeaveType(LeaveType $leaveType) {

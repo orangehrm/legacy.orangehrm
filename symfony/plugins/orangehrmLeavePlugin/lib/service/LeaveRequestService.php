@@ -179,7 +179,7 @@ class LeaveRequestService extends BaseService {
     /**
      *
      * @param Employee $employee
-     * @return OldLeaveType Collection
+     * @return LeaveType Collection
      */
     public function getEmployeeAllowedToApplyLeaveTypes(Employee $employee) {
 
@@ -219,10 +219,10 @@ class LeaveRequestService extends BaseService {
 
     /**
      *
-     * @param OldLeaveType $leaveType
+     * @param LeaveType $leaveType
      * @return boolean
      */
-    public function isApplyToMoreThanCurrent(OldLeaveType $leaveType){
+    public function isApplyToMoreThanCurrent(LeaveType $leaveType){
 		try{
 			$leaveRuleEligibilityProcessor	=	new LeaveRuleEligibilityProcessor();
 			return $leaveRuleEligibilityProcessor->allowApplyToMoreThanCurrent($leaveType);

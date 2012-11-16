@@ -10,7 +10,8 @@
  * @author     ##NAME## <##EMAIL##>
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
-abstract class PluginLeaveType extends BaseLeaveType
-{
-
+abstract class PluginLeaveType extends BaseLeaveType {
+    public function getDescriptiveLeaveTypeName() {
+        return $this->getName() . (($this->getDeleted()) ? ' ('.__('Deleted').')' : '');
+    }
 }

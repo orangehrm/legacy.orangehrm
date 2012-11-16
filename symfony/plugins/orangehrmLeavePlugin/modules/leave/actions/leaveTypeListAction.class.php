@@ -25,7 +25,7 @@ class leaveTypeListAction extends orangehrmAction {
 
         $configurationFactory = $this->getListConfigurationFactory();
         
-        ohrmListComponent::setActivePlugin('orangehrmCoreLeavePlugin');
+        ohrmListComponent::setActivePlugin('orangehrmLeavePlugin');
         ohrmListComponent::setConfigurationFactory($configurationFactory);
         ohrmListComponent::setListData($leaveTypeList);
         ohrmListComponent::setPageNumber(0);

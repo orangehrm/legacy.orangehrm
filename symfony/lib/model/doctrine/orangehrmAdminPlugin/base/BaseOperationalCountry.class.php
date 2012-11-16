@@ -8,7 +8,6 @@
  * @property integer $id
  * @property string $country_code
  * @property Country $Country
- * @property Doctrine_Collection $OldLeaveType
  * @property Doctrine_Collection $LeaveType
  * @property Doctrine_Collection $WorkWeek
  * @property Doctrine_Collection $Holiday
@@ -16,14 +15,12 @@
  * @method integer             getId()           Returns the current record's "id" value
  * @method string              getCountryCode()  Returns the current record's "country_code" value
  * @method Country             getCountry()      Returns the current record's "Country" value
- * @method Doctrine_Collection getOldLeaveType() Returns the current record's "OldLeaveType" collection
  * @method Doctrine_Collection getLeaveType()    Returns the current record's "LeaveType" collection
  * @method Doctrine_Collection getWorkWeek()     Returns the current record's "WorkWeek" collection
  * @method Doctrine_Collection getHoliday()      Returns the current record's "Holiday" collection
  * @method OperationalCountry  setId()           Sets the current record's "id" value
  * @method OperationalCountry  setCountryCode()  Sets the current record's "country_code" value
  * @method OperationalCountry  setCountry()      Sets the current record's "Country" value
- * @method OperationalCountry  setOldLeaveType() Sets the current record's "OldLeaveType" collection
  * @method OperationalCountry  setLeaveType()    Sets the current record's "LeaveType" collection
  * @method OperationalCountry  setWorkWeek()     Sets the current record's "WorkWeek" collection
  * @method OperationalCountry  setHoliday()      Sets the current record's "Holiday" collection
@@ -56,10 +53,6 @@ abstract class BaseOperationalCountry extends sfDoctrineRecord
         $this->hasOne('Country', array(
              'local' => 'country_code',
              'foreign' => 'cou_code'));
-
-        $this->hasMany('OldLeaveType', array(
-             'local' => 'id',
-             'foreign' => 'operational_country_id'));
 
         $this->hasMany('LeaveType', array(
              'local' => 'id',

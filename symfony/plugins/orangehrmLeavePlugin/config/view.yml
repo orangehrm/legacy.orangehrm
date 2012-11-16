@@ -46,3 +46,7 @@ defineHolidaySuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]
+leaveTypeListSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]  

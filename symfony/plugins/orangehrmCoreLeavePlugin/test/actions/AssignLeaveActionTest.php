@@ -125,7 +125,7 @@ class AssignLeaveActionTest extends PHPUnit_Framework_TestCase {
                 ->will($this->returnValue($leaves));
 
         //mocking LeaveTypeService
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
         $leaveTypeService = $this->getMock('LeaveTypeService', array('getLeaveTypeList'));
         $leaveTypeService->expects($this->once())
                 ->method('getLeaveTypeList')
@@ -171,7 +171,7 @@ class AssignLeaveActionTest extends PHPUnit_Framework_TestCase {
 
         //mocking LeaveRequestService
         $leaveRequestService = $this->getMock('LeaveRequestService', array('getOverlappingLeave', 'saveLeaveRequest'));
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
 
         $leaveRequestService->expects($this->once())
                 ->method('getOverlappingLeave')
@@ -256,7 +256,7 @@ class AssignLeaveActionTest extends PHPUnit_Framework_TestCase {
 
         //mocking LeaveRequestService
         $leaveRequestService = $this->getMock('LeaveRequestService', array('getOverlappingLeave', 'saveLeaveRequest'));
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
 
         $leaveRequestService->expects($this->once())
                 ->method('getOverlappingLeave')
@@ -346,7 +346,7 @@ class AssignLeaveActionTest extends PHPUnit_Framework_TestCase {
 
         //mocking LeaveRequestService
         $leaveRequestService = $this->getMock('LeaveRequestService', array('getOverlappingLeave'));
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
 
         $leaveRequestService->expects($this->once())
                 ->method('getOverlappingLeave')

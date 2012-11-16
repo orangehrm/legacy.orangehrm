@@ -14,14 +14,14 @@ class deleteLeaveTypeAction extends orangehrmAction {
         if ($request->isMethod('post')) {
 
             if (count($request->getParameter('chkSelectRow')) == 0) {
-                $this->getUser()->setFlash('templateMessage', array('NOTICE', __(TopLevelMessages::SELECT_RECORDS)));
+                $this->getUser()->setFlash('notice', __(TopLevelMessages::SELECT_RECORDS));
             } else {
 
                 $leaveTypeService = $this->getLeaveTypeService();
                 
                 $leaveTypeIds = $request->getParameter('chkSelectRow');
                 $leaveTypeService->deleteLeaveType($leaveTypeIds);
-                $this->getUser()->setFlash('templateMessage', array('SUCCESS', __(TopLevelMessages::DELETE_SUCCESS)));
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
             }
             
             $this->redirect('leave/leaveTypeList');

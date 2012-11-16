@@ -70,7 +70,6 @@
  * @property Nationality $Nationality
  * @property JobCategory $JobCategory
  * @property Doctrine_Collection $AttendanceRecord
- * @property Doctrine_Collection $EmployeeLeaveEntitlement
  * @property Doctrine_Collection $SystemUser
  * @property Doctrine_Collection $LeaveEntitlement
  * @property Doctrine_Collection $LeaveRequest
@@ -160,7 +159,6 @@
  * @method Nationality               getNationality()               Returns the current record's "Nationality" value
  * @method JobCategory               getJobCategory()               Returns the current record's "JobCategory" value
  * @method Doctrine_Collection       getAttendanceRecord()          Returns the current record's "AttendanceRecord" collection
- * @method Doctrine_Collection       getEmployeeLeaveEntitlement()  Returns the current record's "EmployeeLeaveEntitlement" collection
  * @method Doctrine_Collection       getSystemUser()                Returns the current record's "SystemUser" collection
  * @method Doctrine_Collection       getLeaveEntitlement()          Returns the current record's "LeaveEntitlement" collection
  * @method Doctrine_Collection       getLeaveRequest()              Returns the current record's "LeaveRequest" collection
@@ -249,7 +247,6 @@
  * @method Employee                  setNationality()               Sets the current record's "Nationality" value
  * @method Employee                  setJobCategory()               Sets the current record's "JobCategory" value
  * @method Employee                  setAttendanceRecord()          Sets the current record's "AttendanceRecord" collection
- * @method Employee                  setEmployeeLeaveEntitlement()  Sets the current record's "EmployeeLeaveEntitlement" collection
  * @method Employee                  setSystemUser()                Sets the current record's "SystemUser" collection
  * @method Employee                  setLeaveEntitlement()          Sets the current record's "LeaveEntitlement" collection
  * @method Employee                  setLeaveRequest()              Sets the current record's "LeaveRequest" collection
@@ -568,10 +565,6 @@ abstract class BaseEmployee extends sfDoctrineRecord
         $this->hasMany('AttendanceRecord', array(
              'local' => 'empNumber',
              'foreign' => 'employeeId'));
-
-        $this->hasMany('EmployeeLeaveEntitlement', array(
-             'local' => 'empNumber',
-             'foreign' => 'employee_id'));
 
         $this->hasMany('SystemUser', array(
              'local' => 'emp_number',

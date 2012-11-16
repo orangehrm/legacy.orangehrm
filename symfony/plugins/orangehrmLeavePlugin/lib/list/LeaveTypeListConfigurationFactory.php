@@ -34,8 +34,8 @@ class LeaveTypeListConfigurationFactory extends ohrmListConfigurationFactory {
             'sortField' => null,
             'elementType' => 'link',
             'elementProperty' => array(
-                'labelGetter' => 'getLeaveTypeName',
-                'placeholderGetters' => array('id' => 'getLeaveTypeId'),
+                'labelGetter' => 'getName',
+                'placeholderGetters' => array('id' => 'getId'),
                 'urlPattern' => 'index.php/leave/defineLeaveType?id={id}'),
         ));
 
@@ -49,4 +49,3 @@ class LeaveTypeListConfigurationFactory extends ohrmListConfigurationFactory {
 
 }
 
-?>

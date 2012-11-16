@@ -31,7 +31,6 @@ class LeaveEntitlementForm extends BaseForm {
     public function getLeaveTypeService() {
         if (!isset($this->leaveTypeService)) {
             $this->leaveTypeService = new LeaveTypeService();
-            $this->leaveTypeService->setLeaveTypeDao(new NewLeaveTypeDao());
         }
         return $this->leaveTypeService;
     }
@@ -70,7 +69,7 @@ class LeaveEntitlementForm extends BaseForm {
         $this->setValidator('date_to', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
         
         $this->setDefaultDates();    
-
+        
                 
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'viewLeaveEntitlements','LeaveEntitlementsForm');

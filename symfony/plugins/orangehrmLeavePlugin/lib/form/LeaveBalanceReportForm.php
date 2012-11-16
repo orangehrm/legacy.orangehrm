@@ -34,7 +34,6 @@ class LeaveBalanceReportForm extends BaseForm {
     public function getLeaveTypeService() {
         if (!isset($this->leaveTypeService)) {
             $this->leaveTypeService = new LeaveTypeService();
-            $this->leaveTypeService->setLeaveTypeDao(new NewLeaveTypeDao());
         }
         return $this->leaveTypeService;
     }

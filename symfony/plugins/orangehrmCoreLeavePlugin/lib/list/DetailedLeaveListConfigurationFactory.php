@@ -31,7 +31,7 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
             'elementType' => 'label',
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
-                'getter' => array('getLeaveRequest', 'getOldLeaveType',  'getDescriptiveLeaveTypeName'),
+                'getter' => array('getLeaveRequest', 'getLeaveType',  'getDescriptiveLeaveTypeName'),
                 'hideIfCallback' => 'isNonWorkingDay',
              ),
         ));

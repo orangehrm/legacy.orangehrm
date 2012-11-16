@@ -53,11 +53,11 @@ class LeaveTypeForm extends orangehrmForm {
         $leaveTypeService = $this->getLeaveTypeService();
         $leaveTypeObject = $leaveTypeService->readLeaveType($leaveTypeId);
 
-        if ($leaveTypeObject instanceof OldLeaveType) {
+        if ($leaveTypeObject instanceof LeaveType) {
 
-            $this->setDefault('hdnLeaveTypeId', $leaveTypeObject->getLeaveTypeId());
-            $this->setDefault('txtLeaveTypeName', $leaveTypeObject->getLeaveTypeName());
-            $this->setDefault('hdnOriginalLeaveTypeName', $leaveTypeObject->getLeaveTypeName());
+            $this->setDefault('hdnLeaveTypeId', $leaveTypeObject->getId());
+            $this->setDefault('txtLeaveTypeName', $leaveTypeObject->getName());
+            $this->setDefault('hdnOriginalLeaveTypeName', $leaveTypeObject->getName());
         }
     }
 
@@ -76,11 +76,11 @@ class LeaveTypeForm extends orangehrmForm {
         if (!empty($leaveTypeId)) {
             $leaveType = $this->getLeaveTypeService()->readLeaveType($leaveTypeId);
         } else {
-            $leaveType = new OldLeaveType();
-            $leaveType->setAvailableFlag(OldLeaveType::AVAILABLE);
+            $leaveType = new LeaveType();
+            $leaveType->setDeleted(0);
         }        
         
-        $leaveType->setLeaveTypeName($this->getValue('txtLeaveTypeName'));
+        $leaveType->setName($this->getValue('txtLeaveTypeName'));
 
         return $leaveType;        
     }
@@ -93,8 +93,8 @@ class LeaveTypeForm extends orangehrmForm {
         $deletedTypesArray = array();
 
         foreach ($deletedLeaveTypes as $deletedLeaveType) {
-            $deletedTypesArray[] = array('id' => $deletedLeaveType->getLeaveTypeId(),
-                                         'name' => $deletedLeaveType->getLeaveTypeName());
+            $deletedTypesArray[] = array('id' => $deletedLeaveType->getId(),
+                                         'name' => $deletedLeaveType->getName());
         }
 
         return json_encode($deletedTypesArray);

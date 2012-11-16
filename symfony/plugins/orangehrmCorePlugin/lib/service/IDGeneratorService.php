@@ -110,10 +110,6 @@ class IDGeneratorService extends BaseService {
                 $prefix = 'REP';
                 break;
 
-            case 'OldLeaveType':
-                $prefix = 'LTY';
-                break;
-
             case 'LeaveRequest':
                 $prefix = '';
                 break;

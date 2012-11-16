@@ -19,37 +19,37 @@
 ?>
 
 <?php
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.draggable.js');
-use_javascript('../../../scripts/jquery/ui/ui.resizable.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
+//use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
+//use_javascript('../../../scripts/jquery/ui/ui.core.js');
+//use_javascript('../../../scripts/jquery/ui/ui.draggable.js');
+//use_javascript('../../../scripts/jquery/ui/ui.resizable.js');
+//use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
 
-use_stylesheet('../orangehrmCoreLeavePlugin/css/leaveTypeListSuccess');
-use_javascript('../orangehrmCoreLeavePlugin/js/leaveTypeListSuccess');
+//use_stylesheet('../orangehrmCoreLeavePlugin/css/leaveTypeListSuccess');
+use_javascript('../orangehrmLeavePlugin/js/leaveTypeListSuccess');
 
 ?>
-<div id="messagebar" class="messageBalloon_<?php echo $messageType; ?>" >
-    <span>
-<?php 
-    if (!empty($messageType)) {
-       echo $message; 
-    }
-?>
-    </span>
-</div>
+
 
 <div id="mainDiv"> 
     <?php include_component('core', 'ohrmList'); ?>	
 </div> 
 
-<div id="deleteConfirmation" title="<?php echo __('OrangeHRM - Confirmation Required'); ?>" style="display: none;">
-    <?php echo __(CommonMessages::DELETE_CONFIRMATION); ?>
-    <div class="dialogButtons">
-        <input type="button" id="dialogDeleteBtn" class="savebutton" value="<?php echo __('Ok'); ?>" />
-        <input type="button" id="dialogCancelBtn" class="savebutton" value="<?php echo __('Cancel'); ?>" />
-    </div>
+<!-- Confirmation box HTML: Begins -->
+<div class="modal hide" id="deleteConfModal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="dialogDeleteBtn" value="<?php echo __('Ok'); ?>" />
+    <input type="button" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+  </div>
 </div>
+<!-- Confirmation box HTML: Ends -->
 
 <script type="text/javascript">
     //<![CDATA[

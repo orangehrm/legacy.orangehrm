@@ -166,7 +166,7 @@ class ApplyLeaveActionTest extends PHPUnit_Framework_TestCase {
 
         //mocking LeaveRequestService
         $leaveRequestService = $this->getMock('LeaveRequestService', array('getEmployeeAllowedToApplyLeaveTypes', 'getOverlappingLeave', 'saveLeaveRequest'));
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
 
         $leaveRequestService->expects($this->once())
                 ->method('getOverlappingLeave')
@@ -263,7 +263,7 @@ class ApplyLeaveActionTest extends PHPUnit_Framework_TestCase {
 
         //mocking LeaveRequestService
         $leaveRequestService = $this->getMock('LeaveRequestService', array('getEmployeeAllowedToApplyLeaveTypes', 'getOverlappingLeave', 'saveLeaveRequest'));
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
 
         $leaveRequestService->expects($this->once())
                 ->method('getOverlappingLeave')
@@ -365,7 +365,7 @@ class ApplyLeaveActionTest extends PHPUnit_Framework_TestCase {
 
         //mocking LeaveRequestService
         $leaveRequestService = $this->getMock('LeaveRequestService', array('getEmployeeAllowedToApplyLeaveTypes', 'getOverlappingLeave'));
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
 
         $leaveRequestService->expects($this->once())
                 ->method('getOverlappingLeave')
@@ -457,7 +457,7 @@ class ApplyLeaveActionTest extends PHPUnit_Framework_TestCase {
 
         //mocking LeaveRequestService
         $leaveRequestService = $this->getMock('LeaveRequestService', array('getEmployeeAllowedToApplyLeaveTypes', 'getOverlappingLeave'));
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'LeaveTypes');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'LeaveTypes');
 
         $leaves = TestDataService::loadObjectList('Leave', $this->fixture, 'Leave');
         $leaveRequestService->expects($this->once())

@@ -8,16 +8,13 @@
  * @property integer $leavePeriodId
  * @property date $startDate
  * @property date $endDate
- * @property Doctrine_Collection $EmployeeLeaveEntitlement
  * 
- * @method integer             getLeavePeriodId()            Returns the current record's "leavePeriodId" value
- * @method date                getStartDate()                Returns the current record's "startDate" value
- * @method date                getEndDate()                  Returns the current record's "endDate" value
- * @method Doctrine_Collection getEmployeeLeaveEntitlement() Returns the current record's "EmployeeLeaveEntitlement" collection
- * @method LeavePeriod         setLeavePeriodId()            Sets the current record's "leavePeriodId" value
- * @method LeavePeriod         setStartDate()                Sets the current record's "startDate" value
- * @method LeavePeriod         setEndDate()                  Sets the current record's "endDate" value
- * @method LeavePeriod         setEmployeeLeaveEntitlement() Sets the current record's "EmployeeLeaveEntitlement" collection
+ * @method integer     getLeavePeriodId() Returns the current record's "leavePeriodId" value
+ * @method date        getStartDate()     Returns the current record's "startDate" value
+ * @method date        getEndDate()       Returns the current record's "endDate" value
+ * @method LeavePeriod setLeavePeriodId() Sets the current record's "leavePeriodId" value
+ * @method LeavePeriod setStartDate()     Sets the current record's "startDate" value
+ * @method LeavePeriod setEndDate()       Sets the current record's "endDate" value
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -44,8 +41,6 @@ abstract class BaseLeavePeriod extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('EmployeeLeaveEntitlement', array(
-             'local' => 'leavePeriodId',
-             'foreign' => 'leave_period_id'));
+        
     }
 }
