@@ -3820,13 +3820,10 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/LeaveSummaryDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/dao/OldLeaveEntitlementDao.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/entity/LeaveParameterObject.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/exception/LeaveAllocationServiceException.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/form/LeaveListForm.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/form/LeaveSummaryForm.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/list/DetailedLeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/list/HolidayListConfigurationFactory.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/list/LeaveListActionCell.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/list/LeaveListActionHeader.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/list/LeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/list/LeaveSummaryConfigurationFactory.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/list/LeaveSummaryEmployeeNameCell.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/list/LeaveSummaryEmployeeNameHeader.php -text
@@ -4490,6 +4487,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveBalanceReportForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementAddForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementBulkAssignFilterForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementForm.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveListForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeavePeriodForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveTypeForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/MyLeaveEntitlementForm.php -text
@@ -4498,6 +4496,8 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/WorkWeekForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/sfWidgetFormSchemaFormatterPlain.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementTypeCellFilter.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListActionCell.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveTypeListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginHoliday.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginHolidayTable.class.php -text
