@@ -303,7 +303,7 @@ function printButtonEventBindings($buttons) {
                 </tfoot>
 <?php } ?>
                 </table>
-
+        <div class="bottom"><p>
 <?php renderActionBar($buttons, $buttonsPosition === ohrmListConfigurationFactory::AFTER_TABLE); ?>
 
 <?php 
@@ -311,7 +311,7 @@ function printButtonEventBindings($buttons) {
         include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'bottom'));
     }
 ?>
-
+            </p></div>
         </form> <!-- frmList_ohrmListComponent --> 
         
     </div> <!-- inner -->

@@ -109,9 +109,6 @@ class viewLeaveRequestAction extends sfAction {
     }
 
     public function execute($request) {
-
-        /* For highlighting corresponding menu item */
-        $request->setParameter('initialActionName', 'viewLeaveList');
         
         $this->backUrl = stripos($request->getReferer(), 'viewMyLeaveList') === FALSE ?
                 'leave/viewLeaveList' : 'leave/viewMyLeaveList';
@@ -124,7 +121,10 @@ class viewLeaveRequestAction extends sfAction {
         }
  
         if ($this->backUrl === 'leave/viewMyLeaveList') {
+            $request->setParameter('initialActionName', 'viewMyLeaveList');
             $this->getUser()->setFlash('myLeave', true);
+        } else {
+            $request->setParameter('initialActionName', 'viewLeaveList');    
         }
         
         $this->leaveRequestId = $request->getParameter('id');
