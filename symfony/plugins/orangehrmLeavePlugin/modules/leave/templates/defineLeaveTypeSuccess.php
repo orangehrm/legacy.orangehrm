@@ -1,52 +1,35 @@
 <?php
 
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.draggable.js');
-use_javascript('../../../scripts/jquery/ui/ui.resizable.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-
 use_javascripts_for_form($form);
 use_stylesheets_for_form($form);
 
 ?>
+<?php if ($form->hasErrors()): ?>
+    <div class="messagebar">
+        <?php include_partial('global/form_errors', array('form' => $form)); ?>
+    </div>
+<?php endif; ?>
 
-<div class="formpage">
+<div class="box" id="add-leave-type">
+    <div class="head">
+        <h1><?php echo $form->isUpdateMode() ? __('Edit Leave Type') : __('Add Leave Type'); ?></h1>
+    </div>
+    <div class="inner">
+        <?php include_partial('global/flash_messages'); ?>
+        <form id="frmLeaveType" name="frmLeaveType" method="post" action="<?php echo url_for('leave/defineLeaveType');?>">
 
-    <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
+            <fieldset>                
+                <ol>
+                    <?php echo $form->render(); ?>
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>     
+                    
+                </ol>            
 
-    <div class="outerbox" style="width:auto;">
-
-        <div class="mainHeading">
-            <h2 class="paddingLeft"><?php echo $form->isUpdateMode() ? __('Edit Leave Type') : __('Add Leave Type'); ?></h2>
-        </div>
-
-        <form name="frmLeaveType" id="frmLeaveType" 
-              action="<?php echo url_for('leave/defineLeaveType');?>" method="post">
-        
-        <?php echo $form['hdnLeaveTypeId']->render(); ?>
-        <?php echo $form['hdnOriginalLeaveTypeName']->render(); ?>
-
-        <table class="outerMost">
-            <tr valign="top">
-                <td width="70">
-                <?php echo __('Name');?> <span class="required">*</span>
-                </td>
-                <td>
-                    <?php echo $form['txtLeaveTypeName']->render(); ?>
-                    <?php if ($form['txtLeaveTypeName']->hasError()) { ?>
-                    <div>
-                        <?php echo $form['txtLeaveTypeName']->renderError(); ?>
-                    </div>
-                    <?php } ?>
-                    <?php echo $form['_csrf_token']; ?>
-                </td>
-            </tr>
-        </table>
-
-        <?php include_component('core', 'ohrmPluginPannel', array('location' => 'define-leave-type-extra-fields')); ?>
-            
-        <div class="formbuttons paddingLeft">
+<?php include_component('core', 'ohrmPluginPannel', array('location' => 'define-leave-type-extra-fields')); ?>
+                
+                <p>
 <?php 
     $actionButtons = $form->getActionButtons();
     
@@ -54,19 +37,25 @@ use_stylesheets_for_form($form);
         echo $button->render($id), "\n";        
     }
 
-?>
-        </div>
-
-    </form>
-
-    </div>
-</div>
-
-<div class="paddingLeftRequired"><span class="required">*</span> <?php echo __(CommonMessages::REQUIRED_FIELD); ?></div>
+?>                    
+                </p>                
+            </fieldset>
+            
+        </form>
+        
+    </div> <!-- inner -->
     
-<div id="undeleteDialog" title="OrangeHRM - <?php echo __('Confirmation Required')?>"  style="display:none;">
-    <?php echo __('This is a deleted leave type. Reactivate it?'); ?><br /><br />
+</div> <!-- add-leave-type -->
 
+
+<!-- Undelete Dialog: Begins -->
+<div class="modal hide" id="undeleteDialog">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p><?php echo __('This is a deleted leave type. Reactivate it?'); ?><br /><br />
     <strong><?php echo __('Yes');?></strong> - <?php echo __('Leave type will be undeleted'); ?><br />
     <strong><?php echo __('No');?></strong> - 
     <?php 
@@ -74,13 +63,16 @@ use_stylesheets_for_form($form);
                                      __('A new leave type will be created with same name');
     ?>
     <br />
-    <strong><?php echo __('Cancel');?></strong> - <?php echo __('Will take no action'); ?><br /><br />
-    <div class="dialogButtons">
-        <input type="button" id="undeleteYes" class="savebutton" value="<?php echo __('Yes');?>" />
-        <input type="button" id="undeleteNo" class="savebutton" value="<?php echo __('No');?>" />
-        <input type="button" id="undeleteCancel" class="savebutton" value="<?php echo __('Cancel');?>" />
-    </div>
-</div> <!-- undeleteDialog -->
+    <strong><?php echo __('Cancel');?></strong> - <?php echo __('Will take no action'); ?><br /><br />    
+    </p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="undeleteYes" value="<?php echo __('Yes'); ?>" />
+    <input type="button" class="btn" data-dismiss="modal" id="undeleteNo" value="<?php echo __('No'); ?>" />
+    <input type="button" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
+  </div>
+</div>
+<!-- Undelete Dialog: Ends -->
 
 <form name="frmUndeleteLeaveType" id="frmUndeleteLeaveType" 
       action="<?php echo url_for('leave/undeleteLeaveType');?>" method="post">

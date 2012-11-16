@@ -46,29 +46,15 @@ $(document).ready(function(){
             var deletedId = isDeletedLeaveType();
             if (deletedId) {
                 $('#undeleteLeaveType_undeleteId').val(deletedId);               
-                $("#undeleteDialog").dialog("open");
+                $("#undeleteDialog").modal();
             } else {
                 form.submit();
             }
-        },
-        errorElement: 'div'
-    });
-
-    $("#resetButton").click(function() {
-        validator.resetForm();
+        }
     });
 
     $('#backButton').click(function(){
         window.location.href = backButtonUrl;
-    });
-
-    // undeleteDialog
-    $("#undeleteDialog").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 355,
-        height:210,
-        position: 'middle'
     });
 
     $("#undeleteYes").click(function(){
@@ -81,9 +67,6 @@ $(document).ready(function(){
         $('#frmLeaveType').get(0).submit();
     });
 
-    $("#undeleteCancel").click(function(){
-        $("#undeleteDialog").dialog("close");
-    });
 
     loadActiveLeaveTypes();
     loadDeletedLeaveTypes();

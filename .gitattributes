@@ -3873,8 +3873,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/deleteHolidayActi
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getHolidayAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getLeaveBalanceAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getWorkWeekAjaxAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/loadActiveLeaveTypesJsonAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/loadDeletedLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/saveLeaveEntitlementsAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/undeleteLeaveTypeAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/updateCommentAction.class.php -text
@@ -4552,7 +4550,9 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeeCo
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkshiftAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/leaveTypeListAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadActiveLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadDatesforMonthAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadDeletedLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadLeavePeriodEndDateAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/showLeavePeriodNotDefinedWarningAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewHolidayListAction.class.php -text

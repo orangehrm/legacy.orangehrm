@@ -102,7 +102,7 @@ class LeaveTypeService extends BaseService {
         $activeTypeNamesArray = array();
 
         foreach ($activeLeaveTypes as $activeLeaveType) {
-            $activeTypeNamesArray[] = $activeLeaveType->getLeaveTypeName();
+            $activeTypeNamesArray[] = $activeLeaveType->getName();
         }
 
         return $activeTypeNamesArray;
@@ -117,8 +117,8 @@ class LeaveTypeService extends BaseService {
         foreach ($deletedLeaveTypes as $deletedLeaveType) {
 
             $deletedLeaveTypeObject = new stdClass();
-            $deletedLeaveTypeObject->id = $deletedLeaveType->getLeaveTypeId();
-            $deletedLeaveTypeObject->name = $deletedLeaveType->getLeaveTypeName();
+            $deletedLeaveTypeObject->id = $deletedLeaveType->getId();
+            $deletedLeaveTypeObject->name = $deletedLeaveType->getName();
             $deletedTypeNamesArray[] = $deletedLeaveTypeObject;
         }
 

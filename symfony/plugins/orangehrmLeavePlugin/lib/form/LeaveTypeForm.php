@@ -32,6 +32,8 @@ class LeaveTypeForm extends orangehrmForm {
             'hdnLeaveTypeId' => new sfWidgetFormInputHidden()
         ));
         
+        $this->getWidgetSchema()->setLabel('txtLeaveTypeName', 'Name');
+        
         $this->setValidators(array(
             'txtLeaveTypeName' => 
                 new sfValidatorString(array(
@@ -46,6 +48,7 @@ class LeaveTypeForm extends orangehrmForm {
             'hdnLeaveTypeId' => new sfValidatorString(array('required' => false))          
         ));
         $this->widgetSchema->setNameFormat('leaveType[%s]');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
     }
 
     public function setDefaultValues($leaveTypeId) {
@@ -116,15 +119,13 @@ class LeaveTypeForm extends orangehrmForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmCoreLeavePlugin/js/defineLeaveTypeSuccess.js';
+        $javaScripts[] = '/orangehrmLeavePlugin/js/defineLeaveTypeSuccess.js';
         
         return $javaScripts;
     }
     
     public function getStylesheets() {
-        $styleSheets = parent::getStylesheets();
-        $styleSheets['/orangehrmCoreLeavePlugin/css/defineLeaveTypeSuccess.css'] = 'screen';
-        
+        $styleSheets = parent::getStylesheets();        
         return $styleSheets;        
     }
     
@@ -132,9 +133,8 @@ class LeaveTypeForm extends orangehrmForm {
 
         $actionButtons = array();
         
-        $actionButtons['saveButton'] = new ohrmWidgetButton('saveButton', "Save", array('class' => 'savebutton'));
-        $actionButtons['resetButton'] = new ohrmWidgetButton('resetButton', "Reset", array('class' => 'savebutton', 'type'=> 'reset'));
-        $actionButtons['backButton'] = new ohrmWidgetButton('backButton', "Back", array('class' => 'savebutton'));
+        $actionButtons['saveButton'] = new ohrmWidgetButton('saveButton', "Save", array());
+        $actionButtons['backButton'] = new ohrmWidgetButton('backButton', "Cancel", array('class' => 'cancel'));
 
         return $actionButtons;
     }    

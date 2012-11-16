@@ -6,6 +6,9 @@ class defineLeaveTypeAction extends orangehrmAction {
     
     public function execute($request) {
         
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'leaveTypeList');
+        
         $this->form = $this->getForm();
 
         if ($request->isMethod('post')) {
@@ -35,7 +38,7 @@ class defineLeaveTypeAction extends orangehrmAction {
     protected function saveLeaveType(LeaveType $leaveType) {
         $this->getLeaveTypeService()->saveLeaveType($leaveType);
         $message = __(TopLevelMessages::SAVE_SUCCESS);        
-        $this->getUser()->setFlash('templateMessage', array('success', $message));
+        $this->getUser()->setFlash('success', $message);
     }
 
     protected function getForm() {

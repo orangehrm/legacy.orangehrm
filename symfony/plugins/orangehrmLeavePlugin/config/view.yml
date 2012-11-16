@@ -50,3 +50,7 @@ leaveTypeListSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]  
+defineLeaveTypeSuccess:
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]    

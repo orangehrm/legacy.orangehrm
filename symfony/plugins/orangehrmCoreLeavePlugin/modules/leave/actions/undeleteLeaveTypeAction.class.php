@@ -48,10 +48,10 @@ class undeleteLeaveTypeAction extends orangehrmAction {
         $leaveTypeService->undeleteLeaveType($leaveTypeId);
 
         $leaveType = $leaveTypeService->readLeaveType($leaveTypeId);
-        $leaveTypeName = $leaveType->getLeaveTypeName();
+        $leaveTypeName = $leaveType->getName();
         
         $message = __('Successfully Undeleted');
-        $this->getUser()->setFlash('templateMessage', array('success', $message));
+        $this->getUser()->setFlash('success', $message);
     }
 
 
