@@ -1263,6 +1263,7 @@ CREATE TABLE ohrm_leave_type (
   `id` int unsigned not null auto_increment,
   `name` varchar(50) not null,
   `deleted` tinyint(1) not null default 0,
+  `exclude_in_reports_if_no_entitlement` tinyint(1) not null default 0,
   `operational_country_id` int unsigned default null,
   primary key  (`id`)
 ) engine=innodb default charset=utf8;
