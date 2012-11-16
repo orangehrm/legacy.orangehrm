@@ -50,6 +50,7 @@ class viewLeaveBalanceReportAction extends sfAction {
                     $limit = $this->pager->getMaxPerPage();
         
                     $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
+                    $this->fixUnusedLeave();
                     
                     //var_dump($this->resultsSet[1]);
                     $this->reportName = $this->getReportName($reportId);
@@ -152,6 +153,26 @@ class viewLeaveBalanceReportAction extends sfAction {
         
         */
         return $tableHeaders;
+    }
+    
+    protected function fixUnusedLeave() {
+        for ($i = 0; $i < count($this->resultsSet); $i++) {
+            $total = isset($this->resultsSet[$i]['entitlement_total']) ? $this->resultsSet[$i]['entitlement_total'] : 0;
+            $scheduled = isset($this->resultsSet[$i]['scheduled']) ? $this->resultsSet[$i]['scheduled'] : 0;
+            $taken = isset($this->resultsSet[$i]['taken']) ? $this->resultsSet[$i]['taken'] : 0;
+            
+            $unused = $this->getIntValue($total) - $this->getIntValue($scheduled) - $this->getIntValue($taken);
+            $this->resultsSet[$i]['unused'] = $unused;
+        }
+
+    }
+    
+    protected function getIntValue($value) {
+        if (empty($value)) {
+            $value = 0;
+        }
+                
+        return intval($value);
     }
     private function getReportName($reportId) {
         $dao = new ReportDefinitionDao();

@@ -1,6 +1,6 @@
 DELETE FROM ohrm_advanced_report where id = 6;
 INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
-(6, 'Leave Balance Report', '
+(6, 'Leave Entitlements and Usage Report', '
 <report>
     <settings>
         <csv>
@@ -38,54 +38,6 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
         </display_group>
     </display_groups> 
 </sub_report>
-
-<sub_report type="sql" name="entitlementsAsOf">
-                    <query>
-
-FROM (
-SELECT ohrm_leave_entitlement.id as id, 
-       ohrm_leave_entitlement.leave_type_id as leave_type_id,
-       ohrm_leave_entitlement.no_of_days as no_of_days,
-       sum(IF(ohrm_leave.status = 2, ohrm_leave_leave_entitlement.length_days, 0)) AS scheduled,
-       sum(IF(ohrm_leave.status = 3, ohrm_leave_leave_entitlement.length_days, 0)) AS taken
-       
-FROM ohrm_leave_entitlement LEFT JOIN ohrm_leave_leave_entitlement ON
-    ohrm_leave_entitlement.id = ohrm_leave_leave_entitlement.entitlement_id
-    LEFT JOIN ohrm_leave ON ohrm_leave.id = ohrm_leave_leave_entitlement.leave_id AND 
-    ( $X{&gt;,ohrm_leave.date,toDate} OR $X{&lt;,ohrm_leave.date,fromDate} )
-
-WHERE $X{=,ohrm_leave_entitlement.emp_number,empNumber} AND 
-    $X{&lt;=,ohrm_leave_entitlement.from_date,asOfDate} AND
-    $X{&gt;=,ohrm_leave_entitlement.to_date,asOfDate} 
-    
-GROUP BY ohrm_leave_entitlement.id
-) AS A
-
-GROUP BY A.leave_type_id
-ORDER BY A.leave_type_id
-
-</query>
-    <id_field>leaveTypeId</id_field>
-    <display_groups>
-            <display_group name="g1" type="one" display="true">
-                <group_header></group_header>
-                <fields>
-                    <field display="false">
-                        <field_name>A.leave_type_id</field_name>
-                        <field_alias>leaveTypeId</field_alias>
-                        <display_name>Leave Type ID</display_name>
-                        <width>1</width>
-                    </field>                                
-                    <field display="true">
-                        <field_name>sum(A.no_of_days) - sum(A.scheduled) - sum(A.taken)</field_name>
-                        <field_alias>entitlement</field_alias>
-                        <display_name>Entitlments valid as of</display_name>
-                        <width>120</width>
-                    </field>                                
-                </fields>
-            </display_group>
-    </display_groups>
-    </sub_report>
 
 <sub_report type="sql" name="entitlementsTotal">
                     <query>
@@ -130,7 +82,7 @@ ORDER BY A.leave_type_id
                     <field display="true">
                         <field_name>sum(A.no_of_days) - sum(A.scheduled) - sum(A.taken)</field_name>
                         <field_alias>entitlement_total</field_alias>
-                        <display_name>Total entitlements valid for period</display_name>
+                        <display_name>Leave Entitlements</display_name>
                         <width>120</width>
                     </field>                                
                 </fields>
@@ -138,56 +90,18 @@ ORDER BY A.leave_type_id
     </display_groups>
 </sub_report>
 
-<sub_report type="sql" name="balanceQuery">
-<query>
-FROM (
-SELECT le.leave_type_id AS leave_type_id,
-       le.no_of_days AS entitled, 
-       sum(IF(l.status = 2, lle.length_days, 0)) AS scheduled, 
-       sum(IF(l.status = 3, lle.length_days, 0)) AS taken 
-FROM ohrm_leave_entitlement le LEFT JOIN 
-     ohrm_leave_leave_entitlement lle ON le.id = lle.entitlement_id LEFT JOIN
-     ohrm_leave l ON l.id = lle.leave_id
-WHERE le.deleted = 0 AND $X{=,le.emp_number,empNumber} AND 
-      $X{&lt;=,le.from_date,asOfDate} AND
-      $X{&gt;=,le.to_date,asOfDate} 
-
-GROUP BY le.id
-) AS B
-
-GROUP BY B.leave_type_id
-ORDER BY B.leave_type_id
-
-</query>
-    <id_field>leaveTypeId</id_field>
-    <display_groups>
-            <display_group name="g3" type="one" display="true">
-                <group_header></group_header>
-                <fields>
-                    <field display="false">
-                        <field_name>B.leave_type_id</field_name>
-                        <field_alias>leaveTypeId</field_alias>
-                        <display_name>Leave Type ID</display_name>
-                        <width>1</width>
-                    </field>                                
-                    <field display="true">
-                        <field_name>sum(B.entitled) - sum(B.scheduled) - sum(B.taken)</field_name>
-                        <field_alias>balance</field_alias>
-                        <display_name>Leave Balance as of Date</display_name>
-                        <width>120</width>
-                    </field>                                
-                </fields>
-            </display_group>
-    </display_groups>
-    </sub_report>
-
 <sub_report type="sql" name="scheduledQuery">
 <query>
-FROM ohrm_leave WHERE $X{=,emp_number,empNumber} AND
-status = 2 AND
+FROM ohrm_leave_type LEFT JOIN 
+ohrm_leave ON ohrm_leave_type.id = ohrm_leave.leave_type_id AND
+$X{=,ohrm_leave.emp_number,empNumber} AND
+ohrm_leave.status = 2 AND
 $X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
-GROUP BY leave_type_id
-ORDER BY ohrm_leave.leave_type_id
+WHERE
+ohrm_leave_type.deleted = 0
+
+GROUP BY ohrm_leave_type.id
+ORDER BY ohrm_leave_type.id
 </query>
     <id_field>leaveTypeId</id_field>
     <display_groups>
@@ -195,7 +109,7 @@ ORDER BY ohrm_leave.leave_type_id
                 <group_header></group_header>
                 <fields>
                     <field display="false">
-                        <field_name>ohrm_leave.leave_type_id</field_name>
+                        <field_name>ohrm_leave_type.id</field_name>
                         <field_alias>leaveTypeId</field_alias>
                         <display_name>Leave Type ID</display_name>
                         <width>1</width>
@@ -241,15 +155,38 @@ ORDER BY ohrm_leave.leave_type_id
     </display_groups>
     </sub_report>
 
+<sub_report type="sql" name="unused">       
+    <query>FROM ohrm_leave_type WHERE deleted = 0 ORDER BY ohrm_leave_type.id</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+        <display_group name="unused" type="one" display="true">
+            <group_header></group_header>
+            <fields>
+                <field display="false">
+                    <field_name>ohrm_leave_type.id</field_name>
+                    <field_alias>leaveTypeId</field_alias>
+                    <display_name>Leave Type ID</display_name>
+                    <width>1</width>	
+                </field>   
+                <field display="true">
+                    <field_name>ohrm_leave_type.name</field_name>
+                    <field_alias>unused</field_alias>
+                    <display_name>Unused Leave Entitlements</display_name>
+                    <width>160</width>	
+                </field>                                                                                                     
+            </fields>
+        </display_group>
+    </display_groups> 
+</sub_report>
 
 
     <join>             
-        <join_by sub_report="mainTable" id="leaveTypeId"></join_by>
-        <join_by sub_report="entitlementsAsOf" id="leaveTypeId"></join_by>               
+        <join_by sub_report="mainTable" id="leaveTypeId"></join_by>              
         <join_by sub_report="entitlementsTotal" id="leaveTypeId"></join_by> 
-        <join_by sub_report="balanceQuery" id="leaveTypeId"></join_by>   
         <join_by sub_report="scheduledQuery" id="leaveTypeId"></join_by>  
         <join_by sub_report="takenQuery" id="leaveTypeId"></join_by>  
+        <join_by sub_report="unused" id="leaveTypeId"></join_by>  
+
     </join>
     <page_limit>100</page_limit>
     <decorators>
