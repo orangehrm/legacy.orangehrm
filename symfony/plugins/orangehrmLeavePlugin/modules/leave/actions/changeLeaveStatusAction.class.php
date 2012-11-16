@@ -72,15 +72,15 @@ class changeLeaveStatusAction extends baseCoreLeaveAction {
                 }
             }
 
-            try {
+            //try {
 
                 $this->getLeaveRequestService()->changeLeaveStatus($changes, $changeType, $changeComments, $changedByUserType, $_SESSION['empNumber']);
                 $this->getUser()->setFlash('message', __(TopLevelMessages::UPDATE_SUCCESS));
                 $this->getUser()->setFlash('messageType', 'success');
-            } catch (Exception $e) {
-                $this->getUser()->setFlash('message', $e->getMessage());
-                $this->getUser()->setFlash('messageType', 'failure');
-            }
+            //} catch (Exception $e) {
+            //    $this->getUser()->setFlash('message', $e->getMessage());
+            //    $this->getUser()->setFlash('messageType', 'failure');
+            //}
         }
 
         if ($changedByUserType == SystemUser::USER_TYPE_EMPLOYEE) {
@@ -138,7 +138,7 @@ class changeLeaveStatusAction extends baseCoreLeaveAction {
  
             foreach ($changes as $id) {
                 $leave = $leaveRequestService->getLeaveById($id);
-                $empNumbers[] = $leave->getEmployeeId();
+                $empNumbers[] = $leave->getEmpNumber();
             }
         }
         

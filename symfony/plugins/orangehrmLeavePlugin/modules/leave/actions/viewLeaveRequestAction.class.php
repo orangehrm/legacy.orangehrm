@@ -148,7 +148,7 @@ class viewLeaveRequestAction extends sfAction {
     protected function setListComponent($leaveList) {
 
         ohrmListComponent::setConfigurationFactory($this->getListConfigurationFactory());
-        ohrmListComponent::setActivePlugin('orangehrmCoreLeavePlugin');
+        ohrmListComponent::setActivePlugin('orangehrmLeavePlugin');
         ohrmListComponent::setListData($leaveList);
         ohrmListComponent::setItemsPerPage(sfConfig::get('app_items_per_page'));
         ohrmListComponent::setNumberOfRecords(count($leaveList));

@@ -34,13 +34,13 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
     public function setup() {
 
         $this->leaveRequestService = new LeaveRequestService();
-        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestService.yml';
+        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/LeaveRequestService.yml';
 
     }
 
     /* Tests for saveLeaveRequest() */
 
-    public function testSaveLeaveRequest() {
+    public function testSaveLeaveRequest() { 
 
         $leaveRequestList = TestDataService::loadObjectList('LeaveRequest', $this->fixture, 'set1');
         $leaveList = TestDataService::loadObjectList('Leave', $this->fixture, 'set2');
@@ -138,14 +138,14 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals(1, $returnedLeaveList[0]->getLeaveId());
         $this->assertEquals('LTY001', $returnedLeaveList[0]->getLeaveTypeId());
-        $this->assertEquals(1, $returnedLeaveList[0]->getEmployeeId());
+        $this->assertEquals(1, $returnedLeaveList[0]->getEmpNumber());
         $this->assertEquals(1, $returnedLeaveList[0]->getLeaveRequestId());
         $this->assertEquals('2010-09-01', $returnedLeaveList[0]->getLeaveDate());
         $this->assertEquals(1, $returnedLeaveList[0]->getLeaveStatus());
 
         $this->assertEquals(2, $returnedLeaveList[1]->getLeaveId());
         $this->assertEquals('LTY001', $returnedLeaveList[1]->getLeaveTypeId());
-        $this->assertEquals(1, $returnedLeaveList[1]->getEmployeeId());
+        $this->assertEquals(1, $returnedLeaveList[1]->getEmpNumber());
         $this->assertEquals(1, $returnedLeaveList[1]->getLeaveRequestId());
         $this->assertEquals('2010-09-02', $returnedLeaveList[1]->getLeaveDate());
         $this->assertEquals(1, $returnedLeaveList[1]->getLeaveStatus());
@@ -638,7 +638,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
 
         $leave = new Leave();
         $leaveRequest = new LeaveRequest();
-        $leaveRequest->setLeaveRequestId(1);
+        $leaveRequest->setId(1);
         
         $changes = array(1 =>'markedForApproval',
                          21 => 'markedForRejection',
@@ -666,7 +666,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
     public function testChangeLeaveStatusForLeave() {
         
         $leaveRequest = new LeaveRequest();
-        $leaveRequest->setLeaveRequestId(1);
+        $leaveRequest->setId(1);
 
         $leave = new Leave();
         $leave->setLeaveRequest($leaveRequest);

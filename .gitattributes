@@ -3864,7 +3864,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveStateManagerInerface.php
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveTakenState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveWeekendState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/baseCoreLeaveAction.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/changeLeaveStatusAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/deleteHolidayAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getHolidayAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getLeaveBalanceAjaxAction.class.php -text
@@ -3872,7 +3871,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getWorkWeekAjaxAc
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/saveLeaveEntitlementsAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveSummaryAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewMyLeaveListAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.bg_BG.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.da_DK.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.en_US.xml -text
@@ -3922,7 +3920,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/ApplyLeaveAction.yml -tex
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/AssignLeaveAction.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveEntitlementService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveNotificationService.yml -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveRequestService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveSummaryDao.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/LeaveTypeService.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/leaveEntitlement.yml -text
@@ -3930,7 +3927,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/test/fixtures/leaveType.yml -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveRequestDaoSearchTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/LeaveSummaryDaoTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/dao/OldLeaveEntitlementDaoTest.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/test/model/service/LeaveRequestServiceTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/service/LeaveSummaryServiceTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/model/service/OldLeaveEntitlementServiceTest.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/test/orangehrmCoreLeavePluginAllTests.php -text
@@ -4531,6 +4527,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/addLeaveEntitlementAc
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/applyLeaveAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/assignLeaveAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/baseLeaveAction.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/changeLeaveStatusAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/defineHolidayAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/defineLeavePeriodAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/defineLeaveTypeAction.class.php -text
@@ -4557,6 +4554,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveModuleAction
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewLeaveRequestAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveBalanceReportAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveEntitlementsAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/viewMyLeaveListAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/_overlapping_leave.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/addLeaveEntitlementSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/applyLeaveSuccess.php -text
@@ -4580,6 +4578,7 @@ symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeavePeriodDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeavePeriodService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDaoSearch.yml -text
+symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveType.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveTypeService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/WorkWeekDao.yml -text
@@ -4597,6 +4596,7 @@ symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveEntitlementServiceT
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceGenerateEndDateTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceGenerateStartDateTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveRequestServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveTypeServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkScheduleServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkWeekServiceTest.php -text

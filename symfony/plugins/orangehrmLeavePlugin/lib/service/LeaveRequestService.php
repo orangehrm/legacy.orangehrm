@@ -594,11 +594,11 @@ class LeaveRequestService extends BaseService {
 
         $leaveRequests = array();
         foreach ($leave as $approval) {
-            $leaveRequestId = $approval->getLeaveRequest()->getLeaveRequestId();
+            $leaveRequestId = $approval->getLeaveRequest()->getId();
             $leaveRequests[$leaveRequestId]['requestObj'] = $approval->getLeaveRequest();
             $leaveRequests[$leaveRequestId]['leaves'][] = $approval;
 
-            $comment = is_array($comments) ? $comments[$approval->getLeaveId()] : $comments;
+            $comment = is_array($comments) ? $comments[$approval->getId()] : $comments;
 
             $leaveStateManager->setLeave($approval);
             $leaveStateManager->setChangeComments($comment);
@@ -612,11 +612,11 @@ class LeaveRequestService extends BaseService {
 
         $leaveRequests = array();
         foreach ($leave as $rejection) {
-            $leaveRequestId = $rejection->getLeaveRequest()->getLeaveRequestId();
+            $leaveRequestId = $rejection->getLeaveRequest()->getId();
             $leaveRequests[$leaveRequestId]['requestObj'] = $rejection->getLeaveRequest();
             $leaveRequests[$leaveRequestId]['leaves'][] = $rejection;
 
-            $comment = is_array($comments) ? $comments[$rejection->getLeaveId()] : $comments;
+            $comment = is_array($comments) ? $comments[$rejection->getId()] : $comments;
 
             $leaveStateManager->setLeave($rejection);
             $leaveStateManager->setChangeComments($comment);
@@ -630,7 +630,7 @@ class LeaveRequestService extends BaseService {
 
         $leaveRequests = array();
         foreach ($leave as $cancellation) {
-            $leaveRequestId = $cancellation->getLeaveRequest()->getLeaveRequestId();
+            $leaveRequestId = $cancellation->getLeaveRequest()->getId();
             $leaveRequests[$leaveRequestId]['requestObj'] = $cancellation->getLeaveRequest();
             $leaveRequests[$leaveRequestId]['leaves'][] = $cancellation;
 
@@ -655,7 +655,7 @@ class LeaveRequestService extends BaseService {
     public function getLeaveRequestActions($request, $loggedUserId, $listMode) {
         $actions = array();
 
-        if ($request->canApprove() && $listMode != LeaveListForm::MODE_MY_LEAVE_LIST && $request->getEmployeeId() != $loggedUserId) {
+        if ($request->canApprove() && $listMode != LeaveListForm::MODE_MY_LEAVE_LIST && $request->getEmpNumber() != $loggedUserId) {
             $actions['markedForApproval'] = 'Approve';
             $actions['markedForRejection'] = 'Reject';
         }
@@ -670,7 +670,7 @@ class LeaveRequestService extends BaseService {
     public function getLeaveActions($leave, $loggedUserId, $listMode) {
         $actions = array();
 
-        if ($leave->canApprove() && $listMode != viewLeaveRequestAction::MODE_MY_LEAVE_DETAILED_LIST && $leave->getEmployeeId() != $loggedUserId) {
+        if ($leave->canApprove() && $listMode != viewLeaveRequestAction::MODE_MY_LEAVE_DETAILED_LIST && $leave->getEmpNumber() != $loggedUserId) {
             $actions['markedForApproval'] = 'Approve';
             $actions['markedForRejection'] = 'Reject';
         }

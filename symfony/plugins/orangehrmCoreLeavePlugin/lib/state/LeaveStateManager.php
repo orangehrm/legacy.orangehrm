@@ -39,11 +39,11 @@ class LeaveStateManager implements LeaveStateManagerInterface {
 	}
 
 	public function approve() {
-		$this->setState($this->getStateObjectByValue($this->leave->getLeaveStatus()));
+		$this->setState($this->getStateObjectByValue($this->leave->getStatus()));
 
 		$this->_checkPrerequisits();
 
-		$leaveDateTimestamp = strtotime($this->leave->getLeaveDate());
+		$leaveDateTimestamp = strtotime($this->leave->getDate());
 		$currentTimestamp = strtotime(date('Y-m-d'), true);
 		
 		try {
@@ -55,8 +55,8 @@ class LeaveStateManager implements LeaveStateManagerInterface {
 			
 		}
 
-		$this->leave->setLeaveStatus($this->state->getStateValue());
-		$this->leave->setLeaveComments($this->changeComments);
+		$this->leave->setStatus($this->state->getStateValue());
+		$this->leave->setComments($this->changeComments);
 
 		$result = $this->leave->save();
 		
@@ -68,7 +68,7 @@ class LeaveStateManager implements LeaveStateManagerInterface {
 	}
 
 	public function reject() {
-		$this->setState($this->getStateObjectByValue($this->leave->getLeaveStatus()));
+		$this->setState($this->getStateObjectByValue($this->leave->getStatus()));
 
 		$this->_checkPrerequisits();
 
@@ -78,15 +78,15 @@ class LeaveStateManager implements LeaveStateManagerInterface {
 			
 		}
 
-		$this->leave->setLeaveStatus($this->state->getStateValue());
-		$this->leave->setLeaveComments($this->changeComments);
+		$this->leave->setStatus($this->state->getStateValue());
+		$this->leave->setComments($this->changeComments);
 
 		return $this->leave->save();
 	}
 
 	public function cancel() {
-		$existingStatus	=	$this->leave->getLeaveStatus();
-		$this->setState($this->getStateObjectByValue($this->leave->getLeaveStatus()));
+		$existingStatus	=	$this->leave->getStatus();
+		$this->setState($this->getStateObjectByValue($this->leave->getStatus()));
 
 		$this->_checkPrerequisits();
 
@@ -96,13 +96,13 @@ class LeaveStateManager implements LeaveStateManagerInterface {
 			
 		}
 
-		$this->leave->setLeaveStatus($this->state->getStateValue());
+		$this->leave->setStatus($this->state->getStateValue());
 
 		$this->leave->save();
 		
 		
 		if($existingStatus == Leave::LEAVE_STATUS_LEAVE_TAKEN ){
-			$this->adjustLeaveEntitlement($this->leave, -($this->leave->getLeaveLengthDays()));
+			$this->adjustLeaveEntitlement($this->leave, -($this->leave->getLengthDays()));
 		}
 		 
 		 return true;
