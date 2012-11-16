@@ -28,6 +28,12 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
                     <display_name>Leave Type ID</display_name>
                     <width>1</width>	
                 </field>   
+                <field display="false">
+                    <field_name>ohrm_leave_type.exclude_in_reports_if_no_entitlement</field_name>
+                    <field_alias>exclude_if_no_entitlement</field_alias>
+                    <display_name>Exclude</display_name>
+                    <width>1</width>	
+                </field>  
                 <field display="true">
                     <field_name>ohrm_leave_type.name</field_name>
                     <field_alias>leaveType</field_alias>

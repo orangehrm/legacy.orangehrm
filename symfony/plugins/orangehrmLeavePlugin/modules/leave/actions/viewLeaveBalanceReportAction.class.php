@@ -156,15 +156,23 @@ class viewLeaveBalanceReportAction extends sfAction {
     }
     
     protected function fixUnusedLeave() {
+        $keep = array();
+        
         for ($i = 0; $i < count($this->resultsSet); $i++) {
             $total = isset($this->resultsSet[$i]['entitlement_total']) ? $this->resultsSet[$i]['entitlement_total'] : 0;
             $scheduled = isset($this->resultsSet[$i]['scheduled']) ? $this->resultsSet[$i]['scheduled'] : 0;
             $taken = isset($this->resultsSet[$i]['taken']) ? $this->resultsSet[$i]['taken'] : 0;
+            $exclude = isset($this->resultsSet[$i]['exclude_if_no_entitlement']) ? $this->resultsSet[$i]['exclude_if_no_entitlement'] : 0;
             
-            $unused = $this->getIntValue($total) - $this->getIntValue($scheduled) - $this->getIntValue($taken);
-            $this->resultsSet[$i]['unused'] = $unused;
-        }
+            if (($total == 0) && ($scheduled == 0) && ($taken == 0) && ($exclude == 1)) {
 
+            } else {
+                $unused = $this->getIntValue($total) - $this->getIntValue($scheduled) - $this->getIntValue($taken);
+                $this->resultsSet[$i]['unused'] = $unused;
+                $keep[] = $this->resultsSet[$i];
+            }
+        }
+        $this->resultsSet = $keep;
     }
     
     protected function getIntValue($value) {
