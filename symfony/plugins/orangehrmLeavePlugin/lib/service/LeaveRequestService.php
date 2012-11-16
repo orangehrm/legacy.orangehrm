@@ -28,6 +28,8 @@ class LeaveRequestService extends BaseService {
 
     private $leaveNotificationService;
     private $leaveStateManager;
+    
+    private $dispatcher;
 
     const LEAVE_CHANGE_TYPE_LEAVE = 'change_leave';
     const LEAVE_CHANGE_TYPE_LEAVE_REQUEST = 'change_leave_request';
@@ -161,6 +163,22 @@ class LeaveRequestService extends BaseService {
         }
         return $this->leaveStateManager;
     }
+    
+    /**
+     * Set dispatcher.
+     * 
+     * @param $dispatcher
+     */
+    public function setDispatcher($dispatcher) {
+        $this->dispatcher = $dispatcher;
+    }
+
+    public function getDispatcher() {
+        if(is_null($this->dispatcher)) {
+            $this->dispatcher = sfContext::getInstance()->getEventDispatcher();
+        }
+        return $this->dispatcher;
+    }    
 
     /**
      *
@@ -603,10 +621,12 @@ class LeaveRequestService extends BaseService {
             $leaveStateManager->setLeave($approval);
             $leaveStateManager->setChangeComments($comment);
             $leaveStateManager->approve();
+        
+            $this->_notifyLeaveStatusChange($approval, LeaveEvents::LEAVE_APPROVE);            
         }
 
     }
-
+    
     private function _rejectLeave($leave, $comments, $changeType = null) {
         $leaveStateManager = $this->getLeaveStateManager();
 
@@ -621,6 +641,8 @@ class LeaveRequestService extends BaseService {
             $leaveStateManager->setLeave($rejection);
             $leaveStateManager->setChangeComments($comment);
             $leaveStateManager->reject();
+            
+            $this->_notifyLeaveStatusChange($rejection, LeaveEvents::LEAVE_APPROVE);
         }
 
     }
@@ -636,9 +658,16 @@ class LeaveRequestService extends BaseService {
 
             $leaveStateManager->setLeave($cancellation);
             $leaveStateManager->cancel();
+            
+            $this->_notifyLeaveStatusChange($cancellation, LeaveEvents::LEAVE_APPROVE);
         }
 
     }
+    
+    private function _notifyLeaveStatusChange($leave, $eventType) {
+        $this->getDispatcher()->notify(new sfEvent($this, $eventType, 
+                        array('leave' => $leave)));                                                            
+    }    
 
     public function getScheduledLeavesSum($employeeId, $leaveTypeId, $leavePeriodId) {
 

@@ -63,7 +63,9 @@
         action = action + '/id/' + leaveRequestId;
         
         $('#frmList_ohrmListComponent').attr('action', action);
-        $('#processing').html('<div class="messageBalloon_success">'+"<?php echo __('Processing'); ?>"+'...</div>');
+        
+        $('#helpText').before('<div class="message success">' + '<?php echo __('Processing'); ?>...</div>');
+        
         // check the correct url here
         $('#frmList_ohrmListComponent').submit();
     }

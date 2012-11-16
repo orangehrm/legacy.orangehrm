@@ -25,7 +25,7 @@ class LeaveStateManager implements LeaveStateManagerInterface {
 		$this->state = null;
 		$this->leave = null;
 		$this->changeComments = null;
-		$this->leaveEntitlementService = new OldLeaveEntitlementService();
+		$this->leaveEntitlementService = new LeaveEntitlementService();
 	}
 	
 	public static function instance() {
@@ -187,7 +187,7 @@ class LeaveStateManager implements LeaveStateManagerInterface {
 	}
 	
 	public function adjustLeaveEntitlement($leave, $adjustment) {
-		return $this->leaveEntitlementService->adjustEmployeeLeaveEntitlement($leave, $adjustment);
+		//return $this->leaveEntitlementService->adjustEmployeeLeaveEntitlement($leave, $adjustment);
 	}
 	
 	public function setChangeComments($comments) {
