@@ -60,7 +60,7 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
      * @param $leaveDates Array Array of LeaveDate => Length (days)
      * @return Array or false As described above
      */    
-    public function getAvailableEntitlements($empNumber, $leaveType, $leaveDates) {
+    public function getAvailableEntitlements($empNumber, $leaveType, $leaveDates, $allowNoEntitlements = false) {
 
         $result = false;
         $current = array();
@@ -217,7 +217,7 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
             }
         }
         
-        if ($entitlementsOk && (count($change) > 0 || count($current) > 0)) {
+        if ($allowNoEntitlements || ($entitlementsOk && (count($change) > 0 || count($current) > 0))) {
             $result = array('current' => $current, 'change' => $change);
         }
         

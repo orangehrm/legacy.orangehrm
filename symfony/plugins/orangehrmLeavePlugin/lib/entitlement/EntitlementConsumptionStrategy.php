@@ -25,5 +25,5 @@
 interface EntitlementConsumptionStrategy {
     
     
-    public function getAvailableEntitlements($empNumber, $leaveType, $leaveDates);
+    public function getAvailableEntitlements($empNumber, $leaveType, $leaveDates, $allowNoEntitlements = false);
 }
