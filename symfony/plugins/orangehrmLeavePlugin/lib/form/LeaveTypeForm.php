@@ -28,11 +28,13 @@ class LeaveTypeForm extends orangehrmForm {
         
         $this->setWidgets(array(
             'txtLeaveTypeName' => new sfWidgetFormInput(array(), array('size' => 30)),
+            'excludeIfNoEntitlement' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1)),
             'hdnOriginalLeaveTypeName' => new sfWidgetFormInputHidden(),
             'hdnLeaveTypeId' => new sfWidgetFormInputHidden()
-        ));
+        ));        
         
-        $this->getWidgetSchema()->setLabel('txtLeaveTypeName', 'Name');
+        $this->getWidgetSchema()->setLabel('txtLeaveTypeName', 'Name <em>*</em>');
+        $this->getWidgetSchema()->setLabel('excludeIfNoEntitlement', 'Exclude from "Leave Entitlements and Usage Report" if no entitlements');
         
         $this->setValidators(array(
             'txtLeaveTypeName' => 
@@ -44,6 +46,7 @@ class LeaveTypeForm extends orangehrmForm {
                         'required' => __('Required'),
                         'max_length' => __('Leave type name should be 50 characters or less in length')
                     )),
+            'excludeIfNoEntitlement' => new sfValidatorBoolean(),
             'hdnOriginalLeaveTypeName' => new sfValidatorString(array('required' => false)),
             'hdnLeaveTypeId' => new sfValidatorString(array('required' => false))          
         ));
@@ -60,6 +63,7 @@ class LeaveTypeForm extends orangehrmForm {
 
             $this->setDefault('hdnLeaveTypeId', $leaveTypeObject->getId());
             $this->setDefault('txtLeaveTypeName', $leaveTypeObject->getName());
+            $this->setDefault('excludeIfNoEntitlement', $leaveTypeObject->getExcludeInReportsIfNoEntitlement());
             $this->setDefault('hdnOriginalLeaveTypeName', $leaveTypeObject->getName());
         }
     }
@@ -84,6 +88,7 @@ class LeaveTypeForm extends orangehrmForm {
         }        
         
         $leaveType->setName($this->getValue('txtLeaveTypeName'));
+        $leaveType->setExcludeInReportsIfNoEntitlement($this->getValue('excludeIfNoEntitlement'));
 
         return $leaveType;        
     }

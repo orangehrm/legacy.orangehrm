@@ -7,7 +7,7 @@
  * 
  * @property integer $id
  * @property string $name
- * @property integer $exclude_in_reports_if_no_entitlement
+ * @property boolean $exclude_in_reports_if_no_entitlement
  * @property integer $deleted
  * @property integer $operational_country_id
  * @property OperationalCountry $OperationalCountry
@@ -17,7 +17,7 @@
  * 
  * @method integer             getId()                                   Returns the current record's "id" value
  * @method string              getName()                                 Returns the current record's "name" value
- * @method integer             getExcludeInReportsIfNoEntitlement()      Returns the current record's "exclude_in_reports_if_no_entitlement" value
+ * @method boolean             getExcludeInReportsIfNoEntitlement()      Returns the current record's "exclude_in_reports_if_no_entitlement" value
  * @method integer             getDeleted()                              Returns the current record's "deleted" value
  * @method integer             getOperationalCountryId()                 Returns the current record's "operational_country_id" value
  * @method OperationalCountry  getOperationalCountry()                   Returns the current record's "OperationalCountry" value
@@ -61,15 +61,8 @@ abstract class BaseLeaveType extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 50,
              ));
-        $this->hasColumn('exclude_in_reports_if_no_entitlement', 'integer', 1, array(
-             'type' => 'integer',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'default' => '0',
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 1,
+        $this->hasColumn('exclude_in_reports_if_no_entitlement', 'boolean', null, array(
+             'type' => 'boolean',
              ));
         $this->hasColumn('deleted', 'integer', 1, array(
              'type' => 'integer',

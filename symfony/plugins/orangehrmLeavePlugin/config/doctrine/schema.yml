@@ -134,13 +134,7 @@ LeaveType:
       notnull: true
       autoincrement: false
     exclude_in_reports_if_no_entitlement:
-      type: integer(1)
-      fixed: false
-      unsigned: false
-      primary: false
-      default: '0'
-      notnull: true
-      autoincrement: false      
+      type: boolean    
     deleted:
       type: integer(1)
       fixed: false
