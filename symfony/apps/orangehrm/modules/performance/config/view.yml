@@ -15,3 +15,6 @@ viewReviewSuccess:
 
 saveReviewSuccess:
   layout: freshorange
+
+performanceReviewSuccess:
+  layout: freshorange

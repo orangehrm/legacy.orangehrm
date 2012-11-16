@@ -66,10 +66,18 @@ class SaveReviewForm extends BaseForm {
         $reviewId = $this->getOption('reviewId');
         if (!empty($reviewId)) {
             $review = $this->getPerformanceReviewService()->readPerformanceReview($reviewId);
+            $employee = array(
+                'empName' => $review->getEmployee()->getFullName(), 
+                'empId' => $review->getEmployee()->getEmployeeId()
+            );
+            $reviewer = array(
+                'empName' => $review->getReviewer()->getFullName(), 
+                'empId' => $review->getReviewer()->getEmployeeId()
+            );
             $this->setDefaults(array(
                 'reviewId' => $review->getId(),
-                'employeeName' => $review->getEmployee()->getFirstName() . " " . $review->getEmployee()->getLastName(),
-                'reviewerName' => $review->getReviewer()->getFirstName() . " " . $review->getReviewer()->getLastName(),
+                'employeeName' => $employee,
+                'reviewerName' => $reviewer,
                 'from_date' => $review->getPeriodFrom(),
                 'to_date' => $review->getPeriodTo(),
                 'dueDate' => $review->getDueDate(),

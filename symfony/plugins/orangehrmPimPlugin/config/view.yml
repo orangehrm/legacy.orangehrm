@@ -32,3 +32,5 @@ viewReportToDetailsSuccess:
   layout: freshorange
 viewUsTaxExemptionsSuccess:
   layout: freshorange
+addEmployeeSuccess:
+  layout: freshorange

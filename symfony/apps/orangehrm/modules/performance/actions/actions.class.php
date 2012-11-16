@@ -377,6 +377,9 @@ class performanceActions extends sfActions {
      * @return none
      */
     public function executePerformanceReview(sfWebRequest $request) {
+        
+        /* For highlighting corresponding menu item */  
+        $request->setParameter('initialActionName', 'viewReview'); 
 
         $this->form = new PerformanceReviewForm(array(), array(), true);
 
@@ -387,10 +390,6 @@ class performanceActions extends sfActions {
         $performanceService = $this->getPerformanceKpiService();
         
         $this->_checkPerformanceReviewAuthentication($performanceReview);
-
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            $this->templateMessage = $this->getUser()->getFlash('templateMessage');
-        }
         
         $this->performanceReview = $performanceReview;
         $performanceKpiList = $performanceService->getPerformanceKpiList($performanceReview->getKpis());
@@ -447,7 +446,7 @@ class performanceActions extends sfActions {
                 if (trim($request->getParameter('txtMainComment')) != '') {
                     $performanceReviewService->addComment($performanceReview, $request->getParameter('txtMainComment'), $_SESSION['empNumber']);
                 }
-                $this->getUser()->setFlash('templateMessage', array('SUCCESS', __(TopLevelMessages::UPDATE_SUCCESS)));
+                $this->getUser()->setFlash('success', __(TopLevelMessages::UPDATE_SUCCESS));
                 $this->redirect('performance/performanceReview?id=' . $id);
             }
         }
@@ -544,8 +543,7 @@ class performanceActions extends sfActions {
         (!empty($reviewId)) ? $this->reviewId = $reviewId : '';
         
         $this->form = new SaveReviewForm(array(), array('reviewId' => $reviewId), true);
-        
-        
+                
         /* Saving Performance Reviews */
 
         if ($request->isMethod('post')) {
@@ -566,9 +564,8 @@ class performanceActions extends sfActions {
                 if (empty($empJobCode)) {
 
                     if (trim($reviewId) == "") {
-
-                        $this->getUser()->setFlash('warninig', __('Failed to Add: No Job Title Assigned'));
-                        return;
+                        $this->getUser()->setFlash('warning', __('Failed to Add: No Job Title Assigned'));
+                        $this->redirect('performance/saveReview');
                     }
 
                     $empJobCode = $this->getPerformanceReviewService()->readPerformanceReview($reviewId)->getJobTitleCode();
@@ -577,13 +574,12 @@ class performanceActions extends sfActions {
                 $kpiService = $this->getKpiService();
                 $performanceKpiService = $this->getPerformanceKpiService();
                 $kpiList = $kpiService->getKpiForJobTitle($empJobCode);
-
+                
                 if (count($kpiList) == 0) {
-                    $this->getUser()->setFlash('warninig', __('No Key Performance Indicators were found for the job 
-                        title of this employee') . " " . '<a href="saveKpi">' . __("Define Now") . '</a>');
+                    $this->noKpiDefined = true;
                     return;
                 }
-
+                
                 $performanceReviewService = $this->getPerformanceReviewService();
 
                 if (!empty($reviewId)) { // Updating an existing one
@@ -617,6 +613,8 @@ class performanceActions extends sfActions {
                 $actionResult = (!empty($reviewId)) ? __('updated') : __('added');
                 $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS) . 
                     ' <a href="viewReview">' .__('View').'</a>');
+                
+                $this->redirect('performance/viewReview/mode/new');
             }
         }
     }

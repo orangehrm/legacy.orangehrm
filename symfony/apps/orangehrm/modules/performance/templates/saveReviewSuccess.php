@@ -13,7 +13,16 @@ $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
     <div class="inner">
         
         <?php include_partial('global/flash_messages'); ?>
-        
+
+        <?php if (isset($noKpiDefined)) { ?>
+            <div class = "message warning">
+                <?php
+                echo __('No Key Performance Indicators were found for the job title of this employee') . " " .
+                '<a href="saveKpi">' . __("Define Now") . '</a>';
+                ?>
+                <a href="#" class="messageCloseButton"><?php echo __('Close'); ?></a>
+            </div>
+        <?php } ?>
         <form action="#" id="frmSave" name="frmSave" class="content_inner" method="post">
             <?php // echo $form ?>
             <fieldset>

@@ -117,7 +117,6 @@ $formatData['newSeparater'] = '/';
 
 <div class="box noHeader" id="search-results">
 
-    <?php include_partial('global/flash_messages'); ?>
 
     <div class="inner">
         <form method="post" action="#" id="frmList" name="frmList">
@@ -140,6 +139,9 @@ $formatData['newSeparater'] = '/';
                                tabindex="11" disabled />
                     <?php } ?>     
                 </div>
+                
+                <?php include_partial('global/flash_messages'); ?>
+                
                 <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
                     <thead>
                         <tr>

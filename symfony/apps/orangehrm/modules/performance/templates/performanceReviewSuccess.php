@@ -1,163 +1,137 @@
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.validate.js');?>"></script>
 
-<?php echo stylesheet_tag('performance/performanceReviewSuccess'); ?>
+<div class="box miniList" id="performanceReviewcontentContainer">
+    
+    <div class="head" id="formHeading" >
+        <h1><?php echo __("Performance Review")?></h1>
+    </div>
 
+    <div class="inner">
+        
+        <?php include_partial('global/flash_messages'); ?>
+        
+        <form action="#" id="frmSave" class="content_inner" method="post">
 
-<div id="content">
-	<div id="performanceReviewcontentContainer">
-	<?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
-        <div class="outerbox">
-            <div id="formHeading" class="mainHeading"><h2><?php echo __("Performance Review")?></h2></div>
+            <?php echo $form['_csrf_token']; ?>
+            <input type="hidden" name="id" id="id" value="<?php echo $performanceReview->getId() ?>"/>
+            <input type="hidden" name="saveMode" id="saveMode" value="" />
 
-			<form action="#" id="frmSave" class="content_inner" method="post">
+            <fieldset>
+                <ol>
+                    <li>
+                        <label><?php echo __("Employee") ?></label>
+                        <label><?php echo $performanceReview->getEmployee()->getFirstName() ?> 
+                            <?php echo $performanceReview->getEmployee()->getLastName() ?></label>
+                    </li>
+                    <li>
+                        <label><?php echo __("Job Title") ?></label>
+                        <label><?php echo htmlspecialchars_decode($performanceReview->getJobTitle()->getJobTitleName()) ?> </label>
+                    </li>
+                    <li>
+                        <label><?php echo __("Reviewer") ?></label>
+                        <label><?php echo $performanceReview->getReviewer()->getFirstName() ?> <?php echo $performanceReview->getReviewer()->getLastName() ?></label>
+                    </li>
+                    <li>
+                        <label><?php echo __("Review Period") ?></label>
+                        <label><?php echo set_datepicker_date_format($performanceReview->getPeriodFrom()) ?>-<?php echo set_datepicker_date_format($performanceReview->getPeriodTo()) ?></label>
+                    </li>
+                    <li>
+                        <label><?php echo __("Status") ?></label>
+                        <label><?php echo __($performanceReview->getTextStatus()) ?> </label>
+                    </li>
+                    <?php if (count($performanceReview->getPerformanceReviewComment()) > 0) { ?>
+                    <li>
+                        <label><?php echo __("Notes") ?></label>
+                        <table>
+                            <tr>
+                                <td width="100px"><?php echo __("Date") ?></td>
+                                <td width="150px"><?php echo __("Employee") ?></td>
+                                <td width="350px"><?php echo __("Comment") ?></td>
+                            </tr>
+                            <?php foreach ($performanceReview->getPerformanceReviewComment() as $comment) { ?>
+                            <tr>
+                                <td ><?php echo set_datepicker_date_format($comment->getCreateDate()) ?></td>
+                                <td ><?php echo ($comment->getEmployee()->getFullName() != '') ? 
+                                $comment->getEmployee()->getFullName() : __('Admin') ?></td>
+                                <td ><?php echo $comment->getComment() ?></td>
+                            </tr>
+                            <?php } ?>
+                        </table>
+                    </li>
+                    <?php } ?>
+                </ol>
+            </fieldset>
+            <input type="hidden" name="validRate" id="validRate" value="1" />
+            
+            <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                <thead>
+                    <tr>
+                        <th width="40%" scope="col"><?php echo __("Key Performance Indicator") ?></th>
+                        <th scope="col" width="10%"><?php echo __("Min Rate") ?></th>
+                        <th scope="col" width="10%"><?php echo __("Max Rate") ?></th>
+                        <th scope="col" width="10%"><?php echo __("Rating") ?></th>
+                        <th scope="col" width="30%"><?php echo __("Reviewer Comments") ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($kpiList as $kpi) { ?>
+                        <tr class="odd">
+                            <td >
+                                <?php echo $kpi->getKpi() ?>
+                            </td>
+                            <td >
+                                <?php echo ($kpi->getMinRate() != '') ? $kpi->getMinRate() : '-' ?>
+                            </td>
+                            <td >
+                                <?php echo ($kpi->getMaxRate() != '') ? $kpi->getMaxRate() : '-' ?>
+                            </td>
+                            <td  >
+                                <input type="hidden" name="max<?php echo $kpi->getId() ?>" id="max<?php echo $kpi->getId() ?>" value="<?php echo $kpi->getMaxRate() ?>" />
+                                <input type="hidden" name="min<?php echo $kpi->getId() ?>" id="min<?php echo $kpi->getId() ?>" value="<?php echo $kpi->getMinRate() ?>" />
+                                <input id="txtRate<?php echo $kpi->getId() ?>"  name="txtRate[<?php echo $kpi->getId() ?>]" type="text"  class="smallInput" value="<?php echo trim($kpi->getRate()) ?>"  maxscale="<?php echo $kpi->getMaxRate() ?>" minscale="<?php echo $kpi->getMinRate() ?>" valiadate="1" />
+                            </td>
+                            <td class="">
+                                <textarea id='txtComments' class="reviwerComment" name='txtComments[<?php echo $kpi->getId() ?>]'
+                                            rows="2" cols="40">
+                                    <?php echo htmlspecialchars_decode(trim($kpi->getComment())) ?>
+                                </textarea>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <?php if (($isHrAdmin || $isReviwer) && 
+                    ($performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)) { ?>
+            <p>
+                <label width="40%"><?php echo __("Note") ?></label>
+                <textarea id='txtMainComment' name='txtMainComment' class="formTextArea" rows="4" cols="60" ></textarea>
+            </p>                    
+            <?php } ?>
 
-                        <?php echo $form['_csrf_token']; ?>
+            <p>
+                <?php if (($isReviwer && ($performanceReview->getState() <= PerformanceReview::PERFORMANCE_REVIEW_STATUS_BEING_REVIWED || $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_REJECTED)) || ( $isHrAdmin && $performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)) { ?>
+                    <input type="button" class="" id="saveBtn" value="<?php echo __("Edit") ?>"  />
+                <?php } ?>
 
-			<input type="hidden" name="id" id="id" value="<?php echo $performanceReview->getId()?>"/>
-			<input type="hidden" name="saveMode" id="saveMode" value="" />
+                <?php if ($isReviwer && ( $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SCHDULED || $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_BEING_REVIWED || $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_REJECTED)) { ?>
+                    <input type="button" class="" id="submitBtn" value="<?php echo __("Submit") ?>"  />
+                <?php } ?>
 
-              	<div id="formWrapper">
-                     <label class="detailHearder"><?php echo __("Employee")?></label>
-                     <label class="detail"><?php echo $performanceReview->getEmployee()->getFirstName()?> <?php echo $performanceReview->getEmployee()->getLastName()?></label>
-                   <br class="clear"/>
-                   <label class="detailHearder"><?php echo __("Job Title")?></label>
-                     <label class="detail"><?php echo htmlspecialchars_decode($performanceReview->getJobTitle()->getJobTitleName())?> </label>
-                   <br class="clear"/>
-				     <label class="detailHearder"><?php echo __("Reviewer")?></label>
-                     <label class="detail"><?php echo $performanceReview->getReviewer()->getFirstName()?> <?php echo $performanceReview->getReviewer()->getLastName()?></label>
-                   <br class="clear"/>
-				     <label class="detailHearder"><?php echo __("Review Period")?></label>
-                                     <label class="detail"><?php echo set_datepicker_date_format($performanceReview->getPeriodFrom())?>-<?php echo set_datepicker_date_format($performanceReview->getPeriodTo())?></label>
-                   <br class="clear"/>
-					 <label class="detailHearder"><?php echo __("Status")?></label>
-                     <label class="detail"><?php echo __($performanceReview->getTextStatus())?> </label>
-                   <br class="clear"/>
-					 <?php if( count($performanceReview->getPerformanceReviewComment()) > 0){?>
-					 <label class="detailHearder"><?php echo __("Notes")?></label>
-					 <label class="detail">
+                <?php if ($isHrAdmin && $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SUBMITTED) { ?>
+                    <input type="button" class="delete" id="rejectBtn" value="<?php echo __("Reject") ?>"  />
+                <?php } ?>
 
-						 <table width="600px">
-						 <th>
-						 	<tr>
-						 		<td width="100px"><b><?php echo __("Date")?></b></td>
-						 		<td width="150px"><b><?php echo __("Employee")?></b></td>
-						 		<td width="350px"><b><?php echo __("Comment")?></b></td>
-						 	</tr>
-						 </th>
-	                     <?php foreach( $performanceReview->getPerformanceReviewComment() as $comment){?>
-	                     	<tr>
-                                    <td ><?php echo set_datepicker_date_format($comment->getCreateDate())?></td>
-	                     		<td ><?php echo ($comment->getEmployee()->getFullName() != '')? $comment->getEmployee()->getFullName():__('Admin')?></td>
-	                     		<td ><?php echo $comment->getComment()?></td>
-	                     	</tr>
+                <?php if ($isHrAdmin && ( $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SUBMITTED )) { ?>
+                    <input type="button" class="" id="approveBtn" value="<?php echo __("Approve") ?>"  />
+                <?php } ?>
 
-	                     <?php }?>
-	                     </table>
+                <input type="button" class="reset" id="backBtn" value="<?php echo __("Back"); ?>" />
+            </p>
+        </form>
+        
+    </div> <!-- inner -->
+    
+</div> <!-- performanceReviewcontentContainer -->
 
-                     </label>
-                   <br class="clear"/>
-                   <?php }?>
-
-				   <div id="tableWrapper">
-				   <input type="hidden" name="validRate" id="validRate" value="1" />
-				   <div id="performanceError" class="hide">
-				   	<div id='messageBalloon_failure' class='messageBalloon_failure' ><ul></ul></div>
-				   </div>
-                        <table cellpadding="0" cellspacing="0" class="data-table prData" align="left" width="100%">
-					<thead>
-            		<tr>
-
-            			<td width="10px" scope="col">
-
-						</td>
-						<td width="490px" scope="col">
-						<?php echo __("Key Performance Indicator")?>
-						</td>
-						<td scope="col" width="100">
-						 <?php echo __("Min Rate")?>
-						</td>
-						<td scope="col" width="100">
-						 <?php echo __("Max Rate")?>
-						</td>
-						<td scope="col" width="100">
-						 <?php echo __("Rating")?>
-						</td>
-						<td scope="col" width="200">
-						 <?php echo __("Reviewer Comments")?>
-						</td>
-            		</tr>
-    			</thead>
-            	<tbody>
-            	<?php foreach( $kpiList as $kpi){?>
-            		<tr class="odd">
-            				<td class="">
-
-				 			</td>
-		       				<td >
-				 				<?php echo $kpi->getKpi()?>
-				 			</td>
-				 			<td >
-				 				 <?php echo ($kpi->getMinRate()!= '')?$kpi->getMinRate():'-'?>
-				 			</td>
-				 			<td >
-				 				 <?php echo ($kpi->getMaxRate() !='')?$kpi->getMaxRate():'-'?>
-				 			</td>
-							<td  >
-								<input type="hidden" name="max<?php echo $kpi->getId()?>" id="max<?php echo $kpi->getId()?>" value="<?php echo $kpi->getMaxRate()?>" />
-								<input type="hidden" name="min<?php echo $kpi->getId()?>" id="min<?php echo $kpi->getId()?>" value="<?php echo $kpi->getMinRate()?>" />
-				 				 <input id="txtRate<?php echo $kpi->getId()?>"  name="txtRate[<?php echo $kpi->getId()?>]" type="text"  class="smallInput" value="<?php echo trim($kpi->getRate())?>"  maxscale="<?php echo $kpi->getMaxRate()?>" minscale="<?php echo $kpi->getMinRate()?>" valiadate="1" />
-				 			</td>
-							<td class="">
-				 				<textarea id='txtComments' class="reviwerComment" name='txtComments[<?php echo $kpi->getId()?>]'
-                    rows="4" cols="76" ><?php echo htmlspecialchars_decode(trim($kpi->getComment()))?></textarea>
-				 			</td>
-
-				 	</tr>
-				 <?php } ?>
-
-					</tbody>
-				</table>
-				</div>
-				<?php if(($isHrAdmin || $isReviwer) && ($performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)){?>
-				  <label class="detailHearder"><?php echo __("Note")?></label>
-                     <textarea id='txtMainComment' name='txtMainComment' class="formTextArea"
-                    rows="4" cols="60" ></textarea>
-                   <br class="clear"/>
-                 <?php }?>
-               </div>
-            </form>
-				<div id="buttonWrapper" class="formbuttons">&nbsp;
-                    <?php if(($isReviwer && ($performanceReview->getState() <= PerformanceReview::PERFORMANCE_REVIEW_STATUS_BEING_REVIWED || $performanceReview->getState()==PerformanceReview::PERFORMANCE_REVIEW_STATUS_REJECTED)) || ( $isHrAdmin && $performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)){?>
-                    <input type="button" class="savebutton" id="saveBtn"
-                        value="<?php echo __("Edit")?>"  />
-                      <?php }?>
-
-                    <?php if( $isReviwer && ( $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SCHDULED ||  $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_BEING_REVIWED ||  $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_REJECTED)){?>
-					<input type="button" class="savebutton" id="submitBtn"
-                        value="<?php echo __("Submit")?>"  />
-                     <?php } ?>
-
-                     <?php if( $isHrAdmin && $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SUBMITTED){?>
-                     <input type="button" class="savebutton" id="rejectBtn"
-                        value="<?php echo __("Reject")?>"  />
-                      <?php } ?>
-
-                      <?php if( $isHrAdmin && ( $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SUBMITTED )){?>
-                      <input type="button" class="savebutton" id="approveBtn"
-                        value="<?php echo __("Approve")?>"  />
-                      <?php }?>
-
-                      <input type="button" class="savebutton" id="backBtn" value="<?php echo __("Back");?>" />
-
-                </div>
-
-
-
-        </div>
- 	</div>
-
-
- </div>
   <script type="text/javascript">
 
 	//Check autosave

@@ -1,10 +1,6 @@
 $(document).ready(function() {
-    $("label[for='systemUser_chkChangePassword']").hide();
-    $("label[for='systemUser_chkChangeSecPassword']").hide();
-    $("#systemUser_chkChangePassword").hide();
-    $("#systemUser_chkChangeSecPassword").hide();
-    $("#systemUser_chkChangePassword").next("br").attr('class', 'chkChangePasswordBr').hide();
-    $("#systemUser_chkChangeSecPassword").next("br").attr('class', 'chkChangeSecPasswordBr').hide();
+    $("label[for='systemUser_chkChangePassword']").parent('li').addClass('checkChangePassword').hide();
+    $("label[for='systemUser_chkChangeSecPassword']").parent('li').addClass('checkChangeSecPassword').hide();
     $('.secPassReq').hide();    
 
     $(':input.password').each(function(){
@@ -18,15 +14,11 @@ $(document).ready(function() {
     $('#systemUser_password').after('<label class="score"/>');
     $('#systemUser_secondaryPassword').after('<label class="scoreSec"/>');
 
-    if (isEditMode) {
+    if (isEditMode == 'true') {
+        $('.checkChangePassword').show();
+        $('.checkChangeSecPassword').show();
         $('.passwordDiv').css("display", "none");
         $('.secPasswordDiv').css("display", "none");
-        $("label[for='systemUser_chkChangePassword']").show();
-        $("label[for='systemUser_chkChangeSecPassword']").show();
-        $("#systemUser_chkChangePassword").show();
-        $("#systemUser_chkChangeSecPassword").show();
-        $('.chkChangePasswordBr').show();
-        $('.chkChangeSecPasswordBr').show();
         $('.secPassReq').show();
     }
     
