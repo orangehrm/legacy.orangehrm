@@ -51,7 +51,7 @@ class updateCommentAction extends baseCoreLeaveAction {
 
         if ($leaveId != "") {
             $leave = $leaveRequestService->readLeave($leaveId);
-            $statusId = $leave->getLeaveStatus();
+            $statusId = $leave->getStatus();
 
             if ($essMode && $statusId != PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL) { //ess can not comment on leaves other than status 'pending'
                 $flag = 0;

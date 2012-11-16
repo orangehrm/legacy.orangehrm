@@ -1,29 +1,3 @@
-<?php
-$messageType = empty($messageType) ? '' : "messageBalloon_{$messageType}";
-?>
-
-
-<?php echo stylesheet_tag('../orangehrmCoreLeavePlugin/css/viewLeaveListSuccess'); ?>
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.draggable.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.resizable.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.dialog.js') ?>"></script>
-
-
-<?php if ($messageType == "messageBalloon_notice") {
-    ?>
-    <div class="<?php echo $messageType; ?>"><?php echo $message; ?></div>
-<?php } ?>
-<div class="outerbox">
-    <div class="mainHeading"><h2><?php echo $title; ?></h2></div>
-
-</div> <!-- End of outerbox -->
-<?php if ($messageType == "messageBalloon_success") {
-    ?>
-    <div class="<?php echo $messageType; ?>"><?php echo $message; ?></div>
-<?php } ?>
 <div id="processing"></div>
 
 <!--this is ajax message place -->
@@ -32,22 +6,31 @@ $messageType = empty($messageType) ? '' : "messageBalloon_{$messageType}";
 
 <?php include_component('core', 'ohrmList'); ?>
 <input type="hidden" name="hdnMode" value="<?php echo $mode; ?>" />
-<!-- comment dialog -->
 
-<div id="commentDialog" title="<?php echo __('Leave Comment'); ?>">
+<!-- comment dialog -->
+<div class="modal hide" id="commentDialog">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('Leave Comment'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p>
     <form action="updateComment" method="post" id="frmCommentSave">
         <input type="hidden" id="leaveId" />
         <input type="hidden" id="leaveOrRequest" />
         <textarea name="leaveComment" id="leaveComment" cols="40" rows="10" class="commentTextArea"></textarea>
         <br class="clear" />
-        <div class="error" id="commentError"></div>
-        <div><input type="button" id="commentSave" class="plainbtn" value="<?php echo __('Edit'); ?>" />
-            <input type="button" id="commentCancel" class="plainbtn" value="<?php echo __('Cancel'); ?>" /></div>
-    </form>
+        <div id="commentError"></div>
+
+    </form>        
+    </p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" id="commentSave" value="<?php echo __('Edit'); ?>" />
+    <input type="button" class="btn reset" data-dismiss="modal" id="commentCancel" value="<?php echo __('Cancel'); ?>" />
+  </div>
 </div>
-
 <!-- end of comment dialog-->
-
 
 <script type="text/javascript">
     //<![CDATA[
@@ -96,13 +79,6 @@ $messageType = empty($messageType) ? '' : "messageBalloon_{$messageType}";
 
     $(document).ready(function(){
 
-        //disabling dialog by default
-        $("#commentDialog").dialog({
-            autoOpen: false,
-            width: 350,
-            height: 300
-        });
-
         //open when the pencil mark got clicked
         $('.dialogInvoker').click(function() {
             $("#leaveComment").attr("disabled","disabled");
@@ -133,12 +109,12 @@ $messageType = empty($messageType) ? '' : "messageBalloon_{$messageType}";
             $('#leaveComment').val(comment);
             $('#leaveOrRequest').val(typeOfView);
 
-            $('#commentDialog').dialog('open');
+            $('#commentDialog').modal();
         });                
 
         //closes the dialog
         $("#commentCancel").click(function() {
-            $("#commentDialog").dialog('close');
+            $("#commentDialog").modal('hide');
         });
 
         //on clicking on save button
@@ -162,7 +138,7 @@ $messageType = empty($messageType) ? '' : "messageBalloon_{$messageType}";
 
                 /* If there is no-change between original and updated comments then don't show success message */
                 if($('#hdnLeaveComment-' + $("#leaveId").val()).val().trim() == comment) {
-                    $('#commentDialog').dialog('close');
+                    $('#commentDialog').modal('hide');
                     return;
                 }
 
@@ -190,13 +166,18 @@ $messageType = empty($messageType) ? '' : "messageBalloon_{$messageType}";
                             var id = $('#leaveId').val();
                             $('#commentContainer-' + id).html(commentLabel);
                             $('#hdnLeaveComment-' + id).val(comment);
-                            $('#msgPlace').attr('class', 'messageBalloon_success');
-                            $('#msgPlace').html('<?php echo __(TopLevelMessages::SAVE_SUCCESS); ?>');
+                            
+                            $('#helpText').before('<div class="message success fadable">' + '<?php echo __(TopLevelMessages::SAVE_SUCCESS); ?>' + '<a href="#" class="messageCloseButton">' + '<?php echo __('Close'); ?>' + '</a></div>');
+                            setTimeout(function(){
+                                $("div.fadable").fadeOut("slow", function () {
+                                    $("div.fadable").remove();
+                                });
+                            }, 2000);                            
                         }
                     }
                 });
 
-                $("#commentDialog").dialog('close');
+                $("#commentDialog").modal('hide');
                 return;
             }
         });

@@ -105,13 +105,8 @@ class LeaveRequestDao extends BaseDao {
         }
     }
 
-    public function xsaveLeave(Leave $leave) {
+    public function saveLeave(Leave $leave) {
         try {
-            if ($leave->getLeaveId() == '') {
-                $idGenService = new IDGeneratorService();
-                $idGenService->setEntity($leave);
-                $leave->setLeaveId($idGenService->getNextID());
-            }
             $leave->save();
             return true;
         } catch (Exception $e) {
@@ -508,12 +503,12 @@ class LeaveRequestDao extends BaseDao {
      * @param int $leaveId
      * @return array
      */
-    public function xreadLeave($leaveId) {
+    public function readLeave($leaveId) {
 
         $q = Doctrine_Query::create()
                 ->select('*')
                 ->from('Leave l')
-                ->where('leave_id = ?', $leaveId);
+                ->where('l.id = ?', $leaveId);
 
         return $q->fetchOne();
     }
@@ -529,30 +524,30 @@ class LeaveRequestDao extends BaseDao {
         return $q->fetchOne();
     }
 
-    public function xgetLeaveById($leaveId) {
+    public function getLeaveById($leaveId) {
         $this->_markApprovedLeaveAsTaken();
 
         $q = Doctrine_Query::create()
                 ->select('*')
                 ->from('Leave l')
-                ->where('leave_id = ?', $leaveId);
+                ->where('id = ?', $leaveId);
 
         return $q->fetchOne();
     }
 
-    public function xgetScheduledLeavesSum($employeeId, $leaveTypeId, $leavePeriodId) {
+    public function getScheduledLeavesSum($employeeId, $leaveTypeId, $leavePeriodId) {
         $this->_markApprovedLeaveAsTaken();
 
         try {
 
             $q = Doctrine_Query::create()
-                    ->select('SUM(lea.leave_length_days) as scheduledSum')
+                    ->select('SUM(lea.length_days) as scheduledSum')
                     ->from('Leave lea')
-                    ->leftJoin('lea.LeaveRequest lr')
-                    ->where("lea.employee_id = '$employeeId'")
-                    ->andWhere("lea.leave_type_id = '$leaveTypeId'")
-                    ->andWhere("lea.leave_status = " . Leave::LEAVE_STATUS_LEAVE_APPROVED)
-                    ->andWhere("lr.leave_period_id = $leavePeriodId")
+                    //->leftJoin('lea.LeaveRequest lr')
+                    ->where("lea.emp_number = ?", $employeeId)
+                    ->andWhere("lea.leave_type_id = ?", $leaveTypeId)
+                    ->andWhere("lea.status = ?", Leave::LEAVE_STATUS_LEAVE_APPROVED)
+                    //->andWhere("lr.leave_period_id = $leavePeriodId")
             ;
 
             $record = $q->fetchOne();
@@ -563,18 +558,17 @@ class LeaveRequestDao extends BaseDao {
         }
     }
 
-    public function xgetTakenLeaveSum($employeeId, $leaveTypeId, $leavePeriodId) {
+    public function getTakenLeaveSum($employeeId, $leaveTypeId, $leavePeriodId) {
 
         $this->_markApprovedLeaveAsTaken();
 
         $q = Doctrine_Query::create()
-                ->select('SUM(lea.leave_length_days) as scheduledSum')
+                ->select('SUM(lea.length_days) as scheduledSum')
                 ->from('Leave lea')
-                ->leftJoin('lea.LeaveRequest lr')
-                ->where("lea.employee_id = $employeeId")
-                ->andWhere("lea.leave_type_id = '$leaveTypeId'")
-                ->andWhere("lea.leave_status = " . Leave::LEAVE_STATUS_LEAVE_TAKEN)
-                ->andWhere("lr.leave_period_id = $leavePeriodId")
+                ->where("lea.emp_number = ?", $employeeId)
+                ->andWhere("lea.leave_type_id = ?", $leaveTypeId)
+                ->andWhere("lea.status = ?", Leave::LEAVE_STATUS_LEAVE_TAKEN)                
+
         ;
 
         $record = $q->fetchOne();

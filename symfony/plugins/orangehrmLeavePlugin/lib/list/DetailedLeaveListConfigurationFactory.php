@@ -52,7 +52,7 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'center',
-            'elementProperty' => array('getter' => 'getLeaveLengthHours', 'hideIfCallback' => 'isNonWorkingDay'),
+            'elementProperty' => array('getter' => 'getLengthHours', 'hideIfCallback' => 'isNonWorkingDay'),
         ));
 
         $header5->populateFromArray(array(
@@ -72,7 +72,7 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
                 'hiddenFieldValueGetter' => 'getDetailedLeaveListRequestIdHolderValue',
                 'hiddenFieldClass' => 'requestIdHolder',
                 'placeholderGetters' => array(
-                    'id' => 'getLeaveId',
+                    'id' => 'getId',
                 ),
             ),
         ));
@@ -84,14 +84,14 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
             'elementType' => 'comment',
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
-                'getter' => 'getLeaveComments',
+                'getter' => 'getComments',
                 'idPattern' => 'hdnLeaveComment-{id}',
                 'namePattern' => 'leaveComments[{id}]',
-                'placeholderGetters' => array('id' => 'getLeaveId'),
+                'placeholderGetters' => array('id' => 'getId'),
                 'hasHiddenField' => true,
                 'hiddenFieldName' => 'leave[{id}]',
                 'hiddenFieldId' => 'hdnLeave_{id}',
-                'hiddenFieldValueGetter' => 'getLeaveId',
+                'hiddenFieldValueGetter' => 'getId',
                 'hideIfCallback' => 'isNonWorkingDay',
             ),
         ));
@@ -113,15 +113,14 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
                 'namePattern' => 'select_leave_action_{id}',
                 'idPattern' => 'select_leave_action_{id}',
                 'hasHiddenField' => true,
-                'hiddenFieldName' => '{eimId}-{leaveTypeId}-{leavePeriodId}',
-                'hiddenFieldId' => '{eimId}-{leaveTypeId}-{leavePeriodId}',
+                'hiddenFieldName' => '{eimId}-{leaveTypeId}',
+                'hiddenFieldId' => '{eimId}-{leaveTypeId}',
                 'hiddenFieldValueGetter' => 'getDetailedLeaveListQuotaHolderValue',
                 'hiddenFieldClass' => 'quotaHolder',
                 'placeholderGetters' => array(
-                    'id' => 'getLeaveId',
-                    'eimId' => 'getEmployeeId',
+                    'id' => 'getId',
+                    'eimId' => 'getEmpNumber',
                     'leaveTypeId' => 'getLeaveTypeId',
-                    'leavePeriodId' => 'getLeavePeriodId',
                 ),
             ),
         ));

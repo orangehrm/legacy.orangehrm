@@ -98,11 +98,11 @@ class viewLeaveRequestAction extends sfAction {
         $range = '';
         $count = count($leaveList);
         if ($count == 1) {
-            $range = set_datepicker_date_format($leaveList[0]->getLeaveDate());
+            $range = set_datepicker_date_format($leaveList[0]->getDate());
         } else if ($count > 1) {
-            $range = set_datepicker_date_format($leaveList[0]->getLeaveDate());
+            $range = set_datepicker_date_format($leaveList[0]->getDate());
             $range .= " " . __('to') . " ";
-            $range .= set_datepicker_date_format($leaveList[$count - 1]->getLeaveDate());
+            $range .= set_datepicker_date_format($leaveList[$count - 1]->getDate());
         }
 
         return $range;
@@ -110,6 +110,9 @@ class viewLeaveRequestAction extends sfAction {
 
     public function execute($request) {
 
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewLeaveList');
+        
         $this->backUrl = stripos($request->getReferer(), 'viewMyLeaveList') === FALSE ?
                 'leave/viewLeaveList' : 'leave/viewMyLeaveList';
         
@@ -124,8 +127,6 @@ class viewLeaveRequestAction extends sfAction {
             $this->getUser()->setFlash('myLeave', true);
         }
         
-        $this->message = $this->getUser()->getFlash('message', '');
-        $this->messageType = $this->getUser()->getFlash('messageType', '');
         $this->leaveRequestId = $request->getParameter('id');
 
 
@@ -151,12 +152,15 @@ class viewLeaveRequestAction extends sfAction {
         ohrmListComponent::setListData($leaveList);
         ohrmListComponent::setItemsPerPage(sfConfig::get('app_items_per_page'));
         ohrmListComponent::setNumberOfRecords(count($leaveList));
+      
     }
 
     protected function getListConfigurationFactory() {
         DetailedLeaveListConfigurationFactory::setListMode($this->mode);
         $configurationFactory = new DetailedLeaveListConfigurationFactory();
-
+        $configurationFactory->setRuntimeDefinitions(array(
+			    'title' => $this->title
+			)); 
         return $configurationFactory;
     }
 

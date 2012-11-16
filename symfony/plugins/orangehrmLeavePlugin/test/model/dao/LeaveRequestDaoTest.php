@@ -34,6 +34,7 @@
  	protected function setUp() {
 
             $this->leaveRequestDao = new LeaveRequestDao();
+            $this->leaveRequestDao->markApprovedLeaveAsTaken();
             $fixtureFile = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/LeaveRequestDao.yml';
             TestDataService::populate($fixtureFile);
             $this->fixture = sfYaml::load($fixtureFile);
@@ -84,17 +85,17 @@
 
     /* Tests for getLeaveById() */
 
-    public function xtestGetLeaveById() {
+    public function testGetLeaveById() {
 
         $leave = $this->leaveRequestDao->getLeaveById(1);
 
         $this->assertTrue($leave instanceof Leave);
 
         $this->assertEquals(1, $leave->getId());
-        $this->assertEquals(8, $leave->getLeaveLengthHours());
-        $this->assertEquals(1, $leave->getLeaveLengthDays());
+        $this->assertEquals(8, $leave->getLengthHours());
+        $this->assertEquals(1, $leave->getLengthDays());
         $this->assertEquals(1, $leave->getLeaveRequestId());
-        $this->assertEquals('LTY001', $leave->getLeaveTypeId());
+        $this->assertEquals(1, $leave->getLeaveTypeId());
         $this->assertEquals(1, $leave->getEmpNumber());
         $this->assertEquals('2010-09-01', $leave->getDate());
         $this->assertEquals(1, $leave->getStatus());
@@ -129,18 +130,17 @@
 
     /* Tests for getScheduledLeavesSum() */
 
-    public function xtestGetScheduledLeavesSum() {
+    public function testGetScheduledLeavesSum() {
 
-        $this->assertEquals(2.75, $this->leaveRequestDao->getScheduledLeavesSum(1, 'LTY001', 1));
-        $this->assertEquals(1, $this->leaveRequestDao->getScheduledLeavesSum(2, 'LTY002', 1));
+        $this->assertEquals(2.75, $this->leaveRequestDao->getScheduledLeavesSum(1, 1, 1));
+        $this->assertEquals(1, $this->leaveRequestDao->getScheduledLeavesSum(2, 2, 1));
 
     }
 
     /* Tests for getTakenLeaveSum() */
 
-    public function xtestGetTakenLeaveSum() {
-
-        $this->assertEquals(2, $this->leaveRequestDao->getTakenLeaveSum(5, 'LTY002', 1));
+    public function testGetTakenLeaveSum() {
+        $this->assertEquals(2, $this->leaveRequestDao->getTakenLeaveSum(5, 2, 1));
 
     }
 
@@ -704,8 +704,8 @@
         $leave2 = TestDataService::fetchObject('Leave', 2);
 
         $this->assertEquals(1, $leave1->getId());
-        $this->assertEquals(8, $leave1->getLeaveLengthHours());
-        $this->assertEquals(1, $leave1->getLeaveLengthDays());
+        $this->assertEquals(8, $leave1->getLengthHours());
+        $this->assertEquals(1, $leave1->getLengthDays());
         $this->assertEquals(1, $leave1->getLeaveRequestId());
         $this->assertEquals('LTY001', $leave1->getLeaveTypeId());
         $this->assertEquals(1, $leave1->getEmpNumber());
@@ -713,8 +713,8 @@
         $this->assertEquals(2, $leave1->getStatus());
 
         $this->assertEquals(1, $leave1->getId());
-        $this->assertEquals(8, $leave1->getLeaveLengthHours());
-        $this->assertEquals(1, $leave1->getLeaveLengthDays());
+        $this->assertEquals(8, $leave1->getLengthHours());
+        $this->assertEquals(1, $leave1->getLengthDays());
         $this->assertEquals(1, $leave1->getLeaveRequestId());
         $this->assertEquals('LTY001', $leave1->getLeaveTypeId());
         $this->assertEquals(1, $leave1->getEmpNumber());
@@ -789,8 +789,8 @@
         $leaveList = TestDataService::fetchLastInsertedRecords('Leave', 4);
 
         $this->assertEquals(36, $leaveList[0]->getId());
-        $this->assertEquals(8, $leaveList[0]->getLeaveLengthHours());
-        $this->assertEquals(1, $leaveList[0]->getLeaveLengthDays());
+        $this->assertEquals(8, $leaveList[0]->getLengthHours());
+        $this->assertEquals(1, $leaveList[0]->getLengthDays());
         $this->assertEquals(21, $leaveList[0]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[0]->getLeaveTypeId());
         $this->assertEquals(1, $leaveList[0]->getEmpNumber());
@@ -798,8 +798,8 @@
         $this->assertEquals(1, $leaveList[0]->getStatus());
 
         $this->assertEquals(37, $leaveList[1]->getId());
-        $this->assertEquals(8, $leaveList[1]->getLeaveLengthHours());
-        $this->assertEquals(1, $leaveList[1]->getLeaveLengthDays());
+        $this->assertEquals(8, $leaveList[1]->getLengthHours());
+        $this->assertEquals(1, $leaveList[1]->getLengthDays());
         $this->assertEquals(21, $leaveList[1]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[1]->getLeaveTypeId());
         $this->assertEquals(1, $leaveList[1]->getEmpNumber());
@@ -807,8 +807,8 @@
         $this->assertEquals(1, $leaveList[1]->getStatus());
 
         $this->assertEquals(38, $leaveList[2]->getId());
-        $this->assertEquals(8, $leaveList[2]->getLeaveLengthHours());
-        $this->assertEquals(1, $leaveList[2]->getLeaveLengthDays());
+        $this->assertEquals(8, $leaveList[2]->getLengthHours());
+        $this->assertEquals(1, $leaveList[2]->getLengthDays());
         $this->assertEquals(22, $leaveList[2]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[2]->getLeaveTypeId());
         $this->assertEquals(1, $leaveList[2]->getEmpNumber());
@@ -816,8 +816,8 @@
         $this->assertEquals(1, $leaveList[2]->getStatus());
 
         $this->assertEquals(39, $leaveList[3]->getId());
-        $this->assertEquals(8, $leaveList[3]->getLeaveLengthHours());
-        $this->assertEquals(1, $leaveList[3]->getLeaveLengthDays());
+        $this->assertEquals(8, $leaveList[3]->getLengthHours());
+        $this->assertEquals(1, $leaveList[3]->getLengthDays());
         $this->assertEquals(22, $leaveList[3]->getLeaveRequestId());
         $this->assertEquals('LTY001', $leaveList[3]->getLeaveTypeId());
         $this->assertEquals(1, $leaveList[3]->getEmpNumber());
@@ -1329,7 +1329,7 @@
     /**
      * Test the readLeave() function
      */
-    public function xtestReadLeave() {
+    public function testReadLeave() {
 
         //
         // Unavailable leave id
@@ -1337,7 +1337,7 @@
         Doctrine_Query::create()
 		->delete('*')
 		->from('Leave l')
-		->where('leave_id = 999');
+		->where('id = 999');
 
         $leave = $this->leaveRequestDao->readLeave(999);
 
@@ -1348,10 +1348,10 @@
         //
         $leaveFixture = $this->fixture['Leave'][1];
 
-        $savedLeave = $this->leaveRequestDao->readLeave($leaveFixture['leave_id']);
+        $savedLeave = $this->leaveRequestDao->readLeave($leaveFixture['id']);
 
         // Compare leave id
-        $this->assertEquals($savedLeave->leave_id, $leaveFixture['leave_id'], 'leave id should match');
+        $this->assertEquals($savedLeave->id, $leaveFixture['id'], 'leave id should match');
         
         // Compare other properties
         foreach ($leaveFixture as $property => $value) {
@@ -1359,7 +1359,7 @@
         }
     }
 
-    public function xtestSaveLeave() {
+    public function testSaveLeave() {
 
         // Try and save leave with id that exists - should throw error
         $existingLeave = new Leave();
@@ -1373,26 +1373,26 @@
         }
 
         // Try to save new leave (without id)
-        $leaveRequestId = $this->fixture['LeaveRequest'][1]['leave_request_id'];
+        $leaveRequestId = $this->fixture['LeaveRequest'][1]['id'];
         $leave = new Leave();
-        $leave->leave_length_hours = 8;
-        $leave->leave_length_days = 1;
+        $leave->length_hours = 8;
+        $leave->length_days = 1;
         $leave->leave_request_id = $leaveRequestId;
-        $leave->leave_type_id = $this->fixture['OldLeaveType'][0]['leaveTypeId'];
-        $leave->employee_id = $this->fixture['Employee'][0]['empNumber'];
-        $leave->leave_date = '2010-09-09';
-        $leave->leave_status = 1;
+        $leave->leave_type_id = $this->fixture['LeaveType'][0]['id'];
+        $leave->emp_number = $this->fixture['Employee'][0]['empNumber'];
+        $leave->date = '2010-09-09';
+        $leave->status = 1;
         $this->leaveRequestDao->saveLeave($leave);
 
         // Verify id assigned
-        $this->assertTrue(!empty($leave->leave_id));
+        $this->assertTrue(!empty($leave->id));
 
 
         // Verify saved by retrieving
         $result = Doctrine_Query::create()
                                     ->select()
                                     ->from('Leave l')
-                                    ->where('leave_id = ?', $leave->leave_id)
+                                    ->where('id = ?', $leave->id)
                                     ->execute();
         $this->assertTrue($result->count() == 1);
         $this->assertTrue(is_a($result[0], Leave));

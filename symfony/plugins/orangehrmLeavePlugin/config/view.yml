@@ -54,3 +54,7 @@ defineLeaveTypeSuccess:
   layout: freshorange
   javascripts:    [-*]
   stylesheets:    [-*]    
+viewLeaveRequestSuccess:  
+  layout: freshorange
+  javascripts:    [-*]
+  stylesheets:    [-*]      
