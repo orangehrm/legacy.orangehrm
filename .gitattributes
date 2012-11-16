@@ -867,10 +867,7 @@ symfony/lib/model/doctrine/orangehrmAttendancePlugin/AttendanceRecordTable.class
 symfony/lib/model/doctrine/orangehrmAttendancePlugin/base/BaseAttendanceRecord.class.php -text
 symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/EmployeeLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/EmployeeLeaveEntitlementTable.class.php -text
-symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/OldLeaveType.class.php -text
-symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/OldLeaveTypeTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/base/BaseEmployeeLeaveEntitlement.class.php -text
-symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/base/BaseOldLeaveType.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AbstractDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AbstractDisplayFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AvailableGroupField.class.php -text
