@@ -77,6 +77,9 @@ class defineHolidayAction extends sfAction {
      */
     public function execute($request) {
 
+        //Keep Menu in Leave/Config 
+        $request->setParameter('initialActionName', 'defineLeavePeriod'); 
+         
         $this->form = new HolidayForm();
         $editId = $request->getParameter('hdnEditId');
 
