@@ -62,7 +62,7 @@ class getHolidayAjaxAction extends sfAction {
         $dates = "";
         foreach ($holidayList as $holiday) {
             $htype = $holiday->getLength() == 0 ? 'f' : 'h';
-            $dates .= "[" . str_replace("-", ",", $holiday->getdate()) . ", '" . $htype . "', " . $holiday->getRecurring() . "],";
+            $dates .= '[' . str_replace("-", ",", $holiday->getdate()) . ', "' . $htype . '", ' . $holiday->getRecurring() . "],";
         }
 
         $dates = rtrim($dates, ",");
