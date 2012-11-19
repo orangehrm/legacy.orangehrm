@@ -45,7 +45,7 @@
                 <p>
                     <input type="button" class="addbutton" name="btnEdit" id="btnEdit" value="<?php echo ($isLeavePeriodDefined) ? __("Edit") : __("Save"); ?>"/>
                     <?php if ($isLeavePeriodDefined) { ?>
-                        <input type="button" class="reset" name="btnReset" id="btnReset" value="<?php echo __("Cancel"); ?>"/>
+                        <input type="button" class="reset hide" name="btnReset" id="btnReset" value="<?php echo __("Reset")?>"/>
                     <?php } ?>
                 </p>
 
