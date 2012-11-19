@@ -3883,7 +3883,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.th_TH.xml -
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.vi_VN.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.zh_CN.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.zz_ZZ.xml -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/holidayListSuccess.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationBody.txt -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubscriberBody.txt -text
