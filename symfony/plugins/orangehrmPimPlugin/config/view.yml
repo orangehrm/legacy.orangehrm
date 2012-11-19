@@ -22,6 +22,10 @@ viewImmigrationSuccess:
   layout: freshorange
 viewJobDetailsSuccess:
   layout: freshorange
+viewDefinedPredefinedReportsSuccess:
+  layout: freshorange
+definePredefinedReportSuccess:
+  layout: freshorange
 viewSalaryListSuccess:
   layout: freshorange
 viewMembershipsSuccess:

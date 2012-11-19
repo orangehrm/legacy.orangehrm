@@ -326,7 +326,10 @@ ViewPredefinedReport:
       function: addPredefinedReport
     Delete:
       label: Delete
+      class: delete
       type: submit
+      data-toggle: modal 
+      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/core/viewDefinedPredefinedReports'
