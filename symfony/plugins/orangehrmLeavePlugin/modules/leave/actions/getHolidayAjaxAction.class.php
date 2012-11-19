@@ -55,27 +55,26 @@ class getHolidayAjaxAction extends sfAction {
         sfConfig::set('sf_web_debug', false);
         sfConfig::set('sf_debug', false);
         
-        $year = $request->getParameter("year");
 
         $holidayList = $this->getHolidayList();
 
-        $dates = "";
+        $dateList =  array();
+        
         foreach ($holidayList as $holiday) {
             $htype = $holiday->getLength() == 0 ? 'f' : 'h';
-            $dates .= '[' . str_replace("-", ",", $holiday->getdate()) . ', "' . $htype . '", ' . $holiday->getRecurring() . "],";
+            
+            $dateList[] = array(date('Y',  strtotime($holiday->getdate())), date('m',  strtotime($holiday->getdate())),date('d',  strtotime($holiday->getdate())),$htype, $holiday->getRecurring() ) ;
         }
 
-        $dates = rtrim($dates, ",");
-
+      
         $response = $this->getResponse();
         $response->setHttpHeader('Expires', '0');
         $response->setHttpHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         $response->setHttpHeader("Cache-Control", "private", false);
         
-        echo "[";
-        echo $dates;
-        echo "]";
         
+        
+        echo json_encode($dateList);
         return sfView::NONE;
     }
     
