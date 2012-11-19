@@ -18,6 +18,8 @@
  *
  */
 ?>
+<?php use_javascripts_for_form($form); ?>
+<?php use_stylesheets_for_form($form); ?>
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/viewCandidatesSuccess'); ?>
 
 <div class="box searchForm toggableForm" id="srchCandidates">
@@ -32,9 +34,7 @@
             
             <fieldset>
               
-                <ol>
-                   <?php echo $form->render(); ?> 
-                </ol>
+                <?php echo $form->render(); ?> 
                 
                 <p>
                     <input type="button" id="btnSrch" value="<?php echo __("Search") ?>" name="btnSrch" />

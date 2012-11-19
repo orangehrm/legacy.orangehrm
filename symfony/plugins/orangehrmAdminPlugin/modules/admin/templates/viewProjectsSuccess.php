@@ -35,9 +35,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
             
             <fieldset>
                 
-                <ol>
-                    <?php echo $form->render(); ?>
-                </ol>
+                <?php echo $form->render(); ?>
                 
                 <p>
                     <input type="button" class="" name="btnSave" id="btnSearch" value="<?php echo __("Search"); ?>"/>
