@@ -19,8 +19,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         
         <!-- Custom CSS files -->
         <link href="<?php echo theme_path('css/main.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo theme_path('css/orangehrm.datepicker.css')?>" rel="stylesheet" type="text/css"/>
-        
+       
         <!-- Library JavaScript files -->
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery-1.7.2.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/validate/jquery.validate.js')?>"></script>
@@ -32,8 +31,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <script type="text/javascript" src="<?php echo public_path('jquery/bootstrap-modal.js')?>"></script>
 
         <!-- Custom JavaScript files -->
-        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.validate.js');?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.datepicker.js');?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.validate.js');?>"></script>       
         <script type="text/javascript" src="<?php echo public_path('js/archive.js');?>"></script>
         
         <?php 

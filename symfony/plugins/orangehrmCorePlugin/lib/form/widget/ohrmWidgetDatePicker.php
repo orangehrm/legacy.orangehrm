@@ -19,6 +19,22 @@
  */
 
 class ohrmWidgetDatePicker extends sfWidgetFormInput {
+    
+    public function getJavaScripts() {
+        
+        $javaScripts = parent::getJavaScripts();
+        $javaScripts[] = '/js/orangehrm.datepicker.js';
+
+        return $javaScripts;
+        
+    }
+    
+    public function getStylesheets() {
+        $css = parent::getStylesheets();
+        $css[theme_path('css/orangehrm.datepicker.css')] = 'all';
+        
+        return $css;
+    }
 
     public function render($name, $value = null, $attributes = array(), $errors = array()) {
 
