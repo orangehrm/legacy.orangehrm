@@ -495,7 +495,7 @@ form ol li input {
 form ol li select {
     float:left;
     width:239px;
-	height:25px;
+	height:26px;
 	margin-top:1px;
 }
 form ol li textarea {
@@ -515,7 +515,7 @@ form ol li input, form ol li select,  form ol li textarea {
     background-color: #FFF;
 }
 form ol li input[type=text] {
-    height:15px;
+    height:17px;
 }
 form ol li input[type=checkbox] {
     margin-left: 0;
