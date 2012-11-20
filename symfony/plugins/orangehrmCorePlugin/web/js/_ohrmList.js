@@ -8,7 +8,15 @@ function ohrmList_init() {
 );
 
     $('#ohrmList_chkSelectAll').click(function() {
-        $('table.table input[id^="ohrmList_chkSelectRecord_"]').attr('checked', $(this).attr('checked'));
+        
+        var valueToSet = false;
+        
+        if ($(this).attr('checked') == 'checked') {
+            valueToSet = true;
+        }        
+        
+        $('table.table input[id^="ohrmList_chkSelectRecord_"]').attr('checked', valueToSet);
+        
     });
 
     $('table.table input[id^="ohrmList_chkSelectRecord_"]').click(function() {
