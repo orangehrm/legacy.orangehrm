@@ -803,6 +803,9 @@ table tfoot tr.total td strong {
 	font-weight:bold;
 	color:#fff;
 }
+table.table td.hover, table.table tr.hover, table.tablesorter tbody tr.odd td.hover {
+	background-color:#CCC;
+}
 /* ================ Table styles: End ================ */
 
 /* ================ Top level message styles: Begin ================ */

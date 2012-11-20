@@ -5188,6 +5188,7 @@ symfony/web/jquery/jquery-1.8.0.min.js -text
 symfony/web/jquery/jquery.autocomplete.js -text
 symfony/web/jquery/jquery.form.js -text
 symfony/web/jquery/jquery.functions.js -text
+symfony/web/jquery/jquery.tablehover.min.js -text
 symfony/web/jquery/jquery.tipTip.minified.js -text
 symfony/web/jquery/jquery.ui.core.js -text
 symfony/web/jquery/jquery.ui.datepicker.js -text

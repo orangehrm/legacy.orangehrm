@@ -29,6 +29,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.form.js')?>"></script>        
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tipTip.minified.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/bootstrap-modal.js')?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tablehover.min.js')?>"></script>
 
         <!-- Custom JavaScript files -->
         <script type="text/javascript" src="<?php echo public_path('js/orangehrm.validate.js');?>"></script>       
@@ -93,6 +94,9 @@ $cultureElements = explode('_', $sf_user->getCulture());
 
             $(document).ready(function() {
                 
+                /* Enabling hovering effect for table rows */
+                $('.table').tableHover();                
+                
                 /* Enabling tooltips */
                 $(".tiptip").tipTip();
 
@@ -154,19 +158,6 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 });
                 /* Toggling search form: Ends */
 
-                /* Highlighting firstLevelMenu: Begins */
-                /*
-                $(".firstLevelMenu").click(function () {
-                    
-                    $(".firstLevelMenu").each(function(){
-                        $(this).parent('li').removeClass('current');
-                    });
-                    
-                    $(this).parent('li').addClass('current');
-                
-                });
-                */
-                /* Highlighting firstLevelMenu: Ends */
                 /* Enabling/disabling form fields: Begin */
                 
                 $('form.clickToEditForm input, form.clickToEditForm select, form.clickToEditForm textarea').attr('disabled', 'disabled');
