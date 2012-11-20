@@ -41,10 +41,16 @@ function getHtmlId($menuItem) {
     
     $id = '';
     
-    if (!empty($menuItem['path'])) {
+    if (!empty($menuItem['action'])) {
         $id = 'menu_' . $menuItem['module'] . '_' . $menuItem['action'];
     } else {
-        $id = 'menu_' . str_replace(' ', '', $menuItem['menuTitle']) . '_' . $menuItem['level'];
+        
+        $module             = '';
+        $firstSubMenuItem   = $menuItem['subMenuItems'][0];
+        $module             = $firstSubMenuItem['module'] . '_';
+        
+        $id = 'menu_' . $module . str_replace(' ', '', $menuItem['menuTitle']);
+        
     }
     
     return $id;

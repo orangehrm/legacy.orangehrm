@@ -732,6 +732,11 @@ form ol li input.time_range_duration {
 /* ================ Paging styles: End ================ */
 
 /* ================ Table styles: Begin ================ */
+table.table {
+    width: 100%;
+    border-spacing:0;
+    border-collapse:collapse;    
+}
 table.table th {
 	background:#f28c38;
 	color:#fff;

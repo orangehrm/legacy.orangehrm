@@ -108,7 +108,7 @@ function printButtonEventBindings($buttons) {
                 include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'top'));
             }
         ?>
-        <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+        <table class="table tablesorter">
             
                     <?php
                     
@@ -185,7 +185,7 @@ function printButtonEventBindings($buttons) {
                             }
                             
                             $headerCellClassHtml = $header->isSortable()?' class="header"':'';
-                            $headerCellHtml = '<th rowspan="' . $rowspan . '" width="' . $header->getWidth() . '"' . $headerCellClassHtml . '>' . $headerCell->__toString() . "</th>\n";                            
+                            $headerCellHtml = '<th rowspan="' . $rowspan . '" style="width:' . $header->getWidth() . '"' . $headerCellClassHtml . '>' . $headerCell->__toString() . "</th>\n";                            
                             
                             if ($group->showHeader()) {
                                 $headerRow2 .= $headerCellHtml;
@@ -311,7 +311,7 @@ function printButtonEventBindings($buttons) {
         include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'bottom'));
     }
 ?>
-            </p></div>
+            </div>
         </form> <!-- frmList_ohrmListComponent --> 
         
     </div> <!-- inner -->
