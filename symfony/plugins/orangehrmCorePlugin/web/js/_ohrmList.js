@@ -1,11 +1,4 @@
 function ohrmList_init() {
-    $('table.table > tbody > tr').hover(function() {  // highlight on mouse over
-        $(this).addClass("trHover");
-    },
-    function() {
-        $(this).removeClass("trHover");
-    }
-);
 
     $('#ohrmList_chkSelectAll').click(function() {
         
