@@ -553,7 +553,8 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES
     (0, 'ohrm_job_candidate_history', 'id'),
     (0, 'ohrm_job_interview', 'id');
 
-INSERT INTO `ohrm_workflow_state_machine` VALUES ('1','0','INITIAL','SYSTEM','7','NOT SUBMITTED'),
+INSERT INTO `ohrm_workflow_state_machine`(`id`, `workflow`,`state`,`role`,`action`,`resulting_state`)  
+                            VALUES ('1','0','INITIAL','SYSTEM','7','NOT SUBMITTED'),
                                    ('2','0','SUBMITTED','ADMIN','2','APPROVED'),
                                    ('3','0','SUBMITTED','ADMIN','3','REJECTED'),
                                    ('4','0','SUBMITTED','ADMIN','0','SUBMITTED'),
