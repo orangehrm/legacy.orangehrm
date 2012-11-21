@@ -5,6 +5,7 @@ use_stylesheets_for_form($form);
 
 ?>
 
+
 <?php if ($form->hasErrors()): ?>
     <div class="messagebar">
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
@@ -17,7 +18,7 @@ use_stylesheets_for_form($form);
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
         <form id="frmLeaveBalanceReport" name="frmLeaveBalanceReport" method="post" 
-              action="<?php echo url_for('leave/viewLeaveBalanceReport') ?>">
+              action="">
 
             <fieldset>                
                 <ol>
@@ -82,7 +83,7 @@ use_stylesheets_for_form($form);
                                         <ul>                                         
                                         <?php foreach($colVal as $data):?>
                                                <!--<tr style="height: 10px;"><td headers="10"><?php // echo __($data);?></td></tr>-->                                               
-                                               <li><?php echo __($data);?></li>                                        
+                                               <li><?php echo esc_specialchars(__($data));?></li>                                        
                                         <?php endforeach;?>
                                         </ul>                                    
                                      </td>
@@ -95,7 +96,7 @@ use_stylesheets_for_form($form);
                             <td width="<?php echo ($info["width"]);?>"><?php if(($column == "") || is_null($column)):
                                     echo "---";
                                 else :
-                                    echo __($column);
+                                    echo esc_specialchars(__($column));
                                 endif;?></td>
                       <?php else: ?>
                             <input type="hidden" name="<?php echo $key;?>[]" value="<?php echo $column;?>"/>
@@ -170,7 +171,9 @@ use_stylesheets_for_form($form);
             
         });
         
+        <?php if ($mode != 'my') { ?>
         toggleReportType();
+        <?php } ?>
         
         // create links for 2nd and 3rd column
         createLinks();

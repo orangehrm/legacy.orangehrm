@@ -20,22 +20,37 @@
  */
 
 /**
- * Description of viewMyLeaveBalanceReportAction
+ * Description of MyLeaveBalanceReportForm
  */
-class viewMyLeaveBalanceReportAction extends viewLeaveBalanceReportAction {
+class MyLeaveBalanceReportForm extends LeaveBalanceReportForm {
     
-    public function getForm() {
-        $options = array('empNumber' => $this->getUser()->getAttribute('auth.empNumber'));
-        return new MyLeaveBalanceReportForm(array(), $options);        
-    }
     
-    public function getMode() {
-        return "my";
-    }
+    public function configure() {
+        parent::configure();
         
-    public function execute($request) {
-
-        parent::execute($request);
-        $this->setTemplate('viewLeaveBalanceReport');
+        unset($this['report_type']);
+        unset($this['employee']);
+        
+        
+                
     }
+    
+    public function getValue($field) {
+        if ($field == 'report_type') {
+            return LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE;
+        } 
+        
+        return parent::getValue($field);
+    }
+    
+    public function getValues() {
+        $values = parent::getValues();
+        
+        $empNumber = $this->getOption('empNumber');
+        $employee = array('empId' => $empNumber);
+                
+        $values['employee'] = $employee;
+        return $values;
+    }
+
 }

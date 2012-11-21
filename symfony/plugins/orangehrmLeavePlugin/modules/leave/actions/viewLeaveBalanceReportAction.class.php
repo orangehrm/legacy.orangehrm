@@ -24,8 +24,18 @@
  */
 class viewLeaveBalanceReportAction extends sfAction {
 
+    public function getForm() {
+        return new LeaveBalanceReportForm();
+    }
+    
+    public function getMode() {
+        return "admin";
+    }
+    
     public function execute($request) {
-        $this->form = new LeaveBalanceReportForm();
+       
+        $this->form = $this->getForm();
+        $this->mode = $this->getMode();
 
         if ($request->isMethod('post')) {
 
@@ -89,11 +99,11 @@ class viewLeaveBalanceReportAction extends sfAction {
         
         
         $convertedValues = array(
-            'leaveType' => array($values['leave_type']),
-            'empNumber' => array($values['employee']['empId']),
-            'fromDate' => array($fromDate),
-            'toDate' => array($toDate),
-            'asOfDate' => array($asOfDate),            
+            'leaveType' => $values['leave_type'],
+            'empNumber' => $values['employee']['empId'],
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+            'asOfDate' => $asOfDate,            
         );
         
         return $convertedValues;
