@@ -18,3 +18,5 @@ displayProjectActivityDetailsReportSuccess:
   layout: freshorange
 displayAttendanceSummaryReportSuccess:
   layout: freshorange
+createTimesheetForSubourdinateSuccess:
+  layout: freshorange

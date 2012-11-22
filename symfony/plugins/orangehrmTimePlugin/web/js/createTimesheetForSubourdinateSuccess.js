@@ -6,34 +6,10 @@ $(document).ready(function(){
     
     $("#createTimesheet").hide();
     
-    var rDate = trim($(".date").val());
-    if (rDate == '') {
-        $(".date").val(displayDateFormat);
-    }
-
-    //Bind date picker
-    daymarker.bindElement(".date",
-    {
-        onSelect: function(date){
-
-
-            $(".date").trigger('change');
-        },
-        dateFormat:datepickerDateFormat
-    });
-
-    $('#DateBtn').click(function(){
-
-
-        daymarker.show(".date");
-
-
-    });
-  
-    $(".date").change(function() {
+    $("#time_date").change(function() {
         $('#validationMsg').removeAttr('class');
         $('#validationMsg').html("");
-        var startdate=$(".date").val();
+        var startdate=$("#time_date").val();
    
         if(validateDate(startdate, datepickerDateFormat)){
          

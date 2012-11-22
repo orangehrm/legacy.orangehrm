@@ -15,24 +15,19 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */ ?>
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
+
 <script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
 
-<?php echo stylesheet_tag('../orangehrmTimePlugin/css/createTimesheetForSubourdinateSuccess'); ?>
 <?php echo javascript_include_tag('../orangehrmTimePlugin/js/createTimesheetForSubourdinateSuccess'); ?>
-
-<div id="validationMsg"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
+<?php echo javascript_include_tag('orangehrm.datepicker.js')?>
+<?php include_partial('global/flash_messages'); ?>
 
  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))): ?>
-    <input type="button" class="addTimesheetbutton" name="button" id="btnAddTimesheet"
-           onmouseover="moverButton(this);" onmouseout="moutButton(this);"
+    <input type="button" class="editButton" name="button" id="btnAddTimesheet"
            value="<?php echo __('Add Timesheet') ?>" />
        <?php endif; ?>
 
-<div id="createTimesheet">
+<!--<div id="createTimesheet">
     <br class="clear"/>
     <form  id="createTimesheetForm" action=""  method="post">
         <?php echo $createTimesheetForm['_csrf_token']; ?>
@@ -43,7 +38,27 @@
         <br class="clear"/>
     </form>
 
-</div>
+</div>-->
+    
+        <div id="createTimesheet">
+        
+               
+              
+        <form  id="createTimesheetForm" action=""  method="post">
+        <?php echo $createTimesheetForm['_csrf_token']; ?>
+                
+                <fieldset>
+                         <li>
+                             <?php echo $createTimesheetForm['date']->renderLabel(__('Select a Day to Create Timesheet')); ?>
+                             <?php echo $createTimesheetForm['date']->render(); ?>
+                             <?php echo $createTimesheetForm['date']->renderError() ?>
+                        </li>
+                </fieldset>
+                
+            </form>
+            
+    
+    </div>
 
 
 <script type="text/javascript">
