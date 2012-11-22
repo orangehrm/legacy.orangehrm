@@ -519,6 +519,9 @@ form ol li input[type=text] {
 }
 form ol li input[type=checkbox] {
     margin-left: 0;
+	width:auto;
+	border:none;
+    background-color: #F7F6F6;
 }
 form ol li input[type="file"] {
     margin-bottom: 10px;
@@ -561,7 +564,7 @@ form ol li label em {
 	color:#aa4935;
 }
 /* ------------- Checkbox styles ------------- */
-form ol li.checkbox input {
+form ol li.checkbox input { /* TODO: Check for usage. There is already form ol li input[type=checkbox] */
 	width:auto;
 	border:none;
 }
