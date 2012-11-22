@@ -88,7 +88,6 @@ devTools/rpm/SPECS/OrangeHRM-2.2.spec -text
 /empview.php -text
 /error.xsl -text
 /faq.html -text
-/favicon.ico -text
 /fix_permissions.sh -text
 /genpop.php -text
 /help.php -text
@@ -5246,6 +5245,7 @@ symfony/web/themes/default/css/tipTip.css -text
 symfony/web/themes/default/images/calendar.png -text
 symfony/web/themes/default/images/close.png -text
 symfony/web/themes/default/images/default-photo.png -text
+symfony/web/themes/default/images/favicon.ico -text
 symfony/web/themes/default/images/h1-bg.png -text
 symfony/web/themes/default/images/help-down.png -text
 symfony/web/themes/default/images/help-up.png -text
