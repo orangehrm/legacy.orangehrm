@@ -492,17 +492,6 @@ form ol li input {
 	float:left;
 	width:225px;
 }
-form ol li select {
-    float:left;
-    width:239px;
-	height:26px;
-	margin-top:1px;
-}
-form ol li textarea {
-	float:left;
-	width:250px;
-	height:80px;
-}
 form ol li input, form ol li select,  form ol li textarea {
 	font-size:13px;
 	border:1px solid #d2d1d1;
@@ -514,8 +503,21 @@ form ol li input, form ol li select,  form ol li textarea {
 	padding:4px 6px;
     background-color: #FFF;
 }
+form ol li select {
+    float:left;
+    width:239px;
+	height:25px;
+	margin-top:1px;
+    padding:3px 6px;
+}
+form ol li textarea {
+	float:left;
+	width:250px;
+	height:80px;
+}
 form ol li input[type=text] {
-    height:17px;
+    height:16px;
+
 }
 form ol li input[type=checkbox] {
     margin-left: 0;
@@ -599,6 +601,10 @@ form ol li.radio ul.radio_list li label {
     width: auto;
     margin-right: 10px;
     margin-top: 0;
+}
+/* ------------- File input styles ------------- */
+input[type="file"] {
+    height: 24px;
 }
 /* ------------- Button styles ------------- */
 form p {
@@ -1262,8 +1268,8 @@ color:#fff;
 .pimPane form p.required em {
 	color:#aa4935;
 }
+
 .pimPane form ol li span { /* Used in attachments */
-    margin-top: 0; 
     width: 250px; 
     float: none;
 }
