@@ -622,7 +622,7 @@ input[type="button"], input[type="submit"] {
 	border-radius: 3px;
 	margin-right:4px;
 }
-input.reset, input.cancel {
+input.reset, input.cancel, input[type="reset"] {
 	background:#848484;
 }
 input.delete {
