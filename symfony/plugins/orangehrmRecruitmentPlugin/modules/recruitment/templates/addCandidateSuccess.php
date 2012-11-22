@@ -18,6 +18,8 @@
  *
  */
 ?>
+<?php use_javascripts_for_form($form) ?>
+<?php use_stylesheets_for_form($form) ?>
 
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/addCandidateSuccess'); ?>
 <?php $browser = $_SERVER['HTTP_USER_AGENT']; ?>

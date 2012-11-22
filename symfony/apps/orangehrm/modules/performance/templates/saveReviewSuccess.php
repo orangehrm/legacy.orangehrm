@@ -1,3 +1,6 @@
+<?php use_javascripts_for_form($form); ?>
+<?php use_stylesheets_for_form($form); ?>
+
 <?php
 $dateFormat = get_datepicker_date_format($sf_user->getDateFormat());  
 $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);

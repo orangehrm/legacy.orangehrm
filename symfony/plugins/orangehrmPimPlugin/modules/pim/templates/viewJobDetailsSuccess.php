@@ -1,4 +1,5 @@
-
+<?php use_javascripts_for_form($form); ?>
+<?php use_stylesheets_for_form($form); ?>
 <script type="text/javascript">
     //<![CDATA[
     //we write javascript related stuff here, but if the logic gets lengthy should use a seperate js file

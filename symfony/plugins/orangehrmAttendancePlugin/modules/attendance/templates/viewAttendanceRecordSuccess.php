@@ -1,3 +1,5 @@
+<?php use_javascripts_for_form($form) ?>
+<?php use_stylesheets_for_form($form) ?>
 <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/viewAttendanceRecordSuccess'); ?>
 
 <div class="box">

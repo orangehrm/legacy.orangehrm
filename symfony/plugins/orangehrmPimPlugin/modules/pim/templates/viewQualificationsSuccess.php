@@ -1,3 +1,13 @@
+<?php use_javascripts_for_form($workExperienceForm) ?>
+<?php use_stylesheets_for_form($workExperienceForm) ?>
+<?php use_javascripts_for_form($educationForm) ?>
+<?php use_stylesheets_for_form($educationForm) ?>
+<?php use_javascripts_for_form($skillForm) ?>
+<?php use_stylesheets_for_form($skillForm) ?>
+<?php use_javascripts_for_form($languageForm) ?>
+<?php use_stylesheets_for_form($languageForm) ?>
+<?php use_javascripts_for_form($licenseForm) ?>
+<?php use_stylesheets_for_form($licenseForm) ?>
 
 <?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewQualificationsSuccess'); ?>
 
