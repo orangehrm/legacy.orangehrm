@@ -55,7 +55,7 @@
                             <?php echo $form['set_direct_debit']->renderLabel(__('Add Direct Deposit Details'), array('id' => 'set_direct_debit_label')); ?>
                         </li>
                         <li class="required" id="notDirectDebitSection">
-                            <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                            <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                         </li>
                     </ol>
                     <ol id="directDebitSection">

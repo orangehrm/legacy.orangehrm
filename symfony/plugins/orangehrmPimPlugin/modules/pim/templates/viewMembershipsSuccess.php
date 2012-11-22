@@ -81,7 +81,7 @@ $allowEdit = true;
                                 <?php echo $form['subscriptionRenewalDate']->render(array("class" => "formDateInput")); ?>
                             </li>
                             <li class="required">
-                                <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                                <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                             </li>
                         </ol>
                         <p>

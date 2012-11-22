@@ -69,7 +69,7 @@ $allowEdit = true;
                                 <?php echo $form['reportingMethod']->render(array("class" => "txtBoxR", "maxlength" => 50)); ?>
                             </li>
                             <li class="required">
-                                <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                               <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                             </li>
                         </ol>
                         <p>    
