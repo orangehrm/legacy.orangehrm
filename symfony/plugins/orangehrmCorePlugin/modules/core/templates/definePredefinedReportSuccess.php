@@ -1,12 +1,5 @@
 <?php
-use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-use_stylesheet('orangehrm.datepicker.css');
-
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-use_javascript('../../../scripts/jquery/ui/ui.datepicker.js');
+stylesheet_tag(theme_path('css/orangehrm.datepicker.css'));
 use_javascript('orangehrm.datepicker.js');
 ?>
 <div class="box single">

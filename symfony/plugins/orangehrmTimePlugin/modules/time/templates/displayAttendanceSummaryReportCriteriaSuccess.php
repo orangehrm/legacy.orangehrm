@@ -1,3 +1,5 @@
+<?php use_stylesheets_for_form($form) ?>
+<?php use_javascripts_for_form($form) ?>
 <div class="box" id="attendance-summary">
        <div class="head"><h1><?php echo __('Attendance Total Summary Report'); ?></h1></div>
         <div class="inner">
