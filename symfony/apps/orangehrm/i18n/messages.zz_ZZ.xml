@@ -5247,6 +5247,10 @@
     <source>Join OrangeHRM Community</source>
     <target>FR_Join OrangeHRM Community</target>
    </trans-unit>
+   <trans-unit id="1144">
+    <source>Qualifications</source>
+    <target>FR_Qualifications</target>
+   </trans-unit>   
 
   </body>
  </file>
