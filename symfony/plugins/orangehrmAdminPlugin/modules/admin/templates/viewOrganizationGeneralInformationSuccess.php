@@ -86,6 +86,16 @@
                         <?php echo $form['street1']->renderLabel(__('Address Street 1')); ?>
                         <?php echo $form['street1']->render(array("maxlength" => 100)); ?>
                     </li>
+
+                    <li>
+                        <?php echo $form['street2']->renderLabel(__('Address Street 2')); ?>
+                        <?php echo $form['street2']->render(array("maxlength" => 100)); ?>
+                    </li>                    
+
+                    <li>
+                        <?php echo $form['city']->renderLabel(__('City')); ?>
+                        <?php echo $form['city']->render(array("maxlength" => 30)); ?>
+                    </li>                    
                     
                     <li>
                         <?php echo $form['province']->renderLabel(__('State/Province')); ?>
@@ -93,18 +103,8 @@
                     </li>
                     
                     <li>
-                        <?php echo $form['street2']->renderLabel(__('Address Street 2')); ?>
-                        <?php echo $form['street2']->render(array("maxlength" => 100)); ?>
-                    </li>
-                    
-                    <li>
                         <?php echo $form['zipCode']->renderLabel(__('Zip/Postal Code')); ?>
                         <?php echo $form['zipCode']->render(array("maxlength" => 30)); ?>
-                    </li>
-                    
-                    <li>
-                        <?php echo $form['city']->renderLabel(__('City')); ?>
-                        <?php echo $form['city']->render(array("maxlength" => 30)); ?>
                     </li>
                     
                     <li>
