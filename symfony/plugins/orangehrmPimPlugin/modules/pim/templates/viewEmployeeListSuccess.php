@@ -18,13 +18,6 @@
  */
 ?>
 
-<?php if ($form->hasErrors() || $sf_user->hasFlash('success') || $sf_user->hasFlash('error') || $sf_user->hasFlash('warning')): ?>
-    <div class="box noHeader">
-        <?php include_partial('global/form_errors', array('form' => $form)); ?>
-        <?php include_partial('global/flash_messages', array('sf_user' => $sf_user)); ?>
-    </div>
-<?php endif; ?>
-
 <div class="box searchForm toggableForm" id="employee-information">
     <div class="head">
         <h1><?php echo __("Employee Information") ?></h1>
