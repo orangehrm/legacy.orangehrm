@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
@@ -18,102 +19,158 @@
  * Boston, MA  02110-1301, USA
  *
  */
-class LeavePeriodDao extends BaseDao{
 
-	/**
-	 * Saves the leave period
-	 *
-	 * @param LeavePeriod $leavePeriod
-	 * @return boolean
-	 */
-	public function saveLeavePeriod (LeavePeriod $leavePeriod) {
-		try {
-			if ($leavePeriod->getLeavePeriodId() == '') {
+class LeavePeriodDao extends BaseDao {
 
-				$idGenService = new IDGeneratorService();
-				$idGenService->setEntity($leavePeriod);
-				$leavePeriod->setLeavePeriodId($idGenService->getNextID());
-			}
+    /**
+     * Saves the leave period
+     *
+     * @param LeavePeriod $leavePeriod
+     * @return boolean
+     */
+    public function saveLeavePeriod(LeavePeriod $leavePeriod) {
+        try {
+            if ($leavePeriod->getLeavePeriodId() == '') {
 
-			$leavePeriod->save();
+                $idGenService = new IDGeneratorService();
+                $idGenService->setEntity($leavePeriod);
+                $leavePeriod->setLeavePeriodId($idGenService->getNextID());
+            }
 
-			return true ;
+            $leavePeriod->save();
 
-		} catch( Exception $e) {
-			throw new DaoException( $e->getMessage());
-		}
-	}
+            return true;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
+        }
+    }
 
-	/**
-	 * Returns an instance of LeavePeriod to which the passed timestamp belogs to
-	 *
-	 * @param int $timestamp
-	 * @return LeavePeriod Object of LeavePeriod to which the passed timestamp belogs to
-	 */
-	public function filterByTimestamp($timestamp) {
-		$date = date('Y-m-d', $timestamp);
-		$q = Doctrine_Query::create()
-		->select("*")
-		->from("LeavePeriod lp")
-		->where("lp.leave_period_start_date <= ?", $date)
-		->andWhere("lp.leave_period_end_date >= ?", $date);
+    /**
+     * Returns an instance of LeavePeriod to which the passed timestamp belogs to
+     *
+     * @param int $timestamp
+     * @return LeavePeriod Object of LeavePeriod to which the passed timestamp belogs to
+     */
+    public function filterByTimestamp($timestamp) {
+        $date = date('Y-m-d', $timestamp);
+        $q = Doctrine_Query::create()
+                ->select("*")
+                ->from("LeavePeriod lp")
+                ->where("lp.leave_period_start_date <= ?", $date)
+                ->andWhere("lp.leave_period_end_date >= ?", $date);
 
-		$result = $q->fetchOne();
-      if(!$result instanceof LeavePeriod) {
-         return null;
-      }
-      return $result;
-	}
+        $result = $q->fetchOne();
+        if (!$result instanceof LeavePeriod) {
+            return null;
+        }
+        return $result;
+    }
 
-	public function findLastLeavePeriod($date = null) {
-		$date = empty($date) ? date('Y-m-d', time()) : $date;
-		$q = Doctrine_Query::create()
-		->select("*")
-		->from("LeavePeriod lp")
-		->where("lp.leave_period_end_date < ?", $date);
-
-		
-		$result = $q->execute();
-		
-		if ($result->count() > 0) {
-			return $result->end();
-		} else {
-			return null;
-		}
-	}
+    public function findLastLeavePeriod($date = null) {
+        $date = empty($date) ? date('Y-m-d', time()) : $date;
+        $q = Doctrine_Query::create()
+                ->select("*")
+                ->from("LeavePeriod lp")
+                ->where("lp.leave_period_end_date < ?", $date);
 
 
+        $result = $q->execute();
 
+        if ($result->count() > 0) {
+            return $result->end();
+        } else {
+            return null;
+        }
+    }
 
-	/**
-	 * Get Leave Period list
-	 * @return LeavePeriod Collection
-	 */
-	public function getLeavePeriodList() {
+    /**
+     * Get Leave Period list
+     * @return LeavePeriod Collection
+     */
+    public function getLeavePeriodList() {
 
-		try {
+        try {
 
             $q = Doctrine_Query::create()
-            ->from('LeavePeriod lp');
+                    ->from('LeavePeriod lp');
 
             return $q->execute();
-
-        } catch( Exception $e) {
-            throw new DaoException( $e->getMessage());
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
         }
-
-	}
+    }
 
     public function readLeavePeriod($leavePeriodId) {
 
         try {
-         return Doctrine::getTable('LeavePeriod')->find($leavePeriodId);
-        } catch(Exception $e) {
-         throw new DaoException($e->getMessage());
+            return Doctrine::getTable('LeavePeriod')->find($leavePeriodId);
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
         }
-        
     }
 
+    /**
+     * Save Leave Period History
+     * 
+     * @param LeavePeriodHistory $leavePeriodHistory
+     * @return \LeavePeriodHistory
+     * @throws DaoException
+     */
+    public function saveLeavePeriodHistory(LeavePeriodHistory $leavePeriodHistory) {
+        try {
 
+            $leavePeriodHistory->save();
+
+            return $leavePeriodHistory;
+
+            // @codeCoverageIgnoreStart
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+        // @codeCoverageIgnoreEnd
+    }
+
+    /**
+     * Return latest record of leave period history 
+     * 
+     * @return LeavePeriodHistory leavePeriodHistory
+     * @throws DaoException
+     */
+    public function getCurrentLeavePeriodStartDateAndMonth() {
+        try {
+            $q = Doctrine_Query::create()
+                    ->from("LeavePeriodHistory lph")
+                    ->addOrderBy("lph.created_at DESC")
+                    ->addOrderBy("id DESC");
+
+            
+            return $q->fetchOne();
+
+            // @codeCoverageIgnoreStart
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+        // @codeCoverageIgnoreEnd
+    }
+    
+    /**
+     * Get All Leave period list
+     */
+    public function getLeavePeriodHistoryList( ){
+        try {
+            $q = Doctrine_Query::create()
+                    ->from("LeavePeriodHistory lph")
+                    ->addOrderBy("lph.created_at")
+                    ->addOrderBy("id ");
+
+           
+            return $q->execute();
+
+            // @codeCoverageIgnoreStart
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+        // @codeCoverageIgnoreEnd
+    }
 
 }

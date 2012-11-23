@@ -82,13 +82,12 @@ class defineLeavePeriodAction extends baseLeaveAction {
 
         $this->setForm(new LeavePeriodForm(array(), array(), true));
         $this->isLeavePeriodDefined = OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_LEAVE_PERIOD_DEFINED);
-        $this->currentLeavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriod();
+        $this->latestSatrtDate = $this->getLeavePeriodService()->getCurrentLeavePeriodStartDateAndMonth();
         if ($this->isLeavePeriodDefined) {
-            $endDateElements = explode(' ', $this->currentLeavePeriod->getEndDateFormatted('F d'));
-            $endDate = __($endDateElements[0]) . ' ' . $endDateElements[1];
-            $nextPeriodStartDateTimestamp = strtotime('+1 day', strtotime($this->currentLeavePeriod->getEndDate()));
-            $startMonthValue = (int) date('m', $nextPeriodStartDateTimestamp);
-            $startDateValue = (int) date('d', $nextPeriodStartDateTimestamp);
+            $this->currentLeavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate(date('Y-m-d'));
+            $endDate = date('F d',  strtotime($this->currentLeavePeriod[1]));
+            $startMonthValue = $this->latestSatrtDate->getLeavePeriodStartMonth();
+            $startDateValue = $this->latestSatrtDate->getLeavePeriodStartDay();
         } else {
             $endDate = '-';
             $startMonthValue = 0;
@@ -110,76 +109,23 @@ class defineLeavePeriodAction extends baseLeaveAction {
             $this->form->bind($request->getParameter($this->form->getName()));
             if($this->form->isValid()) {
 
-                $this->_setLeapYearLeavePeriodDetails($this->form);
-                $leavePeriodDataHolder = $this->_getPopulatedLeavePeriodDataHolder();
-                $fullStartDate = $leavePeriodService->generateStartDate($leavePeriodDataHolder);
-
-                $leavePeriodDataHolder->setLeavePeriodStartDate($fullStartDate);
-                $fullEndDate = $leavePeriodService->generateEndDate($leavePeriodDataHolder);
-                $currentLeavePeriod = $leavePeriodService->getCurrentLeavePeriod();
+                $leavePeriodHistory = new LeavePeriodHistory();
+                $leavePeriodHistory->setLeavePeriodStartMonth($this->form->getValue('cmbStartMonth'));
+                $leavePeriodHistory->setLeavePeriodStartDay($this->form->getValue('cmbStartDate'));
+                $leavePeriodHistory->setCreatedAt(date('Y-m-d'));
                 
-                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                $this->getLeavePeriodService()->saveLeavePeriodHistory($leavePeriodHistory);
                 
-
-                if (!is_null($currentLeavePeriod)) {
-                    $leavePeriodService->adjustCurrentLeavePeriod($fullEndDate);
-                } else {
-
-                    $leavePeriod = new LeavePeriod();
-                    $leavePeriod->setStartDate($fullStartDate);
-                    $leavePeriod->setEndDate($fullEndDate);
-                    $leavePeriodService->saveLeavePeriod($leavePeriod);
-                }
-         
                 $this->getMenuService()->enableModuleMenuItems('leave');
                 $this->getUser()->getAttributeHolder()->remove('mainMenu.menuItemArray');
+                
+                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
 
                 $this->redirect('leave/defineLeavePeriod');
             }
         }
     }
 
-    private function _setLeapYearLeavePeriodDetails(sfForm $form) {
-
-        $post   =	$form->getValues();
-        if ($post['cmbStartMonth'] == 2 &&
-                $post['cmbStartDate'] == 29) {
-
-            $nonLeapYearLeavePeriodStartDate = $post['cmbStartMonthForNonLeapYears'];
-            $nonLeapYearLeavePeriodStartDate .= '-';
-            $nonLeapYearLeavePeriodStartDate .= $post['cmbStartDateForNonLeapYears'];
-
-            ParameterService::setParameter('nonLeapYearLeavePeriodStartDate', $nonLeapYearLeavePeriodStartDate);
-            ParameterService::setParameter('isLeavePeriodStartOnFeb29th', 'Yes');
-            ParameterService::setParameter('leavePeriodStartDate', '');
-        } else {
-
-            $leavePeriodStartDate = $post['cmbStartMonth'];
-            $leavePeriodStartDate .= '-';
-            $leavePeriodStartDate .= $post['cmbStartDate'];
-
-            ParameterService::setParameter('leavePeriodStartDate', $leavePeriodStartDate);
-            ParameterService::setParameter('nonLeapYearLeavePeriodStartDate', '');
-            ParameterService::setParameter('isLeavePeriodStartOnFeb29th', 'No');
-        }
-    }
-
-    private function _getPopulatedLeavePeriodDataHolder() {
-
-        $leavePeriodDataHolder = new LeavePeriodDataHolder();
-
-        $isLeavePeriodStartOnFeb29th = ParameterService::getParameter('isLeavePeriodStartOnFeb29th');
-        $nonLeapYearLeavePeriodStartDate = ParameterService::getParameter('nonLeapYearLeavePeriodStartDate');
-        $leavePeriodStartDate = ParameterService::getParameter('leavePeriodStartDate');
-
-
-        $leavePeriodDataHolder->setIsLeavePeriodStartOnFeb29th($isLeavePeriodStartOnFeb29th);
-        $leavePeriodDataHolder->setNonLeapYearLeavePeriodStartDate($nonLeapYearLeavePeriodStartDate);
-        $leavePeriodDataHolder->setStartDate($leavePeriodStartDate);
-        $leavePeriodDataHolder->setDateFormat('Y-m-d');
-        $leavePeriodDataHolder->setCurrentDate(date('Y-m-d'));
-
-        return $leavePeriodDataHolder;
-    }
+    
 }
 ?>

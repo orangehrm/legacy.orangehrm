@@ -956,6 +956,8 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlementTable.class.php 
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveLeaveEntitlementTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriod.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistory.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistoryTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequest.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequestTable.class.php -text
@@ -969,6 +971,7 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeave.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeavePeriod.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeavePeriodHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveRequest.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveType.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseWorkWeek.class.php -text
@@ -4497,6 +4500,8 @@ symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlementTa
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveLeaveEntitlement.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveLeaveEntitlementTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriod.class.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodHistory.class.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodHistoryTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequest.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequestTable.class.php -text
@@ -4574,6 +4579,8 @@ symfony/plugins/orangehrmLeavePlugin/test/fixtures/HolidayDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/HolidayService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveEntitlement.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeavePeriodDao.yml -text
+symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeavePeriodHistoryDao.yml -text
+symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeavePeriodHistoryService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeavePeriodService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/LeaveRequestDaoSearch.yml -text
@@ -4586,12 +4593,14 @@ symfony/plugins/orangehrmLeavePlugin/test/fixtures/leavePeriod.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/HolidayDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeavePeriodDaoTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeavePeriodHistoryDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveRequestDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveTypeDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/WorkWeekDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/HolidayServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveConfigurationServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveEntitlementServiceTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodHistoryServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceGenerateEndDateTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceGenerateStartDateTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/LeavePeriodServiceTest.php -text

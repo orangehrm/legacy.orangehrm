@@ -33,7 +33,7 @@
                             <?php echo __("Current Leave Period"); ?>
                         </label>
                         <label>
-                            <?php echo set_datepicker_date_format($currentLeavePeriod->getStartDate()) . " " . __("to") . " " . set_datepicker_date_format($currentLeavePeriod->getEndDate());?>
+                            <?php echo set_datepicker_date_format($currentLeavePeriod[0]) . " " . __("to") . " " . set_datepicker_date_format($currentLeavePeriod[1]);?>
                         </label>
                     </li>
                     <?php } ?>

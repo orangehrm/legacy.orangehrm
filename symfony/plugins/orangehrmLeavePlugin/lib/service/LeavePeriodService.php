@@ -26,6 +26,7 @@
 class LeavePeriodService extends BaseService {
 
     private $leavePeriodDao;
+    private $leavePeriodList = null;
 
     /**
      * Sets the instance of LeavePeriodDao class
@@ -390,6 +391,100 @@ class LeavePeriodService extends BaseService {
 
     public function readLeavePeriod($leavePeriodId) {
         return $this->getLeavePeriodDao()->readLeavePeriod($leavePeriodId);
+    }
+    
+    /**
+     * 
+     * @param LeavePeriodHistory $leavePeriodHistory
+     * @return LeavePeriodHistory
+     */
+    public function saveLeavePeriodHistory(LeavePeriodHistory $leavePeriodHistory) {
+        $leavePeriodHistory = $this->getLeavePeriodDao()->saveLeavePeriodHistory($leavePeriodHistory);
+        OrangeConfig::getInstance()->setAppConfValue(ConfigService::KEY_LEAVE_PERIOD_DEFINED, 'Yes');
+        return $leavePeriodHistory;
+    }
+    
+    /**
+     * Get Latest Leave period start date and month 
+     * @return type
+     */
+    public function getCurrentLeavePeriodStartDateAndMonth(){
+        $leavePeriodHistory = $this->getLeavePeriodDao()->getCurrentLeavePeriodStartDateAndMonth();
+        return $leavePeriodHistory;
+    }
+    
+    /**
+     * Get Generated Leave Period List
+     * @return type
+     */
+    public function getGeneratedLeavePeriodList( ){
+        $leavePeriodList = array();
+        $leavePeriodHistoryList = $this->getLeavePeriodDao()->getLeavePeriodHistoryList();
+        
+        if(count($leavePeriodHistoryList) == 0)
+            throw new ServiceException("Leave Period Start date is not defined");
+        
+        if(empty($this->leavePeriodList)){
+        
+            $endDate = new DateTime();
+            $endDate->add(new DateInterval('P1Y'));
+
+            $firstCreatedDate = new DateTime($leavePeriodHistoryList->getFirst()->getCreatedAt());
+            $startDate = new DateTime($firstCreatedDate->format('Y')."-".$leavePeriodHistoryList->getFirst()->getLeavePeriodStartMonth()."-".$leavePeriodHistoryList->getFirst()->getLeavePeriodStartDay());
+            if($firstCreatedDate < $startDate){
+                $startDate->sub(new DateInterval('P1Y'));
+            }
+            $tempDate = $startDate;
+            $i= 0;
+            while( $tempDate <=  $endDate){
+
+               $projectedSatrtDate = ($i==0)?$tempDate:new DateTime(date('Y-m-d',  strtotime($tempDate->format('Y-m-d')."+1 day")));
+               $projectedEndDate = new DateTime(date('Y-m-d',  strtotime($projectedSatrtDate->format('Y-m-d')." +1 year -1 day")));
+
+                foreach( $leavePeriodHistoryList as $leavePeriodHistory){
+
+                    $createdDate = new DateTime( $leavePeriodHistory->getCreatedAt());
+
+                    if( ($projectedSatrtDate < $createdDate) && ($createdDate < $projectedEndDate)) {
+                        $newSatrtDate = new DateTime($createdDate->format('Y')."-".$leavePeriodHistory->getLeavePeriodStartMonth()."-".$leavePeriodHistory->getLeavePeriodStartDay());
+                        if($createdDate <  $newSatrtDate){
+                            $newSatrtDate->sub(new DateInterval('P1Y'));
+                        }
+                        $projectedEndDate = $newSatrtDate->add(DateInterval::createFromDateString('+1 year -1 day'));
+
+                    }
+
+                }
+
+               $tempDate = $projectedEndDate;
+
+                $leavePeriodList[] = array($projectedSatrtDate->format('Y-m-d') , $projectedEndDate->format('Y-m-d'));
+                $i++;
+            }
+            $this->leavePeriodList = $leavePeriodList;
+        }
+        return $this->leavePeriodList;
+    }
+    
+    /**
+     * Get Current Leave Period a
+     * @param type $date
+     */
+    public function getCurrentLeavePeriodByDate( $date ){
+        $matchLeavePeriod = null;
+        $this->leavePeriodList = $this->getGeneratedLeavePeriodList();
+        $currentDate = new DateTime($date);
+        foreach( $this->leavePeriodList as $leavePeriod){
+            $startDate = new DateTime($leavePeriod[0]);
+            $endDate = new DateTime($leavePeriod[1]);
+            if(($startDate <= $currentDate) && ($currentDate <= $endDate)){
+                $matchLeavePeriod = $leavePeriod;
+                break;
+                
+            }
+            
+        }
+        return $matchLeavePeriod;
     }
 
 }

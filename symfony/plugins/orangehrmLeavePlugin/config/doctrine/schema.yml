@@ -12,6 +12,22 @@ LeavePeriod:
       name: leave_period_end_date as endDate
       type: date
 
+LeavePeriodHistory:
+  tableName: ohrm_leave_period_history
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    leave_period_start_month:
+      type: integer(7)
+    leave_period_start_day:
+      type: integer(7)
+    created_at:
+      type: date
+
 LeaveEntitlement:
   tableName: ohrm_leave_entitlement
   columns:

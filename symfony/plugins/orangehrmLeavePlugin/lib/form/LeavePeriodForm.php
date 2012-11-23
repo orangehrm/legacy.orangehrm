@@ -14,9 +14,9 @@ class LeavePeriodForm extends sfForm {
         $monthsChoiceList = array_merge($monthsChoiceList, $leavePeriodService->getListOfMonths());
         $datesChoiceList = array($date);
 
-        $currentLeavePeriod = $leavePeriodService->getCurrentLeavePeriod();
+        $currentLeavePeriod = $leavePeriodService->getCurrentLeavePeriodStartDateAndMonth();
         if (!is_null($currentLeavePeriod)) {
-            $datesChoiceList = array_merge($datesChoiceList, $leavePeriodService->getListOfDates($currentLeavePeriod->getStartMonthValue()));
+            $datesChoiceList = array_merge($datesChoiceList, $leavePeriodService->getListOfDates($currentLeavePeriod->getLeavePeriodStartMonth()));
         }
 
         $this->setWidgets(array(
