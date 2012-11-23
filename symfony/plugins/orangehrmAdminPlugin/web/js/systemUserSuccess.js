@@ -4,11 +4,11 @@ $(document).ready(function() {
     $('.secPassReq').hide();    
 
     $(':input.password').each(function(){
-        $(this).prev('label').andSelf().wrapAll('<div class="passwordDiv"/>');
+        $(this).parent('li').addClass('passwordDiv');
     });
     
     $(':input.secPassword').each(function(){
-        $(this).prev('label').andSelf().wrapAll('<div class="secPasswordDiv"/>');
+        $(this).parent('li').addClass('secPasswordDiv');
     });
     
     $('#systemUser_password').after('<label class="score"/>');
