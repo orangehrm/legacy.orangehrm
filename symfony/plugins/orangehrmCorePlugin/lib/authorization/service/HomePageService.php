@@ -25,6 +25,7 @@ class HomePageService {
     protected $userSession;
     protected $configService;
     protected $loginPath = 'auth/login';
+    protected $validatePath = 'auth/validateCredentials';
 
     public function getConfigService() {
         
@@ -140,6 +141,10 @@ class HomePageService {
         $redirectToReferer = true;
         
         if (strpos($referer, $this->loginPath)) { // Check whether referer is login page
+            
+            $redirectToReferer = false;
+
+        } elseif (strpos($referer, $this->validatePath)) { // Check whether referer is validate action
             
             $redirectToReferer = false;
             
