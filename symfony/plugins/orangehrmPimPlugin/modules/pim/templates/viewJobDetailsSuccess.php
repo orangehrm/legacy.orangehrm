@@ -92,7 +92,7 @@
                             <?php echo $form['location']->render(array("class" => "formSelect")); ?>
                         </li>
                         <li>
-                            <h3><?php echo __('Employment Contract'); ?></h3>
+                            <h2><?php echo __('Employment Contract'); ?></h2>
                         </li>
                         <li>
                             <?php echo $form['contract_start_date']->renderLabel(__('Start Date')); ?>
