@@ -92,14 +92,20 @@
                 </thead>
                 <tbody>
                     
-                    <?php foreach($records as $record): ?>
+                    <?php 
+                    $i = 1;
+                    foreach($records as $record): 
+                    ?>
                     
-                    <tr>
+                    <tr class="<?php echo (($i % 2) == 0) ? 'even' : 'odd' ?>">
                         <td class="check"><input type="checkbox" class="checkbox" name="chkListRecord[]" value="<?php echo $record->getId(); ?>" /></td>
                         <td class="tdName tdValue"><a href="#"><?php echo __($record->getName()); ?></a></td>
                     </tr>
                     
-                    <?php endforeach; ?>
+                    <?php 
+                    $i++;
+                    endforeach; 
+                    ?>
                     
                     <?php if (count($records) == 0) : ?>
                     <tr>
