@@ -177,6 +177,9 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
         </div>
     </div> <!-- miniList -->
     
+    <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => CustomField::SCREEN_EMERGENCY_CONTACTS));?>
+    <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => EmployeeAttachment::SCREEN_EMERGENCY_CONTACTS));?>
+    
 </div> <!-- Box -->
 
 <script type="text/javascript">

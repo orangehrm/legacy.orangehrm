@@ -68,10 +68,8 @@
     <?php } ?>
     
     <?php 
-    echo include_component('pim', 'customFields', array('empNumber' => $empNumber, 
-        'screen' => CustomField::SCREEN_TAX_EXEMPTIONS)); 
-    echo include_component('pim', 'attachments', array('empNumber' => $empNumber, 
-        'screen' => EmployeeAttachment::SCREEN_TAX_EXEMPTIONS));
+    echo include_component('pim', 'customFields', array('empNumber' => $empNumber, 'screen' => CustomField::SCREEN_TAX_EXEMPTIONS)); 
+    echo include_component('pim', 'attachments', array('empNumber' => $empNumber, 'screen' => EmployeeAttachment::SCREEN_TAX_EXEMPTIONS));
     ?>
     
 </div> <!-- Box -->

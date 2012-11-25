@@ -210,6 +210,9 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
     include_partial('license', array('empNumber' => $empNumber, 'form' => $licenseForm, 
         'section' => $section, 'licensePermissions' => $licensePermissions));
     ?>
+    
+    <?php echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => CustomField::SCREEN_QUALIFICATIONS));?>
+    <?php echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => EmployeeAttachment::SCREEN_QUALIFICATIONS));?>
         
 </div> <!-- Box -->
 
