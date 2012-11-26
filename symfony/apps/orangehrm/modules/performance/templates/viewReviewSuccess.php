@@ -1,6 +1,7 @@
-<?php use_javascripts_for_form($form) ?>
-<?php use_stylesheets_for_form($form) ?>
 <?php
+
+stylesheet_tag(theme_path('css/orangehrm.datepicker.css'));
+use_javascript('orangehrm.datepicker.js');
 
 /* For formatting date */
 $formatData['currentFormat'] = 'yyyy-mm-dd';
