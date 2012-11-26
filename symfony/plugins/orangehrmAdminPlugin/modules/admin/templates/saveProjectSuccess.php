@@ -140,7 +140,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                         <?php echo $customerForm['description']->render(array("maxlength" => 255)); ?>
                     </li>
                     <li class="required">
-                        <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                 </ol>
             </fieldset>
