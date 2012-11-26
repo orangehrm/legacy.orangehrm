@@ -62,11 +62,19 @@ class LeaveEntitlementForm extends BaseForm {
         
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
         
-        $this->setWidget('date_from', new ohrmWidgetDatePicker(array(), array('id' => 'date_from')));
-        $this->setValidator('date_from', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
+        $this->setWidget('date', new ohrmWidgetFormLeavePeriod(array()));
+        
 
-        $this->setWidget('date_to', new ohrmWidgetDatePicker(array(), array('id' => 'date_to')));
-        $this->setValidator('date_to', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
+        $this->setValidator('date', new sfValidatorDateRange(array(
+            'from_date' => new ohrmDateValidator(array('required' => true)),
+            'to_date' => new ohrmDateValidator(array('required' => true))
+        )));
+        
+        //$this->setWidget('date_from', new ohrmWidgetDatePicker(array(), array('id' => 'date_from')));
+        //$this->setValidator('date_from', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
+
+        //$this->setWidget('date_to', new ohrmWidgetDatePicker(array(), array('id' => 'date_to')));
+        //$this->setValidator('date_to', new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => true)));
         
         $this->setDefaultDates();    
         
@@ -115,8 +123,8 @@ class LeaveEntitlementForm extends BaseForm {
         $labels = array(
             'employee' => __('Employee'),
             'leave_type' => __('Leave Type'),
-            'date_from' => __('Earned Between'),
-            'date_to' => __('&nbsp;')
+            'date' => __('Earned Between')
+            
         );
         return $labels;
     }
@@ -136,8 +144,9 @@ class LeaveEntitlementForm extends BaseForm {
             $toDate = $year . '-12-31';
         }        
         
-        $this->setDefault('date_from', set_datepicker_date_format($fromDate));
-        $this->setDefault('date_to', set_datepicker_date_format($toDate));
+        $this->setDefault('date', array(
+            'from' => set_datepicker_date_format($fromDate),
+            'to' => set_datepicker_date_format($toDate)));
 
     }
     

@@ -4486,6 +4486,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/MyLeaveEntitlementForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/UndeleteLeaveTypeForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/WorkWeekForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/sfWidgetFormSchemaFormatterPlain.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/widget/ohrmWidgetFormLeavePeriod.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/DetailedLeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementTypeCellFilter.php -text

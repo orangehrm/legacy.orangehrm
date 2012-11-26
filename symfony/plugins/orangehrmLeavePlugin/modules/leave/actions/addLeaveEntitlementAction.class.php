@@ -143,8 +143,10 @@ class addLeaveEntitlementAction extends sfAction {
                 'empName' => $employee->getFirstAndLastNames(),
                 'empId' => $employee->getEmpNumber()),
             'leave_type' => $entitlement->getLeaveTypeId(),
-            'date_from' => set_datepicker_date_format($entitlement->getFromDate()),
-            'date_to' => set_datepicker_date_format($entitlement->getToDate()),
+            'date'=>array(
+                    'from'=>set_datepicker_date_format($entitlement->getFromDate()),
+                    'to'=>set_datepicker_date_format($entitlement->getToDate())
+                    ),
             'entitlement' => $entitlement->getNoOfDays()
         );
         
@@ -197,8 +199,8 @@ class addLeaveEntitlementAction extends sfAction {
         }
         
         $leaveEntitlement->setNoOfDays($values['entitlement']);
-        $leaveEntitlement->setFromDate($values['date_from']);
-        $leaveEntitlement->setToDate($values['date_to']);
+        $leaveEntitlement->setFromDate($values['date']['from']);
+        $leaveEntitlement->setToDate($values['date']['to']);
 
         return $leaveEntitlement;
     }

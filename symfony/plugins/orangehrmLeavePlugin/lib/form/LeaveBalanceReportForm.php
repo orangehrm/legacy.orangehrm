@@ -72,10 +72,7 @@ class LeaveBalanceReportForm extends BaseForm {
         
         $this->_setLeaveTypeWidget();        
         
-        $this->setWidget('date', new ohrmWidgetFormDateRange(array(
-                    'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_from')),
-                    'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_to')))
-                ));
+         $this->setWidget('date', new ohrmWidgetFormLeavePeriod(array()));
         
 
         $this->setValidator('date', new sfValidatorDateRange(array(

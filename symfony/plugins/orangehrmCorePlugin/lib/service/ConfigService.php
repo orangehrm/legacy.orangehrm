@@ -42,6 +42,7 @@ class ConfigService extends BaseService {
     const KEY_LEAVE_PERIOD_START_DATE = 'leave.leavePeriodStartDate';
     const KEY_INCLUDE_SUPERVISOR_CHAIN = 'include_supervisor_chain'; 
     const KEY_THEME_NAME = 'themeName';
+    const KEY_LEAVE_PERIOD_STATUS = 'leave.leavePeriodStatus';
 
     /**
      * Get ConfigDao
@@ -220,8 +221,17 @@ class ConfigService extends BaseService {
 
     public function getThemeName() {
         return $this->_getConfigValue(self::KEY_THEME_NAME);
-    }    
+    }  
+    
+    public function setLeavePeriodStatus($value) {
+        $this->_setConfigValue(self::KEY_LEAVE_PERIOD_STATUS, $value);
+    }
 
+    public function getLeavePeriodStatus() {
+        return $this->_getConfigValue(self::KEY_LEAVE_PERIOD_STATUS);
+    } 
+
+    
     public function setAdminLocalizationDefaultLanguage($value){
         $this->_setConfigValue(self::KEY_ADMIN_LOCALIZATION_DEFAULT_LANGUAGE, $value);
     }

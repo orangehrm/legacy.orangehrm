@@ -1,4 +1,4 @@
-
+*
 <?php use_javascripts_for_form($workWeekForm); ?>
 <?php// use_stylesheets_for_form($workWeekForm); ?>
 
@@ -26,7 +26,7 @@
                     ?>
                                 <div class="formbuttons">            
                                     <input type="button" class="savebutton" id="saveBtn" value="<?php echo __('Edit'); ?>" />
-                                    <input type="button" class="clearbutton" onclick="reset();" value="<?php echo __('Reset'); ?>" />                
+                                    <input type="button" class="reset hide" name="btnReset" id="btnReset"  onclick="reset();" value="<?php echo __('Reset'); ?>" />                
                                 </div>
                     <?php } ?> 
                 </p>

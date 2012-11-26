@@ -25,6 +25,10 @@
  */
 class LeavePeriodService extends BaseService {
 
+    const LEAVE_PERIOD_STATUS_FORCED = 1;
+    const LEAVE_PERIOD_STATUS_NOT_FORCED = 2;
+    const LEAVE_PERIOD_STATUS_NOT_APPLICABLE = 3;
+    
     private $leavePeriodDao;
     private $leavePeriodList = null;
 
@@ -485,6 +489,10 @@ class LeavePeriodService extends BaseService {
             
         }
         return $matchLeavePeriod;
+    }
+    
+    public static function getLeavePeriodStatus( ){
+        return OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_LEAVE_PERIOD_STATUS);
     }
 
 }
