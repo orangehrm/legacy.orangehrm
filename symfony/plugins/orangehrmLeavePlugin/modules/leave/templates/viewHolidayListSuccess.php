@@ -36,9 +36,9 @@ use_stylesheets_for_form($searchForm);
             
 
             <fieldset>
-                <ol>
+                
                     <?php echo $searchForm->render() ?>
-                </ol>
+               
                 <p>
                     <input type="button" name="btnSearch" id="btnSearch" value="<?php echo __("Search") ?>" class="savebutton" />
                     <input type="button" class="reset" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />
