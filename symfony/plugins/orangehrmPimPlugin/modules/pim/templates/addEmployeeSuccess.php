@@ -24,7 +24,7 @@
                 <ol>
                     <?php echo $form->render(); ?>
                     <li class="required">
-                        <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                 </ol>
                 <p>
