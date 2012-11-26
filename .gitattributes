@@ -957,7 +957,6 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveLeaveEntitlement.class.php 
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveLeaveEntitlementTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistoryTable.class.php -text
-symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequest.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequestTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveTable.class.php -text
