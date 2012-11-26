@@ -133,10 +133,10 @@ class LeaveBalanceReportForm extends BaseForm {
         $now = time();
         
         // If leave period defined, use leave period start and end date
-        $leavePeriod = $this->getLeavePeriodService()->getLeavePeriod($now);        
+        $leavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate(date('Y-m-d', $now));        
         if (!empty($leavePeriod)) {
-            $fromDate = $leavePeriod->getStartDate();
-            $toDate = $leavePeriod->getEndDate();
+            $fromDate = $leavePeriod[0];
+            $toDate = $leavePeriod[1];
         } else {
             // else use this year as the period
             $year = date('Y', $now);
