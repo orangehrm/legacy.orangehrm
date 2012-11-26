@@ -4010,6 +4010,7 @@ symfony/plugins/orangehrmCorePlugin/lib/exception/CoreDaoException.php -text
 symfony/plugins/orangehrmCorePlugin/lib/exception/CoreServiceException.php -text
 symfony/plugins/orangehrmCorePlugin/lib/factory/SimpleUserRoleFactory.php -text
 symfony/plugins/orangehrmCorePlugin/lib/factory/UserRoleFactory.php -text
+symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/orangehrmForm.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorEmployeeNameAutoFill.php -text
