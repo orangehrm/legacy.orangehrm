@@ -495,5 +495,16 @@ class LeavePeriodService extends BaseService {
         return OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_LEAVE_PERIOD_STATUS);
     }
 
+    /**
+     * Get Calender Year By Date
+     * @param type $time
+     */
+    public function getCalenderYearByDate( $time ){
+            $year = date('Y', $time);
+            $fromDate = $year . '-1-1';
+            $toDate = $year . '-12-31';
+            
+            return array($fromDate,$toDate);
+    }
 }
 

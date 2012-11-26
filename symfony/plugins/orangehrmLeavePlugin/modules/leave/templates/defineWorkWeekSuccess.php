@@ -1,6 +1,6 @@
 *
 <?php use_javascripts_for_form($workWeekForm); ?>
-<?php// use_stylesheets_for_form($workWeekForm); ?>
+<?php use_stylesheets_for_form($workWeekForm); ?>
 
 <div id="location" class="box single">
 

@@ -44,7 +44,7 @@ class viewHolidayListAction extends sfAction {
      * @return LeavePeriodService
      */
     public function getLeavePeriodService() {
-
+  
         if (is_null($this->leavePeriodService)) {
             $leavePeriodService = new LeavePeriodService();
             $leavePeriodService->setLeavePeriodDao(new LeavePeriodDao());
@@ -91,29 +91,33 @@ class viewHolidayListAction extends sfAction {
         $request->setParameter('initialActionName', 'defineLeavePeriod'); 
         
         $this->searchForm = $this->getSearchForm();
-        $leavePeriodService = $this->getLeavePeriodService();
+        
+        $dateRange = $this->getLeavePeriodService()->getCalenderYearByDate(time());
+        $startDate = $dateRange[0];
+        $endDate = $dateRange[1];
+       // 
+        //$leavePeriodService = $this->getLeavePeriodService();
 
         //retrieve current leave period id
-        $leavePeriodId = (!$leavePeriodService->getCurrentLeavePeriod() instanceof LeavePeriod)?0:$leavePeriodService->getCurrentLeavePeriod()->getLeavePeriodId();
+       // $leavePeriodId = (!$leavePeriodService->getCurrentLeavePeriod() instanceof LeavePeriod)?0:$leavePeriodService->getCurrentLeavePeriod()->getLeavePeriodId();
 
-        $startDate = date("Y-m-d");
-        $endDate = date("Y-m-d");
-        if($leavePeriodService->getCurrentLeavePeriod() instanceof LeavePeriod) {
-            $startDate = $leavePeriodService->getCurrentLeavePeriod()->getStartDate();
-            $endDate = $leavePeriodService->getCurrentLeavePeriod()->getEndDate();
-        }
+       // $startDate = date("Y-m-d");
+       // $endDate = date("Y-m-d");
+       // if($leavePeriodService->getCurrentLeavePeriod() instanceof LeavePeriod) {
+       //     $startDate = $leavePeriodService->getCurrentLeavePeriod()->getStartDate();
+       //     $endDate = $leavePeriodService->getCurrentLeavePeriod()->getEndDate();
+       // }
 
         if($request->isMethod('post')) {
             
             $this->searchForm->bind($request->getParameter($this->searchForm->getName()));
             
             if ($this->searchForm->isValid()) {
-                $leavePeriodId = $this->searchForm->getValue('leave_period');
-                $leavePeriod = $leavePeriodService->readLeavePeriod($leavePeriodId);
-                if($leavePeriod instanceof LeavePeriod) {
-                    $startDate = $leavePeriod->getStartDate();
-                    $endDate = $leavePeriod->getEndDate();
-                }
+                $values = $this->searchForm->getValues();
+                
+                    $startDate = $values['date']['from'];
+                    $endDate = $values['date']['to'];
+                
             }
         }
 

@@ -25,19 +25,19 @@
 class HolidayListSearchForm extends sfForm {
     
     private $leavePeriodService;
-    
+  
     /**
      * Returns Leave Period
      * @return LeavePeriodService
      */
     public function getLeavePeriodService() {
-
+    
         if (is_null($this->leavePeriodService)) {
             $leavePeriodService = new LeavePeriodService();
             $leavePeriodService->setLeavePeriodDao(new LeavePeriodDao());
             $this->leavePeriodService = $leavePeriodService;
         }
-
+ 
         return $this->leavePeriodService;
     }
     
@@ -56,48 +56,25 @@ class HolidayListSearchForm extends sfForm {
 
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'OrangeDate'));
         
-        $leavePeriodChoices = $this->getLeavePeriodChoices();                           
-                            
-        $this->setWidget('leave_period', new sfWidgetFormSelect(
-                array('choices' => $leavePeriodChoices),
-                array('class' => 'formSelect')));   
+         $this->setWidget('date', new ohrmWidgetFormDateRange(array(
+              'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_from')),
+            'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_to'))
+         )));
         
-        // Clear the 0 option since it is not a valid choice.
-        unset($leavePeriodChoices[0]);
-        
-        $this->setValidator('leave_period', 
-                new sfValidatorChoice(array('choices' => array_keys($leavePeriodChoices)), 
-                                      array('invalid' => __(ValidationMessages::INVALID))));        
+        $this->setValidator('date', new sfValidatorDateRange(array(
+            'from_date' => new ohrmDateValidator(array('required' => true)),
+            'to_date' => new ohrmDateValidator(array('required' => true))
+        )));      
 
-        $this->widgetSchema->setLabels(array('leave_period' => __("Leave Period")));
+        $this->widgetSchema->setLabels(array('date' => __("Date Range")));
         
         $this->widgetSchema->setNameFormat('holidayList[%s]');        
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
+        $this->getWidgetSchema()->setFormFormatterName('ListFields');
+        
+        $this->setDefaultDates();
     }    
     
-    /**
-     * Get Leave Period choices as an array.
-     * @return array Array of leave periods
-     */
-    protected function getLeavePeriodChoices() {
-        $leavePeriodChoices = array();
-
-        $leavePeriods = $this->getLeavePeriodService()->getLeavePeriodList();
-        if (empty($leavePeriods)) {  
-            $leavePeriodChoices[0] = __('No Leave Periods');
-        } else {
-            foreach($leavePeriods as $leavePeriod) {
-                $id = $leavePeriod->getLeavePeriodId();
-                $label = set_datepicker_date_format($leavePeriod->getStartDate()) 
-                        . " " . __("to") . " " 
-                        . set_datepicker_date_format($leavePeriod->getEndDate());
-                
-                $leavePeriodChoices[$id] = $label;
-            }
-        } 
-        
-        return $leavePeriodChoices;
-    }
+    
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
@@ -110,9 +87,22 @@ class HolidayListSearchForm extends sfForm {
         parent::getStylesheets();
         
         $styleSheets = parent::getStylesheets();
-        $styleSheets['/orangehrmLeavePlugin/css/viewHolidayListSuccessSearch.css'] = 'screen';
+      //  $styleSheets['/orangehrmLeavePlugin/css/viewHolidayListSuccessSearch.css'] = 'screen';
         
         return $styleSheets;        
     }    
+    
+    protected function setDefaultDates() {
+        $now = time();
+        
+        // If leave period defined, use leave period start and end date
+        $calenderYear = $this->getLeavePeriodService()->getCalenderYearByDate($now);        
+                
+        
+        $this->setDefault('date', array(
+            'from' => set_datepicker_date_format($calenderYear[0]),
+            'to' => set_datepicker_date_format($calenderYear[1])));
+
+    }
 }
 

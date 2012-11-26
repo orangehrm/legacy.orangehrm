@@ -136,10 +136,7 @@ class defineHolidayAction extends sfAction {
                     $this->templateMessage = array('WARNING', __('Failed to Save: Date Already Assigned'));
                 } else {
 
-                    //first creating the leave period if the date belongs to next leave period
-                    if ($this->getLeavePeriodService()->isWithinNextLeavePeriod(strtotime($post['date']))) {
-                        $this->getLeavePeriodService()->createNextLeavePeriod($post['date']);
-                    }
+                    
 
                     $holidayObject = $this->getHolidayService()->readHoliday($post['id']);
                     $holidayObject->setDescription($post['description']);

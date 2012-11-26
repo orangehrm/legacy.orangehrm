@@ -24,7 +24,7 @@ use_stylesheets_for_form($searchForm);
 ?>
 
 
-<div id="location-information" class="box searchForm toggableForm">
+<div id="holiday-information" class="box searchForm toggableForm">
     
     <div class="head">
         <h1 id="searchHolidayHeading"><?php echo __('Holidays'); ?></h1>
@@ -36,9 +36,9 @@ use_stylesheets_for_form($searchForm);
             
 
             <fieldset>
-                
-                <?php echo $searchForm->render() ?>
-                
+                <ol>
+                    <?php echo $searchForm->render() ?>
+                </ol>
                 <p>
                     <input type="button" name="btnSearch" id="btnSearch" value="<?php echo __("Search") ?>" class="savebutton" />
                     <input type="button" class="reset" id="resetBtn" value="<?php echo __("Reset") ?>" name="_reset" />
