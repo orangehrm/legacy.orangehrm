@@ -1675,7 +1675,7 @@
             foreach($newEntitlements as $new) {
                 
                 if (!in_array($new->getEntitlementId(), $usedEntitlements)) {
-                    $this->assertEquals($leaveId, $new->getId());
+                    $this->assertEquals($leaveId, $new->getLeaveId());
 
                     // echo "New: "; print_r($new->toArray()); echo "\n";
                     if ($new->getEntitlementId() == $entitlementId) {
@@ -1696,7 +1696,8 @@
     protected function filterEntitlementsForLeave($leaveId, $newEntitlements) {
         $filteredEntitlements = array();
         foreach($newEntitlements as $entitlement) {
-            if ($entitlement->getId() == $leaveId) {
+
+            if ($entitlement->getLeaveId() == $leaveId) {
                 $filteredEntitlements[] = $entitlement;
             }
         }
