@@ -24,7 +24,7 @@ use_stylesheets_for_form($searchForm);
 ?>
 
 
-<div id="holiday-information" class="box searchForm toggableForm">
+<div id="holiday-information" class="box">
     
     <div class="head">
         <h1 id="searchHolidayHeading"><?php echo __('Holidays'); ?></h1>

@@ -56,19 +56,21 @@ class HolidayListSearchForm extends sfForm {
 
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('I18N', 'OrangeDate'));
         
-         $this->setWidget('date', new ohrmWidgetFormDateRange(array(
-              'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_from')),
-            'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_to'))
-         )));
         
-        $this->setValidator('date', new sfValidatorDateRange(array(
-            'from_date' => new ohrmDateValidator(array('required' => true)),
-            'to_date' => new ohrmDateValidator(array('required' => true))
-        )));      
-
-        $this->widgetSchema->setLabels(array('date' => __("Date Range")));
+        $this->setWidget('calFromDate',new ohrmWidgetDatePicker(array(), array('id' => 'calFromDate')));
+        $this->setWidget('calToDate',new ohrmWidgetDatePicker(array(), array('id' => 'calToDate')));
         
-        $this->widgetSchema->setNameFormat('holidayList[%s]');        
+        //$this->widgetSchema->setLabels(array('date' => __("Date Range")));
+        
+        $this->widgetSchema->setLabels(array('calFromDate' => __('From'),'calToDate' => __('To')));
+       
+        $this->setvalidators(array(
+            'calFromDate' => new ohrmDateValidator(array('required' => true)),
+            'calToDate' => new ohrmDateValidator(array('required' => true))
+        ));
+        
+        $this->widgetSchema->setNameFormat('holidayList[%s]'); 
+        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
         $this->getWidgetSchema()->setFormFormatterName('ListFields');
         
         $this->setDefaultDates();
@@ -98,11 +100,10 @@ class HolidayListSearchForm extends sfForm {
         // If leave period defined, use leave period start and end date
         $calenderYear = $this->getLeavePeriodService()->getCalenderYearByDate($now);        
                 
+ 
         
-        $this->setDefault('date', array(
-            'from' => set_datepicker_date_format($calenderYear[0]),
-            'to' => set_datepicker_date_format($calenderYear[1])));
-
+        $this->setDefaults(array('calFromDate' => set_datepicker_date_format($calenderYear[0]),
+            'calToDate' => set_datepicker_date_format($calenderYear[1])));
     }
 }
 

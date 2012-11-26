@@ -115,8 +115,8 @@ class viewHolidayListAction extends sfAction {
             if ($this->searchForm->isValid()) {
                 $values = $this->searchForm->getValues();
                 
-                    $startDate = $values['date']['from'];
-                    $endDate = $values['date']['to'];
+                    $startDate = $values['calFromDate'];
+                    $endDate = $values['calToDate'];
                 
             }
         }
