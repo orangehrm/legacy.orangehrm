@@ -97,10 +97,10 @@ class viewPersonalDetailsAction extends basePimAction {
 
         $leavePeriodService = new LeavePeriodService();
         $leavePeriodService->setLeavePeriodDao(new LeavePeriodDao());
-        $leavePeriod = $leavePeriodService->getLeavePeriod(strtotime(date("Y-m-d")));
+        $leavePeriod = $leavePeriodService->getCurrentLeavePeriodByDate(date("Y-m-d"));
         $flag = 0;
         
-        if($leavePeriod instanceof LeavePeriod) {
+        if(!empty($leavePeriod)) {
             $flag = 1;
         }
 
