@@ -53,7 +53,8 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
 
         $this->leaveRequestService->setLeaveRequestDao($leaveRequestDao);
 
-        $this->assertTrue($this->leaveRequestService->saveLeaveRequest($leaveRequestList[0], $leaveList));
+        $entitlements = array();
+        $this->assertTrue($this->leaveRequestService->saveLeaveRequest($leaveRequestList[0], $leaveList, $entitlements));
 
     }
 
@@ -106,7 +107,6 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $returnedLeaveRequest = $this->leaveRequestService->fetchLeaveRequest(1);
 
         $this->assertTrue($returnedLeaveRequest instanceof LeaveRequest);
-        $this->assertEquals(1, $leaveRequestList[0]->getLeavePeriodId());
         $this->assertEquals('LTY001', $leaveRequestList[0]->getLeaveTypeId());
         $this->assertEquals('Casual', $leaveRequestList[0]->getLeaveTypeName());
         $this->assertEquals('2010-08-30', $leaveRequestList[0]->getDateApplied());
@@ -224,7 +224,6 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $returnedLeaveRequest = $this->leaveRequestService->searchLeaveRequests($searchParameters, 1);
 
         $this->assertTrue($returnedLeaveRequest instanceof LeaveRequest);
-        $this->assertEquals(1, $leaveRequestList[0]->getLeavePeriodId());
         $this->assertEquals('LTY001', $leaveRequestList[0]->getLeaveTypeId());
         $this->assertEquals('Casual', $leaveRequestList[0]->getLeaveTypeName());
         $this->assertEquals('2010-08-30', $leaveRequestList[0]->getDateApplied());
@@ -233,7 +232,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetEmployeeAllowedToApplyLeaveTypes() {
-        $leaveTypes = TestDataService::loadObjectList('OldLeaveType', $this->fixture, 'set5');
+        $leaveTypes = TestDataService::loadObjectList('LeaveType', $this->fixture, 'set5');
 
         //mocking LeaveTypeService
         $leaveTypeService = $this->getMock('LeaveTypeService', array('getLeaveTypeList'));
@@ -266,7 +265,7 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
 
         $this->assertTrue(is_array($result));
         foreach($result as $leaveType) {
-            $this->assertTrue($leaveType instanceof OldLeaveType);
+            $this->assertTrue($leaveType instanceof LeaveType);
         }
 
         // Test handling of exceptions
