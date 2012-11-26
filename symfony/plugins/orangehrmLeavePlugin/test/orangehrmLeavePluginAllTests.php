@@ -14,7 +14,7 @@ class orangehrmLeavePluginAllTests {
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveEntitlementDaoTest.php'); 
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveTypeDaoTest.php');    
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeaveRequestDaoTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeavePeriodDaoTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/model/dao/LeavePeriodDaoTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/WorkWeekDaoTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/HolidayDaoTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/dao/LeavePeriodHistoryDaoTest.php');
@@ -26,9 +26,9 @@ class orangehrmLeavePluginAllTests {
         $suite->addTestFile(dirname(__FILE__) . '/model/service/WorkScheduleServiceTest.php');        
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveTypeServiceTest.php');    
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveRequestServiceTest.php');            
-        $suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceGenerateEndDateTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceGenerateStartDateTest.php');
-        $suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceGenerateEndDateTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceGenerateStartDateTest.php');
+        //$suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodServiceTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/WorkWeekServiceTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/HolidayServiceTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodHistoryServiceTest.php');

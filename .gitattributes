@@ -955,7 +955,6 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlementTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveLeaveEntitlementTable.class.php -text
-symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriod.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistoryTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodTable.class.php -text
@@ -970,7 +969,6 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseHoliday.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeave.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveLeaveEntitlement.class.php -text
-symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeavePeriod.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeavePeriodHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveRequest.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveType.class.php -text
@@ -4500,10 +4498,8 @@ symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlement.c
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlementTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveLeaveEntitlement.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveLeaveEntitlementTable.class.php -text
-symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriod.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodHistory.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodHistoryTable.class.php -text
-symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequest.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequestTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveTable.class.php -text
