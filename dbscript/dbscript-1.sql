@@ -660,14 +660,6 @@ create table `hs_hr_emp_locations` (
   primary key  (`emp_number`, `location_id`)
 ) engine=innodb default charset=utf8;
 
-CREATE TABLE `ohrm_leave_period` (
-  `leave_period_id` int(11) NOT NULL,
-  `leave_period_start_date` date NOT NULL,
-  `leave_period_end_date` date NOT NULL,
-  PRIMARY KEY (`leave_period_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 create table `hs_hr_kpi` (
   `id` int(13) not null,
   `job_title_code` varchar(13) default null,
@@ -1320,6 +1312,14 @@ create TABLE `ohrm_leave_leave_entitlement` (
     PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `ohrm_leave_period_history` (
+  `id` int(11) NOT NULL auto_increment,
+  `leave_period_start_month` int NOT NULL,
+  `leave_period_start_day` int NOT NULL,
+  `created_at` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 alter table ohrm_leave_type
     add foreign key (operational_country_id)
         references ohrm_operational_country(id) on delete set null;
@@ -1720,16 +1720,10 @@ alter table hs_hr_employee_leave_quota
 alter table hs_hr_employee_leave_quota
        add constraint foreign key (employee_id)
        						references hs_hr_employee (emp_number) on delete cascade;
-alter table hs_hr_employee_leave_quota
-       add constraint foreign key (leave_period_id)
-       						references ohrm_leave_period (leave_period_id) on delete cascade;
        						
 alter table hs_hr_leave_requests
        add constraint foreign key (employee_id)
        						references hs_hr_employee (emp_number) on delete cascade;
-alter table hs_hr_leave_requests
-       add constraint foreign key (leave_period_id)
-       						references ohrm_leave_period (leave_period_id) on delete cascade;
 
 alter table hs_hr_leave_requests
        add constraint foreign key (leave_type_id)
