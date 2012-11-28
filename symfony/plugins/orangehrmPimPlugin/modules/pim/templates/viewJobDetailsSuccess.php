@@ -67,14 +67,6 @@
                             <?php echo $form['emp_status']->renderLabel(__('Employment Status')); ?>
                             <?php echo $form['emp_status']->render(array("class" => "formSelect")); ?>
                         </li>
-<!--                        <li>
-                            <?php echo $form['terminated_date']->renderLabel(__('Terminated Date')); ?>
-                            <?php echo $form['terminated_date']->render(array("class" => "formDateInput")); ?> 
-                        </li>
-                        <li>
-                            <?php echo $form['termination_reason']->renderLabel(__('Terminated Reason')); ?>
-                            <?php echo $form['termination_reason']->render(); ?>
-                        </li>-->
                         <li>
                             <?php echo $form['eeo_category']->renderLabel(__('Job Category')); ?>
                             <?php echo $form['eeo_category']->render(array("class" => "formSelect")); ?>
@@ -102,33 +94,35 @@
                             <?php echo $form['contract_end_date']->renderLabel(__('End Date')); ?>
                             <?php echo $form['contract_end_date']->render(array("class" => "formDateInput")); ?>
                         </li>
-                        <li id="contractEdidMode">
                             <?php
                             if (empty($form->attachment)) {
+                                echo "<li class=\"contractEdidMode\">";
                                 echo $form['contract_file']->renderLabel('Contract Details');
                                 echo $form['contract_file']->render();
                                 echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
+                                echo "</li>";
                             } else {
                                 $attachment = $form->attachment;
                                 $linkHtml = "<a title=\"{$attachment->description}\" target=\"_blank\" class=\"fileLink\" href=\"";
                                 $linkHtml .= url_for('pim/viewAttachment?empNumber=' . $empNumber . '&attachId=' . $attachment->attach_id);
                                 $linkHtml .= "\">{$attachment->filename}</a>";
+                                echo "<li class=\"contractEdidMode\">";
                                 echo $form['contract_update']->renderLabel(__('Contract Details'));
                                 echo $linkHtml;
+                                echo "</li>";
                                 
-                                echo "<span id=\"radio\">";
+                                echo "<li id=\"radio\" class=\"radio noLabel contractEdidMode\">";
                                 echo $form['contract_update']->render();
-                                echo "</span>";
+                                echo "</li>";
                                 
-                                echo "<span id=\"fileUploadSection\">";
+                                echo "<li id=\"fileUploadSection\" class=\"noLabel\">";
                                     echo $form['contract_file']->renderLabel(' ');
                                     echo $form['contract_file']->render();
                                     echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
-                                echo "</span>";
+                                echo "</li>";
                             }
                             ?>
-                        </li> <!-- End of contractEdidMode -->    
-                        <li id="contractReadMode">
+                        <li class="contractReadMode">
                             <?php
                             echo "<label>" . __('Contract Details') . "</label>";
                             if (empty($form->attachment)) {
@@ -137,7 +131,7 @@
                                 echo $linkHtml;
                             }
                             ?>
-                        </li> <!-- End of contractReadMode -->
+                        </li>
                     </ol>
                     <?php endif; ?>
                     
@@ -392,12 +386,12 @@
             $('#fileUploadSection').hide();
         });
                 
-        $('#contractEdidMode').hide();
+        $('.contractEdidMode').hide();
         
         $("#btnSave").click(function() {
             
-            $('#contractEdidMode').show();
-            $('#contractReadMode').hide();
+            $('.contractEdidMode').show();
+            $('.contractReadMode').hide();
             
             if ( !readonlyFlag) {  
                 //if user clicks on Edit make all fields editable                                     

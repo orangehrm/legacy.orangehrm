@@ -74,7 +74,7 @@
                             echo $linkHtml;
                             ?>
                     </li>
-                    <li class="radio noLabel" id="radio"><label></label>
+                    <li class="radio noLabel" id="radio">
                         <?php
                             echo $form['jobSpecUpdate']->render();
                         ?>
