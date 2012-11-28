@@ -47,7 +47,9 @@ $(document).ready(function() {
         }
 
         if($("#btnSave").attr('value') == save) {
-            $("#btnSave").val('Processing');
+            if ($("#frmEmpPersonalDetails").valid()) {
+                $("#btnSave").val('Processing');
+            }
             $("#frmEmpPersonalDetails").submit();
         }
     });
