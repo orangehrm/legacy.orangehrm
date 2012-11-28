@@ -23,12 +23,21 @@
                 <?php echo $form['txtEmpID']->render(); ?>
 
                 <fieldset>
+                    <!--
+                    <div class="helpLabelContainer">
+                        <div><label>First Name</label></div>
+                        <div><label>Middle Name</label></div>
+                        <div><label>Last Name</label></div>
+                    </div>
+                    -->
                     <ol>
-                        <li class="line">
+                        <li class="line" id="nameContainer">
                             <label for="Full_Name"><?php echo __('Full Name'); ?></label>
-                            <?php echo $form['txtEmpFirstName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('First Name'))); ?>
-                            <?php echo $form['txtEmpMiddleName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Middle Name'))); ?>
-                            <?php echo $form['txtEmpLastName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
+                            <ol class="fieldsInLine">
+                                <li><?php echo $form['txtEmpFirstName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('First Name'))); ?></li>
+                                <li><?php echo $form['txtEmpMiddleName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Middle Name'))); ?></li>
+                                <li><?php echo $form['txtEmpLastName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?></li>
+                            </ol>    
                         </li>
                     </ol>
                     <ol>

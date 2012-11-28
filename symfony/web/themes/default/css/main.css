@@ -1289,6 +1289,7 @@ div.personalDetails {
 }
 
 .personalDetails form ol {
+    padding-top: 5px;
 	margin-bottom:9px;
 	position:relative;
 }
@@ -1330,5 +1331,36 @@ div.personalDetails {
 }
 .personalDetails form p {
 	padding-top: 0px;
+}
+/* ------------- Full Name styles ------------- */
+.personalDetails form ol.fieldsInLine {
+    border: none;
+    margin: 0;
+    padding-bottom: 2px;
+    padding-top: 0;
+}
+.personalDetails form ol.fieldsInLine li {
+    width: 218px;
+}
+.personalDetails form ol.fieldsInLine li input[type=text] {
+	width:192px;
+}
+.personalDetails form ol.fieldsInLine li span.validation-error {
+    left: 0;
+}
+#nameContainer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+/* ------------- Full Name Hints styles ------------- */
+.personalDetails div.helpLabelContainer {
+    border: none;
+    margin: 0 0 0 150px;
+    padding-top: 0;    
+}
+.personalDetails div.helpLabelContainer div {
+    width: 218px;
+    text-align: center;
+    display: inline;
 }
 /* ================ Personal Details styles: End ================ */
