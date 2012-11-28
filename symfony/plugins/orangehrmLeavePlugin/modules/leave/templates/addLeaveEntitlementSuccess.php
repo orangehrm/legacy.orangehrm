@@ -115,7 +115,7 @@ use_stylesheets_for_form($form);
   </div>
 </div>
 <!-- Confirmation box HTML: Ends -->
-<div class="modal hide" id="preview">
+<div class="modal hide" id="preview" style="width:500px">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
     <h3><?php echo __('OrangeHRM - Matching employees'); ?></h3>
@@ -137,9 +137,12 @@ use_stylesheets_for_form($form);
     var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';
+    var lang_employee  = '<?php echo __("Employee") ?>';
+    var lang_old_entitlement  = '<?php echo __("Old Entitlement") ?>';
+    var lang_new_entitlement  = '<?php echo __("New Entitlement") ?>';
     var listUrl = '<?php echo url_for('leave/viewLeaveEntitlements?savedsearch=1');?>';
     var getCountUrl = '<?php echo url_for('leave/getFilteredEmployeeCountAjax');?>';
-    var getEmployeeUrl = '<?php echo url_for('leave/getFilteredEmployeesAjax');?>';
+    var getEmployeeUrl = '<?php echo url_for('leave/getFilteredEmployeesEntitlementAjax');?>';
     var lang_matchesOne = '<?php echo __('Matches one employee');?>';
     var lang_matchesMany = '<?php echo __('Matches %count% employees');?>';
     var lang_matchesNone = '<?php echo __('No matching employees');?>';
@@ -200,7 +203,7 @@ use_stylesheets_for_form($form);
 
             params = params + '&' + name + '=' + value;
         });
-        
+        params = params + '&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&ed='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
         $.ajax({
             type: 'GET',
             url: getEmployeeUrl,
@@ -210,17 +213,20 @@ use_stylesheets_for_form($form);
                 
                 var count = data.length;
                 var rows = $('ol#employee_list li').length;
+                var html = '';
                 
                 $('ol#employee_list').html('');                      
-                
+                html = "<table class='table'><tr><th>"+lang_employee+"</th><th>"+lang_old_entitlement+"</th><th>"+lang_new_entitlement+"</th></tr>";
                 for (var i = 0; i < count; i++) {
                     var css = "odd";
                     rows++;
                     if (rows % 2) {
                         css = "even";
                     }
-                    $('ol#employee_list').append('<li class="' + css + '">' + data[i] + '</li>');
+                    html = html + '<tr class="' + css + '"><td>'+data[i][0]+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td></tr>';
                 }
+                html = html + '</table>';
+                $('ol#employee_list').append(html);
             }
         });
     }
