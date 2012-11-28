@@ -45,7 +45,7 @@ class viewPersonalDetailsAction extends basePimAction {
             }
             
             $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
-            $this->isLeavePeriodDefined();
+            //$this->isLeavePeriodDefined();
 
             $personal = $request->getParameter('personal');
             $empNumber = (isset($personal['txtEmpID']))?$personal['txtEmpID']:$request->getParameter('empNumber');
@@ -93,19 +93,19 @@ class viewPersonalDetailsAction extends basePimAction {
         }
     }
 
-    private function isLeavePeriodDefined() {
-
-        $leavePeriodService = new LeavePeriodService();
-        $leavePeriodService->setLeavePeriodDao(new LeavePeriodDao());
-        $leavePeriod = $leavePeriodService->getCurrentLeavePeriodByDate(date("Y-m-d"));
-        $flag = 0;
-        
-        if(!empty($leavePeriod)) {
-            $flag = 1;
-        }
-
-        $_SESSION['leavePeriodDefined'] = $flag;
-    }
+//    private function isLeavePeriodDefined() {
+//
+//        $leavePeriodService = new LeavePeriodService();
+//        $leavePeriodService->setLeavePeriodDao(new LeavePeriodDao());
+//        $leavePeriod = $leavePeriodService->getCurrentLeavePeriodByDate(date("Y-m-d"));
+//        $flag = 0;
+//        
+//        if(!empty($leavePeriod)) {
+//            $flag = 1;
+//        }
+//
+//        $_SESSION['leavePeriodDefined'] = $flag;
+//    }
 
     protected function _checkWhetherEmployeeIdExists($employeeId, $empNumber) {
 
