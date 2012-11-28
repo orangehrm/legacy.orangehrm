@@ -120,7 +120,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
                 'classPattern' => 'select_action quotaSelect',
                 'defaultOption' => array('label' => 'Select Action', 'value' => ''),
                 'hideIfEmpty' => true,
-                'options' => array($leaveRequestService, 'getLeaveRequestActions', array(self::RECORD, self::$userId)),
+                'options' => array($leaveRequestService, 'getLeaveRequestActions', array(self::RECORD, self::$loggedInEmpNumber)),
                 'namePattern' => 'select_leave_action_{id}',
                 'idPattern' => 'select_leave_action_{id}',
                 'hasHiddenField' => true,

@@ -60,7 +60,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         $statusStrings = array();
 
         foreach ($this->statusCounter as $status => $count) {
-            if (!empty($status)) {
+            if (!is_null($status)) {
                 $statusStrings[] = __(ucfirst(strtolower(Leave::getTextForLeaveStatus($status)))) . "(" . $count . ")";
             }
         }
