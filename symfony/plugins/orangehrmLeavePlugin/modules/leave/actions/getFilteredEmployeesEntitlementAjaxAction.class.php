@@ -67,6 +67,7 @@ class getFilteredEmployeesEntitlementAjaxAction  extends sfAction {
             $leaveEntitlementSearchParameterHolder->setEmpNumber($employee->getEmpNumber());
             $leaveEntitlementSearchParameterHolder->setFromDate($parameters['fd']);
             $leaveEntitlementSearchParameterHolder->setLeaveTypeId($parameters['lt']);
+            $leaveEntitlementSearchParameterHolder->setToDate($parameters['td']);
             
             $entitlementList = $this->getEntitlementService()->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
             $oldValue = 0;
