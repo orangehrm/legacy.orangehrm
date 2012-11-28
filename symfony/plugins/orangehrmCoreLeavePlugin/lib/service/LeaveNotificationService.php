@@ -18,6 +18,10 @@
  * Boston, MA  02110-1301, USA
  *
 */
+
+/**
+ * Not in use
+ */
 class LeaveNotificationService extends BaseService
 {
     /**

@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU General Public License along with this program;
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
- *
  */
 
 /**
- * Description of LeaveEvents
+ * Description of LeaveAssignMailer
+ *
  */
-class LeaveEvents {
-    const ENTITLEMENT_ADD = 'leave_entitlement_add';
-    const ENTITLEMENT_UPDATE = 'leave_entitlement_update';
-    const ENTITLEMENT_BULK_ADD = 'leave_entitlement_bulk_update';
-    
-    const LEAVE_APPROVE = 'leave.approve';
-    const LEAVE_CANCEL = 'leave.cancel';
-    const LEAVE_REJECT = 'leave.reject';
-    const LEAVE_ASSIGN = 'leave.assign';
-    const LEAVE_APPLY = 'leave.apply';
+class LeaveAssignMailer implements ohrmObserver {    
+
+    public function listen(sfEvent $event) {
+                
+        $leaveAssignmentMailer = new LeaveAssignmentMailer($event['request'], $event['days'], $event['empNumber']);
+        $leaveAssignmentMailer->send();        
+    }
+
 }
+

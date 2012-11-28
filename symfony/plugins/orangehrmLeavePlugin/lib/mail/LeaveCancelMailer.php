@@ -16,20 +16,23 @@
  * You should have received a copy of the GNU General Public License along with this program;
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
- *
  */
 
 /**
- * Description of LeaveEvents
+ * Description of LeaveCancelMailer
+ *
  */
-class LeaveEvents {
-    const ENTITLEMENT_ADD = 'leave_entitlement_add';
-    const ENTITLEMENT_UPDATE = 'leave_entitlement_update';
-    const ENTITLEMENT_BULK_ADD = 'leave_entitlement_bulk_update';
-    
-    const LEAVE_APPROVE = 'leave.approve';
-    const LEAVE_CANCEL = 'leave.cancel';
-    const LEAVE_REJECT = 'leave.reject';
-    const LEAVE_ASSIGN = 'leave.assign';
-    const LEAVE_APPLY = 'leave.apply';
+class LeaveCancelMailer implements ohrmObserver {
+    public function listen(sfEvent $event) {
+        if ($event['performerType'] == SystemUser::USER_TYPE_EMPLOYEE) {
+            $leaveCancellationMailer = new LeaveEmployeeCancellationMailer($event['leaveList'], 
+                    $event['performerType'], $event['performerId'], $event['requestType']);            
+        } else {
+            $leaveCancellationMailer = new LeaveCancellationMailer($event['leaveList'], 
+                    $event['performerType'], $event['performerId'], $event['requestType']);
+        }
+        
+        $leaveCancellationMailer->send();         
+    }
 }
+

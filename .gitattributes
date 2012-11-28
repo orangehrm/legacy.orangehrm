@@ -4453,6 +4453,7 @@ symfony/plugins/orangehrmFunctionalTestPlugin/test/time/testdata/TimePrerequisit
 symfony/plugins/orangehrmFunctionalTestPlugin/test/time/testdata/TimeSheetExternalPrerequisites.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/list_component.yml -text
+symfony/plugins/orangehrmLeavePlugin/config/orangehrmLeavePluginConfiguration.class.php -text
 symfony/plugins/orangehrmLeavePlugin/config/routing.yml -text
 symfony/plugins/orangehrmLeavePlugin/config/view.yml -text
 symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByEmployee.sql -text
@@ -4467,6 +4468,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/entitlement/EntitlementConsumptionStrat
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/FIFOEntitlementConsumptionStrategy.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/LeaveBalance.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/event/LeaveEvents.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/event/ohrmObserver.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/ApplyLeaveForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/AssignLeaveForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/HolidayForm.php -text
@@ -4490,6 +4492,11 @@ symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementTypeCellFilter.php
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListActionCell.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveTypeListConfigurationFactory.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveApplyMailer.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveApproveMailer.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveAssignMailer.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveCancelMailer.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveRejectMailer.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginHoliday.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginHolidayTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeave.class.php -text

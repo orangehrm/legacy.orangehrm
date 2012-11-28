@@ -21,16 +21,24 @@
 */
 
 class LeaveApplicationMailer extends orangehrmLeaveMailer {
-
-    public function  __construct($performer, $leaveRequest, $leaveList) {
+    
+    public function  __construct($performerId, $leaveRequest, $leaveList) {
 
         parent::__construct();
 
-        $this->performer = $performer;
+        $this->performerId = $performerId;
+        $this->_populatePerformer($performerId);
         $this->leaveRequest = $leaveRequest;
         $this->leaveList = $leaveList;
 
     }
+    
+    private function _populatePerformer($performerId) {
+
+        if (!empty($performerId)) {
+            $this->performer = $this->getEmployeeService()->getEmployee($performerId);
+        }
+    }        
 
     public function sendToSupervisors() {
 

@@ -78,6 +78,9 @@ abstract class orangehrmLeaveMailer extends orangehrmMailer {
     }
 
     public function getEmployeeService() {
+        if (!($this->employeeService instanceof EmployeeService)) {
+            $this->employeeService = new EmployeeService();
+        }
         return $this->employeeService;
     }
 

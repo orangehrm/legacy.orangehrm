@@ -12,6 +12,8 @@
 class LeaveApplicationService extends AbstractLeaveAllocationService {
 
     protected $leaveEntitlementService;
+    protected $dispatcher;
+    protected $logger;
 
     /**
      * Get LeaveEntitlementService
@@ -27,11 +29,27 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
     
     /**
      * Set LeaveEntitlementService
-     * @param OldLeaveEntitlementService $service 
+     * @param LeaveEntitlementService $service 
      */
     public function setLeaveEntitlementService(LeaveEntitlementService $service) {
         $this->leaveEntitlementService = $service;
     }
+    
+    /**
+     * Set dispatcher.
+     * 
+     * @param $dispatcher
+     */
+    public function setDispatcher($dispatcher) {
+        $this->dispatcher = $dispatcher;
+    }
+
+    public function getDispatcher() {
+        if(is_null($this->dispatcher)) {
+            $this->dispatcher = sfContext::getInstance()->getEventDispatcher();
+        }
+        return $this->dispatcher;
+    }      
 
     /**
      * Creates a new leave application
@@ -117,10 +135,13 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
 //                    }
 
                     //sending leave apply notification
-                    $this->sendEmail($this->getLoggedInEmployee(), $leaveRequest, $leaves);
-
+                    $employee = $this->getLoggedInEmployee();
+                    $eventData = array('request' => $leaveRequest, 'days' => $leaves, 'empNumber' => $employee->getEmpNumber());
+                    $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_APPLY, $eventData));
+                    
                     return $leaveRequest;
                 } catch (Exception $e) {
+                    $this->getLogger()->error('Exception while saving leave:' . $e);
                     throw new LeaveAllocationServiceException('Leave Quota will Exceed');
                 }
             } else {
@@ -130,12 +151,6 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
         
         return false;
         
-    }
-
-    protected function sendEmail($loggedInEmployee, $leaveRequest, $leaves) {
-        
-        $leaveApplicationMailer = new LeaveApplicationMailer($loggedInEmployee, $leaveRequest, $leaves);
-        $leaveApplicationMailer->send();
     }
 
     /**
@@ -238,5 +253,18 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
         $employee = $this->getEmployeeService()->getEmployee($_SESSION['empNumber']);
         return $employee;
     }
+    
+    /**
+     * Get Logger instance. Creates if not already created.
+     *
+     * @return Logger
+     */
+    protected function getLogger() {
+        if (is_null($this->logger)) {
+            $this->logger = Logger::getLogger('leave.LeaveApplicationService');
+        }
+
+        return($this->logger);
+    }     
 
 }

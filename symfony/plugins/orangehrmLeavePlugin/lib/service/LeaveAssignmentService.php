@@ -3,6 +3,7 @@
 class LeaveAssignmentService extends AbstractLeaveAllocationService {
 
     protected $leaveEntitlementService;
+    protected $dispatcher;
 
     /**
      * Get LeaveEntitlementService
@@ -23,6 +24,22 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
     public function setLeaveEntitlementService(LeaveEntitlementService $service) {
         $this->leaveEntitlementService = $service;
     }
+    
+    /**
+     * Set dispatcher.
+     * 
+     * @param $dispatcher
+     */
+    public function setDispatcher($dispatcher) {
+        $this->dispatcher = $dispatcher;
+    }
+
+    public function getDispatcher() {
+        if(is_null($this->dispatcher)) {
+            $this->dispatcher = sfContext::getInstance()->getEventDispatcher();
+        }
+        return $this->dispatcher;
+    }  
     
     /**
      *
@@ -104,7 +121,8 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 //                    }
 
                     /* Send notification to the when leave is assigned; TODO: Move to action? */
-                    $this->sendEmail($leaveRequest, $leaveDays, $_SESSION['empNumber']);
+                    $eventData = array('request' => $leaveRequest, 'days' => $leaveDays, 'empNumber' => $_SESSION['empNumber']);
+                    $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_ASSIGN, $eventData));
 
 //                    return true;
                     return $leaveRequest;
@@ -115,12 +133,6 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
         } else {
             throw new LeaveAllocationServiceException('Failed to Submit: No Working Days Selected');
         }
-    }
-
-    protected function sendEmail($leaveRequest, $leaveDays, $employeeNumber) {
-
-        $leaveAssignmentMailer = new LeaveAssignmentMailer($leaveRequest, $leaveDays, $employeeNumber);
-        $leaveAssignmentMailer->send();
     }
 
     /**

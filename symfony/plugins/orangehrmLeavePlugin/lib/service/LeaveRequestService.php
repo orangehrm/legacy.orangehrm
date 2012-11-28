@@ -26,7 +26,6 @@ class LeaveRequestService extends BaseService {
     private $leavePeriodService;
     private $holidayService;
 
-    private $leaveNotificationService;
     private $leaveStateManager;
     private $userRoleManager;
     
@@ -53,25 +52,6 @@ class LeaveRequestService extends BaseService {
      */
     public function setLeaveRequestDao(LeaveRequestDao $leaveRequestDao) {
         $this->leaveRequestDao = $leaveRequestDao;
-    }
-
-    /**
-     *
-     * @return <type>
-     */
-    public function setLeaveNotificationService(LeaveNotificationService $leaveNotificationService) {
-        $this->leaveNotificationService = $leaveNotificationService;
-    }
-
-    /**
-     *
-     * @return LeaveNotificationService
-     */
-    public function getLeaveNotificationService() {
-        if(is_null($this->leaveNotificationService)) {
-            $this->leaveNotificationService = new LeaveNotificationService();
-        }
-        return $this->leaveNotificationService;
     }
 
     /**
@@ -554,31 +534,28 @@ class LeaveRequestService extends BaseService {
             $rejectionIds = array_keys(array_filter($changes, array($this, '_filterRejections')));
             $cancellationIds = array_keys(array_filter($changes, array($this, '_filterCancellations')));
 
-            $leaveNotificationService = $this->getLeaveNotificationService();
-
             if ($changeType == 'change_leave_request') {
                 foreach ($approvalIds as $leaveRequestId) {
                     $approvals = $this->searchLeave($leaveRequestId);
                     $this->_approveLeave($approvals, $changeComments[$leaveRequestId]);
 
-                    $leaveNotificationService->approve($approvals, $changedByUserType, $changedUserId, 'request');
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, $approvals, 
+                            $changedByUserType, $changedUserId, 'request');
                 }
 
                 foreach ($rejectionIds as $leaveRequestId) {
                     $rejections = $this->searchLeave($leaveRequestId);
                     $this->_rejectLeave($rejections, $changeComments[$leaveRequestId]);
-                    $leaveNotificationService->reject($rejections, $changedByUserType, $changedUserId, 'request');
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, $rejections, 
+                            $changedByUserType, $changedUserId, 'request');
                 }
 
                 foreach ($cancellationIds as $leaveRequestId) {
                     $cancellations = $this->searchLeave($leaveRequestId);
                     $this->_cancelLeave($cancellations, $changedByUserType);
                     
-                    if ($changedByUserType == SystemUser::USER_TYPE_EMPLOYEE) {
-                        $leaveNotificationService->cancelEmployee($cancellations, $changedByUserType, $changedUserId, 'request');
-                    } else {
-                        $leaveNotificationService->cancel($cancellations, $changedByUserType, $changedUserId, 'request');
-                    }                    
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
+                            $changedByUserType, $changedUserId, 'request');                  
                 }
 
             } elseif ($changeType == 'change_leave') {
@@ -590,7 +567,8 @@ class LeaveRequestService extends BaseService {
                 $this->_approveLeave($approvals, $changeComments);
 
                 foreach ($approvals as $approval) {
-                    $leaveNotificationService->approve(array($approval), $changedByUserType, $changedUserId, 'single');
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, array($approval), 
+                            $changedByUserType, $changedUserId, 'single');
                 }
 
                 $rejections = array();
@@ -600,7 +578,8 @@ class LeaveRequestService extends BaseService {
                 $this->_rejectLeave($rejections, $changeComments);
 
                 foreach ($rejections as $rejection) {
-                    $leaveNotificationService->reject(array($rejection), $changedByUserType, $changedUserId, 'single');
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, array($rejection), 
+                            $changedByUserType, $changedUserId, 'single');
                 }
 
                 $cancellations = array();
@@ -611,11 +590,8 @@ class LeaveRequestService extends BaseService {
 
                 foreach ($cancellations as $cancellation) {
 
-                    if ($changedByUserType == SystemUser::USER_TYPE_EMPLOYEE) {
-                        $leaveNotificationService->cancelEmployee(array($cancellation), $changedByUserType, $changedUserId, 'single');
-                    } else {
-                        $leaveNotificationService->cancel(array($cancellation), $changedByUserType, $changedUserId, 'single');
-                    }
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, array($cancellation), 
+                            $changedByUserType, $changedUserId, 'single');
                 }
 
             } else {
@@ -640,9 +616,7 @@ class LeaveRequestService extends BaseService {
 
             $leaveStateManager->setLeave($approval);
             $leaveStateManager->setChangeComments($comment);
-            $leaveStateManager->approve();
-        
-            $this->_notifyLeaveStatusChange($approval, LeaveEvents::LEAVE_APPROVE);            
+            $leaveStateManager->approve();          
         }
 
     }
@@ -661,8 +635,6 @@ class LeaveRequestService extends BaseService {
             $leaveStateManager->setLeave($rejection);
             $leaveStateManager->setChangeComments($comment);
             $leaveStateManager->reject();
-            
-            $this->_notifyLeaveStatusChange($rejection, LeaveEvents::LEAVE_APPROVE);
         }
 
     }
@@ -677,16 +649,17 @@ class LeaveRequestService extends BaseService {
             $leaveRequests[$leaveRequestId]['leaves'][] = $cancellation;
 
             $leaveStateManager->setLeave($cancellation);
-            $leaveStateManager->cancel();
-            
-            $this->_notifyLeaveStatusChange($cancellation, LeaveEvents::LEAVE_APPROVE);
+            $leaveStateManager->cancel();            
         }
 
     }
     
-    private function _notifyLeaveStatusChange($leave, $eventType) {
-        $this->getDispatcher()->notify(new sfEvent($this, $eventType, 
-                        array('leave' => $leave)));                                                            
+    private function _notifyLeaveStatusChange($eventType, $leaveList, $performerType, $performerId, $requestType) {
+        $eventData = array('leaveList' => $leaveList, 
+                           'performerType' => $performerType, 
+                           'performerId' => $performerId, 
+                           'requestType' => $requestType);
+        $this->getDispatcher()->notify(new sfEvent($this, $eventType, $eventData));   
     }    
 
     public function getScheduledLeavesSum($employeeId, $leaveTypeId, $leavePeriodId) {
