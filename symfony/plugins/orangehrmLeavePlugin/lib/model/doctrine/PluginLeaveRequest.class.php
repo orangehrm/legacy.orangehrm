@@ -17,21 +17,19 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
     private $numberOfDays = null;
     private $leaveDuration = null;
     private $statusCounter = array();
-    private $canApprove = false;
-    private $canCancel = false;
     private $workShiftHoursPerDay = null;
 
-    const LEVAE_REQUEST_STATUS_APPROVED = 'Scheduled';
-    const LEVAE_REQUEST_STATUS_CANCELLED = 'Cancelled';
-    const LEVAE_REQUEST_STATUS_REJECTED = 'Rejected';
-    const LEVAE_REQUEST_STATUS_DIFFER = -2;
+    // const LEAVE_REQUEST_STATUS_APPROVED = 'Scheduled';
+    // const LEAVE_REQUEST_STATUS_CANCELLED = 'Cancelled';
+    // const LEAVE_REQUEST_STATUS_REJECTED = 'Rejected';
+    const LEAVE_REQUEST_STATUS_DIFFER = -2;
 
     public function getNumberOfDays() {
         $this->_fetchLeave();
         return number_format($this->numberOfDays, 2);
     }
 
-    public function getStatusCounter() {
+    private function getStatusCounter() {
         return $this->statusCounter;
     }
 
@@ -56,13 +54,14 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         }
     }
 
-    public function getStatus() {
+    public function getLeaveBreakdown() {
         $this->_fetchLeave();
 
         $statusStrings = array();
+
         foreach ($this->statusCounter as $status => $count) {
             if (!empty($status)) {
-                $statusStrings[] = __($status) . "(" . $count . ")";
+                $statusStrings[] = __(ucfirst(strtolower(Leave::getTextForLeaveStatus($status)))) . "(" . $count . ")";
             }
         }
 
@@ -90,26 +89,14 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         }
     }
 
-    public function canApprove() {
-        $this->_fetchLeave();
-        return $this->canApprove;
-    }
-
-    public function canCancel($isAdmin = false) {
-        if ($isAdmin && $this->_AreAllTaken()) {
-            return true;
-        } else {
-            $this->_fetchLeave();
-            return $this->canCancel;
-        }
-    }
-
     public function getLeaveStatusId() {
         $this->_fetchLeave();
         if ($this->isStatusDiffer()) {
-            return self::LEVAE_REQUEST_STATUS_DIFFER;
+            return self::LEAVE_REQUEST_STATUS_DIFFER;
         } else {
-            return $this->leave[0]->getStatus();
+            reset($this->statusCounter);
+            $firstKey = key($this->statusCounter);
+            return $firstKey;
         }
     }
 
@@ -135,8 +122,6 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         $this->leaveCount = $this->leave->count();
 
         $this->statusCounter = array();
-        $this->canApprove = false;
-        $this->canCancel = false;
 
         foreach ($this->leave as $leave) {
             // Calculating number of days and duration
@@ -157,28 +142,20 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
             //if($hourLength > 0) {
             $this->numberOfDays += $dayLength;
             //}
-            // Populating status counter
-            $key = $leave->getTextLeaveStatus();
-            $statusDayLength = ($dayLength != 0) ? $dayLength : 1;
-            if (!empty($key)) {
+            
+            if (!$leave->isNonWorkingDay()) {
+                
+                // Populating leave breakdown
+                
+                $status = $leave->getStatus();
+                $statusDayLength = ($dayLength != 0) ? $dayLength : 1;
                 if ($hourLength > 0) {
-                    if (array_key_exists($key, $this->statusCounter)) {
-                        $this->statusCounter[$key]+= $statusDayLength;
+                    if (array_key_exists($status, $this->statusCounter)) {
+                        $this->statusCounter[$status]+= $statusDayLength;
                     } else {
-                        $this->statusCounter[$key] = $statusDayLength;
+                        $this->statusCounter[$status] = $statusDayLength;
                     }
                 }
-            }
-
-            // Checking for available status changes
-            if ($leave->canApprove()) {
-                if ($dayLength > 0)
-                    $this->canApprove = true;
-            }
-
-            if ($leave->canCancel()) {
-                if ($dayLength > 0)
-                    $this->canCancel = true;
             }
         }
 
@@ -186,7 +163,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         /* if ($this->numberOfDays == 1.0) {
           $this->numberOfDays = $this->leave[0]->getLengthDays();
           } */
-//die();
+
     }
 
     private function _getWorkShiftHoursPerDay() {

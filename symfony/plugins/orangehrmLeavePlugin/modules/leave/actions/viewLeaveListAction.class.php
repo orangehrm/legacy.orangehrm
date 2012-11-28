@@ -257,7 +257,9 @@ class viewLeaveListAction extends sfAction {
     }
     
     protected function getListConfigurationFactory() {
+        $loggedInEmpNumber = $this->getUser()->getAttribute('auth.empNumber');
         LeaveListConfigurationFactory::setListMode($this->mode);
+        LeaveListConfigurationFactory::setLoggedInEmpNumber($loggedInEmpNumber);
         $configurationFactory = new LeaveListConfigurationFactory();
         
         return $configurationFactory;

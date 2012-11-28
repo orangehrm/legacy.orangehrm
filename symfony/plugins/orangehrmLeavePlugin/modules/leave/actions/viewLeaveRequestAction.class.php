@@ -156,7 +156,10 @@ class viewLeaveRequestAction extends sfAction {
     }
 
     protected function getListConfigurationFactory() {
+        $loggedInEmpNumber = $this->getUser()->getAttribute('auth.empNumber');
+         
         DetailedLeaveListConfigurationFactory::setListMode($this->mode);
+        DetailedLeaveListConfigurationFactory::setLoggedInEmpNumber($loggedInEmpNumber);
         $configurationFactory = new DetailedLeaveListConfigurationFactory();
         $configurationFactory->setRuntimeDefinitions(array(
 			    'title' => $this->title

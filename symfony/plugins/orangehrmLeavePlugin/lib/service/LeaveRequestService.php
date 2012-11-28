@@ -28,6 +28,7 @@ class LeaveRequestService extends BaseService {
 
     private $leaveNotificationService;
     private $leaveStateManager;
+    private $userRoleManager;
     
     private $dispatcher;
 
@@ -180,6 +181,25 @@ class LeaveRequestService extends BaseService {
         return $this->dispatcher;
     }    
 
+    /**
+     * Get User role manager instance
+     * @return AbstractUserRoleManager
+     */
+    public function getUserRoleManager() {
+        if (!($this->userRoleManager instanceof AbstractUserRoleManager)) {
+            $this->userRoleManager = UserRoleManagerFactory::getUserRoleManager();
+        }
+        return $this->userRoleManager;
+    }
+
+    /**
+     * Set user role manager instance
+     * @param AbstractUserRoleManager $userRoleManager
+     */
+    public function setUserRoleManager(AbstractUserRoleManager $userRoleManager) {
+        $this->userRoleManager = $userRoleManager;
+    }
+    
     /**
      *
      * @param LeaveRequest $leaveRequest
@@ -681,32 +701,47 @@ class LeaveRequestService extends BaseService {
 
     }
     
-    public function getLeaveRequestActions($request, $loggedUserId, $listMode) {
+    public function getLeaveRequestActions($request, $loggedInEmpNumber) {
         $actions = array();
 
-        if ($request->canApprove() && $listMode != LeaveListForm::MODE_MY_LEAVE_LIST && $request->getEmpNumber() != $loggedUserId) {
-            $actions['markedForApproval'] = 'Approve';
-            $actions['markedForRejection'] = 'Reject';
-        }
+        if (!$request->isStatusDiffer()) {
+            
+            $includeRoles = array();
+            $excludeRoles = array();
 
-        if ($request->canCancel(Auth::instance()->hasRole(Auth::ADMIN_ROLE))) {
-            $actions['markedForCancellation'] = 'Cancel';
+            if ($request->getEmpNumber() == $loggedInEmpNumber) {
+                $includeRoles = array('ESS');
+            }            
+            
+            $status = $request->getLeaveStatusId();
+
+            $actionNames = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
+                    Leave::getTextForLeaveStatus($status), $excludeRoles, $includeRoles);
+
+            foreach ($actionNames as $name) {
+                $actions[$name] = ucfirst(strtolower($name));
+            }         
         }
         
         return $actions;
     }
     
-    public function getLeaveActions($leave, $loggedUserId, $listMode) {
+    public function getLeaveActions($leave, $loggedInEmpNumber) {
         $actions = array();
+        
+        $includeRoles = array();
+        $excludeRoles = array();
 
-        if ($leave->canApprove() && $listMode != viewLeaveRequestAction::MODE_MY_LEAVE_DETAILED_LIST && $leave->getEmpNumber() != $loggedUserId) {
-            $actions['markedForApproval'] = 'Approve';
-            $actions['markedForRejection'] = 'Reject';
+        if ($leave->getEmpNumber() == $loggedInEmpNumber) {
+            $includeRoles = array('ESS');
         }
+        
+        $actionNames = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
+                $leave->getTextLeaveStatus(), $excludeRoles, $includeRoles);
 
-        if ($leave->canCancel(Auth::instance()->hasRole(Auth::ADMIN_ROLE))) {
-            $actions['markedForCancellation'] = 'Cancel';
-        }
+        foreach ($actionNames as $name) {
+            $actions[$name] = ucfirst(strtolower($name));
+        }    
         
         return $actions;
     }
@@ -717,7 +752,7 @@ class LeaveRequestService extends BaseService {
      * @return boolean
      */
     private function _filterApprovals($element) {
-        return ($element == 'markedForApproval');
+        return ($element == 'APPROVE');
     }
 
     /**
@@ -726,7 +761,7 @@ class LeaveRequestService extends BaseService {
      * @return boolean
      */
     private function _filterRejections($element) {
-        return ($element == 'markedForRejection');
+        return ($element == 'REJECT');
     }
 
     /**
@@ -735,7 +770,7 @@ class LeaveRequestService extends BaseService {
      * @return boolean
      */
     private function _filterCancellations($element) {
-        return ($element == 'markedForCancellation');
+        return ($element == 'CANCEL');
     }
     
 

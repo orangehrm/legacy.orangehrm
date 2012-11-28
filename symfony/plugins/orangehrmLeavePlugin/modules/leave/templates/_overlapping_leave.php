@@ -31,7 +31,7 @@ if (!empty($overlapLeave)) {
                         <td><?php echo set_datepicker_date_format($leave->getDate()) ?></td>
                         <td><?php echo $leave->getLengthHours() ?></td>
                         <td><?php echo $leave->getLeaveRequest()->getLeaveType()->getName() ?></td>
-                        <td><?php echo __($leave->getTextLeaveStatus()); ?></td>
+                        <td><?php echo __(ucwords(strtolower($leave->getTextLeaveStatus()))); ?></td>
                         <td><?php echo $leave->getComments() ?></td>
                     </tr>
 <?php } ?>

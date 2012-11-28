@@ -36,7 +36,7 @@
     //<![CDATA[
 
     var leaveRequestId = <?php echo $leaveRequestId; ?>;
-    var leave_status_pending = '<?php echo PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL_TEXT; ?>';
+    var leave_status_pending = 'Pending Approval'; // TO DO: Fix, check if compatible with localization
     var ess_mode = '<?php echo ($essMode) ? '1' : '0'; ?>';
     
     function handleSaveButton() {

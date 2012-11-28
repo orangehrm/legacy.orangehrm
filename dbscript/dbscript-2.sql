@@ -638,7 +638,22 @@ INSERT INTO `ohrm_workflow_state_machine`(`id`, `workflow`,`state`,`role`,`actio
                                     ('82','3','ACTIVE','ADMIN','2','NOT_EXIST'),
                                     ('83','3','ACTIVE','ADMIN','3','TERMINATED'),
                                     ('84','3','TERMINATED','ADMIN','4','ACTIVE'),
-                                    ('85','3','TERMINATED','ADMIN','5','NOT_EXIST');
+                                    ('85','3','TERMINATED','ADMIN','5','NOT_EXIST'),
+                                    (86, '4', 'INITIAL', 'ESS', 'APPLY', 'PENDING APPROVAL'),
+                                    (87, '4', 'INITIAL', 'ADMIN', 'ASSIGN', 'SCHEDULED'),
+                                    (88, '4', 'INITIAL', 'SUPERVISOR', 'ASSIGN', 'SCHEDULED'),
+                                    (89, '4', 'PENDING APPROVAL', 'ADMIN', 'APPROVE', 'SCHEDULED'),
+                                    (90, '4', 'PENDING APPROVAL', 'SUPERVISOR', 'APPROVE', 'SCHEDULED'),
+                                    (91, '4', 'PENDING APPROVAL', 'ESS', 'CANCEL', 'CANCELLED'),
+                                    (92, '4', 'PENDING APPROVAL', 'ADMIN', 'CANCEL', 'CANCELLED'),
+                                    (93, '4', 'PENDING APPROVAL', 'SUPERVISOR', 'CANCEL', 'CANCELLED'),
+                                    (94, '4', 'PENDING APPROVAL', 'ADMIN', 'REJECT', 'REJECTED'),
+                                    (95, '4', 'PENDING APPROVAL', 'SUPERVISOR', 'REJECT', 'REJECTED'),
+                                    (96, '4', 'SCHEDULED', 'ESS', 'CANCEL', 'CANCELLED'),
+                                    (97, '4', 'SCHEDULED', 'ADMIN', 'CANCEL', 'CANCELLED'),
+                                    (98, '4', 'SCHEDULED', 'SUPERVISOR', 'CANCEL', 'CANCELLED'),
+                                    (99, '4', 'TAKEN', 'ADMIN', 'CANCEL', 'CANCELLED');
+
                                     
 INSERT INTO `ohrm_report_group` (`report_group_id`, `name`, `core_sql`) VALUES 
    (1,'timesheet', 'SELECT selectCondition FROM ohrm_project_activity LEFT JOIN (SELECT * FROM ohrm_timesheet_item WHERE whereCondition1) AS ohrm_timesheet_item  ON (ohrm_timesheet_item.activity_id = ohrm_project_activity.activity_id) LEFT JOIN ohrm_project ON (ohrm_project.project_id = ohrm_project_activity.project_id) LEFT JOIN hs_hr_employee ON (hs_hr_employee.emp_number = ohrm_timesheet_item.employee_id) LEFT JOIN ohrm_timesheet ON (ohrm_timesheet.timesheet_id = ohrm_timesheet_item.timesheet_id) LEFT JOIN ohrm_customer ON (ohrm_customer.customer_id = ohrm_project.customer_id) WHERE whereCondition2 groupByClause ORDER BY ohrm_customer.name, ohrm_project.name, ohrm_project_activity.name, hs_hr_employee.emp_lastname, hs_hr_employee.emp_firstname'),

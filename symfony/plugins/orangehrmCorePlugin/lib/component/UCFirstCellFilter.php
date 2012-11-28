@@ -22,10 +22,12 @@
  * Description of I18nCellFilter
  *
  */
-class UCFirstCellFilter extends ohrmCellFilter {
+class I18nCellFilter extends ohrmCellFilter {
     
     public function filter($value) {
-        return ucfirst(strtolower($value));
+        sfProjectConfiguration::getActive()->loadHelpers('I18N');
+        
+        return __($value);
     }
 }
 

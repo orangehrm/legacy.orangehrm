@@ -3,6 +3,7 @@
 class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
     
     protected static $listMode;
+    protected static $loggedInEmpNumber;
     
     public function init() {
         sfContext::getInstance()->getConfiguration()->loadHelpers('OrangeDate');
@@ -78,7 +79,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
                               ),
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
-                'labelGetter' => array('getStatus'),
+                'labelGetter' => array('getLeaveBreakdown'),
                 'placeholderGetters' => array('id' => 'getId'),
                 'urlPattern' => public_path('index.php/leave/viewLeaveRequest/id/{id}'),
                 'hasHiddenField' => true,
@@ -119,7 +120,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
                 'classPattern' => 'select_action quotaSelect',
                 'defaultOption' => array('label' => 'Select Action', 'value' => ''),
                 'hideIfEmpty' => true,
-                'options' => array($leaveRequestService, 'getLeaveRequestActions', array(self::RECORD, self::$userId, self::$listMode)),
+                'options' => array($leaveRequestService, 'getLeaveRequestActions', array(self::RECORD, self::$userId)),
                 'namePattern' => 'select_leave_action_{id}',
                 'idPattern' => 'select_leave_action_{id}',
                 'hasHiddenField' => true,
@@ -145,4 +146,8 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
     public static function setListMode($listMode) {
         self::$listMode = $listMode;
     }
+    
+    public static function setLoggedInEmpNumber($empNumber) {
+        self::$loggedInEmpNumber = $empNumber;
+    }     
 }

@@ -15,12 +15,13 @@ abstract class PluginLeave extends BaseLeave {
     const LEAVE_STATUS_LEAVE_PENDING_APPROVAL_TEXT = 'Pending Approval';
 
     private static $leaveStatusText = array(
-        self::LEAVE_STATUS_LEAVE_REJECTED => 'Rejected',
-        self::LEAVE_STATUS_LEAVE_CANCELLED => 'Canceled',
-        self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL => self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL_TEXT,
-        self::LEAVE_STATUS_LEAVE_APPROVED => 'Scheduled',
-        self::LEAVE_STATUS_LEAVE_TAKEN => 'Taken',
+        self::LEAVE_STATUS_LEAVE_REJECTED => 'REJECTED',
+        self::LEAVE_STATUS_LEAVE_CANCELLED => 'CANCELLED',
+        self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL => 'PENDING APPROVAL',
+        self::LEAVE_STATUS_LEAVE_APPROVED => 'SCHEDULED',
+        self::LEAVE_STATUS_LEAVE_TAKEN => 'TAKEN'       
     );
+    
     private $nonWorkingDayStatuses = array(
         self::LEAVE_STATUS_LEAVE_WEEKEND,
         self::LEAVE_STATUS_LEAVE_HOLIDAY,
@@ -34,36 +35,26 @@ abstract class PluginLeave extends BaseLeave {
 
         return '';
     }
-
-    public static function getStatusTextList() {
-        return self::$leaveStatusText;
-    }
-
-    public function canApprove() {
-        if ($this->getLeaveRequest()->getLeaveType()->getDeleted()) {
-            return false;
+    
+    public static function getTextForLeaveStatus($status) {
+        if (array_key_exists($status, self::$leaveStatusText)) {            
+            return self::$leaveStatusText[$status];
         }
-        $canApprove = ($this->getStatus() == self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
-        $canApprove |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_HOLIDAY);
-        return $canApprove;
+
+        return '';        
     }
-
-    public function canCancel($isAdmin = false) {
-
-        $canCancel = ($this->getStatus() == self::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
-        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_HOLIDAY);
-        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_WEEKEND);
-        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_APPROVED);
-        $canCancel |= ( $this->getStatus() == self::LEAVE_STATUS_LEAVE_TAKEN && $isAdmin);
-
-        return $canCancel;
+    
+    public static function getStatusTextList() {
+        $leaveStatuses = array_map('strtolower', self::$leaveStatusText);
+        $leaveStatuses = array_map('ucfirst', $leaveStatuses);
+        return $leaveStatuses;
     }
 
     public function isNonWorkingDay() {
         if (($this->getLengthHours() == 0.00) && in_array($this->getStatus(), $this->nonWorkingDayStatuses)) {
             return true;
         }
-        //return in_array($this->getStatus(), $this->nonWorkingDayStatuses);
+        return false;
     }
 
     public function getNumberOfDays() {

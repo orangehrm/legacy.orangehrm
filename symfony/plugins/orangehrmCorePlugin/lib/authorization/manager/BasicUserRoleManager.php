@@ -296,11 +296,14 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
      * @param type $action
      * @return boolean 
      */
-    public function isActionAllowed($workFlowId, $state, $action){
+    public function isActionAllowed($workFlowId, $state, $action, $rolesToExclude = array(), $rolesToInclude = array()){
         $accessFlowStateMachineService = new AccessFlowStateMachineService();
         $isAllowed = FALSE;
-        foreach ($this->userRoles as $role) {
-           $isAllowed = $accessFlowStateMachineService->isActionAllowed($workFlowId, $state, $role, $action);
+        
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude);
+        
+        foreach ($filteredRoles as $role) {
+           $isAllowed = $accessFlowStateMachineService->isActionAllowed($workFlowId, $state, $role->getName(), $action);
            if($isAllowed){
                break;
            }
@@ -315,12 +318,15 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
      * @param type $state
      * @return actionsArray 
      */
-    public function getAllowedActions($workflow, $state){
+    public function getAllowedActions($workflow, $state, $rolesToExclude = array(), $rolesToInclude = array()){
         $accessFlowStateMachineService = new AccessFlowStateMachineService();
         $allAction = array();
-        foreach ($this->userRoles as $role) {
-            $userAction = $accessFlowStateMachineService->getAllowedActions($workflow, $state, $role);     
-            
+        
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude);
+        
+        foreach ($filteredRoles as $role) {        
+            $userAction = $accessFlowStateMachineService->getAllowedActions($workflow, $state, $role->getName());     
+
             if (count($userAction) > 0) {
                 $allAction = array_unique(array_merge($allAction, $userAction));
             }

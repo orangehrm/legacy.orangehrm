@@ -3983,6 +3983,7 @@ symfony/plugins/orangehrmCorePlugin/lib/component/PropertyPopulator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/SelectSingleCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/SortableHeaderCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/TextboxCell.php -text
+symfony/plugins/orangehrmCorePlugin/lib/component/UCFirstCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ohrmCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ohrmComponentInterface.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ohrmFormComponent/ohrmComponent.php -text
