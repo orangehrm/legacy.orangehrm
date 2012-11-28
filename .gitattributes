@@ -3863,9 +3863,7 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveStateManagerInerface.php
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveTakenState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/state/LeaveWeekendState.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/baseCoreLeaveAction.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/getLeaveBalanceAjaxAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/saveLeaveEntitlementsAction.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveModuleAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/actions/viewLeaveSummaryAction.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.bg_BG.xml -text
 symfony/plugins/orangehrmCoreLeavePlugin/modules/leave/i18n/messages.da_DK.xml -text
@@ -4540,6 +4538,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeeCo
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesEntitlementAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getHolidayAjaxAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getLeaveBalanceAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkWeekAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkshiftAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/leaveTypeListAction.class.php -text
