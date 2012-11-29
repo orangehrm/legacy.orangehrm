@@ -24,11 +24,6 @@ function isValidForm(){
                 required:lang_csvRequired
             }
 
-        },
-        errorPlacement: function(error, element) {
-
-            error.appendTo(element.next('div.errorHolder'));
-
         }
 
     });
