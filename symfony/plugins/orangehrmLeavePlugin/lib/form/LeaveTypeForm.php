@@ -34,7 +34,7 @@ class LeaveTypeForm extends orangehrmForm {
         ));        
         
         $this->getWidgetSchema()->setLabel('txtLeaveTypeName', 'Name <em>*</em>');
-        $this->getWidgetSchema()->setLabel('excludeIfNoEntitlement', 'Exclude from "Leave Entitlements and Usage Report" if no entitlements');
+        $this->getWidgetSchema()->setLabel('excludeIfNoEntitlement', '<a id="exclude_link" href="#">' . __('Is entitlement situational') . '</a>');
         
         $this->setValidators(array(
             'txtLeaveTypeName' => 

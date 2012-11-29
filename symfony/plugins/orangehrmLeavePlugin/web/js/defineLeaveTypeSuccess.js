@@ -1,6 +1,9 @@
 $(document).ready(function(){
 
     //$("form#frmLeaveType :input:visible:enabled:first").focus();
+    $('#exclude_link').click(function(){
+        $("#excludeInfoDialog").modal();
+    });
     
     $('#saveButton').click(function(){
         $('#frmLeaveType').submit();

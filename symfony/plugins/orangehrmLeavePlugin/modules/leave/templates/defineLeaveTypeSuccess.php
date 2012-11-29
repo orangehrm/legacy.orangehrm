@@ -67,6 +67,22 @@
   </div>
 </div>
 <!-- Undelete Dialog: Ends -->
+<!-- Exclude Info Dialog: Begins -->
+<div class="modal hide" id="excludeInfoDialog">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('OrangeHRM'); ?></h3>
+  </div>
+  <div class="modal-body">
+      <p><strong><?php echo __('Is entitlement situational');?>:</strong><br/><br/>
+        <?php echo __('These leave will be excluded from reports unless there\'s some activity. E.g. maternity leave, jury duty leave.'); ?>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" value="<?php echo __('OK'); ?>" />
+  </div>
+</div>
+<!-- Undelete Dialog: Ends -->
 
 <form name="frmUndeleteLeaveType" id="frmUndeleteLeaveType" 
       action="<?php echo url_for('leave/undeleteLeaveType');?>" method="post">
