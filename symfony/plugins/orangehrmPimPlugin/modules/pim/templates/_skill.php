@@ -29,7 +29,7 @@ $haveSkills = count($form->empSkillList)>0;
                         <?php echo $form['comments']->render(array("class" => "formInputText")); ?>
                     </li>
                     <li class="required">
-                        <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                 </ol>
                 <p>

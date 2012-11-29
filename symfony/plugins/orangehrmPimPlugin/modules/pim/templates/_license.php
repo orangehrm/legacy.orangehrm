@@ -17,7 +17,7 @@ $haveLicense = count($form->empLicenseList) > 0;
                         <?php echo $form->render(); ?>
                         
                         <li class="required">
-                            <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                            <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                         </li>
                     </ol>
                     <p>

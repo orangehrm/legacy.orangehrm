@@ -129,7 +129,7 @@ class EmployeeLicenseForm extends sfForm {
      * @return array
      */
     protected function getFormLabels() {
-        $required = '<em>*</em>';
+        $required = '<em> *</em>';
         $labels = array(
             'code' => __('License Type') . $required,
             'license_no' => __('License Number'),

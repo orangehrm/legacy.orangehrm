@@ -44,6 +44,9 @@ $haveEducation = count($form->empEducationList) > 0;
                         <?php echo $form['end_date']->renderLabel(__('End Date')); ?>
                         <?php echo $form['end_date']->render(array("class" => "formInputText")); ?>
                     </li>
+                    <li class="required line">
+                          <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>
                 </ol>
                 <p>
                     <input type="button" class="" id="btnEducationSave" value="<?php echo __("Save"); ?>" />

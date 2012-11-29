@@ -62,7 +62,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                 <?php echo $workExperienceForm['comments']->render(array("class" => "formInputText")); ?>
                             </li>
                             <li class="required">
-                                <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                                <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                             </li>
                         </ol>
                         <p>

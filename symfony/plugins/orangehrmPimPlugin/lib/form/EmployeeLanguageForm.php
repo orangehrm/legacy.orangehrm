@@ -149,7 +149,7 @@ class EmployeeLanguageForm extends sfForm {
      * @return array
      */
     protected function getFormLabels() {
-        $required = '<em>*</em>';
+        $required = '<em> *</em>';
         $labels = array(
             'code' => __('Language') . $required,
             'lang_type' => __('Fluency') . $required,
