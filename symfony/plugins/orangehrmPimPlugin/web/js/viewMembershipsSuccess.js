@@ -1,6 +1,7 @@
 $(document).ready(function() {
     
     $('#nameContainer').hide();
+    $("#addPaneMembership").hide();
 
     var commenceDate = "";
     $("#checkAllMem").click(function(){
@@ -10,16 +11,6 @@ $(document).ready(function() {
             $(".checkboxMem").removeAttr('checked');
         }
     });
-
-    if($(".checkboxMem").length > 1) {
-        $(".paddingLeftRequired").hide();
-        $("#addPaneMembership").hide();
-    } else {
-        $("#btnCancel").hide();
-        $(".paddingLeftRequired").show();
-        $("#addPaneMembership").show();
-        $("#listMembershipDetails").hide();
-    }
 
     $(".checkboxMem").click(function() {
         $("#checkAllMem").removeAttr('checked');

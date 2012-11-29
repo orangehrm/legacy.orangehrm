@@ -102,6 +102,9 @@ $allowEdit = true;
         </div>
             
         <div class="inner">
+            
+            <?php include_partial('global/flash_messages', array('prefix' => 'memberships')); ?>
+            
             <?php if ($membershipPermissions->canRead()) : ?>
                     
                 <?php include_partial('global/flash_messages'); ?>
