@@ -552,7 +552,7 @@ class LeaveRequestService extends BaseService {
 
                 foreach ($cancellationIds as $leaveRequestId) {
                     $cancellations = $this->searchLeave($leaveRequestId);
-                    //$this->_cancelLeave($cancellations, $changedByUserType);
+                    $this->_cancelLeave($cancellations, $changedByUserType);
                     
                     $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
                             $changedByUserType, $changedUserId, 'request');                  
@@ -586,7 +586,7 @@ class LeaveRequestService extends BaseService {
                 foreach ($cancellationIds as $leaveId) {
                     $cancellations[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
-                //$this->_cancelLeave($cancellations, $changedByUserType);
+                $this->_cancelLeave($cancellations, $changedByUserType);
 
                 foreach ($cancellations as $cancellation) {
 
