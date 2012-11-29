@@ -24,7 +24,7 @@
                         </select>
                     </li>
                         
-                    <li> 
+                    <li class="largeTextBox">
                         <label for="txtDescription"><?php echo __('Key Performance Indicator' . ' <em>*</em>')?></label>
                         <textarea id='txtDescription' name='txtDescription' rows="3" cols="20" tabindex="2"><?php echo $kpi->getDesc()?></textarea>
                     </li>
