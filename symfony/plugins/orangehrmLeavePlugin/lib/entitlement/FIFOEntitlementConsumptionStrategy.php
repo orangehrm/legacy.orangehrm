@@ -319,4 +319,152 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
         return $sortedDates;        
         
     }
+
+    public function handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, $action, $allowNoEntitlements = false) {
+        $result = false;
+        $current = array();
+        $change = array();
+        
+        $numDates = count($leaveDates);
+        $leaveLength = 0;
+        if (($numDates > 0) && (($action == 'Apply') || ($action == 'Assign'))) {
+
+            $fromDate = NULL;
+            $toDate = NULL;            
+
+            foreach ($leaveDates as $leaveDate) {
+                $length = $leaveDate->getLengthDays();
+                if ($length > 0) {
+                    if (is_null($fromDate)) {
+                        $fromDate = $leaveDate->getDate();
+                    }
+                    $toDate = $leaveDate->getDate();
+                }
+                $leaveLength += $length;
+            }
+
+            $entitlementsOk = true;
+
+            if (!is_null($fromDate)) {
+
+
+                $newentitlements = $this->getLeaveEntitlementService()->getValidLeaveEntitlements($empNumber, $leaveType, $fromDate, $toDate, 'to_date', 'ASC');            
+
+                // TODO Get currently assigned leave dates and add to $leaveDates
+                $entitlements = array();
+                foreach($newentitlements as $entitlement) {
+                    $entitlements[] = $entitlement;
+                }
+
+                reset($leaveDates);
+
+                $getNextDate = true;
+                $entitlementsOk = false;
+                $leaveDate = null;
+                $leaveLength = 0;
+                
+                $leaveWithoutEntitlement = array();
+
+                $entitlement = array_shift($entitlements); 
+                
+                if (!is_null($entitlement)) {
+                    $availableDays = $entitlement->getAvailableDays();         
+                }
+                
+                while (!is_null($entitlement)) {
+
+                    if ($availableDays > 0) {
+                        
+                        if ($getNextDate) {
+                            $leaveDate = array_shift($leaveDates);
+                            
+                            if (is_null($leaveDate)) {
+                                
+                                $entitlementsOk = empty($leaveWithoutEntitlement);
+                                $leaveLength = 0;
+                                break;
+                            } else {
+                                $leaveLength = $leaveDate->getLengthDays();
+                                $getNextDate = false;
+                            }
+                        }
+                        if ($leaveLength <= 0) {
+                            $getNextDate = true;                    
+                        } else if (!$entitlement->withinPeriod($leaveDate->getDate())) {
+
+                            if (strtotime($leaveDate->getDate()) < strtotime($entitlement->getFromDate())) {
+                                $getNextDate = true;
+                                $leaveWithoutEntitlement[] = $leaveDate;
+                            } else if (strtotime($leaveDate->getDate()) > strtotime($entitlement->getToDate())) {
+                                $availableDays = 0;
+                            }
+
+                        } else if ($leaveLength <= $availableDays) {
+
+                            $entitlement->days_used += $leaveLength;
+                            $availableDays -= $leaveLength;
+
+                            $leaveId = $leaveDate->getId();
+
+                            if (empty($leaveId)) {
+                                if (!isset($current[$leaveDate->getDate()])) {
+                                    $current[$leaveDate->getDate()] = array();
+                                }
+                                $current[$leaveDate->getDate()][$entitlement->id] = $leaveLength;
+                                
+                            } else {
+                                if (!isset($change[$leaveId])) {
+                                    $change[$leaveId] = array();
+                                }
+                                $change[$leaveId][$entitlement->id] = $leaveLength;                                
+                            }
+                            $getNextDate = true;
+                        } else {
+                            $entitlement->days_used = $entitlement->no_of_days;
+                            $leaveLength -= $availableDays;
+
+                            $leaveId = $leaveDate->getId();
+
+                            if (empty($leaveId)) {                            
+                                if (!isset($current[$leaveDate->getDate()])) {
+                                    $current[$leaveDate->getDate()] = array();
+                                }
+                                $current[$leaveDate->getDate()][$entitlement->id] = $availableDays;                                
+                            } else {
+                                if (!isset($change[$leaveId])) {
+                                    $change[$leaveId] = array();
+                                }
+                                $change[$leaveId][$entitlement->id] = $availableDays;                                 
+                            }
+
+                            $availableDays = 0;
+                            $getNextDate = false;
+                        }
+                    } else {
+                        $entitlement = array_shift($entitlements);           
+                        if (is_null($entitlement)) {
+                            
+                            if (empty($leaveDates) && empty($leaveWithoutEntitlement) && $getNextDate) {
+                                $entitlementsOk = true;
+                            }
+                        } else {
+                            $availableDays = $entitlement->getAvailableDays();                        
+                        }
+                    }
+                }
+            }
+
+        }
+        
+
+        if ($allowNoEntitlements || ($entitlementsOk && (count($change) > 0 || count($current) > 0))) {
+            $result = array('current' => $current, 'change' => $change);
+        }
+        
+        return $result;        
+    }
+
+    public function handleEntitlementStatusChange() {
+        
+    }
 }

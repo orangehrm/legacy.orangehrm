@@ -25,5 +25,10 @@
 interface EntitlementConsumptionStrategy {
     
     
+    // Deprecated, no longer in use
     public function getAvailableEntitlements($empNumber, $leaveType, $leaveDates, $allowNoEntitlements = false);
+    
+    public function handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, $action, $allowNoEntitlements = false);
+    
+    public function handleEntitlementStatusChange();
 }

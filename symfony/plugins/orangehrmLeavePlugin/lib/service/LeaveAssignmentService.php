@@ -103,7 +103,7 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
                 
         if (count($nonHolidayLeaveDays) > 0) {
             $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();            
-            $entitlements = $strategy->getAvailableEntitlements($empNumber, $leaveType->getId(), $nonHolidayLeaveDays, true);
+            $entitlements = $strategy->handleLeaveStatusChange($empNumber, $leaveType->getId(), $nonHolidayLeaveDays, 'Assign', true);
 
             if ($entitlements == false) {
                 throw new LeaveAllocationServiceException('Leave Balance Exceeded');
