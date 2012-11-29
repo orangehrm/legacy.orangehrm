@@ -17,7 +17,10 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
 
 <div class="box pimPane">
 
-    <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form)); ?>
+    <?php 
+        $form = $workExperienceForm;
+        include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form)); 
+    ?>
 <!--    
     <div class="head">
         <h1><?php echo __('Qualifications'); ?></h1>
