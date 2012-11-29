@@ -19,15 +19,27 @@
  */
 
 /**
- * Description of LeaveApproveMailer
+ * Description of EmailDao
  *
  */
-class LeaveApproveMailer implements ohrmObserver {
-    public function listen(sfEvent $event) {        
-        $emailService = new EmailService();
-        
-        $emailService->sendEmailNotifications(array('leave.approve.applicant', 'leave.approve.subscriber'), 
-                $event->getParameters());        
+class EmailDao {
+
+    public function getEmailByName($name) {
+
+        try {
+
+            $query = Doctrine_Query::create()
+                    ->select('e.*, t.*, p.*')
+                    ->from("OhrmEmail e")
+                    ->leftJoin('e.EmailTemplate t')
+                    ->leftJoin('e.EmailProcessor p')
+                    ->where("e.name = ?", $name);
+
+            return $query->fetchOne();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
+        }
     }
+
 }
 

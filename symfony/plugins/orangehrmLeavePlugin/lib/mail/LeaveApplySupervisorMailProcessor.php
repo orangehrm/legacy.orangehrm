@@ -19,15 +19,40 @@
  */
 
 /**
- * Description of LeaveApproveMailer
+ * Description of LeaveApplySupervisorMailProcessor
  *
  */
-class LeaveApproveMailer implements ohrmObserver {
-    public function listen(sfEvent $event) {        
-        $emailService = new EmailService();
+class LeaveApplySupervisorMailProcessor extends LeaveEmailProcessor {
+    
+    public function getRecipients($data) {
         
-        $emailService->sendEmailNotifications(array('leave.approve.applicant', 'leave.approve.subscriber'), 
-                $event->getParameters());        
+        $recipients = array();
+        
+        $performer = $this->getEmployeeService()->getEmployee($data['empNumber']);    
+        
+        // TODO: Do we need to send to supervisor chain?
+        $supervisors = $performer->getSupervisors();
+
+        if (count($supervisors) > 0) {
+
+            foreach ($supervisors as $supervisor) {
+
+                $to = $supervisor->getEmpWorkEmail();
+
+                if (!empty($to)) {
+                    $recipients[] = $supervisor;
+                }
+            }
+        }
+        
+        return $recipients;
+    }
+
+    public function getReplacements($data) {
+        
+        $replacements = parent::getReplacements($data);
+        return $replacements;
+
     }
 }
 

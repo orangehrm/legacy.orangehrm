@@ -1838,3 +1838,48 @@ INSERT INTO `ohrm_job_category` (`name`) VALUES ('Officials and Managers'),
                                                 ('Craft Workers'),
                                                 ('Service Workers'),
                                                 ('Laborers and Helpers');
+
+INSERT INTO ohrm_email(`id`, `name`) VALUES 
+    (1, 'leave.apply.supervisor'),
+    (2, 'leave.apply.subscriber'),
+    (3, 'leave.approve.applicant'),
+    (4, 'leave.approve.subscriber'),
+    (5, 'leave.assign.assignee'),
+    (6, 'leave.assign.supervisor'),
+    (7, 'leave.assign.subscriber'),
+    (8, 'leave.cancel_employee.supervisor'),
+    (9, 'leave.cancel_employee.subscriber'),
+    (10, 'leave.cancel.applicant'),
+    (11, 'leave.cancel.subscriber'),
+    (12, 'leave.reject.applicant'),
+    (13, 'leave.reject.subscriber');
+
+INSERT INTO ohrm_email_template(`id`, `email_id`, `locale`, `body`, `subject`) VALUES 
+    (1, 1, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt'),
+    (2, 2, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt'),
+    (3, 3, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubject.txt'),
+    (4, 4, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubscriberSubject.txt'),
+    (5, 5, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubject.txt'),
+    (6, 6, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentBodyForSupervisors.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubjectForSupervisors.txt'),
+    (7, 7, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubscriberSubject.txt'),
+    (8, 8, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubject.txt'),
+    (9, 9, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubscriberSubject.txt'),
+    (10, 10, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubject.txt'),
+    (11, 11, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberSubject.txt'),
+    (12, 12, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubject.txt'),
+    (13, 13, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberSubject.txt');
+
+INSERT INTO  ohrm_email_processor(`id`, `email_id`, `class_name`) VALUES 
+    (1, 1, 'LeaveApplySupervisorMailProcessor'),
+    (2, 2, 'LeaveApplySubscriberMailProcessor'),
+    (3, 3, 'LeaveApproveApplicantMailProcessor'),
+    (4, 4, 'LeaveApproveSubscriberMailProcessor'),
+    (5, 5, 'LeaveAssignAssigneeMailProcessor'),
+    (6, 6, 'LeaveAssignSupervisorMailProcessor'),
+    (7, 7, 'LeaveAssignSubscriberMailProcessor'),
+    (8, 8, 'LeaveCancelEmployeeSupervisorMailProcessor'),
+    (9, 9, 'LeaveCancelEmployeeSubscriberMailProcessor'),
+    (10, 10, 'LeaveCancelApplicantMailProcessor'),
+    (11, 11, 'LeaveCancelSubscriberMailProcessor'),
+    (12, 12, 'LeaveRejectApplicantMailProcessor'),
+    (13, 13, 'LeaveRejectSubscriberMailProcessor');

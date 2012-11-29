@@ -19,25 +19,41 @@
  */
 
 /**
- * Description of LeaveCancelMailer
+ * Description of LeaveApplySupervisorMailProcessor
  *
  */
-class LeaveCancelMailer implements ohrmObserver {
-    public function listen(sfEvent $event) {
+class LeaveCancelEmployeeSupervisorMailProcessor extends LeaveEmailProcessor {
+    
+    public function getRecipients($data) {
         
-    
-    
-            
-        if ($event['performerType'] == SystemUser::USER_TYPE_EMPLOYEE) {
-            $events = array('leave.cancel_employee.supervisor', 'leave.cancel_employee.subscriber');
-        } else {
-            $events = array('leave.cancel.applicant', 'leave.cancel.subscriber');
+        $recipients = array();
+        
+        $empNumber = $data['days'][0]->getEmpNumber();
+        $performer = $this->getEmployeeService()->getEmployee($empNumber);    
+        
+        // TODO: Do we need to send to supervisor chain?
+        $supervisors = $performer->getSupervisors();
+
+        if (count($supervisors) > 0) {
+
+            foreach ($supervisors as $supervisor) {
+
+                $to = $supervisor->getEmpWorkEmail();
+
+                if (!empty($to)) {
+                    $recipients[] = $supervisor;
+                }
+            }
         }
         
-        $emailService = new EmailService();
-            
-        $emailService->sendEmailNotifications($events, 
-                $event->getParameters());      
+        return $recipients;
+    }
+
+    public function getReplacements($data) {
+        $data['request'] = $data['days'][0]->getLeaveRequest();
+        $replacements = parent::getReplacements($data);
+        return $replacements;
+
     }
 }
 

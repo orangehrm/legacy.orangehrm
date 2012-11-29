@@ -19,15 +19,13 @@
  */
 
 /**
- * Description of LeaveApproveMailer
+ * Description of orangehrmMailProcessor
  *
  */
-class LeaveApproveMailer implements ohrmObserver {
-    public function listen(sfEvent $event) {        
-        $emailService = new EmailService();
-        
-        $emailService->sendEmailNotifications(array('leave.approve.applicant', 'leave.approve.subscriber'), 
-                $event->getParameters());        
-    }
+interface orangehrmMailProcessor {
+    
+    public function getReplacements($data);
+    
+    public function getRecipients($data);
 }
 

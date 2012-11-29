@@ -1166,6 +1166,29 @@ create table `ohrm_email_subscriber` (
   primary key  (`id`)
 ) engine=innodb default charset=utf8;
 
+create table `ohrm_email` (
+  `id` int(6) not null auto_increment,
+  `name` varchar(100) not null unique,
+  primary key  (`id`),
+  unique key ohrm_email_name(`name`)
+) engine=innodb default charset=utf8;
+
+create table `ohrm_email_template` (
+  `id` int(6) not null auto_increment,
+  `email_id` int(6) not null,
+  `locale` varchar(20),
+  `subject` varchar(255),
+  `body` text,
+  primary key  (`id`)
+) engine=innodb default charset=utf8;
+
+create table `ohrm_email_processor` (
+  `id` int(6) not null auto_increment,
+  `email_id` int(6) not null,
+  `class_name` varchar(100),
+  primary key  (`id`)
+) engine=innodb default charset=utf8;
+
 create table `ohrm_module` (
   `id` int not null auto_increment,
   `name` varchar(120) default null,
@@ -1380,6 +1403,14 @@ alter table ohrm_user_role_data_group
 alter table ohrm_email_subscriber
        add constraint foreign key (notification_id)
                              references ohrm_email_notification(id) on delete cascade;
+
+alter table ohrm_email_template
+    add foreign key (email_id)
+        references ohrm_email(id) on delete cascade;
+
+alter table ohrm_email_processor
+    add foreign key (email_id)
+        references ohrm_email(id) on delete cascade;
 
 alter table ohrm_emp_termination
        add constraint foreign key (reason_id)

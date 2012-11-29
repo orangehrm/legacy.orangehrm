@@ -19,15 +19,33 @@
  */
 
 /**
- * Description of LeaveApproveMailer
+ * Description of LeaveApplySubscriberMailProcessor
  *
  */
-class LeaveApproveMailer implements ohrmObserver {
-    public function listen(sfEvent $event) {        
-        $emailService = new EmailService();
+class LeaveApproveApplicantMailProcessor extends LeaveEmailProcessor {
+    
+    public function getRecipients($data) {
         
-        $emailService->sendEmailNotifications(array('leave.approve.applicant', 'leave.approve.subscriber'), 
-                $event->getParameters());        
+        $recipients = array();
+        $empNumber = $data['days'][0]->getEmpNumber();
+        $performer = $this->getEmployeeService()->getEmployee($empNumber); 
+        
+        $to = $performer->getEmpWorkEmail();
+
+        if (!empty($to)) {
+            $recipients[] = $performer;
+        }        
+
+        return $recipients;
+    }
+
+    public function getReplacements($data) {
+        
+        $data['request'] = $data['days'][0]->getLeaveRequest();
+        
+        $replacements = parent::getReplacements($data);
+        return $replacements;
+
     }
 }
 

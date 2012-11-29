@@ -24,8 +24,9 @@
  */
 class LeaveApplyMailer implements ohrmObserver {
     public function listen(sfEvent $event) {
-        $leaveApplicationMailer = new LeaveApplicationMailer($event['empNumber'], $event['request'], $event['days']);
-        $leaveApplicationMailer->send();         
+        $emailService = new EmailService();
+        $emailService->sendEmailNotifications(array('leave.apply.supervisor', 'leave.apply.subscriber'), 
+                $event->getParameters());        
     }
 }
 

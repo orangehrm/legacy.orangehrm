@@ -24,9 +24,11 @@
  */
 class LeaveRejectMailer implements ohrmObserver {
     public function listen(sfEvent $event) {
-        $leaveRejectionMailer = new LeaveRejectionMailer($event['leaveList'], 
-                $event['performerType'], $event['performerId'], $event['requestType']);
-        $leaveRejectionMailer->send();        
+        $emailService = new EmailService();
+            
+        $emailService->sendEmailNotifications(array('leave.reject.applicant', 'leave.reject.subscriber'), 
+                $event->getParameters());  
+        
     }
 }
 

@@ -25,9 +25,11 @@
 class LeaveAssignMailer implements ohrmObserver {    
 
     public function listen(sfEvent $event) {
-                
-        $leaveAssignmentMailer = new LeaveAssignmentMailer($event['request'], $event['days'], $event['empNumber']);
-        $leaveAssignmentMailer->send();        
+            
+        $emailService = new EmailService();
+        $emailService->sendEmailNotifications(array('leave.assign.assignee', 'leave.assign.supervisor', 'leave.assign.subscriber'), 
+                $event->getParameters());  
+        
     }
 
 }

@@ -40,6 +40,19 @@ class EmailService extends BaseService {
     private $messageBody;
     private $messageCc;
     private $messageBcc;
+    
+    protected $emailDao;
+    
+    public function getEmailDao() {
+        if (is_null($this->emailDao)) {
+            $this->emailDao = new EmailDao();
+        }
+        return $this->emailDao;
+    }
+    
+    public function setEmailDao($emailDao) {
+        $this->emailDao = $emailDao;
+    }
 
     /**
      *
@@ -287,5 +300,105 @@ class EmailService extends BaseService {
         file_put_contents($logPath, $message, FILE_APPEND);
 
     }
+    
+    public function sendEmailNotification($emailName, $eventData) {
+        $email = $this->getEmailDao()->getEmailByName($emailName);
 
+        if (!empty($email)) {
+
+            $templates = $email->getEmailTemplate();
+            
+            if (count($templates) > 0) {
+                
+                $orangehrmMailTransport = new orangehrmMailTransport();
+                $transport = $orangehrmMailTransport->getTransport();
+                $mailer = empty($transport) ? null : Swift_Mailer::newInstance($transport);
+                    
+                $template = $templates[0];
+                $subject = $this->readFile($template->getSubject());
+                $body = $this->readFile($template->getBody());
+                
+                $processors = $email->getEmailProcessor();
+                $allRecipients = array();
+                
+                foreach ($processors as $processor) {
+                    $class = $processor->getClassName();
+                    $processorObj = new $class();
+                    $recipients = $processorObj->getRecipients($eventData);
+                    $allRecipients = array_merge($allRecipients, $recipients);                            
+                }
+                
+                foreach ($allRecipients as $recipient) {
+                    
+                    $data = $eventData;
+                    foreach ($processors as $processor) {
+                        $class = $processor->getClassName();
+                        $processorObj = new $class();
+                        $data['recipient'] = $recipient;
+                        $data = $processorObj->getReplacements($data);                            
+                    }
+                    
+                    
+                    $emailBody = $this->replaceContent($body, $data);
+                    $emailSubject = $this->replaceContent($subject, $data);
+                    
+
+                    $message = Swift_Message::newInstance();
+                    
+                    try {
+
+                        if ($recipient instanceof Employee) {
+                            $message->setTo($recipient->getEmpWorkEmail());
+                        } else {
+                            $message->setTo($recipient);
+                        }
+                        $message->setFrom(array($this->emailConfig->getSentAs() => 'OrangeHRM'));
+
+                        $message->setSubject($emailSubject);
+                        $message->setBody($emailBody);
+
+                        $mailer->send($message);
+
+                        $logMessage = "Leave application email was sent to $to";
+                        $this->_logResult('Success', $logMessage);
+                    } catch (Exception $e) {
+
+                        $logMessage = "Couldn't send leave application email to $to";
+                        $logMessage .= '. Reason: ' . $e->getMessage();
+                        $this->_logResult('Failure', $logMessage);
+                    }                    
+        
+                }
+                
+                                    
+            }
+        }
+    }
+    
+    public function sendEmailNotifications($emailNames, $eventData) {
+        foreach ($emailNames as $name) {
+            $this->sendEmailNotification($name, $eventData);
+        }
+    }
+    
+    protected function readFile($path) {
+        $path = sfConfig::get('sf_root_dir')."/plugins/" . $path;
+        if (!is_readable($path)) {
+            throw new Exception("File is not readable: " . $path);
+        }
+
+        return trim(file_get_contents($path));        
+    }
+
+    protected function replaceContent($template, $replacements, $wrapper = '%') {
+
+        $keys = array_keys($replacements);
+
+        foreach ($keys as $value) {
+            $needls[] = $wrapper . $value . $wrapper;
+        }
+
+        return str_replace($needls, $replacements, $template);
+
+    }
 }

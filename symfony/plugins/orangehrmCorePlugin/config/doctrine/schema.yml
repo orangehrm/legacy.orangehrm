@@ -729,4 +729,103 @@ MenuItem:
     Screen:
       local: screenId
       foreign: id
+      type: one  
+OhrmEmail:
+  tableName: ohrm_email
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    OhrmEmailProcessor:
+      local: id
+      foreign: email_id
+      type: many
+    OhrmEmailTemplate:
+      local: id
+      foreign: email_id
+      type: many
+      
+EmailTemplate:
+  connection: doctrine
+  tableName: ohrm_email_template
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    email_id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    locale:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    subject:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    body:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    OhrmEmail:
+      local: email_id
+      foreign: id
+      type: one 
+
+EmailProcessor:
+  connection: doctrine
+  tableName: ohrm_email_processor
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    email_id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    class_name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    OhrmEmail:
+      local: email_id
+      foreign: id
       type: one      

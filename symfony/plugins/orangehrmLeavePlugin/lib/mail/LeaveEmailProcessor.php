@@ -1,0 +1,176 @@
+<?php
+
+/**
+ * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
+ * all the essential functionalities required for any enterprise.
+ * Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com
+ *
+ * OrangeHRM is free software; you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA
+ */
+
+/**
+ * Description of LeaveEmailProcessor
+ *
+ */
+abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
+    
+    protected $employeeService;
+    
+    public function getEmployeeService() {
+        if (!($this->employeeService instanceof EmployeeService)) {
+            $this->employeeService = new EmployeeService();
+        }
+        return $this->employeeService;
+    }
+
+    public function setEmployeeService($employeeService) {
+        $this->employeeService = $employeeService;
+    }
+    
+    public function getReplacements($data) {
+
+        $replacements = array();
+        
+        $performer = $this->getEmployeeService()->getEmployee($data['empNumber']);
+        
+        if ($performer instanceof Employee) {
+            $replacements['performerFirstName'] = $performer->getFirstName();
+            $replacements['performerFullName'] = $performer->getFirstAndLastNames();
+        } else {
+            $name = sfContext::getInstance()->getUser()->getAttribute('auth.firstName');
+            
+            $replacements['performerFirstName'] = $name;
+            $replacements['performerFullName'] = $name;
+            
+        }        
+
+        if ($data['recipient'] instanceof Employee) {
+            $replacements['recipientFirstName'] = $data['recipient']->getFirstName();
+            $replacements['recipientFullName'] = $data['recipient']->getFirstAndLastNames();
+        }
+
+        $applicantNo = $data['days'][0]->getEmpNumber();
+        
+        $applicant = $this->getEmployeeService()->getEmployee($applicantNo);
+        if ($applicant instanceof Employee) {
+            $replacements['applicantFirstName'] = $applicant->getFirstName();
+            $replacements['applicantFullName'] = $applicant->getFirstAndLastNames();
+        }                
+        
+        $replacements = $this->_populateLeaveReplacements($data, $replacements);
+        
+        return $replacements;
+
+    }   
+
+    protected function getSubscribers($event) {
+        $recipients = array();
+        
+        $mailNotificationService = new EmailNotificationService();
+        $subscriptions = $mailNotificationService->getSubscribersByNotificationId($event);
+
+        foreach ($subscriptions as $subscription) {
+
+            if ($subscription instanceof EmailSubscriber) {
+
+                if ($subscription->getEmailNotification()->getIsEnable() == EmailNotification::ENABLED) {
+
+                    $recipients[] = $subscription->getEmail();
+                }
+            }
+        }
+        
+        return $recipients;        
+    }
+    
+    protected function _populateLeaveReplacements($data, $replacements) {
+
+        
+        if ($data['request'] instanceof LeaveRequest) {
+            $replacements['leaveType'] = $data['request']->getLeaveType()->getName();
+            $replacements['assigneeFullName'] = $data['request']->getEmployee()->getFirstAndLastNames();
+        } else {
+            $replacements['leaveType'] = $data['days'][0]->getLeaveType()->getName();
+            $replacements['assigneeFullName'] = $data['days'][0]->getLeaveRequest()->getEmployee()->getFirstAndLastNames();
+            
+        }
+
+        $numberOfDays = 0;
+
+        foreach ($data['days'] as $leave) {
+            $numberOfDays += $leave->getLengthDays();
+        }
+
+        $replacements['numberOfDays'] = round($numberOfDays, 2);
+
+        $replacements['leaveDetails'] = $this->_generateLeaveDetailsTable($data, $replacements);
+
+        return $replacements;
+    }
+
+    protected function _generateLeaveDetailsTable($data, $replacements) {
+
+        // Length of tab (4 spaces) : "    "
+
+        $details = "Date(s)                Duration (Hours)";
+        $details .= "\n";
+        $details .= "=========================";
+        $details .= "\n";
+
+        foreach ($data['days'] as $leave) {
+
+            $leaveDate = set_datepicker_date_format($leave->getDate());
+            $leaveDuration = round($leave->getLengthHours(), 2);
+
+            if ($leaveDuration > 0) {
+
+                $leaveDuration = $this->_fromatDuration($leaveDuration);
+                $details .= "$leaveDate            $leaveDuration";
+                $details .= "\n";
+
+            }
+
+        }
+
+        $details .= "\n";
+        $details .= "Leave type : " . $replacements['leaveType'];
+        $details .= "\n";
+
+        $leaveComment = '';
+
+        $requestType = isset($data['requestType']) ? $data['requestType'] : 'request';
+        
+        if ($requestType == 'request') {
+            $leaveComment = $data['request']->getComments();
+        } elseif ($requestType == 'single') {
+            $leaveComment = $data['days'][0]->getComments();
+        }    
+
+        if (!empty($leaveComment)) {
+            $details .= "Comment : $leaveComment";
+            $details .= "\n";
+        }
+
+        return $details;
+
+    }
+
+    private function _fromatDuration($duration) {
+
+        $formattedDuration = number_format($duration, 2);
+
+        return $formattedDuration;
+
+    }
+}
+
