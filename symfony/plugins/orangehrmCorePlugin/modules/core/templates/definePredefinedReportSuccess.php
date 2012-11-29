@@ -33,7 +33,7 @@ use_javascript('orangehrm.datepicker.js');
                     echo $form['criteria_list']->render(array("class" => "drpDown", "maxlength" => 30));
                     echo $form['criteria_list']->renderError();
                     ?>
-                   <a class="fieldHelp" id="btnAddConstraint"><?php echo __("Add"); ?></a>
+                   <a class="fieldHelpRight" id="btnAddConstraint"><?php echo __("Add"); ?></a>
                 </li>
             </ol>
         </fieldset>
@@ -99,7 +99,7 @@ use_javascript('orangehrm.datepicker.js');
                 echo $form['display_groups']->render();
                 echo $form['display_groups']->renderError();
             ?>
-                <a class="fieldHelp" id="btnAddDisplayGroup"><?php echo __("Add"); ?></a>
+                <a class="fieldHelpRight" id="btnAddDisplayGroup"><?php echo __("Add"); ?></a>
                 <br />
                 </li>
                 <li>
@@ -108,7 +108,7 @@ use_javascript('orangehrm.datepicker.js');
                 echo $form['display_field_list']->render();
                 echo $form['display_field_list']->renderError();
             ?>
-                <a class="fieldHelp" id="btnAddDisplayField"><?php echo __("Add"); ?></a>
+                <a class="fieldHelpRight" id="btnAddDisplayField"><?php echo __("Add"); ?></a>
                 </li>
                 </ol>
             </fieldset>

@@ -52,10 +52,10 @@
                     </li>
                     
                     <?php $showExtra = ($form->getValue('type') == CustomField::FIELD_TYPE_SELECT) ? 'block' : 'none';?>
-                    <li style="display:<?php echo $showExtra;?>;" id="selectOptions">
+                    <li style="display:<?php echo $showExtra;?>;" id="selectOptions" class="fieldHelpContainer">
                         <?php echo $form['extra_data']->renderLabel(__('Select Options') . ' <em>*</em>'); ?>
                         <?php echo $form['extra_data']->render(); ?>
-                        <span class="fieldHint"><?php echo __("Enter allowed options separated by commas");?></span>
+                        <div class="fieldHelpBottom"><?php echo __("Enter allowed options separated by commas");?></div>
                     </li>
                     
                     <li class="required">

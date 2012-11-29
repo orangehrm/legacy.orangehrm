@@ -56,7 +56,7 @@
                         <?php
                             echo $form['jobSpec']->renderLabel(__('Job Specification'), array());
                             echo $form['jobSpec']->render();
-                            echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
+                            echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                         ?>
                     </li>      
                     
@@ -83,7 +83,7 @@
                         <?php 
                             echo $form['jobSpec']->renderLabel(' ');
                             echo $form['jobSpec']->render();
-                            echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
+                            echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                         ?>
                     </li>
                     <?php } ?>

@@ -54,6 +54,6 @@
     var cancelNavigateUrl = "<?php echo public_path("../../index.php?menu_no_top=hr"); ?>";
     var createUserAccount = "<?php echo $createUserAccount; ?>";
     var ldapInstalled = <?php echo ($sf_user->getAttribute('ldap.available')) ? 'true' : 'false'; ?>;
-    var fileHelpText = <?php echo '"' . __(CommonMessages::FILE_LABEL_IMAGE) . '"'; ?>;
+    var fieldHelpBottom = <?php echo '"' . __(CommonMessages::FILE_LABEL_IMAGE) . '"'; ?>;
     //]]>
 </script>

@@ -25,7 +25,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                         <?php echo $form['customerName']->renderLabel(__('Customer Name') . ' <em>*</em>'); ?>
                         <span>
                             <?php echo $form['customerName']->render(array("class" => "formInputCustomer", "maxlength" => 52)); ?>
-                            <a class="btn2 fieldHelp" data-toggle="modal" href="#customerDialog" ><?php echo __('Add Customer') ?></a>
+                            <a class="btn2 fieldHelpRight" data-toggle="modal" href="#customerDialog" ><?php echo __('Add Customer') ?></a>
                         </span>
                     </li>
                     
@@ -41,9 +41,9 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                         <?php endif; ?>
                         <?php echo $form['projectAdmin_' . $i]->render(array("class" => "formInputProjectAdmin", "maxlength" => 100)); ?>
                         <?php if($i != 1) { ?>
-                            <a class="removeText fieldHelp" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
+                            <a class="removeText fieldHelpRight" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
                         <?php } else { ?>
-                            <a class="addText fieldHelp" id='addButton'><?php echo __('Add Another'); ?></a>
+                            <a class="addText fieldHelpRight" id='addButton'><?php echo __('Add Another'); ?></a>
                         <?php } ?>
                     </li>
                     <?php } ?>

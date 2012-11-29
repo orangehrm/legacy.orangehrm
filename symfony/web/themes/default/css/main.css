@@ -448,14 +448,14 @@ a {
 .inputFormatHint {
     color: #A9A9A9;
 }
-.fileHelpText {
+.fieldHelpBottom {
 	position:absolute;
-	top:25px;
+	top:27px;
 	left:150px;   
     margin-bottom: 10px;
     color: #A9A9A9;
 }
-.fieldHelp {
+.fieldHelpRight {
     margin-left: 5px;
 }
 /* ================ General class styles: End ================ */
@@ -530,7 +530,7 @@ form ol li input[type=checkbox] {
     background-color: #F7F6F6;
 }
 form ol li input[type="file"] {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 form ol li input.calendar {
 	width:165px;
@@ -553,7 +553,7 @@ form ol li.new {
 form ol li.noLabel { /*TODO: Check whether this is the proper way. Used in 'saveJobTitle' */
 	margin-left: 150px;
 }
-form ol li.noLabel .fileHelpText {
+form ol li.noLabel .fieldHelpBottom {
 	left: 0;
 }
 form ol li.required {
@@ -898,8 +898,8 @@ form ol li span.validation-error {
 form ol li.largeTextBox span.validation-error {
     top:85px;
 }
-form ol li.fileBrowser span.validation-error {
-    top:31px;
+form ol li.fieldHelpContainer span.validation-error {
+    top:33px;
 }
 .searchForm form ol li span.validation-error { /* Check the usage */
     font-size: 12px;

@@ -99,7 +99,7 @@
                                 echo "<li class=\"contractEdidMode\">";
                                 echo $form['contract_file']->renderLabel('Contract Details');
                                 echo $form['contract_file']->render();
-                                echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
+                                echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                                 echo "</li>";
                             } else {
                                 $attachment = $form->attachment;
@@ -118,7 +118,7 @@
                                 echo "<li id=\"fileUploadSection\" class=\"noLabel\">";
                                     echo $form['contract_file']->renderLabel(' ');
                                     echo $form['contract_file']->render();
-                                    echo "<div class=\"fileHelpText\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
+                                    echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_SIZE) . "</div>";
                                 echo "</li>";
                             }
                             ?>
