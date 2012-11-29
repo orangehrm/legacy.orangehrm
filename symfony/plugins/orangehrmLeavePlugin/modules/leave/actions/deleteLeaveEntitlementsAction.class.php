@@ -43,8 +43,12 @@ class deleteLeaveEntitlementsAction extends sfAction {
         $ids = $request->getParameter('chkSelectRow');
         
         if (count($ids) > 0) {
-            $this->getLeaveEntitlementService()->deleteLeaveEntitlements($ids);
-            $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+            try{
+                $this->getLeaveEntitlementService()->deleteLeaveEntitlements($ids);
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+            }catch(Exception $e){
+                $this->getUser()->setFlash('warning',$e->getMessage());
+            }
         } else {
             $this->getUser()->setFlash('warning', __(TopLevelMessages::SELECT_RECORDS));
             

@@ -29,11 +29,12 @@ class LeaveEntitlementDao extends BaseDao {
 
             $q = Doctrine_Query::create()->from('LeaveEntitlement le');
 
-            $deletedFlag = $searchParameters->getDeletedFlag();
-            $leaveTypeId = $searchParameters->getLeaveTypeId();
-            $empNumber = $searchParameters->getEmpNumber();
-            $fromDate = $searchParameters->getFromDate();            
-            $toDate = $searchParameters->getToDate();
+            $deletedFlag    = $searchParameters->getDeletedFlag();
+            $leaveTypeId    = $searchParameters->getLeaveTypeId();
+            $empNumber      = $searchParameters->getEmpNumber();
+            $fromDate       = $searchParameters->getFromDate();            
+            $toDate         = $searchParameters->getToDate();
+            $idList         = $searchParameters->getIdList();
             $orderField = $searchParameters->getOrderField();
             $order = $searchParameters->getOrderBy();
             
@@ -60,6 +61,10 @@ class LeaveEntitlementDao extends BaseDao {
                 
                 $params[':fromDate'] = $fromDate;
                 $params[':toDate'] = $toDate;
+            }
+            if(!empty( $idList )){
+                $q->andWhereIn('le.id',$idList);
+                
             }
             
             $orderClause = '';
@@ -124,6 +129,8 @@ class LeaveEntitlementDao extends BaseDao {
             throw new DaoException($e->getMessage(), 0, $e);
         }
     }
+    
+    
     
     public function bulkAssignLeaveEntitlements($employeeNumbers, LeaveEntitlement $leaveEntitlement) {
         $savedCount = 0;

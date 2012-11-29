@@ -28,6 +28,7 @@ class LeaveEntitlementSearchParameterHolder extends SearchParameterHolder {
     protected $fromDate;
     protected $toDate;
     protected $deletedFlag = false;
+    protected $idList = array();
     
     public function __construct() {
         $this->orderField = 'from_date';
@@ -71,6 +72,14 @@ class LeaveEntitlementSearchParameterHolder extends SearchParameterHolder {
 
     public function setDeletedFlag($deleted) {
         $this->deletedFlag = $deleted;
+    }
+    
+    public function getIdList() {
+        return $this->idList;
+    }
+
+    public function setIdList($idList) {
+        $this->idList = $idList;
     }
 
     
