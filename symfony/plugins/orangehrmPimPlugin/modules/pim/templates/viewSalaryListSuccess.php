@@ -44,7 +44,7 @@
                             <input name="" disabled="disabled" id="maxSalary" type="hidden" value=""/>
                             <?php echo $form['basic_salary']->renderLabel(__('Amount') . ' <em>*</em>'); ?>
                             <?php echo $form['basic_salary']->render(array("class" => "formInputText", "maxlength" => 12)); ?>
-                            <label for="minSalary" id="minMaxSalaryLbl"></label>
+                            <label for="minSalary" id="minMaxSalaryLbl" class="fieldHelpRight"></label>
                         </li>
                         <li>
                             <?php echo $form['comments']->renderLabel(__('Comments')); ?>
