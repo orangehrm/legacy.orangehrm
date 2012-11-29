@@ -25,6 +25,35 @@
  */
 class AssignLeaveForm extends sfForm {
 
+    protected $leavePeriodService;    
+    protected $configService;
+
+
+    public function getConfigService() {
+        
+        if (!$this->configService instanceof ConfigService) {
+            $this->configService = new ConfigService();
+        }
+        
+        return $this->configService;        
+    }
+
+    public function setConfigService($configService) {
+        $this->configService = $configService;
+    }  
+    
+    public function getLeavePeriodService() {
+        
+        if (is_null($this->leavePeriodService)) {
+            $this->leavePeriodService = new LeavePeriodService();
+        }
+        return $this->leavePeriodService;
+    }
+
+    public function setLeavePeriodService($leavePeriodService) {
+        $this->leavePeriodService = $leavePeriodService;
+    }
+    
     /**
      * Configure Form
      *
@@ -87,17 +116,41 @@ class AssignLeaveForm extends sfForm {
                 && ($toTimetimeStamp - $fromTimetimeStamp) < 0) {
             $errorList['time'] = new sfValidatorError($validator, ' From time should be before to time');
         }
+        
+        $maxDate = $this->getLeaveAssignDateLimit();
+        $maxTimeStamp = strtotime($maxDate);
+        
+        if (is_int($toDateTimeStamp) && ($toDateTimeStamp > $maxTimeStamp)) {
+            $errorList['txtToDate'] = new sfValidatorError($validator, __('Cannot assign leave beyond ') . $maxDate);
+        }           
 
         if (count($errorList) > 0) {
 
             throw new sfValidatorErrorSchema($validator, $errorList);
-        }
-
+        }     
+        
         $values['txtFromDate'] = date('Y-m-d', $fromDateTimeStamp);
         $values['txtToDate'] = date('Y-m-d', $toDateTimeStamp);
         $values['txtLeaveTotalTime'] = $this->getWidget('time')->getTimeDifference($fromTime, $toTime);
 
         return $values;
+    }
+    
+    protected function getLeaveAssignDateLimit() {
+        // If leave period is defined (enforced or not enforced), don't allow apply assign beyond next Leave period
+        // If no leave period, don't allow apply/assign beyond next calender year
+        $todayNextYear = new DateTime();
+        $todayNextYear->add(new DateInterval('P1Y'));
+            
+        if ($this->getConfigService()->isLeavePeriodDefined()) {
+            $period = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($todayNextYear->format('Y-m-d'));
+            $maxDate = $period[1];
+        } else {
+            $nextYear = $todayNextYear->format('Y');
+            $maxDate = $nextYear . '-12-31';
+        }        
+        
+        return $maxDate;
     }
 
     protected function getEmployeeListAsJson() {

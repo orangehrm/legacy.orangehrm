@@ -4,12 +4,6 @@ use_stylesheets_for_form($form);
 use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
 ?>
 
-<?php if ($form->hasErrors()): ?>
-    <div class="messagebar">
-        <?php include_partial('global/form_errors', array('form' => $form)); ?>
-    </div>
-<?php endif; ?>
-
 <?php include_partial('overlapping_leave', array('overlapLeave' => $overlapLeave));?>
 
 <div class="box" id="assign-leave">
@@ -18,6 +12,9 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
+        <?php if ($form->hasErrors()): ?>
+                <?php include_partial('global/form_errors', array('form' => $form)); ?>
+        <?php endif; ?>        
 <?php if (count($leaveTypes) > 1) : ?>        
         <form id="frmLeaveApply" name="frmLeaveApply" method="post" action="">
             <fieldset>                

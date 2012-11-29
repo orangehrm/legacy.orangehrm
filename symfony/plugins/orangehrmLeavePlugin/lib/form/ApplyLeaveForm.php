@@ -25,6 +25,35 @@
  */
 class ApplyLeaveForm extends sfForm {
 
+    protected $leavePeriodService;    
+    protected $configService;
+
+
+    public function getConfigService() {
+        
+        if (!$this->configService instanceof ConfigService) {
+            $this->configService = new ConfigService();
+        }
+        
+        return $this->configService;        
+    }
+
+    public function setConfigService($configService) {
+        $this->configService = $configService;
+    }  
+    
+    public function getLeavePeriodService() {
+        
+        if (is_null($this->leavePeriodService)) {
+            $this->leavePeriodService = new LeavePeriodService();
+        }
+        return $this->leavePeriodService;
+    }
+
+    public function setLeavePeriodService($leavePeriodService) {
+        $this->leavePeriodService = $leavePeriodService;
+    }
+    
     /**
      * Configure ApplyLeaveForm
      *
@@ -144,25 +173,39 @@ class ApplyLeaveForm extends sfForm {
         $toTime = $values['time']['to'];
         $toTimetimeStamp = strtotime($toTime);        
 
-        if ($fromDateTimeStamp === FALSE)
+        if ($fromDateTimeStamp === FALSE) {
             $errorList['txtFromDate'] = new sfValidatorError($validator, 'Invalid From date');
-
-        if ($toDateTimeStamp === FALSE)
+        }
+        
+        if ($toDateTimeStamp === FALSE) {
             $errorList['txtToDate'] = new sfValidatorError($validator, 'Invalid To date');
-
-        if ((is_int($fromDateTimeStamp) && is_int($toDateTimeStamp)) && ($toDateTimeStamp - $fromDateTimeStamp) < 0)
+        }
+        
+        if ((is_int($fromDateTimeStamp) && is_int($toDateTimeStamp)) && ($toDateTimeStamp - $fromDateTimeStamp) < 0) {
             $errorList['txtFromDate'] = new sfValidatorError($validator, ' From Date should be a previous date to To Date');
-
-        if (($values['txtFromDate'] == $values['txtToDate']) && (is_int($fromTimetimeStamp) && is_int($toTimetimeStamp)) && ($toTimetimeStamp - $fromTimetimeStamp) < 0)
+        }
+                
+        if (($values['txtFromDate'] == $values['txtToDate']) && (is_int($fromTimetimeStamp) && is_int($toTimetimeStamp)) && ($toTimetimeStamp - $fromTimetimeStamp) < 0) {
             $errorList['time'] = new sfValidatorError($validator, ' From time should be a previous time to To time');
+        }
 
         $duration = $this->getWidget('time')->getTimeDifference($fromTime, $toTime);
         
-        if (($values['txtFromDate'] == $values['txtToDate']) && empty($duration))
+        if (($values['txtFromDate'] == $values['txtToDate']) && empty($duration)) {
             $errorList['time'] = new sfValidatorError($validator, 'Total hours required');
-
-        if (($values['txtFromDate'] == $values['txtToDate']) && ($duration == 0 || $duration > 24))
+        }
+        
+        if (($values['txtFromDate'] == $values['txtToDate']) && ($duration == 0 || $duration > 24)) {
             $errorList['time'] = new sfValidatorError($validator, 'Invalid Total hours');
+        }
+        
+        $maxDate = $this->getLeaveAssignDateLimit();
+        $maxTimeStamp = strtotime($maxDate);
+        
+        if (is_int($toDateTimeStamp) && ($toDateTimeStamp > $maxTimeStamp)) {
+            $errorList['txtToDate'] = new sfValidatorError($validator, __('Cannot assign leave beyond ') . $maxDate);
+        }  
+        
         if (count($errorList) > 0) {
 
             throw new sfValidatorErrorSchema($validator, $errorList);
@@ -175,6 +218,23 @@ class ApplyLeaveForm extends sfForm {
         return $values;
     }
 
+    protected function getLeaveAssignDateLimit() {
+        // If leave period is defined (enforced or not enforced), don't allow apply assign beyond next Leave period
+        // If no leave period, don't allow apply/assign beyond next calender year
+        $todayNextYear = new DateTime();
+        $todayNextYear->add(new DateInterval('P1Y'));
+            
+        if ($this->getConfigService()->isLeavePeriodDefined()) {
+            $period = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($todayNextYear->format('Y-m-d'));
+            $maxDate = $period[1];
+        } else {
+            $nextYear = $todayNextYear->format('Y');
+            $maxDate = $nextYear . '-12-31';
+        }        
+        
+        return $maxDate;
+    }
+    
     /**
      * Calculate Date deference
      * @return int
