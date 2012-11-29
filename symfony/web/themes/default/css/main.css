@@ -615,7 +615,7 @@ form p {
 	text-align:left;
     padding-top: 5px;
 }
-input[type="button"], input[type="submit"] {
+input[type="button"], input[type="submit"], input[type="reset"] {
 	background:#33ac3f;
 	color:#fff;
 	font-size:15px;
