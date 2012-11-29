@@ -27,7 +27,7 @@
                     
                 </ol>
                 
-                  <ul>
+                  <ul class="disc">
                     <li>
                         <?php echo __("Column order should not be changed"); ?>
                     </li>
