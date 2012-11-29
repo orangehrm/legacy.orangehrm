@@ -52,7 +52,7 @@ class pimCsvImportAction extends baseCsvImportAction {
                     $this->getUser()->setFlash($result['messageType'], $result['message']);
 				} else {
 				    if($result != 0) {
-                       $this->getUser()->setFlash('success', __('Number of Records Imported').": ".$result);
+                       $this->getUser()->setFlash('csvimport.success', __('Number of Records Imported').": ".$result);
 				    } else {
                         $this->getUser()->setFlash('warning', __('Failed to Import: No Compatible Records'));
 				    }

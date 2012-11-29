@@ -9,7 +9,7 @@
             
     <div class="inner">
         
-        <?php include_partial('global/flash_messages'); ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'csvimport')); ?>
                 
         <form name="frmPimCsvImport" id="frmPimCsvImport" method="post" action="<?php echo url_for('admin/pimCsvImport'); ?>" enctype="multipart/form-data">
 
