@@ -8,6 +8,11 @@ a {
 	outline:none;
     color:#5d5d5d;
 }
+ul {
+    list-style: disc;
+    margin-left: 13px;
+    line-height: 25px;
+}
 /* ================ HTML element styles: End ================ */
 
 /* ================ Application header styles: Begin ================ */
@@ -432,6 +437,11 @@ a {
 /* ================ Main div styles: End ================ */
 
 /* ================ General class styles: Begin ================ */
+.normal {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
 .hide {display:none;}
 
 .show {
@@ -457,6 +467,9 @@ a {
 }
 .fieldHelpRight {
     margin-left: 5px;
+}
+.boldText {
+    font-weight: bold;
 }
 /* ================ General class styles: End ================ */
 

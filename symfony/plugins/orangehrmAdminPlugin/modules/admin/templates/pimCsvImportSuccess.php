@@ -15,7 +15,7 @@
             
             <fieldset>
                 
-                <ol>
+                <ol class="normal">
                     
                     <li>
                         <?php echo $form['csvFile']->renderLabel(__('Select File').' <em>*</em>'); ?>
@@ -24,8 +24,6 @@
                     
                 </ol>
                 
-                <ol>
-                    
                   <ul>
                     <li>
                         <?php echo __("Column order should not be changed"); ?>
@@ -37,7 +35,7 @@
                         <?php echo __("All date fields should be in YYYY-MM-DD format");?>
                     </li>
                     <li>
-                        <?php echo __("If gender is specified, value should be either") . ' Male ' . __('or') . ' Female'; ?>
+                        <?php echo __("If gender is specified, value should be either") . ' <span class="boldText">Male</span> ' . __('or') . ' <span class="boldText">Female</span>'; ?>
                     </li>
                     <li>
                         <?php echo __("Each import file should be configured for 100 records or less");?>
@@ -50,11 +48,11 @@
                            href="<?php echo url_for('admin/sampleCsvDownload');?>"><?php echo __("Download"); ?></a>
                     </li>
                  </ul>
-                    
+                
+                <ol>
                     <li class="required">
                         <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
-                    
                 </ol>
                 
                 <p>
