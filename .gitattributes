@@ -4157,12 +4157,14 @@ symfony/plugins/orangehrmCorePlugin/test/components/SortableHeaderCellTest.php -
 symfony/plugins/orangehrmCorePlugin/test/components/ohrmCellFilterTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/ohrmListComponentTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/dao/ConfigDaoTest.php -text
+symfony/plugins/orangehrmCorePlugin/test/dao/EmailDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/factory/SimpleUserRoleFactoryTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/AccessFlowStateMachineDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/AccessFlowStateMachineService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/BasicUserRoleManager.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ConfigDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/DataGroupDao.yml -text
+symfony/plugins/orangehrmCorePlugin/test/fixtures/EmailDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/MenuDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportGeneratorService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableDao.yml -text

@@ -43,7 +43,8 @@ class orangehrmCorePluginAllTests {
         
         /* Dao Test Cases */
         $suite->addTestFile(dirname(__FILE__) . '/dao/ConfigDaoTest.php');
-
+        $suite->addTestFile(dirname(__FILE__) . '/dao/EmailDaoTest.php');
+ 
         /* Service Test Cases */
         $suite->addTestFile(dirname(__FILE__) . '/service/ConfigServiceTest.php');
 
