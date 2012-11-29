@@ -439,7 +439,6 @@ ul {
 /* ================ General class styles: Begin ================ */
 .normal {
     margin: 0;
-    padding: 0;
     border: none;
 }
 .hide {display:none;}

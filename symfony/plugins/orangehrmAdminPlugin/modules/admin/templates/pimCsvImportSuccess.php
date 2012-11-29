@@ -8,6 +8,8 @@
     </div>
             
     <div class="inner">
+        
+        <?php include_partial('global/flash_messages'); ?>
                 
         <form name="frmPimCsvImport" id="frmPimCsvImport" method="post" action="<?php echo url_for('admin/pimCsvImport'); ?>" enctype="multipart/form-data">
 
@@ -17,9 +19,10 @@
                 
                 <ol class="normal">
                     
-                    <li>
+                    <li class="fieldHelpContainer">
                         <?php echo $form['csvFile']->renderLabel(__('Select File').' <em>*</em>'); ?>
                         <?php echo $form['csvFile']->render(); ?>
+                        <div class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></div>
                     </li>
                     
                 </ol>

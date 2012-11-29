@@ -2,6 +2,7 @@ $(document).ready(function() {
    
     $('#btnSave').click(function() {
         if(isValidForm()){
+            $("#btnSave").val('Processing');
             $('#frmPimCsvImport').submit()
         }
     });
