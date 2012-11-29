@@ -32,6 +32,8 @@ $hasAttachments = count($attachmentList) > 0;
         <h1><?php echo __('Add Attachment'); ?></h1>
     </div> <!-- head -->
     <div class="inner">
+        
+        <?php include_partial('global/flash_messages', array('prefix' => 'saveAttachmentPane')); ?>
 
         <form name="frmEmpAttachment" id="frmEmpAttachment" method="post" enctype="multipart/form-data" action="<?php echo url_for('pim/updateAttachment?empNumber='.$employee->empNumber); ?>">
 
@@ -78,7 +80,7 @@ $hasAttachments = count($attachmentList) > 0;
     </div>
     <div class="inner">
         
-        <?php echo !empty($attachmentMessage) ? displayMainMessage($attachmentMessageType, $attachmentMessage) : ''; ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'listAttachmentPane')); ?>
 
         <form name="frmEmpDelAttachments" id="frmEmpDelAttachments" method="post" action="<?php echo url_for('pim/deleteAttachments?empNumber='.$employee->empNumber); ?>">
 
@@ -185,12 +187,19 @@ $hasAttachments = count($attachmentList) > 0;
     var lang_PleaseSelectAFile = "<?php echo __(ValidationMessages::REQUIRED);?>";
     var lang_CommentsMaxLength = "<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 200));?>";
     var lang_SelectAtLeastOneAttachment = "<?php echo __(TopLevelMessages::SELECT_RECORDS); ?>";
+    var hasError = <?php echo ($sf_user->hasFlash('saveAttachmentPane.warning'))?'true':'false'; ?>;
 
     var clearAttachmentMessages = true;
     
     $(document).ready(function() {
 
-        $('#addPaneAttachments').hide();
+        if (!hasError) {
+            $('#addPaneAttachments').hide();
+        }
+        
+        $('#currentFileLi').hide();
+        $('#btnCommentOnly').hide();
+        
         $("#frmEmpAttachment").data('add_mode', true);
 
         jQuery.validator.addMethod("attachment",
