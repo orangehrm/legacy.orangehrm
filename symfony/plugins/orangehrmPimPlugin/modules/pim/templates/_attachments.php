@@ -154,6 +154,9 @@ $hasAttachments = count($attachmentList) > 0;
                                 <td>
                                     <a href="#" class="editLink"><?php echo __("Edit"); ?></a>
                                 </td>
+                                <?php else: ?>
+                                <td>
+                                </td>
                                 <?php endif; ?>
                             </tr>
                         
