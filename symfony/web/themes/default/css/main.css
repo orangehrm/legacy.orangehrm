@@ -470,6 +470,9 @@ ul.disc {
 .boldText {
     font-weight: bold;
 }
+.required {
+	color:#aa4935;
+}
 /* ================ General class styles: End ================ */
 
 /* ================ Form styles: Begin ================ */
