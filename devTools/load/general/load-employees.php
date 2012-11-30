@@ -323,7 +323,7 @@ USERSQLSTR;
     if (!mysql_query($userSql)) { echo mysql_error(); die; }
 }
 // Sets Last ID at `hs_hr_unique_id`
-if (!mysql_query("UPDATE `hs_hr_unique_id` SET `last_id` = '".count($employees)."' WHERE `id` = '8' AND `table_name` = 'hs_hr_employee'")) { echo mysql_error(); exit(0); }
+if (!mysql_query("UPDATE `hs_hr_unique_id` SET `last_id` = '".count($employees)."' WHERE `field_name` = 'emp_number' AND `table_name` = 'hs_hr_employee'")) { echo mysql_error(); exit(0); }
 
 //End
 echo "<h2>Successfully Created " . count($employees) . " employees and their user accounts!</h2>";
