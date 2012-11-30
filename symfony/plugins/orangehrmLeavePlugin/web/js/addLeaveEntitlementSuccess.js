@@ -214,11 +214,11 @@ function toggleFilters(show) {
                 },
                 messages: {
                     'entitlements[employee][empName]':{
-                        required:'<?php echo __(ValidationMessages::REQUIRED); ?>',
-                        no_default_value:'<?php echo __(ValidationMessages::REQUIRED); ?>'
+                        required:lang_required,
+                        no_default_value:lang_required
                     },
                     'entitlements[leave_type]':{
-                        required:'<?php echo __(ValidationMessages::REQUIRED); ?>'
+                        required:lang_required
                     },
                     'entitlements[date_from]':{
                         required:lang_invalidDate,
@@ -230,8 +230,8 @@ function toggleFilters(show) {
                         date_range: lang_dateError
                     },
                     'entitlements[entitlement]': {
-                        required: '<?php echo __(ValidationMessages::REQUIRED); ?>',
-                        number: '<?php echo __("Should be a number"); ?>'
+                        required: lang_required,
+                        number: lang_number
                     }                    
             }
 

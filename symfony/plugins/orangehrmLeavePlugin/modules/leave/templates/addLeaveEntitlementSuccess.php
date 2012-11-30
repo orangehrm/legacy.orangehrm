@@ -165,6 +165,8 @@ use_stylesheets_for_form($form);
     var lang_matchesOne = '<?php echo __('Matches one employee');?>';
     var lang_matchesMany = '<?php echo __('Matches %count% employees');?>';
     var lang_matchesNone = '<?php echo __('No matching employees');?>';
+    var lang_required = '<?php echo __(ValidationMessages::REQUIRED); ?>';
+    var lang_number = '<?php echo __("Should be a number"); ?>';
         
     var filterMatchingEmployees = 0;
     
