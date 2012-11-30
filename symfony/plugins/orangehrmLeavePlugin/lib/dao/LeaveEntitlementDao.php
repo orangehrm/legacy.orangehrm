@@ -108,10 +108,53 @@ class LeaveEntitlementDao extends BaseDao {
     }
     
     public function saveLeaveEntitlement(LeaveEntitlement $leaveEntitlement) {
+        $conn = Doctrine_Manager::connection();
+        $conn->beginTransaction();  
+        
         try {
+            $balance = $leaveEntitlement->getNoOfDays() - $leaveEntitlement->getDaysUsed();
+            $entitlementId = $leaveEntitlement->getId();
+            
+            if ($balance > 0) {
+                $leaveList = $this->getLeaveWithoutEntitlements($leaveEntitlement->getEmpNumber(), 
+                        $leaveEntitlement->getLeaveTypeId(), $leaveEntitlement->getFromDate(), $leaveEntitlement->getToDate());
+                
+                foreach ($leaveList as $leave) {
+                    $daysLeft = $leave['days_left'];
+                    $leaveId = $leave['id'];
+                    $daysToAssign = $daysLeft > $balance ? $balance : $daysLeft;
+                    
+                    $leaveEntitlement->setDaysUsed($leaveEntitlement->getDaysUsed() - $daysToAssign);
+                    $balance -= $daysToAssign;
+                    
+                    // assign to leave
+                    $entitlementAssignment = Doctrine_Query::create()
+                            ->from('LeaveLeaveEntitlement l')
+                            ->where('l.leave_id = ?', $leaveId)
+                            ->andWhere('l.entitlement_id = ?', $entitlementId)
+                            ->fetchOne(); 
+
+                    if ($entitlementAssignment === false) {
+                        $entitlementAssignment = new LeaveLeaveEntitlement();
+                        $entitlementAssignment->setLeaveId($leaveId);
+                        $entitlementAssignment->setEntitlementId($entitlementId);
+                        $entitlementAssignment->setLengthDays($daysToAssign);                         
+                    } else {
+                        $entitlementAssignment->setLengthDays($entitlementAssignment->getLengthDays() + $daysToAssign); 
+                    }
+                    $entitlementAssignment->save();                    
+                    
+                    if ($balance <= 0) {
+                        break;
+                    }                                        
+                }
+            }
+            
             $leaveEntitlement->save();
+            $conn->commit();            
             return $leaveEntitlement;
         } catch (Exception $e) {
+            $conn->rollback();
             throw new DaoException($e->getMessage(), 0, $e);
         }        
     }
