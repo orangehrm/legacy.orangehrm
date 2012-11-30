@@ -537,7 +537,7 @@ class LeaveRequestService extends BaseService {
             if ($changeType == 'change_leave_request') {
                 foreach ($approvalIds as $leaveRequestId) {
                     $approvals = $this->searchLeave($leaveRequestId);
-                    $this->_approveLeave($approvals, $changeComments[$leaveRequestId]);
+                    $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments[$leaveRequestId]);
 
                     $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, $approvals, 
                             $changedByUserType, $changedUserId, 'request');
@@ -545,14 +545,15 @@ class LeaveRequestService extends BaseService {
 
                 foreach ($rejectionIds as $leaveRequestId) {
                     $rejections = $this->searchLeave($leaveRequestId);
-                    $this->_rejectLeave($rejections, $changeComments[$leaveRequestId]);
+                    $this->_changeLeaveStatus($rejections, Leave::LEAVE_STATUS_LEAVE_REJECTED, $changeComments[$leaveRequestId]);
                     $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, $rejections, 
                             $changedByUserType, $changedUserId, 'request');
                 }
 
                 foreach ($cancellationIds as $leaveRequestId) {
                     $cancellations = $this->searchLeave($leaveRequestId);
-                    $this->_cancelLeave($cancellations, $changedByUserType);
+
+                    $this->_changeLeaveStatus($cancellations, Leave::LEAVE_STATUS_LEAVE_CANCELLED);
                     
                     $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
                             $changedByUserType, $changedUserId, 'request');                  
@@ -565,6 +566,8 @@ class LeaveRequestService extends BaseService {
                     $approvals[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
                 $this->_approveLeave($approvals, $changeComments);
+                $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments);
+                
 
                 foreach ($approvals as $approval) {
                     $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, array($approval), 
@@ -575,7 +578,7 @@ class LeaveRequestService extends BaseService {
                 foreach ($rejectionIds as $leaveId) {
                     $rejections[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
-                $this->_rejectLeave($rejections, $changeComments);
+                $this->_changeLeaveStatus($rejections, Leave::LEAVE_STATUS_LEAVE_REJECTED, $changeComments);
 
                 foreach ($rejections as $rejection) {
                     $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, array($rejection), 
@@ -586,7 +589,7 @@ class LeaveRequestService extends BaseService {
                 foreach ($cancellationIds as $leaveId) {
                     $cancellations[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
-                $this->_cancelLeave($cancellations, $changedByUserType);
+                $this->_changeLeaveStatus($cancellations, Leave::LEAVE_STATUS_LEAVE_CANCELLED);
 
                 foreach ($cancellations as $cancellation) {
 
@@ -603,55 +606,29 @@ class LeaveRequestService extends BaseService {
 
     }
 
-    private function _approveLeave($leave, $comments, $changeType = null) {
-        $leaveStateManager = $this->getLeaveStateManager();
+    protected function _changeLeaveStatus($leaveList, $newState, $comments = null) {
+        $dao = $this->getLeaveRequestDao();
+        
+        foreach ($leaveList as $leave) {
 
-        $leaveRequests = array();
-        foreach ($leave as $approval) {
-            $leaveRequestId = $approval->getLeaveRequest()->getId();
-            $leaveRequests[$leaveRequestId]['requestObj'] = $approval->getLeaveRequest();
-            $leaveRequests[$leaveRequestId]['leaves'][] = $approval;
-
-            $comment = is_array($comments) ? $comments[$approval->getId()] : $comments;
-
-            $leaveStateManager->setLeave($approval);
-            $leaveStateManager->setChangeComments($comment);
-            $leaveStateManager->approve();          
-        }
-
-    }
-    
-    private function _rejectLeave($leave, $comments, $changeType = null) {
-        $leaveStateManager = $this->getLeaveStateManager();
-
-        $leaveRequests = array();
-        foreach ($leave as $rejection) {
-            $leaveRequestId = $rejection->getLeaveRequest()->getId();
-            $leaveRequests[$leaveRequestId]['requestObj'] = $rejection->getLeaveRequest();
-            $leaveRequests[$leaveRequestId]['leaves'][] = $rejection;
-
-            $comment = is_array($comments) ? $comments[$rejection->getId()] : $comments;
-
-            $leaveStateManager->setLeave($rejection);
-            $leaveStateManager->setChangeComments($comment);
-            $leaveStateManager->reject();
-        }
-
-    }
-
-    private function _cancelLeave($leave, $changeType = null) {
-        $leaveStateManager = $this->getLeaveStateManager();
-
-        $leaveRequests = array();
-        foreach ($leave as $cancellation) {
-            $leaveRequestId = $cancellation->getLeaveRequest()->getId();
-            $leaveRequests[$leaveRequestId]['requestObj'] = $cancellation->getLeaveRequest();
-            $leaveRequests[$leaveRequestId]['leaves'][] = $cancellation;
-
-            $leaveStateManager->setLeave($cancellation);
-            $leaveStateManager->cancel();            
-        }
-
+            $entitlementChanges = array();
+            
+            $removeLinkedEntitlements = (($newState == Leave::LEAVE_STATUS_LEAVE_CANCELLED) || 
+                    ($newState == Leave::LEAVE_STATUS_LEAVE_REJECTED));
+            
+            $leave->setStatus($newState);
+            
+            if (!is_null($comments)) {
+                if (is_array($comments)) {
+                    $comment = isset($comments[$leave->getId()]) ? $comments[$leave->getId()] : '';
+                } else {
+                    $comment = $comments;
+                }
+                $leave->setComments($comments);
+            }
+            
+            $dao->changeLeaveStatus($leave, $entitlementChanges, $removeLinkedEntitlements);
+        }        
     }
     
     private function _notifyLeaveStatusChange($eventType, $leaveList, $performerType, $performerId, $requestType) {

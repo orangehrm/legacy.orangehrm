@@ -1436,9 +1436,218 @@
         $this->assertEquals(array(5), $this->getEmployeesInSubUnits(array(5)));
     }
     
-    public function testChangeLeaveStatus() {
+    public function testChangeLeaveStatusNoEntitlementChanges() {
+        $leaves = $this->getLeave(array(1));
+        $this->assertEquals(1, count($leaves));
+        $savedEntitlements = $this->getEntitlementsFromDb();        
         
-    }
+        $leave = $leaves[0];
+        $leave->setStatus(Leave::LEAVE_STATUS_LEAVE_CANCELLED);
+        $this->leaveRequestDao->changeLeaveStatus($leave, array(), false);
+        
+        $leavesAfterChange = $this->getLeave(array(1));
+        $this->assertEquals(1, count($leavesAfterChange));  
+        $leaveAfterChange = $leavesAfterChange[0];
+        
+        // Verify status changed
+        $this->assertEquals(Leave::LEAVE_STATUS_LEAVE_CANCELLED, $leaveAfterChange->getStatus());
+        
+        // Verify no entitlement changes
+        $savedEntitlementsAfter = $this->getEntitlementsFromDb();       
+        $this->assertEquals(count($savedEntitlements), count($savedEntitlementsAfter));
+        
+        for ($i = 0; $i < count($savedEntitlements); $i++) {                       
+            $this->compareEntitlement($savedEntitlements[$i], $savedEntitlementsAfter[$i]);
+        }        
+        
+    }         
+    
+    public function testChangeLeaveStatusNoEntitlementChangesRemoveLinked() {
+        $leaveId = 1;
+        $leaves = $this->getLeave(array($leaveId));
+        $this->assertEquals(1, count($leaves));
+        $leave = $leaves[0];
+        
+        $savedEntitlements = $this->getEntitlementsFromDb();        
+        
+        $thisLeaveEntitlementAssignments = $this->getEntitlementAssignmentsForLeave($leaveId);        
+        $this->assertEquals(2, count($thisLeaveEntitlementAssignments));
+        
+        $entitlementAssignmentIds = $this->getEntitlementAssignmentIdsFromDb();        
+
+        $leave->setStatus(Leave::LEAVE_STATUS_LEAVE_CANCELLED);     
+        $this->leaveRequestDao->changeLeaveStatus($leave, array(), true);
+
+        $leavesAfterChange = $this->getLeave(array(1));
+        $this->assertEquals(1, count($leavesAfterChange));  
+        $leaveAfterChange = $leavesAfterChange[0];
+        
+        // Verify status changed
+        $this->assertEquals(Leave::LEAVE_STATUS_LEAVE_CANCELLED, $leaveAfterChange->getStatus());
+        
+        // Verify entitlement links to leave removed
+        $thisLeaveEntitlementIdsAfter = $this->getEntitlementAssignmentsForLeave(1);
+        $this->assertEquals(0, count($thisLeaveEntitlementIdsAfter));
+        
+        $entitlementAssignmentIdsAfter = $this->getEntitlementAssignmentIdsFromDb();
+        $this->assertEquals(count($entitlementAssignmentIds) - count($thisLeaveEntitlementAssignments), count($entitlementAssignmentIdsAfter));
+        
+        // Verify entitlement changes
+        $savedEntitlementsAfter = $this->getEntitlementsFromDb();     
+        
+        $this->assertEquals(count($savedEntitlements), count($savedEntitlementsAfter));        
+        
+        for ($i = 0; $i < count($savedEntitlements); $i++) {
+            
+            $savedEntitlement = $savedEntitlements[$i];
+
+            foreach ($thisLeaveEntitlementAssignments as $assignment) {
+                
+                if ($assignment->getEntitlementId() == $savedEntitlement['id']) {
+                    $savedEntitlement['days_used'] -= $assignment->getLengthDays();                   
+                }
+            }
+
+            $this->compareEntitlement($savedEntitlement, $savedEntitlementsAfter[$i]);
+        }       
+    }   
+    
+    public function testChangeLeaveStatusEntitlementChangesRemoveLinked() {
+        $leaveId = 1;
+        $leaves = $this->getLeave(array($leaveId));
+        $this->assertEquals(1, count($leaves));
+        $leave = $leaves[0];
+        
+        $savedEntitlements = $this->getEntitlementsFromDb();        
+        
+        $thisLeaveEntitlementAssignments = $this->getEntitlementAssignmentsForLeave($leaveId);        
+        $this->assertEquals(2, count($thisLeaveEntitlementAssignments));
+        
+        $entitlementAssignmentIds = $this->getEntitlementAssignmentIdsFromDb();        
+
+        // entitlements to be assigned to leave
+        $entitlements = array('current' => array(),
+                'change' => array(
+                    34 => array(2 => 1, 3 => 0.4, 4 => 1), // new entitlements for leave without any
+                    2 => array(4 => 1, 3 => 0.5, 2 => 1), // no changes to existing, new ones added
+                    4 => array() // additions to existing, new ones
+                )
+            );
+        
+        //
+        // Before: entitlement id: days: days_used
+        // 1: 3: 2.25
+        // 2: 6: 3.5
+        // 3: 1: 0
+        // 4: 5: 3
+        // 
+        // Leave id: 1 is linked to the following (entitlement id: length_days)
+        // 1: 0.5
+        // 2: 0.5
+        // 
+        // Removing links for leave id: 1 results in the following:
+        // 
+        // entitlement id: days: days_used
+        // 1: 3: 1.75
+        // 2: 6: 3
+        // 3: 1: 0
+        // 4: 5: 3
+        //
+        // Changes in above array: (entitlement id: delta days_used)
+        // 
+        // 1: 0
+        // 2: 2
+        // 3: 0.9
+        // 4: 2
+        //
+        // Final result should be:
+        //
+        // entitlement id: days: days_used
+        // 1: 3: 1.75
+        // 2: 6: 5
+        // 3: 1: 0.9
+        // 4: 5: 5
+        //
+        // Entitlement assignments
+        // leave_id: entitlement_id: before: add: after
+        // 34 : 2 : 0 : 1 : 1
+        // 34 : 3 : 0 : 0.4 : 0.4
+        // 34 : 4 : 0 : 1 : 1
+        // 2 : 2 : 0 : 1 : 1
+        // 2 : 3 : 0 : 0.5 : 0.5
+        // 2 : 4 : 1 : 1 : 2
+
+        // 4
+        //
+        
+        
+        $leave->setStatus(Leave::LEAVE_STATUS_LEAVE_CANCELLED);     
+        
+
+        $this->leaveRequestDao->changeLeaveStatus($leave, $entitlements, true);
+
+        $leavesAfterChange = $this->getLeave(array(1));
+        $this->assertEquals(1, count($leavesAfterChange));  
+        $leaveAfterChange = $leavesAfterChange[0];
+        
+        // Verify status changed
+        $this->assertEquals(Leave::LEAVE_STATUS_LEAVE_CANCELLED, $leaveAfterChange->getStatus());
+        
+        // Verify entitlement links to leave removed
+        $thisLeaveEntitlementIdsAfter = $this->getEntitlementAssignmentsForLeave(1);
+        $this->assertEquals(0, count($thisLeaveEntitlementIdsAfter));
+        
+        $entitlementAssignmentIdsAfter = $this->getEntitlementAssignmentIdsFromDb();
+        
+        $newlyInsertedAssignments = 5;
+        $this->assertEquals(count($entitlementAssignmentIds) - count($thisLeaveEntitlementAssignments) + $newlyInsertedAssignments, 
+                count($entitlementAssignmentIdsAfter));
+        
+        // Verify entitlement changes
+        $savedEntitlementsAfter = $this->getEntitlementsFromDb();     
+        
+        $this->assertEquals(count($savedEntitlements), count($savedEntitlementsAfter));        
+        for ($i = 0; $i < count($savedEntitlements); $i++) {
+            
+            $savedEntitlement = $savedEntitlements[$i];
+
+            // Apply changes due to removing links for changed leave
+            foreach ($thisLeaveEntitlementAssignments as $assignment) {                
+                if ($assignment->getEntitlementId() == $savedEntitlement['id']) {
+                    $savedEntitlement['days_used'] -= $assignment->getLengthDays();                   
+                }
+            }
+            
+            // apply changes due to specified entitlement changes
+            foreach ($entitlements['change'] as $change) {
+                foreach ($change as $entitlementId => $length) {
+                    if ($entitlementId == $savedEntitlement['id']) {
+                        $savedEntitlement['days_used'] += $length; 
+                    }
+                }
+            }
+            
+            //print_r($savedEntitlement['id'] . ': ' . $savedEntitlement['no_of_days'] . ': ' . $savedEntitlement['days_used']); echo "\n";
+
+            $this->compareEntitlement($savedEntitlement, $savedEntitlementsAfter[$i]);
+        }
+        
+        // Verify entitlement assignments to leave
+        $expectedEntitlementAssignments = array(34 => array(2 => 1, 3 => 0.4, 4 => 1),
+            2 => array(2 => 1, 3 => 0.5, 4 => 2));
+        
+        foreach ($expectedEntitlementAssignments as $leaveId => $assignments) {
+            $actualAssignments = $this->getEntitlementAssignmentsForLeave($leaveId, 'l.entitlement_id ASC');
+            $this->assertEquals(count($assignments), count($actualAssignments));
+            
+            $i = 0;
+            foreach ($assignments as $entitlementId => $length) {
+                $actualAssignment = $actualAssignments[$i++];
+                $this->assertEquals($entitlementId, $actualAssignment->getEntitlementId());
+                $this->assertEquals($length, $actualAssignment->getLengthDays());
+            }
+        }
+    }      
     
     
     /**
@@ -1643,10 +1852,10 @@
         return $q->execute();         
     }    
     
-    protected function getEntitlementAssignmentsForLeave($leaveId) {
+    protected function getEntitlementAssignmentsForLeave($leaveId, $sort = 'l.id ASC') {
         $q = Doctrine_Query::create()->from('LeaveLeaveEntitlement l')
                 ->where('l.leave_id = ?', $leaveId)
-                ->addOrderBy('l.id ASC');
+                ->addOrderBy($sort);
 
         return $q->execute();                 
     }
