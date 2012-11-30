@@ -46,7 +46,7 @@ class saveJobTitleAction extends sfAction {
            
             if ($_FILES['jobTitle']['size']['jobSpec'] > 1024000) {
                  
-                $this->getUser()->setFlash('warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
+                $this->getUser()->setFlash('jobtitle.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
             }
             if ($this->form->isValid()) {
                 $result = $this->form->save();

@@ -29,7 +29,7 @@
     
     <div class="inner">       
         
-        <?php include_partial('global/flash_messages'); ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'jobtitle')); ?>
         
         <form name="frmSavejobTitle" id="frmSavejobTitle" method="post" action="<?php echo url_for('admin/saveJobTitle?jobTitleId=' . $form->jobTitleId); ?>" enctype="multipart/form-data" class="<?php echo empty($form->jobTitleId)?'':'clickToEditForm'; ?>">
 
