@@ -488,6 +488,8 @@
         
         $this->assertEquals(count($leave), count($leaveList));
 
+        $entitlementUsedDaysChanges = array();
+        
         // update leave type, leave request id , emp number in leave requests
         for ($i = 0; $i < count($leave); $i++) {
             $expected = $leave[$i];
@@ -504,7 +506,16 @@
             $leaveId = $actual->getId();
             $leaveEntitlements = $entitlements['current'][$expected->getDate()];
             $newEntitlementsForThisLeave = $this->filterEntitlementsForLeave($leaveId, $newEntitlements);
-            $this->validateLeaveEntitlementAssignment($leaveId, $leaveEntitlements, $newEntitlementsForThisLeave);            
+            $this->validateLeaveEntitlementAssignment($leaveId, $leaveEntitlements, $newEntitlementsForThisLeave);      
+            
+            // update leave entitlement used days
+            foreach ($leaveEntitlements as $entitlementId => $length) {
+                if (!isset($entitlementUsedDaysChanges[$entitlementId])) {
+                    $entitlementUsedDaysChanges[$entitlementId] = $length;
+                } else {
+                    $entitlementUsedDaysChanges[$entitlementId] += $length;
+                }
+            }
         }                
         
         // verify entitlement changes
@@ -518,7 +529,14 @@
         $this->assertEquals(count($savedEntitlements), count($savedEntitlementsAfter));
         
         for ($i = 0; $i < count($savedEntitlements); $i++) {
-            $this->compareEntitlement($savedEntitlements[$i], $savedEntitlementsAfter[$i]);
+            
+            $savedEntitlement = $savedEntitlements[$i];
+
+            if (isset($entitlementUsedDaysChanges[$savedEntitlement['id']])) {
+                $savedEntitlement['days_used'] += $entitlementUsedDaysChanges[$savedEntitlement['id']];
+            }            
+            
+            $this->compareEntitlement($savedEntitlement, $savedEntitlementsAfter[$i]);
         }
         
     }        
@@ -574,6 +592,8 @@
         $this->assertEquals(count($leave), count($leaveList));
 
         $takenLeaveId = null;
+       
+        $entitlementUsedDaysChanges = array();        
         
         // update leave type, leave request id , emp number in leave requests
         for ($i = 0; $i < count($leave); $i++) {
@@ -596,7 +616,17 @@
             
             $leaveEntitlements = $entitlements['current'][$expected->getDate()];
             $newEntitlementsForThisLeave = $this->filterEntitlementsForLeave($leaveId, $newEntitlements);
-            $this->validateLeaveEntitlementAssignment($leaveId, $leaveEntitlements, $newEntitlementsForThisLeave);            
+            $this->validateLeaveEntitlementAssignment($leaveId, $leaveEntitlements, $newEntitlementsForThisLeave); 
+            
+        
+            // update leave entitlement used days             
+            foreach ($leaveEntitlements as $entitlementId => $length) {
+                if (!isset($entitlementUsedDaysChanges[$entitlementId])) {
+                    $entitlementUsedDaysChanges[$entitlementId] = $length;
+                } else {
+                    $entitlementUsedDaysChanges[$entitlementId] += $length;
+                }
+            }               
         }                
         
         // verify entitlement changes
@@ -605,11 +635,9 @@
             $this->validateLeaveEntitlementAssignment($leaveId, $change, $entitlementsForThisLeave);
         }
         
-        // Verify days_used for entitlement for taken leave is updated
+        // Verify days_used for entitlement for leave is updated
         $this->assertTrue(!is_null($takenLeaveId));
-        
-        $entitlementChangesForTakenLeave = $entitlements['current']['2010-12-01'];
-        
+                     
         $savedEntitlementsAfter = $this->getEntitlementsFromDb();       
         $this->assertEquals(count($savedEntitlements), count($savedEntitlementsAfter));
         
@@ -617,17 +645,13 @@
             $saved = $savedEntitlements[$i];
             $after = $savedEntitlementsAfter[$i];
             
-            if (!in_array($saved['id'], array_keys($entitlementChangesForTakenLeave))) {
-                $this->compareEntitlement($saved, $after);
-            } else {
                 // verify used_days incremented
-                $change = $entitlementChangesForTakenLeave[$saved['id']];
+                $change = $entitlementUsedDaysChanges[$saved['id']];
                 $this->assertEquals($saved['days_used'] + $change, $after['days_used']);
                 
                 // Compare other fields
                 $saved['days_used'] = $saved['days_used'] + $change;
                 $this->compareEntitlement($saved, $after);
-            }
         }
         
     }        
@@ -1411,6 +1435,11 @@
         
         $this->assertEquals(array(5), $this->getEmployeesInSubUnits(array(5)));
     }
+    
+    public function testChangeLeaveStatus() {
+        
+    }
+    
     
     /**
      * Get Employees under given subunit 
