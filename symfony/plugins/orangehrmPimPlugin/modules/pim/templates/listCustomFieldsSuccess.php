@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
@@ -16,83 +16,83 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  *
- */            
+ */
 ?>  
 
 <div id="customFieldAddPane" style="display: none;" class="box">
-  
+
     <div class="head">
         <h1 id="heading"><?php echo __('Add Custom Field'); ?></h1>
     </div>
-    
+
     <div class="inner">
-    
+
         <form name="frmCustomField" id="frmCustomField" method="post" action="<?php echo url_for('pim/defineCustomField'); ?>">
 
             <?php echo $form['_csrf_token']; ?>
             <?php echo $form["field_num"]->render(); ?>
 
             <fieldset>
-                
+
                 <ol>
-                    
+
                     <li>
                         <?php echo $form['name']->renderLabel(__('Field Name') . ' <em>*</em>'); ?>
                         <?php echo $form['name']->render(array("maxlength" => 250)); ?>
                     </li>
-                    
+
                     <li>
                         <?php echo $form['screen']->renderLabel(__('Screen') . ' <em>*</em>'); ?>
                         <?php echo $form['screen']->render(); ?>
                     </li>
-                    
+
                     <li>
                         <?php echo $form['type']->renderLabel(__('Type') . ' <em>*</em>'); ?>
                         <?php echo $form['type']->render(); ?>
                     </li>
-                    
-                    <?php $showExtra = ($form->getValue('type') == CustomField::FIELD_TYPE_SELECT) ? 'block' : 'none';?>
-                    <li style="display:<?php echo $showExtra;?>;" id="selectOptions" class="fieldHelpContainer">
+
+                    <?php $showExtra = ($form->getValue('type') == CustomField::FIELD_TYPE_SELECT) ? 'block' : 'none'; ?>
+                    <li style="display:<?php echo $showExtra; ?>;" id="selectOptions" class="fieldHelpContainer">
                         <?php echo $form['extra_data']->renderLabel(__('Select Options') . ' <em>*</em>'); ?>
                         <?php echo $form['extra_data']->render(); ?>
-                        <div class="fieldHelpBottom"><?php echo __("Enter allowed options separated by commas");?></div>
+                        <div class="fieldHelpBottom"><?php echo __("Enter allowed options separated by commas"); ?></div>
                     </li>
-                    
+
                     <li class="required">
                         <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
-                    
+
                 </ol>
-                
+
                 <p>
                     <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
                     <input type="button" class="reset" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
-                
+
             </fieldset>
-            
+
         </form>
-        
+
     </div>
 
 </div> <!-- End of customFieldAddPane -->
 
 
 <div class="box miniList" id="customFieldListPane">
-    
+
     <div class="head">
         <h1><?php echo __("Defined Custom Fields") ?></h1>
     </div>
-    
+
     <div class="inner">
-        
+
         <?php include_partial('global/flash_messages'); ?>
-        
+
         <form name="standardView" id="standardView" method="post" action="<?php echo url_for('pim/deleteCustomFields') ?>">
-            
-            <?php 
+
+            <?php
             echo $deleteForm['_csrf_token'];
-            
+
             $fieldsInUse = count($listCustomField);
             $fieldsLeft = CustomField::MAX_FIELD_NUM - $fieldsInUse;
             $fieldsLeftMsg = '';
@@ -106,20 +106,20 @@
                 <p id="listActions">
                     <input type="hidden" name="mode" id="mode" value=""></input>  
 
-                    <?php if ($fieldsLeft > 0 ) { ?>                
+                    <?php if ($fieldsLeft > 0) { ?>                
                         <input type="button" class="" id="buttonAdd" value="<?php echo __("Add") ?>" />
                     <?php } ?>
                     <input type="button" class="delete" id="buttonRemove" value="<?php echo __('Delete'); ?>"/>
-                    <span id="fieldsleft"><?php echo $fieldsLeftMsg;?></span>
+                    <span id="fieldsleft"><?php echo $fieldsLeftMsg; ?></span>
                 </p>
             </fieldset>
-            
+
             <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="customFieldList">
                 <thead>
                     <tr>
                         <th class="check" width="2%">
                             <?php if ($fieldsInUse > 0) { ?>
-                            <input type="checkbox" class="checkbox" name="allCheck" value="" id="allCheck" />
+                                <input type="checkbox" class="checkbox" name="allCheck" value="" id="allCheck" />
                             <?php } ?>
                         </th>
 
@@ -145,7 +145,7 @@
                     foreach ($listCustomField as $customField) {
                         $cssClass = ($row % 2) ? 'even' : 'odd';
                         $row = $row + 1;
-                        $fieldNum = $customField->getFieldNum(); 
+                        $fieldNum = $customField->getFieldNum();
                         ?>
                         <tr class="<?php echo $cssClass ?>">
                             <td class="check">
@@ -155,30 +155,30 @@
                                 <a href="#"><?php echo $customField->getName() ?></a>                                
                             </td>
                             <td>
-                                <?php 
+                                <?php
                                 $screenId = $customField->getScreen();
                                 echo isset($screens[$screenId]) ? $screens[$screenId] : $screenId;
                                 ?>
-                                <input type="hidden" id="screen_<?php echo $fieldNum;?>" value="<?php echo $screenId;?>"/>
+                                <input type="hidden" id="screen_<?php echo $fieldNum; ?>" value="<?php echo $screenId; ?>"/>
                             </td>
                             <td>
-                                <?php 
+                                <?php
                                 $type = $customField->getType();
                                 $typeDesc = isset($fieldTypes[$type]) ? $fieldTypes[$type] : $type;
                                 echo $typeDesc;
                                 ?>
-                                <input type="hidden" id="type_<?php echo $fieldNum;?>" value="<?php echo $type;?>"/>
-                                <input type="hidden" id="extra_data_<?php echo $fieldNum;?>" value="<?php echo $customField->getExtraData();?>"/>
+                                <input type="hidden" id="type_<?php echo $fieldNum; ?>" value="<?php echo $type; ?>"/>
+                                <input type="hidden" id="extra_data_<?php echo $fieldNum; ?>" value="<?php echo $customField->getExtraData(); ?>"/>
                             </td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
-            
+
         </form>
-        
+
     </div>
-                
+
 </div> <!-- End of list -->
 
 <!-- Confirmation box HTML: Begins -->
@@ -220,30 +220,40 @@
         hideextra();
 
         function hideextra() {
-            if ($('#customField_type').val() == <?php echo CustomField::FIELD_TYPE_SELECT;?>) {
+            if ($('#customField_type').val() == <?php echo CustomField::FIELD_TYPE_SELECT; ?>) {
                 $('#selectOptions').show();
             } else {
                 $('#selectOptions').hide();
             }
         }   
+        
+        $("#buttonRemove").attr('disabled', 'disabled');
 
         // When Click Main Tick box
         $("#allCheck").click(function() {
-            if ($('#allCheck').attr('checked')){
-			
+            if ($('#allCheck').attr('checked')){			
                 $('.innercheckbox').attr('checked','checked');
-            }else{
+                $("#buttonRemove").removeAttr('disabled');
+            } else{
                 $('.innercheckbox').removeAttr('checked');
+                $("#buttonRemove").attr('disabled', 'disabled');
             }
         });
 
         $(".innercheckbox").click(function() {
             if($(this).attr('checked'))
             {
-			
+                $("#buttonRemove").removeAttr('disabled');	
             }else
             {
                 $('#allCheck').removeAttr('checked');
+                $("#buttonRemove").attr('disabled', 'disabled');
+            }
+            
+            if($(".innercheckbox").is(':checked')) {
+                $('#buttonRemove').removeAttr('disabled');
+            } else {
+                $('#buttonRemove').attr('disabled','disabled');
             }
         });
 
@@ -269,6 +279,7 @@
                     }
                 });
                 
+                $('#deleteConfModal').modal();
                 return false;
             }
         });
@@ -278,122 +289,122 @@
             $("#standardView").submit();
         });
 	  	
-    /* Valid From Date */
-    $.validator.addMethod("validateExtra", function(value, element) {
+        /* Valid From Date */
+        $.validator.addMethod("validateExtra", function(value, element) {
 
-        if ($('#customField_type').val() == <?php echo CustomField::FIELD_TYPE_SELECT;?>) {
-            var extraVal = $.trim($('#customField_extra_data').val());
-            var len = extraVal.length;
-            if (len == 0) {
-                return false;
-            }            
-        }
-        return true;
-    });
-    
-    //form validation
-    var formValidator =
-        $("#frmCustomField").validate({
-        rules: {
-            'customField[name]': {required: true},
-            'customField[type]': {required: true},
-            'customField[screen]': {required: true},
-            'customField[extra_data]': {validateExtra: true}
-        },
-        messages: {
-            'customField[name]': {required: '<?php echo __(ValidationMessages::REQUIRED);?>'},
-            'customField[type]': {required: '<?php echo __(ValidationMessages::REQUIRED);?>'},
-            'customField[screen]': {required: '<?php echo __(ValidationMessages::REQUIRED);?>'},
-            'customField[extra_data]' : {validateExtra: '<?php echo __(ValidationMessages::REQUIRED);?>'}
-        }
-    });
-    
-    $('#customField_type').change(function() {
-        hideextra();        
-    });    
-    
-    function clearAddForm() {
-        $('#customField_field_num').val('');
-        $('#customField_name').val('');
-        $('#customField_type').val('');
-        $('#customField_screen').val('');
-        $('#customField_extra_data').val('');
-        $('div#customFieldAddPane label.error').hide();
-        $('div#messagebar').text('').attr('class', '');            
-    }
-
-    function addEditLinks() {
-        removeEditLinks();
-        $('#customFieldList tbody td.fieldName').wrapInner('<a href="#"/>');
-    }
-
-    function removeEditLinks() {
-        $('#customFieldList tbody td.fieldName a').each(function(index) {
-            $(this).parent().text($(this).text());
+            if ($('#customField_type').val() == <?php echo CustomField::FIELD_TYPE_SELECT; ?>) {
+                var extraVal = $.trim($('#customField_extra_data').val());
+                var len = extraVal.length;
+                if (len == 0) {
+                    return false;
+                }            
+            }
+            return true;
         });
-    }
     
-    $('#btnCancel').click(function() {
-        clearAddForm();
-        $('#customFieldAddPane').css('display', 'none');
-        $('#listActions').show();
-        $('#customFieldList .check').show();
-        addEditLinks();
-        $('div#messagebar').text('').attr('class', '');            
-        $(".paddingLeftRequired").hide();
+        //form validation
+        var formValidator =
+            $("#frmCustomField").validate({
+            rules: {
+                'customField[name]': {required: true},
+                'customField[type]': {required: true},
+                'customField[screen]': {required: true},
+                'customField[extra_data]': {validateExtra: true}
+            },
+            messages: {
+                'customField[name]': {required: '<?php echo __(ValidationMessages::REQUIRED); ?>'},
+                'customField[type]': {required: '<?php echo __(ValidationMessages::REQUIRED); ?>'},
+                'customField[screen]': {required: '<?php echo __(ValidationMessages::REQUIRED); ?>'},
+                'customField[extra_data]' : {validateExtra: '<?php echo __(ValidationMessages::REQUIRED); ?>'}
+            }
+        });
+    
+        $('#customField_type').change(function() {
+            hideextra();        
+        });    
+    
+        function clearAddForm() {
+            $('#customField_field_num').val('');
+            $('#customField_name').val('');
+            $('#customField_type').val('');
+            $('#customField_screen').val('');
+            $('#customField_extra_data').val('');
+            $('div#customFieldAddPane label.error').hide();
+            $('div#messagebar').text('').attr('class', '');            
+        }
 
-        $('div.error').each(function(){
-            $(this).hide();
+        function addEditLinks() {
+            removeEditLinks();
+            $('#customFieldList tbody td.fieldName').wrapInner('<a href="#"/>');
+        }
+
+        function removeEditLinks() {
+            $('#customFieldList tbody td.fieldName a').each(function(index) {
+                $(this).parent().text($(this).text());
+            });
+        }
+    
+        $('#btnCancel').click(function() {
+            clearAddForm();
+            $('#customFieldAddPane').css('display', 'none');
+            $('#listActions').show();
+            $('#customFieldList .check').show();
+            addEditLinks();
+            $('div#messagebar').text('').attr('class', '');            
+            $(".paddingLeftRequired").hide();
+
+            $('div.error').each(function(){
+                $(this).hide();
+            });
+
         });
 
-    });
+        // Add a emergency contact
+        $('#buttonAdd').click(function() {
+            $("#heading").text("<?php echo __("Add Custom Field"); ?>");
+            clearAddForm();
 
-    // Add a emergency contact
-    $('#buttonAdd').click(function() {
-        $("#heading").text("<?php echo __("Add Custom Field");?>");
-        clearAddForm();
-
-        // Hide list action buttons and checkbox
-        $('#listActions').hide();
-        $('#customFieldList .check').hide();
-        removeEditLinks();
-        $('div#messagebar').text('').attr('class', '');            
+            // Hide list action buttons and checkbox
+            $('#listActions').hide();
+            $('#customFieldList .check').hide();
+            removeEditLinks();
+            $('div#messagebar').text('').attr('class', '');            
         
-        hideextra();
+            hideextra();
 
-        //
-        //            // hide validation error messages
-        //            $("label.errortd[generated='true']").css('display', 'none');
-        $('#customFieldAddPane').css('display', 'block');
+            //
+            //            // hide validation error messages
+            //            $("label.errortd[generated='true']").css('display', 'none');
+            $('#customFieldAddPane').css('display', 'block');
 
-    });        
+        });        
     
-    $('#customFieldList tbody a').live('click', function() {
-        $("#heading").text("<?php echo __("Edit Custom Field");?>");
+        $('#customFieldList tbody a').live('click', function() {
+            $("#heading").text("<?php echo __("Edit Custom Field"); ?>");
         
-        var row = $(this).closest("tr");
-        var fieldNo = row.find('input.checkbox:first').val();
-        var name = $(this).text();
-        var type = $("#type_" + fieldNo).val();
-        var screen = $("#screen_" + fieldNo).val();
-        var extraData = $("#extra_data_" + fieldNo).val();
+            var row = $(this).closest("tr");
+            var fieldNo = row.find('input.checkbox:first').val();
+            var name = $(this).text();
+            var type = $("#type_" + fieldNo).val();
+            var screen = $("#screen_" + fieldNo).val();
+            var extraData = $("#extra_data_" + fieldNo).val();
 
-        $('#customField_field_num').val(fieldNo);
-        $('#customField_name').val(name);
-        $('#customField_type').val(type);
-        $('#customField_screen').val(screen);
-        $('#customField_extra_data').val(extraData);
+            $('#customField_field_num').val(fieldNo);
+            $('#customField_name').val(name);
+            $('#customField_type').val(type);
+            $('#customField_screen').val(screen);
+            $('#customField_extra_data').val(extraData);
 
 
-        $('div#messagebar').text('').attr('class', '');            
-        hideextra();
-        // hide validation error messages
+            $('div#messagebar').text('').attr('class', '');            
+            hideextra();
+            // hide validation error messages
 
-        $('#listActions').hide();
-        $('#customFieldList .check').hide();
-        $('#customFieldAddPane').css('display', 'block');
+            $('#listActions').hide();
+            $('#customFieldList .check').hide();
+            $('#customFieldAddPane').css('display', 'block');
 
-    });
+        });
 
         $('#btnSave').click(function() {
             $('#frmCustomField').submit();
