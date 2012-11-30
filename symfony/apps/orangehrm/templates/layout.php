@@ -9,6 +9,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
     <?php include_http_metas() ?>
     <?php include_metas() ?>
     <?php include_title() ?>
+        <link href="<?php echo theme_path('images/favicon.ico')?>" rel="icon" type="image/gif"/>
         
 	<link href="<?php echo public_path('../../themes/orange/css/style.css')?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo public_path('../../themes/orange/css/layout.css')?>" rel="stylesheet" type="text/css"/>
