@@ -30,10 +30,18 @@ foreach ($messageTypes as $messageType) :
         $flashName = $prefix . '.' . $messageType;
     }    
     
-    if ($sf_user->hasFlash($flashName)) : 
+    $cssClass = $messageType;
+    $message = null;
+    if ($sf_user->hasFlash($flashName)) {
+        $message = $sf_user->getFlash($flashName);
+        $cssClass .= ' fadable';
+    } else if ($sf_user->hasFlash($flashName . '.nofade')) {
+        $message = $sf_user->getFlash($flashName. '.nofade');
+    }
+    if (!is_null($message)) : 
 ?>
-<div class="message <?php echo $messageType;?> fadable">
-    <?php echo $sf_user->getFlash($flashName);?>
+<div class="message <?php echo $cssClass;?>">
+    <?php echo $message;?>
     <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
 </div>
 <?php
