@@ -895,16 +895,16 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->exactly(2))
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
 
         // Apply, $allowNoEntitlements = false 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, 'Apply');
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates);
         $this->assertTrue(!$results);
 
         // Assign, $allowNoEntitlements = true 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates,  'Assign', true);
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates, true);
         $expected = array('current' => array(), 'change' => array());
         $this->assertEquals($expected, $results);
     }
@@ -942,12 +942,12 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
 
         // Apply, $allowNoEntitlements = false 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, 'Apply');
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates);
         $this->assertTrue(!$results);      
     }
     
@@ -984,12 +984,12 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
         
         // Assign, $allowNoEntitlements = true 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates,  'Assign', true);               
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates, true);               
         $this->assertTrue(is_array($results), $results);      
         
         $current = array('2012-09-11' => array(1 => 1));
@@ -1031,11 +1031,11 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, 'Apply');
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates);
         $this->assertTrue(!$results);      
     }    
     
@@ -1072,12 +1072,12 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
         
         // Assign, $allowNoEntitlements = true 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates,  'Assign', true);               
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates, true);               
         $this->assertTrue(is_array($results), $results);      
         
         $current = array('2012-09-12' => array(3 => 1));
@@ -1119,12 +1119,12 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-13', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-13', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
 
         // Apply, $allowNoEntitlements = false 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, 'Apply');
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates);
         $this->assertTrue(!$results);
 
     }    
@@ -1162,13 +1162,13 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-13', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-13', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
 
 
         // Assign, $allowNoEntitlements = true 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates,  'Assign', true);
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates, true);
         $current = array('2012-09-11' => array(6 => 1));
         $changes = array();
 
@@ -1206,12 +1206,12 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
 
         // Apply, $allowNoEntitlements = false 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, 'Apply');
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates);
 
         $expected = array('current' => array('2012-09-11' => array(6=>1), '2012-09-12' => array(6=>1)), 'change' => array());
         $this->assertEquals($expected, $results);
@@ -1250,15 +1250,19 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $mockService = $this->getMock('LeaveEntitlementService', array('getValidLeaveEntitlements'));
         $mockService->expects($this->once())
                 ->method('getValidLeaveEntitlements')
-                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'to_date', 'ASC')
+                ->with($empNumber, $leaveType, '2012-09-11', '2012-09-12', 'from_date', 'ASC')
                 ->will($this->returnValue($entitlements));
         $this->strategy->setLeaveEntitlementService($mockService);
 
         // Apply, $allowNoEntitlements = false 
-        $results = $this->strategy->handleLeaveStatusChange($empNumber, $leaveType, $leaveDates, 'Apply');
+        $results = $this->strategy->handleLeaveCreate($empNumber, $leaveType, $leaveDates);
         $expected = array('current' => array('2012-09-11' => array(6=>1), '2012-09-12' => array(6=>1)), 'change' => array());
         $this->assertEquals($expected, $results);
     }      
+    
+    public function testHandleLeaveCancel() {
+        
+    }
     
     /**
      * Verify entitlement results

@@ -23,18 +23,18 @@ abstract class PluginLeaveEntitlement extends BaseLeaveEntitlement
         }
         
         // Get other leaves
-        $allowedStatuses = array(
-                    Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL,
-                    Leave::LEAVE_STATUS_LEAVE_APPROVED);
-        
-        // TODO: Improve performance
-        $leaves = $this->getLeave();
-        foreach ($leaves as $leave) {
-            $status = $leave->getStatus();
-            if (in_array($status, $allowedStatuses)) {
-                $available -= $leave->getLengthDays();
-            }
-        }
+//        $allowedStatuses = array(
+//                    Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL,
+//                    Leave::LEAVE_STATUS_LEAVE_APPROVED);
+//        
+//        // TODO: Improve performance
+//        $leaves = $this->getLeave();
+//        foreach ($leaves as $leave) {
+//            $status = $leave->getStatus();
+//            if (in_array($status, $allowedStatuses)) {
+//                $available -= $leave->getLengthDays();
+//            }
+//        }
         
         return $available;
     }

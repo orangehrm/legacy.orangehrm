@@ -267,4 +267,47 @@ class LeaveEntitlementDao extends BaseDao {
 
         return $balance;    
     }
+    
+    public function getEntitlementUsageForLeave($leaveId) {
+        try {
+            $conn = Doctrine_Manager::connection()->getDbh();
+            $query = "SELECT e.id, e.no_of_days, e.days_used, e.from_date, e.to_date, sum(lle.length_days) as length_days from ohrm_leave_entitlement e " . 
+                     "left join ohrm_leave_leave_entitlement lle on lle.entitlement_id = e.id where " . 
+                     "lle.leave_id = ? AND e.deleted = 0 group by e.id order by e.from_date ASC";
+            $statement = $conn->prepare($query);
+            $result = $statement->execute(array($leaveId));        
+
+            return $statement->fetchAll();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }
+        
+    }    
+    
+    public function getLeaveWithoutEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate) {
+        try {
+            //print_r("$empNumber, $leaveTypeId, $fromDate, $toDate");
+            $statusList = array(Leave::LEAVE_STATUS_LEAVE_REJECTED, Leave::LEAVE_STATUS_LEAVE_CANCELLED,
+                Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY);
+
+
+            $conn = Doctrine_Manager::connection()->getDbh();
+            $query = "select * from (select l.id, l.date, l.length_hours, l.length_days, l.status, l.leave_type_id, l.emp_number, " . 
+                     "l.length_days - sum(COALESCE(lle.length_days, 0)) as days_left " . 
+                     "from ohrm_leave l left join ohrm_leave_leave_entitlement lle on lle.leave_id = l.id " . 
+                     "where l.emp_number = ? and l.leave_type_id = ? and l.date >= ? and l.date <= ? and " .
+                     "l.status not in (" . implode(',', $statusList) . ") " .
+                     "group by l.id order by l.`date` ASC) as A where days_left > 0";
+            
+    
+    
+            $statement = $conn->prepare($query);
+            $result = $statement->execute(array($empNumber, $leaveTypeId, $fromDate, $toDate));        
+
+            return $statement->fetchAll();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }
+        
+    }    
 }

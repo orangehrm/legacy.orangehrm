@@ -139,7 +139,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
                     success: function(data) {
                         var balance = data.balance;
                         var asAtDate = data.asAtDate;
-                        var balanceDays = balance.entitled - balance.used - balance.scheduled - balance.pending;
+                        var balanceDays = balance.entitled - balance.used;
                         $('#applyleave_leaveBalance').text(balanceDays)
                             .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
                                 lang_details + '</a>');

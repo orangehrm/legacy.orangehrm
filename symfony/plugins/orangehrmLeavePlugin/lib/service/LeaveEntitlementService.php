@@ -121,5 +121,15 @@ class LeaveEntitlementService extends BaseService {
 
         return $this->getLeaveEntitlementDao()->getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date);
     }
+    
+    public function getEntitlementUsageForLeave($leaveId) {
+        return $this->getLeaveEntitlementDao()->getEntitlementUsageForLeave($leaveId);
+    }
+    
+    public function getLeaveWithoutEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate) {
+        return $this->getLeaveEntitlementDao()->getLeaveWithoutEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate);
+    }
+    
+    
 
 }

@@ -202,7 +202,8 @@ class LeaveRequestService extends BaseService {
     public function getEmployeeAllowedToApplyLeaveTypes(Employee $employee) {
 
         try {
-            $leaveEntitlementService    = $this->getLeaveEntitlementService();
+            $leaveEntitlementService    = $this->getLeaveEntitlementService();                $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();     
+
             $leaveTypeService           = $this->getLeaveTypeService();
 
             $leaveTypes     = $leaveTypeService->getLeaveTypeList();
@@ -565,7 +566,6 @@ class LeaveRequestService extends BaseService {
                 foreach ($approvalIds as $leaveId) {
                     $approvals[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
-                $this->_approveLeave($approvals, $changeComments);
                 $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments);
                 
 
@@ -616,6 +616,13 @@ class LeaveRequestService extends BaseService {
             $removeLinkedEntitlements = (($newState == Leave::LEAVE_STATUS_LEAVE_CANCELLED) || 
                     ($newState == Leave::LEAVE_STATUS_LEAVE_REJECTED));
             
+
+            $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();     
+            
+            if ($removeLinkedEntitlements) {                
+                $entitlementChanges = $strategy->handleLeaveCancel($leave);
+            }
+            
             $leave->setStatus($newState);
             
             if (!is_null($comments)) {
@@ -628,7 +635,7 @@ class LeaveRequestService extends BaseService {
             }
             
             $dao->changeLeaveStatus($leave, $entitlementChanges, $removeLinkedEntitlements);
-        }        
+        }                
     }
     
     private function _notifyLeaveStatusChange($eventType, $leaveList, $performerType, $performerId, $requestType) {
