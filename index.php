@@ -907,7 +907,7 @@ $menuObj->getJavascript($menu);
         </div>
 
         <div id="main-footer" style="clear:both;text-align:center;height:20px;">
-            <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 3.0-alpha.3 &copy; OrangeHRM Inc. 2005 - 2012 All rights reserved.
+            <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a> ver 3.0-alpha.5 &copy; OrangeHRM Inc. 2005 - 2012 All rights reserved.
         </div>
         <script type="text/javascript">
             //<![CDATA[

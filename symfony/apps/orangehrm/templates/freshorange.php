@@ -89,7 +89,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         </div> <!-- wrapper -->
         
         <div id="footer">
-            OrangeHRM ver 3.0-alpha.3 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
+            OrangeHRM ver 3.0-alpha.5 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
         </div> <!-- footer -->
  
         <script type="text/javascript">
