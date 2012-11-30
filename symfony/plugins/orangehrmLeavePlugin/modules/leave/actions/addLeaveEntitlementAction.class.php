@@ -180,8 +180,28 @@ class addLeaveEntitlementAction extends sfAction {
         if (isset($values['id'])) {
             $id = $values['id'];
             $leaveEntitlement = $this->getLeaveEntitlementService()->getLeaveEntitlement($id);
+            $leaveEntitlement->setNoOfDays($values['entitlement']);
         } else {
-            $leaveEntitlement = new LeaveEntitlement();  
+            if(LeavePeriodService::getLeavePeriodStatus()== LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
+                $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
+                $leaveEntitlementSearchParameterHolder->setEmpNumber($values['employee']['empId']);
+                $leaveEntitlementSearchParameterHolder->setFromDate($values['date']['from']);
+                $leaveEntitlementSearchParameterHolder->setLeaveTypeId($values['leave_type']);
+
+                $entitlementList = $this->getLeaveEntitlementService()->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
+                if(count($entitlementList) > 0){
+                    $leaveEntitlement = $entitlementList->getFirst();
+                    $newValue = $leaveEntitlement->getNoOfDays()+$values['entitlement'];
+                    $leaveEntitlement->setNoOfDays($newValue);
+                }else{
+                    $leaveEntitlement = new LeaveEntitlement(); 
+                    $leaveEntitlement->setNoOfDays($values['entitlement']);
+                }
+            }else{
+                $leaveEntitlement = new LeaveEntitlement(); 
+                $leaveEntitlement->setNoOfDays($values['entitlement']);
+            }
+            
             
             $leaveEntitlement->setEmpNumber($values['employee']['empId']);
             $leaveEntitlement->setLeaveTypeId($values['leave_type']);
@@ -198,7 +218,7 @@ class addLeaveEntitlementAction extends sfAction {
             $leaveEntitlement->setDeleted(0);            
         }
         
-        $leaveEntitlement->setNoOfDays($values['entitlement']);
+        
         $leaveEntitlement->setFromDate($values['date']['from']);
         $leaveEntitlement->setToDate($values['date']['to']);
 

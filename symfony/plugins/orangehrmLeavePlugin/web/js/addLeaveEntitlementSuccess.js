@@ -105,32 +105,36 @@ function toggleFilters(show) {
                     }
                 }
             } else {
-                var valid = $('#frmLeaveEntitlementAdd').valid();
-                    if (valid) {   
-                        var params = '';
-                        
-                        params = 'empId='+$('#entitlements_employee_empId').val()+'&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&ed='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
+                if(!($('#entitlements_id').val() > 0)){
+                    var valid = $('#frmLeaveEntitlementAdd').valid();
+                        if (valid) {   
+                            var params = '';
 
-                        $.ajax({
-                            type: 'GET',
-                            url: getEmployeeEntitlementUrl,
-                            data: params,
-                            dataType: 'json',
-                            success: function(data) {                
-                                if( !isNaN(data[0]) && parseInt(data[0])!=0 ){
-                                    $('ol#employee_entitlement_update').html(''); 
-                                    var html = '<span>Existing Entitlement value '+ data[0]+' will be updated to '+ data[1] +'</span>'
-                                    $('ol#employee_entitlement_update').append(html);
-                                    $('#employeeEntitlement').modal();
-                                }else{
-                                    $('#frmLeaveEntitlementAdd').submit();
+                            params = 'empId='+$('#entitlements_employee_empId').val()+'&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&ed='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
+
+                            $.ajax({
+                                type: 'GET',
+                                url: getEmployeeEntitlementUrl,
+                                data: params,
+                                dataType: 'json',
+                                success: function(data) {                
+                                    if( !isNaN(data[0]) && parseInt(data[0])!=0 ){
+                                        $('ol#employee_entitlement_update').html(''); 
+                                        var html = '<span>Existing Entitlement value '+ data[0]+' will be updated to '+ data[1] +'</span>'
+                                        $('ol#employee_entitlement_update').append(html);
+                                        $('#employeeEntitlement').modal();
+                                    }else{
+                                        $('#frmLeaveEntitlementAdd').submit();
+                                    }
+
                                 }
+                            });
 
-                            }
-                        });
-                        
+                        }
+
+                    }else{
+                        $('#frmLeaveEntitlementAdd').submit();
                     }
-                
             }
         });        
         
@@ -208,7 +212,13 @@ function toggleFilters(show) {
                     },
                     'entitlements[entitlement]': {
                         required: true,
-                        number: true
+                        number: true,
+                        remote: {
+                            url: validEntitlemnetUrl,
+                            data: {
+                                id: $('#entitlements_id').val()
+                            }
+                        }
                     }
                     
                 },
@@ -231,7 +241,8 @@ function toggleFilters(show) {
                     },
                     'entitlements[entitlement]': {
                         required: lang_required,
-                        number: lang_number
+                        number: lang_number,
+                        remote : lang_valid_entitlement
                     }                    
             }
 

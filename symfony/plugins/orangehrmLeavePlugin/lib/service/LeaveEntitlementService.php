@@ -66,27 +66,8 @@ class LeaveEntitlementService extends BaseService {
     }
     
     public function saveLeaveEntitlement(LeaveEntitlement $leaveEntitlement) {
-        
-        if(LeavePeriodService::getLeavePeriodStatus()== LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
-            
-            $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
-            $leaveEntitlementSearchParameterHolder->setEmpNumber($leaveEntitlement->getEmpNumber());
-            $leaveEntitlementSearchParameterHolder->setFromDate($leaveEntitlement->getFromDate());
-            $leaveEntitlementSearchParameterHolder->setLeaveTypeId($leaveEntitlement->getLeaveTypeId());
-            
-            $entitlementList = $this->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
-            if(count($entitlementList) > 0){
-                $existingLeaveEntitlement = $entitlementList->getFirst();
-                $newValue = $existingLeaveEntitlement->getNoOfDays()+$leaveEntitlement->getNoOfDays();
-                $existingLeaveEntitlement->setNoOfDays($newValue) ;
-                $savedLeaveEntitlement = $this->getLeaveEntitlementDao()->saveLeaveEntitlement($existingLeaveEntitlement);
-            }else{
-                $savedLeaveEntitlement  = $this->getLeaveEntitlementDao()->saveLeaveEntitlement($leaveEntitlement);
-            }
-        }else{
-            $savedLeaveEntitlement = $this->getLeaveEntitlementDao()->saveLeaveEntitlement($leaveEntitlement);
-        }
-        return $savedLeaveEntitlement;
+
+        return $this->getLeaveEntitlementDao()->saveLeaveEntitlement($leaveEntitlement);
     }
     
     public function deleteLeaveEntitlements($ids) {

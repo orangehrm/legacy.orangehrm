@@ -47,7 +47,11 @@ use_stylesheets_for_form($form);
         <h1><?php echo __($title);?></h1>
     </div>
     <div class="inner">
-        <?php include_partial('global/flash_messages'); ?>
+        <?php 
+        if (!$showResultTable) {
+            include_partial('global/flash_messages'); 
+        }
+        ?>
         <form id="search_form" name="frmLeaveEntitlementSearch" method="post" action="">
 
             <fieldset>                
