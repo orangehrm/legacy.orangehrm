@@ -47,7 +47,7 @@ class deleteLeaveEntitlementsAction extends sfAction {
                 $this->getLeaveEntitlementService()->deleteLeaveEntitlements($ids);
                 $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
             }catch(Exception $e){
-                $this->getUser()->setFlash('warning',$e->getMessage());
+                $this->getUser()->setFlash('warning.nofade',$e->getMessage());
             }
         } else {
             $this->getUser()->setFlash('warning', __(TopLevelMessages::SELECT_RECORDS));
