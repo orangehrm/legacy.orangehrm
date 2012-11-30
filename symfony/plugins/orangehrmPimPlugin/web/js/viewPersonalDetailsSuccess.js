@@ -48,7 +48,7 @@ $(document).ready(function() {
 
         if($("#btnSave").attr('value') == save) {
             if ($("#frmEmpPersonalDetails").valid()) {
-                $("#btnSave").val('Processing');
+                $("#btnSave").val(lang_processing);
             }
             $("#frmEmpPersonalDetails").submit();
         }
