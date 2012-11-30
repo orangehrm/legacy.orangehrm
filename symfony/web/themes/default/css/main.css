@@ -538,12 +538,6 @@ form ol li input[type=text] {
     height:16px;
 
 }
-form ol li input[type=checkbox] {
-    margin-left: 0;
-	width:auto;
-	border:none;
-    background-color: #F7F6F6;
-}
 form ol li input[type="file"] {
     margin-bottom: 12px;
 }
@@ -646,6 +640,22 @@ input.reset, input.cancel, input[type="reset"] {
 }
 input.delete {
 	background:#aa4935;
+}
+/* ------------- Checkbox & Radio universal styles ------------- */
+input[type=checkbox] {
+    margin: 3px 3px 0 0;
+    width: auto;
+	border: none;
+    padding: 0;
+}
+input[type=radio] {
+    margin: 3px 3px 0 0;
+	border: none;
+    padding: 0;
+    background: transparent;
+}
+input[type=radio]:disabled {
+    background: transparent;
 }
 /* ================ Form styles: End ================ */
 
