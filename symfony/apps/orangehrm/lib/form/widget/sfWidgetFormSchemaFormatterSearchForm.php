@@ -1,6 +1,6 @@
 <?php
 
-class sfWidgetFormSchemaFormatterListFields extends sfWidgetFormSchemaFormatter {
+class sfWidgetFormSchemaFormatterSearchForm extends sfWidgetFormSchemaFormatter {
 
     protected $rowFormat = "<li>%label%\n  %field%%help%\n%hidden_fields%%error%</li>\n";
     protected $errorRowFormat = "%errors%";

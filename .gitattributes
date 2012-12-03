@@ -525,7 +525,7 @@ symfony/apps/orangehrm/lib/form/widget/ohrmWidgetButton.php -text
 symfony/apps/orangehrm/lib/form/widget/ohrmWidgetCheckbox.php -text
 symfony/apps/orangehrm/lib/form/widget/ohrmWidgetDatePickerOld.php -text
 symfony/apps/orangehrm/lib/form/widget/sfWidgetFormSchemaFormatterBreakTags.php -text
-symfony/apps/orangehrm/lib/form/widget/sfWidgetFormSchemaFormatterListFields.php -text
+symfony/apps/orangehrm/lib/form/widget/sfWidgetFormSchemaFormatterSearchForm.php -text
 symfony/apps/orangehrm/lib/form/widget/sfWidgetFormSchemaFormatterSingleColumnForm.php -text
 symfony/apps/orangehrm/lib/helper/OrangeActionHelper.php -text
 symfony/apps/orangehrm/lib/helper/OrangeDateHelper.php -text
