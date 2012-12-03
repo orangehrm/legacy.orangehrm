@@ -110,8 +110,8 @@ class viewLeaveEntitlementsAction extends sfAction {
             }
         }
         $searchParameters->setLeaveTypeId($filters['leave_type']);
-        $searchParameters->setFromDate($filters['date_from']);
-        $searchParameters->setToDate($filters['date_to']);
+        $searchParameters->setFromDate($filters['date']['from']);
+        $searchParameters->setToDate($filters['date']['to']);
         return $searchParameters;
     }
     
