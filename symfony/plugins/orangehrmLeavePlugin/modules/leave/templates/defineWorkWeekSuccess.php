@@ -1,4 +1,3 @@
-*
 <?php use_javascripts_for_form($workWeekForm); ?>
 <?php use_stylesheets_for_form($workWeekForm); ?>
 
