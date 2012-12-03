@@ -3,6 +3,7 @@
 class sfWidgetFormSchemaFormatterDefault extends sfWidgetFormSchemaFormatter {
 
     protected $rowFormat = "<li>%label%\n  %field%%help%\n%hidden_fields%%error%</li>\n";
+    protected $textareaRowFormat = "<li class=\"largeTextBox\">%label%\n  %field%%help%\n%hidden_fields%%error%</li>\n";
     protected $errorRowFormat = "%errors%";
     protected $helpFormat = '<br />%help%';
     protected $decoratorFormat = "<form>\n  %content%</form>";
@@ -12,13 +13,23 @@ class sfWidgetFormSchemaFormatterDefault extends sfWidgetFormSchemaFormatter {
 
     public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null) {
         
-        return strtr($this->getRowFormat(), array(
+        return strtr($this->getRowFormat($field), array(
             '%label%' => $label,
             '%field%' => $field,
             '%error%' => $this->formatErrorsForRow($errors),
             '%help%' => $this->formatHelp($help),
             '%hidden_fields%' => null === $hiddenFields ? '%hidden_fields%' : $hiddenFields,
         ));
+        
+    }
+    
+    public function getRowFormat($field) {
+        
+        if (substr($field, 0, 9) == '<textarea') {
+            return $this->textareaRowFormat;
+        }
+        
+        return $this->rowFormat;
         
     }
 
