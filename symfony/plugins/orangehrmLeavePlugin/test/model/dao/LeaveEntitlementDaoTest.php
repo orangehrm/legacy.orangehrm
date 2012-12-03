@@ -522,16 +522,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $requests[0]->getId());
         $this->assertEquals(2, $requests[1]->getId());        
     }
-    
-/*
- *   0: {id: 1, leave_type_id: 1, emp_number: 1, no_of_days: 3, from_date: '2012-01-01 00:00:00', to_date: '2012-08-01 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
-  1: {id: 2, leave_type_id: 6, emp_number: 2, no_of_days: 4, days_used: 1, from_date: '2013-08-05 00:00:00', to_date: '2013-09-01 00:00:00', credited_date: '2013-01-06 00:00:00', note: '', entitlement_type: 1, deleted: 0}
-  2: {id: 3, leave_type_id: 2, emp_number: 1, no_of_days: 1, from_date: '2012-04-04 00:00:00', to_date: '2012-06-01 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
-  3: {id: 4, leave_type_id: 2, emp_number: 1, no_of_days: 2, from_date: '2012-05-05 00:00:00', to_date: '2012-08-01 00:00:00', credited_date: '2012-02-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
-  4: {id: 5, leave_type_id: 1, emp_number: 5, no_of_days: 5, from_date: '2012-06-06 00:00:00', to_date: '2012-09-01 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 1}
-  
-  
- */    
+     
     public function testMatchingEntitlementsNoMatches() {
         $empNumber = 1;
         $leaveTypeId = 1;
