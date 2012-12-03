@@ -70,8 +70,6 @@ class HolidayListSearchForm extends sfForm {
         ));
         
         $this->widgetSchema->setNameFormat('holidayList[%s]'); 
-        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
-        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
         
         $this->setDefaultDates();
     }    

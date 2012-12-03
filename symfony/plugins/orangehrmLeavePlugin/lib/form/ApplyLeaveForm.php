@@ -73,7 +73,7 @@ class ApplyLeaveForm extends sfForm {
 
         $this->getWidgetSchema()->setNameFormat('applyleave[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
+
     }
 
     /**

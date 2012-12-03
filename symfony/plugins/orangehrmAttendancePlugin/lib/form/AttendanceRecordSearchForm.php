@@ -45,7 +45,7 @@ class AttendanceRecordSearchForm extends sfForm {
         ));
 
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
+
     }
 
     /**

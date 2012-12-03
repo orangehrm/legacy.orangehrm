@@ -84,7 +84,7 @@ class LeaveEntitlementForm extends BaseForm {
   
         $this->widgetSchema->setNameFormat('entitlements[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
+
     }
 
     private function _setLeaveTypeWidget() {

@@ -69,7 +69,7 @@ class AssignLeaveForm extends sfForm {
 
         $this->getWidgetSchema()->setNameFormat('assignleave[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
+
     }
 
     /**

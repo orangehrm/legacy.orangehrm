@@ -87,7 +87,7 @@ class LeaveBalanceReportForm extends BaseForm {
   
         $this->widgetSchema->setNameFormat('leave_balance[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
+
     }
     
     private function _setLeaveTypeWidget() {

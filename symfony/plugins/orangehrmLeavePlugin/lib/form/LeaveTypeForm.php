@@ -51,7 +51,7 @@ class LeaveTypeForm extends orangehrmForm {
             'hdnLeaveTypeId' => new sfValidatorString(array('required' => false))          
         ));
         $this->widgetSchema->setNameFormat('leaveType[%s]');
-        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
+
     }
 
     public function setDefaultValues($leaveTypeId) {
