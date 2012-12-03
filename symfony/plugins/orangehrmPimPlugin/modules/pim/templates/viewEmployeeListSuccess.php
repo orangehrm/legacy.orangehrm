@@ -27,7 +27,9 @@
 
             <fieldset>
                 
-                <?php echo $form->render(); ?>
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>
                 
                 <input type="hidden" name="pageNo" id="pageNo" value="" />
                 <input type="hidden" name="hdnAction" id="hdnAction" value="search" />                 
