@@ -353,4 +353,36 @@ class LeaveEntitlementDao extends BaseDao {
         }
         
     }    
+    
+    /**
+     * Return any matching entitlements (with identical empNumber, leave type, from and to
+     * dates. 
+     * 
+     * @param int $empNumber Employee Number
+     * @param int $leaveTypeId Leave Type ID
+     * @param Date $fromDate From Date
+     * @param Date $toDate To Date
+     * 
+     * @return array Array of Entitlement objects. Empty array if no matches
+     */
+    public function getMatchingEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate) {
+        try {
+            $params = array(':leaveTypeId' => $leaveTypeId,
+                            ':empNumber' => $empNumber,
+                            ':fromDate' => $fromDate,
+                            ':toDate' => $toDate);
+            
+            $q = Doctrine_Query::create()->from('LeaveEntitlement le')
+                    ->addWhere('le.deleted = 0')
+                    ->addWhere('le.leave_type_id = :leaveTypeId')
+                    ->addWhere('le.emp_number = :empNumber')
+                    ->addWhere('le.from_date = :fromDate')
+                    ->addWhere('le.to_date = :toDate');
+
+            $results = $q->execute($params);
+            return $results;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }        
+    }
 }
