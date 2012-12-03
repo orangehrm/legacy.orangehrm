@@ -801,13 +801,13 @@ table.table td.comments img {
 	float:left;
 	margin:2px 0 0 2px;
 }
-table.tablesorter thead tr .header {
+table thead tr .header {
 	background-image: url(../images/tablesorter-bg.png);
 	background-repeat: no-repeat;
 	background-position: 95% 55%;
 	cursor: pointer;
 }
-table.tablesorter tbody tr.odd td, table tbody tr.odd td {
+table tbody tr.odd td, table tbody tr.odd td {
 	background-color:#eaeaea;
 }
 table tbody tr.total td {
@@ -822,10 +822,10 @@ table tbody tr.total td strong {
 	font-weight:bold;
 	color:#fff;
 }
-table.tablesorter thead tr .headerSortUp {
+table thead tr .headerSortUp {
 	background-image: url(../images/tablesorter-asc.png);
 }
-table.tablesorter thead tr .headerSortDown {
+table thead tr .headerSortDown {
 	background-image: url(../images/tablesorter-dsc.png);
 }
 table.table th.checkbox-col {
@@ -846,7 +846,7 @@ table tfoot tr.total td strong {
 	font-weight:bold;
 	color:#fff;
 }
-table.table td.hover, table.table tr.hover, table.tablesorter tbody tr.odd td.hover {
+table.table td.hover, table.table tr.hover, table tbody tr.odd td.hover {
 	background-color:#CCC;
 }
 /* ================ Table styles: End ================ */

@@ -129,7 +129,7 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                 include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'top'));
             }
         ?>
-        <table class="table tablesorter">
+        <table class="table hover">
             
                     <?php
                     

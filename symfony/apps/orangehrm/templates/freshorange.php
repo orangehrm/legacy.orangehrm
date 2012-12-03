@@ -97,7 +97,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
             $(document).ready(function() {
                 
                 /* Enabling hovering effect for table rows */
-                $('.table').tableHover();                
+                $('table.hover').tableHover();                
                 
                 /* Enabling tooltips */
                 $(".tiptip").tipTip();
