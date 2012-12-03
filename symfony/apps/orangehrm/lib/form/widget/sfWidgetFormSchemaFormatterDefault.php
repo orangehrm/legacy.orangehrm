@@ -2,13 +2,13 @@
 
 class sfWidgetFormSchemaFormatterDefault extends sfWidgetFormSchemaFormatter {
 
-    protected $rowFormat = "<li>%label%  %field%%help%\n%hidden_fields%</li> %error%\n";
-    protected $errorRowFormat = "<span>\n%errors%</span>\n";
+    protected $rowFormat = "<li>%label%\n  %field%%help%\n%hidden_fields%%error%</li>\n";
+    protected $errorRowFormat = "%errors%";
     protected $helpFormat = '<br />%help%';
     protected $decoratorFormat = "<form>\n  %content%</form>";
     protected $errorListFormatInARow = "%errors%";
     protected $errorRowFormatInARow  = "<span class='validation-error' generated='true'>%error%</span>\n";
-    protected $namedErrorRowFormatInARow = "    <li>%name%: %error%</li>\n";    
+    protected $namedErrorRowFormatInARow = "    <li>%name%: %error%</li>\n";
 
     public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null) {
         
@@ -23,4 +23,3 @@ class sfWidgetFormSchemaFormatterDefault extends sfWidgetFormSchemaFormatter {
     }
 
 }
-
