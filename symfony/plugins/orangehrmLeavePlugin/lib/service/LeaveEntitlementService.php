@@ -71,6 +71,9 @@ class LeaveEntitlementService extends BaseService {
     }
     
     public function deleteLeaveEntitlements($ids) {
+        
+        $deleted = 0;
+        
         $allDeleted = true;
         $avaliableToDeleteIds = array();
         $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
@@ -85,12 +88,14 @@ class LeaveEntitlementService extends BaseService {
             }
         }
         if(count($avaliableToDeleteIds) > 0){
-            $this->getLeaveEntitlementDao()->deleteLeaveEntitlements($avaliableToDeleteIds);
+            $deleted = $this->getLeaveEntitlementDao()->deleteLeaveEntitlements($avaliableToDeleteIds);
         }
         
         if(!$allDeleted){
             throw new Exception("Entitlement/s will not be deleted since it's already in use");
         }
+        
+        return $deleted;
             
     }    
     

@@ -72,11 +72,28 @@ class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
     public function testDeleteLeaveEntitlements() {
         $ids = array(2, 33, 12);
 
-        $mockDao = $this->getMock('LeaveEntitlementDao', array('deleteLeaveEntitlements'));
+        $leaveEntitlement1 = new LeaveEntitlement();
+        $leaveEntitlement1->fromArray(array('id' => 2, 'emp_number' => 1, 'no_of_days' => 3, 'days_used' => 0));
+        
+        $leaveEntitlement2 = new LeaveEntitlement();
+        $leaveEntitlement2->fromArray(array('id' => 33, 'emp_number' => 1, 'no_of_days' => 3, 'days_used' => 0));
+        
+        $leaveEntitlement3 = new LeaveEntitlement();
+        $leaveEntitlement3->fromArray(array('id' => 12, 'emp_number' => 1, 'no_of_days' => 3, 'days_used' => 0));   
+        
+        $leaveEntitlements = array($leaveEntitlement1, $leaveEntitlement2, $leaveEntitlement3);
+        
+        
+        $mockDao = $this->getMock('LeaveEntitlementDao', array('deleteLeaveEntitlements', 'searchLeaveEntitlements'));
         $mockDao->expects($this->once())
                     ->method('deleteLeaveEntitlements')
                     ->with($ids)
                     ->will($this->returnValue(count($ids)));
+        
+        $mockDao->expects($this->once())
+                    ->method('searchLeaveEntitlements')
+                    ->will($this->returnValue($leaveEntitlements));
+        
 
         $this->service->setLeaveEntitlementDao($mockDao);
         $result = $this->service->deleteLeaveEntitlements($ids);      
