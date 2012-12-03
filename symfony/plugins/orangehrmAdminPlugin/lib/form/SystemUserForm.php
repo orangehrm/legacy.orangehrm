@@ -78,7 +78,6 @@ class SystemUserForm extends BaseForm {
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'saveSystemUser', 'SystemUserForm');
 
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 
     private function setDefaultValues($locationId) {

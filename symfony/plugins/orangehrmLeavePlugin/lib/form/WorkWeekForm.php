@@ -77,7 +77,6 @@ class WorkWeekForm extends sfForm {
 
         $this->validatorSchema->setPostValidator(new sfValidatorCallback(array('callback' => array($this, 'validateWorkWeekValue'))));
         
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 
     /**

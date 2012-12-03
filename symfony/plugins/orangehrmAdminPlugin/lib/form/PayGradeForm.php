@@ -62,7 +62,7 @@ class PayGradeForm extends BaseForm {
 			$this->setDefaultValues($this->payGradeId);
 		}
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
+
 	}
 
 	private function setDefaultValues($payGradeId) {

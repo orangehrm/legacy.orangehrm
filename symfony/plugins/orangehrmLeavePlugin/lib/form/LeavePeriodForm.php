@@ -36,7 +36,7 @@ class LeavePeriodForm extends sfForm {
 
         $this->widgetSchema->setNameFormat('leaveperiod[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
+
     }
     
      /**

@@ -86,7 +86,7 @@ class EmployeeLanguageForm extends sfForm {
         
         $this->widgetSchema->setNameFormat('language[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');        
+       
     }
     
     /**

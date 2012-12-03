@@ -73,7 +73,7 @@ class EmployeeLicenseForm extends sfForm {
         $this->widgetSchema->setNameFormat('license[%s]');
         
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
+
     }
     
     /**

@@ -58,7 +58,6 @@ class SaveReviewForm extends BaseForm {
         $this->__setDefaultValues();
         
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
         $this->widgetSchema->setNameFormat('saveReview[%s]');
     }
      

@@ -45,8 +45,6 @@ class ChangeUserPasswordForm extends BaseForm {
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'changeUserPassword', 'ChangeUserPasswordForm');
 
-        sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
     }
 
     /**

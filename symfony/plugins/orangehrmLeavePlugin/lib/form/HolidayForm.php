@@ -35,7 +35,7 @@ class HolidayForm extends sfForm {
 
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
         $this->getWidgetSchema()->setNameFormat('holiday[%s]');
-        $this->getWidgetSchema()->setFormFormatterName('SingleColumnForm');
+
     }
 
     /**
