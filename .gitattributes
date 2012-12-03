@@ -5309,7 +5309,9 @@ symfony/web/themes/default/images/sub-nav-arrow-s.png -text
 symfony/web/themes/default/images/sub-nav-arrow.png -text
 symfony/web/themes/default/images/sub-nav.png -text
 symfony/web/themes/default/images/success-btn.png -text
+symfony/web/themes/default/images/tablesorter-asc.png -text
 symfony/web/themes/default/images/tablesorter-bg.png -text
+symfony/web/themes/default/images/tablesorter-dsc.png -text
 symfony/web/themes/default/images/toggle-down.png -text
 symfony/web/themes/default/images/toggle-up.png -text
 symfony/web/themes/default/images/top-nav-selected.png -text

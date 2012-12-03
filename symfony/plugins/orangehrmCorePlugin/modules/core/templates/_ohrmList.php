@@ -56,6 +56,27 @@ function printButtonEventBindings($buttons) {
         }
     }
 }
+
+function getHeaderCellClassHtml($isSortable, $sortOrder) {
+    
+    if ($isSortable) {
+        
+        $headerCellClassHtml = ' class="header"';
+    
+        if ($sortOrder == 'ASC') {
+            $headerCellClassHtml = ' class="header headerSortUp"';
+        } elseif ($sortOrder == 'DESC') {
+            $headerCellClassHtml = ' class="header headerSortDown"';
+        }
+        
+        return $headerCellClassHtml;
+    
+    }
+    
+    return '';
+    
+}                            
+
 ?>
 <div class="box noHeader" id="search-results">
     
@@ -184,7 +205,7 @@ function printButtonEventBindings($buttons) {
                                 );
                             }
                             
-                            $headerCellClassHtml = $header->isSortable()?' class="header"':'';
+                            $headerCellClassHtml = getHeaderCellClassHtml($header->isSortable(), $sortOrderStyle);
                             $headerCellHtml = '<th rowspan="' . $rowspan . '" style="width:' . $header->getWidth() . '"' . $headerCellClassHtml . '>' . $headerCell->__toString() . "</th>\n";                            
                             
                             if ($group->showHeader()) {
