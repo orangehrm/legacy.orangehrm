@@ -34,7 +34,9 @@
             
             <fieldset>
               
-                <?php echo $form->render(); ?> 
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>
                 
                 <p>
                     <input type="button" id="btnSrch" value="<?php echo __("Search") ?>" name="btnSrch" />

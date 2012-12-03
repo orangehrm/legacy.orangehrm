@@ -55,7 +55,9 @@ use_stylesheets_for_form($form);
         <form id="search_form" name="frmLeaveEntitlementSearch" method="post" action="">
 
             <fieldset>                
-                <?php echo $form->render(); ?>
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>
                 
                 <p>
                     <input type="button" id="searchBtn" value="<?php echo __("Search") ?>" name="_search" />

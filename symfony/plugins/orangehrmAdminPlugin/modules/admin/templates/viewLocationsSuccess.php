@@ -15,7 +15,9 @@ use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess');
 
             <fieldset>
                 
-                <?php echo $form->render(); ?>
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>
                 
                 <p>
                     <input type="button" class="addbutton" name="btnSave" id="btnSearch" value="<?php echo __("Search"); ?>" title="<?php echo __("Search"); ?>"/>
