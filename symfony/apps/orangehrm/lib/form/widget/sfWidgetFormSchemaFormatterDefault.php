@@ -1,6 +1,6 @@
 <?php
 
-class sfWidgetFormSchemaFormatterSingleColumnForm extends sfWidgetFormSchemaFormatter {
+class sfWidgetFormSchemaFormatterDefault extends sfWidgetFormSchemaFormatter {
 
     protected $rowFormat = "<li>%label%  %field%%help%\n%hidden_fields%</li> %error%\n";
     protected $errorRowFormat = "<span>\n%errors%</span>\n";

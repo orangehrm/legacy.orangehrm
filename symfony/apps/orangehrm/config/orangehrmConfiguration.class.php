@@ -4,6 +4,7 @@ class orangehrmConfiguration extends sfApplicationConfiguration
 {
   public function configure() {
       ProjectConfiguration::getActive()->loadHelpers(array('I18N', 'OrangeDate', 'Orange', 'Url'));
+      sfWidgetFormSchema::setDefaultFormFormatterName('Default');
   }
   
   /**
