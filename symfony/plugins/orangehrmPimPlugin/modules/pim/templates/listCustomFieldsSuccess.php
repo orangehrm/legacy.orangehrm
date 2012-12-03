@@ -114,22 +114,22 @@
                 </p>
             </fieldset>
 
-            <table width="100%" cellspacing="0" cellpadding="0" class="table hover" id="customFieldList">
+            <table class="table hover" id="customFieldList">
                 <thead>
                     <tr>
-                        <th class="check" width="2%">
+                        <th class="check" style="width:2%">
                             <?php if ($fieldsInUse > 0) { ?>
                                 <input type="checkbox" class="checkbox" name="allCheck" value="" id="allCheck" />
                             <?php } ?>
                         </th>
 
-                        <th class="fieldName" width="35%">
+                        <th class="fieldName" style="width:35%">
                             <?php echo $sorter->sortLink('name', __('Custom Field Name'), '@customfield_list', ESC_RAW); ?>
                         </th>  	  
-                        <th width="35%">
+                        <th style="width:35%">
                             <?php echo $sorter->sortLink('screen', __('Screen'), '@customfield_list', ESC_RAW); ?>
                         </th>
-                        <th width="28%">
+                        <th style="width:28%">
                             <?php echo $sorter->sortLink('type', __('Field Type'), '@customfield_list', ESC_RAW); ?>
                         </th>
 

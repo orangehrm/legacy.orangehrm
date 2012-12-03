@@ -82,11 +82,11 @@ use_javascript('../orangehrmAdminPlugin/js/viewLicensesSuccess');
                 <input type="button" class="delete" id="btnDel" value="<?php echo __('Delete'); ?>"/>
             </p>
 
-            <table width="100%" cellspacing="0" cellpadding="0" class="table hover" id="recordsListTable">
+            <table class="table hover" id="recordsListTable">
                 <thead>
                     <tr>
-                        <th class="check" width="2%"><input type="checkbox" id="checkAll" class="checkboxAtch" /></th>
-                        <th width="98%"><?php echo __('Name'); ?></th>
+                        <th class="check" style="width:2%"><input type="checkbox" id="checkAll" class="checkboxAtch" /></th>
+                        <th style="width:98%"><?php echo __('Name'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,10 +100,10 @@ use_javascript('../orangehrmAdminPlugin/js/viewLicensesSuccess');
                     ?>
                     
                     <tr class="<?php echo $cssClass;?>">
-                        <td class="check" width="2%">
+                        <td class="check" style="width:2%">
                             <input type="checkbox" class="checkboxAtch" name="chkListRecord[]" value="<?php echo $record->getId(); ?>" />
                         </td>
-                        <td class="tdName tdValue" width="98%">
+                        <td class="tdName tdValue" style="width:98%">
                             <a href="#"><?php echo $record->getName(); ?></a>
                         </td>
                     </tr>

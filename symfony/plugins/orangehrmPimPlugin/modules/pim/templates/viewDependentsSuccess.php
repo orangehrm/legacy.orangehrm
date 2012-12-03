@@ -105,10 +105,10 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                     <input type="button" class="delete" id="delDependentBtn" value="<?php echo __("Delete"); ?>"/>
                     <?php } ?>
                 </p>
-                <table id="dependent_list" cellpadding="0" cellspacing="0" width="100%" class="table hover">
+                <table id="dependent_list" class="table hover">
                     <thead>
                         <tr>
-                            <th class="check" width="2%"><input type='checkbox' id='checkAll' class="checkbox" /></th>
+                            <th class="check" style="width:2%"><input type='checkbox' id='checkAll' class="checkbox" /></th>
                             <th class="dependentName"><?php echo __("Name"); ?></th>
                             <th><?php echo __("Relationship"); ?></th>
                             <th><?php echo __("Date of Birth"); ?></th>

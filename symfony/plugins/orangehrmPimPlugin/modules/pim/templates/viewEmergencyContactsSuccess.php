@@ -110,11 +110,11 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                     <?php } ?>
                 </p>
                 
-                <table id="emgcontact_list" cellpadding="0" cellspacing="0" width="100%" class="table hover">
+                <table id="emgcontact_list" class="table hover">
                     <thead>
                         <tr>
                             <?php if ($emergencyContactPermissions->canDelete()) { ?>
-                            <th class="check" width="2%"><input type='checkbox' id='checkAll'/></th>
+                            <th class="check" style="width:2%"><input type='checkbox' id='checkAll'/></th>
                             <?php }?>
                             <th class="emgContactName"><?php echo __("Name"); ?></th>
                             <th><?php echo __("Relationship"); ?></th>

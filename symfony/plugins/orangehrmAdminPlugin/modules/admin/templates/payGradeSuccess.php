@@ -121,13 +121,13 @@ use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess');
                 <?php } ?>
             </p>
             
-            <table width="100%" cellspacing="0" cellpadding="0" class="table hover" id="tblCurrencies">
+            <table class="table hover" id="tblCurrencies">
                 <thead>
                     <tr>
-                        <th class="check" width="2%"><input type="checkbox" id="currencyCheckAll" class="checkboxCurr"/></th>
-                        <th width="40%"><?php echo __("Currency") ?></th>
-                        <th width="34%"><?php echo __("Minimum Salary") ?></th>
-                        <th width="34%"><?php echo __("Maximum Salary") ?></th>
+                        <th class="check" style="width:2%"><input type="checkbox" id="currencyCheckAll" class="checkboxCurr"/></th>
+                        <th style="width:40%"><?php echo __("Currency") ?></th>
+                        <th style="width:34%"><?php echo __("Minimum Salary") ?></th>
+                        <th style="width:34%"><?php echo __("Maximum Salary") ?></th>
                     </tr>
                 </thead>
                 <tbody>

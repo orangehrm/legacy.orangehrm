@@ -41,12 +41,12 @@ use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet');
     
     <div class="inner">
         <form action="<?php echo url_for("time/viewPendingApprovelTimesheet"); ?>" id="viewTimesheetForm" method="post" >        
-            <table  border="0" cellpadding="5" cellspacing="0" width="100%" class="table">
+            <table class="table">
                 <thead>
                     <tr>
-                        <th id="tablehead" width="40%"><?php echo __('Employee name'); ?></th>
-                        <th id="tablehead" width="54%"><?php echo __('Timesheet Period'); ?></th>
-                        <th width="6%"></th>
+                        <th id="tablehead" style="width:40%"><?php echo __('Employee name'); ?></th>
+                        <th id="tablehead" style="width:54%"><?php echo __('Timesheet Period'); ?></th>
+                        <th style="width:6%"></th>
                     </tr>
                 </thead>
                 <tbody>

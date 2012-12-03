@@ -119,11 +119,11 @@
                     <input type="button" value="<?php echo __("Delete"); ?>" class="delete" id="delSalary" />
                     <?php } ?>
                 </p>
-                <table id="tblSalary" cellpadding="0" cellspacing="0" width="100%" class="table hover">
+                <table id="tblSalary" class="table hover">
                     <thead>
                         <tr>
                             <?php if ($salaryPermissions->canDelete()) { ?>
-                            <th class="check" width="2%"><input type="checkbox" id="salaryCheckAll" /></th>
+                            <th class="check" style="width:2%"><input type="checkbox" id="salaryCheckAll" /></th>
                             <?php } ?>
                             <th class="component"><?php echo __('Salary Component'); ?></th>
                             <th class="payperiod"><?php echo __('Pay Frequency'); ?></th>
@@ -219,7 +219,7 @@
                                 <tr class="directDepositRow" style="display:none;">
                                     <td colspan="<?php echo $essUserMode ? '6' : '7'?>" class="<?php echo $cssClass; ?>" >
                                         <span class="directDepositHeading"><h3><?php echo __("Direct Deposit Details"); ?></h3></span>
-                                        <table cellspacing="0" cellpadding="0" border="0" class="table hover" width="60%">
+                                        <table class="table hover" style="width:60%">
                                             <thead>
                                                 <tr>
                                                     <th><?php echo __("Account Number"); ?></th>

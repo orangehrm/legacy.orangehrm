@@ -104,11 +104,11 @@ $havePassports = $numContacts>0;
                     <input type="button" class="delete" id="btnDelete" value="<?php echo __("Delete"); ?>" />
                     <?php } ?>
                 </p>
-                <table id="" cellpadding="0" cellspacing="0" width="100%" class="table hover">
+                <table id="" class="table hover">
                     <thead>
                         <tr>
                             <?php if ($immigrationPermission->canDelete()) { ?>
-                            <th class="check" width="2%"><input type="checkbox" id="immigrationCheckAll" class="checkbox"/></th>
+                            <th class="check" style="width:2%"><input type="checkbox" id="immigrationCheckAll" class="checkbox"/></th>
                             <?php } ?>
                             <th><?php echo __('Document'); ?></th>
                             <th><?php echo __('Document No'); ?></th>

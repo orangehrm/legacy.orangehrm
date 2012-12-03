@@ -110,11 +110,11 @@ $allowEdit = true;
                             <input type="button" class="delete" id="delSupBtn" value="<?php echo __("Delete"); ?>" />
                             <?php } ?>
                         </p>
-                        <table id="sup_list" cellpadding="0" cellspacing="0" width="100%" class="table hover">
+                        <table id="sup_list" class="table hover">
                             <thead>
                                 <tr>
                                     <?php if ($reportToSupervisorPermission->canDelete()) { ?>
-                                    <th class="check" width="2%"><input type='checkbox' id='checkAllSup' class="checkboxSup" /></th>
+                                    <th class="check" style="width:2%"><input type='checkbox' id='checkAllSup' class="checkboxSup" /></th>
                                     <?php }?>
                                     <th class="supName"><?php echo __("Name"); ?></th>
                                     <th class="supReportMethod"><?php echo __("Reporting Method"); ?></th>
@@ -197,11 +197,11 @@ $allowEdit = true;
                             <input type="button" class="delete" id="delSubBtn" value="<?php echo __("Delete"); ?>"/>
                             <?php } ?>
                         </p>
-                        <table id="sub_list" cellpadding="0" cellspacing="0" width="100%" class="table hover">
+                        <table id="sub_list" class="table hover">
                             <thead>
                                 <tr>
                                     <?php if ($reportToSubordinatePermission->canDelete()) { ?>
-                                    <th class="check" width="2%"><input type='checkbox' id='checkAllSub' class="checkboxSub" /></th>
+                                    <th class="check" style="width:2%"><input type='checkbox' id='checkAllSub' class="checkboxSub" /></th>
                                     <?php } ?>
                                     <th class="subName"><?php echo __("Name"); ?></th>
                                     <th class="subReportMethod"><?php echo __("Reporting Method"); ?></th>

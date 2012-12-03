@@ -125,11 +125,11 @@ $allowEdit = true;
                             <input type="button" class="delete" id="delMemsBtn" value="<?php echo __("Delete"); ?>" />
                         <?php } ?>
                     </p>
-                    <table id="" cellpadding="0" cellspacing="0" width="100%" class="table hover">
+                    <table id="" class="table hover">
                         <thead>
                             <tr>
                                 <?php if ($membershipPermissions->canDelete()) { ?>
-                                <th class="check" width="2%"><input type='checkbox' id='checkAllMem' class="checkboxMem" /></th>
+                                <th class="check" style="width:2%"><input type='checkbox' id='checkAllMem' class="checkboxMem" /></th>
                                 <?php } else {?>
                                 <input type='hidden' class='checkboxMem' id='checkAllMem' />
                                 <?php } ?>

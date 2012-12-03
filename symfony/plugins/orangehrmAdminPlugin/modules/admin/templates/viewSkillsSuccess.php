@@ -87,12 +87,12 @@ use_javascript('../orangehrmAdminPlugin/js/viewSkillsSuccess');
                 <input type="button" class="delete" id="btnDel" value="<?php echo __('Delete'); ?>"/>
             </p>
             
-            <table width="100%" cellspacing="0" cellpadding="0" class="table hover" id="recordsListTable">
+            <table class="table hover" id="recordsListTable">
                 <thead>
                     <tr>
-                        <th class="check" width="2%"><input type="checkbox" id="checkAll" class="checkboxAtch" /></td>
-                        <th width="40%"><?php echo __('Name'); ?></td>
-                        <th width="58%"><?php echo __('Description'); ?></td>
+                        <th class="check" style="width:2%"><input type="checkbox" id="checkAll" class="checkboxAtch" /></td>
+                        <th style="width:40%"><?php echo __('Name'); ?></td>
+                        <th style="width:58%"><?php echo __('Description'); ?></td>
                     </tr>
                 </thead>
                 <tbody>

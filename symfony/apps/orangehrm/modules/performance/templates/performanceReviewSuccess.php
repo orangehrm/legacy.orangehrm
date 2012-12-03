@@ -43,9 +43,9 @@
                         <label><?php echo __("Notes") ?></label>
                         <table>
                             <tr>
-                                <td width="100px"><?php echo __("Date") ?></td>
-                                <td width="150px"><?php echo __("Employee") ?></td>
-                                <td width="350px"><?php echo __("Comment") ?></td>
+                                <td style="width:100px"><?php echo __("Date") ?></td>
+                                <td style="width:150px"><?php echo __("Employee") ?></td>
+                                <td style="width:350px"><?php echo __("Comment") ?></td>
                             </tr>
                             <?php foreach ($performanceReview->getPerformanceReviewComment() as $comment) { ?>
                             <tr>
@@ -62,14 +62,14 @@
             </fieldset>
             <input type="hidden" name="validRate" id="validRate" value="1" />
             
-            <table cellpadding="0" cellspacing="0" width="100%" class="table">
+            <table class="table">
                 <thead>
                     <tr>
-                        <th width="40%" scope="col"><?php echo __("Key Performance Indicator") ?></th>
-                        <th scope="col" width="10%"><?php echo __("Min Rate") ?></th>
-                        <th scope="col" width="10%"><?php echo __("Max Rate") ?></th>
-                        <th scope="col" width="10%"><?php echo __("Rating") ?></th>
-                        <th scope="col" width="30%"><?php echo __("Reviewer Comments") ?></th>
+                        <th style="width:40%" scope="col"><?php echo __("Key Performance Indicator") ?></th>
+                        <th scope="col" style="width:10%"><?php echo __("Min Rate") ?></th>
+                        <th scope="col" style="width:10%"><?php echo __("Max Rate") ?></th>
+                        <th scope="col" style="width:10%"><?php echo __("Rating") ?></th>
+                        <th scope="col" style="width:30%"><?php echo __("Reviewer Comments") ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,7 +102,7 @@
             <?php if (($isHrAdmin || $isReviwer) && 
                     ($performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)) { ?>
             <p>
-                <label width="40%"><?php echo __("Note") ?></label>
+                <label style="width:40%"><?php echo __("Note") ?></label>
                 <textarea id='txtMainComment' name='txtMainComment' class="formTextArea" rows="4" cols="60" ></textarea>
             </p>                    
             <?php } ?>
