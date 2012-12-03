@@ -75,7 +75,7 @@
                                 value="<?php echo __('Copy')?>" tabindex="4" />
 	                        <?php }?>
                         </div>
-                        <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                        <table cellpadding="0" cellspacing="0" width="100%" class="table hover">
                             <thead>
                                 <tr>
                                     <th width="2%" class="tdcheckbox">

@@ -110,7 +110,7 @@ $allowEdit = true;
                             <input type="button" class="delete" id="delSupBtn" value="<?php echo __("Delete"); ?>" />
                             <?php } ?>
                         </p>
-                        <table id="sup_list" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                        <table id="sup_list" cellpadding="0" cellspacing="0" width="100%" class="table hover">
                             <thead>
                                 <tr>
                                     <?php if ($reportToSupervisorPermission->canDelete()) { ?>
@@ -197,7 +197,7 @@ $allowEdit = true;
                             <input type="button" class="delete" id="delSubBtn" value="<?php echo __("Delete"); ?>"/>
                             <?php } ?>
                         </p>
-                        <table id="sub_list" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                        <table id="sub_list" cellpadding="0" cellspacing="0" width="100%" class="table hover">
                             <thead>
                                 <tr>
                                     <?php if ($reportToSubordinatePermission->canDelete()) { ?>

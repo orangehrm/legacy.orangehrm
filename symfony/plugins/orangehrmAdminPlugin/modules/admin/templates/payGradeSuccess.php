@@ -121,7 +121,7 @@ use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess');
                 <?php } ?>
             </p>
             
-            <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="tblCurrencies">
+            <table width="100%" cellspacing="0" cellpadding="0" class="table hover" id="tblCurrencies">
                 <thead>
                     <tr>
                         <th class="check" width="2%"><input type="checkbox" id="currencyCheckAll" class="checkboxCurr"/></th>

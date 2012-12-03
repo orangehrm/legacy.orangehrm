@@ -110,7 +110,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
                     <?php } ?>
                 </p>
                 
-                <table id="emgcontact_list" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                <table id="emgcontact_list" cellpadding="0" cellspacing="0" width="100%" class="table hover">
                     <thead>
                         <tr>
                             <?php if ($emergencyContactPermissions->canDelete()) { ?>

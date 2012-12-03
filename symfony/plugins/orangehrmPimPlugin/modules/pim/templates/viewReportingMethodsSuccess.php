@@ -87,7 +87,7 @@
                 
             </fieldset>
             
-            <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="recordsListTable">
+            <table width="100%" cellspacing="0" cellpadding="0" class="table hover" id="recordsListTable">
                 <thead>
                     <tr>
                         <th class="check" width="2%"><input type="checkbox" id="checkAll" class="checkbox" /></th>

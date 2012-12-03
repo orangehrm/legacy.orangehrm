@@ -125,7 +125,7 @@ $allowEdit = true;
                             <input type="button" class="delete" id="delMemsBtn" value="<?php echo __("Delete"); ?>" />
                         <?php } ?>
                     </p>
-                    <table id="" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                    <table id="" cellpadding="0" cellspacing="0" width="100%" class="table hover">
                         <thead>
                             <tr>
                                 <?php if ($membershipPermissions->canDelete()) { ?>

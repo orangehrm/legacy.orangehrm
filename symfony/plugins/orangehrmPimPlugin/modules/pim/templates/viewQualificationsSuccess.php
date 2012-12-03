@@ -108,7 +108,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                         <input type="button" value="<?php echo __("Delete");?>" class="delete" id="delWorkExperience" />
                         <?php } ?>
                     </p>
-                    <table id="" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                    <table id="" cellpadding="0" cellspacing="0" width="100%" class="table hover">
                         <thead>
                             <tr>
                                 <?php if ($workExperiencePermissions->canDelete()) { ?>

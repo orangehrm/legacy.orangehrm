@@ -114,7 +114,7 @@
                 </p>
             </fieldset>
 
-            <table width="100%" cellspacing="0" cellpadding="0" class="table tablesorter" id="customFieldList">
+            <table width="100%" cellspacing="0" cellpadding="0" class="table hover" id="customFieldList">
                 <thead>
                     <tr>
                         <th class="check" width="2%">
