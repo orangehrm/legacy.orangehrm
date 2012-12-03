@@ -92,6 +92,7 @@ class addLeaveEntitlementAction extends sfAction {
                 
                 $bulkFilter = $this->form->getValue('filters');
                 if (!isset($bulkFilter['bulk_assign'])) {
+                    
                     $leaveEntitlement = $this->getLeaveEntitlementService()->saveLeaveEntitlement($leaveEntitlement);
                     
                     $eventType = $this->addMode ? LeaveEvents::ENTITLEMENT_ADD : LeaveEvents::ENTITLEMENT_UPDATE;
@@ -183,14 +184,16 @@ class addLeaveEntitlementAction extends sfAction {
             $leaveEntitlement->setNoOfDays($values['entitlement']);
         } else {
             if(LeavePeriodService::getLeavePeriodStatus()== LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
-                $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
-                $leaveEntitlementSearchParameterHolder->setEmpNumber($values['employee']['empId']);
-                $leaveEntitlementSearchParameterHolder->setFromDate($values['date']['from']);
-                $leaveEntitlementSearchParameterHolder->setLeaveTypeId($values['leave_type']);
+                $empNumber = $values['employee']['empId'];
+                $fromDate = $values['date']['from'];
+                $toDate = $values['date']['to'];
+                $leaveTypeId = $values['leave_type'];
 
-                $entitlementList = $this->getLeaveEntitlementService()->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
+                $entitlementList = $this->getLeaveEntitlementService()->getMatchingEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate);                               
+       
                 if(count($entitlementList) > 0){
                     $leaveEntitlement = $entitlementList->getFirst();
+
                     $newValue = $leaveEntitlement->getNoOfDays()+$values['entitlement'];
                     $leaveEntitlement->setNoOfDays($newValue);
                 }else{

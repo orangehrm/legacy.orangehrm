@@ -110,7 +110,7 @@ function toggleFilters(show) {
                         if (valid) {   
                             var params = '';
 
-                            params = 'empId='+$('#entitlements_employee_empId').val()+'&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&ed='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
+                            params = 'empId='+$('#entitlements_employee_empId').val()+'&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&td='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
 
                             $.ajax({
                                 type: 'GET',
