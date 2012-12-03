@@ -118,5 +118,25 @@ class LeaveEntitlementServiceTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($leaveEntitlement, $result);
     }
 
+    public function testGetMatchingEntitlements() {
+
+        $leaveEntitlements = TestDataService::loadObjectList('LeaveEntitlement', $this->fixture, 'LeaveEntitlement');
+        $leaveEntitlement = $leaveEntitlements[0];
+        $empNumber = $leaveEntitlement->getEmpNumber();
+        $leaveTypeId = $leaveEntitlement->getLeaveTypeId();
+        $fromDate = $leaveEntitlement->getFromDate();
+        $toDate = $leaveEntitlement->getToDate();
+        
+        $mockDao = $this->getMock('LeaveEntitlementDao', array('getMatchingEntitlements'));
+        $mockDao->expects($this->once())
+                ->method('getMatchingEntitlements')
+                ->with($empNumber, $leaveTypeId, $fromDate, $toDate)
+                ->will($this->returnValue($leaveEntitlement));
+
+        $this->service->setLeaveEntitlementDao($mockDao);
+        $result = $this->service->getMatchingEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate);
+
+        $this->assertEquals($leaveEntitlement, $result);        
+    }
     
 }
