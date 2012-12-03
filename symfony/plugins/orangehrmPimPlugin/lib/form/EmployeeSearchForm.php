@@ -78,7 +78,7 @@ class EmployeeSearchForm extends BaseForm {
         
         $this->widgetSchema->setNameFormat('empsearch[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('ListFields');
+        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
 
     }
 

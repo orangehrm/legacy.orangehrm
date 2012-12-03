@@ -130,7 +130,7 @@ class LeaveListForm extends sfForm {
         
         $this->getWidgetSchema()->setNameFormat('leaveList[%s]');
         sfWidgetFormSchemaFormatterBreakTags::setNoOfColumns(1);
-        $this->getWidgetSchema()->setFormFormatterName('ListFields');  
+        $this->getWidgetSchema()->setFormFormatterName('SearchForm');  
         
         // Validate that if both from and to date are given, form date is before to date.
         $this->getValidatorSchema()->setPostValidator(

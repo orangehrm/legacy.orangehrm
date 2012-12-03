@@ -53,7 +53,7 @@ class LeaveEntitlementBulkAssignFilterForm extends BaseForm {
         $formExtension->mergeForms($this, 'viewLeaveEntitlements', 'LeaveEntitlementBulkAssignFilterForm');
 
         $this->widgetSchema->setNameFormat('entitlement_filter[%s]');
-        $this->getWidgetSchema()->setFormFormatterName('ListFields');
+        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
     }
 
 }

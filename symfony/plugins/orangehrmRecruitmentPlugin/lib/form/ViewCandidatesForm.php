@@ -133,7 +133,7 @@ class viewCandidatesForm extends BaseForm {
         ));
         $this->widgetSchema->setNameFormat('candidateSearch[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
-        $this->getWidgetSchema()->setFormFormatterName('ListFields');
+        $this->getWidgetSchema()->setFormFormatterName('SearchForm');
     }
 
     /**
