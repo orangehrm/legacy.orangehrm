@@ -926,13 +926,14 @@ form ol li.largeTextBox span.validation-error {
 form ol li.fieldHelpContainer span.validation-error {
     top:33px;
 }
-.searchForm form ol li span.validation-error { /* Check the usage */
+.searchForm form ol li span.validation-error {
     font-size: 12px;
     color: #aa4935;
     display:block;
     float:left;
-    /*z-index:9999;*/
     margin-top: 1px;
+    top: 42px;
+    left: 0;
 }
 .score { /* Used for password strength indicator */
     float:left; 
