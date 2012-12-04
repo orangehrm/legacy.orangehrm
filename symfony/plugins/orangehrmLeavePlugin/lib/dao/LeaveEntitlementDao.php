@@ -112,6 +112,7 @@ class LeaveEntitlementDao extends BaseDao {
         $conn->beginTransaction();  
         
         try {
+            $leaveEntitlement->save();            
             $balance = $leaveEntitlement->getNoOfDays() - $leaveEntitlement->getDaysUsed();
             $entitlementId = $leaveEntitlement->getId();
             
@@ -150,7 +151,6 @@ class LeaveEntitlementDao extends BaseDao {
                 }
             }
             
-            $leaveEntitlement->save();
             $conn->commit();            
             return $leaveEntitlement;
         } catch (Exception $e) {
