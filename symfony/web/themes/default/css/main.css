@@ -932,7 +932,7 @@ form ol li.fieldHelpContainer span.validation-error {
     display:block;
     float:left;
     margin-top: 1px;
-    top: 42px;
+    top: 44px;
     left: 0;
 }
 .score { /* Used for password strength indicator */
