@@ -62,12 +62,14 @@ class addLeaveEntitlementAction extends sfAction {
             'sub_unit' => $parameters['subunit']);
 
         $parameterHolder->setFilters($filters);
+        $parameterHolder->setLimit(NULL);
         $employees = $this->getEmployeeService()->searchEmployees($parameterHolder);
 
         $ids = array();
         foreach($employees as $employee) {
             $ids[] = $employee->getEmpNumber();
         }
+        
         return $ids;
     }
     

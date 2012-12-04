@@ -44,6 +44,7 @@ class getFilteredEmployeesAjaxAction  extends sfAction {
             'sub_unit' => $parameters['subunit']);
 
         $parameterHolder->setFilters($filters);
+        $parameterHolder->setLimit(NULL);
         $employees = $this->getEmployeeService()->searchEmployees($parameterHolder);
 
 
