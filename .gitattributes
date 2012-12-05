@@ -34,6 +34,7 @@ devDocs/sample_report_definition.xml -text
 devTools/custom_rhino.jar -text
 devTools/general/ReadMe-reset-installation.txt -text
 devTools/general/create-test-db.php -text
+devTools/general/drop-all-tables.php -text
 devTools/general/reinstall.php -text
 devTools/general/reset-installation.php -text
 devTools/installer/SOURCE/content/license.txt -text
