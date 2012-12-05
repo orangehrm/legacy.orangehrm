@@ -55,8 +55,9 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
 
     $this->addOption('from_label_template', "<label for='%from_id%' class='date_range_label'>%from_label%</label>");
     $this->addOption('to_label_template', "<label>&nbsp;</label><label for='%to_id%' class='date_range_label'>%to_label%</label>");
-    
-    $this->addOption('template', '%from_label% %from_date% </li><li>%to_label% %to_date%');
+    $this->addOption('use_separate_containers', true);
+    $this->addOption('container_separator', '</li><li>');
+    $this->addOption('template', '%from_label% %from_date% %container_separator%%to_label% %to_date%');
     
 
   }    
@@ -110,12 +111,18 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
         ));
 
     }    
+    
+    $containerSeparator = '';
+    if ($this->getOption('use_separate_containers')) {
+        $containerSeparator = $this->getOption('container_separator');
+    }
 
     return strtr($this->translate($this->getOption('template')), array(
       '%from_label%' => $fromLabelHtml,
       '%to_label%' => $toLabelHtml,
       '%from_date%' => $fromWidget->render($name.'[from]', $value['from']),
       '%to_date%' => $toWidget->render($name.'[to]', $value['to']),
+      '%container_separator%' => $containerSeparator,
     ));
   }  
 }
