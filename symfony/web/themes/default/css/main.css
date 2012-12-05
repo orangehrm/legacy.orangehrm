@@ -937,6 +937,9 @@ form ol li.fieldHelpContainer span.validation-error {
     top: 44px;
     left: 0;
 }
+ul.error_list li { /* For Symfony form errors. Used in PIM Define Reports */
+    color: #aa4935;
+}
 .score { /* Used for password strength indicator */
     float:left; 
     margin-left:5px; 

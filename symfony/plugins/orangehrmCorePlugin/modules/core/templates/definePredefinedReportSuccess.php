@@ -190,7 +190,7 @@ use_javascript('orangehrm.datepicker.js');
         }
         
         .error_list li {
-            margin-left: 220px;
+            margin-left: 240px;
         }
 
         .box a {
@@ -204,6 +204,10 @@ use_javascript('orangehrm.datepicker.js');
         
         #display_field_selection label, #name_fieldset label, #criteria_selection label {
             width: 240px !important;
+        }
+        
+        form ol li span.validation-error {
+            left: 240px;
         }
         
         #li_include label {
@@ -246,44 +250,6 @@ use_javascript('orangehrm.datepicker.js');
     <script type="text/javascript">
     $(document).ready(function() {
 
-        var rDate = trim($("#joined_date_from").val());
-
-            if (rDate == '') {
-                $("#joined_date_from").val(datepickerDateFormat);
-            }
-
-        //Bind date picker
-        daymarker.bindElement("#joined_date_from",
-        {
-            onSelect: function(date){
-
-            },
-            dateFormat : datepickerDateFormat
-        });
-
-        $('#joined_date_from_Button').click(function(){
-            daymarker.show("#joined_date_from");
-    });
-
-        var rDate = trim($("#joined_date_to").val());
-            if (rDate == '') {
-                $("#joined_date_to").val(datepickerDateFormat);
-            }
-
-        //Bind date picker
-        daymarker.bindElement("#joined_date_to",
-        {
-            onSelect: function(date){
-
-            },
-            dateFormat : datepickerDateFormat
-        });
-
-        $('#joined_date_to_Button').click(function(){
-            daymarker.show("#joined_date_to");
-    });
-
-           
         $('#filter_fields_inactive').find(':input').attr('disabled', 'disabled');
     
         // update display fields
@@ -509,7 +475,7 @@ use_javascript('orangehrm.datepicker.js');
                 'report[report_name]': '<?php echo __(ValidationMessages::REQUIRED);?>',
                 'display_fields[]': '<?php echo __(ValidationMessages::REQUIRED);?>'
             },
-            errorElement : 'div',
+            errorElement : 'span',
             errorPlacement: function(error, element) {
                 var elementId = element.attr('id');
                 
