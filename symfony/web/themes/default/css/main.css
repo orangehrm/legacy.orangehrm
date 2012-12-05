@@ -697,12 +697,13 @@ input[type=radio]:disabled {
     display: block;
     float: left;
 }
-form ol li label.date_range_label {
+.searchForm form ol li label.date_range_label {
     width:auto;
     margin-left:  0px;
     margin-right: 10px;
     clear: both;
 }
+
 form ol li label.time_range_label {
     width:auto;
     margin-left: 20px;
