@@ -13,6 +13,11 @@
 class definePredefinedReportAction extends sfAction {
 
     public function execute($request) {
+        
+        /* For highlighting corresponding menu item 
+         * TODO: Currently menu item is hard-coded since this action is only used by PIM Reports
+         */
+        $request->setParameter('initialActionName', 'viewDefinedPredefinedReports');
 
         $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
 
