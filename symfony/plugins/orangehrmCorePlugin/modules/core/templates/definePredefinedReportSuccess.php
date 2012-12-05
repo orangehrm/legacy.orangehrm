@@ -1,5 +1,5 @@
 <?php
-stylesheet_tag(theme_path('css/orangehrm.datepicker.css'));
+echo stylesheet_tag(theme_path('css/orangehrm.datepicker.css'));
 use_javascript('orangehrm.datepicker.js');
 ?>
 <div class="box single">
@@ -233,8 +233,11 @@ use_javascript('orangehrm.datepicker.js');
         input[type="checkbox"] {
             width: 14px;
         }
-
         
+        #joined_date_from, #joined_date_to {
+            margin-left: 20px;
+        }
+
     </style>
     <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
