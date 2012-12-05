@@ -699,8 +699,9 @@ input[type=radio]:disabled {
 }
 form ol li label.date_range_label {
     width:auto;
-    margin-left: 20px;
+    margin-left:  0px;
     margin-right: 10px;
+    clear: both;
 }
 form ol li label.time_range_label {
     width:auto;

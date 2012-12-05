@@ -101,11 +101,13 @@ class viewCandidatesForm extends BaseForm {
             'candidateName' => new sfWidgetFormInputText(),
             'selectedCandidate' => new sfWidgetFormInputHidden(),
             'keywords' => new sfWidgetFormInputText(),
-            'modeOfApplication' => new sfWidgetFormSelect(array('choices' => $modeOfApplication)),
             'dateApplication' => new ohrmWidgetFormDateRange(array(  
                     'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'candidateSearch_fromDate')),  
-                    'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'candidateSearch_toDate'))
+                    'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'candidateSearch_toDate')),
+                    'from_label' => 'From',
+                    'to_label' => 'To'
                 )),
+            'modeOfApplication' => new sfWidgetFormSelect(array('choices' => $modeOfApplication)),            
 //            'fromDate' => new ohrmWidgetDatePicker(array(), array('id' => 'candidateSearch_fromDate')),
 //            'toDate' => new ohrmWidgetDatePicker(array(), array('id' => 'candidateSearch_toDate'))
         ));

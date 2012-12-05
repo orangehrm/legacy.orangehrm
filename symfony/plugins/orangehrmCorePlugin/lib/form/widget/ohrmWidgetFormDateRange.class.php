@@ -54,9 +54,9 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
     $this->addOption('to_label', 'to');
 
     $this->addOption('from_label_template', "<label for='%from_id%' class='date_range_label'>%from_label%</label>");
-    $this->addOption('to_label_template', "<label for='%to_id%' class='date_range_label'>%to_label%</label>");
+    $this->addOption('to_label_template', "<label>&nbsp;</label><label for='%to_id%' class='date_range_label'>%to_label%</label>");
     
-    $this->addOption('template', '%from_label% %from_date% %to_label% %to_date%');
+    $this->addOption('template', '%from_label% %from_date% </li><li>%to_label% %to_date%');
     
 
   }    
@@ -94,7 +94,7 @@ class ohrmWidgetFormDateRange extends sfWidgetFormDateRange {
     if (!empty($fromLabel)) {
         
        
-        $fromLabelHtml = strstr($this->getOption('from_label_template'), array(
+        $fromLabelHtml = strtr($this->getOption('from_label_template'), array(
             '%from_id%' => $fromId,
             '%from_label%' => $this->translate($fromLabel)
         ));

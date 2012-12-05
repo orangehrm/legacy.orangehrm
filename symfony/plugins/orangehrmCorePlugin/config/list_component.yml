@@ -170,8 +170,6 @@ Candidate:
   formMethod: post
   formAction: 'index.php/recruitment/deleteCandidateVacancies'
   assets:
-    - viewCandidatesSuccess.js
-    - viewCandidatesSuccess.css
   jsInitMethods: []
 
 JobVacancy:
