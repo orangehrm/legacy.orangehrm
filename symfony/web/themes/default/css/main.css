@@ -548,11 +548,6 @@ form ol li input.calendar {
 form ol li input:disabled, form ol li select:disabled,  form ol li textarea:disabled {
     background-color: #DDD;
 }
-form ol li.checkbox label {
-	display:block;
-	margin:0 0 10px 0;
-	width:40%;
-}
 form ol li.line {
 	width:100%;
 }
@@ -578,8 +573,14 @@ form ol li.required em {
 form ol li label em {
 	color:#aa4935;
 }
+form ol li.helpText { /* Used in Recruitment > Add Job Vacancy */
+	float:left;
+	margin-top:9px;
+	color:#a9a9a9;
+	font-size:11px;
+}
 /* ------------- Checkbox styles ------------- */
-form ol li.checkbox input { /* TODO: Check for usage. There is already form ol li input[type=checkbox] */
+form ol li.checkbox input { /* Used in Admin > Localization */
 	width:auto;
 	border:none;
 }
@@ -587,6 +588,14 @@ form ol li.checkbox label {
 	display:inline;
 	margin-right:25px;
 	line-height:20px;
+    width:90%;
+}
+form ol li.labelRight {
+    padding-left: 150px;
+}
+form ol li.labelRight label {
+    width:90%;
+    line-height:20px;
 }
 /* ------------- Radio styles ------------- */
 form ol li.radio input {

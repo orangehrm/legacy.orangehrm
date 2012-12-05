@@ -62,24 +62,24 @@ use_javascript('../orangehrmRecruitmentPlugin/js/addJobVacancySuccess');
                         <?php echo $form['status']->renderLabel(__('Active')); ?>
                         <?php echo $form['status']->render(); ?>
                     </li>
-
+                    <!-- TODO: See whether this div is used in any addon
                     <li><div class="publishJobVacancySeparator">&nbsp;</div></li>
-                    <li>
-                        <?php echo $form['publishedInFeed']->renderLabel(__('Publish in RSS feed(<em>1</em>) and web page(<em>2</em>)')); ?>
+                    -->
+                    <li class="labelRight">
                         <?php echo $form['publishedInFeed']->render(); ?>
-                    </li>
-                    <li>
-                        <?php include_component('core', 'ohrmPluginPannel', array('location' => 'add_layout_before_navigation_bar_1')) ?>
+                        <?php echo $form['publishedInFeed']->renderLabel(__('Publish in RSS feed(1) and web page(2)')); ?>
                     </li>
 
-                    <li class="required" style="clear: both">
+                    <?php include_component('core', 'ohrmPluginPannel', array('location' => 'add_layout_before_navigation_bar_1')) ?>
+
+                    <li class="required">
                         <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
-                    <li class="required" style="clear: both; width: 100%">
-                        <em>1</em> : <?php echo __('RSS Feed URL') ?> : <?php echo link_to(null, 'recruitmentApply/jobs.rss', array('absolute' => true, 'target' => '_new')); ?>
+                    <li class="helpText">
+                        1 : <?php echo __('RSS Feed URL') ?> : <?php echo link_to(null, 'recruitmentApply/jobs.rss', array('absolute' => true, 'target' => '_new')); ?>
                     </li>
-                    <li class="required" style="clear: both; width: 100%">
-                        <em>2</em> : <?php echo __('Web Page URL') ?> : <?php echo link_to(null, 'recruitmentApply/jobs.html', array('absolute' => true, 'target' => '_new')); ?>
+                    <li class="helpText">
+                        2 : <?php echo __('Web Page URL') ?> : <?php echo link_to(null, 'recruitmentApply/jobs.html', array('absolute' => true, 'target' => '_new')); ?>
                     </li>
                 </ol>
                 <p>
