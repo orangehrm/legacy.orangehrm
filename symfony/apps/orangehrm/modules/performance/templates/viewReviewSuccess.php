@@ -26,7 +26,7 @@ $formatData['newSeparater'] = '/';
                             <label for="txtPeriodFromDate"><?php echo __('From') ?> </label>
                             <?php
                             $fromDate = new ohrmWIdgetDatePicker(array(), array('id' => 'txtPeriodFromDate'));
-                            echo $fromDate->render();
+                            echo $fromDate->render('txtPeriodFromDate', $clues['from']);
                             ?>
                         </li>
 
@@ -34,7 +34,7 @@ $formatData['newSeparater'] = '/';
                             <label for="txtPeriodToDate"><?php echo __('To') ?> </label>
                             <?php
                             $toDate = new ohrmWIdgetDatePicker(array(), array('id' => 'txtPeriodToDate'));
-                            echo $toDate->render();
+                            echo $toDate->render('txtPeriodToDate', $clues['to']);
                             ?>
                         </li>
 
