@@ -4,6 +4,11 @@ var item = 0;
 var vacancyId;
 $(document).ready(function() {
     isValidForm();
+    
+    if ($('#frmList_ohrmListComponent .top').html(' ')) { 
+        $('#frmList_ohrmListComponent .top').remove();
+    }
+    
     vacancyId = $('#addCandidate_vacancy').val();
     if(candidateStatus != activeStatus) {
         $("#btnSave").attr('disabled', 'disabled');
