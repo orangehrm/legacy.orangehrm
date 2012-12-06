@@ -238,8 +238,11 @@ use_javascript('orangehrm.datepicker.js');
             width: 14px;
         }
         
-        #joined_date_from, #joined_date_to {
+        #joined_date_from, #joined_date_to, #age_group_value1, #age_group_value2, #service_period_value1, #service_period_value2 {
             margin-left: 20px;
+        }
+        #age_group_value1, #age_group_value2, #service_period_value1, #service_period_value2 {
+            width: 192px;
         }
 
     </style>
