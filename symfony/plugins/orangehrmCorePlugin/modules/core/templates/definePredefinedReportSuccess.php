@@ -80,7 +80,7 @@ use_javascript('orangehrm.datepicker.js');
                     if (!in_array($filterName, $requiredFilterNames)) {
                     
                         $formField = $form[$filterName];
-                        echo "<li id='li_" . $filterName . "' ><a href='#'>X</a>" . $formField->renderLabel() .
+                        echo "<li id='li_" . $filterName . "' ><a href=\"#\" class=\"closeText\">X</a>" . $formField->renderLabel() .
                         $formField->render() .
                         $formField->renderError() .
                         "</li>";
@@ -137,7 +137,7 @@ use_javascript('orangehrm.datepicker.js');
                         $groupAttrs = array('checked' => 'checked');
                     }
                 ?>
-                    <li <?php echo $visible; ?>><a href="#">X</a>
+                    <li <?php echo $visible; ?>><a href="#" class="closeText">X</a>
                     <?php
                     echo $form[$group]->renderLabel() . $form[$group]->render($groupAttrs) . $form[$group]->renderError();
                     ?>
@@ -148,7 +148,7 @@ use_javascript('orangehrm.datepicker.js');
                             $fieldSelected = in_array($fieldId, $form->selectedDisplayFields);
                             $visible = $fieldSelected ? '' : 'style="display:none"';
                         ?>
-                            <li <?php echo $visible; ?>><a href="#">X</a>
+                            <li <?php echo $visible; ?>><a href="#" class="closeText">X</a>
                             <?php
                             $attrs = array('style' => 'display:none;');
                             if ($fieldSelected) {

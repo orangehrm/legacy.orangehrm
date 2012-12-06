@@ -1162,6 +1162,12 @@ color:#fff;
 }
 /* ================ Modal box styles: End ================ */
 
+/* ================ Hyperlink styles: Begin ================ */
+a.closeText {
+    color:#aa4935;
+}
+/* ================ Hyperlink styles: End ================ */
+
 /* ================ Timesheet styles: Begin ================ */
 .timesheet .top h3 {
 	font-size:18px;
