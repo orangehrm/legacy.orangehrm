@@ -56,7 +56,7 @@ class AttendanceRecordSearchForm extends sfForm {
         $requiredMarker = ' <em> *</em>';
 
         $labels = array(
-            'employeeName' => __('Employee Name') . $requiredMarker,
+            'employeeName' => __('Employee Name'),
             'date' => __('Date') . $requiredMarker
         );
 

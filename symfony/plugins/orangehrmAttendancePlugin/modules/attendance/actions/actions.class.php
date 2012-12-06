@@ -254,8 +254,9 @@ class AttendanceActions extends sfActions {
     }
 
     public function executeProxyPunchInPunchOut($request) {
-
-
+        /* For highlighting corresponding menu item */  
+        $request->setParameter('initialActionName', 'viewAttendanceRecord');  
+        
         $this->punchInTime = null;
         $this->punchInUtcTime = null;
         $this->punchInNote = null;
@@ -391,6 +392,7 @@ class AttendanceActions extends sfActions {
             $attendanceRecord->setPunchOutNote($comment);
             $this->getAttendanceService()->savePunchRecord($attendanceRecord);
         }
+        return sfView::NONE;
     }
 
     public function allowedToPerformAction($flow, $action, $state, $userObject) {

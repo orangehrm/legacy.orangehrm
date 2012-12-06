@@ -112,16 +112,6 @@ $(document).ready(function()
             return date.getTime();
 
         }
-        
-        daymarker.bindElement("#attendance_date",
-        {
-            onSelect: function(date){
-              
-                $("#attendance_date").trigger('change');            
-
-            },
-            dateFormat:datepickerDateFormat
-        });
 
         $("#attendance_date").change(function() {
 
@@ -131,12 +121,12 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
+                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
+                    $(".time").removeClass('validation-error');
+                    $("#attendance_date").removeClass('validation-error');
                 }
 
                 if(flag){
@@ -144,14 +134,14 @@ $(document).ready(function()
 
                     if(flag2==1){
                         $('.punchOutbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
+                        $(".time").removeClass('validation-error');
+                        $(".date").removeClass('validation-error');
                     }
 
                     if(flag2==0){
 
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
+                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -163,12 +153,12 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
+                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
+                    $(".time").removeClass('validation-error');
+                    $("#attendance_date").removeClass('validation-error');
                 }
 
                 if(flag4){
@@ -177,15 +167,15 @@ $(document).ready(function()
                     if(flag3==1){
 
                         $('.punchInbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
+                        $(".time").removeClass('validation-error');
+                        $(".date").removeClass('validation-error');
 
                     }
 
                     if(flag3==0){
 
                         $('.punchInbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
+                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -202,12 +192,12 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
+                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
+                    $(".time").removeClass('validation-error');
+                    $("#attendance_date").removeClass('validation-error');
                 }
 
                 if(flag){
@@ -215,14 +205,14 @@ $(document).ready(function()
 
                     if(flag2==1){
                         $('.punchOutbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
+                        $(".time").removeClass('validation-error');
+                        $(".date").removeClass('validation-error');
                     }
 
                     if(flag2==0){
 
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
+                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -234,12 +224,12 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
+                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
+                    $(".time").removeClass('validation-error');
+                    $("#attendance_date").removeClass('validation-error');
                 }
 
                 if(flag4){
@@ -248,15 +238,15 @@ $(document).ready(function()
                     if(flag3==1){
 
                         $('.punchInbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
+                        $(".time").removeClass('validation-error');
+                        $(".date").removeClass('validation-error');
 
                     }
 
                     if(flag3==0){
 
                         $('.punchInbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
+                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -270,12 +260,12 @@ $(document).ready(function()
             if(!flag7) {
                 $('.punchOutbutton').attr('disabled', 'disabled');
                 $('.punchInbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
+                $('#validationMsg').attr('class', "message warning");
             }
             else{
                 $('.punchOutbutton').removeAttr('disabled');
                 $('.punchInbutton').removeAttr('disabled');
-                $(".note").removeAttr('style');
+                $(".note").removeClass('validation-error');
             }
 
 
@@ -303,9 +293,9 @@ $(document).ready(function()
             if(!validateDate(date, datepickerDateFormat)){
         
                 $('.punchOutbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
-                $('#validationMsg').html(errorForInvalidDateFormat);
-                $("#attendance_date").attr('style', errorStyle);
+                $('#validationMsg').attr('class', "message warning");
+                $('#validationMsg').html(errorForInvalidDateFormat+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
+                $("#attendance_date").addClass("validation-error");
                 errFlag = true;
        
             }
@@ -320,9 +310,9 @@ $(document).ready(function()
             if((timeArray[0]>24)||(timeArray[0]<0)||(timeArray[1]>59)||(timeArray[1]<0)){
 
                 $('.punchOutbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
-                $('#validationMsg').html(errorForInvalidTimeFormat);
-                $(".time").attr('style', errorStyle);
+                $('#validationMsg').attr('class', "message warning");
+                $('#validationMsg').html(errorForInvalidTimeFormat+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
+                $(".time").addClass("validation-error");
                 errFlag = true;
 
             }
@@ -374,10 +364,10 @@ $(document).ready(function()
                 if (!strToTime(formtedFullDate+" "+formtdFullTime, dateTimeFormat)) {
 
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
-                    $('#validationMsg').html(errorForInvalidFormat);
-                    $("#attendance_date").attr('style', errorStyle);
-                    $(".time").attr('style', errorStyle);
+                    $('#validationMsg').attr('class', "message warning");
+                    $('#validationMsg').html(errorForInvalidFormat+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
+                    $("#attendance_date").addClass("validation-error");
+                    $(".time").addClass("validation-error");
                     errFlag = true;
 
                 }
@@ -409,10 +399,10 @@ $(document).ready(function()
                     if (inTime > outTime) {
 
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
-                        $('#validationMsg').html(errorForInvalidTime);
-                        $(".time").attr('style', errorStyle);
-                        $("#attendance_date").attr('style', errorStyle);
+                        $('#validationMsg').attr('class', "message warning");
+                        $('#validationMsg').html(errorForInvalidTime+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
+                        $(".time").addClass("validation-error");
+                        $("#attendance_date").addClass("validation-error");
                         errFlag = true;
                     }
                 }
@@ -460,10 +450,10 @@ $(document).ready(function()
             if (isValid==0) {
 
                 $('.punchOutbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
-                $('#validationMsg').html(errorForOverLappingTime);
-                $(".time").attr('style', errorStyle);
-                $("#attendance_date").attr('style', errorStyle);
+                $('#validationMsg').attr('class', "message warning");
+                $('#validationMsg').html(errorForOverLappingTime+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
+                $(".time").addClass("validation-error");
+                $("#attendance_date").addClass("validation-error");
 
             }
 
@@ -504,10 +494,10 @@ $(document).ready(function()
             if (isValid==0) {
 
                 $('.punchInbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
-                $('#validationMsg').html(errorForOverLappingTime);
-                $(".time").attr('style', errorStyle);
-                $("#attendance_date").attr('style', errorStyle);
+                $('#validationMsg').attr('class', "message warning");
+                $('#validationMsg').html(errorForOverLappingTime+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
+                $(".time").addClass("validation-error");
+                $("#attendance_date").addClass("validation-error");
 
             }
 
@@ -583,9 +573,9 @@ function convertDateToYMDFormat(date){
             if ($(".note").val().length > 250) {
                 $('.punchOutbutton').attr('disabled', 'disabled');
                 $('.punchInbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
-                $('#validationMsg').html(errorForInvalidNote);
-                $(".note").attr('style', errorStyle);
+                $('#validationMsg').attr('class', "message warning");
+                $('#validationMsg').html(errorForInvalidNote+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
+                $(".note").addClass("validation-error");
                   
                 errFlag1 = true;
             }

@@ -1,75 +1,51 @@
 
-<?php echo stylesheet_tag('../orangehrmAttendancePlugin/css/proxyPunchInOutSuccess'); ?>
 <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/proxyPunchInPunchOutSuccess'); ?>
 
-<link href="<?php echo public_path('../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css') ?>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.core.js') ?>"></script>
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
-<?php echo stylesheet_tag('orangehrm.datepicker.css') ?>
-<?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
-
-<div id="validationMsg"   style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
-
-<div class="outerbox"  style="width: 500px">
-    <div class="maincontent">
-        <div id="punchInOutForm">
-
-            <?php if (($action['PunchIn'])): ?>
-
-                <div class="mainHeading">
-                    <h2><?php echo __('Punch In'); ?></h2>
-                </div>
-            <?php endif; ?>
-
-            <?php if ($action['PunchOut']): ?>
-                <div class="mainHeading">
-                    <h2><?php echo __('Punch Out'); ?></h2>
-                </div>
-            <?php endif; ?>
-
-            <br class="clear">
-            <form  id="punchTimeForm" method="post">
-                <table class="punchTable" border="0" cellpadding="5" cellspacing="0">
-                    <tbody>
-                        <?php echo $form['_csrf_token']; ?>
-
-                        <tr>
-                            <td><?php echo $form['date']->renderLabel() ?></td>
-                            <td> <?php echo $form['date']->renderError() ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $form['date']->render();?></td></tr>
-                        <tr><td> <?php echo $form['time']->renderLabel() ?></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $form['time']->renderError() ?><?php echo $form['time']->render(); ?><span class="timeFormatHint">HH:MM</span></td></tr>
-                        <tr><td> <?php echo $form['timezone']->renderLabel() ?></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $form['timezone']->renderError() ?><?php echo $form['timezone']->render(); ?></td></tr>
-                        <tr><td style="vertical-align: top" > <?php echo $form['note']->renderLabel() ?></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $form['note']->renderError() ?><?php echo $form['note']->render(array("onkeyup" => "validateNote()")); ?></td></tr>
-
-
-                        <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN, $sf_data->getRaw('allowedActions'))) : ?>
-                            <tr> <td></td> <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="punchInbutton" name="button" id="btnPunch"
-                                                                                           onmouseover="moverButton(this);" onmouseout="moutButton(this); "
-                                                                                           value="<?php echo __('In'); ?>" /></td></tr>
-                            <?php endif; ?>
-
-                        <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
-                            <tr><td></td> <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="punchOutbutton" name="button" id="btnPunch"
-                                                                                         onmouseover="moverButton(this);" onmouseout="moutButton(this);"
-                                                                                         value="<?php echo __('Out'); ?>" /></td></tr>
-                            <?php endif; ?>
-                    </tbody>
-                </table>
-            </form>
-            <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
-            <?php $dateArray = explode(" ", $punchInTime)?>
-            <div>&nbsp; <?php echo __("Last punch in time")." : "; ?><?php echo set_datepicker_date_format($dateArray[0])." ".$dateArray[1]; ?></div>
-                <?php if (!empty($punchInNote)): ?>
-                    <br class="clear">
-                    <div style="width:60px; padding-left: 5px; float:left"><?php echo __("Note")." : "; ?></div><div style="float:left"><?php echo $punchInNote; ?></div>
-                <?php endif; ?>
-            <?php endif; ?><br class="clear">
-
-
-        </div> 
-        <br class="clear">
+<div class="box">
+    
+    <div class="head">
+        <h1><?php echo ($action['PunchIn']) ? __('Punch In') : __('Punch Out') ; ?></h1>
     </div>
+    
+    <div class="inner">
+        
+        <div id="validationMsg">
+            <?php echo isset($messageData[0]) ? displayMainMessage($messageData[0], $messageData[1]) : ''; ?>
+        </div>
+        
+        <form  id="punchTimeForm" method="post">
+            <fieldset>
+                <ol>
+                    <?php echo $form->render(); ?>
+                </ol>
+                <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN, $sf_data->getRaw('allowedActions'))) : ?>
+                    <p><input type="button" class="punchInbutton" name="button" id="btnPunch" value="<?php echo __('In'); ?>" /></p>
+                <?php endif; ?>
+                                
+                <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
+                    <p><input type="button" class="punchOutbutton" name="button" id="btnPunch" value="<?php echo __('Out'); ?>" /></p>
+                <?php endif; ?>
+                
+                <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
+                    <?php $dateArray = explode(" ", $punchInTime) ?>
+                    <p>
+                        <?php echo __("Last punch in time") . " : "; ?>
+                        <?php echo set_datepicker_date_format($dateArray[0]) . " " . $dateArray[1]; ?>
+                    </p>
+                    <?php if (!empty($punchInNote)): ?>
+                    <p>
+                        <?php echo __("Note") . " : "; ?>
+                        <?php echo $punchInNote; ?>
+                    </p>
+                    <?php endif; ?>
+                <?php endif; ?>    
+                    
+            </fieldset>
+        </form>
+        
+    </div>
+    
 </div>
-
 
 <script type="text/javascript">
     //<![CDATA[
@@ -89,17 +65,10 @@
     var errorForOverLappingTime="<?php echo __('Overlapping Records Found'); ?>";
     var errorForInvalidNote='<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)) ?>';
     var actionRecorder='<?php echo $actionRecorder; ?>';
-   
-
     var punchOut =false;
     punchOut='<?php echo $action['PunchOut'] ?>'
-
-  
     var punchInTime='<?php echo $punchInTime; ?>';
     var punchInNote='<?php echo json_encode($punchInNote); ?>';
     var punchInUtcTime='<?php echo $punchInUtcTime; ?>';       
-  
-
-    
-    
+    var closeText = '<?php echo __('Close');?>';
 </script>

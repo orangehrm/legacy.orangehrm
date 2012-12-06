@@ -1201,7 +1201,7 @@ color:#fff;
 	width:40px;
 }
 */
-.editTimesheet input.timeBox {
+input.timeBox {
 	width:40px;
 }
 /*
@@ -1210,7 +1210,7 @@ color:#fff;
 	float:left;
 }
 */
-.editTimesheet select, .editTimesheet .checkbox-input {
+.editTimesheet select, .editTimesheet input, .editTimesheet .checkbox-input {
 	float:left;
 }
 .editTimesheet .checkbox-input {

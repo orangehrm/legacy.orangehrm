@@ -4,3 +4,7 @@ viewAttendanceRecordSuccess:
   layout: freshorange
 configureSuccess:
   layout: freshorange
+proxyPunchInPunchOutSuccess:
+  layout: freshorange
+editAttendanceRecordSuccess:
+  layout: freshorange

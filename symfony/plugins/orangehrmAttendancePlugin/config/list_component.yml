@@ -8,12 +8,8 @@ AttendanceRecordList:
   hasSummary: false
   summary: []
   buttons:
-    Delete:
-      label: Delete
-      data-toggle: modal
-      data-target: '#dialogBox'
-      class: delete
-      type: submit
-  buttonsPosition: after-data
+  buttonsPosition: before-data
+  formMethod: post
+  formAction: '#'
   assets: []
   jsInitMethods: [] 

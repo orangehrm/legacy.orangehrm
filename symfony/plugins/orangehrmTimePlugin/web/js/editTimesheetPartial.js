@@ -1,165 +1,96 @@
 
 $(document).ready(function() {
+    $msgDelayTime = 3000; // time that set for msg fading...
+    $("#extraRows").hide();
     var status;
-
     $('#btnAddRow').click(function(){
-        $("#extraRows").append(addRow(rows-1,startDate,endDate,employeeId,timesheetId));
+        $("#extraRows").append(addRow(rows-1, startDate, endDate, employeeId, timesheetId));
+        $('#extraRows table tr').insertBefore('#extraRows');
+        $('#newRow').remove();
         rows = rows + 1;
     });
 
     $("#submitRemoveRows").click(function(){
-
         if(!isRowsSelected()){
-
-            $('#validationMsg').attr('class', "messageBalloon_warning");
-            $('#validationMsg').html(lang_noRecords);
-
+            displayMessages('warning', lang_noRecords);
         }
         else if(isDeleteAllRows()){
-                
             $(".toDelete").each(function(){
                 element = $(this)
-
                 if($( element).is(':checked')){
-      
                     var array=$(element).parent().attr('id').split("_");
-                    
-                 
                     var projectId=array[0];
                     var activityId=array[1];
                     var timesheetId=array[2];
                     var employeeId=array[3];
-
                     var r = $.ajax({
                         type: 'POST',
                         url: linkToDeleteRow,
                         data: "timesheetId="+timesheetId+"&activityId="+activityId+"&projectId="+projectId+"&employeeId="+employeeId,
                         async: false,
-
                         success: function(state){
-                            
                             status=state;
-
                         }
                     });
-
-                
                 }
-
             });
             if(status){
-              
-            
                 $('form#timesheetForm').submit();
             }
             else{
-                $('#validationMsg').attr('class', "messageBalloon_warning");
-                $('#validationMsg').html(lang_noChagesToDelete);
+                displayMessages('warning', lang_noChagesToDelete);
             }
-
         }
-
         else{
-
-
-            $(".messageBalloon_warning").remove();
-            $('#validationMsg').html("");
-
             $(".toDelete").each(function(){
                 element = $(this)
-
-
- 
                 if($( element).is(':checked')){
-      
-
-
                     var array=$(element).parent().attr('id').split("_");
                     if((array!="") && ($(".toDelete").size()==1)){
                         var projectId=array[0];
                         var activityId=array[1];
                         var timesheetId=array[2];
                         var employeeId=array[3];
-
                         var r = $.ajax({
                             type: 'POST',
                             url: linkToDeleteRow,
                             data: "timesheetId="+timesheetId+"&activityId="+activityId+"&projectId="+projectId+"&employeeId="+employeeId,
                             async: false,
-
                             success: function(state){
-
                             }
                         });
-
                         $('form#timesheetForm').submit();
-
-
                     }
-
                     else if((array=="") && ($(".toDelete").size()==1)){
-   
-
-                        $('#validationMsg').attr('class', "messageBalloon_warning");
-                        $('#validationMsg').html("No changes to delete");
-                    //error message
-                    // $(element).parent().parent().remove();
-                    //$('form#timesheetForm').submit();
+                        displayMessages('warning', lang_noChagesToDelete);
                     }
-
                     else if((array=="") && ($(".toDelete").size()!=1)){
-
                         $(".messageBalloon_warning").remove();
-                        $('#validationMsg').html("");
-                        $('#validationMsg').attr('class', "messageBalloon_success");
-                        $('#validationMsg').html(lang_removeSuccess);
+                        displayMessages('success', lang_removeSuccess);
                         $(element).parent().parent().remove();
-
-
-
                     }
-
                     else if((array!="") && ($(".toDelete").size()!=1)){
-
-
                         var projectId=array[0];
                         var activityId=array[1];
                         var timesheetId=array[2];
                         var employeeId=array[3];
-
-
                         var r = $.ajax({
                             type: 'POST',
                             url: linkToDeleteRow,
                             data: "timesheetId="+timesheetId+"&activityId="+activityId+"&projectId="+projectId+"&employeeId="+employeeId,
                             async: false,
-
                             success: function(state){
-                        
                             }
-
-
                         });
-                        //     $('#validationMsg').attr('class', "messageBalloon_success");
-                        //		$('#validationMsg').html("Successfully removed");
-                        //  $(element).parent().parent().remove();
-                        //action:linkForViewTimesheet+"?state=REJECTED"+"&date="+date
                         $('form#timesheetForm').submit();
-
-
                     }
-
                 }
             });
         }
-    });
-
-
-
+    }); //submitRemoveRows-click
 });
 
-function addRow(num,startDate,endDate,employeeId,timesheetId) {
-
+function addRow(num, startDate, endDate, employeeId, timesheetId) {
     var r = $.ajax({
         type: 'GET',
         url: link ,
@@ -167,7 +98,6 @@ function addRow(num,startDate,endDate,employeeId,timesheetId) {
         async: false
     }).responseText;
     return r;
-
 }
 
 function isRowsSelected(){
@@ -176,48 +106,41 @@ function isRowsSelected(){
     //alert($(".toDelete").size());
     $(".toDelete").each(function(){
         element = $(this)
-    
-
         if($( element).is(':checked')){
             count=count+1;
         }
-
-        
-
-
-        
     });
-
     if(count==0){
         errFlag=true;
-
-
     }
     return !errFlag;
-
 }
 
 function isDeleteAllRows(){
     var count=0;
     $(".toDelete").each(function(){
         element = $(this)
-    
-
         if($( element).is(':checked')){
             count=count+1;
         }
-
-        
     });
-
-    
     if($(".toDelete").size()==count){
-        
         return true;
-        
     }
     else{
         return false;
     }
-    
+}
+
+function displayMessages(messageType, message) {
+    $('#msgDiv').remove();
+    if (messageType != 'reset') {
+        $divClass = 'message '+messageType;
+        $msgDivContent = "<div id='msgDiv' class=' " + $divClass + "' >" + message + 
+            "<a class='messageCloseButton' href='#'>"+closeText+"</a>" + "</div>";
+        $('#validationMsg').append($msgDivContent);
+    }
+//    $('#msgDiv').fadeOut($msgDelayTime, function(){
+//        $('#msgDiv').remove();
+//    });
 }

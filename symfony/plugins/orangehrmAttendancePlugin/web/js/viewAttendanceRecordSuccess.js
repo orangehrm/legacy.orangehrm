@@ -1,18 +1,36 @@
 $(document).ready(function(){
-    
-    if(employeeId != '') {
-        $('#employeeRecordsForm').append($('.actionbar > .formbuttons').html());
-        $('.actionbar > .formbuttons').html('');
-        $('.actionbar > .formbuttons').html($('#formbuttons').html());
-        $('#formbuttons').html('');
-    }
-    
     var rDate = trim($("#attendance_date").val());
     if (rDate == '') {
         $("#attendance_date").val(displayDateFormat);
     }
-
     
+    $.validator.addMethod("validEmployeeName", function(value, element) {
+        return autoFill('attendance_employeeName_empName', 'attendance_employeeName_empId', employees_attendance_employeeName);
+    });
+    
+    var validator = $("#reportForm").validate({
+        rules: {
+            'attendance[employeeName][empName]' : {
+                required: false,
+                validEmployeeName: true
+            },
+            'attendance[date]' : {
+                required: true, 
+                valid_date: function() {
+                    return {format: datepickerDateFormat, required: true, displayFormat: displayDateFormat} 
+                } 
+            }
+        },
+        messages: {
+            'attendance[employeeName][empName]' : {
+                validEmployeeName: invalidEmpName
+            },
+            'attendance[date]' : {
+                required: lang_NameRequired,
+                valid_date: errorForInvalidFormat
+            }
+        }
+    });
         
     if(trigger){
         autoFillEmpName(employeeId);
@@ -20,23 +38,7 @@ $(document).ready(function(){
     }
 
     $('#btView').click(function() {
-        $('#validationMsg').removeAttr('class');
-        $('#validationMsg').html("");
-        var validEmp = true;
-        
-        autoFill('attendance_employeeName_empName', 'attendance_employeeName_empId', employees_attendance_employeeName);
-        
-        if($('#attendance_employeeName_empName').val() != '' && $('#attendance_employeeName_empName').val() != typeForHints && $('#attendance_employeeName_empName').val() != employeeAll && $('#attendance_employeeName_empId').val() == ''){
-
-            $('#validationMsg').attr('class', "messageBalloon_failure");
-            $('#validationMsg').html(invalidEmpName);
-            $("#attendance_employeeName_empName").attr('style', errorStyle);
-            validEmp = false;
-        }    
-
-        var isValidDate= validateInputDate();
-                
-        if(isValidDate && validEmp){
+        if($("#reportForm").valid()){
             $("#reportForm").submit();                 
         }
     });
@@ -47,12 +49,14 @@ $(document).ready(function(){
 
     function autoFill(selector, filler, data) {
         $("#" + filler).val("");
+        var valid = false;
         $.each(data, function(index, item){
             if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
                 $("#" + filler).val(item.id);
-                return true;
+                valid = true;
             }
         });
+        return valid;
     }
         
     function autoFillEmpName(employeeId) {
@@ -66,24 +70,3 @@ $(document).ready(function(){
         });
     }
 }); //ready
-
-function validateInputDate(){
-
-    errFlag = false;
-    $(".messageBalloon_success").remove();
-    $('#validationMsg').removeAttr('class');
-    $('#validationMsg').html("");
-    $(".date").removeAttr('style');
-
-    var errorStyle = "background-color:#FFDFDF;";
-          
-    if((!validateDate($("#attendance_date").val(), datepickerDateFormat))){
-
-        $('#validationMsg').attr('class', "messageBalloon_failure");
-        $('#validationMsg').html(errorForInvalidFormat);
-        $("#attendance_date").attr('style', errorStyle);
-        errFlag = true;
-    }  
-    return !errFlag ;
-    
-}

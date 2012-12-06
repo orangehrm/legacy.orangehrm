@@ -1,16 +1,13 @@
 
-<?php 
-use_stylesheet('../../../symfony/web/themes/default/css/jquery/jquery.autocomplete.css');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet'); 
-?>
+<?php use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet'); ?>
 
 <div class="box">
     <div class="head">
         <h1><?php echo __("Select Employee");?></h1>
     </div>
 	<div class="inner">
-        <form action="<?php echo url_for("time/viewEmployeeTimesheet"); ?>" id="employeeSelectForm" name="employeeSelectForm" method="post">
+        <form action="<?php echo url_for("time/viewEmployeeTimesheet"); ?>" id="employeeSelectForm" 
+              name="employeeSelectForm" method="post">
             <?php echo $form->renderHiddenFields(); ?>
             <fieldset>
                 <ol>
@@ -33,7 +30,7 @@ use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet');
 
 <!-- Employee-pending-submited-timesheets -->
 <?php if (!($pendingApprovelTimesheets == null)): ?>
-<div class="box noHeader">
+<div class="box ">
     
     <div class="head">
         <h1><?php echo __("Timesheets Pending Action"); ?></h1>
@@ -50,8 +47,10 @@ use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet');
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($sf_data->getRaw('pendingApprovelTimesheets') as $pendingApprovelTimesheet): ?>
-                    <tr>
+                    <?php 
+                    $i = 0;
+                    foreach ($sf_data->getRaw('pendingApprovelTimesheets') as $pendingApprovelTimesheet): ?>
+                    <tr class="<?php echo ($i & 1) ? 'even' : 'odd'; ?>">
                         <input type="hidden" name="timesheetId" value="<?php echo $pendingApprovelTimesheet['timesheetId']; ?>" />
                         <input type="hidden" name="employeeId" value="<?php echo $pendingApprovelTimesheet['employeeId']; ?>" />
                         <input type="hidden" name="startDate" value="<?php echo $pendingApprovelTimesheet['timesheetStartday']; ?>" />
@@ -62,10 +61,17 @@ use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet');
                             <?php echo set_datepicker_date_format($pendingApprovelTimesheet['timesheetStartday']) . " " . __("to") . " " . set_datepicker_date_format($pendingApprovelTimesheet['timesheetEndDate']) ?>
                         </td>
                         <td align="center" class="<?php echo $pendingApprovelTimesheet['timesheetId'] . "##" . $pendingApprovelTimesheet['employeeId'] . "##" . $pendingApprovelTimesheet['timesheetStartday'] ?>">
-                            <a href="" class="editLink" id="viewSubmitted"><?php echo __("View"); ?></a>
+                            <a href="<?php echo 'viewPendingApprovelTimesheet?timesheetId=' . 
+                                    $pendingApprovelTimesheet['timesheetId'] . '&employeeId=' . 
+                                    $pendingApprovelTimesheet['employeeId'] . '&timesheetStartday=' . 
+                                    $pendingApprovelTimesheet['timesheetStartday']; ?>" id="viewSubmitted">
+                                        <?php echo __("View"); ?>
+                            </a>
                         </td>
                     </tr>                        
-                    <?php endforeach; ?>
+                    <?php 
+                    $i++; 
+                    endforeach; ?>
                 </tbody>
             </table>
         </form>
@@ -107,7 +113,7 @@ use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet');
             $(location).attr('href',url);
         });    
         
-        $('#btnView').click(function() {          
+        $('#btnView').click(function() {
             $('#employeeSelectForm').submit();
         });
     });
