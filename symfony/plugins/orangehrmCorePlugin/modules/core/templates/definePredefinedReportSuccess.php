@@ -364,7 +364,7 @@ use_javascript('orangehrm.datepicker.js');
         
             var selectedItem = $('#report_criteria_list option:selected').remove().val();
         
-            var delLink = $('<a/>').attr('href', '#').text('X');
+        var delLink = $('<a/>').attr('href', '#').text('X').addClass('closeText');
         
             /*var delLink = $('<a/>').attr('href', '#').text('X').click(function() {
         var li = $(this).parent();
