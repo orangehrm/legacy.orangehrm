@@ -493,7 +493,7 @@ use_javascript('orangehrm.datepicker.js');
         }
 
         $("#btnCancel").click(function(){
-            navigateUrl("viewDefinedPredefinedReports");
+            window.location.href = 'viewDefinedPredefinedReports';
         });
     });
 </script>
