@@ -64,6 +64,7 @@
             <exclude name="build/build.xml"/>
             <exclude name="devDocs/**"/>
             <exclude name="devTools/**"/>
+            <exclude name="nbproject/**"/>
             <exclude name="lib/**/testConf.php"/>
             <exclude name="lib/confs/Conf.php"/>
             <exclude name="lib/confs/cryptokeys/key.ohrm"/>
