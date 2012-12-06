@@ -81,7 +81,7 @@ ul.disc {
 }
 #help {
 	color:#f28c38;
-	background: url(../images/help-down.png) no-repeat center right;
+	background: url(../images/help-up.png) no-repeat center right;
 	padding:2px 15px 1px 1px;
 	text-decoration:none;
 	position:absolute;
@@ -90,7 +90,7 @@ ul.disc {
 	z-index:999;
 }
 #wrapper .activated-help {
-	background: url(../images/help-up.png) no-repeat center right;
+	background: url(../images/help-down.png) no-repeat center right;
 }
 #help-menu {
 	background:#454648;
