@@ -310,7 +310,7 @@ function isValidForm(){
 });
 
     var validator = $("#frmAddCandidate").validate({
-
+        onkeyup: false,
         rules: {
             'addCandidate[firstName]' : {
                 required:true,
