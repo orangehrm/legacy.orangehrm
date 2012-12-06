@@ -1,12 +1,3 @@
-<?php
-use_stylesheet('../../../themes/orange/css/jquery/jquery.autocomplete.css');
-use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-
-use_javascript('../../../scripts/jquery/ui/ui.core.js');
-use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-use_javascript('../../../scripts/jquery/jquery.autocomplete.js');
-?>
-
 <div class="box toggableForm">
    
     <div class="head">
