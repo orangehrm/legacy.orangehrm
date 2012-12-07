@@ -166,6 +166,7 @@ Candidate:
     Delete:
       label: Delete
       type: submit
+      class: delete
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/recruitment/deleteCandidateVacancies'
