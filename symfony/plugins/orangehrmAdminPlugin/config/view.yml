@@ -94,3 +94,5 @@ saveProjectSuccess:
   layout: freshorange
 changeUserPasswordSuccess:
   layout: freshorange
+viewCompanyStructureSuccess:
+  layout: freshorange

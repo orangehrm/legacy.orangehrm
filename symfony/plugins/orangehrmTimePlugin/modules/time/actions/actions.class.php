@@ -248,7 +248,7 @@ class timeActions extends sfActions {
         $this->currentDate = date('Y-m-d');
         if ($this->getContext()->getUser()->hasFlash('errorMessage')) {
 
-            $this->messageData = array('NOTICE', __($this->getContext()->getUser()->getFlash('errorMessage')));
+            $this->messageData = array('error', __($this->getContext()->getUser()->getFlash('errorMessage')));
         }
     }
 

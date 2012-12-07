@@ -1,21 +1,5 @@
 $(document).ready(function() {
 
-    $("#unitDialog").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 470,
-        height: 300,
-        position: 'middle'
-    });
-
-    $("#dltDialog").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 300,
-        height: 130,
-        position: 'middle'
-    });
-
     setViewMode()
 
     $('#btnEdit').click(function() {
@@ -51,20 +35,20 @@ $(document).ready(function() {
                 clearForm();
                 reloadTree();
                 $('#dltConfirmationMsg').text("")
-                $("#dltDialog").dialog("close")
+                $("#dltDialog").modal('hide');
             }
         });
     });
 
     $('#dialogNo').click(function(){
-        $("#dltDialog").dialog("close")
+        $("#dltDialog").modal('hide');
     });
 
-    $('#ohrmFormActionButton_Cancel').click(function() {
-        $('#unitDialog').dialog('close');
+    $('#btnCancel').click(function() {
+        $("#unitDialog").modal('hide');
     });
 
-    $('#ohrmFormActionButton_Save').click(function() {
+    $('#btnSave').click(function() {
         if(saveNode()){
             closeDialog();
         }
@@ -93,9 +77,6 @@ $(document).ready(function() {
             txtUnit_Id: {
                 maxlength: lang_max_100
             }
-        },
-        submitHandler: function(form) {
-            form.submit();
         }
     });
 });
@@ -119,8 +100,8 @@ function loadNode(nodeId) {
             $('#txtDescription').val(obj.description);
             $('#txtUnit_Id').val(obj.unitId);
             showForm();
-            $("#ui-dialog-title-unitDialog").text(lang_editUnit)
-            openDialog()
+            $("#title").text(lang_editUnit);
+            openDialog();
         }
     });
 }
@@ -161,11 +142,11 @@ function setEditMode(){
 
 
 function openDialog(){
-    $("#unitDialog").dialog("open")
+    $("#unitDialog").modal('show');
 }
 
 function closeDialog(){
-    $("#unitDialog").dialog("close")
+    $("#unitDialog").modal('hide');
 }
 
 function addChildToNode(nodeId) {
@@ -173,13 +154,14 @@ function addChildToNode(nodeId) {
     _clearMessage();
     nodeName = $('#treeLink_edit_' + nodeId).html();
     $('#lblParentNotice').remove();
-    $('<label id="lblParentNotice">'+lang_addNote +' <span class="boldText">' + nodeName + '</span></label>').insertAfter($('#txtDescription').next('br'));
+    $('<li class="line" id="lblParentNotice">'+lang_addNote +' <span class="boldText">' + nodeName + '</span></li>').
+        insertBefore('#lastElement');
 
     $('#hdnParent').val(nodeId);
     showForm();
-    $("#ui-dialog-title-unitDialog").text(lang_addUnit)
-    clearErrors()
-    openDialog()
+    $("#title").text(lang_addUnit);
+    clearErrors();
+    openDialog();
 }
 
 function deleteNode(nodeId) {
@@ -187,7 +169,7 @@ function deleteNode(nodeId) {
     nodeName = $('#treeLink_edit_' + nodeId).html();
     $('#dltNodeId').attr('value', nodeId)
     $('#dltConfirmationMsg').append(lang_delete_warning+'<br /><br />'+lang_delete_confirmation)
-    $("#dltDialog").dialog("open")
+    $("#dltDialog").modal('show');
 }
 
 function saveNode() {
@@ -240,7 +222,8 @@ function reloadTree() {
 
 function _showMessage(messageType, message) {
     _clearMessage();
-    $('#messageDiv').append('<div class="messageBalloon_' + messageType + ' id="divMessageBar" generated="true" style="width: 40%;">'+ message + '</div>');
+    $('#messageDiv').append('<div class="message ' + messageType + '" id="divMessageBar" generated="true">'+ message + 
+        "<a class='messageCloseButton' href='#'>"+closeText+"</a>" +  '</div>');
 }
 
 function _clearMessage() {
