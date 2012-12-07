@@ -51,7 +51,7 @@ $hasAttachments = count($attachmentList) > 0;
                         <?php echo $form['ufile']->render(array("class" => "atachment")); ?>
                         <div class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></div>
                     </li>
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['comment']->renderLabel(__('Comment')); ?>
                         <?php echo $form['comment']->render(array("class" => "comment", "cols" => 36, "rows" => 3)); ?>
                     </li>

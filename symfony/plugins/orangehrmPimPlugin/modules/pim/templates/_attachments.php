@@ -55,7 +55,7 @@ $hasAttachments = count($attachmentList) > 0;
                         <div class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></div>
                         <input type="file" name="ufile" id="ufile" />
                     </li>
-                    <li>
+                    <li class="largeTextBox">
                         <label><?php echo __("Comment")?></label>
                         <textarea name="txtAttDesc" id="txtAttDesc" rows="3" cols="35" ></textarea>
                     </li>
