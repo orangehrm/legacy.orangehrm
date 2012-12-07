@@ -104,7 +104,7 @@ class HomePageService {
         $isProjectAdmin = ($this->userSession->getAttribute('auth.isProjectAdmin'));    
         
         if ($isAdmin) {
-            return 'admin/viewOrganizationGeneralInformation';
+            return 'admin/viewSystemUsers';
         } elseif ($isProjectAdmin) {
             return 'admin/viewProjects';
         }         
