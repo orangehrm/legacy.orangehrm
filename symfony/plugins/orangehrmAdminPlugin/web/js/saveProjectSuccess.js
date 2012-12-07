@@ -1,6 +1,8 @@
 var countArray = new Array();
 var customerProjectList;
+var dialogValidator;
 $(document).ready(function() {
+    customerProjectList='';
     
     isValidAddCustomerForm();
 
@@ -168,6 +170,10 @@ $(document).ready(function() {
                 $('#frmAddCustomer').submit();
             }   
         }
+    });
+    
+    $('#dialogCancel').click(function () {
+        dialogValidator.resetForm();
     });
     
     $('#frmAddCustomer').submit(function(event) {
@@ -709,7 +715,7 @@ function isDeletedCustomer() {
 
 function isValidAddCustomerForm(){
     
-    var validator = $("#frmAddCustomer").validate({
+    dialogValidator = $("#frmAddCustomer").validate({
         rules: {
             'addCustomer[customerName]' : {
                 required:true,

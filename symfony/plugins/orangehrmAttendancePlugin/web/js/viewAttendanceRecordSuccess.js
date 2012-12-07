@@ -3,11 +3,31 @@ $(document).ready(function(){
     if (rDate == '') {
         $("#attendance_date").val(displayDateFormat);
     }
-    
-    $.validator.addMethod("validEmployeeName", function(value, element) {
-        return autoFill('attendance_employeeName_empName', 'attendance_employeeName_empId', employees_attendance_employeeName);
+
+    if(trigger){
+        autoFillEmpName(employeeId);
+        $("#reportForm").submit();     
+    }
+
+    $('#btView').click(function() {
+        if(isValidForm()){
+            $("#reportForm").submit();                 
+        }
     });
     
+    function autoFillEmpName(employeeId) {
+        $("#attendance_employeeName_empId").val("");
+        $.each(employees_attendance_employeeName, function(index, item){
+            if(item.id == employeeId) {
+                $("#attendance_employeeName_empId").val(item.id);
+                $("#attendance_employeeName_empName").val(item.name);
+                return true;
+            }
+        });
+    }
+}); //ready
+
+function isValidForm(){
     var validator = $("#reportForm").validate({
         rules: {
             'attendance[employeeName][empName]' : {
@@ -17,7 +37,11 @@ $(document).ready(function(){
             'attendance[date]' : {
                 required: true, 
                 valid_date: function() {
-                    return {format: datepickerDateFormat, required: true, displayFormat: displayDateFormat} 
+                    return {
+                        format: datepickerDateFormat, 
+                        required: true, 
+                        displayFormat: displayDateFormat
+                    } 
                 } 
             }
         },
@@ -31,42 +55,21 @@ $(document).ready(function(){
             }
         }
     });
-        
-    if(trigger){
-        autoFillEmpName(employeeId);
-        $("#reportForm").submit();     
-    }
+    return true;
+}
 
-    $('#btView').click(function() {
-        if($("#reportForm").valid()){
-            $("#reportForm").submit();                 
+$.validator.addMethod("validEmployeeName", function(value, element) {      
+    return autoFill('attendance_employeeName_empName', 'attendance_employeeName_empId', employees_attendance_employeeName);
+});
+
+function autoFill(selector, filler, data) {
+    $("#" + filler).val("");
+    var valid = false;
+    $.each(data, function(index, item){
+        if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
+            $("#" + filler).val(item.id);
+            valid = true;
         }
     });
-    
-    $("#attendance_employeeName_empName").change(function(){
-        autoFill('attendance_employeeName_empName', 'attendance_employeeName_empId', employees_attendance_employeeName);
-    });
-
-    function autoFill(selector, filler, data) {
-        $("#" + filler).val("");
-        var valid = false;
-        $.each(data, function(index, item){
-            if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
-                $("#" + filler).val(item.id);
-                valid = true;
-            }
-        });
-        return valid;
-    }
-        
-    function autoFillEmpName(employeeId) {
-        $("#attendance_employeeName_empId").val("");
-        $.each(employees_attendance_employeeName, function(index, item){
-            if(item.id == employeeId) {
-                $("#attendance_employeeName_empId").val(item.id);
-                $("#attendance_employeeName_empName").val(item.name);
-                return true;
-            }
-        });
-    }
-}); //ready
+    return valid;
+}

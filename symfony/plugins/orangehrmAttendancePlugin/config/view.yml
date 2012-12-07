@@ -8,3 +8,5 @@ proxyPunchInPunchOutSuccess:
   layout: freshorange
 editAttendanceRecordSuccess:
   layout: freshorange
+viewMyAttendanceRecordSuccess:
+  layout: freshorange

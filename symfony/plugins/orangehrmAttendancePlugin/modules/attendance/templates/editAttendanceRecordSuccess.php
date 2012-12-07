@@ -1,7 +1,12 @@
 
 <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/editAttendanceRecordSuccess'); ?>
 
-<div class="box miniList noHeader">
+<div class="box miniList ">
+    
+    <div class="head">
+        <h1><?Php echo __('Edit Attendance Records'); ?></h1>
+    </div>
+    
     <div class="inner">
         
         <div id="validationMsg">
@@ -9,14 +14,19 @@
         </div>
         
         <form action="" id="employeeRecordsForm" method="post">
+            <p class="formbuttons">
+                <input type="button" class="" name="button" id="btnSave" value="<?php echo __('Save'); ?>" />
+                <input type="button" class="reset" name="button" id="btnCancel" value="<?php echo __('Cancel'); ?>" />
+            </p>
+            
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="width: 27%;"><?php echo __("Punch In"); ?></th>
+                        <th style="width: 25%;"><?php echo __("Punch In"); ?></th>
                         <th style="width: 20%;"><?php echo __("Punch In Note"); ?></th>
-                        <th style="width: 27%;"><?php echo __("Punch Out"); ?></th>
+                        <th style="width: 25%;"><?php echo __("Punch Out"); ?></th>
                         <th style="width: 20%;"><?php echo __("Punch Out Note"); ?></th>
-                        <th style="width: 6%;" class="center"><?php echo __("Duration") . "(" . __("Hours") . ")"; ?></th>
+                        <th style="width: 10%;" class="center"><?php echo __("Duration") . "(" . __("Hours") . ")"; ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,10 +143,7 @@
                     <?php echo $editAttendanceForm->renderHiddenFields(); ?>
                 </tbody>
             </table>
-            <p class="formbuttons">
-                <input type="button" class="" name="button" id="btnSave" value="<?php echo __('Save'); ?>" />
-                <input type="button" class="reset" name="button" id="btnCancel" value="<?php echo __('Cancel'); ?>" />
-            </p>
+            
         </form>
     </div><!-- inner -->
 </div><!-- box -->
@@ -154,7 +161,7 @@
                 <ol>
                     <li class ="largeTextBox">
                         <label for="punchInOutNote"><?php echo __('Comment') ?></label>
-                        <textarea name="punchInOutNote" id="punchInOutNote" class="commentTextArea"></textarea>
+                        <textarea name="punchInOutNote" id="punchInOutNote" class="largeTextBox"></textarea>
                     </li>
                 </ol>
             </fieldset>

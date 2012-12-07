@@ -292,17 +292,21 @@ $(document).ready(function()
                 var punchInOut=classStr[2];
                 var comment =  $("#punchInOutNote").val();
                 updateComment(comment, id, punchInOut);
+                $("#attendanceNote_"+classStr[1]+"_"+classStr[2]+"_"+classStr[0]).val(comment);
+                var displayedComment=trim(comment)
+                if (displayedComment.length > 25) {
+                    displayedComment =displayedComment.substring( 0, 25) +"...";
+                }
+                $("#commentLable_"+classStr[1]+"_"+classStr[2]+"_"+classStr[0]).html(displayedComment)
+                $('#commentDialog').modal('toggle');
             }
-            $("#attendanceNote_"+classStr[1]+"_"+classStr[2]+"_"+classStr[0]).val(comment);
-            var displayedComment=trim(comment)
-            if (displayedComment.length > 25) {
-                displayedComment =displayedComment.substring( 0, 25) +"...";
-            }
-            $("#commentLable_"+classStr[1]+"_"+classStr[2]+"_"+classStr[0]).html(displayedComment)
-            $('#commentDialog').modal('toggle');
         });
         
-        $(".outTime").change(function(){
+        $('#commentCancel').click(function () {
+            validator.resetForm();
+        });
+        
+        $(".outTime").keyup(function(){
             element = $(this)
             idDate=element.attr('id');
             idArray= idDate.split("_");
@@ -386,7 +390,7 @@ $(document).ready(function()
             }
         });
             
-        $(".inTime").change(function(){
+        $(".inTime").keyup(function(){
              
             element = $(this)
             idTime=element.attr('id');
