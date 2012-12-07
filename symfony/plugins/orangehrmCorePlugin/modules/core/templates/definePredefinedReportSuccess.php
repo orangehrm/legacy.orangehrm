@@ -173,8 +173,8 @@ use_javascript('orangehrm.datepicker.js');
          
         
         <div class="formbuttons">
-            <input type="button" class="savebutton" id="btnSave" value="<?php echo __("Save"); ?>"  />
-            <input type="button" class="savebutton" id="btnCancel" value="<?php echo __("Cancel"); ?>" />
+            <input type="button" id="btnSave" value="<?php echo __("Save"); ?>"  />
+            <input type="button" class="cancel" id="btnCancel" value="<?php echo __("Cancel"); ?>" />
         </div>
         </form>
         </div>

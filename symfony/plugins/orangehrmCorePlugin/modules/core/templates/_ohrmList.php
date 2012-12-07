@@ -1,3 +1,4 @@
+<?php echo use_stylesheet('../orangehrmCorePlugin/css/_ohrmList.css'); ?>
 <?php
 if ($tableWidth == 'auto') {
     $outboxWidth = 0;
@@ -129,7 +130,12 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                 include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'top'));
             }
         ?>
-        <table class="table hover">
+        <div id="scrollWrapper">
+            <div id="scrollContainer">
+            </div>
+        </div>        
+        <div id="tableWrapper">
+        <table class="table hover" id="resultTable">
             
                     <?php
                     
@@ -324,6 +330,7 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                 </tfoot>
 <?php } ?>
                 </table>
+        </div> <!-- tableWrapper -->
         <div class="bottom"><p>
 <?php renderActionBar($buttons, $buttonsPosition === ohrmListConfigurationFactory::AFTER_TABLE); ?>
 
@@ -373,6 +380,18 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                         printButtonEventBindings($extraButtons);
                     }
 ?>
+        
+$("#scrollContainer").css('width', $("#resultTable").width() + 'px');
+
+    $("#scrollWrapper").scroll(function(){
+        $("#tableWrapper")
+            .scrollLeft($("#scrollWrapper").scrollLeft());
     });
+    $("#tableWrapper").scroll(function(){
+        $("#scrollWrapper")
+            .scrollLeft($("#tableWrapper").scrollLeft());
+    });
+        
+});
 
 </script>
