@@ -79,7 +79,7 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
 }                            
 
 ?>
-<div class="box noHeader" id="search-results">
+<div class="box<?php echo empty($title)?' noHeader':''; ?>" id="search-results">
     
     <?php if (!empty($title)) { ?>
         <div class="head"><h1><?php echo __($title); ?></h1></div>
@@ -105,23 +105,26 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
         
     <form method="<?php echo $formMethod; ?>" action="<?php echo public_path($formAction); ?>" name="frmList_ohrmListComponent" id="frmList_ohrmListComponent">
         
+<?php if (count($buttons) > 0 || isset($extraButtons)) : ?>        
         <div class="top">
         
 <?php
     if (count($buttons) > 0) {
         renderActionBar($buttons, $buttonsPosition === ohrmListConfigurationFactory::BEFORE_TABLE);
-        echo "<br class=\"clear\" />";
+        //echo "<br class=\"clear\" />";
     }
 
     if (isset($extraButtons)) {
         renderActionBar($extraButtons);
-        echo "<br class=\"clear\" />";
+        //echo "<br class=\"clear\" />";
     }
 
     include_component('core', 'ohrmPluginPannel', array('location' => 'list-component-before-table-action-bar'));
 ?>
          </div> <!-- top -->
 
+<?php endif; ?>         
+         
         <?php include_partial('global/flash_messages'); ?>
          
         <div id="helpText" class="helpText"></div>
