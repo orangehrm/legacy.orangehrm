@@ -211,7 +211,7 @@ foreach ($jobVacancyList as $vacancy) {
     </div>
     <div class="modal-body">
         <p><?php echo __("This action will remove previous vacancy"); ?></p>
-        <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
+        <p><?php echo __('Remove?'); ?></p>
     </div>
     <div class="modal-footer">
         <input type="button" class="btn" data-dismiss="modal" id="dialogSaveButton" value="<?php echo __('Ok'); ?>" />
