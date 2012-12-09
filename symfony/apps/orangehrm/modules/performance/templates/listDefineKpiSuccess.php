@@ -55,8 +55,6 @@
                  
                
             
-            <?php include_partial('global/flash_messages'); ?>
-            
                     <div class="inner">
                         
                         <div class="top">
@@ -75,6 +73,9 @@
                                 value="<?php echo __('Copy')?>" tabindex="4" />
 	                        <?php }?>
                         </div>
+                        
+                        <?php include_partial('global/flash_messages'); ?>
+                        
                         <table class="table hover">
                             <thead>
                                 <tr>
