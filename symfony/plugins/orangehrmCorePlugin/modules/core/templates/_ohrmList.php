@@ -383,7 +383,8 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                         printButtonEventBindings($extraButtons);
                     }
 ?>
-        
+
+<?php if (false) : // TODO: Get this as a setting of configuration ?>
 $("#scrollContainer").css('width', $("#resultTable").width() + 'px');
 
     $("#scrollWrapper").scroll(function(){
@@ -396,5 +397,6 @@ $("#scrollContainer").css('width', $("#resultTable").width() + 'px');
     });
         
 });
+<?php endif; ?>
 
 </script>

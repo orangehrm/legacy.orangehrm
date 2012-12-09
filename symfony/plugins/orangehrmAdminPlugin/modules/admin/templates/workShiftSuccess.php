@@ -28,7 +28,7 @@
                         <table border="0" width="45%" class="">
                             <tbody>
                                 <tr>
-                                    <td width="35%" style="font-weight:bold;">
+                                    <td width="35%" style="font-weight:bold; height: 20px">
                                         <?php echo __("Available Employees"); ?>
                                     </td>
                                     <td width="30%"></td>
@@ -39,8 +39,12 @@
                                         <?php echo $form['availableEmp']->render(array("class" => "selectMany", "size" => 10, "style" => "width: 100%")); ?>	
                                     </td>
                                     <td align="center" style="vertical-align: middle">
+                                        <!--
                                         <input type="button" style="width: 70%;" value="<?php echo __("Add"). " >"; ?>" class="" id="btnAssignEmployee" name="btnAssignEmployee">
                                         <input type="button" style="width: 70%;" value="<?php echo "< ".__("Remove"); ?>" class="delete" id="btnRemoveEmployee" name="btnRemoveEmployee">
+                                        -->
+                                        <a href="#" class="" id="btnAssignEmployee"><?php echo __("Add"). " >>"; ?></a><br /><br />
+                                        <a href="#" class="delete" id="btnRemoveEmployee"><?php echo __("Remove") . " <<"; ?></a>
                                     </td>
                                     <td>
                                         <?php echo $form['assignedEmp']->render(array("class" => "selectMany", "size" => 10, "style" => "width: 100%")); ?>
