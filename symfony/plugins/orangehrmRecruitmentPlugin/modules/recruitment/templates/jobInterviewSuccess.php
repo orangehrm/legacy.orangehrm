@@ -60,10 +60,10 @@ use_stylesheet('../orangehrmRecruitmentPlugin/css/jobInterviewSuccess');
                             ?>
                             <div <?php echo ($i != 1) ? "class='interviewer'" : '' ?> id="<?php echo "interviewer_" . $i ?>">
                                 <?php echo $form['interviewer_' . $i]->render(array("class" => "formInputInterviewer", "maxlength" => 100)); ?>                
-                                <a class="removeText" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
+                                <a class="removeText fieldHelpRight" id=<?php echo "removeButton" . $i ?>><?php echo __('Remove'); ?></a>
                             </div>
                         <?php } ?>
-                        <a class="addText" id='addButton'><?php echo __('Add another'); ?></a>
+                        <a class="addText fieldHelpRight" id='addButton'><?php echo __('Add another'); ?></a>
                     </li>
                     <li>
                         <?php echo $form['date']->renderLabel(__('Date') . ' <em>*</em>', array('class' => 'firstLabel')); ?>
