@@ -579,6 +579,13 @@ form ol li.helpText { /* Used in Recruitment > Add Job Vacancy */
 	color:#a9a9a9;
 	font-size:11px;
 }
+/* ------------- longLabels styles ------------- */
+form.longLabels ol li label { /* Used in pim/viewMemberships, admin/listMailConfiguration*/
+    width: 180px;
+}
+form.longLabels ol li span.validation-error {
+	left:180px;
+}
 /* ------------- Checkbox styles ------------- */
 form ol li.checkbox input { /* Used in Admin > Localization */
 	width:auto;

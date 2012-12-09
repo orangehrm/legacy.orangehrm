@@ -10,7 +10,7 @@
         <?php include_partial('global/flash_messages'); ?>
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
 
-	    <form action="<?php echo url_for('admin/listMailConfiguration');?>" onsubmit="" method="post" id="frmSave" name="frmSave">
+	    <form action="<?php echo url_for('admin/listMailConfiguration');?>" method="post" id="frmSave" name="frmSave" class="longLabels">
 
             <?php echo $form['_csrf_token']; ?>
 	        
