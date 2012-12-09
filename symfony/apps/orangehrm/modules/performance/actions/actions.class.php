@@ -611,8 +611,7 @@ class performanceActions extends sfActions {
                 $performanceReviewService->informReviewer($review);
 
                 $actionResult = (!empty($reviewId)) ? __('updated') : __('added');
-                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS) . 
-                    ' <a href="viewReview">' .__('View').'</a>');
+                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
                 
                 $this->redirect('performance/viewReview/mode/new');
             }
