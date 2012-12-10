@@ -31,16 +31,16 @@ use_javascript('../orangehrmAdminPlugin/js/emailNotificationSuccess');
 
 
 <!-- help messages are added after the list table printes -->
-<fieldset id="helper_message">
-    <ol>
-        <li class="required">
-            <em>*</em><?php echo __(' Click on a notification type to add subscribers') ?>
-        </li>
-        <li class="required">
-            <em>*</em><?php echo __(' Click on Edit button to enable notifications') ?>
-        </li>
-    </ol>
-</fieldset>
+
+<ul id="helper_message" class="helpList">
+    <li>
+        * <?php echo __(' Click on a notification type to add subscribers') ?>
+    </li>
+    <li>
+        * <?php echo __(' Click on Edit button to enable notifications') ?>
+    </li>
+</ul>
+
 
 <script type="text/javascript">
     var notificationIds = <?php echo str_replace('&#039;', "'", $form->getEnabledNotificationIdListAsJson()) ?> ;

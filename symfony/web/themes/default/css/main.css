@@ -8,11 +8,6 @@ a {
 	outline:none;
     color:#5d5d5d;
 }
-ul.disc {
-    list-style: disc;
-    margin-left: 13px;
-    line-height: 25px;
-}
 /* ================ HTML element styles: End ================ */
 
 /* ================ Application header styles: Begin ================ */
@@ -580,7 +575,7 @@ form ol li.helpText { /* Used in Recruitment > Add Job Vacancy */
 	float:left;
 	margin-top:9px;
 	color:#a9a9a9;
-	font-size:11px;
+	font-size:12px;
 }
 /* ------------- longLabels styles ------------- */
 form.longLabels ol li label { /* Used in pim/viewMemberships, admin/listMailConfiguration*/
@@ -871,6 +866,19 @@ table.table td.hover, table.table tr.hover, table tbody tr.odd td.hover {
 	background-color:#CCC;
 }
 /* ================ Table styles: End ================ */
+
+/* ================ List styles: Begin ================ */
+ul.disc { /* Used in admin/pimCsvImport */
+    list-style: disc;
+    margin-left: 13px;
+    line-height: 25px;
+}
+ul.helpList li { /* Used in admin/viewEmailNotification */
+	color:#a9a9a9;
+	font-size:12px;
+    margin: 5px 0 0 0;
+}
+/* ================ List styles: End ================ */
 
 /* ================ Top level message styles: Begin ================ */
 .message {
