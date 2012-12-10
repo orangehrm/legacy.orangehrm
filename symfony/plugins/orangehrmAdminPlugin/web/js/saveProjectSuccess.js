@@ -1,6 +1,7 @@
 var countArray = new Array();
 var customerProjectList;
 var dialogValidator;
+var hintClass = 'inputFormatHint';
 $(document).ready(function() {
     customerProjectList='';
     
@@ -85,13 +86,37 @@ $(document).ready(function() {
         $(this).next().html('');
 
     });
-        
-    $('#projectName').keydown(function(){
-        if($('#projectName').val() == lang_typeHint){
-            $('#projectName').val("")
-            $('#projectName').removeClass("inputFormatHint");
+    
+    /* Type hint for Customer Name */
+    var customerName = $('#addProject_customerName');
+
+    if (customerName.val() == '' || customerName.val() == lang_typeHint) {
+        customerName.val(lang_typeHint).addClass(hintClass);
+    }
+
+    customerName.one('focus', function() {
+        if ($(this).hasClass(hintClass)) {
+            $(this).val("");
+            $(this).removeClass(hintClass);
+        }
+    });    
+    
+    /* Type hint for Project Name in Copy Activity */
+    var projectName = $('#projectName');
+    
+    $("#btnCopy").click(function(){
+        if (projectName.val() == '' || projectName.val() == lang_typeHint) {
+            projectName.val(lang_typeHint).addClass(hintClass);
         }
     });
+
+    projectName.one('focus', function() {
+        if ($(this).hasClass(hintClass)) {
+            $(this).val("");
+            $(this).removeClass(hintClass);
+        }
+    });
+        
     // undeleteDialog    
     $("#undeleteYes").click(function(){
         $('#frmUndeleteCustomer').submit();
@@ -547,6 +572,8 @@ function getActivityList(url){
 }
 
 function buildActivityList(data){
+    
+    $('#copyActivityList').empty();
     
     var i;
     for (i=0; i<data.length; i++){
