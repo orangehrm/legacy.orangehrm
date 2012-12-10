@@ -50,13 +50,16 @@ ul.disc {
 }
 #welcome {
 	color:#5d5d5d;
-	background: url(../images/welcome.png) no-repeat center right;
+	background: url(../images/welcome-down.png) no-repeat center right;
 	padding:2px 32px 1px 1px;
 	text-decoration:none;
 	position:absolute;
 	top:55px;
 	right:35px;
 	z-index:999;
+}
+#wrapper .activated {
+	background: url(../images/welcome-up.png) no-repeat center right;
 }
 #welcome-menu {
 	background:#454648;
