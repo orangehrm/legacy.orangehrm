@@ -53,7 +53,7 @@ a {
 	right:35px;
 	z-index:999;
 }
-#wrapper .activated {
+#wrapper .activated-welcome {
 	background: url(../images/welcome-up.png) no-repeat center right;
 }
 #welcome-menu {

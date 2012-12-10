@@ -106,7 +106,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
                 /* Toggling header menus */
                 $("#welcome").click(function () {
                     $("#welcome-menu").slideToggle("fast");
-                    $(this).toggleClass("activated");
+                    $(this).toggleClass("activated-welcome");
                     return false;
                 });
                 
