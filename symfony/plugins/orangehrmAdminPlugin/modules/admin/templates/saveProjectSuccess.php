@@ -194,15 +194,17 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
             <fieldset>
                 <ol>
                     <li>
-                        <label for="addProjectActivity_activityName"><? echo __("Project Name"); ?> <em>*</em></label>
+                        <label for="addProjectActivity_activityName"><?php echo __("Project Name"); ?> <em>*</em></label>
                         <input type="text" id="projectName" maxlength="52" class="project" name="projectName">
                         <span id="errorHolderCopy"></span>
                     </li>
-                    <li id="copyActivityList"> <!-- For adding checkboxes with activities -->
+                    <li>
+                        <ul id="copyActivityList" class="checkList"> <!-- For adding checkboxes with activities -->
 
+                        </ul>
                     </li>
                     <li class="required">
-                        <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                     </li>
                 </ol>
             </fieldset>

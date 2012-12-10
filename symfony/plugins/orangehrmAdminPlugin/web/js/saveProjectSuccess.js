@@ -249,6 +249,7 @@ $(document).ready(function() {
             $('#frmCopyAct').submit();
         } else {
             $('#errorHolderCopy').text(lang_noActivitiesSelected);
+            $('#errorHolderCopy').addClass('validation-error');
         }
     });
     
@@ -532,6 +533,7 @@ function getActivityList(url){
         $('.activityDiv').remove();
         if(data == "") {
             $('#errorHolderCopy').text(lang_noActivities);
+            $('#errorHolderCopy').addClass('validation-error');
         } else {
             $('#btnCopyDig').show();
             buildActivityList(data);
@@ -544,8 +546,8 @@ function buildActivityList(data){
     var i;
     for (i=0; i<data.length; i++){
         
-        $('#copyActivityList').append('<input type="checkbox" checked="yes" name="activityNames[]" value="'+data[i].name+'" class="check"/>' +
-            '<span '+'class="activityName"'+'">'+data[i].name+'</span>');
+        $('#copyActivityList').append('<li><input type="checkbox" checked="yes" name="activityNames[]" value="'+data[i].name+'" class="check"/>' +
+            '<label '+'class="activityName"'+'">'+data[i].name+'</label></li>');
     }
 }
 
