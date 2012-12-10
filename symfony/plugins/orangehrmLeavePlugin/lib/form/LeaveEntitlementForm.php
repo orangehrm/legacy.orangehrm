@@ -122,10 +122,15 @@ class LeaveEntitlementForm extends BaseForm {
 
         $labels = array(
             'employee' => __('Employee'),
-            'leave_type' => __('Leave Type'),
-            'date' => __('Earned Between')
+            'leave_type' => __('Leave Type')
+            
             
         );
+        if( LeavePeriodService::getLeavePeriodStatus() == LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
+             $labels['date'] = __('Leave Period');
+        }else{
+            $labels['date'] = __('Earned Between');
+        }
         return $labels;
     }
     
