@@ -23,7 +23,6 @@ class orangehrmCoreLeavePluginAllTests {
         
         
         //$suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveTypeServiceTest.php');
-        //$suite->addTestFile(dirname(__FILE__) . '/model/service/OldLeaveEntitlementServiceTest.php');
         //$suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveRequestServiceTest.php');
         //$suite->addTestFile(dirname(__FILE__) . '/model/service/LeaveSummaryServiceTest.php');
 //

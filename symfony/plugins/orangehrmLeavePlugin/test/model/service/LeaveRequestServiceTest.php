@@ -861,7 +861,8 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
     
 }
 
-class MockLeaveStateManager extends LeaveStateManager {
+/** TODO: Remove*/
+class MockLeaveStateManager {
 
     public function __construct() {
 

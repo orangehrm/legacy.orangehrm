@@ -17,7 +17,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
 
     /**
      * Get LeaveEntitlementService
-     * @return OldLeaveEntitlementService
+     * @return LeaveEntitlementService
      * 
      */
     public function getLeaveEntitlementService() {

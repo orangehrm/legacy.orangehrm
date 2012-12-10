@@ -55,7 +55,7 @@ class LeaveRequestService extends BaseService {
     }
 
     /**
-     * @return OldLeaveEntitlementService
+     * @return LeaveEntitlementService
      */
     public function getLeaveEntitlementService() {
         if(is_null($this->leaveEntitlementService)) {
@@ -76,7 +76,7 @@ class LeaveRequestService extends BaseService {
 
     /**
      * Sets LeaveEntitlementService
-     * @param OldLeaveEntitlementService $leaveEntitlementService
+     * @param LeaveEntitlementService $leaveEntitlementService
      */
     public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
@@ -127,22 +127,6 @@ class LeaveRequestService extends BaseService {
      */
     public function setHolidayService(HolidayService $holidayService) {
         $this->holidayService = $holidayService;
-    }
-
-    /**
-     * Set leave state manager. Only use for unit testing.
-     * 
-     * @param LeaveStateManager $leaveStateManager
-     */
-    public function setLeaveStateManager(LeaveStateManager $leaveStateManager) {
-        $this->leaveStateManager = $leaveStateManager;
-    }
-
-    public function getLeaveStateManager() {
-        if(is_null($this->leaveStateManager)) {
-            $this->leaveStateManager = LeaveStateManager::instance();
-        }
-        return $this->leaveStateManager;
     }
     
     /**
