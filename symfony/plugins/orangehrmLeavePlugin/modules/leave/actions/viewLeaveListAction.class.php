@@ -95,10 +95,12 @@ class viewLeaveListAction extends sfAction {
         // Check for parametes sent from direct links
         // (PIM: 'txtEmpID' will be available as a get parameter)
         // (Leave Summary Links: leavePeriodId, leaveTypeId and status)
-        $empNumber = $request->getGetParameter('txtEmpID');
-        $leavePeriodId = $request->getGetParameter('leavePeriodId');
-        $leaveTypeId = $request->getGetParameter('leaveTypeId');
-        $leaveStatusId = $request->getGetParameter('status');
+        $empNumber = $request->getParameter('empNumber');
+        
+        $fromDateParam = $request->getParameter('fromDate');
+        $toDateParam = $request->getParameter('toDate');
+        $leaveTypeId = $request->getParameter('leaveTypeId');
+        $leaveStatusId = $request->getParameter('status');
         
         if ($request->isMethod('post')) {
 
@@ -152,15 +154,12 @@ class viewLeaveListAction extends sfAction {
                         $values['cmbWithTerminated'] = $terminatedEmp;
                         $this->form->setDefault('cmbWithTerminated', $terminatedEmp);
                     }
-                    if (!empty($leavePeriodId)) {
+                    if (!empty($fromDateParam) && !empty($toDateParam)) {
 
-                        $leavePeriod = $this->getLeavePeriodService()->readLeavePeriod($leavePeriodId);
-                        if ($leavePeriod instanceof LeavePeriod) {
-                            $values['calFromDate'] = $leavePeriod->getStartDate();
-                            $values['calToDate'] = $leavePeriod->getEndDate();
-                            $this->form->setDefault('calFromDate', set_datepicker_date_format($values['calFromDate']));
-                            $this->form->setDefault('calToDate', set_datepicker_date_format($values['calToDate']));
-                        }
+                        $values['calFromDate'] = $this->_getStandardDate($fromDateParam);
+                        $values['calToDate'] = $this->_getStandardDate($toDateParam);
+                        $this->form->setDefault('calFromDate', set_datepicker_date_format($values['calFromDate']));
+                        $this->form->setDefault('calToDate', set_datepicker_date_format($values['calToDate']));
                     }
 
                     if (!empty($leaveTypeId)) {

@@ -70,12 +70,29 @@ class viewLeaveBalanceReportAction extends sfAction {
 
                     $this->headerInfo = $reportBuilder->getHeaderInfo($reportId);
 
-                    $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);                    
-
+                    $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);
+                    
+                    $this->linkParams = $this->getLinkParams($reportType, $values);
+                    $this->reportType = $reportType;
                 }
             }
         }
     }
+    protected function getLinkParams($reportType, $values) {
+        $linkParams = array(
+            'fromDate' => array($values['fromDate']),
+            'toDate' => array($values['toDate'])
+        );
+        
+        if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
+            $linkParams['leaveType'] = array($values['leaveType']);
+        } else {
+            $linkParams['empNumber'] = array($values['empNumber']);
+        }
+        
+        return $linkParams;
+    }
+
     
     protected function convertValues($values) {
         

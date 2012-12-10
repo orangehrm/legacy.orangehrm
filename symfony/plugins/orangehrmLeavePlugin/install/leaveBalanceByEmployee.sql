@@ -125,6 +125,7 @@ ORDER BY ohrm_leave_type.id
                         <field_alias>scheduled</field_alias>
                         <display_name>Leave Scheduled</display_name>
                         <width>120</width>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -155,6 +156,7 @@ ORDER BY ohrm_leave.leave_type_id
                         <field_alias>taken</field_alias>
                         <display_name>Leave Taken</display_name>
                         <width>120</width>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3</link>
                     </field>                                
                 </fields>
             </display_group>

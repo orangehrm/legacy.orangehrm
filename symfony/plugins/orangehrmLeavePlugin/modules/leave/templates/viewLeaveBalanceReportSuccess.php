@@ -65,6 +65,8 @@ use_stylesheets_for_form($form);
                 </tr>
                 </thead>
                 <?php                
+                    $reportBuilder = new ReportBuilder();
+                    $linkParamsRaw = $sf_data->getRaw('linkParams');
                     $rowCssClass = "even";
                     $results = $sf_data->getRaw('resultsSet');?>                
                 <tbody class="scrollContent"> 
@@ -96,7 +98,22 @@ use_stylesheets_for_form($form);
                             <td width="<?php echo ($info["width"]);?>"><?php if(($column == "") || is_null($column)):
                                     echo "---";
                                 else :
-                                    echo esc_specialchars(__($column));
+                                    
+                                    if (isset($info['link'])):
+                                        if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE):
+                                            $linkParamsRaw['empNumber'] = array($row['empNumber']);
+                                        else:
+                                            $linkParamsRaw['leaveType'] = array($row['leaveTypeId']);
+                                        endif;
+ 
+                                        $url = $reportBuilder->replaceHeaderParam($info['link'], $linkParamsRaw);
+                                        echo link_to(esc_specialchars(__($column)), $url);
+                                    
+                                    else:
+                                        echo esc_specialchars(__($column));
+
+                                    endif;                                    
+                                
                                 endif;?></td>
                       <?php else: ?>
                             <input type="hidden" name="<?php echo $key;?>[]" value="<?php echo $column;?>"/>
@@ -149,21 +166,7 @@ use_stylesheets_for_form($form);
             dateLi.hide();
             viewBtn.hide();
         }        
-    }
-    
-    function createLinks() {
-        $('#report-results').find('table.table td:nth-child(3)').each(function(){
-            if ($(this).text() != '---') {
-                $(this).wrapInner("<a href='#' class='asof'/>");
-            }
-        });
-        
-        $('#report-results').find('table.table td:nth-child(4)').each(function(){
-            if ($(this).text() != '---') {
-                $(this).wrapInner("<a href='#' class='total'/>");
-            }
-        });        
-    }    
+    }   
    
     $(document).ready(function() {        
         
@@ -173,10 +176,7 @@ use_stylesheets_for_form($form);
         
         <?php if ($mode != 'my') { ?>
         toggleReportType();
-        <?php } ?>
-        
-        // create links for 2nd and 3rd column
-        createLinks();
+        <?php } ?>       
         
         $('#report-results table.table thead.fixedHeader tr:first').hide();
         

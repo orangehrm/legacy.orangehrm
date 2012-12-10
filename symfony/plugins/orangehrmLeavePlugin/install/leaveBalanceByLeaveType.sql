@@ -113,7 +113,8 @@ ORDER BY ohrm_leave.emp_number
                         <field_name>sum(length_days)</field_name>
                         <field_alias>scheduled</field_alias>
                         <display_name>Leave Scheduled</display_name>
-                        <width>120</width>
+                        <width>121</width>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -144,6 +145,7 @@ ORDER BY ohrm_leave.emp_number
                         <field_alias>taken</field_alias>
                         <display_name>Leave Taken</display_name>
                         <width>120</width>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3</link>
                     </field>                                
                 </fields>
             </display_group>
