@@ -92,6 +92,7 @@ class addLeaveEntitlementAction extends sfAction {
             if ($this->form->isValid()) {
                 $leaveEntitlement = $this->getLeaveEntitlement($this->form->getValues());
                 
+                
                 $bulkFilter = $this->form->getValue('filters');
                 if (!isset($bulkFilter['bulk_assign'])) {
                     
@@ -110,7 +111,7 @@ class addLeaveEntitlementAction extends sfAction {
                     $this->saveFilters($filters);                    
                 } else {
                     $employeeNumbers = $this->getMatchingEmployees($this->form->getValue('filters'));
-                    
+                  
                     $savedCount = $this->getLeaveEntitlementService()->bulkAssignLeaveEntitlements($employeeNumbers, $leaveEntitlement);
                     
                     $this->dispatcher->notify(new sfEvent($this, LeaveEvents::ENTITLEMENT_BULK_ADD, 
@@ -179,33 +180,40 @@ class addLeaveEntitlementAction extends sfAction {
     }  
     
     protected function getLeaveEntitlement($values) {
+        
+       if(isset($values['filters']['bulk_assign'])){
+           $leaveEntitlement = new LeaveEntitlement(); 
+           $leaveEntitlement->setNoOfDays($values['entitlement']);
+        }else{
+            if (isset($values['id'])) {
+                $id = $values['id'];
+                $leaveEntitlement = $this->getLeaveEntitlementService()->getLeaveEntitlement($id);
+                $leaveEntitlement->setNoOfDays($values['entitlement']);
+            } else {
+                if(LeavePeriodService::getLeavePeriodStatus()== LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
+                    $empNumber = $values['employee']['empId'];
+                    $fromDate = $values['date']['from'];
+                    $toDate = $values['date']['to'];
+                    $leaveTypeId = $values['leave_type'];
 
-        if (isset($values['id'])) {
-            $id = $values['id'];
-            $leaveEntitlement = $this->getLeaveEntitlementService()->getLeaveEntitlement($id);
-            $leaveEntitlement->setNoOfDays($values['entitlement']);
-        } else {
-            if(LeavePeriodService::getLeavePeriodStatus()== LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
-                $empNumber = $values['employee']['empId'];
-                $fromDate = $values['date']['from'];
-                $toDate = $values['date']['to'];
-                $leaveTypeId = $values['leave_type'];
+                    $entitlementList = $this->getLeaveEntitlementService()->getMatchingEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate);                               
 
-                $entitlementList = $this->getLeaveEntitlementService()->getMatchingEntitlements($empNumber, $leaveTypeId, $fromDate, $toDate);                               
-       
-                if(count($entitlementList) > 0){
-                    $leaveEntitlement = $entitlementList->getFirst();
+                    if(count($entitlementList) > 0){
+                        $leaveEntitlement = $entitlementList->getFirst();
 
-                    $newValue = $leaveEntitlement->getNoOfDays()+$values['entitlement'];
-                    $leaveEntitlement->setNoOfDays($newValue);
+                        $newValue = $leaveEntitlement->getNoOfDays()+$values['entitlement'];
+                        $leaveEntitlement->setNoOfDays($newValue);
+                    }else{
+                        $leaveEntitlement = new LeaveEntitlement(); 
+                        $leaveEntitlement->setNoOfDays($values['entitlement']);
+                    }
                 }else{
                     $leaveEntitlement = new LeaveEntitlement(); 
                     $leaveEntitlement->setNoOfDays($values['entitlement']);
                 }
-            }else{
-                $leaveEntitlement = new LeaveEntitlement(); 
-                $leaveEntitlement->setNoOfDays($values['entitlement']);
-            }
+        }
+
+        }
             
             
             $leaveEntitlement->setEmpNumber($values['employee']['empId']);
@@ -221,7 +229,7 @@ class addLeaveEntitlementAction extends sfAction {
             
             $leaveEntitlement->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
             $leaveEntitlement->setDeleted(0);            
-        }
+        
         
         
         $leaveEntitlement->setFromDate($values['date']['from']);

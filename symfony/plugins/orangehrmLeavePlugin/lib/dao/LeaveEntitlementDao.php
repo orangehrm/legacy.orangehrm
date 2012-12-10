@@ -178,8 +178,25 @@ class LeaveEntitlementDao extends BaseDao {
     public function bulkAssignLeaveEntitlements($employeeNumbers, LeaveEntitlement $leaveEntitlement) {
         $savedCount = 0;
         
+        $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
+          
         foreach ($employeeNumbers as $empNumber) {
-            $entitlement = new LeaveEntitlement(); 
+            
+            
+            $leaveEntitlementSearchParameterHolder->setEmpNumber($empNumber);
+            $leaveEntitlementSearchParameterHolder->setFromDate($leaveEntitlement->getFromDate());
+            $leaveEntitlementSearchParameterHolder->setLeaveTypeId($leaveEntitlement->getLeaveTypeId());
+            $leaveEntitlementSearchParameterHolder->setToDate($leaveEntitlement->getToDate());
+            
+            $entitlementList = $this->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
+            if(count($entitlementList) > 0){
+                $entitlement  = $entitlementList->getFirst();
+                $noOfDays  = $leaveEntitlement->getNoOfDays()+ $existingEntitlement->getNoOfDays();
+               
+            }else{
+                $entitlement    = new LeaveEntitlement(); 
+                $noOfDays       =   $leaveEntitlement->getNoOfDays();
+            }
             
             $entitlement->setEmpNumber($empNumber);
             $entitlement->setLeaveTypeId($leaveEntitlement->getLeaveTypeId());
@@ -191,7 +208,7 @@ class LeaveEntitlementDao extends BaseDao {
             $entitlement->setEntitlementType($leaveEntitlement->getEntitlementType());
             $entitlement->setDeleted(0);            
         
-            $entitlement->setNoOfDays($leaveEntitlement->getNoOfDays());
+            $entitlement->setNoOfDays($noOfDays);
             $entitlement->setFromDate($leaveEntitlement->getFromDate());
             $entitlement->setToDate($leaveEntitlement->getToDate());            
             
