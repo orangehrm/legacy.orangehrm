@@ -175,6 +175,11 @@ $(document).ready(function() {
     $('#dialogCancel').click(function () {
         dialogValidator.resetForm();
     });
+    $('#btnCopyCancel').click(function () {
+        $('#projectName').val('');
+        $('#copyActivityList').empty();
+        $('#btnCopyDig').hide();
+    });    
     
     $('#frmAddCustomer').submit(function(event) {
         
