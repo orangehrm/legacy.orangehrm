@@ -384,8 +384,21 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                     }
 ?>
                         });
+                        
+<?php
 
-<?php if (false) : // TODO: Get this as a setting of configuration ?>
+/* TODO: Do this as a configuration setting in list component */
+
+$actionName = sfContext::getInstance()->getActionName();
+$enableTopScrolling = false;
+
+if ($actionName == 'displayPredefinedReport') {
+    $enableTopScrolling = true;
+}
+
+?>                        
+
+<?php if ($enableTopScrolling) : // TODO: Get this as a setting of configuration ?>
 
     $("#scrollContainer").css('width', $("#resultTable").width() + 'px');
 
