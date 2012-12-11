@@ -106,7 +106,6 @@ class applyLeaveAction extends baseLeaveAction {
             if ($this->applyLeaveForm->isValid()) {
                 try {
                     $leaveParameters = $this->getLeaveParameterObject($this->applyLeaveForm->getValues());
-
                     $success = $this->getLeaveApplicationService()->applyLeave($leaveParameters);
 
                     if ($success) {
@@ -123,6 +122,11 @@ class applyLeaveAction extends baseLeaveAction {
     }
     
     protected function getLeaveParameterObject(array $formValues) {
+
+        $time = $formValues['time'];
+        $formValues['txtFromTime'] = $time['from'];
+        $formValues['txtToTime'] = $time['to'];
+        
         return new LeaveParameterObject($formValues);
     } 
 
