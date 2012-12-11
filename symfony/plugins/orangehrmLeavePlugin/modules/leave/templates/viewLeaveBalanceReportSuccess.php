@@ -106,7 +106,11 @@ use_stylesheets_for_form($form);
                                             $linkParamsRaw['leaveType'] = array($row['leaveTypeId']);
                                         endif;
  
-                                        $url = $reportBuilder->replaceHeaderParam($info['link'], $linkParamsRaw);
+                                        $link = $info['link'];
+                                        if ($mode == 'my') {
+                                            $link = str_replace('viewLeaveList', 'viewMyLeaveList', $link);
+                                        }
+                                        $url = $reportBuilder->replaceHeaderParam($link, $linkParamsRaw);
                                         echo link_to(esc_specialchars(__($column)), $url);
                                     
                                     else:
