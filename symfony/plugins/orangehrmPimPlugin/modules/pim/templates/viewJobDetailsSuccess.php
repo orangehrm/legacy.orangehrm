@@ -36,7 +36,7 @@
         <div class="inner">
             <?php if ($allowTerminate || $allowActivate || $jobInformationPermission->canRead()) : ?>
             
-            <?php include_partial('global/flash_messages'); ?>
+            <?php include_partial('global/flash_messages', array('prefix' => 'jobdetails')); ?>
             
             <form id="frmEmpJobDetails" method="post" enctype="multipart/form-data" action="<?php echo url_for('pim/viewJobDetails'); ?>">
                 <fieldset>
@@ -208,7 +208,7 @@
                         <?php echo $employeeTerminateForm['date']->renderLabel(__('Date') . ' <em>*</em>'); ?>
                         <?php echo $employeeTerminateForm['date']->render(array("class" => "formDateInput")); ?>
                     </li>
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $employeeTerminateForm['note']->renderLabel(__('Note')); ?>
                         <?php echo $employeeTerminateForm['note']->render(array("class" => "formTxtArea")); ?>
                     </li>
