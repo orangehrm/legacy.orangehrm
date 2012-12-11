@@ -139,6 +139,9 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         $leavePeriodHistory->setLeavePeriodStartMonth(3);
         $leavePeriodHistory->setLeavePeriodStartDay(1);
         $leavePeriodHistory->setCreatedAt('2012-08-02');
+
+        // work around for cached generated leave period list
+        $this->leavePeriodService = new LeavePeriodService();
         
         $this->leavePeriodService->saveLeavePeriodHistory( $leavePeriodHistory );
         
@@ -171,8 +174,9 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         
         $this->leavePeriodService->saveLeavePeriodHistory( $leavePeriodHistory );
         
-        
-         $result= $this->leavePeriodService->getGeneratedLeavePeriodList();
+        // work around for cached generated leave period list
+        $this->leavePeriodService = new LeavePeriodService();
+        $result= $this->leavePeriodService->getGeneratedLeavePeriodList();
 
         $this->assertEquals(array(array('2009-02-01','2011-01-01'),array('2011-01-02','2012-01-01'),array('2012-01-02','2013-01-01'),array('2013-01-02','2014-01-01')),$result);
         
