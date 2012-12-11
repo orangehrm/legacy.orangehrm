@@ -22,7 +22,7 @@
 /**
  * Leave Entitlement form for my entitlements
  */
-class MyLeaveEntitlementForm extends LeaveEntitlementForm {
+class MyLeaveEntitlementForm extends LeaveEntitlementSearchForm {
     public function configure() {
         parent::configure();
         
@@ -38,7 +38,7 @@ class MyLeaveEntitlementForm extends LeaveEntitlementForm {
           new sfValidatorCallback(array(
             'callback' => array($this, 'postValidate')
           ))
-        );
+        );        
     }
 
     public function postValidate($validator, $values) {

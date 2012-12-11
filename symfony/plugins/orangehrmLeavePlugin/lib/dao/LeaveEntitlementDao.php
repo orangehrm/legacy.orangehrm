@@ -46,7 +46,7 @@ class LeaveEntitlementDao extends BaseDao {
                 $q->addWhere('le.deleted = 0');
             }
             
-            if (!is_null($leaveTypeId)) {
+            if (!empty($leaveTypeId)) {
                 $q->addWhere('le.leave_type_id = :leaveTypeId');
                 $params[':leaveTypeId'] = $leaveTypeId;
             }            
