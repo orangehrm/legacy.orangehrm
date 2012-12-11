@@ -15,7 +15,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
         <?php if ($form->hasErrors()): ?>
                 <?php include_partial('global/form_errors', array('form' => $form)); ?>
         <?php endif; ?>        
-<?php if (count($leaveTypes) > 1) : ?>        
+<?php if (count($leaveTypes) > 0) : ?>        
         <form id="frmLeaveApply" name="frmLeaveApply" method="post" action="">
             <fieldset>                
                 <ol>
@@ -76,6 +76,9 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
 <!-- leave balance details HTML: Ends -->
 
 <?php
+
+// Do not render JS to avoid js issues when form is hidden 
+if (count($leaveTypes) > 0) : 
     $dateFormat = get_datepicker_date_format($sf_user->getDateFormat());
     $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
 ?>
@@ -433,3 +436,4 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
     }    
     
 </script>
+<?php endif?>

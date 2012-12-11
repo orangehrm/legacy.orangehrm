@@ -73,7 +73,7 @@ class assignLeaveAction extends baseLeaveAction {
         $this->leaveTypes = $this->getElegibleLeaveTypes();
         
         if (count($this->leaveTypes) == 0) {
-            $this->getUser()->setFlash('warning', __('No Leave Types with Leave Balance'));
+            $this->getUser()->setFlash('warning.nofade', __('No Leave Types with Leave Balance'));
         }
         
         $this->form = $this->getAssignLeaveForm($this->leaveTypes);        
