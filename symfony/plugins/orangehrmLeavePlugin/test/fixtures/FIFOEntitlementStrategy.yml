@@ -23,7 +23,7 @@ Employee:
   5: {empNumber: 6, firstName: 'Jane', lastName: 'Edward'}
   
 LeaveEntitlement:
-  0: {id: 1, leave_type_id: 1, emp_number: 1, no_of_days: 3, from_date: '2012-01-01 00:00:00', to_date: '2012-12-31 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
+  0: {id: 1, leave_type_id: 1, emp_number: 1, no_of_days: 3, from_date: '2011-01-01 00:00:00', to_date: '2011-12-31 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
   1: {id: 2, leave_type_id: 6, emp_number: 2, no_of_days: 4, days_used: 1, from_date: '2012-01-01 00:00:00', to_date: '2012-12-31 00:00:00', credited_date: '2013-01-06 00:00:00', note: '', entitlement_type: 1, deleted: 0}
   2: {id: 3, leave_type_id: 2, emp_number: 1, no_of_days: 1, from_date: '2013-01-01 00:00:00', to_date: '2013-12-31 00:00:00', credited_date: '2012-01-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}
   3: {id: 4, leave_type_id: 2, emp_number: 1, no_of_days: 2, from_date: '2013-01-01 00:00:00', to_date: '2013-12-31 00:00:00', credited_date: '2012-02-01 00:00:00', note: '', entitlement_type: 1, deleted: 0}

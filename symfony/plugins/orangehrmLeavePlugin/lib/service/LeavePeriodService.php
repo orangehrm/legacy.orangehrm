@@ -443,11 +443,13 @@ class LeavePeriodService extends BaseService {
             OrangeConfig::getInstance()->setAppConfValue(ConfigService::KEY_LEAVE_PERIOD_DEFINED, 'Yes');
 
             if ($isLeavePeriodDefined && !empty($currentLeavePeriod)) {
-                $strategy->handleLeavePeriodChange(
-                        $currentLeavePeriod->getLeavePeriodStartMonth(), 
-                        $currentLeavePeriod->getLeavePeriodStartDay(), 
-                        $leavePeriodHistory->getLeavePeriodStartMonth(), 
-                        $leavePeriodHistory->getLeavePeriodStartDay());
+                $leavePeriodForToday = $this->getCurrentLeavePeriodByDate(date('Y-m-d'));
+                $oldStartMonth = $currentLeavePeriod->getLeavePeriodStartMonth();
+                $oldStartDay = $currentLeavePeriod->getLeavePeriodStartDay();
+                $newStartMonth = $leavePeriodHistory->getLeavePeriodStartMonth();
+                $newStartDay = $leavePeriodHistory->getLeavePeriodStartDay();
+                
+                $strategy->handleLeavePeriodChange($leavePeriodForToday, $oldStartMonth, $oldStartDay, $newStartMonth, $newStartDay);
             }
             $conn->commit();
             return true;
