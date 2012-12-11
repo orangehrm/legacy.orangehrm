@@ -40,7 +40,7 @@ class viewLeaveEntitlementsAction extends sfAction {
     }    
     
     protected function getForm() {
-        return new LeaveEntitlementForm();
+        return new LeaveEntitlementSearchForm();
     }
     
     protected function showResultTableByDefault() {
@@ -89,7 +89,10 @@ class viewLeaveEntitlementsAction extends sfAction {
                 $this->showResultTable = false;
             } else {
                 $results = $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
-                $this->setListComponent($results, 0, 0);        
+                
+                // Show leave Type column if displaying all leave types
+                $showLeaveType = empty($filters['leave_type']);
+                $this->setListComponent($results, 0, 0, $showLeaveType);        
             }
         }
     }
@@ -115,9 +118,9 @@ class viewLeaveEntitlementsAction extends sfAction {
         return $searchParameters;
     }
     
-    protected function setListComponent($leaveList, $count, $page) {
+    protected function setListComponent($leaveList, $count, $page, $showLeaveType = false) {
         
-        $configurationFactory = $this->getListConfigurationFactory();
+        $configurationFactory = $this->getListConfigurationFactory($showLeaveType);
 
         $permissions = $this->getContext()->get('screen_permissions');
         
@@ -151,7 +154,8 @@ class viewLeaveEntitlementsAction extends sfAction {
         ohrmListComponent::setPageNumber($page);
     }    
     
-    protected function getListConfigurationFactory() {
+    protected function getListConfigurationFactory($showLeaveType = false) {
+        LeaveEntitlementListConfigurationFactory::$displayLeaveType = $showLeaveType;
         $configurationFactory = new LeaveEntitlementListConfigurationFactory();
         
         return $configurationFactory;

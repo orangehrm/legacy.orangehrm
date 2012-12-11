@@ -4453,6 +4453,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveBalanceReportForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementAddForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementBulkAssignFilterForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementForm.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementSearchForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveListForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeavePeriodForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveTypeForm.php -text

@@ -66,12 +66,14 @@ class LeaveEntitlementDao extends BaseDao {
                 $q->andWhereIn('le.id',$idList);
                 
             }
+
+            // We need leave type name
+            $q->leftJoin('le.LeaveType l');
             
             $orderClause = '';
             
             switch ($orderField) {
                 case 'leave_type' : 
-                    $q->leftJoin('le.LeaveType l');
                     $orderClause = 'l.name ' . $order;
                     break;
                 case 'employee_name':

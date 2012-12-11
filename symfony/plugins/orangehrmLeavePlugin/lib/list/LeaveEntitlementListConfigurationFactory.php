@@ -26,6 +26,8 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
     
     protected $allowEdit;
     
+    public static $displayLeaveType = false;
+    
     public function init() {
         sfContext::getInstance()->getConfiguration()->loadHelpers('OrangeDate');
         
@@ -33,7 +35,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
         $header2 = new ListHeader();
         $header3 = new ListHeader();
         $header4 = new ListHeader();
-
+            
         $header1->populateFromArray(array(
             'name' => 'Entitlement Type',
             'width' => '45%',
@@ -87,7 +89,26 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
         ));
 
 
-        $this->headers = array($header1, $header2, $header3, $header4);
+        $headers = array($header1, $header2, $header3, $header4);
+
+        if (self::$displayLeaveType) {           
+            
+            $leaveTypeHeader = new ListHeader();
+
+            $leaveTypeHeader->populateFromArray(array(
+                'name' => 'Leave Type',
+                'width' => '25%',
+                'isSortable' => false,
+                'elementType' => 'label',
+                'textAlignmentStyle' => 'left',
+                'elementProperty' => array('getter' => array('getLeaveType', 'getName'))
+            ));
+            array_unshift($headers, $leaveTypeHeader);            
+            
+        }
+        $this->headers = $headers;
+        
+
     }
     
     public function getClassName() {

@@ -145,7 +145,6 @@ use_stylesheets_for_form($form);
                             }
                         }
                     },
-                    'entitlements[leave_type]':{required: true },
                     'entitlements[date_from]': {
                         required: true,
                         valid_date: function() {
@@ -178,9 +177,6 @@ use_stylesheets_for_form($form);
                     'entitlements[employee][empName]':{
                         required:'<?php echo __(ValidationMessages::REQUIRED); ?>',
                         no_default_value:'<?php echo __(ValidationMessages::REQUIRED); ?>'
-                    },
-                    'entitlements[leave_type]':{
-                        required:'<?php echo __(ValidationMessages::REQUIRED); ?>'
                     },
                     'entitlements[date_from]':{
                         required:lang_invalidDate,
