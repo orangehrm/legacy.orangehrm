@@ -31,6 +31,10 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
 
         $this->leavePeriodService = new LeavePeriodService();
+        $leaveEntitlementService = new LeaveEntitlementService();
+        $leaveEntitlementService->setLeaveEntitlementStrategy(new FIFOEntitlementConsumptionStrategy());
+        $this->leavePeriodService->setLeaveEntitlementService($leaveEntitlementService);
+        
         TestDataService::truncateTables(array('LeavePeriodHistory'));
     }
     /**

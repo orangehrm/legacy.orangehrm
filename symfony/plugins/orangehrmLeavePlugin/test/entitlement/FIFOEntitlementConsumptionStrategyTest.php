@@ -31,6 +31,9 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
      */
     protected function setUp() {
         $this->strategy = new FIFOEntitlementConsumptionStrategy();
+
+        $this->fixture = sfConfig::get('sf_plugins_dir') . '/orangehrmLeavePlugin/test/fixtures/FIFOEntitlementStrategy.yml';
+        TestDataService::populate($this->fixture);        
     }
 
     /**
@@ -1259,6 +1262,116 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $expected = array('current' => array('2012-09-11' => array(6=>1), '2012-09-12' => array(6=>1)), 'change' => array());
         $this->assertEquals($expected, $results);
     }      
+   
+    public function testHandleLeavePeriodChange() {
+        
+        $entitlementsBefore = $this->getEntitlements();
+        $deletedEntitlementsBefore = $this->getDeletedEntitlements();
+        
+        $this->strategy->handleLeavePeriodChange(1, 1, 3, 27);
+        
+        $entitlementsAfter = $this->getEntitlements();
+        $deletedEntitlementsAfter = $this->getDeletedEntitlements();
+        
+        $this->assertEquals(count($entitlementsBefore), count($entitlementsAfter));
+        $this->assertEquals(count($deletedEntitlementsBefore), count($deletedEntitlementsAfter));
+
+        foreach ($entitlementsAfter as $id => $entitlement) {
+            $this->assertTrue(isset($entitlementsBefore[$id]));            
+            
+            $dateFromBefore = DateTime::createFromFormat('Y-m-d G:i:s', $entitlementsBefore[$id]->getFromDate());
+
+            $dateFromAfter = DateTime::createFromFormat('Y-m-d G:i:s', $entitlement->getFromDate());
+            $expectedDateFrom = $dateFromBefore->setDate($dateFromBefore->format('Y'), 3, 26);
+            
+            $dateToBefore = DateTime::createFromFormat('Y-m-d G:i:s', $entitlementsBefore[$id]->getFromDate());
+            $dateToAfter = DateTime::createFromFormat('Y-m-d G:i:s', $entitlementsBefore[$id]->getToDate());
+            $expectedDateTo = $dateToBefore->setDate($dateToBefore->format('Y'), 3, 27);
+            
+            // check year not changed, but month and date changed
+            $this->assertEquals($expectedDateFrom, $dateFromAfter);
+            $this->assertEquals($expectedDateTo, $dateToAfter);
+            
+            $this->_compareEntitlement($entitlementsBefore[$id], $entitlement);
+        }
+        
+        // Verify no change to deleted entitlements
+        foreach ($deletedEntitlementsAfter as $id => $entitlement) {
+            $this->assertTrue(isset($deletedEntitlementsBefore[$id]));
+            $this->_compareEntitlement($deletedEntitlementsBefore[$id], $entitlement);
+        }        
+        
+    }
+    
+    // Check leap year
+    
+    // check does not affect entitlements unless both from/to date match previous from/to date
+    
+    // Check leave assigned to old entitlements are redistributed
+    
+    protected function _compareEntitlements($expected, $results) {
+        $this->assertEquals(count($expected), count($results));
+        
+        for ($i = 0; $i < count($expected); $i++) {         
+            $this->_compareEntitlement($expected[$i], $results[$i]);
+        }
+    }
+    
+    protected function _compareEntitlement($expected, $actual) {
+        $this->assertEquals($expected->getId(), $actual->getId());
+        $this->assertEquals($expected->getEmpNumber(), $actual->getEmpNumber());
+        $this->assertEquals($expected->getNoOfDays(), $actual->getNoOfDays());
+        $this->assertEquals($expected->getLeaveTypeId(), $actual->getLeaveTypeId());
+        $this->assertEquals($expected->getFromDate(), $actual->getFromDate());
+        $this->assertEquals($expected->getToDate(), $actual->getToDate());
+        $this->assertEquals($expected->getCreditedDate(), $actual->getCreditedDate());
+        $this->assertEquals($expected->getNote(), $actual->getNote());
+        $this->assertEquals($expected->getEntitlementType(), $actual->getEntitlementType());
+        $this->assertEquals($expected->getDeleted(), $actual->getDeleted());
+        
+    }
+    
+    protected function getDeletedEntitlements() {
+        $deletedEntitlements = array();
+        $entitlements = Doctrine_Query::create()
+                        ->from('LeaveEntitlement le')
+                        ->where('le.deleted = 1')
+                        ->orderBy('le.id ASC')
+                        ->execute();
+        
+        foreach ($entitlements as $e) {
+            $deletedEntitlements[$e->getId()] = $e;
+        }        
+        
+        return $deletedEntitlements;
+    }
+    
+    protected function getEntitlements() {
+        $deletedEntitlements = array();
+        $entitlements = Doctrine_Query::create()
+                        ->from('LeaveEntitlement le')
+                        ->where('le.deleted = 0')
+                        ->orderBy('le.id ASC')
+                        ->execute();
+        
+        foreach ($entitlements as $e) {
+            $deletedEntitlements[$e->getId()] = $e;
+        }        
+        
+        return $deletedEntitlements;
+    }    
+    
+    
+    /** 
+     * Verify no change to deleted entitlements;
+     */
+    public function xtestHandleLeavePeriodChangeX() {
+        $this->strategy->handleLeavePeriodChange(1, 1, 3, 27);
+        
+                $fromDb = Doctrine_Query::create()
+                                ->from('LeaveEntitlement le')
+                                ->where('le.id = ? ', $id);
+    }
     
     public function testHandleLeaveCancel() {
         

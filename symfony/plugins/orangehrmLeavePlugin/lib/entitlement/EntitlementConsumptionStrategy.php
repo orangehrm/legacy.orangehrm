@@ -33,4 +33,6 @@ interface EntitlementConsumptionStrategy {
     public function handleLeaveCancel($leave);
     
     public function handleEntitlementStatusChange();
+    
+    public function handleLeavePeriodChange($oldMonth, $oldDay, $newMonth, $newDay);
 }

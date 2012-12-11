@@ -37,7 +37,11 @@ class LeaveEntitlementService extends BaseService {
         
         return $this->leaveEntitlementStrategy;
     }
-
+    
+    public function setLeaveEntitlementStrategy($leaveEntitlementStrategy) {
+        $this->leaveEntitlementStrategy = $leaveEntitlementStrategy;
+    }
+    
     public function getLeaveConfigService() {
         if (!($this->leaveConfigService instanceof LeaveConfigurationService)) {
             $this->leaveConfigService = new LeaveConfigurationService();

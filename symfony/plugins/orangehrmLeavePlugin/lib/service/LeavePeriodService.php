@@ -31,7 +31,33 @@ class LeavePeriodService extends BaseService {
     
     private $leavePeriodDao;
     private $leavePeriodList = null;
+    protected $leaveEntitlementService = null;
+    
+    
+    /**
+     * Sets the instance of LeaveEntitlementService class
+     *
+     * @param LeaveEntitlementService $leaveEntitlementService
+     * @return void
+     */
+    public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
+        $this->leaveEntitlementService = $leaveEntitlementService;
+    }
 
+    /**
+     * Returns the instance of LeaveEntitlementService
+     *
+     * @return LeaveEntitlementService LeaveEntitlementService object
+     */
+    public function getLeaveEntitlementService() {
+
+        if (!($this->leaveEntitlementService instanceof LeaveEntitlementService)) {
+            $this->leaveEntitlementService = new LeaveEntitlementService();
+        }
+
+        return $this->leaveEntitlementService;
+    }
+    
     /**
      * Sets the instance of LeavePeriodDao class
      *
@@ -403,8 +429,33 @@ class LeavePeriodService extends BaseService {
      * @return LeavePeriodHistory
      */
     public function saveLeavePeriodHistory(LeavePeriodHistory $leavePeriodHistory) {
-        $leavePeriodHistory = $this->getLeavePeriodDao()->saveLeavePeriodHistory($leavePeriodHistory);
-        OrangeConfig::getInstance()->setAppConfValue(ConfigService::KEY_LEAVE_PERIOD_DEFINED, 'Yes');
+
+        $conn = Doctrine_Manager::connection();
+        $conn->beginTransaction();
+
+        try {
+            $currentLeavePeriod = $this->getCurrentLeavePeriodStartDateAndMonth();
+
+            $strategy = $this->getLeaveEntitlementService()->getLeaveEntitlementStrategy();
+
+            $leavePeriodHistory = $this->getLeavePeriodDao()->saveLeavePeriodHistory($leavePeriodHistory);
+            $isLeavePeriodDefined = OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_LEAVE_PERIOD_DEFINED);
+            OrangeConfig::getInstance()->setAppConfValue(ConfigService::KEY_LEAVE_PERIOD_DEFINED, 'Yes');
+
+            if ($isLeavePeriodDefined && !empty($currentLeavePeriod)) {
+                $strategy->handleLeavePeriodChange(
+                        $currentLeavePeriod->getLeavePeriodStartMonth(), 
+                        $currentLeavePeriod->getLeavePeriodStartDay(), 
+                        $leavePeriodHistory->getLeavePeriodStartMonth(), 
+                        $leavePeriodHistory->getLeavePeriodStartDay());
+            }
+            $conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $conn->rollback();
+            throw new DaoException($e->getMessage());
+        }
+        
         return $leavePeriodHistory;
     }
     

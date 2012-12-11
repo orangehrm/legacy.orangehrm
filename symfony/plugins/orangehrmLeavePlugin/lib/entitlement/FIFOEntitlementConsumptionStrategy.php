@@ -635,7 +635,28 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
         
 
         $result = array('current' => $current, 'change' => $change);
-        print_r($result);
+
         return $result;          
+    }
+    
+    public function handleLeavePeriodChange($oldMonth, $oldDay, $newMonth, $newDay) {
+        
+        try {
+            
+            $pdo = Doctrine_Manager::connection()->getDbh();             
+            
+            $query = 'UPDATE ohrm_leave_entitlement e SET ' .
+                    "e.from_date = DATE_SUB(CONCAT(YEAR(e.to_date), '-', $newMonth, '-', $newDay), INTERVAL 1 DAY), " .
+                    "e.to_date = CONCAT(YEAR(e.from_date), '-', $newMonth, '-', $newDay)" .                    
+                    "WHERE e.deleted = 0";
+
+            $stmt = $pdo->prepare($query);            
+            
+            $stmt->execute();
+
+        } catch (DaoException $e) {
+            throw new DaoException($e->getMessage(), 0, $e);
+        }
+        
     }
 }
