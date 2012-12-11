@@ -10,7 +10,7 @@ LeaveEntitlement:
     summaryLabel: 'Total'
     summaryField: 'Days'
     summaryFunction: SUM
-    summaryFieldDecimals: 0
+    summaryFieldDecimals: 2
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/leave/deleteLeaveEntitlements'
