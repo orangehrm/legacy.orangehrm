@@ -1901,7 +1901,7 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
 </filter_fields> 
 
 <sub_report type="sql" name="mainTable">       
-    <query>FROM ohrm_leave_type WHERE deleted = 0 ORDER BY ohrm_leave_type.id</query>
+    <query>FROM ohrm_leave_type WHERE (deleted = 0) OR (SELECT count(l.id) FROM ohrm_leave l WHERE l.status = 3 AND l.leave_type_id = ohrm_leave_type.id) > 0 ORDER BY ohrm_leave_type.id</query>
     <id_field>leaveTypeId</id_field>
     <display_groups>
         <display_group name="leavetype" type="one" display="true">
@@ -2064,7 +2064,7 @@ ORDER BY ohrm_leave.leave_type_id
                 <field display="true">
                     <field_name>ohrm_leave_type.name</field_name>
                     <field_alias>unused</field_alias>
-                    <display_name>Unused Leave Entitlements</display_name>
+                    <display_name>Leave Balance</display_name>
                     <width>160</width>	
                 </field>                                                                                                     
             </fields>
@@ -2252,7 +2252,7 @@ ORDER BY ohrm_leave.emp_number
                 <field display="true">
                     <field_name>hs_hr_employee.emp_firstname</field_name>
                     <field_alias>unused</field_alias>
-                    <display_name>Unused Leave Entitlements</display_name>
+                    <display_name>Leave Balance</display_name>
                     <width>150</width>
                 </field> 
                                                                                                
