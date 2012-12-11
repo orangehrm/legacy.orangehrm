@@ -868,6 +868,8 @@ symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/EmployeeLeaveEntitlementTabl
 symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/base/BaseEmployeeLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AbstractDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AbstractDisplayFieldTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/AdvancedReport.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/AdvancedReportTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AvailableGroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AvailableGroupFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/CompositeDisplayField.class.php -text
@@ -927,6 +929,7 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/UserSelectionRuleTable.class.php 
 symfony/lib/model/doctrine/orangehrmCorePlugin/WorkflowStateMachine.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/WorkflowStateMachineTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseAbstractDisplayField.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseAdvancedReport.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseAvailableGroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseCompositeDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseConfig.class.php -text
@@ -3996,6 +3999,8 @@ symfony/plugins/orangehrmCorePlugin/lib/mail/orangehrmMailTransport.php -text
 symfony/plugins/orangehrmCorePlugin/lib/mail/orangehrmMailer.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginAbstractDisplayField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginAbstractDisplayFieldTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginAdvancedReport.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginAdvancedReportTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginAvailableGroupField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginAvailableGroupFieldTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginCompositeDisplayField.class.php -text
@@ -4056,6 +4061,13 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginWorkflowStateMachin
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginWorkflowStateMachineTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/parameterholder/SearchParameterHolder.php -text
 symfony/plugins/orangehrmCorePlugin/lib/parameterholder/SearchParameterHolderException.php -text
+symfony/plugins/orangehrmCorePlugin/lib/report/DataGenerator.php -text
+symfony/plugins/orangehrmCorePlugin/lib/report/ReportBuilder.php -text
+symfony/plugins/orangehrmCorePlugin/lib/report/ReportDefinition.php -text
+symfony/plugins/orangehrmCorePlugin/lib/report/SqlDataGenerator.php -text
+symfony/plugins/orangehrmCorePlugin/lib/report/dao/ReportDefinitionDao.php -text
+symfony/plugins/orangehrmCorePlugin/lib/report/exception/ReportException.php -text
+symfony/plugins/orangehrmCorePlugin/lib/report/service/ReportDefinitionService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/AdminUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/EssUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/HiringManagerUserRoleDecorator.php -text
@@ -4095,6 +4107,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/_footer.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_mainMenu.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmList.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmPluginPannel.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/templates/_report_paging.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/definePredefinedReportSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedReportSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text

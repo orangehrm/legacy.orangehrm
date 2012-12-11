@@ -1343,6 +1343,13 @@ CREATE TABLE `ohrm_leave_period_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table `ohrm_advanced_report` (
+  `id` int(10) not null,
+  `name` varchar(100) not null,
+  `definition` longtext not null,
+  primary key (`id`)
+) engine=innodb default charset=utf8;
+
 alter table ohrm_leave_type
     add foreign key (operational_country_id)
         references ohrm_operational_country(id) on delete set null;

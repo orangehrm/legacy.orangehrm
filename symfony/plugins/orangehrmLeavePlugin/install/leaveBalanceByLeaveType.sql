@@ -182,11 +182,5 @@ ORDER BY ohrm_leave.emp_number
         <join_by sub_report="takenQuery" id="empNumber"></join_by> 
         <join_by sub_report="unused" id="empNumber"></join_by>  
     </join>
-    <page_limit>20</page_limit>
-    <decorators>
-        <decorator>
-            <decorator_name>ChangeCase1</decorator_name>
-            <field>leaveTypeId</field>
-        </decorator>
-    </decorators>            
+    <page_limit>20</page_limit>       
 </report>'); 

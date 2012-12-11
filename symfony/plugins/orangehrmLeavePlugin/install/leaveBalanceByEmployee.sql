@@ -1,6 +1,6 @@
 DELETE FROM ohrm_advanced_report where id = 6;
 INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
-(6, 'Leave Entitlements and Usage Report', '
+(1, 'Leave Entitlements and Usage Report', '
 <report>
     <settings>
         <csv>
@@ -196,11 +196,5 @@ ORDER BY ohrm_leave.leave_type_id
         <join_by sub_report="unused" id="leaveTypeId"></join_by>  
 
     </join>
-    <page_limit>100</page_limit>
-    <decorators>
-        <decorator>
-            <decorator_name>ChangeCase1</decorator_name>
-            <field>leaveTypeId</field>
-        </decorator>
-    </decorators>            
+    <page_limit>100</page_limit>        
 </report>'); 

@@ -139,8 +139,9 @@ public static function fillData($phase=1, $source='/dbscript/dbscript-') {
 
 	error_log (date("r")." Fill Data Phase $phase - Read DB script\n",3, "installer/log.txt");
 
-	$dbScriptStatements = explode(";", $query);
-
+	// Match ; followed by whitespaces and new line. Does not match ; inside a query.
+        $dbScriptStatements   = preg_split('/;\s*$/m', $query);  
+    
 	error_log (date("r")." Fill Data Phase $phase - There are ".count($dbScriptStatements)." Statements in the DB script\n",3, "installer/log.txt");
 
 	for($c=0;(count($dbScriptStatements)-1)>$c;$c++)

@@ -45,7 +45,7 @@ class viewLeaveBalanceReportAction extends sfAction {
                 $reportType = $this->form->getValue('report_type');
                 if ($reportType != 0) {
                     $values = $this->convertValues($this->form->getValues());
-                    $reportId = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 5 : 6;
+                    $reportId = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 2 : 1;
                     $reportBuilder = new ReportBuilder();
                     $numOfRecords = $reportBuilder->getNumOfRecords($reportId, $values);
                     $maxPageLimit = $reportBuilder->getMaxPageLimit($reportId);

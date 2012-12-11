@@ -38,7 +38,7 @@ use_stylesheets_for_form($form);
         <div class="inner">
             <?php if ($pager->haveToPaginate()):?>
             <div class="top" style="padding-top:25px;">
-                <?php include_partial('report/report_paging', array('pager' => $pager));?>                
+                <?php include_partial('core/report_paging', array('pager' => $pager));?>                
             </div>
             <?php endif; ?> 
             <table class="table" width="<?php echo $tableWidthInfo["tableWidth"];?>" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
