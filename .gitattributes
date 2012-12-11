@@ -5267,6 +5267,7 @@ symfony/web/js/jquery.datePicker.js -text
 symfony/web/js/jquery.tooltip.js -text
 symfony/web/js/jquery.treeview.min.js -text
 symfony/web/js/orangehrm.admin.js -text
+symfony/web/js/orangehrm.autocomplete.js -text
 symfony/web/js/orangehrm.core.js -text
 symfony/web/js/orangehrm.datepicker.js -text
 symfony/web/js/orangehrm.validate.js -text

@@ -27,6 +27,7 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <script type="text/javascript" src="<?php echo public_path('jquery/validate/jquery.validate.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.core.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.autocomplete.js')?>"></script>
+        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.autocomplete.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.datepicker.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.form.js')?>"></script>        
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tipTip.minified.js')?>"></script>
