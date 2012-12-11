@@ -15,21 +15,6 @@ Installing
 ----------
 1. Install OrangeHRM using the web installer
 
-
-Testing Leave Module
---------------------
-The leave module new screens are not yet complete. Therefore, you have to use old screens
-to setup a leave period and create leave types.
-
-1. Click on the Leave menu and set up a leave period.
-2. Use the menu item Leave->Configure->Leave Types to create some leave types
-3. Create some employees
-4. Install Report Engine Addon
-   source the symfony/plugins/orangehrmReportEnginePlugin/install/dbscript.sql file
-7. Source the reports used by 'Leave Balance Report' in symfony/plugins/orangehrmLeavePlugin/install directory
-   i. leaveBalanceByEmployee.sql
-   ii. leaveBalanceByLeaveType.sql
-
 Deprecated Notes
 ----------------
 
