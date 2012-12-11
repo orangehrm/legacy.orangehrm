@@ -194,20 +194,20 @@ class viewLeaveBalanceReportAction extends sfAction {
             if (($total == 0) && ($scheduled == 0) && ($taken == 0) && ($exclude == 1)) {
 
             } else {
-                $unused = $this->getIntValue($total) - $this->getIntValue($scheduled) - $this->getIntValue($taken);
-                $this->resultsSet[$i]['unused'] = $unused;
+                $unused = $this->getValue($total) - $this->getValue($scheduled) - $this->getValue($taken);
+                $this->resultsSet[$i]['unused'] = number_format($unused,2);
                 $keep[] = $this->resultsSet[$i];
             }
         }
         $this->resultsSet = $keep;
     }
     
-    protected function getIntValue($value) {
+    protected function getValue($value) {
         if (empty($value)) {
             $value = 0;
         }
                 
-        return intval($value);
+        return $value;
     }
     private function getReportName($reportId) {
         $dao = new ReportDefinitionDao();
