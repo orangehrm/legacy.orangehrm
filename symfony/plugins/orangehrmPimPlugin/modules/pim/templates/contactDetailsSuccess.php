@@ -36,7 +36,7 @@
         <div class="inner">
             <?php if ($contactDetailsPermission->canRead()) : ?>
             
-            <?php include_partial('global/flash_messages'); ?>
+            <?php include_partial('global/flash_messages', array('prefix' => 'contactdetails')); ?>
             
             <form id="frmEmpContactDetails" method="post" action="<?php echo url_for('pim/contactDetails'); ?>">
                 <?php echo $form['_csrf_token']; ?>

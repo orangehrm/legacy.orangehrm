@@ -82,7 +82,7 @@ class viewPersonalDetailsAction extends basePimAction {
 
                         $employee = $this->form->getEmployee();
                         $this->getEmployeeService()->saveEmployee($employee);
-                        $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                        $this->getUser()->setFlash('personaldetails.success', __(TopLevelMessages::SAVE_SUCCESS));
                         $this->redirect('pim/viewPersonalDetails?empNumber='. $empNumber);
 
                     }

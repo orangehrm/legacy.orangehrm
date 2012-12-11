@@ -82,7 +82,7 @@
                             <?php echo $directDepositForm['amount']->render(array("class" => "formInputText", "maxlength" => 12)); ?>
                         </li>
                         <li class="required">
-                            <em>*</em><?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                            <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                         </li>
                     </ol>
                     <p>
@@ -109,7 +109,7 @@
         <div class="inner">
             <?php if ($salaryPermissions->canRead()) : ?>
             
-            <?php include_partial('global/flash_messages'); ?>
+            <?php include_partial('global/flash_messages', array('prefix' => 'salary')); ?>
             <form id="frmDelSalary" action="<?php echo url_for('pim/deleteSalary?empNumber=' . $empNumber); ?>" method="post">
                 <p id="actionSalary">
                     <?php if ($salaryPermissions->canCreate()) { ?>

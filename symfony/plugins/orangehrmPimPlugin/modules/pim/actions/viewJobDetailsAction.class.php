@@ -44,7 +44,7 @@ class viewJobDetailsAction extends basePimAction {
          * Check for a better solution.
          */
         if (empty($empNumber)) {
-            $this->getUser()->setFlash('templateMessage', array('warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE)));
+            $this->getUser()->setFlash('jobdetails.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
             $this->redirect($request->getReferer());
         }
         
@@ -104,7 +104,7 @@ class viewJobDetailsAction extends basePimAction {
                 $this->form->updateAttachment();
 
 
-                $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::UPDATE_SUCCESS)));
+                $this->getUser()->setFlash('jobdetails.success', __(TopLevelMessages::UPDATE_SUCCESS));
             } else {
                 $validationMsg = '';
                 foreach ($this->form->getWidgetSchema()->getPositions() as $widgetName) {
@@ -113,7 +113,7 @@ class viewJobDetailsAction extends basePimAction {
                     }
                 }
 
-                $this->getUser()->setFlash('templateMessage', array('warning', $validationMsg));
+                $this->getUser()->setFlash('jobdetails.warning', $validationMsg);
             }
 
             $this->redirect('pim/viewJobDetails?empNumber=' . $empNumber);

@@ -15,7 +15,7 @@
 
             <?php if ($personalInformationPermission->canRead()) : ?>
 
-            <?php include_partial('global/flash_messages'); ?>
+            <?php include_partial('global/flash_messages', array('prefix' => 'personaldetails')); ?>
 
             <form id="frmEmpPersonalDetails" method="post" action="<?php echo url_for('pim/viewPersonalDetails'); ?>">
 

@@ -108,7 +108,7 @@ class viewSalaryListAction extends basePimAction {
                         $this->setOperationName('UPDATE SALARY');
                         $service->saveEmployeeSalary($salary);                
 
-                        $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));  
+                        $this->getUser()->setFlash('salary.success', __(TopLevelMessages::SAVE_SUCCESS));  
                     }
                 }
             } else {
