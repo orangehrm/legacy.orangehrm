@@ -654,10 +654,16 @@ class LeaveRequestService extends BaseService {
                 $includeRoles = array('ESS');
             }            
             
-            $status = $request->getLeaveStatusId();
+            $leaveTypeDeleted = $request->getLeaveType()->getDeleted();
+            
+            $status = Leave::getTextForLeaveStatus($request->getLeaveStatusId());
+                    
+            if ($leaveTypeDeleted) {
+                $status = Leave::LEAVE_STATUS_LEAVE_TYPE_DELETED_TEXT . ' ' . $status;
+            }
 
             $actionNames = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
-                    Leave::getTextForLeaveStatus($status), $excludeRoles, $includeRoles);
+                    $status, $excludeRoles, $includeRoles);
 
             foreach ($actionNames as $name) {
                 $actions[$name] = ucfirst(strtolower($name));
@@ -677,8 +683,16 @@ class LeaveRequestService extends BaseService {
             $includeRoles = array('ESS');
         }
         
+        $status = $leave->getTextLeaveStatus();
+        
+        $leaveTypeDeleted = $leave->getLeaveType()->getDeleted();
+
+        if ($leaveTypeDeleted) {
+            $status = Leave::LEAVE_STATUS_LEAVE_TYPE_DELETED_TEXT . ' ' . $status;
+        }
+            
         $actionNames = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
-                $leave->getTextLeaveStatus(), $excludeRoles, $includeRoles);
+                $status, $excludeRoles, $includeRoles);
 
         foreach ($actionNames as $name) {
             $actions[$name] = ucfirst(strtolower($name));

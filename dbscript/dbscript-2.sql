@@ -546,7 +546,7 @@ INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES
     (0,'ohrm_attendance_record', 'id'),
     (0, 'ohrm_job_vacancy', 'id'),
     (0, 'ohrm_job_candidate', 'id'),
-    (99,'ohrm_workflow_state_machine', 'id'),
+    (106,'ohrm_workflow_state_machine', 'id'),
     (0, 'ohrm_job_candidate_attachment', 'id'),
     (0, 'ohrm_job_vacancy_attachment', 'id'),
     (0, 'ohrm_job_candidate_vacancy', 'id'),
@@ -652,7 +652,14 @@ INSERT INTO `ohrm_workflow_state_machine`(`id`, `workflow`,`state`,`role`,`actio
                                     (96, '4', 'SCHEDULED', 'ESS', 'CANCEL', 'CANCELLED'),
                                     (97, '4', 'SCHEDULED', 'ADMIN', 'CANCEL', 'CANCELLED'),
                                     (98, '4', 'SCHEDULED', 'SUPERVISOR', 'CANCEL', 'CANCELLED'),
-                                    (99, '4', 'TAKEN', 'ADMIN', 'CANCEL', 'CANCELLED');
+                                    (99, '4', 'TAKEN', 'ADMIN', 'CANCEL', 'CANCELLED'),
+                                    (100, '4', 'LEAVE TYPE DELETED PENDING APPROVAL', 'ESS', 'CANCEL', 'CANCELLED'),
+                                    (101, '4', 'LEAVE TYPE DELETED PENDING APPROVAL', 'ADMIN', 'CANCEL', 'CANCELLED'),
+                                    (102, '4', 'LEAVE TYPE DELETED PENDING APPROVAL', 'SUPERVISOR', 'CANCEL', 'CANCELLED'),
+                                    (103, '4', 'LEAVE TYPE DELETED SCHEDULED', 'ESS', 'CANCEL', 'CANCELLED'),
+                                    (104, '4', 'LEAVE TYPE DELETED SCHEDULED', 'ADMIN', 'CANCEL', 'CANCELLED'),
+                                    (105, '4', 'LEAVE TYPE DELETED SCHEDULED', 'SUPERVISOR', 'CANCEL', 'CANCELLED'),
+                                    (106, '4', 'LEAVE TYPE DELETED TAKEN', 'ADMIN', 'CANCEL', 'CANCELLED');
 
                                     
 INSERT INTO `ohrm_report_group` (`report_group_id`, `name`, `core_sql`) VALUES 

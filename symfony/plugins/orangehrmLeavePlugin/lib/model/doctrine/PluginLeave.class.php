@@ -12,6 +12,8 @@ abstract class PluginLeave extends BaseLeave {
     const LEAVE_STATUS_LEAVE_WEEKEND = 4;
     const LEAVE_STATUS_LEAVE_HOLIDAY = 5;
     
+    const LEAVE_STATUS_LEAVE_TYPE_DELETED_TEXT = 'LEAVE TYPE DELETED';
+    
     const LEAVE_STATUS_LEAVE_PENDING_APPROVAL_TEXT = 'Pending Approval';
 
     private static $leaveStatusText = array(
