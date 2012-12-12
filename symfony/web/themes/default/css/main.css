@@ -668,6 +668,41 @@ input[type=radio] {
 input[type=radio]:disabled {
     background: transparent;
 }
+/* ------------- Full Name styles ------------- */
+form ol.fieldsInLine {
+    border: none;
+    margin: 0;
+    padding-bottom: 2px;
+    padding-top: 0;
+}
+form ol.fieldsInLine li {
+    width: 218px;
+}
+form ol.fieldsInLine li input[type=text] {
+	width:192px;
+}
+form ol li.nameContainer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+form ol li ol.fieldsInLine li {
+    text-align: center;
+}
+form ol li label.hasTopFieldHelp {
+    margin-top: 20px;
+}
+form ol li div.fieldDescription {
+    margin-bottom: 5px;
+	color:#a9a9a9;
+	font-size:11px;    
+}
+form ol li div.fieldDescription em {
+	color:#aa4935;
+}
+form ol li ol.fieldsInLine li span.validation-error {
+	left: 0;
+    top: 38px;
+}
 /* ================ Form styles: End ================ */
 
 /* ================ searchForm styles: Begin ================ */
@@ -1338,15 +1373,9 @@ input.timeBox {
 .pimPane form p.required em {
 	color:#aa4935;
 }
-
-.pimPane form ol li span { /* Used in attachments */
-    width: 250px; 
-    float: none;
-}
 .pimPane form ol li label { /* Used in attachments */
     margin-top: 0; 
 }
-
 /* ================ PIM styles: End ================ */
 
 /* ================ Personal Details styles: Begin ================ */
@@ -1398,35 +1427,7 @@ div.personalDetails {
 .personalDetails form p {
 	padding-top: 0px;
 }
-/* ------------- Full Name styles ------------- */
-.personalDetails form ol.fieldsInLine {
-    border: none;
-    margin: 0;
-    padding-bottom: 2px;
-    padding-top: 0;
-}
 .personalDetails form ol.fieldsInLine li {
     width: 218px;
-}
-.personalDetails form ol.fieldsInLine li input[type=text] {
-	width:192px;
-}
-.personalDetails form ol.fieldsInLine li span.validation-error {
-    left: 0;
-}
-#nameContainer {
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-/* ------------- Full Name Hints styles ------------- */
-.personalDetails div.helpLabelContainer {
-    border: none;
-    margin: 0 0 0 150px;
-    padding-top: 0;    
-}
-.personalDetails div.helpLabelContainer div {
-    width: 218px;
-    text-align: center;
-    display: inline;
 }
 /* ================ Personal Details styles: End ================ */

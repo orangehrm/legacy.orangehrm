@@ -31,12 +31,21 @@
                     </div>
                     -->
                     <ol>
-                        <li class="line" id="nameContainer">
-                            <label for="Full_Name"><?php echo __('Full Name'); ?></label>
+                        <li class="line nameContainer">
+                            <label for="Full_Name" class="hasTopFieldHelp"><?php echo __('Full Name'); ?></label>
                             <ol class="fieldsInLine">
-                                <li><?php echo $form['txtEmpFirstName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('First Name'))); ?></li>
-                                <li><?php echo $form['txtEmpMiddleName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Middle Name'))); ?></li>
-                                <li><?php echo $form['txtEmpLastName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?></li>
+                                <li>
+                                    <div class="fieldDescription"><em>*</em> <?php echo __('First Name'); ?></div>
+                                    <?php echo $form['txtEmpFirstName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('First Name'))); ?>
+                                </li>
+                                <li>
+                                    <div class="fieldDescription"><?php echo __('Middle Name'); ?></div>
+                                    <?php echo $form['txtEmpMiddleName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Middle Name'))); ?>
+                                </li>
+                                <li>
+                                    <div class="fieldDescription"><em>*</em> <?php echo __('Last Name'); ?></div>
+                                    <?php echo $form['txtEmpLastName']->render(array("class" => "block default editable", "maxlength" => 30, "title" => __('Last Name'))); ?>
+                                </li>
                             </ol>    
                         </li>
                     </ol>

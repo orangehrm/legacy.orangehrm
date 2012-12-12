@@ -58,22 +58,23 @@ foreach ($jobVacancyList as $vacancy) {
             <?php echo $form['_csrf_token']; ?>
             <fieldset>
                 <ol>
-                    <li class="line">
+                    <li class="line nameContainer">
 
-                        <label><?php echo __('Full Name'); ?></label>
-
-
-                        <?php echo $form['firstName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
-
-<!--               <label id="frmDate" class="helpText"><?php echo __('First Name' . ' <em>*</em>'); ?></label>-->
-
-                        <?php echo $form['middleName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
-
-<!--                <label id="toDate" class="helpText"><?php echo __('Middle Name'); ?></label>-->
-
-                        <?php echo $form['lastName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
-
-<!--                <label id="toDate" class="helpText"><?php echo __('Last Name' . ' <em>*</em>'); ?></label>-->
+                        <label class="hasTopFieldHelp"><?php echo __('Full Name'); ?></label>
+                        <ol class="fieldsInLine">
+                            <li>
+                                <div class="fieldDescription"><em>*</em> <?php echo __('First Name'); ?></div>
+                                <?php echo $form['firstName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
+                            </li>
+                            <li>
+                                <div class="fieldDescription"><?php echo __('Middle Name'); ?></div>
+                                 <?php echo $form['middleName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
+                            </li>
+                            <li>
+                                <div class="fieldDescription"><em>*</em> <?php echo __('Last Name'); ?></div>
+                                <?php echo $form['lastName']->render(array("class" => "formInputText", "maxlength" => 35)); ?>
+                            </li>
+                        </ol>                        
 
                     </li>
 

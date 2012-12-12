@@ -52,8 +52,7 @@ $(document).ready(function() {
     $('#btnSave').click(function() {
         var isExistedVacancyGoingToBeDeleted = 0;
         if($("#btnSave").attr('value') == lang_edit) {
-            $('#addCandidateHeading').hide();
-            $('#addCandidate .mainHeading').append('<h2>' + lang_editCandidateTitle + '</h2>');
+            $('#addCandidateHeading').text(lang_editCandidateTitle);
             for(i=0; i < widgetList.length; i++) {
                 $(widgetList[i]).removeAttr("disabled");
             }
@@ -391,11 +390,6 @@ function isValidForm(){
                 valid_date: lang_validDateMsg,
                 date_range_comp:lang_dateValidation
             }
-
-        },
-        errorPlacement: function(error, element) {
-            error.appendTo(element.prev('label'));
-            error.appendTo(element.next('div.errorHolder'));
 
         }
 
