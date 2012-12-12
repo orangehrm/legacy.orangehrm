@@ -203,6 +203,7 @@ $(document).ready(function() {
     $('#btnCopyCancel').click(function () {
         $('#projectName').val('');
         $('#copyActivityList').empty();
+        $('#errorHolderCopy').empty();
         $('#btnCopyDig').hide();
     });    
     
