@@ -1470,8 +1470,8 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (76, 'My Entitlements', 70, 74, 3, 200, '/reset/1', 0),
 (77, 'Employee Entitlements', 69, 74, 3, 300, '/reset/1', 0),
 (78, 'Reports', NULL, 41, 2, 200, NULL, 0),
-(79, 'Leave Balance', 78, 78, 3, 100, NULL, 0),
-(80, 'My Leave Balance', 79, 78, 3, 200, NULL, 0);
+(79, 'Leave Entitlements and Usage', 78, 78, 3, 100, NULL, 0),
+(80, 'My Leave Entitlements and Usage', 79, 78, 3, 200, NULL, 0);
 
 INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
 (1, 1, 1, 1, 1, 1),
