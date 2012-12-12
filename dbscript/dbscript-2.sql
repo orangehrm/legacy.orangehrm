@@ -1980,7 +1980,7 @@ ORDER BY A.leave_type_id
                     <field display="true">
                         <field_name>sum(A.no_of_days) - sum(A.scheduled) - sum(A.taken)</field_name>
                         <field_alias>entitlement_total</field_alias>
-                        <display_name>Leave Entitlements</display_name>
+                        <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
                     </field>                                
                 </fields>
@@ -2015,7 +2015,7 @@ ORDER BY ohrm_leave_type.id
                     <field display="true">
                         <field_name>sum(length_days)</field_name>
                         <field_alias>scheduled</field_alias>
-                        <display_name>Leave Scheduled</display_name>
+                        <display_name>Leave Scheduled (Days)</display_name>
                         <width>120</width>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2</link>
                     </field>                                
@@ -2046,7 +2046,7 @@ ORDER BY ohrm_leave.leave_type_id
                     <field display="true">
                         <field_name>sum(length_days)</field_name>
                         <field_alias>taken</field_alias>
-                        <display_name>Leave Taken</display_name>
+                        <display_name>Leave Taken (Days)</display_name>
                         <width>120</width>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3</link>
                     </field>                                
@@ -2071,7 +2071,7 @@ ORDER BY ohrm_leave.leave_type_id
                 <field display="true">
                     <field_name>ohrm_leave_type.name</field_name>
                     <field_alias>unused</field_alias>
-                    <display_name>Leave Balance</display_name>
+                    <display_name>Leave Balance (Days)</display_name>
                     <width>160</width>	
                 </field>                                                                                                     
             </fields>
@@ -2174,7 +2174,7 @@ ORDER BY A.emp_number
                     <field display="true">
                         <field_name>sum(A.no_of_days) - sum(A.scheduled) - sum(A.taken)</field_name>
                         <field_alias>entitlement_total</field_alias>
-                        <display_name>Leave Entitlements</display_name>
+                        <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
                     </field>                                
                 </fields>
@@ -2204,7 +2204,7 @@ ORDER BY ohrm_leave.emp_number
                     <field display="true">
                         <field_name>sum(length_days)</field_name>
                         <field_alias>scheduled</field_alias>
-                        <display_name>Leave Scheduled</display_name>
+                        <display_name>Leave Scheduled (Days)</display_name>
                         <width>121</width>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2</link>
                     </field>                                
@@ -2235,7 +2235,7 @@ ORDER BY ohrm_leave.emp_number
                     <field display="true">
                         <field_name>sum(length_days)</field_name>
                         <field_alias>taken</field_alias>
-                        <display_name>Leave Taken</display_name>
+                        <display_name>Leave Taken (Days)</display_name>
                         <width>120</width>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3</link>
                     </field>                                
@@ -2259,7 +2259,7 @@ ORDER BY ohrm_leave.emp_number
                 <field display="true">
                     <field_name>hs_hr_employee.emp_firstname</field_name>
                     <field_alias>unused</field_alias>
-                    <display_name>Leave Balance</display_name>
+                    <display_name>Leave Balance (Days)</display_name>
                     <width>150</width>
                 </field> 
                                                                                                
