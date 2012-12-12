@@ -1435,6 +1435,7 @@ div.personalDetails {
 }
 .personalDetails form ol.fieldsInLine li {
     width: 218px;
+    margin-bottom: 0;
 }
 .personalDetails form ol li label.hasTopFieldHelp {
     margin-top: 23px;
