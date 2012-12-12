@@ -162,6 +162,7 @@ function toggleFilters(show) {
                 $('#entitlements_employee_empName').parent('li').hide();
             } else {
                 $('#entitlements_employee_empName').parent('li').show();
+                $('span#ajax_count').remove();
             }
         });
         
