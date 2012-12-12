@@ -74,7 +74,7 @@ class CustomFieldForm extends BaseForm {
                          CustomField::SCREEN_SALARY => __('Salary'),
                          CustomField::SCREEN_JOB => __('Job'),
                          CustomField::SCREEN_REPORT_TO => __('Report-to'),
-                         CustomField::SCREEN_MEMBERSHIP => __('Membership')
+                         CustomField::SCREEN_MEMBERSHIP => __('Memberships')
                         );
         return $screens;
     }

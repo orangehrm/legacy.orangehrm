@@ -138,7 +138,7 @@ if($empNumber == sfContext::getInstance()->getUser()->getAttribute('auth.empNumb
             $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('membership','membership_attachment','membership_custom_fields'), array(), array(), $self, $entities);
             if($dataGroupPermission->canRead()) :
         ?>        
-            <li<?php echo getListClassHtml('viewMemberships'); ?>><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>"><?php echo __("Membership"); ?></a></li>
+            <li<?php echo getListClassHtml('viewMemberships'); ?>><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>"><?php echo __("Memberships"); ?></a></li>
         <?php endif; ?>
     
     </ul>

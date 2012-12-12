@@ -111,10 +111,10 @@ $havePassports = $numContacts>0;
                             <th class="check" style="width:2%"><input type="checkbox" id="immigrationCheckAll" class="checkbox"/></th>
                             <?php } ?>
                             <th><?php echo __('Document'); ?></th>
-                            <th><?php echo __('Document No'); ?></th>
+                            <th><?php echo __('Number'); ?></th>
                             <th><?php echo __('Issued By'); ?></th>
                             <th><?php echo __('Issued Date'); ?></th>
-                            <th><?php echo __('Date of Expiry'); ?></th>
+                            <th><?php echo __('Expiry Date'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
