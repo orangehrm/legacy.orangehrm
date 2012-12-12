@@ -11,6 +11,7 @@ Default:
     summaryField: 'Time (Hours)'
     summaryFunction: SUM
     summaryFieldDecimals: 2
+  enableTopScrolling: false
   buttons: []
   buttonsPosition: before-data
   formMethod: post
@@ -306,6 +307,7 @@ PimPredefinedReport:
   buttonsPosition: ''
   formMethod: post
   formAction: '#'
+  enableTopScrolling: true
   assets: []
   jsInitMethods: []
 
