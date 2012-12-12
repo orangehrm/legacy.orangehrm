@@ -1436,4 +1436,7 @@ div.personalDetails {
 .personalDetails form ol.fieldsInLine li {
     width: 218px;
 }
+.personalDetails form ol li label.hasTopFieldHelp {
+    margin-top: 20px;
+}
 /* ================ Personal Details styles: End ================ */
