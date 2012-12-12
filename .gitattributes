@@ -4660,6 +4660,7 @@ symfony/plugins/orangehrmLeavePlugin/web/css/leaveTypeListSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/viewHolidayListSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/viewHolidayListSuccessSearch.css -text
 symfony/plugins/orangehrmLeavePlugin/web/js/addLeaveEntitlementSuccess.js -text
+symfony/plugins/orangehrmLeavePlugin/web/js/assignLeaveSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineHolidaySuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineHolidaySuccessValidate.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineLeavePeriodSuccess.js -text

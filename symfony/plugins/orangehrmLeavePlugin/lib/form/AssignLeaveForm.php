@@ -191,6 +191,13 @@ class AssignLeaveForm extends sfForm {
 
         return $styleSheets;
     }
+    
+    public function getJavaScripts() {
+        $javaScripts = parent::getJavaScripts();
+        $javaScripts[] = '/orangehrmLeavePlugin/js/assignLeaveSuccess.js';
+
+        return $javaScripts;
+    }     
 
     /**
      *
