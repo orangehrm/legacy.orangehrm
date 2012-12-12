@@ -32,7 +32,7 @@ class LeaveEntitlementBulkAssignFilterForm extends BaseForm {
         $this->setWidget('bulk_assign', new sfWidgetFormInputCheckbox());
         //$this->setValidator('bulk_assign', new sfValidatorChoice(array('choices' => array(1), 'required' => false)));
         $this->setValidator('bulk_assign', new sfValidatorPass());
-        $labels['bulk_assign'] = __('Add to multiple employees');
+        $labels['bulk_assign'] = __('Add to Multiple Employees');
 
         $locationWidget = new ohrmReportWidgetOperationalCountryLocationDropDown();
         $this->setWidget('location', $locationWidget);

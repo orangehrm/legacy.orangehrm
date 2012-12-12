@@ -118,7 +118,7 @@ use_stylesheets_for_form($form);
 <div class="modal hide" id="preview" style="width:500px">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3><?php echo __('OrangeHRM - Matching employees'); ?></h3>
+    <h3><?php echo __('OrangeHRM - Matching Employees'); ?></h3>
   </div>
   <div class="modal-body">
       <span><?php echo __('The selected leave entitlement will be applied to the following employees.');?></span>
