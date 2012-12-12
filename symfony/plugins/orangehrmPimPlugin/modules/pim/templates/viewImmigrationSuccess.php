@@ -88,7 +88,7 @@ $havePassports = $numContacts>0;
     
     <div class="miniList" id="immidrationList">
         <div class="head">
-            <h1><?php echo __("Assigned Immigration Documents"); ?></h1>
+            <h1><?php echo __("Assigned Immigration Records"); ?></h1>
         </div>
         
         <div class="inner">
