@@ -71,7 +71,7 @@ class viewModulesAction extends sfAction {
     protected function _resetModulesSavedInSession() {
         
         $this->getUser()->getAttributeHolder()->remove('admin.disabledModules'); 
-        $this->getUser()->getAttributeHolder()->remove('mainMenu.menuItemArray');
+        $this->getUser()->getAttributeHolder()->remove(mainMenuComponent::MAIN_MENU_USER_ATTRIBUTE);
         
     }    
     

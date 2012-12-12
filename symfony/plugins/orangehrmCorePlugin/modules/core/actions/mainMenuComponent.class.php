@@ -19,6 +19,8 @@
 
 class mainMenuComponent extends sfComponent {
     
+    const MAIN_MENU_USER_ATTRIBUTE = 'mainMenu.menuItemArray';
+    
     protected $menuService;
     
     public function getMenuService() {
@@ -69,17 +71,17 @@ class mainMenuComponent extends sfComponent {
 
     protected function _getMenuItemDetails() {
         
-        if (!$this->getUser()->hasAttribute('mainMenu.menuItemArray')) {
+        if (!$this->getUser()->hasAttribute(self::MAIN_MENU_USER_ATTRIBUTE)) {
             
             // $menuItemArray = $this->getContext()->getUserRoleManager()->getAccessibleMenuItemDetails();
             // Above leads to an internal error when ESS tries to access unauthorized URL
             // Try http://localhost/orangehrm/symfony/web/index.php/performance/saveReview as ESS
             $menuItemArray = UserRoleManagerFactory::getUserRoleManager()->getAccessibleMenuItemDetails();
-            $this->getUser()->setAttribute('mainMenu.menuItemArray', $menuItemArray);
+            $this->getUser()->setAttribute(self::MAIN_MENU_USER_ATTRIBUTE, $menuItemArray);
             
         }
         
-        return $this->getUser()->getAttribute('mainMenu.menuItemArray');
+        return $this->getUser()->getAttribute(self::MAIN_MENU_USER_ATTRIBUTE);
         
     }
     

@@ -49,7 +49,7 @@ class defineTimesheetPeriodAction extends sfAction {
                 $results = $this->form->save();
                 $this->getMenuService()->enableModuleMenuItems('time');
                 $this->getMenuService()->enableModuleMenuItems('attendance');
-                $this->getUser()->getAttributeHolder()->remove('mainMenu.menuItemArray');
+                $this->getUser()->getAttributeHolder()->remove(mainMenuComponent::MAIN_MENU_USER_ATTRIBUTE);
             }
             $this->redirect('time/proceedTimesheetPeriod');
         }

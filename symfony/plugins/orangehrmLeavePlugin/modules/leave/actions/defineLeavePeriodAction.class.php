@@ -117,7 +117,7 @@ class defineLeavePeriodAction extends baseLeaveAction {
                 $this->getLeavePeriodService()->saveLeavePeriodHistory($leavePeriodHistory);
                 
                 $this->getMenuService()->enableModuleMenuItems('leave');
-                $this->getUser()->getAttributeHolder()->remove('mainMenu.menuItemArray');
+                $this->getUser()->getAttributeHolder()->remove(mainMenuComponent::MAIN_MENU_USER_ATTRIBUTE);
                 
                 $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
 
