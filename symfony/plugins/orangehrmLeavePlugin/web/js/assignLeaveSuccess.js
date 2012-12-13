@@ -191,7 +191,8 @@ $(document).ready(function() {
         });
         
         //Click Submit button
-        $('#assignBtn').click(function() {
+       $('#assignBtn').click(function(event) {
+        	event.preventDefault();
             if($('#assignleave_txtFromDate').val() == displayDateFormat ){
                 $('#assignleave_txtFromDate').val("");
             }

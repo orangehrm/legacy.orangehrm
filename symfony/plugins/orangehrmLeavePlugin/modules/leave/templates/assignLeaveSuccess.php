@@ -73,6 +73,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
     <input type="button" class="btn" data-dismiss="modal" id="closeButton" value="<?php echo __('Ok'); ?>" />
   </div>
 </div>
+<?php include_component('core', 'ohrmPluginPannel', array('location' => 'assign-leave-javascript'))?>
 <!-- leave balance details HTML: Ends -->
 
 <?php
