@@ -18,53 +18,9 @@
  * Boston, MA  02110-1301, USA
  */
 ?>
-<style type="text/css">
-    ol#filter {
-        border-bottom: 0px;
-    }
-    
-    ol#filter li {
-        float: left;
-        width: auto;
-        margin-right: 20px;
-    }    
-    ol#filter li:first-child {
-        float: left;
-        width: 100%;
-    }
-    ol#filter li:first-child label {
-        width: 200px;        
-    }    
-    ol#filter span#ajax_count {
-        margin-left: 20px;
-    }
-    
-    ol#employee_list {
-        margin-top: 20px;
-        height: 200px;
-        overflow-y: scroll;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-    ol#employee_list li {
-        padding-top: 3px;
-        padding-bottom: 3px;
-        padding-left: 2px;
-        padding-right: 2px;
-        
-    }    
-    ol#employee_list li.odd {
-        background-color: #EAEAEA;
-    }
-    
-    ol#employee_list li.even {
-        
-    }
-    
-</style>
-    
-<?php
 
+<?php
+use_stylesheet('../orangehrmLeavePlugin/css/addLeaveEntitlementSuccess.css');
 use_javascripts_for_form($form);
 use_stylesheets_for_form($form);
 

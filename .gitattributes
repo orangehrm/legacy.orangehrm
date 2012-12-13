@@ -4660,6 +4660,7 @@ symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveTypeServiceTest.php
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkScheduleServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkWeekServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/orangehrmLeavePluginAllTests.php -text
+symfony/plugins/orangehrmLeavePlugin/web/css/addLeaveEntitlementSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/applyLeaveSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/assignLeaveSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/defineLeavePeriodSuccess.css -text
