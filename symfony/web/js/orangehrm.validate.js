@@ -17,8 +17,10 @@
         // If element has onkeyup:false, do not run onkeyup validation for that element.
         onkeyup: function(element) {
             var elementName = jQuery(element).attr('name');
-            if (this.settings.rules[elementName].onkeyup == undefined || this.settings.rules[elementName].onkeyup !== false) {
-              jqValidatorDefaultOnKeyUp.apply(this, arguments);
+            if (this.settings.rules[elementName] != undefined) {
+                if (this.settings.rules[elementName].onkeyup == undefined || this.settings.rules[elementName].onkeyup !== false) {
+                  jqValidatorDefaultOnKeyUp.apply(this, arguments);
+                }
             }
         }     
     });
