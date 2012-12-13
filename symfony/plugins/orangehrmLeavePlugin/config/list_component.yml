@@ -38,7 +38,7 @@ HolidayList:
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/leave/deleteHoliday'
-  assets: [viewHolidayListSuccess.js, viewHolidayListSuccess.css]
+  assets:
   jsInitMethods: []  
   
 LeaveTypeList:

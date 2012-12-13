@@ -4675,7 +4675,6 @@ symfony/plugins/orangehrmLeavePlugin/web/js/defineLeaveTypeSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccessValidate.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/leaveTypeListSuccess.js -text
-symfony/plugins/orangehrmLeavePlugin/web/js/viewHolidayListSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewHolidayListSuccessSearch.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewLeaveListSuccess.js -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text

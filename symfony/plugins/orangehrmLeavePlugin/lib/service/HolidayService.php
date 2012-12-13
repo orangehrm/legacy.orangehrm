@@ -119,34 +119,45 @@ class HolidayService extends BaseService {
      */
     public function searchHolidays($startDate = null, $endDate = null) {
 
-        $holidayList = array();
         $holidayList = $this->getHolidayDao()->searchHolidays($startDate, $endDate);
+        
+        $startDate = new DateTime($startDate);
+        $endDate = new DateTime($endDate);
+        
+        $startYear = $startDate->format('Y');
+        $endYear = $endDate->format('Y');
 
-        $startDateTimeStamp = (is_null($startDate)) ? strtotime(date("Y-m-d")) : strtotime($startDate);
-        $endDateTimeStamp = (is_null($endDate)) ? strtotime(date("Y-m-d")) : strtotime($endDate);
-
-        $formattedHolidayList = array();
+        $results = array();
+        
         foreach ($holidayList as $holiday) {
             if ($holiday->getRecurring() == 1) {
-                $startYearRecurring = date("Y", $startDateTimeStamp) . '-' . date("m", strtotime($holiday->getDate())) . '-' . date("d", strtotime($holiday->getDate()));
-                $startYearRecurringTimeStamp = strtotime($startYearRecurring);
-                if (($startYearRecurringTimeStamp >= $startDateTimeStamp) && ($startYearRecurringTimeStamp <= $endDateTimeStamp)) {
-                    $holiday->setDate(date("Y-m-d", $startYearRecurringTimeStamp));
-                    $formattedHolidayList[] = $holiday;
-                } else {
-                    $endYearRecurring = date("Y", $endDateTimeStamp) . '-' . date("m", strtotime($holiday->getDate())) . '-' . date("d", strtotime($holiday->getDate()));
-                    $endYearRecurringTimeStamp = strtotime($endYearRecurring);
-                    if (($endYearRecurringTimeStamp >= $startDateTimeStamp) && ($endYearRecurringTimeStamp <= $endDateTimeStamp)) {
-                        $holiday->setDate(date("Y-m-d", $endYearRecurringTimeStamp));
-                        $formattedHolidayList[] = $holiday;
+                
+                $holidayDate = new DateTime($holiday->getDate());
+                
+                for ($year = $startYear; $year <= $endYear; $year++) {
+                    
+                    $recurringDateStr = "{$year}-{$holidayDate->format('m')}-{$holidayDate->format('d')}";                    
+                    $recurringDate = new DateTime($recurringDateStr);
+                    
+                    if ($recurringDate >= $startDate && $recurringDate <= $endDate) {
+                        $recurringHoliday = $holiday->copy();
+                        $recurringHoliday->setDate($recurringDateStr);
+                        $recurringHoliday->setId($holiday->getId());
+                        
+                        $results[] = $recurringHoliday;
                     }
-                }                
+                }
+                             
             } else {
-                $formattedHolidayList[] = $holiday;
+                $results[] = $holiday;
             }
         }
-
-        return $formattedHolidayList;
+        
+        usort($results, function($a, $b) {
+            return strtotime($a->getDate()) - strtotime($b->getDate());
+        });
+        
+        return array_values($results);
     }
 
     /**
