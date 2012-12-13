@@ -1,7 +1,7 @@
 <?php
 $styleSheet = 'orange';
 $imagePath = public_path("../../themes/{$styleSheet}/images/login");
-$version = '3.0-alpha.6';
+$version = '3.0-alpha.7';
 $copyrightYear = '2012';
 ?>
 
