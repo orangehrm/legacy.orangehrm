@@ -1,61 +1,10 @@
-<!DOCTYPE html>
-<?php 
-$cultureElements = explode('_', $sf_user->getCulture()); 
-?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $cultureElements[0]; ?>" lang="<?php echo $cultureElements[0]; ?>">
-    
-    <head>
-
-        <title>OrangeHRM</title>
-        
-        <?php include_http_metas() ?>
-        <?php include_metas() ?>
-        
-        <link rel="shortcut icon" href="<?php echo theme_path('images/favicon.ico')?>" />
-        
-        <!-- Library CSS files -->
-        <link href="<?php echo theme_path('css/reset.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo theme_path('css/tipTip.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo theme_path('css/jquery/jquery-ui-1.8.21.custom.css')?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo theme_path('css/jquery/jquery.autocomplete.css')?>" rel="stylesheet" type="text/css"/>
-        
-        <!-- Custom CSS files -->
-        <link href="<?php echo theme_path('css/main.css')?>" rel="stylesheet" type="text/css"/>
-       
-        <!-- Library JavaScript files -->
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery-1.7.2.min.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/validate/jquery.validate.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.core.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.autocomplete.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.autocomplete.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.datepicker.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.form.js')?>"></script>        
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tipTip.minified.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/bootstrap-modal.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tablehover.min.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.clickoutside.js')?>"></script>
-
-        <!-- Custom JavaScript files -->
-        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.validate.js');?>"></script>       
-        <script type="text/javascript" src="<?php echo public_path('js/archive.js');?>"></script>
-        
-        <?php 
-        /* Note: use_javascript() doesn't work well when we need to maintain the order of JS inclutions.
-         * Ex: It may include a jQuery plugin before jQuery core file. There are two position options as
-         * 'first' and 'last'. But they don't seem to resolve the issue.
-         */
-        ?>   
-        
-        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->        
+<?php require_once '_header.php'; ?>
 
     </head>
     <body>
       
         <div id="wrapper">
-
+            
             <div id="branding">
                 <img src="<?php echo theme_path('images/logo.png')?>" width="283" height="56" alt="OrangeHRM"/>
                 <a href="http://www.orangehrm.com/user-survey-registration.php" class="subscribe" target="_blank"><?php echo __('Join OrangeHRM Community'); ?></a>
@@ -92,95 +41,6 @@ $cultureElements = explode('_', $sf_user->getCulture());
         
         <div id="footer">
             OrangeHRM ver 3.0-alpha.6 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
-        </div> <!-- footer -->
- 
-        <script type="text/javascript">
-
-            $(document).ready(function() {
-                
-                /* Enabling hovering effect for table rows */
-                $('table.hover').tableHover();                
-                
-                /* Enabling tooltips */
-                $(".tiptip").tipTip();
-
-                /* Toggling header menus */
-                $("#welcome").click(function () {
-                    $("#welcome-menu").slideToggle("fast");
-                    $(this).toggleClass("activated-welcome");
-                    return false;
-                });
-                
-                $("#help").click(function () {
-                    $("#help-menu").slideToggle("fast");
-                    $(this).toggleClass("activated-help");
-                    return false;
-                });
-                
-                $('.panelTrigger').outside('click', function() {
-                    $('.panelContainer').stop(true, true).slideUp('fast');
-                });                
-
-                /* Button hovering effects */
-                $("input[type=button]").hover(function() {
-                    $(this).css("background-color","#086912");
-                        }, function() {
-                    $(this).css("background-color","#33ac3f");
-                });
-
-                $("input.reset, input.cancel").hover(function() {
-                    $(this).css("background-color","#4d4d4d");
-                        }, function() {
-                    $(this).css("background-color","#848484");
-                });
-
-                $("input.delete").hover(function() {
-                    $(this).css("background-color","#782918");
-                        }, function() {
-                    $(this).css("background-color","#aa4935");
-                });
-
-                /* Fading out main messages */
-                $(".message a.messageCloseButton").click(function() {
-                    $(this).parent('div.message').fadeOut("slow");
-                });
-                
-                setTimeout(function(){
-                    $("div.fadable").fadeOut("slow", function () {
-                        $("div.fadable").remove();
-                    });
-                }, 2000);
-
-                /* Toggling search form: Begins */
-                //$(".toggableForm .inner").hide(); // Disabling this makes search forms to be expanded by default.
-
-                $(".toggableForm .toggle").click(function () {
-                    $(".toggableForm .inner").slideToggle('slow', function() {
-                        if($(this).is(':hidden')) {
-                            $('.toggableForm .tiptip').tipTip({content:'<?php echo __(CommonMessages::EXPAND_OPTIONS); ?>'});
-                        } else {
-                            $('.toggableForm .tiptip').tipTip({content:'<?php echo __(CommonMessages::HIDE_OPTIONS); ?>'});
-                        }
-                    });
-                    $(this).toggleClass("activated");
-                });
-                /* Toggling search form: Ends */
-
-                /* Enabling/disabling form fields: Begin */
-                
-                $('form.clickToEditForm input, form.clickToEditForm select, form.clickToEditForm textarea').attr('disabled', 'disabled');
-                $('form.clickToEditForm input[type=button]').removeAttr('disabled');
-                
-                $('form input.editButton').click(function(){
-                    $('form.clickToEditForm input, form.clickToEditForm select, form.clickToEditForm textarea').removeAttr('disabled');
-                });
-                
-                /* Enabling/disabling form fields: End */
-                
-            });
-            
-        </script>        
-
-    </body>
-    
-</html>
+        </div> <!-- footer -->        
+        
+<?php require_once '_footer.php'; ?>

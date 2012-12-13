@@ -703,6 +703,25 @@ form ol li ol.fieldsInLine li span.validation-error {
 	left: 0;
     top: 38px;
 }
+/* ------------- Button hovering styles ------------- */
+input.generalButtonMouseOver {
+    background-color: #086912;
+}
+input.generalButtonMouseOut {
+    background-color: #33ac3f;
+}
+input.cancelButtonMouseOver {
+    background-color: #4d4d4d;
+}
+input.cancelButtonMouseOut {
+    background-color: #848484;
+}
+input.deleteButtonMouseOver {
+    background-color: #782918;
+}
+input.deleteButtonMouseOut {
+    background-color: #aa4935;
+}
 /* ================ Form styles: End ================ */
 
 /* ================ searchForm styles: Begin ================ */

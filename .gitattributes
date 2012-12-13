@@ -659,7 +659,9 @@ symfony/apps/orangehrm/modules/performance/templates/showDefineKpiSuccess.php -t
 symfony/apps/orangehrm/modules/performance/templates/updateKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/viewReviewSuccess.php -text
 symfony/apps/orangehrm/templates/_flash_messages.php -text
+symfony/apps/orangehrm/templates/_footer.php -text
 symfony/apps/orangehrm/templates/_form_errors.php -text
+symfony/apps/orangehrm/templates/_header.php -text
 symfony/apps/orangehrm/templates/_paging_links.php -text
 symfony/apps/orangehrm/templates/_paging_links_js.php -text
 symfony/apps/orangehrm/templates/freshorange.php -text
@@ -667,6 +669,7 @@ symfony/apps/orangehrm/templates/layout.php -text
 symfony/apps/orangehrm/templates/mail/performance_approve.txt -text
 symfony/apps/orangehrm/templates/mail/performance_reject.txt -text
 symfony/apps/orangehrm/templates/mail/performance_submit.txt -text
+symfony/apps/orangehrm/templates/noHeader.php -text
 symfony/apps/orangehrm/templates/oldLayout.php -text
 symfony/config/ProjectConfiguration.class.php -text
 symfony/config/autoload.yml -text
@@ -5312,6 +5315,17 @@ symfony/web/themes/default/images/favicon.ico -text
 symfony/web/themes/default/images/h1-bg.png -text
 symfony/web/themes/default/images/help-down.png -text
 symfony/web/themes/default/images/help-up.png -text
+symfony/web/themes/default/images/login/Login_button.png -text
+symfony/web/themes/default/images/login/facebook.png -text
+symfony/web/themes/default/images/login/linkedin.png -text
+symfony/web/themes/default/images/login/login.png -text
+symfony/web/themes/default/images/login/logo.png -text
+symfony/web/themes/default/images/login/mark.png -text
+symfony/web/themes/default/images/login/password-hint.png -text
+symfony/web/themes/default/images/login/twiter.png -text
+symfony/web/themes/default/images/login/username-hint.png -text
+symfony/web/themes/default/images/login/valid.png -text
+symfony/web/themes/default/images/login/youtube.png -text
 symfony/web/themes/default/images/logo.png -text
 symfony/web/themes/default/images/nav-bg.png -text
 symfony/web/themes/default/images/paging-first.png -text

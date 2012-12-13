@@ -8,8 +8,6 @@ class loginAction extends sfAction {
      */
     public function execute($request) {
         
-        $this->setLayout('oldLayout');
-        
         $loginForm = new LoginForm();
         $this->message = $this->getUser()->getFlash('message');
         $this->form = $loginForm;

@@ -15,7 +15,6 @@ $copyrightYear = '2012';
     }
     
     #spanSocialMedia a img {
-        margin-bottom: -8px;
 		border: none;
     }
 

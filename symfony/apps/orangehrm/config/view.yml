@@ -12,12 +12,5 @@ default:
   has_layout:     true
   layout:         layout
 
-viewJobsSuccess:
-   javascripts:    [-*]
-   stylesheets:    [-*]
-   
-viewEmployeeListSuccess:
-  layout: freshorange
-  javascripts:    [-*]
-  stylesheets:    [-*]  
-  
+loginSuccess:
+  layout: noHeader
