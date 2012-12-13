@@ -5,16 +5,28 @@
  **/
 
 /** Set default for jquery validator */
-$.validator.setDefaults({
-    errorElement : 'span',
-    errorClass : 'validation-error',
-    onkeyup: function(element) {
-        var elementName = jQuery(element).attr('name');
-        if (this.settings.rules[elementName].onkeyup !== false) {
-          jQuery.validator.defaults.onkeyup.apply(this, arguments);
-        }
-    }    
-});
+(function($){
+    
+    // Remember default onkeyup function
+    var jqValidatorDefaultOnKeyUp = jQuery.validator.defaults.onkeyup;
+    
+    $.validator.setDefaults({
+        errorElement : 'span',
+        errorClass : 'validation-error',
+
+        // If element has onkeyup:false, do not run onkeyup validation for that element.
+        onkeyup: function(element) {
+            var elementName = jQuery(element).attr('name');
+            if (this.settings.rules[elementName].onkeyup == undefined || this.settings.rules[elementName].onkeyup !== false) {
+              jqValidatorDefaultOnKeyUp.apply(this, arguments);
+            }
+        }     
+    });
+
+}(jQuery));    
+
+
+
 
 /**
  * valid_date validator method.
