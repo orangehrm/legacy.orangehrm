@@ -7,9 +7,14 @@
 /** Set default for jquery validator */
 $.validator.setDefaults({
     errorElement : 'span',
-    errorClass : 'validation-error'    
+    errorClass : 'validation-error',
+    onkeyup: function(element) {
+        var elementName = jQuery(element).attr('name');
+        if (this.settings.rules[elementName].onkeyup !== false) {
+          jQuery.validator.defaults.onkeyup.apply(this, arguments);
+        }
+    }    
 });
-
 
 /**
  * valid_date validator method.
