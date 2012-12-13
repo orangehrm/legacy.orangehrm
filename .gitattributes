@@ -3605,7 +3605,6 @@ symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/getActivitiesRelate
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/indexSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/jobCategorySuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/listCustomerSuccess.php -text
-symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/listMailConfigerationSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/listMailConfigurationSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/listMailSubscriptionsSuccess.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/templates/listProjectActivitySuccess.php -text
