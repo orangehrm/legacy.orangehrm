@@ -18,7 +18,7 @@ LeaveEntitlement:
   jsInitMethods: []
   
 HolidayList:
-  pluginName: orangehrmCoreLeavePlugin
+  pluginName: orangehrmLeavePlugin
   hasSelectableRows: true
   unselectableRowIds: []
   idValueGetter: getId
