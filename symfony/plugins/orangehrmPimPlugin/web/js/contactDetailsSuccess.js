@@ -8,11 +8,13 @@ $(document).ready(function() {
             'contact[emp_work_telephone]': {phone: true},
             'contact[emp_work_email]' : {
                 email: true,
-                uniqueWorkEmail: true
+                uniqueWorkEmail: true,
+                onkeyup: false
             },
             'contact[emp_oth_email]': {
                 email: true,
-                uniqueOtherEmail: true
+                uniqueOtherEmail: true,
+                onkeyup: false
             }
 
         },

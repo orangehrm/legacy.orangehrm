@@ -123,7 +123,8 @@
 			 rules: {
 			 	'emailConfigurationForm[txtMailAddress]': { 
                     required: true,
-                    email: true
+                    email: true,
+                    onkeyup: false
                 }
 		 	 },
 		 	 messages: {

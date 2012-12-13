@@ -114,7 +114,8 @@ $(document).ready(function() {
                 required:true,
                 maxlength: 100,
                 uniqueEmail:true,
-                email:true
+                email:true,
+                onkeyup: false                
             }
         },
         messages: {
