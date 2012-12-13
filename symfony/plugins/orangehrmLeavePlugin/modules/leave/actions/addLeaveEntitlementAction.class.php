@@ -215,9 +215,13 @@ class addLeaveEntitlementAction extends sfAction {
 
         }
             
+            if(isset($values['employee']['empId'])){
+                $leaveEntitlement->setEmpNumber($values['employee']['empId']);
+            }
+            if(isset($values['leave_type'])){
+                $leaveEntitlement->setLeaveTypeId($values['leave_type']);
+            }
             
-            $leaveEntitlement->setEmpNumber($values['employee']['empId']);
-            $leaveEntitlement->setLeaveTypeId($values['leave_type']);
         
             $user = $this->getUser();
             $userId = $user->getAttribute('auth.userId');
@@ -232,8 +236,8 @@ class addLeaveEntitlementAction extends sfAction {
         
         
         
-        $leaveEntitlement->setFromDate($values['date']['from']);
-        $leaveEntitlement->setToDate($values['date']['to']);
+            $leaveEntitlement->setFromDate($values['date']['from']);
+            $leaveEntitlement->setToDate($values['date']['to']);
 
         return $leaveEntitlement;
     }

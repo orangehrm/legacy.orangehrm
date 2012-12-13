@@ -21,42 +21,45 @@
  * @property LeaveType $LeaveType
  * @property Employee $Employee
  * @property SystemUser $SystemUser
+ * @property LeaveEntitlementType $LeaveEntitlementType
  * @property Doctrine_Collection $leave
  * 
- * @method integer             getId()               Returns the current record's "id" value
- * @method integer             getEmpNumber()        Returns the current record's "emp_number" value
- * @method decimal             getNoOfDays()         Returns the current record's "no_of_days" value
- * @method decimal             getDaysUsed()         Returns the current record's "days_used" value
- * @method integer             getLeaveTypeId()      Returns the current record's "leave_type_id" value
- * @method timestamp           getFromDate()         Returns the current record's "from_date" value
- * @method timestamp           getToDate()           Returns the current record's "to_date" value
- * @method timestamp           getCreditedDate()     Returns the current record's "credited_date" value
- * @method string              getNote()             Returns the current record's "note" value
- * @method integer             getEntitlementType()  Returns the current record's "entitlement_type" value
- * @method integer             getDeleted()          Returns the current record's "deleted" value
- * @method integer             getCreatedById()      Returns the current record's "created_by_id" value
- * @method string              getCreatedByName()    Returns the current record's "created_by_name" value
- * @method LeaveType           getLeaveType()        Returns the current record's "LeaveType" value
- * @method Employee            getEmployee()         Returns the current record's "Employee" value
- * @method SystemUser          getSystemUser()       Returns the current record's "SystemUser" value
- * @method Doctrine_Collection getLeave()            Returns the current record's "leave" collection
- * @method LeaveEntitlement    setId()               Sets the current record's "id" value
- * @method LeaveEntitlement    setEmpNumber()        Sets the current record's "emp_number" value
- * @method LeaveEntitlement    setNoOfDays()         Sets the current record's "no_of_days" value
- * @method LeaveEntitlement    setDaysUsed()         Sets the current record's "days_used" value
- * @method LeaveEntitlement    setLeaveTypeId()      Sets the current record's "leave_type_id" value
- * @method LeaveEntitlement    setFromDate()         Sets the current record's "from_date" value
- * @method LeaveEntitlement    setToDate()           Sets the current record's "to_date" value
- * @method LeaveEntitlement    setCreditedDate()     Sets the current record's "credited_date" value
- * @method LeaveEntitlement    setNote()             Sets the current record's "note" value
- * @method LeaveEntitlement    setEntitlementType()  Sets the current record's "entitlement_type" value
- * @method LeaveEntitlement    setDeleted()          Sets the current record's "deleted" value
- * @method LeaveEntitlement    setCreatedById()      Sets the current record's "created_by_id" value
- * @method LeaveEntitlement    setCreatedByName()    Sets the current record's "created_by_name" value
- * @method LeaveEntitlement    setLeaveType()        Sets the current record's "LeaveType" value
- * @method LeaveEntitlement    setEmployee()         Sets the current record's "Employee" value
- * @method LeaveEntitlement    setSystemUser()       Sets the current record's "SystemUser" value
- * @method LeaveEntitlement    setLeave()            Sets the current record's "leave" collection
+ * @method integer              getId()                   Returns the current record's "id" value
+ * @method integer              getEmpNumber()            Returns the current record's "emp_number" value
+ * @method decimal              getNoOfDays()             Returns the current record's "no_of_days" value
+ * @method decimal              getDaysUsed()             Returns the current record's "days_used" value
+ * @method integer              getLeaveTypeId()          Returns the current record's "leave_type_id" value
+ * @method timestamp            getFromDate()             Returns the current record's "from_date" value
+ * @method timestamp            getToDate()               Returns the current record's "to_date" value
+ * @method timestamp            getCreditedDate()         Returns the current record's "credited_date" value
+ * @method string               getNote()                 Returns the current record's "note" value
+ * @method integer              getEntitlementType()      Returns the current record's "entitlement_type" value
+ * @method integer              getDeleted()              Returns the current record's "deleted" value
+ * @method integer              getCreatedById()          Returns the current record's "created_by_id" value
+ * @method string               getCreatedByName()        Returns the current record's "created_by_name" value
+ * @method LeaveType            getLeaveType()            Returns the current record's "LeaveType" value
+ * @method Employee             getEmployee()             Returns the current record's "Employee" value
+ * @method SystemUser           getSystemUser()           Returns the current record's "SystemUser" value
+ * @method LeaveEntitlementType getLeaveEntitlementType() Returns the current record's "LeaveEntitlementType" value
+ * @method Doctrine_Collection  getLeave()                Returns the current record's "leave" collection
+ * @method LeaveEntitlement     setId()                   Sets the current record's "id" value
+ * @method LeaveEntitlement     setEmpNumber()            Sets the current record's "emp_number" value
+ * @method LeaveEntitlement     setNoOfDays()             Sets the current record's "no_of_days" value
+ * @method LeaveEntitlement     setDaysUsed()             Sets the current record's "days_used" value
+ * @method LeaveEntitlement     setLeaveTypeId()          Sets the current record's "leave_type_id" value
+ * @method LeaveEntitlement     setFromDate()             Sets the current record's "from_date" value
+ * @method LeaveEntitlement     setToDate()               Sets the current record's "to_date" value
+ * @method LeaveEntitlement     setCreditedDate()         Sets the current record's "credited_date" value
+ * @method LeaveEntitlement     setNote()                 Sets the current record's "note" value
+ * @method LeaveEntitlement     setEntitlementType()      Sets the current record's "entitlement_type" value
+ * @method LeaveEntitlement     setDeleted()              Sets the current record's "deleted" value
+ * @method LeaveEntitlement     setCreatedById()          Sets the current record's "created_by_id" value
+ * @method LeaveEntitlement     setCreatedByName()        Sets the current record's "created_by_name" value
+ * @method LeaveEntitlement     setLeaveType()            Sets the current record's "LeaveType" value
+ * @method LeaveEntitlement     setEmployee()             Sets the current record's "Employee" value
+ * @method LeaveEntitlement     setSystemUser()           Sets the current record's "SystemUser" value
+ * @method LeaveEntitlement     setLeaveEntitlementType() Sets the current record's "LeaveEntitlementType" value
+ * @method LeaveEntitlement     setLeave()                Sets the current record's "leave" collection
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -198,6 +201,10 @@ abstract class BaseLeaveEntitlement extends sfDoctrineRecord
 
         $this->hasOne('SystemUser', array(
              'local' => 'created_by_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('LeaveEntitlementType', array(
+             'local' => 'entitlement_type',
              'foreign' => 'id'));
 
         $this->hasMany('Leave as leave', array(

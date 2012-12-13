@@ -14,6 +14,31 @@ LeavePeriodHistory:
     created_at:
       type: date
 
+LeaveEntitlementType:
+  tableName: ohrm_leave_entitlement_type
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    name:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_editable:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+
 LeaveEntitlement:
   tableName: ohrm_leave_entitlement
   columns:
@@ -116,6 +141,10 @@ LeaveEntitlement:
       type: one
     SystemUser:
       local: created_by_id
+      foreign: id
+      type: one
+    LeaveEntitlementType:
+      local: entitlement_type
       foreign: id
       type: one
       

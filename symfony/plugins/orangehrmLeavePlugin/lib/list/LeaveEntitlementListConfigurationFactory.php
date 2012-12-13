@@ -42,8 +42,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'left',
-            'filters' => array('LeaveEntitlementTypeCellFilter' => array()),
-            'elementProperty' => array('getter' => 'getEntitlementType')
+            'elementProperty' => array('getter' => array('getLeaveEntitlementType', 'getName')) 
         ));
 
         $header2->populateFromArray(array(

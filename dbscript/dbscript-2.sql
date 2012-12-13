@@ -1891,6 +1891,9 @@ INSERT INTO  ohrm_email_processor(`id`, `email_id`, `class_name`) VALUES
     (12, 12, 'LeaveRejectApplicantMailProcessor'),
     (13, 13, 'LeaveRejectSubscriberMailProcessor');
 
+INSERT INTO ohrm_leave_entitlement_type(`id`,`name`,`is_editable`) VALUES
+    (1,'Added',1);
+
 INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
 (1, 'Leave Entitlements and Usage Report', '
 <report>
