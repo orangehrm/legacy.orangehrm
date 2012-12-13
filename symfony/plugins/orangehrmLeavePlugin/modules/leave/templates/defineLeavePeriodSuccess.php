@@ -32,9 +32,9 @@
                         <label>
                             <?php echo __("Current Leave Period"); ?>
                         </label>
-                        <label>
+                        <span>
                             <?php echo set_datepicker_date_format($currentLeavePeriod[0]) . " " . __("to") . " " . set_datepicker_date_format($currentLeavePeriod[1]);?>
-                        </label>
+                        </span>
                     </li>
                     <?php } ?>
                     <li class="required">
