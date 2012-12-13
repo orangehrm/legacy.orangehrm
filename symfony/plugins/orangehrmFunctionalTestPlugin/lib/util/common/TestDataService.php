@@ -327,9 +327,12 @@ class TestDataService {
     }
 
     public static function loadObjectList($alias, $fixture, $key) {
+        return self::loadObjectListFromArray($alias, $data, $key);
+    }
+    
+    public static function loadObjectListFromArray($alias, $data, $key) {
 
         $objectList = array();
-        $data = sfYaml::load($fixture);
 
         foreach ($data[$key] as $row) {
             $object = new $alias;
@@ -338,7 +341,7 @@ class TestDataService {
         }
 
         return $objectList;
-    }
+    }    
 
     public static function getRecords($query) {
         return self::_getDbConnection()->query($query)->fetchAll(PDO::FETCH_ASSOC);
