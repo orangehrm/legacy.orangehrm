@@ -189,6 +189,7 @@
     </div>
     <div class="modal-body">
         <p><?php echo __('Will be deleted from all employees'); ?></p>
+        <br>
         <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
     </div>
     <div class="modal-footer">

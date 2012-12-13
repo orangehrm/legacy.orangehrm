@@ -52,7 +52,7 @@ foreach ($jobVacancyList as $vacancy) {
 
     <div class="head"><h1 id="addCandidateHeading"><?php echo $title; ?></h1></div>
     <div class="inner">
-        <?php include_partial('global/flash_messages'); ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'addcandidate')); ?>
         <form name="frmAddCandidate" id="frmAddCandidate" method="post" action="<?php echo url_for('recruitment/addCandidate?id=' . $candidateId); ?>" enctype="multipart/form-data">
 
             <?php echo $form['_csrf_token']; ?>
@@ -212,6 +212,7 @@ foreach ($jobVacancyList as $vacancy) {
     </div>
     <div class="modal-body">
         <p><?php echo __("This action will remove previous vacancy"); ?></p>
+        <br>
         <p><?php echo __('Remove?'); ?></p>
     </div>
     <div class="modal-footer">
