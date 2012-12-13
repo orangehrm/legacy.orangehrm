@@ -4,22 +4,6 @@ $(document).ready(function() {
         return (checkPhone(element));
     });
 
-    $('#btnSaveGenInfo').click(function() {
-        isFormValid();
-        //if user clicks on Edit make all fields editable
-        if($("#btnSaveGenInfo").attr('value') == edit) {
-            $("#btnSaveGenInfo").attr('value', save)
-        }
-        else {
-            isFormValid();
-            $("#frmGenInfo").submit()
-        }
-    });
-    
-});
-
-//form validation
-function isFormValid() {
     $("#frmGenInfo").validate({ 
         rules: {
             'organization[name]': {
@@ -32,7 +16,8 @@ function isFormValid() {
                 phone: true
             },
             'organization[email]' : {
-                email: true
+                email: true,
+                onkeyup: false
             },
             'organization[note]' : {
                 maxlength: 250
@@ -57,4 +42,15 @@ function isFormValid() {
         }
     });
     
-}
+    $('#btnSaveGenInfo').click(function() {
+
+        //if user clicks on Edit make all fields editable
+        if($("#btnSaveGenInfo").attr('value') == edit) {
+            $("#btnSaveGenInfo").attr('value', save)
+        }
+        else {
+            $("#frmGenInfo").submit();
+        }
+    });
+    
+});
