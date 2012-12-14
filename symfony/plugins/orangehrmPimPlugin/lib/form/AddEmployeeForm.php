@@ -63,21 +63,19 @@ class AddEmployeeForm extends sfForm {
         $employeeId = str_pad($empNumber, 4, '0');
 
         $this->widgets = array(
-            'fullNameLabel' => new ohrmWidgetDiv(),
             'firstName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
             'middleName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
             'lastName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
             'employeeId' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 10, "colspan" => 3)),
             'photofile' => new sfWidgetFormInputFileEditable(array('edit_mode' => false, 'with_delete' => false, 
                 'file_src' => ''), array("class" => "duplexBox", "colspan" => 3)),
-//            'helpText' => new ohrmWidgetDiv(),
             'chkLogin' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1), array("colspan" => 3)),
             'user_name' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 20, "colspan" => 3)),
-            'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText", "colspan" => 3)),
             'user_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText passwordRequired", 
                 "maxlength" => 20, "colspan" => 3)),
             're_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText passwordRequired", 
                 "maxlength" => 20, "colspan" => 3)),
+            'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText", "colspan" => 3)),            
             'empNumber' => new sfWidgetFormInputHidden(),
         );
 
@@ -117,12 +115,21 @@ class AddEmployeeForm extends sfForm {
 
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
 
-        sfWidgetFormSchemaFormatterAddEmployee::setNoOfColumns(4);
-        //merge location dropdown
         $formExtension = PluginFormMergeManager::instance();
         $formExtension->mergeForms($this, 'addEmployee', 'AddEmployeeForm');
-
-        $this->widgetSchema->setFormFormatterName('AddEmployee');
+        
+        
+        $customRowFormats[0] = "<li class=\"line nameContainer\"><label class=\"hasTopFieldHelp\">Full Name</label><ol class=\"fieldsInLine\"><li><div class=\"fieldDescription\"><em>*</em> First Name</div>\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        $customRowFormats[1] = "<li><div class=\"fieldDescription\">Middle Name</div>\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        $customRowFormats[2] = "<li><div class=\"fieldDescription\"><em>*</em> Last Name</div>\n %field%%help%\n%hidden_fields%%error%</li>\n</ol>\n</li>";
+        $customRowFormats[6] = "<li class=\"loginSection\">%label%\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        $customRowFormats[7] = "<li class=\"loginSection\">%label%\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        $customRowFormats[8] = "<li class=\"loginSection\">%label%\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        $customRowFormats[9] = "<li class=\"loginSection\">%label%\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        
+        sfWidgetFormSchemaFormatterCustomRowFormat::setCustomRowFormats($customRowFormats);
+        $this->widgetSchema->setFormFormatterName('CustomRowFormat');
+        
     }
 
     /**
@@ -141,8 +148,7 @@ class AddEmployeeForm extends sfForm {
             'user_name' => __('User Name') . '<em> *</em>',
             'user_password' => __('Password') . '<em id="password_required"> *</em>',
             're_password' => __('Confirm Password') . '<em id="rePassword_required"> *</em>',
-            'status' => __('Status') . '<em> *</em>',
-//            'helpText' => '<div class="helpText" style="width:160px;padding-top:5px;">' . __(CommonMessages::FILE_LABEL_IMAGE) . '</div>',
+            'status' => __('Status') . '<em> *</em>'
         );
 
         return $labels;
@@ -152,8 +158,6 @@ class AddEmployeeForm extends sfForm {
 
         $posts = $this->getValues();
         $file = $posts['photofile'];
-//        print_r($file);die;
-        //saving employee
         $employee = new Employee();
         $employee->firstName = $posts['firstName'];
         $employee->lastName = $posts['lastName'];
@@ -219,27 +223,27 @@ class AddEmployeeForm extends sfForm {
 
     private function pictureSizeAdjust($imgHeight, $imgWidth) {
 
-        if ($imgHeight > 180 || $imgWidth > 150) {
+        if ($imgHeight > 200 || $imgWidth > 200) {
             $newHeight = 0;
             $newWidth = 0;
 
-            $propHeight = floor(($imgHeight / $imgWidth) * 150);
-            $propWidth = floor(($imgWidth / $imgHeight) * 180);
+            $propHeight = floor(($imgHeight / $imgWidth) * 200);
+            $propWidth = floor(($imgWidth / $imgHeight) * 200);
 
-            if ($propHeight <= 180) {
+            if ($propHeight <= 200) {
                 $newHeight = $propHeight;
-                $newWidth = 150;
+                $newWidth = 200;
             }
 
-            if ($propWidth <= 150) {
+            if ($propWidth <= 200) {
                 $newWidth = $propWidth;
-                $newHeight = 180;
+                $newHeight = 200;
             }
         } else {
-            if ($imgHeight <= 180)
+            if ($imgHeight <= 200)
                 $newHeight = $imgHeight;
 
-            if ($imgWidth <= 150)
+            if ($imgWidth <= 200)
                 $newWidth = $imgWidth;
         }
         return array('width' => $newWidth, 'height' => $newHeight);

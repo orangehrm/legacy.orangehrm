@@ -1,16 +1,15 @@
 
 <?php echo javascript_include_tag('../orangehrmPimPlugin/js/addEmployeeSuccess'); ?>
 
+<div class="box">
+
 <?php if (isset($credentialMessage)) { ?>
 
-<div align="center" >
-    <br><br><br>
-    <h1 style="color: red">Credentials Required </h1>
+<div class="message warning">
+    <?php echo __(CommonMessages::CREDENTIALS_REQUIRED) ?> 
 </div>
 
 <?php } else { ?>
-
-<div class="box twoColumn">
 
     <div class="head">
         <h1 id=""><?php echo __('Add Employee'); ?></h1>
@@ -35,9 +34,9 @@
         </form>
     </div>
 
-</div> <!-- Box -->
-
 <?php } ?>
+    
+</div> <!-- Box -->    
 
 <script type="text/javascript">
     //<![CDATA[
