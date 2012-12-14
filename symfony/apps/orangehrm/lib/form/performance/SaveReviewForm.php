@@ -97,8 +97,8 @@ class SaveReviewForm extends BaseForm {
     }
 
     public function getEmployeeListAsJson() {
-        $companyService = new CompanyService();
-        return $companyService->getEmployeeListAsJson();
+         $employeeService = new EmployeeService();
+         return $employeeService->getEmployeeListAsJson();        
     }
     
     public function save() {

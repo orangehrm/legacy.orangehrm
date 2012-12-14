@@ -264,7 +264,6 @@ symfony/apps/orangehrm/lib/helper/OrangeHelper.php -text
 symfony/apps/orangehrm/lib/message/CommonMessages.php -text
 symfony/apps/orangehrm/lib/message/TopLevelMessages.php -text
 symfony/apps/orangehrm/lib/message/ValidationMessages.php -text
-symfony/apps/orangehrm/lib/model/admin/dao/CompanyDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/CountryDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/CurrencyDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/CustomExportDao.php -text
@@ -272,7 +271,6 @@ symfony/apps/orangehrm/lib/model/admin/dao/CustomImportDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/MailDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/UserDao.php -text
 symfony/apps/orangehrm/lib/model/admin/entity/Company.php -text
-symfony/apps/orangehrm/lib/model/admin/service/CompanyService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/CountryService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/CurrencyService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/MailService.php -text
