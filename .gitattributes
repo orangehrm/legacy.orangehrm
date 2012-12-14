@@ -730,8 +730,6 @@ symfony/lib/model/doctrine/orangehrmPimPlugin/EmpEmergencyContact.class.php -tex
 symfony/lib/model/doctrine/orangehrmPimPlugin/EmpEmergencyContactTable.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/EmpJobtitleHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/EmpJobtitleHistoryTable.class.php -text
-symfony/lib/model/doctrine/orangehrmPimPlugin/EmpLocationHistory.class.php -text
-symfony/lib/model/doctrine/orangehrmPimPlugin/EmpLocationHistoryTable.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/EmpPicture.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/EmpPictureTable.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/EmpSubdivisionHistory.class.php -text
@@ -770,7 +768,6 @@ symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpDependent.class.php -t
 symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpDirectdebit.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpEmergencyContact.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpJobtitleHistory.class.php -text
-symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpLocationHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpPicture.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpSubdivisionHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/base/BaseEmpUsTaxExemption.class.php -text
@@ -4459,8 +4456,6 @@ symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpEmergencyContact.
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpEmergencyContactTable.class.php -text
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpJobtitleHistory.class.php -text
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpJobtitleHistoryTable.class.php -text
-symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpLocationHistory.class.php -text
-symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpLocationHistoryTable.class.php -text
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpPicture.class.php -text
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpPictureTable.class.php -text
 symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginEmpSubdivisionHistory.class.php -text
