@@ -4790,7 +4790,6 @@ symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectActivityD
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectReportAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectReportCriteriaAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/editTimesheetAction.class.php -text
-symfony/plugins/orangehrmTimePlugin/modules/time/actions/proceedTimesheetPeriodAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/saveTimesheetAction.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewEmployeeTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewMyTimesheetAction.class.php -text
@@ -4832,7 +4831,6 @@ symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayProjectReportS
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/editTimesheetSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/getRelatedActiviesForAutoCompleteAjaxSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/overLappingTimesheetErrorSuccess.php -text
-symfony/plugins/orangehrmTimePlugin/modules/time/templates/proceedTimesheetPeriodSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/returnEndDateSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/showTimesheetItemCommentSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/viewEmployeeTimesheetSuccess.php -text

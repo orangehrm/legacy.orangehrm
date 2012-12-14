@@ -51,7 +51,7 @@ class defineTimesheetPeriodAction extends sfAction {
                 $this->getMenuService()->enableModuleMenuItems('attendance');
                 $this->getUser()->getAttributeHolder()->remove(mainMenuComponent::MAIN_MENU_USER_ATTRIBUTE);
             }
-            $this->redirect('time/proceedTimesheetPeriod');
+            $this->redirect('time/viewEmployeeTimesheet');
         }
     }
 
