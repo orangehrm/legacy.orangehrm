@@ -93,7 +93,7 @@
             
                 <?php echo $form['resume']->renderLabel(__('Resume') . ' <span class="required">*</span>'); ?>
                 <?php echo $form['resume']->render(array("class " => "duplexBox")); ?>
-                <?php echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_DOC) . "</dvi>"; ?>
+                <?php echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_DOC) . "</div>"; ?>
             
             <?php else : ?>
                 
