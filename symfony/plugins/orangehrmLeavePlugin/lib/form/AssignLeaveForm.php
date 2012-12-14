@@ -76,9 +76,12 @@ class AssignLeaveForm extends sfForm {
      *
      * @return array
      */
-    protected function getLeaveTypeChoices() {
+    protected function getLeaveTypeChoices($leaveTypeList) {
 
-        $leaveTypeList = $this->getOption('leaveTypes');
+        if (!$leaveTypeList) {
+            $leaveTypeList = $this->getOption('leaveTypes');
+        }
+        
         $leaveTypeChoices = array('' => '--' . __('Select') . '--');
 
         foreach ($leaveTypeList as $leaveType) {
