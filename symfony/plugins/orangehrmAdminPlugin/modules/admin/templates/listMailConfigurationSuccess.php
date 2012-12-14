@@ -104,9 +104,6 @@
         // Displaying the appropriate send mail method controls when page is ready
         toggleSendMailMethodControls();
         
-        // Changing the read-nly status of SMTP authentication fields when page is ready
-        toggleSMTPAuthenticationFields();
-        
         $("#editBtn").click(function() {
             
             if( mode == 'edit')
@@ -245,6 +242,7 @@
     }
     function toggleSMTPAuthenticationFields() {
         if ($('#emailConfigurationForm_optAuth_login').attr('checked')) {
+            
             $('#emailConfigurationForm_txtSmtpUser').removeAttr('disabled');
             $('#emailConfigurationForm_txtSmtpPass').removeAttr('disabled');
         } else {
