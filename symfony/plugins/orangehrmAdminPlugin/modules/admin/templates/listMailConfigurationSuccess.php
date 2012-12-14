@@ -85,144 +85,157 @@
 </div>
 
 <script type="text/javascript">
+//<![CDATA[    
+
     var requiredMsg = '<?php echo __(ValidationMessages::REQUIRED); ?>';
     var validEmailMsg = '<?php echo __(ValidationMessages::EMAIL_INVALID); ?>';
     
-	$(document).ready(function() {
+    $(document).ready(function() {
         
         $('#emailConfigurationForm_chkSendTestEmail').attr('checked', false);
         $('#emailConfigurationForm_txtTestEmail').val('');
-
-		var mode	=	'edit';
-
-		//Disable all fields
-		$('#frmSave :input').attr('disabled', true);
-		$('#editBtn').removeAttr('disabled');
-
-		// Displaying the appropriate send mail method controls when page is ready
-		toggleSendMailMethodControls();
-
-		// Changing the read-nly status of SMTP authentication fields when page is ready
-		toggleSMTPAuthenticationFields();
-
-		$("#editBtn").click(function() {
-
-			if( mode == 'edit')
-			{
-				$('#editBtn').attr('value', "<?php echo __('Save');?>");
-				$('#frmSave :input').removeAttr('disabled');
-				mode = 'save';
-			}else
-			{
-				$('#frmSave').submit();
-			}
-		});
-
-		//Validate the form
-		$("#frmSave").validate({
-			 rules: {
-			 	'emailConfigurationForm[txtMailAddress]': { 
+        
+        var mode	=	'edit';
+        
+        //Disable all fields
+        $('#frmSave :input').attr('disabled', true);
+        $('#editBtn').removeAttr('disabled');
+        
+        // Displaying the appropriate send mail method controls when page is ready
+        toggleSendMailMethodControls();
+        
+        // Changing the read-nly status of SMTP authentication fields when page is ready
+        toggleSMTPAuthenticationFields();
+        
+        $("#editBtn").click(function() {
+            
+            if( mode == 'edit')
+            {
+                $('#editBtn').attr('value', "<?php echo __('Save'); ?>");
+                $('#frmSave :input').removeAttr('disabled');
+                toggleSMTPAuthenticationFields();        
+                checkSendTestMail();                
+                mode = 'save';
+            }else
+            {
+                $('#frmSave').submit();
+            }
+        });
+        
+        //Validate the form
+        $("#frmSave").validate({
+            rules: {
+                'emailConfigurationForm[txtMailAddress]': { 
                     required: true,
                     email: true,
                     onkeyup: 'if_invalid'
                 }
-		 	 },
-		 	 messages: {
-		 		'emailConfigurationForm[txtMailAddress]': {
+            },
+            messages: {
+                'emailConfigurationForm[txtMailAddress]': {
                     required: requiredMsg,
                     email: validEmailMsg
                 }
-		 	 }
-		 });
+            }
+        });
         
         $("label[for=emailConfigurationForm_txtTestEmail] em").remove();
-		$("#emailConfigurationForm_chkSendTestEmail").click(function() {
-			if($("#emailConfigurationForm_chkSendTestEmail").attr("checked")){
-                $("label[for=emailConfigurationForm_txtTestEmail]").append(' <em>*</em>');                
-				$("#emailConfigurationForm_txtTestEmail").rules("add", {
-		              required: true,
-		              email: true,
-		             messages: {
-					   required: '<?php echo __(ValidationMessages::REQUIRED); ?>',
-					   email: '<?php echo __(ValidationMessages::EMAIL_INVALID); ?>'
-		             }
-		         });
-	        } else {
-                $("label[for=emailConfigurationForm_txtTestEmail] em").remove();
-	        	$("#emailConfigurationForm_txtTestEmail").rules("remove", "required");
-	        	$("#emailConfigurationForm_txtTestEmail").rules("remove", "email");
-		    }
-		})
-		
+        $("#emailConfigurationForm_chkSendTestEmail").change(checkSendTestMail);
+        
         checkAuthenticationActivate();
-		$("#emailConfigurationForm_optAuth_login, #emailConfigurationForm_optAuth_none").change(function() {
-			checkAuthenticationActivate();
+        $("#emailConfigurationForm_optAuth_login, #emailConfigurationForm_optAuth_none").change(function() {
+            checkAuthenticationActivate();
         })
         
-		
+        
         checkSmtpValidation();
-		$("#emailConfigurationForm_cmbMailSendingMethod").change(function() {
-			checkSmtpValidation();
+        $("#emailConfigurationForm_cmbMailSendingMethod").change(function() {
+            checkSmtpValidation();
         })
-		//When click reset buton
-		$("#resetBtn").click(function() {
-			document.forms[0].reset('');
-		 });
-
-		// When changing the mail sending method
-		$("#emailConfigurationForm_cmbMailSendingMethod").change(toggleSendMailMethodControls);
-
-		// When changing the Use SMTP Authentication
-		$("#emailConfigurationForm_optAuth_login").change(toggleSMTPAuthenticationFields);
-		$("#emailConfigurationForm_optAuth_none").change(toggleSMTPAuthenticationFields);
-	 });
-
-	function toggleSendMailMethodControls(){
-		$(".toggleDiv").hide();
-		divId = "#div" + $("#emailConfigurationForm_cmbMailSendingMethod").val() + "Controls";
-		$(divId).show();
-	}
-
-	function checkSmtpValidation(){
-		if($("#emailConfigurationForm_cmbMailSendingMethod").val() == 'smtp'){
+        //When click reset buton
+        $("#resetBtn").click(function() {
+            document.forms[0].reset('');
+        });
+        
+        // When changing the mail sending method
+        $("#emailConfigurationForm_cmbMailSendingMethod").change(toggleSendMailMethodControls);
+        
+        // When changing the Use SMTP Authentication
+        $("#emailConfigurationForm_optAuth_login").change(toggleSMTPAuthenticationFields);
+        $("#emailConfigurationForm_optAuth_none").change(toggleSMTPAuthenticationFields);
+    });
+    
+    function toggleSendMailMethodControls(){
+        $(".toggleDiv").hide();
+        divId = "#div" + $("#emailConfigurationForm_cmbMailSendingMethod").val() + "Controls";
+        $(divId).show();
+    }
+    
+    function checkSendTestMail() {
+        
+        if($("#emailConfigurationForm_chkSendTestEmail").attr("checked")){
+            $("label[for=emailConfigurationForm_txtTestEmail]").append(' <em>*</em>');                
+            $("#emailConfigurationForm_txtTestEmail")
+                .rules("add", {
+                    required: true,
+                    email: true,
+                    onkeyup: 'if_invalid',
+                    messages: {
+                        required: '<?php echo __(ValidationMessages::REQUIRED); ?>',
+                        email: '<?php echo __(ValidationMessages::EMAIL_INVALID); ?>'
+                    }
+                });
+                
+                $("#emailConfigurationForm_txtTestEmail").removeAttr('disabled');
+                
+        } else {
+            $("label[for=emailConfigurationForm_txtTestEmail] em").remove();
+            $("#emailConfigurationForm_txtTestEmail").rules("remove", "required email onkeyup")
+                
+            $("#emailConfigurationForm_txtTestEmail").attr('disabled', true);
+        }
+    }
+            
+    function checkSmtpValidation(){
+        if($("#emailConfigurationForm_cmbMailSendingMethod").val() == 'smtp'){
             $("#emailConfigurationForm_txtSmtpHost").rules("add", {
-                  required: true,
-                 messages: {
-                   required: requiredMsg
-                 }
-             });
+                required: true,
+                messages: {
+                    required: requiredMsg
+                }
+            });
             $("#emailConfigurationForm_txtSmtpPort").rules("add", {
                 required: true,
                 number: true,
                 maxlength: 10,
-               messages: {
-                 required: requiredMsg,
-                 number: '<?php echo __('Should be a number'); ?>',
-                 maxlength: '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 10)); ?>'
-               }
-           });
+                messages: {
+                    required: requiredMsg,
+                    number: '<?php echo __('Should be a number'); ?>',
+                    maxlength: '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 10)); ?>'
+                }
+            });
         } else {
             $("#emailConfigurationForm_txtSmtpHost").rules("remove", "required");
             $("#emailConfigurationForm_txtSmtpPort").rules("remove", "required");
         }
-	}
-
+    }
+    
     function checkAuthenticationActivate() {
         if($("#emailConfigurationForm_optAuth_login").attr("checked")){
-        	$("label[for=emailConfigurationForm_txtSmtpUser]").append(' <em>*</em>');
-        	$("label[for=emailConfigurationForm_txtSmtpPass]").append(' <em>*</em>');
+            $("label[for=emailConfigurationForm_txtSmtpUser]").append(' <em>*</em>');
+            $("label[for=emailConfigurationForm_txtSmtpPass]").append(' <em>*</em>');
             $("#emailConfigurationForm_txtSmtpUser").rules("add", {
-                  required: true,
-                 messages: {
-                   required: requiredMsg
-                 }
-             });
+                required: true,
+                messages: {
+                    required: requiredMsg
+                }
+            });
             $("#emailConfigurationForm_txtSmtpPass").rules("add", {
-                  required: true,
-                 messages: {
-                   required: requiredMsg
-                 }
-             });
+                required: true,
+                messages: {
+                    required: requiredMsg
+                }
+            });
         } else {
             $("#emailConfigurationForm_txtSmtpUser").rules("remove", "required");
             $("#emailConfigurationForm_txtSmtpPass").rules("remove", "required");
@@ -230,13 +243,14 @@
             $("label[for=emailConfigurationForm_txtSmtpPass] em").remove();
         }
     }
-	function toggleSMTPAuthenticationFields() {
-		if ($('#emailConfigurationForm_optAuth_login').attr('checked')) {
-			$('#emailConfigurationForm_txtSmtpUser').removeAttr('readonly');
-			$('#emailConfigurationForm_txtSmtpPass').removeAttr('readonly');
-		} else {
-			$('#emailConfigurationForm_txtSmtpUser').attr('readonly', true);
-			$('#emailConfigurationForm_txtSmtpPass').attr('readonly', true);
-		}
-	}
+    function toggleSMTPAuthenticationFields() {
+        if ($('#emailConfigurationForm_optAuth_login').attr('checked')) {
+            $('#emailConfigurationForm_txtSmtpUser').removeAttr('disabled');
+            $('#emailConfigurationForm_txtSmtpPass').removeAttr('disabled');
+        } else {
+            $('#emailConfigurationForm_txtSmtpUser').attr('disabled', true);
+            $('#emailConfigurationForm_txtSmtpPass').attr('disabled', true);
+        }
+    }
+//]]>    
 </script>
