@@ -202,7 +202,6 @@ plugins/printBenefits/pdfHspPaymentsDue.php -text
 plugins/printBenefits/pdfHspSummary.php -text
 plugins/printBenefits/pdfHspUsed.php -text
 plugins/printBenefits/pdfPersonalHspSummary.php -text
-/repview.php -text
 scripts/SCRIPT_compstruct.js -text
 scripts/archive.js -text
 scripts/autoSuggest.js -text
