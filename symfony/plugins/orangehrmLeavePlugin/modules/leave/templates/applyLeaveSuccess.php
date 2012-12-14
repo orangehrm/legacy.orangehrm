@@ -17,7 +17,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
         <?php endif; ?>        
         <?php if (count($leaveTypes) > 1) : ?>           
         <form id="frmLeaveApply" name="frmLeaveApply" method="post" action="">
-
+            <?php include_component('core', 'ohrmPluginPannel', array('location' => 'apply-leave-form-elements'))?>
             <fieldset>                
                 <ol>
                     <?php echo $applyLeaveForm->render(); ?>
