@@ -120,7 +120,7 @@
         });
         
         //Validate the form
-        $("#frmSave").validate({
+        var validator = $("#frmSave").validate({
             rules: {
                 'emailConfigurationForm[txtMailAddress]': { 
                     required: true,
@@ -152,6 +152,7 @@
         //When click reset buton
         $("#resetBtn").click(function() {
             document.forms[0].reset('');
+            validator.resetForm();
         });
         
         // When changing the mail sending method
