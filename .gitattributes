@@ -5004,6 +5004,7 @@ symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/templates/viewJob
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/actions/applyVacancyAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/actions/viewJobsAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/config/security.yml -text
+symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/config/view.yml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/i18n/messages.bg_BG.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/i18n/messages.da_DK.xml -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitmentApply/i18n/messages.en_US.xml -text
