@@ -513,8 +513,6 @@ function validateProjectAdmins(){
     $('#projectAdminNameError').removeAttr('class');
     $('#projectAdminNameError').html("");
 
-    var errorStyle = "background-color:#FFDFDF;";
-    var normalStyle = "background-color:#FFFFFF;";
     var interviewerNameArray = new Array();
     var errorElements = new Array();
     var index = 0;
@@ -522,7 +520,6 @@ function validateProjectAdmins(){
 
     $('.formInputProjectAdmin').each(function(){
         element = $(this);
-        $(element).attr('style', normalStyle);
         if((element.val() != "") && (element.val() != lang_typeHint)){
             interviewerNameArray[index] = $(element);
             index++;
@@ -541,10 +538,6 @@ function validateProjectAdmins(){
                 flag = false;
 
             }
-        }
-        for(var k=0; k<errorElements.length; k++){
-
-            errorElements[k].attr('style', errorStyle);
         }
     }
 
@@ -636,14 +629,11 @@ function isValidForm(){
             temp = true;
         }
         
-        if(!temp) {
-            $('#'+element.id).next().next().css('display', 'block');
-        } else {
-            $('#'+element.id).next().next().css('display', 'none');
-        }
-        
         return temp;
-        return true;
+    });
+    
+    $.validator.addMethod("projectAdminDuplicationValidation", function(value, element, params) {
+        return validateProjectAdmins();
     });
     
     $.validator.addMethod("customerValidation", function(value, element, params) {
@@ -679,19 +669,24 @@ function isValidForm(){
                 maxlength: 50
             },
             'addProject[projectAdmin_1]' : {
-                projectAdminNameValidation : true
+                projectAdminNameValidation : true,
+                projectAdminDuplicationValidation : true
             },
             'addProject[projectAdmin_2]' : {
-                projectAdminNameValidation : true
+                projectAdminNameValidation : true,
+                projectAdminDuplicationValidation : true
             },
             'addProject[projectAdmin_3]' : {
-                projectAdminNameValidation : true
+                projectAdminNameValidation : true,
+                projectAdminDuplicationValidation : true
             },
             'addProject[projectAdmin_4]' : {
-                projectAdminNameValidation : true
+                projectAdminNameValidation : true,
+                projectAdminDuplicationValidation : true
             },
             'addProject[projectAdmin_5]' : {
-                projectAdminNameValidation : true
+                projectAdminNameValidation : true,
+                projectAdminDuplicationValidation : true
             },
             'addProject[description]' : {
                 maxlength: 255
@@ -710,19 +705,24 @@ function isValidForm(){
                 maxlength: lang_exceed50Chars
             },
             'addProject[projectAdmin_1]' : {
-                projectAdminNameValidation : lang_enterAValidEmployeeName
+                projectAdminNameValidation : lang_enterAValidEmployeeName,
+                projectAdminDuplicationValidation : lang_identical_rows
             },
             'addProject[projectAdmin_2]' : {
-                projectAdminNameValidation : lang_enterAValidEmployeeName
+                projectAdminNameValidation : lang_enterAValidEmployeeName,
+                projectAdminDuplicationValidation : lang_identical_rows
             },
             'addProject[projectAdmin_3]' : {
-                projectAdminNameValidation : lang_enterAValidEmployeeName
+                projectAdminNameValidation : lang_enterAValidEmployeeName,
+                projectAdminDuplicationValidation : lang_identical_rows
             },
             'addProject[projectAdmin_4]' : {
-                projectAdminNameValidation : lang_enterAValidEmployeeName
+                projectAdminNameValidation : lang_enterAValidEmployeeName,
+                projectAdminDuplicationValidation : lang_identical_rows
             },
             'addProject[projectAdmin_5]' : {
-                projectAdminNameValidation : lang_enterAValidEmployeeName
+                projectAdminNameValidation : lang_enterAValidEmployeeName,
+                projectAdminDuplicationValidation : lang_identical_rows
             },
             'addProject[description]' : {
                 maxlength: lang_exceed255Chars
