@@ -238,50 +238,6 @@ EmpContract:
       foreign: emp_number
       type: one
 
-EmpJobtitleHistory:
-  tableName: hs_hr_emp_jobtitle_history
-  columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
-    emp_number:
-      type: integer(4)
-      notnull: true
-    code:
-      type: string(15)
-      notnull: true
-    name: string(250)
-    start_date: timestamp(25)
-    end_date: timestamp(25)
-  relations:
-    Employee:
-      local: emp_number
-      foreign: emp_number
-      type: one
-
-EmpSubdivisionHistory:
-  tableName: hs_hr_emp_subdivision_history
-  columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
-    emp_number:
-      type: integer(4)
-      notnull: true
-    code:
-      type: string(15)
-      notnull: true
-    name: string(250)
-    start_date: timestamp(25)
-    end_date: timestamp(25)
-  relations:
-    Employee:
-      local: emp_number
-      foreign: emp_number
-      type: one
-
 EmpEmergencyContact:
   tableName: hs_hr_emp_emergency_contacts
   columns:
