@@ -598,9 +598,6 @@ symfony/lib/model/doctrine/orangehrmAdminPlugin/base/BaseWorkShift.class.php -te
 symfony/lib/model/doctrine/orangehrmAttendancePlugin/AttendanceRecord.class.php -text
 symfony/lib/model/doctrine/orangehrmAttendancePlugin/AttendanceRecordTable.class.php -text
 symfony/lib/model/doctrine/orangehrmAttendancePlugin/base/BaseAttendanceRecord.class.php -text
-symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/EmployeeLeaveEntitlement.class.php -text
-symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/EmployeeLeaveEntitlementTable.class.php -text
-symfony/lib/model/doctrine/orangehrmCoreLeavePlugin/base/BaseEmployeeLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AbstractDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AbstractDisplayFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/AdvancedReport.class.php -text
@@ -3587,8 +3584,6 @@ symfony/plugins/orangehrmCoreLeavePlugin/lib/mail/LeaveRejectionMailContent.php 
 symfony/plugins/orangehrmCoreLeavePlugin/lib/mail/LeaveRejectionMailer.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/mail/orangehrmLeaveMailContent.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/mail/orangehrmLeaveMailer.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/model/doctrine/PluginEmployeeLeaveEntitlement.class.php -text
-symfony/plugins/orangehrmCoreLeavePlugin/lib/model/doctrine/PluginEmployeeLeaveEntitlementTable.class.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveNotificationService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/LeaveSummaryService.php -text
 symfony/plugins/orangehrmCoreLeavePlugin/lib/service/OldLeaveEntitlementService.php -text
