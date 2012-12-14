@@ -31,7 +31,6 @@ devDocs/OrangeHRM-ver-2.1-ERD.dmx -text
 devDocs/hr_mysql.xml -text
 devDocs/makensis.txt -text
 devDocs/sample_report_definition.xml -text
-devTools/custom_rhino.jar -text
 devTools/general/ReadMe-reset-installation.txt -text
 devTools/general/create-test-db.php -text
 devTools/general/drop-all-tables.php -text
