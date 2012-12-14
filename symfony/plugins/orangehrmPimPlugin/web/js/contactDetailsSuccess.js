@@ -9,12 +9,12 @@ $(document).ready(function() {
             'contact[emp_work_email]' : {
                 email: true,
                 uniqueWorkEmail: true,
-                onkeyup: false
+                onkeyup: 'if_invalid'
             },
             'contact[emp_oth_email]': {
                 email: true,
                 uniqueOtherEmail: true,
-                onkeyup: false
+                onkeyup: 'if_invalid'
             }
 
         },

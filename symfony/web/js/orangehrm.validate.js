@@ -18,7 +18,20 @@
         onkeyup: function(element) {
             var elementName = jQuery(element).attr('name');
             if (this.settings.rules[elementName] != undefined) {
-                if (this.settings.rules[elementName].onkeyup == undefined || this.settings.rules[elementName].onkeyup !== false) {
+                
+                var applyDefaultFunction = true;
+                
+                // onkeyup: 'if_invalid': apply onkeyup only if element is invalid
+                // onkeyup: false: do not apply onkeyup
+                //
+                if ((this.settings.rules[elementName].onkeyup === false) || 
+                    ( (this.settings.rules[elementName].onkeyup === 'if_invalid') && 
+                        ((this.invalid[element.name] === undefined) || (this.invalid[element.name] !== true))
+                    )) {
+                    applyDefaultFunction = false;
+                }
+                
+                if (applyDefaultFunction) {
                   jqValidatorDefaultOnKeyUp.apply(this, arguments);
                 }
             }
@@ -27,9 +40,15 @@
 
 }(jQuery));    
 
-
-
-
+/**
+ * Dummy validation method used to add onkeyup: rules to the validation rules.
+ * See above for where this is being used.
+ */
+$.validator.addMethod("onkeyup",
+    function(value, element, params) {
+        return true;
+    });
+    
 /**
  * valid_date validator method.
  *

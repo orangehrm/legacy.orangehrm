@@ -124,7 +124,7 @@
 			 	'emailConfigurationForm[txtMailAddress]': { 
                     required: true,
                     email: true,
-                    onkeyup: false
+                    onkeyup: 'if_invalid'
                 }
 		 	 },
 		 	 messages: {

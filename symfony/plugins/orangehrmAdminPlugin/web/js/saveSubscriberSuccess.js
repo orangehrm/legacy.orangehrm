@@ -115,7 +115,7 @@ $(document).ready(function() {
                 maxlength: 100,
                 uniqueEmail:true,
                 email:true,
-                onkeyup: false                
+                onkeyup: 'if_invalid'                
             }
         },
         messages: {

@@ -17,7 +17,7 @@ $(document).ready(function() {
             },
             'organization[email]' : {
                 email: true,
-                onkeyup: false
+                onkeyup: 'if_invalid'
             },
             'organization[note]' : {
                 maxlength: 250
