@@ -89,6 +89,18 @@ $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
         $.validator.addMethod("validEmployeeName", function(value, element) {                 
             return autoFill('saveReview_employeeName_empName', 'saveReview_employeeName_empId', employees_saveReview_employeeName);
         });
+        
+        $.validator.addMethod("validReviewerName", function(value, element) {                 
+            return autoFill('saveReview_reviewerName_empName', 'saveReview_reviewerName_empId', employees_saveReview_reviewerName);
+        });
+        
+        $("#saveReview_employeeName_empName").result(function(event, item) {
+            $(this).valid();
+        });
+        
+        $("#saveReview_reviewerName_empName").result(function(event, item) {
+            $(this).valid();
+        });        
 
         function autoFill(selector, filler, data) {
             $("#" + filler).val("");
@@ -108,11 +120,13 @@ $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
                 rules: {
                     'saveReview[employeeName][empName]' : {
                         required: true,
-                        validEmployeeName: true
+                        validEmployeeName: true,
+                        onkeyup: false
                     },
                     'saveReview[reviewerName][empName]' : {
                         required: true,
-                        validEmployeeName: true
+                        validReviewerName: true,
+                        onkeyup: false
                     },
                     'saveReview[from_date]': {  
                         required: true,  
@@ -166,7 +180,7 @@ $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
                     },
                     'saveReview[reviewerName][empName]' : {
                         required: required_message,
-                        validEmployeeName: valid_emp
+                        validReviewerName: valid_emp
                     },
                     'saveReview[from_date]':{  
                         required: required_message,  
