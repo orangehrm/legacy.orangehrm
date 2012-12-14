@@ -13,12 +13,8 @@ build/report-styles/log.xsl -text
 build/report-styles/phpunit2-frames.xsl -text
 build/report-styles/phpunit2-noframes.xsl -text
 build/report-styles/str.replace.function.xsl -text
-dbscript/constraints.php -text
 dbscript/dbscript-1.sql -text
 dbscript/dbscript-2.sql -text
-dbscript/dbscript-u1.sql -text
-dbscript/dbscript-u2.sql -text
-dbscript/dbscript.sql -text
 devDocs/OrangeHRM-2.1.xmi -text
 devDocs/OrangeHRM-2.2.1.xmi -text
 devDocs/OrangeHRM-2.2.2.xmi -text
