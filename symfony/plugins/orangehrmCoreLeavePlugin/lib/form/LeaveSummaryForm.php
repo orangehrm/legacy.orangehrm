@@ -23,7 +23,6 @@ class LeaveSummaryForm extends sfForm {
     private $empId;
     private $employeeService;
     private $leaveTypeService;
-    private $companyService;
     private $leaveSummaryService;
     private $leaveEntitlementService;
     private $companyStructureService;
@@ -187,10 +186,6 @@ class LeaveSummaryForm extends sfForm {
             $this->locationService = new LocationService();
         }
         return $this->locationService;
-    }
-
-    public function setCompanyService(CompanyService $companyService) {
-        $this->companyService = $companyService;
     }
 
     protected function getLocationChoices() {
