@@ -86,13 +86,9 @@ devTools/load/recruitment/test-cv.doc -text
 devTools/load/recruitment/test-cv.odt -text
 devTools/load/recruitment/test-cv.pdf -text
 devTools/rpm/SPECS/OrangeHRM-2.2.spec -text
-/empview.php -text
 /error.xsl -text
 /faq.html -text
 /fix_permissions.sh -text
-/genpop.php -text
-/help.php -text
-/home.php -text
 /index.php -text
 /install.php -text
 installer/ApplicationSetupUtility.php -text
@@ -135,7 +131,6 @@ installer/progress.php -text
 installer/registration.php -text
 installer/style.css -text
 installer/welcome.php -text
-/jobs.php -text
 language/da/lang_da_full.php -text
 language/default/lang_default_benefits.php -text
 language/default/lang_default_empview.php -text
@@ -162,8 +157,6 @@ license/3rdParty/xplanner.license -text
 license/3rdParty/ypslideoutmenus.license.html -text
 license/3rdParty/yui.license -text
 license/LICENSE.TXT -text
-/message.php -text
-/mtview.php -text
 /new_changed_features.txt -text
 /orangehrm-quick-start-guide.html -text
 /orangehrm_updates.php -text
@@ -223,10 +216,7 @@ plugins/printBenefits/pdfHspPaymentsDue.php -text
 plugins/printBenefits/pdfHspSummary.php -text
 plugins/printBenefits/pdfHspUsed.php -text
 plugins/printBenefits/pdfPersonalHspSummary.php -text
-/recruitmentview.php -text
 /repview.php -text
-resources/USStates.php -text
-resources/countries.php -text
 scripts/SCRIPT_compstruct.js -text
 scripts/archive.js -text
 scripts/autoSuggest.js -text
@@ -5648,4 +5638,3 @@ upgrader/web/js/jquery.validate.js -text
 upgrader/web/js/selectVersionSuccess.js -text
 upgrader/web/robots.txt -text
 upgrader/web/upgrader_dev.php -text
-/view.php -text
