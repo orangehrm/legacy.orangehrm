@@ -26,7 +26,7 @@
                 //
                 if ((this.settings.rules[elementName].onkeyup === false) || 
                     ( (this.settings.rules[elementName].onkeyup === 'if_invalid') && 
-                        ((this.invalid[element.name] === undefined) || (this.invalid[element.name] !== true))
+                      (this.invalid[element.name] === undefined)
                     )) {
                     applyDefaultFunction = false;
                 }
