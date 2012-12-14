@@ -851,7 +851,9 @@ table.table th {
 }
 table.table th a {
 	color:#fff;
-    text-decoration: none;
+        text-decoration: none;
+        display: inline-block;
+        width: 100%;
 }
 table.table th.center, table.table td.center {
 	text-align:center;
