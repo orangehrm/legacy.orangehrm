@@ -403,7 +403,7 @@ EmployeeSalary:
       type: integer(4)
       notnull: true      
     sal_grd_code as payGradeId:
-      type: string(13)
+      type: integer
       default: null
     currency_id as currencyCode:
       type: string(6)
@@ -414,11 +414,6 @@ EmployeeSalary:
     salary_component as salaryName: string(100)
     comments as notes: string(255)        
   relations:
-    salaryGrade:
-      class: SalaryGrade
-      local: payGradeId
-      foreign: sal_grd_code
-      type: one
     currencyType:
       class: CurrencyType
       local: currencyCode
@@ -439,7 +434,12 @@ EmployeeSalary:
       local: id
       foreign: salary_id
       type: one      
-    
+    payGrade:
+      class: PayGrade
+      local: payGradeId
+      foreign: id
+      type: one  
+      
 EmpDirectdebit:
   tableName: hs_hr_emp_directdebit
   columns:

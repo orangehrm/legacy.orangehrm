@@ -22,7 +22,7 @@ class displayAttendanceTotalSummaryReportCriteriaAction extends displayReportCri
     public function setReportCriteriaInfoInRequest($formValues) {
 
         $employeeService = new EmployeeService();
-        $jobService = new JobService();
+        $jobService = new JobTitleService();
 	$empStatusService = new EmploymentStatusService();
         $companyStructureService = new CompanyStructureService();
         
@@ -42,7 +42,7 @@ class displayAttendanceTotalSummaryReportCriteriaAction extends displayReportCri
 
         if (isset($formValues["job_title"]) && ($formValues["job_title"]!=0)) {
             $jobTitCode = $formValues["job_title"];
-            $jobTitle = $jobService->readJobTitle($jobTitCode);
+            $jobTitle = $jobService->getJobTitleById($jobTitCode);
             $jobTitName = $jobTitle->getJobTitName();
             $this->getRequest()->setParameter("jobTitName", $jobTitName);
         }

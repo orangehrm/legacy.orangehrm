@@ -269,14 +269,12 @@ symfony/apps/orangehrm/lib/model/admin/dao/CountryDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/CurrencyDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/CustomExportDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/CustomImportDao.php -text
-symfony/apps/orangehrm/lib/model/admin/dao/JobDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/MailDao.php -text
 symfony/apps/orangehrm/lib/model/admin/dao/UserDao.php -text
 symfony/apps/orangehrm/lib/model/admin/entity/Company.php -text
 symfony/apps/orangehrm/lib/model/admin/service/CompanyService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/CountryService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/CurrencyService.php -text
-symfony/apps/orangehrm/lib/model/admin/service/JobService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/MailService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/UserService.php -text
 symfony/apps/orangehrm/lib/model/auth/dao/AuthenticationDao.php -text
@@ -445,7 +443,6 @@ symfony/lib/form/doctrine/ProjectActivityForm.class.php -text
 symfony/lib/form/doctrine/ProjectAdminForm.class.php -text
 symfony/lib/form/doctrine/ProvinceForm.class.php -text
 symfony/lib/form/doctrine/ReportToForm.class.php -text
-symfony/lib/form/doctrine/SalaryGradeForm.class.php -text
 symfony/lib/form/doctrine/UniqueIdForm.class.php -text
 symfony/lib/form/doctrine/base/BaseCountryForm.class.php -text
 symfony/lib/form/doctrine/base/BaseCustomFieldsForm.class.php -text
@@ -464,7 +461,6 @@ symfony/lib/form/doctrine/base/BaseProjectActivityForm.class.php -text
 symfony/lib/form/doctrine/base/BaseProjectAdminForm.class.php -text
 symfony/lib/form/doctrine/base/BaseProvinceForm.class.php -text
 symfony/lib/form/doctrine/base/BaseReportToForm.class.php -text
-symfony/lib/form/doctrine/base/BaseSalaryGradeForm.class.php -text
 symfony/lib/form/doctrine/base/BaseSkillForm.class.php -text
 symfony/lib/form/doctrine/base/BaseUniqueIdForm.class.php -text
 symfony/lib/model/doctrine/Country.class.php -text
@@ -490,8 +486,6 @@ symfony/lib/model/doctrine/PerformanceReviewCommentTable.class.php -text
 symfony/lib/model/doctrine/PerformanceReviewTable.class.php -text
 symfony/lib/model/doctrine/Province.class.php -text
 symfony/lib/model/doctrine/ProvinceTable.class.php -text
-symfony/lib/model/doctrine/SalaryGrade.class.php -text
-symfony/lib/model/doctrine/SalaryGradeTable.class.php -text
 symfony/lib/model/doctrine/base/BaseCountry.class.php -text
 symfony/lib/model/doctrine/base/BaseCurrencyType.class.php -text
 symfony/lib/model/doctrine/base/BaseDefineKpi.class.php -text
@@ -504,7 +498,6 @@ symfony/lib/model/doctrine/base/BasePayperiod.class.php -text
 symfony/lib/model/doctrine/base/BasePerformanceReview.class.php -text
 symfony/lib/model/doctrine/base/BasePerformanceReviewComment.class.php -text
 symfony/lib/model/doctrine/base/BaseProvince.class.php -text
-symfony/lib/model/doctrine/base/BaseSalaryGrade.class.php -text
 symfony/lib/model/doctrine/orangehrmAdminPlugin/Customer.class.php -text
 symfony/lib/model/doctrine/orangehrmAdminPlugin/CustomerTable.class.php -text
 symfony/lib/model/doctrine/orangehrmAdminPlugin/Education.class.php -text
@@ -3209,7 +3202,6 @@ symfony/plugins/orangehrmAdminPlugin/lib/service/ProjectService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/SkillService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/WorkShiftService.php -text
-symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/actions.class.bak.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addCustomerAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addProjectActivityAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/changeUserPasswordAction.class.php -text

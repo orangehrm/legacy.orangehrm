@@ -61,18 +61,6 @@ class AttendanceTotalSummaryReportForm extends sfForm {
         $this->widgetSchema->setNameFormat('attendanceTotalSummary[%s]');
     }
 
-    public function getJobService() {
-        if (is_null($this->jobService)) {
-            $this->jobService = new JobService();
-            $this->jobService->setJobDao(new JobDao());
-        }
-        return $this->jobService;
-    }
-
-    public function setJobService(JobService $jobService) {
-        $this->jobService = $jobService;
-    }
-
     private function _setJobTitleWidget() {
 
         $jobTitleList = $this->getJobTitleService()->getJobTitleList();

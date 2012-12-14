@@ -75,9 +75,6 @@
  * @property Doctrine_Collection $LeaveRequest
  * @property Doctrine_Collection $subordinates
  * @property Doctrine_Collection $EmpPicture
- * @property Doctrine_Collection $EmpJobtitleHistory
- * @property Doctrine_Collection $EmpLocationHistory
- * @property Doctrine_Collection $EmpSubdivisionHistory
  * @property Doctrine_Collection $EmployeeImmigrationRecord
  * @property Doctrine_Collection $EmpUsTaxExemption
  * @property Doctrine_Collection $EmployeeMembership
@@ -164,9 +161,6 @@
  * @method Doctrine_Collection       getLeaveRequest()              Returns the current record's "LeaveRequest" collection
  * @method Doctrine_Collection       getSubordinates()              Returns the current record's "subordinates" collection
  * @method Doctrine_Collection       getEmpPicture()                Returns the current record's "EmpPicture" collection
- * @method Doctrine_Collection       getEmpJobtitleHistory()        Returns the current record's "EmpJobtitleHistory" collection
- * @method Doctrine_Collection       getEmpLocationHistory()        Returns the current record's "EmpLocationHistory" collection
- * @method Doctrine_Collection       getEmpSubdivisionHistory()     Returns the current record's "EmpSubdivisionHistory" collection
  * @method Doctrine_Collection       getEmployeeImmigrationRecord() Returns the current record's "EmployeeImmigrationRecord" collection
  * @method Doctrine_Collection       getEmpUsTaxExemption()         Returns the current record's "EmpUsTaxExemption" collection
  * @method Doctrine_Collection       getEmployeeMembership()        Returns the current record's "EmployeeMembership" collection
@@ -252,9 +246,6 @@
  * @method Employee                  setLeaveRequest()              Sets the current record's "LeaveRequest" collection
  * @method Employee                  setSubordinates()              Sets the current record's "subordinates" collection
  * @method Employee                  setEmpPicture()                Sets the current record's "EmpPicture" collection
- * @method Employee                  setEmpJobtitleHistory()        Sets the current record's "EmpJobtitleHistory" collection
- * @method Employee                  setEmpLocationHistory()        Sets the current record's "EmpLocationHistory" collection
- * @method Employee                  setEmpSubdivisionHistory()     Sets the current record's "EmpSubdivisionHistory" collection
  * @method Employee                  setEmployeeImmigrationRecord() Sets the current record's "EmployeeImmigrationRecord" collection
  * @method Employee                  setEmpUsTaxExemption()         Sets the current record's "EmpUsTaxExemption" collection
  * @method Employee                  setEmployeeMembership()        Sets the current record's "EmployeeMembership" collection
@@ -584,18 +575,6 @@ abstract class BaseEmployee extends sfDoctrineRecord
              'foreign' => 'erep_sub_emp_number'));
 
         $this->hasMany('EmpPicture', array(
-             'local' => 'emp_number',
-             'foreign' => 'emp_number'));
-
-        $this->hasMany('EmpJobtitleHistory', array(
-             'local' => 'emp_number',
-             'foreign' => 'emp_number'));
-
-        $this->hasMany('EmpLocationHistory', array(
-             'local' => 'emp_number',
-             'foreign' => 'emp_number'));
-
-        $this->hasMany('EmpSubdivisionHistory', array(
              'local' => 'emp_number',
              'foreign' => 'emp_number'));
 

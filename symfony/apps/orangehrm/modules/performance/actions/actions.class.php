@@ -53,23 +53,6 @@ class performanceActions extends sfActions {
     }
 
     /**
-     * Get Job Service
-     */
-    public function getJobService() {
-        $this->jobService = new JobService();
-        return $this->jobService;
-    }
-
-    /**
-     * Set Job Service
-     * @param JobService $jobService
-     * @return unknown_type
-     */
-    public function setJobService(JobService $jobService) {
-        $this->jobService = $jobService;
-    }
-
-    /**
      * Get Kpi Service
      * @return KpiService
      */
