@@ -196,12 +196,7 @@ plugins/printBenefits/pdfHspPaymentsDue.php -text
 plugins/printBenefits/pdfHspSummary.php -text
 plugins/printBenefits/pdfHspUsed.php -text
 plugins/printBenefits/pdfPersonalHspSummary.php -text
-scripts/SCRIPT_compstruct.js -text
 scripts/archive.js -text
-scripts/autoSuggest.js -text
-scripts/autocomplete/autocomplete.js -text
-scripts/calendar/calendar.js -text
-scripts/enhancedSearchBox.js -text
 scripts/jquery/jquery-1.3.2.js -text
 scripts/jquery/jquery.autocomplete.js -text
 scripts/jquery/jquery.form.js -text
@@ -213,11 +208,6 @@ scripts/jquery/ui/ui.datepicker.js -text
 scripts/jquery/ui/ui.dialog.js -text
 scripts/jquery/ui/ui.draggable.js -text
 scripts/jquery/ui/ui.resizable.js -text
-scripts/octopus.js -text
-scripts/suggestions.js -text
-scripts/time.js -text
-scripts/valid.js -text
-scripts/ypSlideOutMenus.js -text
 symfony/apps/orangehrm/config/action_descriptions.yml -text
 symfony/apps/orangehrm/config/app.yml -text
 symfony/apps/orangehrm/config/cache.yml -text
