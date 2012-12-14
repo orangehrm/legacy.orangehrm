@@ -150,7 +150,6 @@ language/nl/lang_nl_benefits.php -text
 language/nl/lang_nl_full.php -text
 language/ru/lang_ru_full.php -text
 lib/common/CommonFunctions.php -text
-lib/common/LocaleUtil.php -text
 lib/confs/Conf-auto.php -text
 lib/confs/Conf.php-distribution -text
 lib/confs/cryptokeys/.htaccess -text
