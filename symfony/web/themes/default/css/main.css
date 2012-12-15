@@ -395,6 +395,10 @@ a {
     font-weight: bold;
     font-size: 15px;
 }
+.box h3 {
+    font-weight: bold;
+    font-size: 13px;
+}
 .noHeader .inner {
 	border:1px solid #dedede;
 	-webkit-border-radius: 3px;

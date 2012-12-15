@@ -216,7 +216,7 @@
                                     $accountTypeStr = $directDepositForm->getAccountTypeDescription($accountType);
                                 }
                                 ?>
-                                <tr class="directDepositRow" style="display:none;">
+                                <tr class="directDepositRow <?php echo $cssClass; ?>" style="display:none;">
                                     <td colspan="<?php echo $essUserMode ? '6' : '7'?>" class="<?php echo $cssClass; ?>" >
                                         <span class="directDepositHeading"><h3><?php echo __("Direct Deposit Details"); ?></h3></span>
                                         <table class="table hover" style="width:60%">
