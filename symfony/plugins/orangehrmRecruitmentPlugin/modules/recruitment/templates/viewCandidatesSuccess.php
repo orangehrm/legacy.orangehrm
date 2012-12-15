@@ -42,7 +42,7 @@
                     <input type="button" id="btnSrch" value="<?php echo __("Search") ?>" name="btnSrch" />
                     <input type="button" class="reset" id="btnRst" value="<?php echo __("Reset") ?>" name="btnSrch" />                    
                 </p>
-            </fieldset><?php use_javascript('../orangehrmRecruitmentPlugin/js/viewCandidatesSuccess'); ?>
+            </fieldset>
 
 
             <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_1')); ?>
