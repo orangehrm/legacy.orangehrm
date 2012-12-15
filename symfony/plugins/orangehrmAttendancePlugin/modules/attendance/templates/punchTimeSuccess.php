@@ -18,6 +18,10 @@
  */ ?>
 <?php use_javascripts_for_form($form) ?>
 <?php use_stylesheets_for_form($form) ?>
+<?php if (!((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))))))) : ?>
+    <body id="b" onload="JavaScript:timedRefresh(1);">
+<?php endif; ?>
+        
 <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/punchTimeSuccess'); ?>
 
 <!-- 
@@ -25,81 +29,78 @@ TODO: Use field level validation
 For top level messages, use new styles
 -->
 <div id="validationMsg" style="margin-left: 16px; width: 470px"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
-    
-<?php
 
-    $heading = __('Punch In');
-    $heading = isset($actionPunchOut)?__('Punch Out'):$heading;
-    
-    $isEditable = (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions'))) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions')));
-    $isPunchInAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions'));
-    $isPunchOutAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'));
-    
-    $punchInDisplayNote = '';
-    
-    if ($isPunchOutAllowed) {
-        
-        $punchInDisplayNote = "<li>\n";
-        $dateTimeArray = explode(" ", $punchInTime);
-        $punchInDisplayNote .= __("Last punch in time") . " : " . set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1];
-        
-        if (!empty($punchInNote)) {
-            $punchInDisplayNote .= "<br>\n";
-            $punchInDisplayNote .=  __("Note") . " : " . $punchInNote;
-        }
-        
-        $punchInDisplayNote .= "</li>\n";
-        
+<?php
+$heading = __('Punch In');
+$heading = isset($actionPunchOut) ? __('Punch Out') : $heading;
+
+$isEditable = (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $sf_data->getRaw('allowedActions'))) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions')));
+$isPunchInAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions'));
+$isPunchOutAllowed = in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'));
+
+$punchInDisplayNote = '';
+
+if ($isPunchOutAllowed) {
+
+    $punchInDisplayNote = "<li>\n";
+    $dateTimeArray = explode(" ", $punchInTime);
+    $punchInDisplayNote .= __("Last punch in time") . " : " . set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1];
+
+    if (!empty($punchInNote)) {
+        $punchInDisplayNote .= "<br>\n";
+        $punchInDisplayNote .= __("Note") . " : " . $punchInNote;
     }
-    
+
+    $punchInDisplayNote .= "</li>\n";
+}
 ?>
-    
+
 <div class="box">
-    
+
     <div class="head"><h1><?php echo $heading; ?></h1></div>
-    
+
     <div class="inner">
-        
+
         <?php include_partial('global/flash_messages'); ?>
-        
+
         <form  id="punchTimeForm" method="post">
-            
+
             <?php echo $form['_csrf_token']; ?>
-            
+
             <fieldset>
                 <ol>
                     <?php if ($isEditable) : ?>
-                    <li>
-                        <label><?php echo $form['date']->renderLabel() ?></label>
-                        <?php echo $form['date']->render(); ?>
-                    </li>
-                    <li>
-                        <label><?php echo $form['time']->renderLabel() ?></label>
-                        <?php echo $form['time']->render(); ?> <span>HH:MM</span>
-                    </li>
-                    <li>
-                        <label><?php echo $form['note']->renderLabel() ?></label>
-                        <?php echo $form['note']->render(); ?>
-                    </li>
-                    <?php echo $punchInDisplayNote; ?>
+                        <li>
+                            <label><?php echo $form['date']->renderLabel() ?></label>
+                            <?php echo $form['date']->render(); ?>
+                        </li>
+                        <li>
+                            <label><?php echo $form['time']->renderLabel() ?></label>
+                            <?php echo $form['time']->render(); ?> <span>HH:MM</span>
+                        </li>
+                        <li>
+                            <label><?php echo $form['note']->renderLabel() ?></label>
+                            <?php echo $form['note']->render(); ?>
+                        </li>
+                        <?php echo $punchInDisplayNote; ?>
                     <?php else : ?>
-                    <?php echo $attendanceFormToImplementCsrfToken['_csrf_token']; ?>
-                    <li>
-                        <label><?php echo __('Date'); ?></label>
-                        <span id="currentDate"></span><input type="hidden" class="date"name="date" value=""/>
-                    </li>
-                    <li>
-                        <label><?php echo __('Time'); ?></label>
-                        <span id="currentTime"></span><input  type="hidden" class="time"name="time" value=""> <span>HH:MM</span>
-                    </li>
-                    <li>
-                        <label><?php echo __('Note'); ?></label>
-                        <textarea id="note" class="note" name="note" rows="5" cols="50"></textarea>
-                    </li>
-                    <?php echo $punchInDisplayNote; ?>
+                        <?php echo $attendanceFormToImplementCsrfToken['_csrf_token']; ?>
+                        <li>
+                            <label><?php echo __('Date'); ?></label>
+                            <span id="currentDate"></span><input type="hidden" class="date"name="date" value=""/>
+                        </li>
+                        <li>
+                            <label><?php echo __('Time'); ?></label>
+                            <span id="currentTime"></span><input  type="hidden" class="time"name="time" value=""> <span>HH:MM</span>
+                        </li>
+                        <li>
+                            <label><?php echo __('Note'); ?></label>
+                            <textarea id="note" class="note" name="note" rows="5" cols="50"></textarea>
+                        </li>
+                        <?php echo $punchInDisplayNote; ?>
                     <?php endif; ?>
                 </ol> 
-                
+
                 <?php if ($isPunchInAllowed) : ?>
                     <p>
                         <input type="button" name="button" class="punchInbutton" id="btnPunch" value="<?php echo __('In'); ?>" />
@@ -114,53 +115,51 @@ For top level messages, use new styles
         </form>
     </div>
 </div>    
-    
-<?php 
+
+<?php
 //TODO: Kept the 'if' condition as it was. Better to move to a meaningful variable
-if (((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))))))) : ?>
-<?php $editmode = true; ?>
+if (((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_IN, $sf_data->getRaw('allowedActions')))) || ((in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, $sf_data->getRaw('allowedActions')) && (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))))))) :
+    ?>
+    <?php $editmode = true; ?>
+</body>
 <?php endif; ?>
 
-                                                </body>
-                                                <script type="text/javascript">
-                                                    //<![CDATA[
-                                                    var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
+<script type="text/javascript">
+    //<![CDATA[
+    var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
 
-                                                    var linkForPunchIn ='<?php echo url_for('attendance/punchIn') ?>';
-                                                    var linkForPunchOut ='<?php echo url_for('attendance/punchOut') ?>';
-                                                    var linkForOverLappingValidation='<?php echo url_for('attendance/validatePunchOutOverLapping') ?>';
-                                                    var linkForPunchInOverlappingValidation='<?php echo url_for('attendance/validatePunchInOverLapping') ?>';
-                                                    var errorForInvalidTime='<?php echo __('Punch out Time Should Be Higher Than Punch in Time'); ?>';
-                                                    var errorForInvalidFormat="<?php echo __('Should Be a Valid Time in %format% Format', array('%format%' => 'HH:MM')) ?>";
-                                                    var errorForInvalidTimeFormat="<?php echo __('Should Be a Valid Time in %format% Format', array('%format%' => 'HH:MM')) ?>";
-                                                    var getCurrentTimeLink='<?php echo url_for('attendance/getCurrentTime') ?>';
-                                                    var errorForInvalidDateFormat='<?php echo __('Should Be a Valid Date in %format% Format', array('%format%' => get_datepicker_date_format($sf_user->getDateFormat()))) ?>';
-                                                    var errorForOverLappingTime="<?php echo __('Overlapping Records Found'); ?>";
-                                                    var errorForInvalidNote='<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)) ?>';
+    var linkForPunchIn ='<?php echo url_for('attendance/punchIn') ?>';
+    var linkForPunchOut ='<?php echo url_for('attendance/punchOut') ?>';
+    var linkForOverLappingValidation='<?php echo url_for('attendance/validatePunchOutOverLapping') ?>';
+    var linkForPunchInOverlappingValidation='<?php echo url_for('attendance/validatePunchInOverLapping') ?>';
+    var errorForInvalidTime='<?php echo __('Punch out Time Should Be Higher Than Punch in Time'); ?>';
+    var errorForInvalidFormat="<?php echo __('Should Be a Valid Time in %format% Format', array('%format%' => 'HH:MM')) ?>";
+    var errorForInvalidTimeFormat="<?php echo __('Should Be a Valid Time in %format% Format', array('%format%' => 'HH:MM')) ?>";
+    var getCurrentTimeLink='<?php echo url_for('attendance/getCurrentTime') ?>';
+    var errorForInvalidDateFormat='<?php echo __('Should Be a Valid Date in %format% Format', array('%format%' => get_datepicker_date_format($sf_user->getDateFormat()))) ?>';
+    var errorForOverLappingTime="<?php echo __('Overlapping Records Found'); ?>";
+    var errorForInvalidNote='<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)) ?>';
 
-                                                    var actionPunchIn='<?php echo $actionPunchIn; ?>';
+    var actionPunchIn='<?php echo $actionPunchIn; ?>';
 
-                                                    var actionPunchOut='<?php echo $actionPunchOut; ?>';
+    var actionPunchOut='<?php echo $actionPunchOut; ?>';
 
-                                                    var recordId = '<?php echo $recordId; ?>';
-                                                    var employeeId='<?php echo $employeeId; ?>';
-                                                    var currentTime='<?php echo $currentTime; ?>';
-                                                    var currentDate='<?php echo set_datepicker_date_format($currentDate); ?>';
-                                                    var punchInTime='<?php echo $punchInTime; ?>';
-                                                    var timeZone='<?php echo $timezone; ?>';
-                                                    var punchInNote='<?php echo json_encode($punchInNote); ?>';
-                                                    var punchInUtcTime='<?php echo $punchInUtcTime; ?>';
+    var recordId = '<?php echo $recordId; ?>';
+    var employeeId='<?php echo $employeeId; ?>';
+    var currentTime='<?php echo $currentTime; ?>';
+    var currentDate='<?php echo set_datepicker_date_format($currentDate); ?>';
+    var punchInTime='<?php echo $punchInTime; ?>';
+    var timeZone='<?php echo $timezone; ?>';
+    var punchInNote='<?php echo json_encode($punchInNote); ?>';
+    var punchInUtcTime='<?php echo $punchInUtcTime; ?>';
 
-                                                    //
+    var editMode =false;
 
-                                                    var editMode =false;
-
-                                                    if( '<?php echo $editmode ?>'){
-                
+    if('<?php echo $editmode ?>') {                
         editMode=true;
     }
 
-    if(!editMode){
+    if(!editMode) {
 
         function timedRefresh(timeoutPeriod) {
 

@@ -13,8 +13,7 @@
         <div id="validationMsg">
             <?php echo isset($messageData[0]) ? displayMainMessage($messageData[0], $messageData[1]) : ''; ?>
         </div>
-        <?php include_partial('global/flash_messages'); ?>
-     
+             
         <form action="<?php echo url_for("attendance/viewAttendanceRecord"); ?>" id="reportForm" method="post" name="frmAttendanceReport">
             <fieldset>
                 <ol>

@@ -3,7 +3,7 @@
     
 <div class="box miniList noHeader" id="recordsTable">
     <div class="inner">
-        <div id="msg" ><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
+        <?php include_partial('global/flash_messages'); ?>
         <form action="" id="employeeRecordsForm" method="post">
             <p>
                 <?php if ($allowedActions['Edit']) : ?>
@@ -36,7 +36,7 @@
                     <?php $total = 0; ?>
                     <?php if ($records == null): ?>  
                         <tr>
-                            <td id="noRecordsColumn" colspan="5">
+                            <td id="noRecordsColumn" colspan="6">
                                 <?php echo __("No attendance records to display") ?>
                             </td>
                         </tr> 
@@ -114,7 +114,7 @@
         <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
             </div>
     <div class="modal-footer">
-        <input type="button" class="btn" id="dialogOk" value="<?php echo __('Ok'); ?>" />
+        <input type="button" class="btn" id="dialogOk" data-dismiss="modal" value="<?php echo __('Ok'); ?>" />
         <input type="button" class="btn reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
         </div>
 </div>

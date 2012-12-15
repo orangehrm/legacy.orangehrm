@@ -249,6 +249,8 @@ class AttendanceActions extends sfActions {
         $attendanceRecordId = $request->getParameter('id');
 
         $this->isDeleted = $this->getAttendanceService()->deleteAttendanceRecords($attendanceRecordId);
+        
+        $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
 
         return $this->renderText($this->isDeleted);
     }
