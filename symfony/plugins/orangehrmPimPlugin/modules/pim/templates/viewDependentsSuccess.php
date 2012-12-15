@@ -176,7 +176,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
     
     <!-- Attachments & Custom Fields -->
     <?php
-    echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => CustomField::SCREEN_CONTACT_DETAILS));
+    echo include_component('pim', 'customFields', array('empNumber'=>$empNumber, 'screen' => CustomField::SCREEN_DEPENDENTS));
     echo include_component('pim', 'attachments', array('empNumber'=>$empNumber, 'screen' => EmployeeAttachment::SCREEN_DEPENDENTS));
     ?>
     
