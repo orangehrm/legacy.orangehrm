@@ -10,7 +10,7 @@ $(document).ready(function() {
     }).result(function(event, item) {
         //$("#candidateSearch_selectedCandidate").val(item.id);
         //$("label.error").hide();
-        validateInterviewerNames()
+        validateInterviewerNames();
     });
 
     $("#addButton").live('click', function(){
@@ -97,10 +97,12 @@ $(document).ready(function() {
             return;
         }
         if($("#saveBtn").attr('value') == lang_save) {
-            if(isValidForm()){
-                removeTypeHints();
-                validateInterviewers()
-                $('#frmJobInterview').submit();
+            if(validateInterviewerNames()){
+                if(isValidForm()){
+                    removeTypeHints();
+                    validateInterviewers();                
+                    $('#frmJobInterview').submit();
+                }
             }
         }
     });
@@ -173,7 +175,7 @@ function validateInterviewerNames(){
 
     var flag = true;
     $(".messageBalloon_success").remove();
-//    $("li#interviewerList > .validation-error").remove();
+    //    $("li#interviewerList > .validation-error").remove();
 
     var errorClass = "validation-error";
     var interviewerNameArray = new Array();
@@ -190,22 +192,27 @@ function validateInterviewerNames(){
         }
     });
 
-    for(var i=0; i<interviewerNameArray.length; i++){
-        var currentElement = interviewerNameArray[i];
+    if(interviewerNameArray.length > 0) {
+        for(var i=0; i<interviewerNameArray.length; i++){        
+            var currentElement = interviewerNameArray[i];
         
-        for(var j=1+i; j<interviewerNameArray.length; j++){
-            if(currentElement.val() == interviewerNameArray[j].val() ){
-                errorElements[num] = currentElement;
-                errorElements[++num] = interviewerNameArray[j];
-                num++;
-//                interviewerNameArray[j].after('<span class="validation-error">'+lang_identical_rows+'</span>');
-                flag = false;
+            for(var j=0; j<interviewerNameArray.length; j++){
+                if(currentElement.val() == interviewerNameArray[j].val() && currentElement.attr('id') != interviewerNameArray[j].attr('id')){
+                    errorElements[num] = currentElement;
+                    errorElements[++num] = interviewerNameArray[j];
+                    num++;
+                    //interviewerNameArray[j].after('<span class="validation-error">'+lang_identical_rows+'</span>');
+                    flag = false;
+                }
+            }
+        
+            for(var k=0; k<errorElements.length; k++){
+                errorElements[k].addClass(errorClass);
             }
         }
-        
-        for(var k=0; k<errorElements.length; k++){
-            errorElements[k].attr('class', errorClass);
-        }
+    } else {
+        flag = false;
+        $('#addButton').after('<span class="validation-error">'+lang_interviewerRequired+'</span>')
     }
 
     return flag;
@@ -232,12 +239,6 @@ function isValidForm(){
         
         if((element.id != 'jobInterview_interviewer_1') && (($('#'+element.id).val() == "") || ($('#'+element.id).val() == lang_typeHint))) {
             temp = true;
-        }
-        
-        if(!temp) {
-            $('#'+element.id).next().next().css('display', 'block');
-        } else {
-            $('#'+element.id).next().next().css('display', 'none');
         }
         
         return temp;
@@ -285,23 +286,28 @@ function isValidForm(){
             },
             
             'jobInterview[interviewer_1]' : {
-                hiringManagerNameValidation: true
+                hiringManagerNameValidation: true,
+                required: $(this).is(":visible")
             },
             
             'jobInterview[interviewer_2]' : {
-                hiringManagerNameValidation: true
+                hiringManagerNameValidation: true,
+                required: $(this).is(":visible")
             },
             
             'jobInterview[interviewer_3]' : {
-                hiringManagerNameValidation: true
+                hiringManagerNameValidation: true,
+                required: $(this).is(":visible")
             },
             
             'jobInterview[interviewer_4]' : {
-                hiringManagerNameValidation: true
+                hiringManagerNameValidation: true,
+                required: $(this).is(":visible")
             },
             
             'jobInterview[interviewer_5]' : {
-                hiringManagerNameValidation: true
+                hiringManagerNameValidation: true,
+                required: $(this).is(":visible")
             },
 
             'jobInterview[date]' : {
@@ -326,23 +332,28 @@ function isValidForm(){
             },
 
             'jobInterview[interviewer_1]' : {
-                hiringManagerNameValidation:lang_enterAValidEmployeeName
+                hiringManagerNameValidation:lang_enterAValidEmployeeName,
+                required: lang_interviewerRequired
             },
             
             'jobInterview[interviewer_2]' : {
-                hiringManagerNameValidation:lang_enterAValidEmployeeName
+                hiringManagerNameValidation:lang_enterAValidEmployeeName,
+                required: lang_interviewerRequired
             },
             
             'jobInterview[interviewer_3]' : {
-                hiringManagerNameValidation:lang_enterAValidEmployeeName
+                hiringManagerNameValidation:lang_enterAValidEmployeeName,
+                required: lang_interviewerRequired
             },
             
             'jobInterview[interviewer_4]' : {
-                hiringManagerNameValidation:lang_enterAValidEmployeeName
+                hiringManagerNameValidation:lang_enterAValidEmployeeName,
+                required: lang_interviewerRequired
             },
             
             'jobInterview[interviewer_5]' : {
-                hiringManagerNameValidation:lang_enterAValidEmployeeName
+                hiringManagerNameValidation:lang_enterAValidEmployeeName,
+                required: lang_interviewerRequired
             },
 
             'jobInterview[date]' : {
@@ -356,7 +367,7 @@ function isValidForm(){
         }
     });
     
-    return true;   
+    return validator.valid();   
 }
 
 function isSheduledTimeFreeJson(shedulingDate, shedulingTime) {

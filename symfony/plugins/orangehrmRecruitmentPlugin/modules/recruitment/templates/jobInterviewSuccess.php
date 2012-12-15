@@ -116,6 +116,7 @@ use_stylesheet('../orangehrmRecruitmentPlugin/css/jobInterviewSuccess');
     var historyId = "<?php echo $historyId; ?>";
     var getInterviewSheduledTimeListActionUrl = "<?php echo url_for('recruitment/getInterviewSheduledTimeListJson?candidateId=' . $form->candidateId); ?>";
     var lang_interviewHeadingRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
+    var lang_interviewerRequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
     var lang_noMoreThan98 = "<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 100)); ?>";
     var lang_noMoreThan18 = "<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 50)); ?>";
     var lang_enterAValidEmployeeName = "<?php echo __(ValidationMessages::INVALID); ?>";
