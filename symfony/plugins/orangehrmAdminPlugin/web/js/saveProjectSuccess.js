@@ -192,7 +192,9 @@ $(document).ready(function() {
             isValid = false;
         }else {
             if($("#frmAddCustomer").valid()){
-                $('#frmAddCustomer').submit();
+                var customerName = escape($.trim($('#addCustomer_customerName').val()));
+                var customerDescription = escape($('#addCustomer_description').val());
+                saveCustomer(custUrl+'?customerName=' + customerName +'&description=' + customerDescription); 
             }   
         }
     });
@@ -206,13 +208,6 @@ $(document).ready(function() {
         $('#errorHolderCopy').empty();
         $('#btnCopyDig').hide();
     });    
-    
-    $('#frmAddCustomer').submit(function(event) {
-        
-        saveCustomer(custUrl+'?customerName='+escape($.trim($('#addCustomer_customerName').val()))+'&description='+
-            escape($('#addCustomer_description').val()));        
-        event.preventDefault();
-    });
     
     if(projectId>0){
         var noOfInterviewers = $('#addProject_projectAdminList').val();
