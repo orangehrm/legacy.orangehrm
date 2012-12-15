@@ -919,7 +919,9 @@ table tfoot tr.total td strong {
 	font-weight:bold;
 	color:#fff;
 }
-table.table td.hover, table.table tr.hover, table tbody tr.odd td.hover {
+table.table td.hover, table.table tr.hover, table tbody tr.odd td.hover,
+table tbody tr.odd td.hover table tbody tr td, 
+table tbody tr.even td.hover table tbody tr td {
 	background-color:#CCC;
 }
 /* ================ Table styles: End ================ */
