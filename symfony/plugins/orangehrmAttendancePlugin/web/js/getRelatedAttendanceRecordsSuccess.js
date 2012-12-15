@@ -1,8 +1,6 @@
 var global = 1
 $(document).ready(function() {
     $('#btnDelete').attr('disabled', 'disabled');
-    $('#msg').removeAttr('class');
-    $('#msg').html("");
 
     $(':checkbox[name*="chkSelectRow[]"]').click(function() {
         if($(':checkbox[name*="chkSelectRow[]"]').is(':checked')) {
@@ -22,6 +20,12 @@ $(document).ready(function() {
             } else {
                 $('#btnDelete').attr('disabled','disabled');
             }
+        }
+    });
+    
+    $("input:checkbox[name='chkSelectRow[]']").each(function(){
+        if($(this).val() == '') {
+            $(this).remove();
         }
     });
 
