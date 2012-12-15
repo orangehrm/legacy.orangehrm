@@ -292,8 +292,6 @@ CandidateHistory:
   buttonsPosition: ''
   formMethod: post
   formAction: '#'
-  assets:
-    - addCandidateSuccess.css
   jsInitMethods: []
 
 PimPredefinedReport:

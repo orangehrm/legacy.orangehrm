@@ -44,6 +44,12 @@ foreach ($jobVacancyList as $vacancy) {
     }
 }
 ?>
+<style type="text/css">
+.actionDrpDown {
+    width: 170px;
+    margin:1px 10px 0 10px;
+}    
+</style>
 <div class="box" id="addCandidate">
 
     <div class="head"><h1 id="addCandidateHeading"><?php echo $title; ?></h1></div>
