@@ -1,2 +1,4 @@
+viewJobsSuccess.html:
+  layout: noHeader
 applyVacancySuccess:
   layout: noHeader
