@@ -18,6 +18,13 @@
  */
 ?>
 
+<style type="text/css">
+    form ol li.checkbox label {
+        width:35%
+    }
+</style>
+    
+
 <div class="box">
          
     <div class="head">

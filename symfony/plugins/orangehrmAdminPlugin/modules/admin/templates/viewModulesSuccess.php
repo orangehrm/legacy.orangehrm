@@ -19,6 +19,11 @@
  */
 ?>
 
+<style type="text/css">
+    form ol li.checkbox label {
+        width:15%
+    }
+</style>
 
 <div id="saveFormDiv" class="box">
     
