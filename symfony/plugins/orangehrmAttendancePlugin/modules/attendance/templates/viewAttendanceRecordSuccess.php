@@ -80,7 +80,7 @@
     var employeeSelect = '<?php echo __('Select an Employee') ?>';
     var invalidEmpName = '<?php echo __('Invalid Employee Name') ?>';
     var noEmployees = '<?php echo __('No Employees Available') ?>';
-    var typeForHints = '<?php echo __("Type for hintsWOW") . '...'; ?>';
+    var typeForHints = '<?php echo __("Type for hints") . '...'; ?>';
     var date='<?php echo $date; ?>';
     var linkToEdit='<?php echo url_for('attendance/editAttendanceRecord'); ?>'
     var linkToDeleteRecords='<?php echo url_for('attendance/deleteAttendanceRecords'); ?>'

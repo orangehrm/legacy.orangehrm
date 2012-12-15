@@ -1,4 +1,12 @@
 $(document).ready(function(){
+    
+    if(employeeId != '') {
+        $('#employeeRecordsForm').append($('.actionbar > .formbuttons').html());
+        $('.actionbar > .formbuttons').html('');
+        $('.actionbar > .formbuttons').html($('#formbuttons').html());
+        $('#formbuttons').html('');
+    }
+    
     var rDate = trim($("#attendance_date").val());
     if (rDate == '') {
         $("#attendance_date").val(displayDateFormat);
@@ -15,6 +23,20 @@ $(document).ready(function(){
         }
     });
     
+    $("#attendance_employeeName_empName").change(function(){
+        autoFill('attendance_employeeName_empName', 'attendance_employeeName_empId', employees_attendance_employeeName);
+    });
+
+    function autoFill(selector, filler, data) {
+        $("#" + filler).val("");
+        $.each(data, function(index, item){
+            if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
+                $("#" + filler).val(item.id);
+                return true;
+            }
+        });
+    }
+        
     function autoFillEmpName(employeeId) {
         $("#attendance_employeeName_empId").val("");
         $.each(employees_attendance_employeeName, function(index, item){
@@ -65,11 +87,15 @@ $.validator.addMethod("validEmployeeName", function(value, element) {
 function autoFill(selector, filler, data) {
     $("#" + filler).val("");
     var valid = false;
-    $.each(data, function(index, item){
-        if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
-            $("#" + filler).val(item.id);
-            valid = true;
-        }
-    });
+    if($("#" + selector).val() == typeForHints || $("#" + selector).val() == '') {
+        valid = true;
+    } else {
+        $.each(data, function(index, item){
+            if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
+                $("#" + filler).val(item.id);
+                valid = true;
+            }
+        });
+    }
     return valid;
 }
