@@ -22,10 +22,6 @@
 <?php use_stylesheets_for_form($form) ?>
 
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/addCandidateSuccess'); ?>
-<?php $browser = $_SERVER['HTTP_USER_AGENT']; ?>
-<?php if (strstr($browser, "MSIE 8.0")): ?>
-<?php else: ?>
-<?php endif; ?>
 <?php $title = ($candidateId > 0) ? __('Candidate') : __('Add Candidate'); ?>
 <?php
 $allVacancylist[] = array("id" => "", "name" => __('-- Select --'));
@@ -106,7 +102,7 @@ foreach ($jobVacancyList as $vacancy) {
                                     $widgetName = $candidateVacancy->getId();
                                     echo $actionForm[$widgetName]->render(array("class" => "actionDrpDown"));
                                     ?> 
-                                <span class="status" style="font-weight: bold"><?php echo __("Status") . " : " . __(ucwords(strtolower($candidateVacancy->getStatus()))); ?></span>
+                                <span class="status" style="font-weight: bold"><?php echo __("Status") . ": " . __(ucwords(strtolower($candidateVacancy->getStatus()))); ?></span>
                                     <?php
                                 }
                                 $i++;
@@ -135,16 +131,14 @@ foreach ($jobVacancyList as $vacancy) {
 
                             echo $form['resumeUpdate']->renderLabel(__('Resume'));
                             echo $linkHtml;
-                            echo "<br class=\"clear\"/>";
-                            echo "<div id=\"radio\">";
-                            echo $form['resumeUpdate']->render(array("class" => ""));
-                            echo "<br class=\"clear\"/>";
-                            echo "</div>";
-                            echo "<div id=\"fileUploadSection\">";
+                            echo "<li class=\"radio noLabel\" id=\"radio\">";
+                            echo $form['resumeUpdate']->render(array("class" => "fileEditOptions"));
+                            echo "</li>";
+                            echo "<li id=\"fileUploadSection\" class=\"noLabel\">";
                             echo $form['resume']->renderLabel(' ');
                             echo $form['resume']->render(array("class " => "duplexBox"));
                             echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_DOC) . "</div>";
-                            echo "</div>";
+                            echo "</li>";
                         }
                         ?>
                     </li>
