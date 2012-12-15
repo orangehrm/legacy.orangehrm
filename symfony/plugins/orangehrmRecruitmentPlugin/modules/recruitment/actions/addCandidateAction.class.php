@@ -113,7 +113,7 @@ class addCandidateAction extends sfAction {
 
             if (($_FILES['addCandidate']['size']['resume'] > 1024000) || ($_FILES['addCandidate']['error']['resume'] && $_FILES['addCandidate']['name']['resume'])) {
                 $title = ($this->candidateId > 0) ? __('Editing Candidate') : __('Adding Candidate');	 
-                $this->templateMessage = array('addcandidate.warning', '' . __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
+                $this->getUser()->setFlash('addcandidate.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
             } elseif ($_FILES == null) {
                 $title = ($this->candidateId > 0) ? __('Editing Candidate') : __('Adding Candidate');
                 $this->getUser()->setFlash('addcandidate.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
