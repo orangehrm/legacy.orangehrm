@@ -174,8 +174,6 @@ function removeTypeHints() {
 function validateInterviewerNames(){
 
     var flag = true;
-    $(".messageBalloon_success").remove();
-    //    $("li#interviewerList > .validation-error").remove();
 
     var errorClass = "validation-error";
     var interviewerNameArray = new Array();
