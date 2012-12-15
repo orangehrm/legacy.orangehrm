@@ -23,8 +23,9 @@ $noOfColumns = sizeof($sf_data->getRaw('rowDates'));
 $width = 350 + $noOfColumns * 75;
 
 $actionName = sfContext::getInstance()->getActionName(); 
+?>
 
-if (isset($messageData[0])): ?>
+<?php if (isset($messageData[0])): ?>
     <div class="box timesheet">
         <div class="inner">
             <div class="message <?php echo $messageData[0]; ?>">
@@ -33,9 +34,7 @@ if (isset($messageData[0])): ?>
             </div>
         </div>
     </div>
-<?php;
-else:
-?>
+<?php else: ?>
 
 <div class="box timesheet noHeader" id="timesheet">
     
@@ -369,6 +368,8 @@ else:
     </div>
 </div> <!-- createTimesheet -->
 
+<?php endif; ?>
+
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
     var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';
@@ -398,5 +399,3 @@ else:
     var closeText = '<?php echo __('Close');?>';
     
 </script>
-
-<?php endif; ?>
