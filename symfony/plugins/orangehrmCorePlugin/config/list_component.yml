@@ -166,8 +166,10 @@ Candidate:
       function: addCandidate
     Delete:
       label: Delete
-      type: submit
+      data-toggle: modal
+      data-target: '#deleteConfirmation'
       class: delete
+      type: submit
   buttonsPosition: before-data
   formMethod: post
   formAction: 'index.php/recruitment/deleteCandidateVacancies'
