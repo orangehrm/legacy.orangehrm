@@ -149,11 +149,14 @@ $(document).ready(function() {
 //function to load data for updating
 function fillDataToImmigrationDataPane(seqno) {
 
-    var controls = new Array("number", "passport_issue_date", "passport_expire_date", "i9_status", "country", "i9_review_date", "comments");
-    for(i=0; i < controls.length; i++) {
-        //this is to say something like $('#immigration_number').val($("#number_" + seqno).val());
-        $("#immigration_" + controls[i]).val($("#" + controls[i] + "_" + seqno).val());
-    }
+    $('#immigration_number').val(recordsAsJSON[seqno].number);
+    $('#immigration_passport_issue_date').val(recordsAsJSON[seqno].issuedDate);
+    $('#immigration_passport_expire_date').val(recordsAsJSON[seqno].expiryDate);
+    $('#immigration_i9_status').val(recordsAsJSON[seqno].status);
+    $('#immigration_country').val(recordsAsJSON[seqno].countryCode);
+    $('#immigration_i9_review_date').val(recordsAsJSON[seqno].reviewDate);
+    $('#immigration_comments').val(recordsAsJSON[seqno].notes);
+
     $("#immigration_seqno").val(seqno);
 
     var typeFlag = $("#type_flag_" + seqno).val();

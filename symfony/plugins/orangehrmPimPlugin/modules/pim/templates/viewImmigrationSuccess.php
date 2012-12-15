@@ -18,7 +18,7 @@ $havePassports = $numContacts>0;
     var fileModified = 0;
     var havePassports = '<?php echo $havePassports;?>';
     var canUpdate = '<?php echo $immigrationPermission->canUpdate();?>';
-
+    var recordsAsJSON = new Array();
     //]]>
 </script>
 <?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewImmigrationSuccess'); ?>
@@ -146,7 +146,22 @@ $havePassports = $numContacts>0;
                                 $issuedDate = set_datepicker_date_format($record->issuedDate);
                                 $expiryDate = set_datepicker_date_format($record->expiryDate);
                                 $reviewDate = set_datepicker_date_format($record->reviewDate);
+                                
+                                $serializableRecord = new stdClass();
+                                $serializableRecord->recordId = $record->recordId;
+                                $serializableRecord->type = $record->type;
+                                $serializableRecord->number = $record->number;
+                                $serializableRecord->issuedDate = $issuedDate;
+                                $serializableRecord->expiryDate = $expiryDate;
+                                $serializableRecord->reviewDate = $reviewDate;
+                                $serializableRecord->status = $record->status;
+                                $serializableRecord->countryCode = $record->countryCode;
+                                $serializableRecord->notes = $record->notes;
+                                
                                 ?>
+                                <script type="text/javascript">
+                                    <?php echo "recordsAsJSON[{$record->recordId}] = " . json_encode($serializableRecord) . ';'; ?>
+                                </script>
                                 <input type="hidden" id="passport_issue_date_<?php echo $record->recordId; ?>" value="<?php echo $issuedDate; ?>" />
                                 <input type="hidden" id="passport_expire_date_<?php echo $record->recordId; ?>" value="<?php echo $expiryDate; ?>" />
                                 <input type="hidden" id="i9_status_<?php echo $record->recordId; ?>" value="<?php echo htmlentities($record->status); ?>" />
