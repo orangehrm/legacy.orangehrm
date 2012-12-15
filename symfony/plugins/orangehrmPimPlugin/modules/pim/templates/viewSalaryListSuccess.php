@@ -10,7 +10,7 @@
         </div>
         
         <div class="inner">
-            <form id="frmSalary" action="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber); ?>" method="post">
+            <form id="frmSalary" action="<?php echo url_for('pim/viewSalaryList?empNumber=' . $empNumber); ?>" method="post" class="longLabels">
                 <fieldset>
                     <?php echo $form['_csrf_token']; ?>
                     <?php echo $form['id']->render(); ?>
@@ -50,9 +50,9 @@
                             <?php echo $form['comments']->renderLabel(__('Comments')); ?>
                             <?php echo $form['comments']->render(array("class" => "formInputText")); ?>
                         </li>
-                        <li class="checkbox">
-                            <?php echo $form['set_direct_debit']->render(); ?>
+                        <li>
                             <?php echo $form['set_direct_debit']->renderLabel(__('Add Direct Deposit Details'), array('id' => 'set_direct_debit_label')); ?>
+                            <?php echo $form['set_direct_debit']->render(); ?>
                         </li>
                         <li class="required" id="notDirectDebitSection">
                             <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
@@ -110,7 +110,7 @@
             <?php if ($salaryPermissions->canRead()) : ?>
             
             <?php include_partial('global/flash_messages', array('prefix' => 'salary')); ?>
-            <form id="frmDelSalary" action="<?php echo url_for('pim/deleteSalary?empNumber=' . $empNumber); ?>" method="post">
+            <form id="frmDelSalary" action="<?php echo url_for('pim/deleteSalary?empNumber=' . $empNumber); ?>" method="post" class="longLabels">
                 <p id="actionSalary">
                     <?php if ($salaryPermissions->canCreate()) { ?>
                     <input type="button" value="<?php echo __("Add"); ?>" class="" id="addSalary" />
