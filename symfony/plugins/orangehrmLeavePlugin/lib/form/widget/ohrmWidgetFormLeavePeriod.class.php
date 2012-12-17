@@ -43,6 +43,19 @@ class ohrmWidgetFormLeavePeriod  extends sfWidgetForm{
    *
    * @see ohrmWidgetFormDateRange
    */
+     protected $leaveTypeService;
+     
+    public function getLeavePeriodService() {
+        if (!isset($this->leavePeriodService)) {
+            $this->leavePeriodService = new LeavePeriodService();
+        }        
+        return $this->leavePeriodService;
+    }
+
+    public function setLeavePeriodService($leavePeriodService) {
+        $this->leavePeriodService = $leavePeriodService;
+    }
+    
   protected function configure($options = array(), $attributes = array()) {
     parent::configure($options, $attributes);
     
@@ -93,7 +106,13 @@ class ohrmWidgetFormLeavePeriod  extends sfWidgetForm{
    */
   public function render($name, $value = null, $attributes = array(), $errors = array()) {
     $value = array_merge(array('from' => '', 'to' => ''), is_array($value) ? $value : array());
-
+    if($value['from']=='' && $value['to'] == ''){
+        // If leave period defined, use leave period start and end date
+        $leavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate(date('Y-m-d', time()));
+        
+        $value['from']  = $leavePeriod[0];
+        $value['to']   = $leavePeriod[1];
+    }
     $fromWidget = $this->getOption('from_date');
     $fromId = $fromWidget->getAttribute('id');
     if (empty($fromId)) {
@@ -170,7 +189,7 @@ EOF
           '%from_label%' => $fromLabelHtml,
           '%to_label%' => $toLabelHtml,
           '%from_date%' => $fromWidget->render($name.'[from]', $value['from'], array('id' => 'date_from')),
-          '%to_date%' => $toWidget->render($name.'[to]', $value['to'], array('id' => 'date_from')),
+          '%to_date%' => $toWidget->render($name.'[to]', $value['to'], array('id' => 'date_to')),
         ));
     }
     
