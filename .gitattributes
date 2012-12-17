@@ -130,7 +130,6 @@ lib/confs/cryptokeys/.htaccess -text
 lib/confs/log_settings.php -text
 lib/confs/mailConf.php-distribution -text
 lib/confs/sysConf.php -text
-lib/logs/LogFileWriter.php -text
 license/3RDPARTY.TXT -text
 license/3rdParty/PHPMyAdmin.license -text
 license/3rdParty/xplanner.license -text
