@@ -69,15 +69,17 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
     }
 
     public function getLeaveBalance() {
-        /*$leaveEntitlementService = new LeaveEntitlementService();
+        $balance = '';
+        $leaveEntitlementService = new LeaveEntitlementService();
         $employeeId = $this->getEmpNumber();
         $leaveTypeId = $this->getLeaveTypeId();
-        $leavePeriodId = $this->getLeavePeriodId();
+       
         
-        $balance = $leaveEntitlementService->getLeaveBalance($employeeId, $leaveTypeId, $leavePeriodId);
-         * 
-         */
-        $balance = '';
+        $leaveBalance = $leaveEntitlementService->getLeaveBalance( $employeeId ,$leaveTypeId);
+        if( $leaveBalance instanceof LeaveBalance){
+            $balance = $leaveBalance->getEntitled()-$leaveBalance->getUsed();
+        }
+        
         return $balance;
     }
 
