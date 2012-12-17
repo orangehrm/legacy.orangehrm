@@ -26,7 +26,7 @@ class LeaveCancelSubscriberMailProcessor extends LeaveEmailProcessor {
     
     public function getRecipients($data) {
 
-        $recipients = parent::getSubscribers(EmailNotification::LEAVE_REJECTION);
+        $recipients = parent::getSubscribers(EmailNotification::LEAVE_CANCELLATION);
         return $recipients;
     }
 
