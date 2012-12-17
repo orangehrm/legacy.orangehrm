@@ -193,7 +193,7 @@ class LeaveEntitlementDao extends BaseDao {
             $entitlementList = $this->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
             if(count($entitlementList) > 0){
                 $entitlement  = $entitlementList->getFirst();
-                $noOfDays  = $leaveEntitlement->getNoOfDays()+ $existingEntitlement->getNoOfDays();
+                $noOfDays  = $leaveEntitlement->getNoOfDays()+ $entitlement->getNoOfDays();
                
             }else{
                 $entitlement    = new LeaveEntitlement(); 
