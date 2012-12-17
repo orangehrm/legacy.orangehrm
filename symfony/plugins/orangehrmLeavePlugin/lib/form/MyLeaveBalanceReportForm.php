@@ -30,9 +30,7 @@ class MyLeaveBalanceReportForm extends LeaveBalanceReportForm {
         
         unset($this['report_type']);
         unset($this['employee']);
-        
-        
-                
+        unset($this['leave_type']);
     }
     
     public function getValue($field) {
