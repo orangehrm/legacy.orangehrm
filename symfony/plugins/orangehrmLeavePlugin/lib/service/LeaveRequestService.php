@@ -550,37 +550,49 @@ class LeaveRequestService extends BaseService {
                 foreach ($approvalIds as $leaveId) {
                     $approvals[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
-                $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments);
-                
+                if (count($approvals) > 0) {
+                    $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments);
 
-                foreach ($approvals as $approval) {
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, array($approval), 
-                            $changedByUserType, $changedUserId, 'single');
+//                    foreach ($approvals as $approval) {
+//                        $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, array($approval), 
+//                                $changedByUserType, $changedUserId, 'single');
+//                    }
+
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, $approvals, 
+                            $changedByUserType, $changedUserId, 'multiple');                
                 }
-
+                
                 $rejections = array();
                 foreach ($rejectionIds as $leaveId) {
                     $rejections[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
-                $this->_changeLeaveStatus($rejections, Leave::LEAVE_STATUS_LEAVE_REJECTED, $changeComments);
+                
+                if (count($rejections) > 0) {
+                    $this->_changeLeaveStatus($rejections, Leave::LEAVE_STATUS_LEAVE_REJECTED, $changeComments);
 
-                foreach ($rejections as $rejection) {
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, array($rejection), 
-                            $changedByUserType, $changedUserId, 'single');
+//                    foreach ($rejections as $rejection) {
+//                        $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, array($rejection), 
+//                                $changedByUserType, $changedUserId, 'single');
+//                    }
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, $rejections, 
+                            $changedByUserType, $changedUserId, 'multiple');                    
                 }
-
                 $cancellations = array();
                 foreach ($cancellationIds as $leaveId) {
                     $cancellations[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
-                $this->_changeLeaveStatus($cancellations, Leave::LEAVE_STATUS_LEAVE_CANCELLED);
+                
+                if (count($cancellations) > 0) {
+                    $this->_changeLeaveStatus($cancellations, Leave::LEAVE_STATUS_LEAVE_CANCELLED);
 
-                foreach ($cancellations as $cancellation) {
-
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, array($cancellation), 
-                            $changedByUserType, $changedUserId, 'single');
+//                    foreach ($cancellations as $cancellation) {
+//
+//                        $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, array($cancellation), 
+//                                $changedByUserType, $changedUserId, 'single');
+//                    }
+                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
+                            $changedByUserType, $changedUserId, 'multiple');                
                 }
-
             } else {
                 throw new LeaveServiceException('Wrong change type passed');
             }
