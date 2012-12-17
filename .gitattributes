@@ -30,6 +30,7 @@ devTools/general/create-test-db.php -text
 devTools/general/drop-all-tables.php -text
 devTools/general/reinstall.php -text
 devTools/general/reset-installation.php -text
+devTools/general/update-version.php -text
 devTools/installer/SOURCE/content/license.txt -text
 devTools/installer/SOURCE/content/orangehrm2/dbscript/dbscript-user.sql -text
 devTools/installer/SOURCE/content/orangehrm2/lib/confs/Conf.php -text
