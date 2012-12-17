@@ -615,7 +615,7 @@ class LeaveRequestService extends BaseService {
                 } else {
                     $comment = $comments;
                 }
-                $leave->setComments($comments);
+                $leave->setComments($comment);
             }
             
             $dao->changeLeaveStatus($leave, $entitlementChanges, $removeLinkedEntitlements);
