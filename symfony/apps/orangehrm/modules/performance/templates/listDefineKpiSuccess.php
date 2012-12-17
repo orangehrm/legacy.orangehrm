@@ -27,12 +27,12 @@
                                 echo 'selected';
                             }
                                 ?>><?php
-                                        echo htmlspecialchars_decode($jobTitle->getJobTitleName());
-                                        if (!$jobTitle->getIsDeleted() == JobTitle::ACTIVE) {
-                                            echo ' (' . __('Deleted') . ')';
-                                        }
-                                        ?></option>
-<?php } ?>
+                                    echo htmlspecialchars_decode($jobTitle->getJobTitleName());
+                                    if (!$jobTitle->getIsDeleted() == JobTitle::ACTIVE) {
+                                        echo ' (' . __('Deleted') . ')';
+                                    }
+                                ?></option>
+                            <?php } ?>
                         </select>
                     </li>
                 </ol>
@@ -53,7 +53,7 @@
 
     <form action="<?php echo url_for('performance/deleteDefineKpi') ?>" name="frmList" id="frmList" method="post">
 
-<?php echo $form['_csrf_token']; ?>
+        <?php echo $form['_csrf_token']; ?>
 
         <div id="tableWrapper">
 
@@ -70,15 +70,15 @@
                     ?>
 
                     <input type="button" class="" id="addKpiBut" value="<?php echo __('Add') ?>" tabindex="2"  />
-                           <?php if ($hasKpi) { ?>
+                    <?php if ($hasKpi) { ?>
                         <input type="button" class="delete"  id="deleteKpiBut"
                                value="<?php echo __('Delete') ?>" tabindex="3" />
                         <input type="button" class=""  id="copyKpiBut"
                                value="<?php echo __('Copy') ?>" tabindex="4" />
-<?php } ?>
+                           <?php } ?>
                 </div>
 
-<?php include_partial('global/flash_messages'); ?>
+                <?php include_partial('global/flash_messages'); ?>
 
                 <table class="table hover">
                     <thead>
@@ -87,24 +87,24 @@
                                 <input type="checkbox"  name="allCheck" value="" id="allCheck" />
                             </th>
                             <th> 
-<?php echo __('Key Performance Indicator') ?>
+                                <?php echo __('Key Performance Indicator') ?>
                             </th> 
                             <th>
-<?php echo __('Job Title') ?>
+                                <?php echo __('Job Title') ?>
                             </th>
                             <th> 
-<?php echo __('Min Rate') ?>
+                                <?php echo __('Min Rate') ?>
                             </th>
                             <th> 
-<?php echo __('Max Rate') ?>
+                                <?php echo __('Max Rate') ?>
                             </th>
                             <th> 
-                        <?php echo __('Is Default') ?>
+                                <?php echo __('Is Default') ?>
                             </th>   
                         </tr>
                     </thead>
                     <tbody>
-<?php if (!$hasKpi) { ?>
+                        <?php if (!$hasKpi) { ?>
                             <tr>
                                 <td></td>
                                 <td><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
@@ -134,27 +134,27 @@
                                     <td class="">
                                         <?php echo ($kpi->getRateMin() != '') ? $kpi->getRateMin() : '-' ?>
                                     </td><td class="">
-        <?php echo ($kpi->getRateMax() != '') ? $kpi->getRateMax() : '-' ?>
+                                        <?php echo ($kpi->getRateMax() != '') ? $kpi->getRateMax() : '-' ?>
                                     </td><td class="">
-                                <?php echo ($kpi->getDefault() == 1) ? __('Yes') : '-' ?>
+                                        <?php echo ($kpi->getDefault() == 1) ? __('Yes') : '-' ?>
                                     </td>
 
                                 </tr>
 
-    <?php
-    }
-}
-?>
+                                <?php
+                            }
+                        }
+                        ?>
 
                     </tbody>
 
                 </table> 
 
-<?php
-if ($pager->haveToPaginate()) {
-    include_partial('global/paging_links', array('pager' => $pager, 'url' => url_for('performance/listDefineKpi'), 'location' => 'bottom'));
-}
-?>                        
+                <?php
+                if ($pager->haveToPaginate()) {
+                    include_partial('global/paging_links', array('pager' => $pager, 'url' => url_for('performance/listDefineKpi'), 'location' => 'bottom'));
+                }
+                ?>                        
 
             </div>
 
@@ -169,24 +169,22 @@ if ($pager->haveToPaginate()) {
 
     $(document).ready(function() {
 
-			
-
-        //search Kpi 
+        // Search Kpi 
         $('#searchBtn').click(function(){
             $('#frmSearch').submit();
         });
 			
-        //Add Kpi button
+        // Add Kpi button
         $('#addKpiBut').click(function(){
             location.href = "<?php echo url_for('performance/saveKpi') ?>";
         });
 
-        //Copy kpi button
+        // Copy kpi button
         $('#copyKpiBut').click(function(){
             location.href = "<?php echo url_for('performance/copyKpi') ?>";
         });
 
-        //delete KPI 
+        // Delete KPI 
         $('#deleteKpiBut').click(function(){
             if($('.innercheckbox').is(':checked'))
             {
@@ -198,7 +196,7 @@ if ($pager->haveToPaginate()) {
             }
         });
 
-        //Validate search form 
+        // Validate search form 
         $("#frmSearch").validate({
 					
             rules: {
@@ -209,31 +207,34 @@ if ($pager->haveToPaginate()) {
             }
         });
 
-			
-
         // When Click Main Tick box
         $("#allCheck").click(function() {
             if ($('#allCheck').attr('checked')) {
                 $('.innercheckbox').attr('checked', true);
-            }else{
+            } else {
                 $('.innercheckbox').attr('checked', false);
             }
-					
+
+            toggleDeleteButton();
         });
 
-        $(".innercheckbox").click(function() {
-            if(!($(this).attr('checked')))
-            {
+        $('.innercheckbox').click(function() {
+            if(!($(this).attr('checked'))) {
                 $('#allCheck').attr('checked', false);
             }
+            
+            toggleDeleteButton();
         });
-
-			 
+        
+        toggleDeleteButton();
 				
     });
+    
+    function toggleDeleteButton() {
+        $('#deleteKpiBut').attr('disabled', $('.innercheckbox:checked').size() == 0);
+    }
 
-    function showError(errorType,message)
-    {
+    function showError(errorType,message) {
         var html	=	"<div id='"+errorType+"' class='"+errorType+"' >"+message+"</div>";
         $("#errorContainer").html(html);
         $("#errorContainer").show();
