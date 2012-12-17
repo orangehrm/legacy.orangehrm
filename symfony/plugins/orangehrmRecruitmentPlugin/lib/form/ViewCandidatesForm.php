@@ -124,15 +124,17 @@ class viewCandidatesForm extends BaseForm {
             'selectedCandidate' => new sfValidatorNumber(array('required' => false, 'min' => 0)),
             'keywords' => new sfValidatorString(array('required' => false)),
             'modeOfApplication' => new sfValidatorString(array('required' => false)),
-            new sfValidatorDateRange(array(  
+            'dateApplication' => new sfValidatorDateRange(array(  
                 'from_date' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false)),  
                 'to_date' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false)),
+                'required' => false
             )),
 //            'fromDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false),
 //                    array('invalid' => 'Date format should be ' . $inputDatePattern)),
 //            'toDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false),
 //                    array('invalid' => 'Date format should be ' . $inputDatePattern)),
         ));
+        
         $this->widgetSchema->setNameFormat('candidateSearch[%s]');
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
 
