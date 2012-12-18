@@ -135,10 +135,8 @@ $(document).ready(function() {
     $('#btnCopyDig').hide();
     
     $('.formInputProjectAdmin').each(function(){
-        if($(this).css('display') == 'block') {
-            if ($(this).val() == '' || $(this).val() == lang_typeHint) {
-                $(this).addClass("inputFormatHint").val(lang_typeHint);
-            }
+        if ($(this).val() == '' || $(this).val() == lang_typeHint) {
+            $(this).addClass("inputFormatHint").val(lang_typeHint);
         }
     });
     $('.project').each(function(){
