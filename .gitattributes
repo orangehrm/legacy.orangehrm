@@ -5007,6 +5007,7 @@ symfony/web/themes/default/images/favicon.ico -text
 symfony/web/themes/default/images/h1-bg.png -text
 symfony/web/themes/default/images/help-down.png -text
 symfony/web/themes/default/images/help-up.png -text
+symfony/web/themes/default/images/loading.gif -text
 symfony/web/themes/default/images/login/Login_button.png -text
 symfony/web/themes/default/images/login/facebook.png -text
 symfony/web/themes/default/images/login/linkedin.png -text
