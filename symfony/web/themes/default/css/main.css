@@ -493,6 +493,16 @@ form ol li label {
 	width:150px;
 	float:left;
 }
+
+form ol li label.sublabel {
+	display:block;
+	color:#5d5d5d;
+	width:auto;
+        margin-left: 15px;
+        margin-right: 5px;
+	float:left;
+}
+
  /* TODO: Check whether .label is in use */
 /* 
 form ol li .label {
