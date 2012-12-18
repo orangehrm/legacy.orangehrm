@@ -65,3 +65,15 @@
 .labelNode, .editLink {
     margin-left: 8px;
 }
+
+.addButton {
+    color: #33AC3F;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.deleteButton {
+    color: #AA4935;
+    font-size: 16px;
+    font-weight: bold;
+}

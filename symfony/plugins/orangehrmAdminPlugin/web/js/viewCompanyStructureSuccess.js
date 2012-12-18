@@ -125,8 +125,8 @@ function loadToolTip(nodeId){
 
 
 function setViewMode(){
-    $('.addLink').hide()
-    $('.deleteLink').hide()
+    $('.addButton').hide()
+    $('.deleteButton').hide()
     $('.editLink').hide()
     $('.labelNode').show()
     $("#btnEdit").attr('value', lang_edit)
@@ -134,8 +134,8 @@ function setViewMode(){
 
 function setEditMode(){
     $('.labelNode').hide()
-    $('.addLink').show()
-    $('.deleteLink').show()
+    $('.addButton').show()
+    $('.deleteButton').show()
     $('.editLink').show()
     $("#btnEdit").attr('value', lang_done)
 }

@@ -106,22 +106,22 @@ class ohrmTreeViewComponent extends ohrmComponent {
         $listContent .= '&nbsp;';
 
         if ($this->allowAdd && !in_array($node['level'], $this->addRestrictionLevels)) {
-            $listContent .= content_tag('a', '[ + ]', array(
+            $listContent .= content_tag('a', ' +', array(
                         'href' => '#?',
                         'id' => 'treeLink_addChild_' . $node['id'],
                         'style' => 'text-decoration: none;',
-                        'class' => 'addLink'
+                        'class' => 'addButton'
                     ));
         }
 
         $listContent .= '&nbsp;';
 
         if ($node['id'] != 1 && $this->allowDelete && !in_array($node['level'], $this->deleteRestrictionLevels)) {
-            $listContent .= content_tag('a', '[ x ]', array(
+            $listContent .= content_tag('a', ' x', array(
                         'href' => '#?',
                         'id' => 'treeLink_delete_' . $node['id'],
                         'style' => 'text-decoration: none;',
-                        'class' => 'deleteLink'
+                        'class' => 'deleteButton'
                     ));
         }
 
