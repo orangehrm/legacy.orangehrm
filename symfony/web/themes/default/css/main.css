@@ -1412,6 +1412,19 @@ input.timeBox {
 .pimPane form ol li label { /* Used in attachments */
     margin-top: 0; 
 }
+.pimPane div.imageHolder {
+    height: 200px;
+    width: 200px;
+    text-align: center;
+    border: 1px solid #DEDEDE;
+    border-top: none;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	border-bottom-left-radius: 3px;    
+}
 /* ================ PIM styles: End ================ */
 
 /* ================ Personal Details styles: Begin ================ */
