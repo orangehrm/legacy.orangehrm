@@ -301,7 +301,24 @@ class LeaveEntitlementDao extends BaseDao {
             $parameters[] = $date;            
         }
         
-        $sql .= 'GROUP BY le.id';
+        $sql .= ' GROUP BY le.id';
+        
+        $sql .= ' UNION '.
+                    'SELECT '. 
+                        '0 AS entitled, '.
+                        'SUM(l.length_days) AS used, '.
+                        'sum(IF(l.status = 2, l.length_days, 0)) AS scheduled, '.
+                        'sum(IF(l.status = 1, l.length_days, 0)) AS pending '.
+                     'FROM ohrm_leave l '.
+                        'LEFT JOIN ohrm_leave_leave_entitlement lle ON (lle.leave_id = l.id) AND (lle.leave_id IS NULL) '.
+                      'WHERE  l.emp_number = ? AND l.leave_type_id = ? AND l.status NOT IN (-1, 1) ';
+        
+        $parameters[] = $empNumber;
+        $parameters[] = $leaveTypeId;
+        //$parameters[] = $asAtDate;        
+       
+        
+        $sql .= 'GROUP BY l.leave_type_id';
         
         $sql = 'SELECT sum(a.entitled) as entitled, sum(a.used) as used, sum(a.scheduled) as scheduled, sum(a.pending) as pending ' .
                ' FROM (' . $sql . ') as a';
