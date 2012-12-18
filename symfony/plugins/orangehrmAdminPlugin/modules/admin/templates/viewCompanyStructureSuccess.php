@@ -1,6 +1,12 @@
 <?php echo javascript_include_tag('jquery.tooltip.js') ?>
 <?php use_javascript('../orangehrmAdminPlugin/js/viewCompanyStructureSuccess'); ?>
 
+<style type="text/css">
+    p {
+        margin-top: 10px;
+    }
+</style>
+
 <div class="box">
     <div class="head">
         <h1><?php echo __("Organization Structure") ?></h1>
@@ -8,13 +14,10 @@
     
     <div class="inner" >
         <div id="messageDiv"></div>
-        <div id="divCompanyStructureContainer">
+        <ol id="divCompanyStructureContainer">
             <?php $tree->render(); ?>
-        </div>
-        <fieldset>
-            <p> </p>
-            <p><input type="button" class="" name="btnEdit" id="btnEdit" value="<?php echo __("Edit"); ?>"/></p>
-        </fieldset>
+        </ol>
+        <p><input type="button" class="" name="btnEdit" id="btnEdit" value="<?php echo __("Edit"); ?>"/></p>
     </div>
 </div>
 

@@ -219,12 +219,12 @@ class ohrmTreeViewComponent extends ohrmComponent {
         if ($this->type == null) {
             $html .= tag('link', array(
                         'rel' => 'stylesheet',
-                        'href' => stylesheet_path('jquery-treeview/jquery.treeview.css'),
+                        'href' => theme_path('css/jquery/jquery-treeview/jquery.treeview.css'),
                     ));
         } else {
             $html .= tag('link', array(
                         'rel' => 'stylesheet',
-                        'href' => stylesheet_path('jquery-treeview/jquery.treeview_1.css'),
+                        'href' => theme_path('css/jquery/jquery-treeview/jquery.treeview_1.css'),
                     ));
         }
         $this->addScriptContent(array('$(document).ready(function() {', '});'), 'wrap');
