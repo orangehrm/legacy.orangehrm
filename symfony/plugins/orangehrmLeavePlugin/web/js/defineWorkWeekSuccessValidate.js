@@ -5,7 +5,6 @@ $(document).ready(function() {
         var valid = true;            
         var noWorkingDays = $("#frmWorkWeek").find('option:selected[value="8"]').length;
 
-        console.log(noWorkingDay);
         if (noWorkingDays == 7) {
             valid = false;          
         }
