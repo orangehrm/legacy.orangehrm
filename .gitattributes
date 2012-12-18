@@ -125,12 +125,16 @@ installer/progress.php -text
 installer/registration.php -text
 installer/style.css -text
 installer/welcome.php -text
+lib/common/UniqueIDGenerator.php -text
+lib/common/UniqueIDGeneratorTest.php -text
 lib/confs/Conf-auto.php -text
 lib/confs/Conf.php-distribution -text
 lib/confs/cryptokeys/.htaccess -text
 lib/confs/log_settings.php -text
 lib/confs/mailConf.php-distribution -text
 lib/confs/sysConf.php -text
+lib/utils/InstallUtilTest.php -text
+lib/utils/installUtil.php -text
 license/3RDPARTY.TXT -text
 license/3rdParty/PHPMyAdmin.license -text
 license/3rdParty/xplanner.license -text
