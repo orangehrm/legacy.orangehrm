@@ -1,6 +1,6 @@
 <?php
 $imagePath = theme_path("images/login");
-$version = '3.0-alpha.7';
+$version = '3.0-alpha.8';
 $copyrightYear = '2012';
 ?>
 
