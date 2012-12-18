@@ -85,7 +85,7 @@ function back() {
 </head>
 <body>
 <div id="body">
-  <a href="http://www.orangehrm.com"><img src="../themes/beyondT/pictures/orange3.png" alt="OrangeHRM" name="logo"  width="264" height="62" border="0" id="logo" style="margin-left: 10px;" title="OrangeHRM"></a>
+  <a href="http://www.orangehrm.com"><img src="../symfony/web/themes/default/images/logo.png" alt="OrangeHRM" name="logo"  width="283" height="56" border="0" id="logo" style="margin-left: 10px;margin-bottom: 15px;" title="OrangeHRM"></a>
 <form name="frmInstall" action="../install.php" method="POST">
 <input type="hidden" name="txtScreen" value="<?php echo $currScreen?>">
 <input type="hidden" name="actionResponse">

@@ -21,7 +21,7 @@
 /* Check if running through upgrader and skip including if so */
 $confPHP = ROOT_PATH . '/lib/confs/Conf.php';
 if (file_exists($confPHP)) {
-	@require_once ROOT_PATH . '/lib/dao/DMLFunctions.php';
+	@require_once ROOT_PATH . '/installer/utils/DMLFunctions.php';
 }
 
 /**

@@ -18,7 +18,7 @@
  *
  */
 
-require_once ROOT_PATH.'/lib/common/UniqueIDGenerator.php';
+require_once ROOT_PATH.'/installer/utils/UniqueIDGenerator.php';
 
 
 class ApplicationSetupUtility {
@@ -348,7 +348,7 @@ public static function writeLog() {
 	fclose($handle);
 }
 
-public static function install() {
+public static function install() { 
    if (isset($_SESSION['INSTALLING'])) {
 	switch ($_SESSION['INSTALLING']) {
 		case 0	:	self::writeLog();
