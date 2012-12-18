@@ -4928,6 +4928,7 @@ symfony/web/jquery/jquery.form.js -text
 symfony/web/jquery/jquery.functions.js -text
 symfony/web/jquery/jquery.tablehover.min.js -text
 symfony/web/jquery/jquery.tipTip.minified.js -text
+symfony/web/jquery/jquery.treeview.min.js -text
 symfony/web/jquery/jquery.ui.core.js -text
 symfony/web/jquery/jquery.ui.datepicker.js -text
 symfony/web/jquery/jquery.ui.widget.js -text
@@ -4949,7 +4950,6 @@ symfony/web/js/jq/ui.datepicker.js -text
 symfony/web/js/jquery-ui-1.7.1.custom.min.js -text
 symfony/web/js/jquery.datePicker.js -text
 symfony/web/js/jquery.tooltip.js -text
-symfony/web/js/jquery.treeview.min.js -text
 symfony/web/js/orangehrm.admin.js -text
 symfony/web/js/orangehrm.autocomplete.js -text
 symfony/web/js/orangehrm.core.js -text
