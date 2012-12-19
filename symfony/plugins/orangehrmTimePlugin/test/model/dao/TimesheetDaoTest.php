@@ -649,26 +649,6 @@ class TimesheetDaoTest extends PHPUnit_Framework_TestCase {
         
         $activities = $this->timesheetDao->getProjectActivityListByPorjectId(null);
         $this->assertEquals(array(), $activities);
-    }
-    
-    public function testGetProjectActivityCount() {
-        $count = $this->timesheetDao->getProjectActivityCount();
-        $this->assertEquals(1, $count);
-    }
-    
-    public function testGetProjectActivityCountWithDeleted() {
-        $includeDeleted = true;
-        $count = $this->timesheetDao->getProjectActivityCount($includeDeleted);
-        $this->assertEquals(2, $count);
-    }    
-    
-    public function testGetProjectActivityCountWithNoActivities() {
-        $query = Doctrine_Query::create()
-                ->delete()
-                ->from('ProjectActivity');        
-        $query->execute();
-        $count = $this->timesheetDao->getProjectActivityCount();
-        $this->assertEquals(0, $count);        
     }    
 
 }

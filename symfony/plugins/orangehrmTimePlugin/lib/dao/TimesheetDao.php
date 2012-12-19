@@ -516,32 +516,7 @@ class TimesheetDao {
         } catch (Exception $ex) {
             throw new DaoException($ex->getMessage());
         }
-    }
-    
-    /**
-     * Get count of project activities in the sytem
-     * 
-     * @param bool $includeDeleted If true, count will include deleted activities
-     * @return int number of activities
-     * @throws DaoException
-     */
-    public function getProjectActivityCount($includeDeleted = false) {
-        try {
-
-            $query = Doctrine_Query::create()
-                    ->from('ProjectActivity');
-
-            if (!$includeDeleted) {
-                $query->andWhere('is_deleted = ?', ProjectActivity::ACTIVE_PROJECT_ACTIVITY);
-            }
-
-            $count = $query->count();
-            return $count;
-
-        } catch (Exception $ex) {
-            throw new DaoException($ex->getMessage());
-        }        
-    }
+    }    
     
     /**
      * Return an Array of Project Names

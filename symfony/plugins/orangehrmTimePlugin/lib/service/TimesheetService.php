@@ -593,16 +593,5 @@ class TimesheetService {
         
         return $this->getTimesheetDao()->searchTimesheetItems($employeeIds, $employeementStatus, $supervisorIds,  $subDivision, $dateFrom, $dateTo );
     }
-    
-    /**
-     * Get count of project activities in the sytem
-     * 
-     * @param bool $includeDeleted If true, count will include deleted activities
-     * @return int number of activities
-     * @throws DaoException
-     */
-    public function getProjectActivityCount($includeDeleted = false) {
-        return $this->getTimesheetDao()->getProjectActivityCount($includeDeleted);    
-    }
 
 }
