@@ -46,7 +46,7 @@ class viewOrganizationGeneralInformationAction extends sfAction {
                 $organizationName = (!empty($name)) ? $name : __("Organization");
                 $companyStructureService = new CompanyStructureService();
                 $companyStructureService->setOrganizationName($organizationName);
-                $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                $this->getUser()->setFlash('generalinformation.success', __(TopLevelMessages::SAVE_SUCCESS));
             }
         }
     }

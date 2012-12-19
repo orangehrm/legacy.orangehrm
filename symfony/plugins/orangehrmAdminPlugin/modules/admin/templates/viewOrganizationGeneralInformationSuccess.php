@@ -29,7 +29,7 @@
 
     <div class="inner">
         
-        <?php include_partial('global/flash_messages'); ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'generalinformation')); ?>
         
         <form name="frmGenInfo" id="frmGenInfo" method="post" action="<?php echo url_for('admin/viewOrganizationGeneralInformation'); ?>" class="clickToEditForm">
 
