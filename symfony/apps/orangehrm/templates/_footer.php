@@ -26,35 +26,31 @@
                     $('.panelContainer').stop(true, true).slideUp('fast');
                 });                
 
-                /* Button hovering effects */
-                $("input[type=button]").hover(function() {
-                    $(this).addClass('generalButtonMouseOver');
-                    $(this).removeClass('generalButtonMouseOut');
-                        }, function() {
-                    $(this).addClass('generalButtonMouseOut');
-                    $(this).removeClass('generalButtonMouseOver');
-                });
+                /* 
+                 * Button hovering effects 
+                 * Note: we are not using pure css using :hover because :hover applies to even disabled elements.
+                 * The pseudo class :enabled is not supported in IE < 9.
+                 */                
+                $(document).on({
+                    mouseenter: function () {
+                        $(this).addClass('hover');                        
+                    },
+                    mouseleave: function () {
+                        $(this).removeClass('hover');                        
+                    }
 
-                $("input.reset, input.cancel").hover(function() {
-                    $(this).addClass('cancelButtonMouseOver');
-                    $(this).removeClass('cancelButtonMouseOut');
-                        }, function() {
-                    $(this).addClass('cancelButtonMouseOut');
-                    $(this).removeClass('cancelButtonMouseOver');
-                });
-
-                $("input.delete").hover(function() {
-                    $(this).addClass('deleteButtonMouseOver');
-                    $(this).removeClass('deleteButtonMouseOut');
-                        }, function() {
-                    $(this).addClass('deleteButtonMouseOut');
-                    $(this).removeClass('deleteButtonMouseOver');
-                });
-
+                }, 'input[type=button], input[type=submit], input[type=reset]'); 
+  
                 /* Fading out main messages */
-                $(".message a.messageCloseButton").click(function() {
+                $(document).on({
+                    click: function() {
+                        $(this).parent('div.message').fadeOut("slow");
+                    }
+                }, '.message a.messageCloseButton');
+                
+                /*$(".message a.messageCloseButton").click(function() {
                     $(this).parent('div.message').fadeOut("slow");
-                });
+                });*/
                 
                 setTimeout(function(){
                     $("div.fadable").fadeOut("slow", function () {

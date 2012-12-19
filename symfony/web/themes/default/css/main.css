@@ -723,24 +723,52 @@ form ol li ol.fieldsInLine li span.validation-error {
     top: 38px;
 }
 /* ------------- Button hovering styles ------------- */
-input.generalButtonMouseOver {
+/* 
+ * Button hovering effects 
+ * Note: we are not using pure css using :hover because :hover applies to even disabled elements.
+ * The pseudo class :enabled is not supported in IE < 9.
+ */
+input[type=button].hover,
+input[type=submit].hover {
     background-color: #086912;
 }
-input.generalButtonMouseOut {
+
+input[type=button],
+input[type=submit] {
     background-color: #33ac3f;
 }
-input.cancelButtonMouseOver {
+
+input[type=button].cancel.hover,
+input[type=submit].cancel.hover {
     background-color: #4d4d4d;
 }
-input.cancelButtonMouseOut {
+
+input[type=button].cancel,
+input[type=submit].cancel {
     background-color: #848484;
 }
-input.deleteButtonMouseOver {
+
+input[type=button].delete.hover,
+input[type=submit].delete.hover {
     background-color: #782918;
 }
-input.deleteButtonMouseOut {
+input[type=button].delete,
+input[type=submit].delete {
     background-color: #aa4935;
 }
+
+input[type=button].reset.hover,
+input[type=reset].reset.hover,
+input[type=submit].reset.hover {
+    background-color: #4d4d4d;
+}
+
+input[type=button].reset,
+input[type=reset].reset,
+input[type=submit].reset {
+    background-color: #848484;
+}
+
 /* ================ Form styles: End ================ */
 
 /* ================ searchForm styles: Begin ================ */
