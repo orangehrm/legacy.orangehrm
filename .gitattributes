@@ -113,6 +113,12 @@ installer/images/license.png -text
 installer/images/link.gif -text
 installer/images/login.png -text
 installer/images/logo.gif -text
+installer/images/nCurrentTab_left.gif -text
+installer/images/nCurrentTab_middle.gif -text
+installer/images/nCurrentTab_right.gif -text
+installer/images/otherTab_left.png -text
+installer/images/otherTab_middle.png -text
+installer/images/otherTab_right.png -text
 installer/images/progress_bar.gif -text
 installer/images/registration.png -text
 installer/images/system_check_01.gif -text
