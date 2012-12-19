@@ -23,6 +23,15 @@ $width = 450 + $noOfColumns * 75;
 <?php echo javascript_include_tag('../orangehrmTimePlugin/js/editTimesheet'); ?>
 <?php echo javascript_include_tag('../orangehrmTimePlugin/js/editTimesheetPartial'); ?>
 
+<style type="text/css">
+form ol li.largeTextBox textarea {
+    width: 365px;
+}
+.modal-open form ol li.largeTextBox span.validation-error {
+    left: 0;
+}    
+</style>
+
 <!--<div id="validationMsg"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>-->
 
 <div class="box editTimesheet noHeader" id="edit-timesheet">
@@ -173,14 +182,21 @@ $width = 450 + $noOfColumns * 75;
         <h3><?php echo __('Comment'); ?></h3>
     </div>
     <div class="modal-body">
-        <table>
-            <tr><td><?php echo __("Project Name") ?></td><td><span id="commentProjectName"></span></td></tr>
-            <tr><td><?php echo __("Activity Name") ?></td><td><span id="commentActivityName"></span></td></tr>
-            <tr><td><?php echo __("Date") ?></td><td><span id="commentDate"></span></td></tr>
-        </table>
         <form action="updateComment" method="post" id="frmCommentSave" name="frmCommentSave">
             <fieldset>
                 <ol>
+                    <li>
+                        <label><?php echo __("Project Name") ?></label>
+                        <label id="commentProjectName"></label>
+                    </li>                        
+                    <li>                        
+                        <label><?php echo __("Activity Name") ?></label>
+                        <label id="commentActivityName"></label>
+                    </li>                        
+                    <li>                        
+                        <label><?php echo __("Date") ?></label>
+                        <label id="commentDate"></label>                        
+                    </li>
                     <li class="largeTextBox">
                         <textarea id="timeComment" name="timeComment"></textarea>
                     </li>

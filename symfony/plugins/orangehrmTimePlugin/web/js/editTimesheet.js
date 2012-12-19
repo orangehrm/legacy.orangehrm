@@ -319,10 +319,10 @@ $(document).ready(function() {
         } else if( temp==false){
             displayMessages('warning', lang_enterExistingProject);  
         }else{
-            $("#commentProjectName").text(":"+" "+$("#"+projectNameId).val());
-            $("#commentActivityName").text(":"+" "+$("#"+activityNameId+" :selected").text());
+            $("#commentProjectName").text($("#"+projectNameId).val());
+            $("#commentActivityName").text($("#"+activityNameId+" :selected").text());
             var parsedDate = $.datepicker.parseDate("yy-mm-dd", date);
-            $("#commentDate").text(":"+" "+$.datepicker.formatDate(datepickerDateFormat, parsedDate));
+            $("#commentDate").text($.datepicker.formatDate(datepickerDateFormat, parsedDate));
         }
     });
 

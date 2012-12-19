@@ -98,10 +98,10 @@ $(document).ready(function(){
         var comment = getComment(timesheetItemId);
         var decoded = $("<div/>").html(comment).text();
         $("#timeComment").val(decoded);
-        $("#commentProjectName").text(": " + projectName);
-        $("#commentActivityName").text(": " + activityName);
+        $("#commentProjectName").text(projectName);
+        $("#commentActivityName").text(activityName);
         var parsedDate = $.datepicker.parseDate("yy-mm-dd", comment_date);
-        $("#commentDate").text(":"+" "+$.datepicker.formatDate(datepickerDateFormat, parsedDate));
+        $("#commentDate").text($.datepicker.formatDate(datepickerDateFormat, parsedDate));
     });
 
     var validator = $("#timesheetActionFrm").validate({

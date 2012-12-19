@@ -25,6 +25,12 @@ $width = 350 + $noOfColumns * 75;
 $actionName = sfContext::getInstance()->getActionName(); 
 ?>
 
+<style type="text/css">
+#timeComment {
+    width: 365px;
+}
+</style>
+
 <?php if (isset($messageData[0])): ?>
     <div class="box timesheet">
         <div class="inner">
@@ -322,14 +328,22 @@ $actionName = sfContext::getInstance()->getActionName();
         <h3><?php echo __('Comment'); ?></h3>
     </div>
     <div class="modal-body">
-        <table>
-            <tr><td><?php echo __("Project Name ") ?></td><td><span id="commentProjectName"></span></td></tr>
-            <tr><td><?php echo __("Activity Name ") ?></td><td><span id="commentActivityName"></span></td></tr>
-            <tr><td><?php echo __("Date ") ?></td><td><span id="commentDate"></span></td></tr>
-        </table>
+
         <form action="updateComment" method="post" id="frmCommentSave">
             <fieldset>
                 <ol>
+                    <li>
+                        <label><?php echo __("Project Name ") ?></label>
+                        <label id="commentProjectName"></label>
+                    </li>
+                    <li>
+                        <label><?php echo __("Activity Name ") ?></label>
+                        <label id="commentActivityName"></label>
+                    </li>
+                    <li>
+                        <label><?php echo __("Date ") ?></label>
+                        <label id="commentDate"></label>
+                    </li>                    
                     <li>
                         <textarea name="leaveComment" id="timeComment"></textarea>
                     </li>
