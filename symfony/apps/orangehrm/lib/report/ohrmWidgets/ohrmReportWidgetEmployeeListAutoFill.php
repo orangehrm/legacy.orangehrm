@@ -62,7 +62,7 @@ class ohrmReportWidgetEmployeeListAutoFill extends sfWidgetForm implements ohrmE
         $noEmployeeMessage = __('No Employees Available');
         $requiredMessage = __(ValidationMessages::REQUIRED);
         $invalidMessage = __(ValidationMessages::INVALID);
-        $typeHint = __('Type for hints') . '...';
+        $typeHint = __('Type for hints') . ' ...';
         
         $javaScript = $javaScript = sprintf(<<<EOF
 <script type="text/javascript">
@@ -87,7 +87,9 @@ $(document).ready(function() {
                     $(this).val("");
                     $(this).removeClass("inputFormatHint");
                 }
-            });
+            })
+            .data('typeHint', "$typeHint");
+            
 
     $("#%s" + "_empName").autocomplete(employees, {
 
@@ -163,7 +165,7 @@ EOF
                         $this->getEmployeeListAsJson(sfContext::getInstance()->getUser()->getAttribute("user")->getEmployeeList()),
                         $this->attributes['id'],
                         $this->attributes['id'],
-                        __("Type for hints")." ...",
+                        $typeHint,
                         $this->attributes['id'],
                         $this->attributes['id'],
                         $this->attributes['id'],

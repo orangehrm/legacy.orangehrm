@@ -38,23 +38,64 @@ use_javascript('orangehrm.datepicker.js');
             var lang_required = '<?php echo __(ValidationMessages::REQUIRED); ?>';
             var lang_empNamerequired = '<?php echo __(ValidationMessages::REQUIRED); ?>';
             var lang_activityRequired = '<?php echo __(ValidationMessages::REQUIRED)?>';
+            var lang_validEmployee = '<?php echo __(ValidationMessages::INVALID); ?>';
         $(document).ready(function() {
 
 
          $('#viewbutton').click(function() {
             $('#reportForm').submit();
         });
+        
+        $('#employee_empName').result(function(event, item) {
+            $(this).valid();
+        });
+        
+        $.validator.addMethod("validEmployee", function(value, element) {
+            var defaultValue = $('#employee_empName').data('typeHint');
+            validEmployee = true;
+            
+            if (value != '' && value != defaultValue) {
+                var matchFound = false;
+                var empId = $('#employee_empId').val();
+                
+                if (empId != '') {
+                    var lowerCaseName = value.toLowerCase();
+
+                    for (i = 0; i < employeesArray.length; i++) {
+                        if (empId == employeesArray[i].id) {
+                            var arrayName = employeesArray[i].name.toLowerCase();
+
+                            if (lowerCaseName == arrayName) {
+                                matchFound = true;
+                            }
+                            break;
+                        }
+                    }
+                }                
+                if (!matchFound) {
+                    validEmployee = false;
+                }
+            }
+            return validEmployee;
+        });        
 
 
         var validator = $("#reportForm").validate({
 
             rules: {
-            'time[employee][empId]' : {
-                required:true
-            },
-            'time[activity_name]' : {
-                required:true
-            },
+                'time[employee][empName]' : {
+                    required: true,
+                    no_default_value: function() {
+                      return {
+                       defaults: $('#employee_empName').data('typeHint')
+                      }
+                    },
+                    validEmployee:true,
+                    onkeyup: false
+                },
+                'time[activity_name]' : {
+                    required:true
+                },
                 'time[project_date_range][from]' : {
                     valid_date: function() {
                         return {
@@ -81,8 +122,10 @@ use_javascript('orangehrm.datepicker.js');
                 }
             },
             messages: {
-                'time[employee][empId]' : {
-                    required: lang_empNamerequired
+                'time[employee][empName]' : {
+                    required: lang_empNamerequired,
+                    no_default_value: lang_empNamerequired,
+                    validEmployee: lang_validEmployee
                 },
                 'time[activity_name]' : {
                     required: lang_activityRequired
