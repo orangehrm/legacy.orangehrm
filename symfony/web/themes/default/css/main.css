@@ -472,6 +472,9 @@ a {
 .required {
 	color:#aa4935;
 }
+.helpText { /* Used in attendance/viewAttendanceRecord */
+	color:#a9a9a9;
+}
 /* ================ General class styles: End ================ */
 
 /* ================ Form styles: Begin ================ */
