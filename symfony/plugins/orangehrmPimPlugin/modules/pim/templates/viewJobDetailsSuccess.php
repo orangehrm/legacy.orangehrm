@@ -370,6 +370,9 @@
         for(i=0; i < list.length; i++) {
             $(list[i]).attr("disabled", "disabled");
         }
+        
+        $('#job_joined_date,#job_contract_start_date,#job_contract_end_date').datepicker('disable');
+        
         <?php if (empty($form->attachment)) { ?>
             $('#job_contract_update_3').attr('checked', 'checked');
         <?php } ?>
@@ -399,6 +402,8 @@
                     for(i=0; i < list.length; i++) {
                         $(list[i]).removeAttr("disabled");
                     }
+                    
+                    $('#job_joined_date,#job_contract_start_date,#job_contract_end_date').datepicker('enable');
                     
                     $("#btnSave").attr('value', save);
                     
