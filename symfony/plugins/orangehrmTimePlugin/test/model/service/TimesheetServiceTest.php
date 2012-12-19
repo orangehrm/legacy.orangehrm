@@ -508,5 +508,35 @@ class TimesheetServiceTest extends PHPUnit_Framework_Testcase {
 //
 //
 //    }
+    
+    public function testGetProjectActivityCount() {
+        $count = 34;
+        
+        $timesheetDaoMock = $this->getMock('TimesheetDao', array('getProjectActivityCount'));
+        $timesheetDaoMock->expects($this->once())
+                ->method('getProjectActivityCount')
+                ->with()
+                ->will($this->returnValue($count));
+
+        $this->timesheetService->setTimesheetDao($timesheetDaoMock);
+        $result = $this->timesheetService->getProjectActivityCount();
+        
+        $this->assertEquals($count, $result);      
+    }
+    
+    public function testGetProjectActivityCountWithDeleted() {
+        $count = 44;
+        
+        $timesheetDaoMock = $this->getMock('TimesheetDao', array('getProjectActivityCount'));
+        $timesheetDaoMock->expects($this->once())
+                ->method('getProjectActivityCount')
+                ->with(true)
+                ->will($this->returnValue($count));
+
+        $this->timesheetService->setTimesheetDao($timesheetDaoMock);
+        $result = $this->timesheetService->getProjectActivityCount(true);
+        
+        $this->assertEquals($count, $result);           
+    }    
 }
 
