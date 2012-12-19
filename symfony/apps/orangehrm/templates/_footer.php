@@ -66,10 +66,12 @@
                 /* Enabling/disabling form fields: Begin */
                 
                 $('form.clickToEditForm input, form.clickToEditForm select, form.clickToEditForm textarea').attr('disabled', 'disabled');
+                $('form.clickToEditForm input.calendar').datepicker('disable');
                 $('form.clickToEditForm input[type=button]').removeAttr('disabled');
                 
                 $('form input.editButton').click(function(){
                     $('form.clickToEditForm input, form.clickToEditForm select, form.clickToEditForm textarea').removeAttr('disabled');
+                    $('form.clickToEditForm input.calendar').datepicker('enable');
                 });
                 
                 /* Enabling/disabling form fields: End */

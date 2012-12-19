@@ -20,6 +20,9 @@ $(document).ready(function() {
         $(this).attr("disabled", "disabled");
     });
     
+    // Disable calendar elements
+    $(".editable.calendar").datepicker('disable');
+    
     $("#btnSave").click(function() {
         //if user clicks on Edit make all fields editable
         if($("#btnSave").attr('value') == edit) {
@@ -27,6 +30,19 @@ $(document).ready(function() {
             $("#pdMainContainer .editable").each(function(){
                 $(this).removeAttr("disabled");
             });            
+            
+            // Enable calendar elements that are not in readOnlyFields array
+            $(".editable.calendar").each(function() {
+                var fieldId = $(this).attr('id');
+                
+                if (fieldId.indexOf('personal_') == 0) {
+                    var idWithoutPrefix = fieldId.slice(9);
+                    if (-1 == jQuery.inArray(idWithoutPrefix, readOnlyFields)) {
+                        $(this).datepicker('enable');
+                    }
+                }
+            });
+            
             
             // handle read only fields                
             for (var j = 0; j < readOnlyFields.length; j++) {
@@ -36,10 +52,6 @@ $(document).ready(function() {
                 
                 $('input[name="' + fieldName + '"]').attr('disabled', 'disabled');
                 field.attr('disabled', 'disabled');
-                if (field.hasClass('ohrm_datepicker')) {
-                    field.next('.calendarBtn').attr('disabled', 'disabled');
-                    
-                }
             }
 
             $("#btnSave").attr('value', save);
@@ -53,4 +65,4 @@ $(document).ready(function() {
             $("#frmEmpPersonalDetails").submit();
         }
     });
-});
+    });
