@@ -72,6 +72,7 @@
  * @property Doctrine_Collection $AttendanceRecord
  * @property Doctrine_Collection $SystemUser
  * @property Doctrine_Collection $LeaveEntitlement
+ * @property Doctrine_Collection $LeaveAdjustment
  * @property Doctrine_Collection $LeaveRequest
  * @property Doctrine_Collection $subordinates
  * @property Doctrine_Collection $EmpPicture
@@ -158,6 +159,7 @@
  * @method Doctrine_Collection       getAttendanceRecord()          Returns the current record's "AttendanceRecord" collection
  * @method Doctrine_Collection       getSystemUser()                Returns the current record's "SystemUser" collection
  * @method Doctrine_Collection       getLeaveEntitlement()          Returns the current record's "LeaveEntitlement" collection
+ * @method Doctrine_Collection       getLeaveAdjustment()           Returns the current record's "LeaveAdjustment" collection
  * @method Doctrine_Collection       getLeaveRequest()              Returns the current record's "LeaveRequest" collection
  * @method Doctrine_Collection       getSubordinates()              Returns the current record's "subordinates" collection
  * @method Doctrine_Collection       getEmpPicture()                Returns the current record's "EmpPicture" collection
@@ -243,6 +245,7 @@
  * @method Employee                  setAttendanceRecord()          Sets the current record's "AttendanceRecord" collection
  * @method Employee                  setSystemUser()                Sets the current record's "SystemUser" collection
  * @method Employee                  setLeaveEntitlement()          Sets the current record's "LeaveEntitlement" collection
+ * @method Employee                  setLeaveAdjustment()           Sets the current record's "LeaveAdjustment" collection
  * @method Employee                  setLeaveRequest()              Sets the current record's "LeaveRequest" collection
  * @method Employee                  setSubordinates()              Sets the current record's "subordinates" collection
  * @method Employee                  setEmpPicture()                Sets the current record's "EmpPicture" collection
@@ -562,6 +565,10 @@ abstract class BaseEmployee extends sfDoctrineRecord
              'foreign' => 'emp_number'));
 
         $this->hasMany('LeaveEntitlement', array(
+             'local' => 'emp_number',
+             'foreign' => 'emp_number'));
+
+        $this->hasMany('LeaveAdjustment', array(
              'local' => 'emp_number',
              'foreign' => 'emp_number'));
 

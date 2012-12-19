@@ -19,6 +19,7 @@
  * @property Employee $Employee
  * @property UserRole $UserRole
  * @property Doctrine_Collection $LeaveEntitlement
+ * @property Doctrine_Collection $LeaveAdjustment
  * @property Doctrine_Collection $TimesheetActionLog
  * @property Doctrine_Collection $PerformanceReview
  * 
@@ -36,6 +37,7 @@
  * @method Employee            getEmployee()           Returns the current record's "Employee" value
  * @method UserRole            getUserRole()           Returns the current record's "UserRole" value
  * @method Doctrine_Collection getLeaveEntitlement()   Returns the current record's "LeaveEntitlement" collection
+ * @method Doctrine_Collection getLeaveAdjustment()    Returns the current record's "LeaveAdjustment" collection
  * @method Doctrine_Collection getTimesheetActionLog() Returns the current record's "TimesheetActionLog" collection
  * @method Doctrine_Collection getPerformanceReview()  Returns the current record's "PerformanceReview" collection
  * @method SystemUser          setId()                 Sets the current record's "id" value
@@ -52,6 +54,7 @@
  * @method SystemUser          setEmployee()           Sets the current record's "Employee" value
  * @method SystemUser          setUserRole()           Sets the current record's "UserRole" value
  * @method SystemUser          setLeaveEntitlement()   Sets the current record's "LeaveEntitlement" collection
+ * @method SystemUser          setLeaveAdjustment()    Sets the current record's "LeaveAdjustment" collection
  * @method SystemUser          setTimesheetActionLog() Sets the current record's "TimesheetActionLog" collection
  * @method SystemUser          setPerformanceReview()  Sets the current record's "PerformanceReview" collection
  * 
@@ -122,6 +125,10 @@ abstract class BaseSystemUser extends sfDoctrineRecord
              'foreign' => 'id'));
 
         $this->hasMany('LeaveEntitlement', array(
+             'local' => 'id',
+             'foreign' => 'created_by_id'));
+
+        $this->hasMany('LeaveAdjustment', array(
              'local' => 'id',
              'foreign' => 'created_by_id'));
 
