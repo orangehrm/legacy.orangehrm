@@ -29,20 +29,19 @@ class performanceActions extends sfActions {
     private $performanceReviewService;
     private $jobTitleService;
     protected $homePageService;
-    
+
     public function getHomePageService() {
-        
+
         if (!$this->homePageService instanceof HomePageService) {
             $this->homePageService = new HomePageService($this->getUser());
         }
-        
+
         return $this->homePageService;
-        
     }
 
     public function setHomePageService($homePageService) {
         $this->homePageService = $homePageService;
-    }    
+    }
 
     public function getJobTitleService() {
         if (is_null($this->jobTitleService)) {
@@ -196,8 +195,8 @@ class performanceActions extends sfActions {
 
         $kpiService = $this->getKpiService();
         $this->defaultRate = $kpiService->getKpiDefaultRate();
-        
-        
+
+
         if ($request->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
@@ -245,9 +244,9 @@ class performanceActions extends sfActions {
      * @return unknown_type
      */
     public function executeUpdateKpi(sfWebRequest $request) {
-        
-        /* For highlighting corresponding menu item */  
-        $request->setParameter('initialActionName', 'listDefineKpi'); 
+
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'listDefineKpi');
 
         $this->listJobTitle = $this->getJobTitleService()->getJobTitleList("", "", false);
 
@@ -360,9 +359,9 @@ class performanceActions extends sfActions {
      * @return none
      */
     public function executePerformanceReview(sfWebRequest $request) {
-        
-        /* For highlighting corresponding menu item */  
-        $request->setParameter('initialActionName', 'viewReview'); 
+
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewReview');
 
         $this->form = new PerformanceReviewForm(array(), array(), true);
 
@@ -371,9 +370,9 @@ class performanceActions extends sfActions {
         $performanceReviewService = $this->getPerformanceReviewService();
         $performanceReview = $performanceReviewService->readPerformanceReview($id);
         $performanceService = $this->getPerformanceKpiService();
-        
+
         $this->_checkPerformanceReviewAuthentication($performanceReview);
-        
+
         $this->performanceReview = $performanceReview;
         $performanceKpiList = $performanceService->getPerformanceKpiList($performanceReview->getKpis());
         $this->kpiList = $performanceKpiList;
@@ -434,28 +433,27 @@ class performanceActions extends sfActions {
             }
         }
     }
-    
+
     protected function _checkPerformanceReviewAuthentication($performanceReview) {
-        
+
         if ($this->isHrAdmin()) {
             return;
         }
-        
+
         if ($this->isReviwer($performanceReview)) {
             return;
         }
-        
+
         $user = $this->getUser()->getAttribute('user');
-        
+
         if ($performanceReview->getEmployeeId() == $user->getEmployeeNumber()) {
             return;
         }
-        
-		if (!$user->isAdmin()) {
-			$this->redirect('auth/login');
-		}
-        
-    }    
+
+        if (!$user->isAdmin()) {
+            $this->redirect('auth/login');
+        }
+    }
 
     /**
      * Get the current page number from the user session.
@@ -520,35 +518,51 @@ class performanceActions extends sfActions {
      * @return unknown_type
      */
     public function executeSaveReview(sfWebRequest $request) {
-        
+
         $reviewId = '';
         $reviewId = $request->getParameter('reviewId');
         (!empty($reviewId)) ? $this->reviewId = $reviewId : '';
-        
-        $this->form = new SaveReviewForm(array(), array('reviewId' => $reviewId), true);
-                
+
+        if ($request->getParameter('redirect')) {
+
+            $empName = $request->getParameter('empName');
+            $revName = $request->getParameter('reviewerName');
+            $empId = $request->getParameter('empId');
+            $revId = $request->getParameter('reviewerId');
+            $toDate = $request->getParameter('toDate');
+            $fromDate = $request->getParameter('fromDate');
+            $dueDate = $request->getParameter('dueDate');
+            $this->form = new SaveReviewForm(array(), array('redirect' => $request->getParameter('redirect'), 'reviewId' => $reviewId, 'empName' => $empName, 'empId' => $empId, 'reviewerName' => $revName, 'reviewerId' => $revId, 'toDate' => $toDate, 'fromDate' => $fromDate, 'dueDate' => $dueDate), true);
+        } else {
+            $this->form = new SaveReviewForm(array(), array('reviewId' => $reviewId), true);
+        }
         /* Saving Performance Reviews */
 
         if ($request->isMethod('post')) {
             /* Showing update form: Ends */
             $this->form->bind($request->getParameter($this->form->getName()));
-            
+
             if ($this->form->isValid()) {
-                
+
                 $reviewId = $this->form->getValue('reviewId');
-                
+
                 $empWidget = $this->form->getValue('employeeName');
                 $revWidget = $this->form->getValue('reviewerName');
                 $employeeService = new EmployeeService();
                 $employee = $employeeService->getEmployee($empWidget['empId']);
                 $empJobCode = $employee->getJobTitleCode();
                 $subDivisionId = $employee->getWorkStation();
-                
+
                 if (empty($empJobCode)) {
 
                     if (trim($reviewId) == "") {
                         $this->getUser()->setFlash('warning', __('Failed to Add: No Job Title Assigned'));
-                        $this->redirect('performance/saveReview');
+                        $fromDate = $this->form->getValue('to_date');
+                        $toDate = $this->form->getValue('from_date');
+                        $dueDate = $this->form->getValue('dueDate');
+                        $formDataArray = array('redirect' => true, 'empName' => $empWidget['empName'], 'empId' => $empWidget['empId'], 'reviewerName' => $revWidget['empName'], 'reviewerId' => $revWidget['empId'], 'toDate' => $toDate, 'fromDate' => $fromDate, 'dueDate' => $dueDate);
+
+                        $this->redirect('performance/saveReview?' . http_build_query($formDataArray));
                     }
 
                     $empJobCode = $this->getPerformanceReviewService()->readPerformanceReview($reviewId)->getJobTitleCode();
@@ -557,12 +571,12 @@ class performanceActions extends sfActions {
                 $kpiService = $this->getKpiService();
                 $performanceKpiService = $this->getPerformanceKpiService();
                 $kpiList = $kpiService->getKpiForJobTitle($empJobCode);
-                
+
                 if (count($kpiList) == 0) {
                     $this->noKpiDefined = true;
                     return;
                 }
-                
+
                 $performanceReviewService = $this->getPerformanceReviewService();
 
                 if (!empty($reviewId)) { // Updating an existing one
@@ -582,11 +596,11 @@ class performanceActions extends sfActions {
                 $localizationService = new LocalizationService();
                 $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
                 $review->setPeriodFrom(date("Y-m-d", strtotime($localizationService->convertPHPFormatDateToISOFormatDate(
-                        $inputDatePattern, $this->form->getValue('from_date')))));
+                                                $inputDatePattern, $this->form->getValue('from_date')))));
                 $review->setPeriodTo(date("Y-m-d", strtotime($localizationService->convertPHPFormatDateToISOFormatDate(
-                        $inputDatePattern, $this->form->getValue('to_date')))));
+                                                $inputDatePattern, $this->form->getValue('to_date')))));
                 $review->setDueDate(date("Y-m-d", strtotime($localizationService->convertPHPFormatDateToISOFormatDate(
-                        $inputDatePattern, $this->form->getValue('dueDate')))));
+                                                $inputDatePattern, $this->form->getValue('dueDate')))));
                 $review->setState(PerformanceReview::PERFORMANCE_REVIEW_STATUS_SCHDULED);
                 $review->setKpis($xmlStr);
 
@@ -595,7 +609,7 @@ class performanceActions extends sfActions {
 
                 $actionResult = (!empty($reviewId)) ? __('updated') : __('added');
                 $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
-                
+
                 $this->redirect('performance/viewReview/mode/new');
             }
         }
@@ -605,7 +619,7 @@ class performanceActions extends sfActions {
      * Handles showing review search form and
      * listing searched reviews.
      */
-    public function executeViewReview(sfWebRequest $request) {        
+    public function executeViewReview(sfWebRequest $request) {
 
         $performanceReviewService = $this->getPerformanceReviewService();
 
@@ -624,7 +638,7 @@ class performanceActions extends sfActions {
          * ====================================== */
 
         $this->form = new ViewReviewForm(array(), array('empJson' => $this->empJson), true);
-        
+
         /* Subdivision list */
         $compStructure = new CompanyStructureService();
         $treeObject = $compStructure->getSubunitTreeObject();
@@ -653,7 +667,7 @@ class performanceActions extends sfActions {
 
         /* Processing reviews
          * ================== */
- 
+
         if ($request->isMethod('post')) {
             $page = 1;
             $this->clues['pageNo'] = 1;
@@ -708,7 +722,9 @@ class performanceActions extends sfActions {
         } elseif (count($this->reviews) == 0) {
             $this->templateMessage = array('WARNING', __(TopLevelMessages::NO_RECORDS_FOUND));
         }
-    } //End of executeViewReview
+    }
+
+//End of executeViewReview
 
     /**
      * Show not authorized message
@@ -802,7 +818,9 @@ class performanceActions extends sfActions {
             $nameArray = explode(' ', $name);
 
             if (count($nameArray) == 2 &&
-                    strtolower($employee->getFirstName() . ' ' . $employee->getLastName()) != strtolower($name)) {
+                    strtolower($employee->getFirstName() . ' 
+
+                        ' . $employee->getLastName()) != strtolower($name)) {
                 $flag = false;
             } elseif (count($nameArray) == 3 &&
                     strtolower($employee->getFullName()) != strtolower($name)) {
@@ -816,11 +834,10 @@ class performanceActions extends sfActions {
             return false;
         }
     }
-    
-    public function executeViewPerformanceModule(sfWebRequest $request) {        
+
+    public function executeViewPerformanceModule(sfWebRequest $request) {
 
         $this->redirect($this->getHomePageService()->getPerformanceModuleDefaultPath());
-
-    }    
+    }
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
@@ -21,13 +22,13 @@
  * Form class for Save Education
  */
 class SaveReviewForm extends BaseForm {
-    
+
     private $performanceReviewService = null;
 
     /**
-        * 
-        * @return type 
-        */
+     * 
+     * @return type 
+     */
     public function getPerformanceReviewService() {
         if (is_null($this->performanceReviewService)) {
             $this->performanceReviewService = new PerformanceReviewService();
@@ -35,13 +36,13 @@ class SaveReviewForm extends BaseForm {
         }
         return $this->performanceReviewService;
     }
-	
+
     public function configure() {
         $this->setWidgets(array(
             'reviewId' => new sfWidgetFormInputHidden(),
             'employeeName' => new ohrmWidgetEmployeeNameAutoFill(),
             'reviewerName' => new ohrmWidgetEmployeeNameAutoFill(),
-            'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_from')), 
+            'from_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_from')),
             'to_date' => new ohrmWidgetDatePicker(array(), array('id' => 'date_to')),
             'dueDate' => new ohrmWIdgetDatePicker(array(), array('id' => 'due_date')),
         ));
@@ -54,23 +55,23 @@ class SaveReviewForm extends BaseForm {
             'to_date' => new ohrmDateValidator(array('required' => true)),
             'dueDate' => new ohrmDateValidator(array('required' => true)),
         ));
-        
+
         $this->__setDefaultValues();
-        
+
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
         $this->widgetSchema->setNameFormat('saveReview[%s]');
     }
-     
+
     private function __setDefaultValues() {
         $reviewId = $this->getOption('reviewId');
         if (!empty($reviewId)) {
             $review = $this->getPerformanceReviewService()->readPerformanceReview($reviewId);
             $employee = array(
-                'empName' => $review->getEmployee()->getFullName(), 
+                'empName' => $review->getEmployee()->getFullName(),
                 'empId' => $review->getEmployee()->getEmployeeId()
             );
             $reviewer = array(
-                'empName' => $review->getReviewer()->getFullName(), 
+                'empName' => $review->getReviewer()->getFullName(),
                 'empId' => $review->getReviewer()->getEmployeeId()
             );
             $this->setDefaults(array(
@@ -82,8 +83,26 @@ class SaveReviewForm extends BaseForm {
                 'dueDate' => $review->getDueDate(),
             ));
         }
+        if ($this->getOption('redirect')) {
+            $employee = array(
+                'empName' => $this->getOption('empName'),
+                'empId' => $this->getOption('empId')
+            );
+            $reviewer = array(
+                'empName' => $this->getOption('reviewerName'),
+                'empId' => $this->getOption('reviewerId')
+            );
+
+            $this->setDefaults(array(
+                'employeeName' => $employee,
+                'reviewerName' => $reviewer,
+                'from_date' => $this->getOption('toDate'),
+                'to_date' => $this->getOption('fromDate'),
+                'dueDate' => $this->getOption('dueDate'),
+            ));
+        }
     }
-    
+
     protected function getFormLabels() {
         $required = '<em> *</em>';
         $labels = array(
@@ -91,17 +110,18 @@ class SaveReviewForm extends BaseForm {
             'reviewerName' => __('Reviewer Name') . $required,
             'from_date' => __('From') . $required,
             'to_date' => __('To') . $required,
-            'dueDate' => __('Due Date')  . $required,
+            'dueDate' => __('Due Date') . $required,
         );
         return $labels;
     }
 
     public function getEmployeeListAsJson() {
-         $employeeService = new EmployeeService();
-         return $employeeService->getEmployeeListAsJson();        
+        $employeeService = new EmployeeService();
+        return $employeeService->getEmployeeListAsJson();
     }
-    
+
     public function save() {
         
     }
+
 }
