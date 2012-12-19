@@ -146,18 +146,19 @@ class viewCandidatesForm extends BaseForm {
      * @return CandidateSearchParameters
      */
     public function getSearchParamsBindwithFormData(CandidateSearchParameters $searchParam) {
-
+        
         $searchParam->setJobTitleCode($this->getValue('jobTitle'));
         $searchParam->setVacancyId($this->getValue('jobVacancy'));
         $searchParam->setHiringManagerId($this->getValue('hiringManager'));
         $searchParam->setStatus($this->getValue('status'));
         $searchParam->setCandidateId($this->getValue('selectedCandidate'));
         $searchParam->setModeOfApplication($this->getValue('modeOfApplication'));
-        $searchParam->setFromDate($this->getValue('fromDate'));
-        $searchParam->setToDate($this->getValue('toDate'));
+        $dateApplication = $this->getValue('dateApplication');
+        $searchParam->setFromDate($dateApplication['from']);
+        $searchParam->setToDate($dateApplication['to']);
         $searchParam->setKeywords($this->getValue('keywords'));
         $searchParam->setCandidateName($this->getValue('candidateName'));
-
+        
         return $searchParam;
     }
 
