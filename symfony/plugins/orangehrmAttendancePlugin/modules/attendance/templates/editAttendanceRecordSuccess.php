@@ -14,11 +14,10 @@
         </div>
         
         <form action="" id="employeeRecordsForm" method="post">
-            <p class="formbuttons">
+            <div class="top">
                 <input type="button" class="" name="button" id="btnSave" value="<?php echo __('Save'); ?>" />
                 <input type="button" class="reset" name="button" id="btnCancel" value="<?php echo __('Cancel'); ?>" />
-            </p>
-            
+            </div>
             <table class="table">
                 <thead>
                     <tr>
