@@ -46,17 +46,7 @@
                     click: function() {
                         $(this).parent('div.message').fadeOut("slow");
                     }
-                }, '.message a.messageCloseButton');
-                
-                /*$(".message a.messageCloseButton").click(function() {
-                    $(this).parent('div.message').fadeOut("slow");
-                });*/
-                
-                setTimeout(function(){
-                    $("div.fadable").fadeOut("slow", function () {
-                        $("div.fadable").remove();
-                    });
-                }, 2000);
+                }, '.message a.messageCloseButton');                
 
                 /* Toggling search form: Begins */
                 //$(".toggableForm .inner").hide(); // Disabling this makes search forms to be expanded by default.

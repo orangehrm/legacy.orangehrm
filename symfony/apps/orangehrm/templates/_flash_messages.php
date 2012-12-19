@@ -21,6 +21,7 @@
 <?php
 
 $messageTypes = array('success', 'warning', 'error');
+$fadableMessages = false;
 
 foreach ($messageTypes as $messageType) :
 
@@ -35,6 +36,7 @@ foreach ($messageTypes as $messageType) :
     if ($sf_user->hasFlash($flashName)) {
         $message = $sf_user->getFlash($flashName);
         $cssClass .= ' fadable';
+        $fadableMessages = true;
     } else if ($sf_user->hasFlash($flashName . '.nofade')) {
         $message = $sf_user->getFlash($flashName. '.nofade');
     }
@@ -47,5 +49,19 @@ foreach ($messageTypes as $messageType) :
 <?php
     endif; 
 endforeach;
+
+if ($fadableMessages) :
 ?>
+<script type="text/javascript">
+//<![CDATA[
+    $("div.fadable").delay(2000)
+        .fadeOut("slow", function () {
+            $("div.fadable").remove();
+        }); 
+//<![CDATA[
+</script>
+<?php
+endif;
+?>
+
 
