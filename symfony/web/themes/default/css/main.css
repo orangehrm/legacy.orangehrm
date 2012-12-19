@@ -1350,6 +1350,12 @@ input.timeBox {
 	float:left;
 }
 */
+.editTimesheet table.table td {
+    vertical-align: top;
+}
+.editTimesheet .toDelete {
+    margin-top: 6px;
+}
 .editTimesheet select, .editTimesheet input, .editTimesheet .checkbox-input {
 	float:left;
 }
