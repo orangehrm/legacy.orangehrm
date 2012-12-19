@@ -1307,6 +1307,19 @@ CREATE TABLE ohrm_leave_entitlement (
   PRIMARY KEY(`id`)
 ) ENGINE = INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE ohrm_leave_adjustment (
+  `id` int unsigned not null auto_increment,
+  emp_number int(7) not null,
+  no_of_days decimal(6,2) not null,
+  leave_type_id int unsigned not null,
+  credited_date datetime,
+  note varchar(255) default null, 
+  `deleted` tinyint(1) not null default 0,
+  created_by_id int(10),
+  created_by_name varchar(255),
+  PRIMARY KEY(`id`)
+) ENGINE = INNODB DEFAULT CHARSET=utf8;
+
 -- Do we need the field duplication here (leave_request and leave)?
 CREATE TABLE `ohrm_leave_request` (
   `id` int unsigned NOT NULL auto_increment,
@@ -1337,6 +1350,14 @@ CREATE TABLE `ohrm_leave` (
 create TABLE `ohrm_leave_leave_entitlement` (
     `id` int(11) NOT NULL   auto_increment,
     `leave_id` int(11) NOT NULL,
+    `entitlement_id` int unsigned NOT NULL,
+    `length_days` decimal(4,2) unsigned default NULL,
+    PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create TABLE `ohrm_leave_entitlement_adjustment` (
+    `id` int(11) NOT NULL   auto_increment,
+    `adjustment_id` int unsigned NOT NULL,
     `entitlement_id` int unsigned NOT NULL,
     `length_days` decimal(4,2) unsigned default NULL,
     PRIMARY KEY  (`id`)
@@ -1377,6 +1398,18 @@ alter table ohrm_leave_entitlement
     add foreign key (created_by_id)
         references ohrm_user(`id`) on delete set null;
 
+alter table ohrm_leave_adjustment
+    add foreign key (leave_type_id)
+        references ohrm_leave_type(id) on delete cascade;
+
+alter table ohrm_leave_adjustment
+    add foreign key (emp_number)
+        references hs_hr_employee(emp_number) on delete cascade;
+
+alter table ohrm_leave_adjustment
+    add foreign key (created_by_id)
+        references ohrm_user(`id`) on delete set null;
+
 alter table ohrm_leave_request
     add constraint foreign key (emp_number)
         references hs_hr_employee (emp_number) on delete cascade;
@@ -1405,6 +1438,13 @@ alter table ohrm_leave_leave_entitlement
     add constraint foreign key (leave_id)
         references ohrm_leave (id) on delete cascade;
 
+alter table ohrm_leave_entitlement_adjustment
+    add constraint foreign key (entitlement_id)
+        references ohrm_leave_entitlement (id) on delete cascade;
+
+alter table ohrm_leave_entitlement_adjustment
+    add constraint foreign key (adjustment_id)
+        references ohrm_leave_adjustment (id) on delete cascade;
 
 alter table ohrm_menu_item 
        add constraint foreign key (screen_id)
