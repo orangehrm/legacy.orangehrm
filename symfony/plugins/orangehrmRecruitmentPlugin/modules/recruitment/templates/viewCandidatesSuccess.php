@@ -28,7 +28,6 @@
     </div>
 
     <div class="inner">
-        <?php include_partial('global/flash_messages'); ?>
 
         <form name="frmSrchCandidates" id="frmSrchCandidates" method="post" action="<?php echo url_for('recruitment/viewCandidates'); ?>">
             
