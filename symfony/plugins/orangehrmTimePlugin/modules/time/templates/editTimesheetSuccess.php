@@ -73,7 +73,7 @@ $width = 450 + $noOfColumns * 75;
                 <tbody>
                     <?php $i = 0 ?>
                     <?php if ($timesheetItemValuesArray == null): ?>
-                    <tr>
+                    <tr class="odd">
                         <td id=""><?php echo $timesheetForm['initialRows'][$i]['toDelete'] ?></td>
                         <td>
                             <?php echo $timesheetForm['initialRows'][$i]['projectName']->renderError() ?>

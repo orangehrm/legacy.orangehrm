@@ -1356,6 +1356,9 @@ input.timeBox {
 .editTimesheet .toDelete {
     margin-top: 6px;
 }
+.editTimesheet input[type="button"], .editTimesheet input[type="submit"] {
+    margin-left: 5px;
+}
 .editTimesheet select, .editTimesheet input, .editTimesheet .checkbox-input {
 	float:left;
 }
@@ -1371,13 +1374,15 @@ input.timeBox {
 .editTimesheet .bottom .required {
 	float:left;
 	width:425px;
-	margin-top:-9px;
 	color:#a9a9a9;
 	font-size:11px;
 	text-align:left;
 }
 .editTimesheet .bottom .required em {
 	color:#aa4935;
+}
+.editTimesheet input.project {
+    width: 280px;
 }
 /* ================ Timesheet styles: End ================ */
 
