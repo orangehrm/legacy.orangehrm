@@ -494,13 +494,18 @@ form ol li label {
 	float:left;
 }
 
-form ol li label.sublabel {
-	display:block;
-	color:#5d5d5d;
+/* eg: From label for date range. Left margin is 0 */
+form ol li label.sublabel1 {
 	width:auto;
-        margin-left: 15px;
-        margin-right: 5px;
-	float:left;
+        margin-left: 0px;
+        margin-right: 10px;
+}
+
+/* eg: To label for date range */
+form ol li label.sublabel2 {
+	width:auto;
+        margin-left: 20px;
+        margin-right: 10px;
 }
 
  /* TODO: Check whether .label is in use */

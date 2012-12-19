@@ -29,7 +29,7 @@ class ohrmWidgetDateRange extends sfWidgetForm implements ohrmEmbeddableWidget {
         $this->addOption($this->id . '_' . 'to_date', new ohrmWidgetDatePicker(array(), array('id' => $this->id . '_' . 'to_date')));
 
 
-        $this->addOption('template', '%from_date%<label class="sublabel">'.__('To').'</label>%to_date%');
+        $this->addOption('template', '<label class="sublabel1">'.__('From').'</label>%from_date%<label class="sublabel2">'.__('To').'</label>%to_date%');
     }
 
     public function render($name, $value = null, $attributes = array(), $errors = array()) {
