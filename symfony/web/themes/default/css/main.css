@@ -1306,7 +1306,7 @@ a.closeText {
 .timesheet .top h3 {
 	font-size:18px;
 	float:left;
-	margin-top:5px;
+	margin-top: 2px;
 }
 .editTimesheet .top h3 {
 	font-size:18px;
@@ -1317,7 +1317,7 @@ a.closeText {
 	width:200px;
 	float:left;
 	height:28px;
-	margin:3px 0 0 10px;
+	margin: 0 5px 0 10px;
 }
 .timesheet .top button {
 	float:left;
