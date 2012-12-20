@@ -68,7 +68,7 @@ $havePassports = $numContacts>0;
                             <?php echo $form['i9_review_date']->renderLabel(__('Eligible Review Date')); ?>
                             <?php echo $form['i9_review_date']->render(array("class" => "formInputText")); ?>
                         </li>
-                        <li>
+                        <li class="largeTextBox">
                             <?php echo $form['comments']->renderLabel(__('Comments')); ?>
                             <?php echo $form['comments']->render(array("class" => "formInputText")); ?>
                         </li>

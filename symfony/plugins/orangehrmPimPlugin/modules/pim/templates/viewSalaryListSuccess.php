@@ -46,7 +46,7 @@
                             <?php echo $form['basic_salary']->render(array("class" => "formInputText", "maxlength" => 12)); ?>
                             <label for="minSalary" id="minMaxSalaryLbl" class="fieldHelpRight"></label>
                         </li>
-                        <li>
+                        <li class="largeTextBox">
                             <?php echo $form['comments']->renderLabel(__('Comments')); ?>
                             <?php echo $form['comments']->render(array("class" => "formInputText")); ?>
                         </li>
