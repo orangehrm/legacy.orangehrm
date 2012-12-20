@@ -424,9 +424,8 @@ textarea {
 	background: url(../images/toggle-up.png) no-repeat 99% 50%;
 }
 .box ul.top {
-	position:absolute;
-	top:25px;
-	right:20px;
+	float:right;
+	padding: 10px 0 0 ;    
 }
 .box ul.bottom {
 	float:right;

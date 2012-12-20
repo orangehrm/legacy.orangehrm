@@ -105,8 +105,8 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
         
     <form method="<?php echo $formMethod; ?>" action="<?php echo public_path($formAction); ?>" name="frmList_ohrmListComponent" id="frmList_ohrmListComponent">
         
-<?php if (count($buttons) > 0 || isset($extraButtons)) : ?>        
-        <div class="top">
+<?php if (count($buttons) > 0 || isset($extraButtons) || $pager->haveToPaginate()) : ?>        
+ <div class="top">          
         
 <?php
     if (count($buttons) > 0) {
@@ -120,19 +120,20 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
     }
 
     include_component('core', 'ohrmPluginPannel', array('location' => 'list-component-before-table-action-bar'));
+    
+    if ($pager->haveToPaginate()) {
+        include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'top'));
+    }    
+    
 ?>
-         </div> <!-- top -->
+</div> <!-- top --> 
 
 <?php endif; ?>         
-         
+
         <?php include_partial('global/flash_messages'); ?>
          
         <div id="helpText" class="helpText"></div>
-        <?php 
-            if ($pager->haveToPaginate()) {
-                include_partial('global/paging_links_js', array('pager' => $pager, 'location' => 'top'));
-            }
-        ?>
+
         <div id="scrollWrapper">
             <div id="scrollContainer">
             </div>
