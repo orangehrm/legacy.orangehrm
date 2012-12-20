@@ -135,7 +135,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                         <?php echo $customerForm['customerName']->renderLabel(__('Name') . ' <em>*</em>'); ?>
                         <?php echo $customerForm['customerName']->render(array("maxlength" => 52)); ?>
                     </li>
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $customerForm['description']->renderLabel(__('Description')); ?>
                         <?php echo $customerForm['description']->render(array("maxlength" => 255)); ?>
                     </li>
