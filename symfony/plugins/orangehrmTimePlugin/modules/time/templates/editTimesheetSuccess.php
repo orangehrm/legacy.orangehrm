@@ -26,6 +26,7 @@ $width = 450 + $noOfColumns * 75;
 <style type="text/css">
 form ol li.largeTextBox textarea {
     width: 365px;
+    margin-bottom: 5px;
 }
 .modal-open form ol li.largeTextBox span.validation-error {
     left: 0;

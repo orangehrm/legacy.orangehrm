@@ -282,6 +282,8 @@ $(document).ready(function() {
 
     $('.commentIcon').click(function(){
         $("#commentError").html("");
+        $('#frmCommentSave').validate().resetForm();
+        $('#timeComment').removeClass('validation-error');
         $("#timeComment").val("");
         classStr = $(this).attr("id").split("_");
         deleteStr = $(this).attr("class").split(" ");

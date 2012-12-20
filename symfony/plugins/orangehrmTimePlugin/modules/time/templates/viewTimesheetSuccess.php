@@ -28,6 +28,7 @@ $actionName = sfContext::getInstance()->getActionName();
 <style type="text/css">
 #timeComment {
     width: 365px;
+    margin-bottom: 5px;
 }
 </style>
 
