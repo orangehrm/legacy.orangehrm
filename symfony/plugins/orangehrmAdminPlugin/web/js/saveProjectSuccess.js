@@ -391,7 +391,7 @@ function disableWidgets(){
     $('.formInputProjectAdmin').attr('disabled','disabled');
     $('#addProject_description').attr('disabled','disabled');
     $('#addCustomerLink').hide();
-    $('#addButton').hide();
+    $('.fieldHelpRight').hide();
     $('.removeText').hide();
     $('#btnSave').val(lang_edit);
     
@@ -405,7 +405,7 @@ function enableWidgets(){
     $('.formInputProjectAdmin').removeAttr('disabled');
     $('#addProject_description').removeAttr('disabled');
     $('#addCustomerLink').show();
-    $('#addButton').show();
+    $('.fieldHelpRight').show();
     $('.removeText').show();
     $('#btnSave').val(lang_save);
     $('#removeButton1').hide();
