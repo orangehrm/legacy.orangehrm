@@ -28,7 +28,7 @@ class activateEmployementAction extends basePimAction {
 
         if ($allowActivate) {
             $this->getEmployeeService()->activateTerminatedEmployment($empNumber);
-            $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::UPDATE_SUCCESS)));
+            $this->getUser()->setFlash('jobdetails.success', __(TopLevelMessages::UPDATE_SUCCESS));
             $this->redirect('pim/viewJobDetails?empNumber=' . $empNumber);
         }
     }
