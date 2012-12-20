@@ -470,6 +470,7 @@ use_javascript('orangehrm.datepicker.js');
         //form validation
         var reportValidator =
             $("#defineReportForm").validate({
+            ignore: [], // reset the ignore list. by default hidden fields are ignored when validating
             rules: {
                 'report[report_name]': {required: true},
                 'display_fields[]': {required: true, minlength: 1}
