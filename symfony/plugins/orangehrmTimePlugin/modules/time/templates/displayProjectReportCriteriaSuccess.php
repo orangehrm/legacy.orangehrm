@@ -91,7 +91,14 @@ use_javascript('orangehrm.datepicker.js');
                     date_range:lang_dateError
                 }
 
-            }
+            },
+            errorPlacement: function(error, element) {
+                if (element.attr("name") == "time[project_date_range][to]") {
+                    var toDatePos = $('#project_date_range_to_date').position();
+                    error.css('left', toDatePos.left);
+                }
+                error.insertAfter(element);
+            }            
 
         });
     });
