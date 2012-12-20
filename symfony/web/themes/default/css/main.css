@@ -8,6 +8,9 @@ a {
 	outline:none;
     color:#5d5d5d;
 }
+textarea {
+    font-family:Arial, Helvetica, sans-serif;
+}
 /* ================ HTML element styles: End ================ */
 
 /* ================ Application header styles: Begin ================ */
