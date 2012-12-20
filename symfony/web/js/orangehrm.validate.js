@@ -176,8 +176,14 @@ $.validator.addMethod("phone", function(value, element) {
 $.validator.addMethod('date_range', function(value, element, params) {
 
     var valid = false;
-    var fromDate = $.trim(params.fromDate);
-    var toDate = $.trim(value);
+
+    if (params.fromDate != undefined) {
+        var fromDate = $.trim(params.fromDate);
+        var toDate = $.trim(value);
+    } else {
+        var fromDate = $.trim(value); 
+        var toDate = $.trim(params.toDate);       
+    }
     var format = params.format;
     var displayFormat = '';
 
