@@ -42,16 +42,9 @@ $punchInDisplayNote = '';
 
 if ($isPunchOutAllowed) {
 
-    $punchInDisplayNote = "<li>\n";
     $dateTimeArray = explode(" ", $punchInTime);
-    $punchInDisplayNote .= __("Last punch in time") . " : " . set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1];
-
-    if (!empty($punchInNote)) {
-        $punchInDisplayNote .= "<br>\n";
-        $punchInDisplayNote .= __("Note") . " : " . $punchInNote;
-    }
-
-    $punchInDisplayNote .= "</li>\n";
+    $punchInDisplayTime = set_datepicker_date_format($dateTimeArray[0]) . " " . $dateTimeArray[1];
+    
 }
 ?>
 
@@ -70,21 +63,44 @@ if ($isPunchOutAllowed) {
             <fieldset>
                 <ol>
                     <?php if ($isEditable) : ?>
+                        <?php if ($isPunchOutAllowed) : ?>
+                        <li>
+                            <label><?php echo __('Punched in Time'); ?></label>
+                            <label><?php echo $punchInDisplayTime; ?></label>
+                        </li>
+                        <?php if (!empty($punchInNote)) : ?>
+                        <li>
+                            <label><?php echo __('Punched in Note'); ?></label>
+                            <label><?php echo $punchInNote; ?></label>
+                        </li>
+                        <?php endif; ?> 
+                        <?php endif; ?> 
                         <li>
                             <label><?php echo $form['date']->renderLabel() ?></label>
                             <?php echo $form['date']->render(); ?>
                         </li>
                         <li>
                             <label><?php echo $form['time']->renderLabel() ?></label>
-                            <?php echo $form['time']->render(); ?> <span>HH:MM</span>
+                            <?php echo $form['time']->render(); ?> <span class="fieldHelpRight">HH:MM</span>
                         </li>
                         <li>
                             <label><?php echo $form['note']->renderLabel() ?></label>
                             <?php echo $form['note']->render(); ?>
                         </li>
-                        <?php echo $punchInDisplayNote; ?>
                     <?php else : ?>
                         <?php echo $attendanceFormToImplementCsrfToken['_csrf_token']; ?>
+                        <?php if ($isPunchOutAllowed) : ?>
+                        <li>
+                            <label><?php echo __('Punched in Time'); ?></label>
+                            <label><?php echo $punchInDisplayTime; ?></label>
+                        </li>
+                        <?php if (!empty($punchInNote)) : ?>
+                        <li>
+                            <label><?php echo __('Punched in Note'); ?></label>
+                            <label><?php echo $punchInNote; ?></label>
+                        </li>
+                        <?php endif; ?> 
+                        <?php endif; ?> 
                         <li>
                             <label><?php echo __('Date'); ?></label>
                             <span id="currentDate"></span><input type="hidden" class="date"name="date" value=""/>
@@ -97,7 +113,6 @@ if ($isPunchOutAllowed) {
                             <label><?php echo __('Note'); ?></label>
                             <textarea id="note" class="note" name="note" rows="5" cols="50"></textarea>
                         </li>
-                        <?php echo $punchInDisplayNote; ?>
                     <?php endif; ?>
                 </ol> 
 
