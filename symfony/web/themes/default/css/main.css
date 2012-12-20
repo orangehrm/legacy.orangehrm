@@ -974,6 +974,31 @@ table tbody tr.even td.hover table tbody tr td {
 }
 /* ================ Table styles: End ================ */
 
+/* ================ Definition list styles: Begin ================ */
+dl.search-params dt {
+    clear: left;
+    float: left;
+    width: 150px;
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+}
+
+dl.search-params dd {
+    margin-left: 150px;
+    padding: 5px;
+}
+
+dl.search-params dt.total {
+
+}
+
+dl.search-params dd.total {
+
+}
+
+/* ================ Definition list styles: End ================ */
+
 /* ================ List styles: Begin ================ */
 ul.disc { /* Used in admin/pimCsvImport */
     list-style: disc;
@@ -1394,7 +1419,6 @@ input.timeBox {
 /* ================ PIM sidebar styles: Begin ================ */
 #sidebar {
 	width:202px;
-	overflow:hidden;
 	float:left;
 	margin:0 17px 0 0;
 	min-height:300px;
