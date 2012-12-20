@@ -116,6 +116,11 @@ $(document).ready(function(){
             }
         }
     });
+    
+    $('#btnAddTimesheet').click(function(){
+        $('#msgDiv').remove();
+    });
+    
 });
 
 var timesheetItemId;
