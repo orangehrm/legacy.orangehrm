@@ -302,7 +302,7 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                     }
                 ?>
                 </tbody>
-            <?php if ($hasSummary) {
+            <?php if ($hasSummary && $data->count() > 0) {
  ?>
                         <tfoot>
                             <tr class="total">
