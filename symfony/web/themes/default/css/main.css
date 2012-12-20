@@ -1305,6 +1305,7 @@ color:#fff;
 /* ================ Hyperlink styles: Begin ================ */
 a.closeText {
     color:#aa4935;
+    text-decoration: none;
 }
 /* ================ Hyperlink styles: End ================ */
 
