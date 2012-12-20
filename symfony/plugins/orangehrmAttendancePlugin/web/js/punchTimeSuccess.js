@@ -124,12 +124,9 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
                 }
 
                 if(flag){
@@ -137,15 +134,10 @@ $(document).ready(function()
 
                     if(flag2==1){
                         $('.punchOutbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
                     }
 
                     if(flag2==0){
-
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
-
                     }
                 }
             }
@@ -156,30 +148,20 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
                 }
 
                 if(flag4){
                     var flag3=validateForpunchInOverLapping();
 
                     if(flag3==1){
-
                         $('.punchInbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
-
                     }
 
                     if(flag3==0){
-
                         $('.punchInbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
-
                     }
                 }
             }
@@ -195,12 +177,9 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
                 }
 
                 if(flag){
@@ -208,15 +187,10 @@ $(document).ready(function()
 
                     if(flag2==1){
                         $('.punchOutbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
                     }
 
                     if(flag2==0){
-
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
-
                     }
                 }
             }
@@ -227,30 +201,20 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "messageBalloon_failure");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
-                    $(".time").removeAttr('style');
-                    $("#attendance_date").removeAttr('style');
                 }
 
                 if(flag4){
                     var flag3=validateForpunchInOverLapping();
 
                     if(flag3==1){
-
                         $('.punchInbutton').removeAttr('disabled');
-                        $(".time").removeAttr('style');
-                        $(".date").removeAttr('style');
-
                     }
 
                     if(flag3==0){
-
                         $('.punchInbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "messageBalloon_failure");
-
                     }
                 }
             }
@@ -263,12 +227,10 @@ $(document).ready(function()
             if(!flag7) {
                 $('.punchOutbutton').attr('disabled', 'disabled');
                 $('.punchInbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
             }
             else{
                 $('.punchOutbutton').removeAttr('disabled');
                 $('.punchInbutton').removeAttr('disabled');
-                $(".note").removeAttr('style');
             }
 
 
@@ -276,8 +238,6 @@ $(document).ready(function()
 
         function validate() {
 
-            var formtMonth;
-            var formtDate;
             var formtHour;
             var formtMin;
             errFlag = false;
