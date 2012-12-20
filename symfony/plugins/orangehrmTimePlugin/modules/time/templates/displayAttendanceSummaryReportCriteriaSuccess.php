@@ -104,6 +104,7 @@
             }
             ,matchContains:true
         }).result(function(event, item) {
+            $(this).valid();
         }
     );
 
@@ -125,7 +126,8 @@
             rules: {
                 'attendanceTotalSummary[empName]': {
                     required:true,
-                    employeeValidation: true
+                    employeeValidation: true,
+                    onkeyup: false
                 },
                 'attendanceTotalSummary[fromDate]':{
                     valid_date: function() {
