@@ -293,6 +293,9 @@
 
 <script type="text/javascript"><!--
 //<![CDATA[
+
+    $('#delSalary').attr('disabled', 'disabled');
+
     function clearMessageBar() {
         $("#messagebar").text("").attr('class', "");
     }
@@ -409,6 +412,12 @@
         if ($("#salaryCheckAll").attr("checked")) {
             $(".check .chkbox").attr("checked", "checked");
         }
+        
+        if($('.check .chkbox:checkbox:checked').length > 0) {
+            $('#delSalary').removeAttr('disabled');
+        } else {
+            $('#delSalary').attr('disabled', 'disabled');
+        }
     });
 
     //remove tick from the all button if any checkbox unchecked
@@ -416,6 +425,12 @@
         $("#salaryCheckAll").removeAttr('checked');
         if ($(".check .chkbox").length == $(".check .chkbox:checked").length) {
             $("#salaryCheckAll").attr('checked', 'checked');
+        }
+        
+        if($('.check .chkbox:checkbox:checked').length > 0) {
+            $('#delSalary').removeAttr('disabled');
+        } else {
+            $('#delSalary').attr('disabled', 'disabled');
         }
     });
 

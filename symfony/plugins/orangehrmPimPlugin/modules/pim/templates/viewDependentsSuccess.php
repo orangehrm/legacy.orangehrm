@@ -188,6 +188,8 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
     var lang_validDateMsg = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))); ?>'
 
+    $('#delDependentBtn').attr('disabled', 'disabled');
+
     function clearAddForm() {
         $('#dependent_seqNo').val('');
         $('#dependent_name').val('');
@@ -230,12 +232,24 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
             } else {
                 $(".checkbox").removeAttr('checked');
             }
+            
+            if($('.checkbox:checkbox:checked').length > 0) {
+                $('#delDependentBtn').removeAttr('disabled');
+            } else {
+                $('#delDependentBtn').attr('disabled', 'disabled');
+            }
         });
 
         $(".checkbox").click(function() {
             $("#checkAll").removeAttr('checked');
             if(($(".checkbox").length - 1) == $(".checkbox:checked").length) {
                 $("#checkAll").attr('checked', 'checked');
+            }
+            
+            if($('.checkbox:checkbox:checked').length > 0) {
+                $('#delDependentBtn').removeAttr('disabled');
+            } else {
+                $('#delDependentBtn').attr('disabled', 'disabled');
             }
         });
 

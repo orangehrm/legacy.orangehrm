@@ -1,6 +1,8 @@
 $(document).ready(function() {
     
     $('#immigrationDataPane').hide();
+    $('#btnDelete').attr('disabled', 'disabled');
+
     var issuedDate = "";
     var passportIssueDate = $("#immigration_passport_issue_date");
     var passportExpireDate = $("#immigration_passport_expire_date");
@@ -121,6 +123,12 @@ $(document).ready(function() {
         if($("#immigrationCheckAll").attr("checked")) {
             $("form#frmImmigrationDelete table tbody .checkbox").attr("checked", "checked");
         }
+        
+        if($('form#frmImmigrationDelete table tbody .checkbox:checkbox:checked').length > 0) {
+            $('#btnDelete').removeAttr('disabled');
+        } else {
+            $('#btnDelete').attr('disabled', 'disabled');
+        }
     });
 
     //remove tick from the all button if any checkbox unchecked
@@ -128,6 +136,12 @@ $(document).ready(function() {
         $("#immigrationCheckAll").removeAttr('checked');
         if($("form#frmImmigrationDelete table tbody .checkbox").length == $("form#frmImmigrationDelete table tbody .checkbox:checked").length) {
             $("#immigrationCheckAll").attr('checked', 'checked');
+        }
+        
+        if($('form#frmImmigrationDelete table tbody .checkbox:checkbox:checked').length > 0) {
+            $('#btnDelete').removeAttr('disabled');
+        } else {
+            $('#btnDelete').attr('disabled', 'disabled');
         }
     });     
     

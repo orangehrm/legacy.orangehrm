@@ -186,6 +186,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
     //<![CDATA[
 
     // Move to separate js after completing initial work
+    $('#delContactsBtn').attr('disabled', 'disabled');
     
     function clearAddForm() {
         $('#emgcontacts_seqNo').val('');
@@ -222,12 +223,24 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
             } else {
                 $(".checkbox").removeAttr('checked');
             }
+            
+            if($('.checkbox:checkbox:checked').length > 0) {
+                $('#delContactsBtn').removeAttr('disabled');
+            } else {
+                $('#delContactsBtn').attr('disabled', 'disabled');
+            }
         });
 
         $(".checkbox").click(function() {
             $("#checkAll").removeAttr('checked');
             if(($(".checkbox").length) == $(".checkbox:checked").length) {
                 $("#checkAll").attr('checked', 'checked');
+            }
+            
+            if($('.checkbox:checkbox:checked').length > 0) {
+                $('#delContactsBtn').removeAttr('disabled');
+            } else {
+                $('#delContactsBtn').attr('disabled', 'disabled');
             }
         });
         // Edit a emergency contact in the list

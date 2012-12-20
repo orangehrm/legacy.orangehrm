@@ -92,8 +92,7 @@ $hasAttachments = count($attachmentList) > 0;
                 <input type="button" class="addbutton" id="btnAddAttachment" value="<?php echo __("Add");?>" />
                 <?php endif; // $permission->canCreate() ?>
                 <?php if ($permission->canDelete() && $hasAttachments) : ?>
-                 <input type="button" class="delete tiptip" id="btnDeleteAttachment" 
-                 value="<?php echo __("Delete");?>" title="<?php echo __('Select records first'); ?>"/>
+                 <input type="button" class="delete" id="btnDeleteAttachment" value="<?php echo __("Delete");?>"/>
                 <?php endif; // $permission->canDelete() && $hasAttachments ?>
             </p>
             
@@ -192,6 +191,8 @@ $hasAttachments = count($attachmentList) > 0;
     var clearAttachmentMessages = true;
     
     $(document).ready(function() {
+        
+        $('#btnDeleteAttachment').attr('disabled', 'disabled');
 
         if (!hasError) {
             $('#addPaneAttachments').hide();
@@ -234,6 +235,12 @@ $hasAttachments = count($attachmentList) > 0;
             if($("#attachmentsCheckAll").attr("checked")) {
                 $("table#tblAttachments tbody input.checkboxAtch").attr("checked", "checked");
             }
+            
+            if($('table#tblAttachments tbody .checkboxAtch:checkbox:checked').length > 0) {
+                $('#btnDeleteAttachment').removeAttr('disabled');
+            } else {
+                $('#btnDeleteAttachment').attr('disabled', 'disabled');
+            }
         });
 
         //remove tick from the all button if any checkbox unchecked
@@ -241,6 +248,12 @@ $hasAttachments = count($attachmentList) > 0;
             $("#attachmentsCheckAll").removeAttr('checked');
             if($("table#tblAttachments tbody input.checkboxAtch").length == $("table#tblAttachments tbody input.checkboxAtch:checked").length) {
                 $("#attachmentsCheckAll").attr('checked', 'checked');
+            }
+            
+            if($('table#tblAttachments tbody .checkboxAtch:checkbox:checked').length > 0) {
+                $('#btnDeleteAttachment').removeAttr('disabled');
+            } else {
+                $('#btnDeleteAttachment').attr('disabled', 'disabled');
             }
         });
         // Edit an attachment in the list
