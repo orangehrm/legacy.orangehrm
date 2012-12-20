@@ -4806,8 +4806,6 @@ symfony/plugins/orangehrmTimePlugin/modules/time/actions/actions.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/defineTimesheetPeriodAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceSummaryReportAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceSummaryReportCriteriaAction.class.php -text
-symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceTotalSummaryReportAction.class.php -text
-symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceTotalSummaryReportCriteriaAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayEmployeeReportAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayEmployeeReportCriteriaAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectActivityDetailsReportAction.class.php -text
@@ -4836,7 +4834,6 @@ symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.zh_CN.xml -text
 symfony/plugins/orangehrmTimePlugin/modules/time/i18n/messages.zz_ZZ.xml -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/_addRow.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/_attendanceSummaryReportHeader.php -text
-symfony/plugins/orangehrmTimePlugin/modules/time/templates/_attendanceTotalSummaryReportHeader.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/_employeeReportHeader.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/_projectActivityDetailsReportHeader.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/_projectReportHeader.php -text
@@ -4845,8 +4842,6 @@ symfony/plugins/orangehrmTimePlugin/modules/time/templates/defineTimesheetPeriod
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/deleteRowsSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayAttendanceSummaryReportCriteriaSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayAttendanceSummaryReportSuccess.php -text
-symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayAttendanceTotalSummaryReportCriteriaSuccess.php -text
-symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayAttendanceTotalSummaryReportSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayEmployeeReportCriteriaSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayEmployeeReportSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/displayProjectActivityDetailsReportSuccess.php -text
