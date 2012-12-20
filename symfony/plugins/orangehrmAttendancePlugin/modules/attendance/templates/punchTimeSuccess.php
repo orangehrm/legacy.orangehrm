@@ -78,14 +78,17 @@ if ($isPunchOutAllowed) {
                         <li>
                             <label><?php echo $form['date']->renderLabel() ?></label>
                             <?php echo $form['date']->render(); ?>
+                            <span id="dateErrorHolder" class="validation-error"></span>
                         </li>
                         <li>
                             <label><?php echo $form['time']->renderLabel() ?></label>
                             <?php echo $form['time']->render(); ?> <span class="fieldHelpRight">HH:MM</span>
+                            <span id="timeErrorHolder" class="validation-error"></span>
                         </li>
-                        <li>
+                        <li class="largeTextBox">
                             <label><?php echo $form['note']->renderLabel() ?></label>
                             <?php echo $form['note']->render(); ?>
+                            <span id="noteErrorHolder" class="validation-error"></span>
                         </li>
                     <?php else : ?>
                         <?php echo $attendanceFormToImplementCsrfToken['_csrf_token']; ?>
@@ -109,9 +112,10 @@ if ($isPunchOutAllowed) {
                             <label><?php echo __('Time'); ?></label>
                             <span id="currentTime"></span><input  type="hidden" class="time"name="time" value=""> <span>HH:MM</span>
                         </li>
-                        <li>
+                        <li class="largeTextBox">
                             <label><?php echo __('Note'); ?></label>
                             <textarea id="note" class="note" name="note" rows="5" cols="50"></textarea>
+                            <span id="noteErrorHolder" class="validation-error"></span>
                         </li>
                     <?php endif; ?>
                 </ol> 
