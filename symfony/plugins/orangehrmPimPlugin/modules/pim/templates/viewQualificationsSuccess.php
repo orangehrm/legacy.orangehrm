@@ -60,7 +60,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
                                 <?php echo $workExperienceForm['to_date']->renderLabel(__('To')); ?>
                                 <?php echo $workExperienceForm['to_date']->render(array("class" => "formInputText")); ?>
                             </li>
-                            <li>
+                            <li class="largeTextBox">
                                 <?php echo $workExperienceForm['comments']->renderLabel(__('Comment')); ?>
                                 <?php echo $workExperienceForm['comments']->render(array("class" => "formInputText")); ?>
                             </li>

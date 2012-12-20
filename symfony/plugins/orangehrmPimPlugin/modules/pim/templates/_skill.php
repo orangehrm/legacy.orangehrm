@@ -24,7 +24,7 @@ $haveSkills = count($form->empSkillList)>0;
                         <?php echo $form['years_of_exp']->renderLabel(__('Years of Experience')); ?>
                         <?php echo $form['years_of_exp']->render(array("class" => "formInputText", "maxlength" => 100)); ?>
                     </li>
-                    <li>
+                   <li class="largeTextBox">
                         <?php echo $form['comments']->renderLabel(__('Comments')); ?>
                         <?php echo $form['comments']->render(array("class" => "formInputText")); ?>
                     </li>
