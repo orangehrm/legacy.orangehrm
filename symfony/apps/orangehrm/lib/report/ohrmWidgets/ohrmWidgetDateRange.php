@@ -115,6 +115,29 @@ class ohrmWidgetDateRange extends sfWidgetForm implements ohrmEmbeddableWidget {
 
         return "( " . $fieldName . " " . $this->getWhereClauseCondition() . " '" . $fromDate . "' AND '" . $toDate . "' )";
     }
+    
+    public function getJavaScripts() {
+        
+        $parentJs = parent::getJavaScripts();
+        
+        $fromDateWidget = $this->getOption($this->attributes['id'] . '_' . 'from_date');                
+        $fromWidgetJs = $fromDateWidget->getJavaScripts();       
+
+        $javaScripts = array_merge($parentJs, $fromWidgetJs);
+        
+        return $javaScripts;        
+    }
+    
+    public function getStylesheets() {
+        $parentCss = parent::getStylesheets();
+        
+        $fromDateWidget = $this->getOption($this->attributes['id'] . '_' . 'from_date');
+        $fromWidgetCss = $fromDateWidget->getStylesheets();
+        
+        $css = array_merge($parentCss, $fromWidgetCss);
+        
+        return $css;
+    }    
 
 }
 

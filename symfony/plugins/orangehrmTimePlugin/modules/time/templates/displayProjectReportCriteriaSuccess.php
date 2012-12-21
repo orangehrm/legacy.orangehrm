@@ -1,7 +1,3 @@
-<?php
-stylesheet_tag(theme_path('css/orangehrm.datepicker.css'));
-use_javascript('orangehrm.datepicker.js');
-?>
 <div class="box">
     <div class="head"><h1 id="reportToHeading"><?php echo __($reportName); ?></h1></div>
     <div class="inner">
