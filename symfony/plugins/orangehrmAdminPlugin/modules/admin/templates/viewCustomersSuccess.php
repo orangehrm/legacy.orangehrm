@@ -41,6 +41,8 @@ use_javascript('../orangehrmAdminPlugin/js/viewCustomersSuccess');
     <h3><?php echo __('OrangeHRM - Confirmation Required'); ?></h3>
   </div>
   <div class="modal-body">
+      <p><?php echo __("Projects under selected customer will also be deleted"); ?></p>
+      <br/>
     <p><?php echo __(CommonMessages::DELETE_CONFIRMATION); ?></p>
   </div>
   <div class="modal-footer">

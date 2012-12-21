@@ -25,7 +25,7 @@ use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess');
                         <?php echo $form['customerName']->renderLabel(__('Customer Name') . ' <em>*</em>'); ?>
                         <span>
                             <?php echo $form['customerName']->render(array("class" => "formInputCustomer", "maxlength" => 52)); ?>
-                            <a class="btn2 fieldHelpRight" data-toggle="modal" href="#customerDialog" ><?php echo __('Add Customer') ?></a>
+                            <a id="addCustomerLink" class="btn2 fieldHelpRight" data-toggle="modal" href="#customerDialog" ><?php echo __('Add Customer') ?></a>
                         </span>
                     </li>
                     
