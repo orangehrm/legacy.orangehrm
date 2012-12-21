@@ -42,11 +42,18 @@
                 </p>
                 
             </fieldset>
-
+            
+            <!-- language and font help link -->
+            <ul id="" class="helpList">
+                <li>
+                    <a href="http://www.orangehrm.com/localization-help.shtml" target="_blank"><?php echo __('Language and font help'); ?></a>
+                </li>
+            </ul>
+            
         </form>
         
     </div>
-
+    
 </div>
 
 <!-- Message for supported languages -->
