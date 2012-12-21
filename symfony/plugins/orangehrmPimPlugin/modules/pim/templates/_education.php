@@ -140,9 +140,9 @@ $haveEducation = count($form->empEducationList) > 0;
                                 </td>
                                 <td class="program">
                                     <?php if ($educationPermissions->canUpdate()) { ?>
-                                    <a href="#" class="edit"><?php echo htmlspecialchars($eduDesc); ?></a>
+                                    <a href="#" class="edit"><?php echo $eduDesc; ?></a>
                                     <?php } else { 
-                                        echo htmlspecialchars($eduDesc);
+                                        echo $eduDesc;
                                     } ?>
                                 </td>
                                 <td><?php echo htmlspecialchars($education->year); ?></td>

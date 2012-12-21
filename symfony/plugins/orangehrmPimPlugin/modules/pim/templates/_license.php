@@ -74,7 +74,7 @@ $haveLicense = count($form->empLicenseList) > 0;
                             </tr>
                         <?php } else { ?>                        
                             <?php
-                            $licenses = $form->empLicenseList; //var_dump($licenses->toArray());die;
+                            $licenses = $form->empLicenseList;
                             $row = 0;
 
                             foreach ($licenses as $license) :
@@ -106,9 +106,9 @@ $haveLicense = count($form->empLicenseList) > 0;
                                     </td>   
                                     <td class="desc">
                                         <?php if ($licensePermissions->canUpdate()) { ?>
-                                        <a href="#" class="edit"><?php echo htmlspecialchars($licenseDesc); ?></a>
+                                        <a href="#" class="edit"><?php echo $licenseDesc; ?></a>
                                         <?php } else {
-                                            echo htmlspecialchars($licenseDesc);
+                                            echo $licenseDesc;
                                         }
                                         ?>
                                     </td>
