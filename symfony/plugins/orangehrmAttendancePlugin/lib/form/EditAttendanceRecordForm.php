@@ -62,7 +62,7 @@ class EditAttendanceRecordForm extends sfForm {
 
                     $this->setDefault('recordId_' . $i, $record->getId());
                     $this->setDefault('InOffset_' . $i, $record->getPunchInTimeOffset());
-                    $this->setDefault('punchInDate_' . $i, set_datepicker_date_format(date($inputDatePattern, strtotime($record->getPunchInUserTime()))));
+                    $this->setDefault('punchInDate_' . $i, date($inputDatePattern, strtotime($record->getPunchInUserTime())));
                     $this->setDefault('punchInTime_' . $i, date('H:i', strtotime($record->getPunchInUserTime())));
                     $this->setDefault('inNote_' . $i, $record->getPunchInNote());
                     $this->setDefault('outNote_' . $i, "");
@@ -72,7 +72,7 @@ class EditAttendanceRecordForm extends sfForm {
                     $this->setDefault('recordId_' . $i, $record->getId());
                     $this->setDefault('InOffset_' . $i, $record->getPunchInTimeOffset());
                     $this->setDefault('OutOffset_' . $i, $record->getPunchOutTimeOffset());
-                    $this->setDefault('punchInDate_' . $i, set_datepicker_date_format(date($inputDatePattern, strtotime($record->getPunchInUserTime()))));
+                    $this->setDefault('punchInDate_' . $i, date($inputDatePattern, strtotime($record->getPunchInUserTime())));
                     $this->setDefault('punchInTime_' . $i, date('H:i', strtotime($record->getPunchInUserTime())));
                     $this->setDefault('inNote_' . $i, $record->getPunchInNote());
                     $this->setDefault('punchOutDate_' . $i, date($inputDatePattern, strtotime($record->getPunchOutUserTime())));
