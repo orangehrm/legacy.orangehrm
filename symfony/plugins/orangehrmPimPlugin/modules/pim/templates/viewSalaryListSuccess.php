@@ -477,7 +477,6 @@
         //changing the headings
         $("#headchangeSalary").text(lang_addSalary);
         $('.check').hide();
-        $('td.component').attr('colspan', 2);
 
         //hiding action button section
         $("#actionSalary").hide();
@@ -694,7 +693,6 @@
         updateCurrencyList(salGrdCode, currencyId, currencyName);
         
         $(".check").hide();
-        $('td.component').attr('colspan', 2);
         
     });
     
