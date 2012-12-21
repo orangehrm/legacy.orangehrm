@@ -257,7 +257,12 @@ $(document).ready(function() {
     $('#btnActSave').click(function(){
         $('#btnActSave').attr('disabled', 'disabled');
         $('#addProjectActivity_projectId').val(projectId);
-        $('#frmAddActivity').submit();
+        
+        if($('#frmAddActivity').valid()) {
+            $('#frmAddActivity').submit();
+        } else {
+            $('#btnActSave').removeAttr('disabled');
+        }
     });
     
     $('#btnActCancel').click(function(){
