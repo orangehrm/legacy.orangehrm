@@ -5250,7 +5250,15 @@
    <trans-unit id="1144">
     <source>Qualifications</source>
     <target>FR_Qualifications</target>
-   </trans-unit>   
+   </trans-unit> 
+   <trans-unit id="1145">
+    <source>Current File</source>
+    <target>FR_Current File</target>
+   </trans-unit>
+   <trans-unit id="1146">
+    <source>Replace With</source>
+    <target>FR_Replace With</target>
+   </trans-unit>
 
   </body>
  </file>
