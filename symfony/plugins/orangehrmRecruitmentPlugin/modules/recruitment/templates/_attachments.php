@@ -72,7 +72,7 @@ $hasAttachments = count($attachmentList) > 0;
         <h1><?php echo __('Attachments'); ?></h1>
     </div>
     <div class="inner">
-        <?php echo!empty($attachmentMessage) ? displayMainMessage($attachmentMessageType, $attachmentMessage) : ''; ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'jobAttachmentPane')); ?>
         <form name="frmRecDelAttachments" id="frmRecDelAttachments" method="post" action="<?php echo url_for('recruitment/deleteAttachments?screen=' . $screen); ?>">
             <?php echo $deleteForm['_csrf_token']; ?>
             <p id="attachmentActions">
