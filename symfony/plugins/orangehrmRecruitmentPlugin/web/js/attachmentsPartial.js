@@ -1,5 +1,9 @@
 
 $(document).ready(function() {
+    
+    $('#btnDeleteAttachment').attr('disabled', 'disabled');
+    
+    
 
     $('#addPaneAttachments').hide();
     $("#frmRecAttachment").data('add_mode', true);
@@ -42,6 +46,11 @@ $(document).ready(function() {
         if($("#attachmentsCheckAll").attr("checked")) {
             $("table#tblAttachments tbody input.checkboxAtch").attr("checked", "checked");
         }
+        if($('table#tblAttachments tbody .checkboxAtch:checkbox:checked').length > 0) {
+            $('#btnDeleteAttachment').removeAttr('disabled');
+        } else {
+            $('#btnDeleteAttachment').attr('disabled', 'disabled');
+        }
     });
 
     //remove tick from the all button if any checkbox unchecked
@@ -49,6 +58,11 @@ $(document).ready(function() {
         $("#attachmentsCheckAll").removeAttr('checked');
         if($("table#tblAttachments tbody input.checkboxAtch").length == $("table#tblAttachments tbody input.checkboxAtch:checked").length) {
             $("#attachmentsCheckAll").attr('checked', 'checked');
+        }
+        if($('table#tblAttachments tbody .checkboxAtch:checkbox:checked').length > 0) {
+            $('#btnDeleteAttachment').removeAttr('disabled');
+        } else {
+            $('#btnDeleteAttachment').attr('disabled', 'disabled');
         }
     });
     // Edit an attachment in the list

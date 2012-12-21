@@ -78,7 +78,7 @@ $hasAttachments = count($attachmentList) > 0;
             <p id="attachmentActions">
                 <input type="button" class="addbutton" id="btnAddAttachment" value="<?php echo __("Add"); ?>" />
                 <?php if ($hasAttachments) : ?>
-                    <input type="button" class="delete tiptip" id="btnDeleteAttachment" value="<?php echo __("Delete"); ?>" title="<?php echo __('Select records first'); ?>"/>
+                    <input type="button" class="delete" id="btnDeleteAttachment" value="<?php echo __("Delete"); ?>"/>
                 <?php endif; // $hasAttachments ?>
             </p>
             <?php if ($hasAttachments) : ?>
