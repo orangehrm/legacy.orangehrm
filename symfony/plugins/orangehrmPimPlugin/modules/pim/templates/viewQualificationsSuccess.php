@@ -92,11 +92,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
 
             <?php if ($workExperiencePermissions->canRead()) : ?>
 
-                <?php 
-                if ($section == 'workexperience') {
-                    include_partial('global/flash_messages'); 
-                }
-                ?>
+                <?php include_partial('global/flash_messages', array('prefix' => 'workexperience')); ?>
 
                 <form id="frmDelWorkExperience" action="<?php echo url_for('pim/saveDeleteWorkExperience?empNumber=' . 
                         $empNumber . "&option=delete"); ?>" method="post">

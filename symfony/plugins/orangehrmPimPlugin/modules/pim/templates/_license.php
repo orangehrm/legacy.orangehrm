@@ -39,11 +39,8 @@ $haveLicense = count($form->empLicenseList) > 0;
 
         <?php if ($licensePermissions->canRead()) : ?>
 
-        <?php 
-        if ($section == 'license') {
-            include_partial('global/flash_messages'); 
-        } 
-        ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'license')); ?>
+        
             <form id="frmDelLicense" action="<?php echo url_for('pim/saveDeleteLicense?empNumber=' . 
                     $empNumber . "&option=delete"); ?>" method="post">
                 <p id="actionLicense">

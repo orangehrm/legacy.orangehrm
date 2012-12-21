@@ -95,7 +95,7 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
         <div class="inner">
             <?php if ($emergencyContactPermissions->canRead()) : ?>
             
-            <?php include_partial('global/flash_messages'); ?>
+            <?php include_partial('global/flash_messages', array('prefix' => 'viewEmergencyContacts')); ?>
             
             <form name="frmEmpDelEmgContacts" id="frmEmpDelEmgContacts" method="post" action="<?php echo url_for('pim/deleteEmergencyContacts?empNumber=' . $empNumber); ?>">
                 <?php echo $deleteForm['_csrf_token']->render(); ?>

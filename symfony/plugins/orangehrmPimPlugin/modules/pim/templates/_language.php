@@ -39,11 +39,7 @@ $haveLanguage = count($form->empLanguageList) > 0;
 
         <?php if ($languagePermissions->canRead()) : ?>
 
-            <?php 
-            if ($section == 'language') {
-                include_partial('global/flash_messages'); 
-            }
-            ?>
+            <?php include_partial('global/flash_messages', array('prefix' => 'language')); ?>
 
             <form id="frmDelLanguage" action="<?php echo url_for('pim/saveDeleteLanguage?empNumber=' . 
                     $empNumber . "&option=delete"); ?>" method="post">

@@ -53,12 +53,7 @@ $haveSkills = count($form->empSkillList)>0;
     <div class="inner">
 
         <?php if ($skillPermissions->canRead()) : ?>
-
-        <?php 
-        if ($section == 'skill') {
-            include_partial('global/flash_messages'); 
-        }
-        ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'skill')); ?>
 
         <form id="frmDelSkill" action="<?php echo url_for('pim/saveDeleteSkill?empNumber=' . 
                 $empNumber . "&option=delete"); ?>" method="post">

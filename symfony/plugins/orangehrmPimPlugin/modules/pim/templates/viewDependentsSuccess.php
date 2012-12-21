@@ -93,7 +93,8 @@ foreach($form->getWidgetSchema()->getPositions() as $widgetName) {
         <div class="inner">
             <?php if ($dependentPermissions->canRead()) : ?>
             
-            <?php include_partial('global/flash_messages'); ?>
+            <?php include_partial('global/flash_messages', array('prefix' => 'viewDependents')); ?>
+            
             <form name="frmEmpDelDependents" id="frmEmpDelDependents" method="post" action="<?php echo url_for('pim/deleteDependents?empNumber=' . $empNumber); ?>">
                 <?php echo $deleteForm['_csrf_token']->render(); ?>
                 <?php echo $deleteForm['empNumber']->render(); ?>

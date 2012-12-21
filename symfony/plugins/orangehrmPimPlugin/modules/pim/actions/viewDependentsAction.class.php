@@ -54,10 +54,6 @@ class viewDependentsAction extends basePimAction {
 
         $adminMode = $this->getUser()->hasCredential(Auth::ADMIN_ROLE);
 
-        if ($this->getUser()->hasFlash('templateMessage')) {
-            list($this->messageType, $this->message) = $this->getUser()->getFlash('templateMessage');
-        }
-
         //hiding the back button if its self ESS view
         if ($loggedInEmpNum == $empNumber) {
             $this->showBackButton = false;

@@ -68,11 +68,7 @@ $haveEducation = count($form->empEducationList) > 0;
 
         <?php if ($educationPermissions->canRead()) : ?>
 
-        <?php 
-        if (($section == 'education')) {
-            include_partial('global/flash_messages'); 
-        } 
-        ?>
+        <?php include_partial('global/flash_messages', array('prefix' => 'education')); ?>
 
         <form id="frmDelEducation" action="<?php echo url_for('pim/saveDeleteEducation?empNumber=' . 
                 $empNumber . "&option=delete"); ?>" method="post">

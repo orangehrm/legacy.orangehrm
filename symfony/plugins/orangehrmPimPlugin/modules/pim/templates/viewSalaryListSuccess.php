@@ -110,6 +110,7 @@
             <?php if ($salaryPermissions->canRead()) : ?>
             
             <?php include_partial('global/flash_messages', array('prefix' => 'salary')); ?>
+            
             <form id="frmDelSalary" action="<?php echo url_for('pim/deleteSalary?empNumber=' . $empNumber); ?>" method="post" class="longLabels">
                 <p id="actionSalary">
                     <?php if ($salaryPermissions->canCreate()) { ?>
@@ -385,26 +386,7 @@
 
     $(document).ready(function() {
 
-        
-        //hide add section
-<?php if (count($salaryList) > 0) { ?>
-        $("#changeSalary").hide();
-<?php } else { ?>
-        clearDirectDepositFields();
-        $('#directDebitSection').hide();
-        $('#notDirectDebitSection').show();
-<?php } ?>
-
-    //hiding the data table if records are not available
-    
-    var salaryListCount = <?php echo count($salaryList); ?>;
-    
-    if (salaryListCount == 0) {
-        $("#salaryMiniList").hide();
-        $("#tblSalary").hide();
-        $("#editSalary").hide();
-        $("#delSalary").hide();
-    }
+    $("#changeSalary").hide();
 
     //if check all button clicked
     $("#salaryCheckAll").click(function() {

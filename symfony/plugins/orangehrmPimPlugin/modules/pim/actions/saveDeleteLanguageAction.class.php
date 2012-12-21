@@ -49,10 +49,10 @@ class saveDeleteLanguageAction extends basePimAction {
                     $language = $this->getLanguage($this->languageForm);
                     if ($language != NULL) {
                         $this->getEmployeeService()->saveEmployeeLanguage($language);
-                        $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                        $this->getUser()->setFlash('language.success', __(TopLevelMessages::SAVE_SUCCESS));
                     } 
                 } else {
-                    $this->getUser()->setFlash('warning', __('Form Validation Failed'));
+                    $this->getUser()->setFlash('language.warning', __('Form Validation Failed'));
                 }
             }
 
@@ -72,7 +72,7 @@ class saveDeleteLanguageAction extends basePimAction {
                     if (count($languagesToDelete) > 0) {
 
                         $this->getEmployeeService()->deleteEmployeeLanguages($empNumber, $languagesToDelete);
-                        $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                        $this->getUser()->setFlash('language.success', __(TopLevelMessages::DELETE_SUCCESS));
                     }
                 }
             }
@@ -113,4 +113,3 @@ class saveDeleteLanguageAction extends basePimAction {
         }
     }
 }
-?>
