@@ -35,8 +35,8 @@ class JobInterviewForm extends BaseForm {
     private $defaultTime = '00:00:00';
 
     /**
-     *
-     * @return <type>
+     * 
+     * @return CandidateService
      */
     public function getCandidateService() {
         if (is_null($this->candidateService)) {
