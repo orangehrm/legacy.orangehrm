@@ -480,6 +480,9 @@ textarea {
 /* ================ General class styles: End ================ */
 
 /* ================ Form styles: Begin ================ */
+input:disabled, select:disabled, textarea:disabled {
+    background-color: #DDD;
+}
 form ol {
 	border-bottom:1px solid #dedede;
 	overflow:hidden;
@@ -563,9 +566,6 @@ form ol li input[type="file"] {
 form ol li input.calendar {
 	width:165px;
 	float:left;
-}
-form ol li input:disabled, form ol li select:disabled,  form ol li textarea:disabled {
-    background-color: #DDD;
 }
 form ol li.line {
 	width:100%;

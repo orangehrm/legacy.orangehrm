@@ -1,3 +1,9 @@
+<style type="text/css">
+    table.table td {
+        vertical-align: top;
+    }
+</style>
+
 
 <div class="box miniList" id="performanceReviewcontentContainer">
     
@@ -47,14 +53,19 @@
                                 <td style="width:150px"><?php echo __("Employee") ?></td>
                                 <td style="width:350px"><?php echo __("Comment") ?></td>
                             </tr>
-                            <?php foreach ($performanceReview->getPerformanceReviewComment() as $comment) { ?>
-                            <tr>
+                            <?php
+                                $i = 1;
+                                foreach ($performanceReview->getPerformanceReviewComment() as $comment) { 
+                            ?>
+                            <tr class="<?php echo ($i%2 == 0)?'even':'odd'; ?>">
                                 <td ><?php echo set_datepicker_date_format($comment->getCreateDate()) ?></td>
-                                <td ><?php echo ($comment->getEmployee()->getFullName() != '') ? 
-                                $comment->getEmployee()->getFullName() : __('Admin') ?></td>
+                                <td ><?php echo ($comment->getEmployee()->getFullName() != '') ? $comment->getEmployee()->getFullName() : __('Admin') ?></td>
                                 <td ><?php echo $comment->getComment() ?></td>
                             </tr>
-                            <?php } ?>
+                            <?php 
+                                    $i++;
+                                } 
+                            ?>
                         </table>
                     </li>
                     <?php } ?>
@@ -62,7 +73,7 @@
             </fieldset>
             <input type="hidden" name="validRate" id="validRate" value="1" />
             
-            <table class="table">
+            <table class="table borderBottom">
                 <thead>
                     <tr>
                         <th style="width:40%" scope="col"><?php echo __("Key Performance Indicator") ?></th>
@@ -73,8 +84,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($kpiList as $kpi) { ?>
-                        <tr class="odd">
+                    <?php 
+                        $i = 1;
+                        foreach ($kpiList as $kpi) { 
+                    ?>
+                        <tr class="<?php echo ($i%2 == 0)?'even':'odd'; ?>">
                             <td >
                                 <?php echo $kpi->getKpi() ?>
                             </td>
@@ -96,18 +110,21 @@
                                 </textarea>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php 
+                        $i++;
+                        } 
+                    ?>
+                        <?php if (($isHrAdmin || $isReviwer) && 
+                                ($performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)) : ?>                        
+                        <tr class="<?php echo ($i%2 == 0)?'even':'odd'; ?>">
+                            <td colspan="4" style="text-align:right"><?php echo __("Note") ?></td>
+                            <td><textarea id='txtMainComment' name='txtMainComment' class="formTextArea" rows="2" cols="40" ></textarea></td>
+                        </tr>
+                        <?php endif; ?>                        
                 </tbody>
             </table>
-            <?php if (($isHrAdmin || $isReviwer) && 
-                    ($performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)) { ?>
-            <p>
-                <label style="width:40%"><?php echo __("Note") ?></label>
-                <textarea id='txtMainComment' name='txtMainComment' class="formTextArea" rows="4" cols="60" ></textarea>
-            </p>                    
-            <?php } ?>
 
-            <p>
+            <p style="margin-top:10px">
                 <?php if (($isReviwer && ($performanceReview->getState() <= PerformanceReview::PERFORMANCE_REVIEW_STATUS_BEING_REVIWED || $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_REJECTED)) || ( $isHrAdmin && $performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)) { ?>
                     <input type="button" class="" id="saveBtn" value="<?php echo __("Edit") ?>"  />
                 <?php } ?>
@@ -236,15 +253,15 @@
 		  	var mode	=	'edit';
 
 			//Disable all fields
-			$('#frmSave :input').attr('readonly', true);
-			$('#saveBtn').removeAttr('readonly');
+            $('#frmSave :input').attr("disabled", "disabled");
+            $('#saveBtn').removeAttr("disabled");
 
 			//When click edit button
 			 $("#saveBtn").click(function() {
 					if( mode == 'edit')
 					{
 						$('#saveBtn').attr('value', "<?php echo __("Save")?>");
-						$('#frmSave :input').removeAttr('readonly');
+                        $('#frmSave :input').removeAttr("disabled");
 						mode = 'save';
 					}else
 					{
@@ -257,7 +274,7 @@
 
 			//When Submit button click
 				$("#submitBtn").click(function() {
-					$('#frmSave :input').removeAttr('readonly');
+                    $('#frmSave :input').removeAttr("disabled");
 					if(checkSubmit()){
 						$('#saveMode').val('submit');
 						$('#frmSave').submit();
@@ -266,14 +283,14 @@
 
 			//When Submit button click
 				$("#rejectBtn").click(function() {
-					$('#frmSave :input').removeAttr('readonly');
+                    $('#frmSave :input').removeAttr("disabled");                    
 					$('#saveMode').val('reject');
 					$('#frmSave').submit();
 				});
 
 			//When Submit button click
 				$("#approveBtn").click(function() {
-					$('#frmSave :input').removeAttr('readonly');
+                    $('#frmSave :input').removeAttr("disabled");
 					$('#saveMode').val('approve');
 					$('#frmSave').submit();
 				});
