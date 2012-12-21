@@ -21,7 +21,7 @@ $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
             <div class = "message warning">
                 <?php
                 echo __('No Key Performance Indicators were found for the job title of this employee') . " " .
-                '<a href="saveKpi">' . __("Define Now") . '</a>';
+                '<a href="#" id="defineKpi">' . __("Define Now") . '</a>';
                 ?>
                 <a href="#" class="messageCloseButton"><?php echo __('Close'); ?></a>
             </div>
@@ -197,6 +197,11 @@ $displayDateFormat = str_replace('yy', 'yyyy', $dateFormat);
                         date_range: dueDateMessage
                     }  
                 } 
-            });    
+            });
+            
+            // defineKpi link click
+            $('#defineKpi').click(function(){
+                location.href = "<?php echo url_for('performance/saveKpi'); ?>";
+            });
     }); // ready():Ends
 </script>
