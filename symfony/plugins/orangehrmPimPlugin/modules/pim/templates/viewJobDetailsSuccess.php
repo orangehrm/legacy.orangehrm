@@ -247,33 +247,15 @@
         }
     }
     
-    function showHideTerminatedDetails() {
-        
-        if ($('#job_emp_status').val() == 'EST000') {
-            $('#terminatedDetails').show();
-        } else {
-            $('#terminatedDetails').hide();
-        }
-    }
-    
     function clearErrors() {
-        $("label.error[generated='true']").each(function() {
-            $('#' + $(this).attr('for')).removeClass('error');
-            $(this).remove();
-        });
-    }
-    
-    function openTerminateEmploymentDialog(){
-        $('#ui-dialog-title-terminateEmployement').text(lang_editTerminateEmployement);
-        $('#terminate_date_Button').removeAttr('disabled');
-        $('#terminateModal').click();
+        $('#frmTerminateEmployement').validate().resetForm();
     }
     
     $(document).ready(function() {
         
         $('#btnTerminateEmployement').click(function(){
             if($(this).val() == lang_terminateEmployement){
-                clearErrors()
+                clearErrors();
                 $('#terminate_date_Button').removeAttr('disabled')
                $('#terminateModal').click();
             }
@@ -292,7 +274,7 @@
         });
         
         $('#dialogCancel').click(function(){
-            clearErrors()
+            clearErrors();
         });
         
         $("#job_job_title").change(function() {
@@ -435,15 +417,7 @@
             
             $('div#job_spec_details').toggle();
         });
-        
-        /* Hiding/showing terminatedDetails */
-        
-        showHideTerminatedDetails();
-        
-        $('#job_emp_status').change(function(){
-            showHideTerminatedDetails();
-        });
-        
+
         /* Hiding showing viewDetailsLink at loading */
         showHideViewDetailsLink();
         
