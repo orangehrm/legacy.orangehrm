@@ -771,12 +771,15 @@ class performanceActions extends sfActions {
 
         $clues = array();
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
-        $localizationService = new LocalizationService();
+        
+        $dateValidator = new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false),
+                    array('invalid' => 'Date format should be ' . $inputDatePattern));
+        
         if ($request instanceof sfWebRequest) {
 
-            $clues['from'] = $localizationService->convertPHPFormatDateToISOFormatDate($inputDatePattern, $request->getParameter('txtPeriodFromDate' . $suffix));
-            $clues['to'] = $localizationService->convertPHPFormatDateToISOFormatDate($inputDatePattern, $request->getParameter('txtPeriodToDate' . $suffix));
-            $clues['due'] = $localizationService->convertPHPFormatDateToISOFormatDate($inputDatePattern, $request->getParameter('txtDueDate' . $suffix));
+            $clues['from'] = $dateValidator->clean($request->getParameter('txtPeriodFromDate' . $suffix));
+            $clues['to'] = $dateValidator->clean($request->getParameter('txtPeriodToDate' . $suffix));
+            $clues['due'] = $dateValidator->clean($request->getParameter('txtDueDate' . $suffix));
             $clues['jobCode'] = $request->getParameter('txtJobTitleCode' . $suffix);
             $clues['divisionId'] = $request->getParameter('txtSubDivisionId' . $suffix);
             $clues['empName'] = $request->getParameter('txtEmpName' . $suffix);

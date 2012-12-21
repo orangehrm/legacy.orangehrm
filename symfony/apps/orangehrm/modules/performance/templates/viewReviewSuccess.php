@@ -25,7 +25,7 @@ $formatData['newSeparater'] = '/';
                         <li>
                             <label for="txtPeriodFromDate"><?php echo __('From') ?> </label>
                             <?php
-                            $fromDate = new ohrmWIdgetDatePicker(array(), array('id' => 'txtPeriodFromDate'));
+                            $fromDate = new ohrmWidgetDatePicker(array(), array('id' => 'txtPeriodFromDate'));
                             echo $fromDate->render('txtPeriodFromDate', $clues['from']);
                             ?>
                         </li>
@@ -33,7 +33,7 @@ $formatData['newSeparater'] = '/';
                         <li>
                             <label for="txtPeriodToDate"><?php echo __('To') ?> </label>
                             <?php
-                            $toDate = new ohrmWIdgetDatePicker(array(), array('id' => 'txtPeriodToDate'));
+                            $toDate = new ohrmWidgetDatePicker(array(), array('id' => 'txtPeriodToDate'));
                             echo $toDate->render('txtPeriodToDate', $clues['to']);
                             ?>
                         </li>
@@ -313,7 +313,8 @@ $formatData['newSeparater'] = '/';
             $('#txtPeriodFromDate').val(displayDateFormat);
         }
         if($('#txtPeriodToDate').val() == ""){
-            $('#txtPeriodToDate').val(displayDateFormat);}
+            $('#txtPeriodToDate').val(displayDateFormat);
+        }
         
         <?php if ($loggedAdmin || $loggedReviewer) { ?>
             
@@ -384,6 +385,13 @@ $formatData['newSeparater'] = '/';
             <?php if ($loggedAdmin || $loggedReviewer) { ?>
                 fillAutoFields(autoFields.split("|"), autoHidden.split("|"));
             <?php } ?>
+                
+            if($('#txtPeriodFromDate').val() == displayDateFormat){
+                $('#txtPeriodFromDate').val('');
+            }
+            if($('#txtPeriodToDate').val() == displayDateFormat) {
+                $('#txtPeriodToDate').val('');
+            }    
             $('#frmSearch').submit();
             
         });
