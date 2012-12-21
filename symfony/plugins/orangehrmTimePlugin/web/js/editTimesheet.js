@@ -107,7 +107,7 @@ $(document).ready(function() {
         if ($("#frmCommentSave").valid()) {
             var comment = $("#timeComment").val();
             saveComment(timesheetId, activityId, date, comment, employeeId);
-            $('#commentDialog').modal('toggle');
+            $('#commentDialog').modal('hide');
         }
     });
 

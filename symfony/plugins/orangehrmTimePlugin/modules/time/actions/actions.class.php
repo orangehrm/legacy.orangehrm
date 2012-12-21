@@ -80,6 +80,7 @@ class timeActions extends sfActions {
             $timesheetItem[0]->setComment(trim($comment));
             $dao->saveTimesheetItem($timesheetItem[0]);
         }
+        return sfView::NONE;
     }
 
     public function executeShowTimesheetItemComment($request) {
