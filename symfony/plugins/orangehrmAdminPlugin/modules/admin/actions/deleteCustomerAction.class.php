@@ -52,7 +52,7 @@ class deleteCustomerAction extends sfAction {
 				}
 				$this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
 			} else {
-				$this->getUser()->setFlash('failure', __('Not Allowed to Delete Customer(s) Which Have Time Logged Against'));
+				$this->getUser()->setFlash('error', __('Not Allowed to Delete Customer(s) Which Have Time Logged Against'));
 			}
 		}
 

@@ -46,7 +46,7 @@ class deleteProjectAction extends sfAction {
 				}
 				$this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
 			} else {
-				$this->getUser()->setFlash('warning', __('Not Allowed to Delete Project(s) Which Have Time Logged Against Them'));
+				$this->getUser()->setFlash('error', __('Not Allowed to Delete Project(s) Which Have Time Logged Against Them'));
 			}
 		}
 
