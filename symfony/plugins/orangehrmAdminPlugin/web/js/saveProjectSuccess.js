@@ -255,6 +255,7 @@ $(document).ready(function() {
     }
     
     $('#btnActSave').click(function(){
+        $('#btnActSave').attr('disabled', 'disabled');
         $('#addProjectActivity_projectId').val(projectId);
         $('#frmAddActivity').submit();
     });
