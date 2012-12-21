@@ -11,7 +11,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess');
     <div class="inner">
 
         <form name="frmSearchLocation" id="frmSearchLocation" method="post" action="<?php echo url_for('admin/viewLocations'); ?>" >
-            <?php echo $form['_csrf_token']; ?>
 
             <fieldset>
                 
@@ -60,14 +59,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess');
 <!-- Confirmation box HTML: Ends -->
 
 <script type="text/javascript">
-	
-    function submitPage(pageNo) {
-
-        document.frmHiddenParam.pageNo.value = pageNo;
-        document.frmHiddenParam.hdnAction.value = 'paging';
-        document.getElementById('frmHiddenParam').submit();
-
-    }
     var addLocationUrl = '<?php echo url_for('admin/location'); ?>';
     var viewLocationUrl = '<?php echo url_for('admin/viewLocations'); ?>';
 </script>
