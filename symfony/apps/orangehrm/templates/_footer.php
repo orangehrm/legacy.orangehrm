@@ -1,10 +1,7 @@
  
         <script type="text/javascript">
 
-            $(document).ready(function() {
-                
-                /* Enabling hovering effect for table rows */
-                $('table.hover').tableHover();                
+            $(document).ready(function() {                            
                 
                 /* Enabling tooltips */
                 $(".tiptip").tipTip();

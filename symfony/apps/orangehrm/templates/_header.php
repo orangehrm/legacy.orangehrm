@@ -32,7 +32,6 @@ $cultureElements = explode('_', $sf_user->getCulture());
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.form.js')?>"></script>        
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tipTip.minified.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/bootstrap-modal.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tablehover.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo public_path('jquery/jquery.clickoutside.js')?>"></script>
 
         <!-- Custom JavaScript files -->
