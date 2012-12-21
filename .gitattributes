@@ -3881,6 +3881,7 @@ symfony/plugins/orangehrmCorePlugin/test/model/service/ReportableServiceTest.php
 symfony/plugins/orangehrmCorePlugin/test/orangehrmCorePluginAllTests.php -text
 symfony/plugins/orangehrmCorePlugin/test/service/ConfigServiceTest.php -text
 symfony/plugins/orangehrmCorePlugin/web/css/_ohrmList.css -text
+symfony/plugins/orangehrmCorePlugin/web/css/display_report.css -text
 symfony/plugins/orangehrmCorePlugin/web/css/nationality.css -text
 symfony/plugins/orangehrmCorePlugin/web/css/ohrmWidgetCheckboxGroup.css -text
 symfony/plugins/orangehrmCorePlugin/web/css/ohrmWidgetSelectableGroupDropDown.css -text

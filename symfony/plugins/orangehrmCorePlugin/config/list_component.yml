@@ -308,7 +308,7 @@ PimPredefinedReport:
   formMethod: post
   formAction: '#'
   enableTopScrolling: true
-  assets: []
+  assets: [display_report.css]
   jsInitMethods: []
 
 ViewPredefinedReport:
