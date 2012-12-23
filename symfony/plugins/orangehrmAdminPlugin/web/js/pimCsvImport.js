@@ -22,7 +22,6 @@ $(document).ready(function() {
             $("#btnSave").val(lang_processing);
         }
 
-        $('#frmPimCsvImport').submit()
-        $('#btnSave').removeAttr('disabled');
+        $('#frmPimCsvImport').submit();
     });   
 });
