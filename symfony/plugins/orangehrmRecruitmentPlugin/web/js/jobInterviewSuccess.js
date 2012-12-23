@@ -38,7 +38,7 @@ $(document).ready(function() {
     $('.interviwerErrorContainers').css('display', 'none');
 
     $('.formInputInterviewer').each(function(){
-        if($(this).parent().css('display') == 'block') {
+        if($(this).parent().css('display') != 'none') {
             if ($(this).val() == '' || $(this).val() == lang_typeHint) {
                 $(this).addClass("inputFormatHint").val(lang_typeHint);
             }
