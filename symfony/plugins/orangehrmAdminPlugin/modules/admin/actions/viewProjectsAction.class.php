@@ -57,7 +57,7 @@ class viewProjectsAction extends sfAction {
         if ($projectId > 0 && $this->getUser()->hasAttribute('pageNumber')) {
             $pageNumber = $this->getUser()->getAttribute('pageNumber');
         }
-        $limit = 1;
+	$limit = Project::NO_OF_RECORDS_PER_PAGE;
         $offset = ($pageNumber >= 1) ? (($pageNumber - 1) * $limit) : ($request->getParameter('pageNo', 1) - 1) * $limit;
         $searchClues = $this->_setSearchClues($sortField, $sortOrder, $offset, $limit);
         if (!empty($sortField) && !empty($sortOrder) || $isPaging > 0 || $projectId > 0) {
