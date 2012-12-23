@@ -3,16 +3,16 @@
 
 <div class="box">
     <div class="head">
-        <h1><?php echo __("Select Employee");?></h1>
+        <h1><?php echo __("Select Employee"); ?></h1>
     </div>
-	<div class="inner">
+    <div class="inner">
         <form action="<?php echo url_for("time/viewEmployeeTimesheet"); ?>" id="employeeSelectForm" 
               name="employeeSelectForm" method="post">
-            <?php echo $form->renderHiddenFields(); ?>
+                  <?php echo $form->renderHiddenFields(); ?>
             <fieldset>
                 <ol>
                     <li>
-                        <?php echo $form['employeeName']->renderLabel(__('Employee Name'). ' <em>*</em>'); ?>
+                        <?php echo $form['employeeName']->renderLabel(__('Employee Name') . ' <em>*</em>'); ?>
                         <?php echo $form['employeeName']->render(); ?>
                         <?php echo $form['employeeName']->renderError(); ?>
                     </li>
@@ -24,59 +24,63 @@
                     <input type="button" class="" id="btnView" value="<?php echo __('View') ?>" />
                 </p>
             </fieldset>
-		</form>
-	</div>
+        </form>
+    </div>
 </div>
 
 <!-- Employee-pending-submited-timesheets -->
 <?php if (!($pendingApprovelTimesheets == null)): ?>
-<div class="box ">
-    
-    <div class="head">
-        <h1><?php echo __("Timesheets Pending Action"); ?></h1>
-    </div>
-    
-    <div class="inner">
-        <form action="<?php echo url_for("time/viewPendingApprovelTimesheet"); ?>" id="viewTimesheetForm" method="post" >        
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th id="tablehead" style="width:40%"><?php echo __('Employee name'); ?></th>
-                        <th id="tablehead" style="width:54%"><?php echo __('Timesheet Period'); ?></th>
-                        <th style="width:6%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                    $i = 0;
-                    foreach ($sf_data->getRaw('pendingApprovelTimesheets') as $pendingApprovelTimesheet): ?>
-                    <tr class="<?php echo ($i & 1) ? 'even' : 'odd'; ?>">
+    <div class="box ">
+
+        <div class="head">
+            <h1><?php echo __("Timesheets Pending Action"); ?></h1>
+        </div>
+
+        <div class="inner">
+            <form action="<?php echo url_for("time/viewPendingApprovelTimesheet"); ?>" id="viewTimesheetForm" method="post" >        
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th id="tablehead" style="width:40%"><?php echo __('Employee name'); ?></th>
+                            <th id="tablehead" style="width:54%"><?php echo __('Timesheet Period'); ?></th>
+                            <th style="width:6%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $i = 0;
+                        foreach ($sf_data->getRaw('pendingApprovelTimesheets') as $pendingApprovelTimesheet):
+                            ?>
+                            <tr class="<?php echo ($i & 1) ? 'even' : 'odd'; ?>">
                         <input type="hidden" name="timesheetId" value="<?php echo $pendingApprovelTimesheet['timesheetId']; ?>" />
                         <input type="hidden" name="employeeId" value="<?php echo $pendingApprovelTimesheet['employeeId']; ?>" />
                         <input type="hidden" name="startDate" value="<?php echo $pendingApprovelTimesheet['timesheetStartday']; ?>" />
                         <td>
-                        <?php echo $pendingApprovelTimesheet['employeeFirstName'] . " " . $pendingApprovelTimesheet['employeeLastName']; ?>
+                            <?php echo $pendingApprovelTimesheet['employeeFirstName'] . " " . $pendingApprovelTimesheet['employeeLastName']; ?>
                         </td>
                         <td>
                             <?php echo set_datepicker_date_format($pendingApprovelTimesheet['timesheetStartday']) . " " . __("to") . " " . set_datepicker_date_format($pendingApprovelTimesheet['timesheetEndDate']) ?>
                         </td>
                         <td align="center" class="<?php echo $pendingApprovelTimesheet['timesheetId'] . "##" . $pendingApprovelTimesheet['employeeId'] . "##" . $pendingApprovelTimesheet['timesheetStartday'] ?>">
-                            <a href="<?php echo 'viewPendingApprovelTimesheet?timesheetId=' . 
-                                    $pendingApprovelTimesheet['timesheetId'] . '&employeeId=' . 
-                                    $pendingApprovelTimesheet['employeeId'] . '&timesheetStartday=' . 
-                                    $pendingApprovelTimesheet['timesheetStartday']; ?>" id="viewSubmitted">
-                                        <?php echo __("View"); ?>
+                            <a href="<?php
+                    echo 'viewPendingApprovelTimesheet?timesheetId=' .
+                    $pendingApprovelTimesheet['timesheetId'] . '&employeeId=' .
+                    $pendingApprovelTimesheet['employeeId'] . '&timesheetStartday=' .
+                    $pendingApprovelTimesheet['timesheetStartday'];
+                            ?>" id="viewSubmitted">
+                                <?php echo __("View"); ?>
                             </a>
                         </td>
-                    </tr>                        
-                    <?php 
-                    $i++; 
-                    endforeach; ?>
-                </tbody>
-            </table>
-        </form>
+                        </tr>                        
+                        <?php
+                        $i++;
+                    endforeach;
+                    ?>
+                    </tbody>
+                </table>
+            </form>
+        </div>
     </div>
-</div>
 <?php endif; ?>
 
 <script type="text/javascript">
@@ -84,6 +88,8 @@
     var employeesArray = eval(employees);
     var errorMsge;
     var lang_typeForHints = '<?php echo __("Type for hints") . '...'; ?>';
+    var time_EmployeeNameRequired   = '<?php echo __(ValidationMessages::REQUIRED); ?>';
+    var time_ValidEmployee          = '<?php echo __(ValidationMessages::INVALID); ?>';
     
     $(document).ready(function() {
         $("#employee").autocomplete(employees, {
@@ -94,16 +100,22 @@
         }).result(function(event, item) {
         });
         
-        $('#employeeSelectForm').submit(function(){
-            $('#validationMsg').removeAttr('class');
-            $('#validationMsg').html("");
-            var projectFlag = validateInput();
-            if(!projectFlag) {
-                $('#btnSave').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "messageBalloon_failure");
-                $('#validationMsg').html(errorMsge);
-                return false;
+        $("#employeeSelectForm").validate({
+
+            rules: {
+                'time[employeeName]' : {
+                    required:true,
+                    maxlength: 200,
+                    validEmployeeName: true
+                }
+            },
+            messages: {
+                'time[employeeName]' : {
+                    required: time_EmployeeNameRequired,
+                    validEmployeeName: time_ValidEmployee
+                }
             }
+
         });
 
         $('#viewSubmitted').click(function() {
@@ -114,37 +126,28 @@
         });    
         
         $('#btnView').click(function() {
+            if($("#employee").val() == lang_typeForHints) {
+                $("#employee").val('');
+            }
             $('#employeeSelectForm').submit();
+        });
+        
+        $.validator.addMethod("validEmployeeName", function(value, element) {                
+
+            return autoFill('employee', 'time_employeeId', employees);                 
         });
     });
     
-    function validateInput(){
-        var errorStyle = "background-color:#FFDFDF;";
-        var empDateCount = employeesArray.length;
-        var temp = false;
-        var i;
-        if(empDateCount==0){
-            errorMsge = '<?php echo __("No Employees Available"); ?>';
-            return false;
-        }
-        for (i=0; i < empDateCount; i++) {
-            empName = $.trim($('#employee').val()).toLowerCase();
-            arrayName = employeesArray[i].name.toLowerCase();
-            if (empName == arrayName) {
-                $('#time_employeeId').val(employeesArray[i].id);
-                temp = true
-                break;
+    function autoFill(selector, filler, data) {
+        $("#" + filler).val("");
+        var valid = false;
+        $.each(data, function(index, item){
+            if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
+                $("#" + filler).val(item.id);
+                valid = true;
             }
-        }
-        if(temp){
-            return true;
-        }else if(empName == "" || empName == $.trim("<?php echo __('Type for hints') . '...'; ?>").toLowerCase()){
-            errorMsge = '<?php echo __("Select an Employee"); ?>';
-            return false;
-        }else{
-            errorMsge = '<?php echo __("Invalid Employee Name"); ?>';
-            return false;
-        }
+        });
+        return valid;
     }
     
 </script>
