@@ -184,6 +184,8 @@ function validateInterviewerNames(){
     $('.formInputInterviewer').each(function(){
         element = $(this);
         $(element).removeClass(errorClass);
+        var ParantId = $(element).parent('li').attr('id');
+        $("#"+ParantId).find('span.'+errorClass).remove();
         if((element.val() != "") && (element.val() != lang_typeHint)){
             interviewerNameArray[index] = $(element);
             index++;
@@ -199,7 +201,7 @@ function validateInterviewerNames(){
                     errorElements[num] = currentElement;
                     errorElements[++num] = interviewerNameArray[j];
                     num++;
-                    //interviewerNameArray[j].after('<span class="validation-error">'+lang_identical_rows+'</span>');
+                    interviewerNameArray[j].after('<span class="validation-error">'+lang_identical_rows+'</span>');
                     flag = false;
                 }
             }
