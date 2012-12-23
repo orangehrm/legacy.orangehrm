@@ -255,7 +255,18 @@ function escapeHtml($value) {
 
 function displayMainMessage($messageType, $message) {
     
-    return "<div class=\"message $messageType fadable\">$message<a href=\"#\" class=\"messageCloseButton\">Close</a></div>";
+    $message = "<div class=\"message $messageType fadable\">$message<a href=\"#\" class=\"messageCloseButton\">Close</a></div>";
+    
+    $message .= '<script type="text/javascript">
+                //<![CDATA[
+                    $("div.fadable").delay(2000)
+                        .fadeOut("slow", function () {
+                            $("div.fadable").remove();
+                        }); 
+                //<![CDATA[
+                </script>';
+    
+    return $message;
     
 }
 
