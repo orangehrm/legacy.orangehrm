@@ -15,8 +15,7 @@ $(document).ready(function() {
         },
         matchContains:true
     }).result(function(event, item) {
-
-        validateProjectAdmins();
+        validateProjectAdminNames();
     });
     
     //customer auto complete
@@ -80,8 +79,7 @@ $(document).ready(function() {
         if(countArray.length > 0){
             $("#addButton").show();
         }
-        isValidForm();
-        validateProjectAdmins();
+        validateProjectAdminNames();
         $(this).prev().removeClass('error');
         $(this).next().html('');
 
@@ -227,11 +225,13 @@ $(document).ready(function() {
             $('#addProjectHeading').text(lang_editProject);
             $('#btnSave').val(lang_save);
         } else if($('#btnSave').val() == lang_save){
-            if(isValidForm()){
-                removeTypeHints();
-                setProjectAdmins();
-                $('#frmAddProject').submit()
-            }   
+            if(validateProjectAdminNames()){
+                if(isValidForm()){
+                    removeTypeHints();
+                    setProjectAdmins();
+                    $('#frmAddProject').submit()
+                }   
+            }
         }
     });
     
@@ -505,42 +505,29 @@ function setProjectAdmins(){
     $('#addProject_projectAdminList').val(empIdList);
 }
 
-function validateProjectAdmins(){
+function validateProjectAdmins(element){
 
-    var flag = true;
-    $(".messageBalloon_success").remove();
-    $('#projectAdminNameError').removeAttr('class');
-    $('#projectAdminNameError').html("");
-
-    var interviewerNameArray = new Array();
-    var errorElements = new Array();
-    var index = 0;
-    var num = 0;
-
-    $('.formInputProjectAdmin').each(function(){
-        element = $(this);
-        if((element.val() != "") && (element.val() != lang_typeHint)){
-            interviewerNameArray[index] = $(element);
-            index++;
-        }
-    });
-
-    for(var i=0; i<interviewerNameArray.length; i++){
-        var currentElement = interviewerNameArray[i];
-        for(var j=1+i; j<interviewerNameArray.length; j++){
-
-            if(currentElement.val() == interviewerNameArray[j].val() ){
-                errorElements[num] = currentElement;
-                errorElements[++num] = interviewerNameArray[j];
-                num++;
-                $('#projectAdminNameError').html(lang_identical_rows);
-                flag = false;
-
-            }
+    var temp = false;
+    var paCount = employeeList.length;
+    var i;
+    for (i=0; i < paCount; i++) {
+        hmName = $.trim($('#'+element.id).val()).toLowerCase();
+        arrayName = employeeList[i].name.toLowerCase();
+        if (hmName == arrayName) {
+            $('#'+element.id).val(employeeList[i].name);
+            temp = true;
+            break;
         }
     }
-
-    return flag;
+    if(($('#'+element.id).parent().css('display') == "none") && (($('#'+element.id).val() == "") || ($('#'+element.id).val() == lang_typeHint))) {
+        temp = true;
+    }
+        
+    if((element.id != 'addProject_projectAdmin_1') && (($('#'+element.id).val() == "") || ($('#'+element.id).val() == lang_typeHint))) {
+        temp = true;
+    }
+        
+    return temp;
 }
 
 function getProjectListAsJson(url){
@@ -632,7 +619,7 @@ function isValidForm(){
     });
     
     $.validator.addMethod("projectAdminDuplicationValidation", function(value, element, params) {
-        return validateProjectAdmins();
+        return validateProjectAdmins(element);
     });
     
     $.validator.addMethod("customerValidation", function(value, element, params) {
@@ -797,4 +784,51 @@ function isValidAddCustomerForm(){
     });
     
     return true;
+}
+
+function validateProjectAdminNames(){
+
+    var flag = true;
+
+    var errorClass = "validation-error";
+    var projectAdminNameArray = new Array();
+    var errorElements = new Array();
+    var index = 0;
+    var num = 0;
+
+    $('.formInputProjectAdmin').each(function(){
+        element = $(this);
+        $(element).removeClass(errorClass);
+        var ParantId = $(element).parent('li').attr('id');
+        $("#"+ParantId).find('span.'+errorClass).remove();
+        if((element.val() != "") && (element.val() != lang_typeHint)){
+            projectAdminNameArray[index] = $(element);
+            index++;
+        }
+    });
+
+    if(projectAdminNameArray.length > 0) {
+        for(var i=0; i<projectAdminNameArray.length; i++){        
+            var currentElement = projectAdminNameArray[i];
+        
+            for(var j=0; j<projectAdminNameArray.length; j++){
+                if(currentElement.val() == projectAdminNameArray[j].val() && currentElement.attr('id') != projectAdminNameArray[j].attr('id')){
+                    errorElements[num] = currentElement;
+                    errorElements[++num] = projectAdminNameArray[j];
+                    num++;
+                    projectAdminNameArray[j].after('<span class="'+errorClass+'">'+lang_identical_rows+'</span>');
+                    flag = false;
+                }
+            }
+        
+            for(var k=0; k<errorElements.length; k++){
+                errorElements[k].addClass(errorClass);
+            }
+        }
+    } else {
+        flag = false;
+        $('#addButton').after('<span class="validation-error">'+lang_interviewerRequired+'</span>')
+    }
+
+    return flag;
 }
