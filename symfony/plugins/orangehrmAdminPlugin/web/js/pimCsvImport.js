@@ -1,7 +1,6 @@
 $(document).ready(function() {
     
     $("#frmPimCsvImport").validate({
-
         rules: {
             'pimCsvImport[csvFile]' : {
                 required:true
@@ -14,18 +13,16 @@ $(document).ready(function() {
             }
 
         }
-
     });    
    
     $('#btnSave').click(function() {
         
         if ($('#frmPimCsvImport').valid()) {
+            $('#btnSave').attr('disabled', 'disabled');
             $("#btnSave").val(lang_processing);
         }
 
         $('#frmPimCsvImport').submit()
-
-    });
-   
-   
+        $('#btnSave').removeAttr('disabled');
+    });   
 });
