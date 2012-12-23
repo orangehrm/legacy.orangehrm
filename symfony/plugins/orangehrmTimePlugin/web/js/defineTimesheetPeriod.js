@@ -6,23 +6,20 @@
 
 $(document).ready(function(){
 
-	$("#btnSave").click(function(){
-
-		if($('#time_startingDays').val()==""){
-			$('#btnSave').attr('disabled', 'disabled');
-		}else{
-			$('form#definePeriod').attr({
-				action:linkTodefineTimesheetPeriod
-			});
-			$('form#definePeriod').submit();
-		}
-	});
-
-	$('#time_startingDays').change(function() {
-		if($('#time_startingDays').val()==""){
-			$('#btnSave').attr('disabled', 'disabled');
-		}else{
-			$('#btnSave').removeAttr('disabled');
-		}
-	});
+    $("#btnSave").click(function(){
+        $('#definePeriod').submit();
+    });
+        
+    $("#definePeriod").validate({
+        rules: {
+            'time[startingDays]' : {
+                required: true
+            }
+        },
+        messages: {
+            'time[startingDays]' : {
+                required: lang_required
+            }
+        }
+    });
 });

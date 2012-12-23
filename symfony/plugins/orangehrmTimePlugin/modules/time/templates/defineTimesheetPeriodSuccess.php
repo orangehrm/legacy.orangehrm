@@ -29,7 +29,7 @@
         
         <?php include_partial('global/flash_messages'); ?>
         
-        <form id="definePeriod" method="post">
+        <form id="definePeriod" method="post" action="<?php echo url_for('time/defineTimesheetPeriod')?>">
             <?php echo $form['_csrf_token']; ?>
             <fieldset>
                 <ol>
@@ -60,5 +60,5 @@
 </div>
     
 <script type="text/javascript">
-    var linkTodefineTimesheetPeriod="<?php echo url_for('time/defineTimesheetPeriod')?>";
+    var lang_required = '<?php echo __(ValidationMessages::REQUIRED);?>';
 </script>
