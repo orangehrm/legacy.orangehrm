@@ -31,7 +31,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
     </div>
     <div class="inner">
         <form name="frmSearchProject" id="frmSearchProject" method="post" action="<?php echo url_for('admin/viewProjects'); ?>" >
-            <?php // echo $form['_csrf_token']; ?>
             
             <fieldset>
                 
@@ -54,7 +53,7 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
 </div>
 
 <form name="frmHiddenParam" id="frmHiddenParam" method="post" action="<?php echo url_for('admin/viewProjects'); ?>">
-    <input type="hidden" name="pageNo" id="pageNo" value="<?php //echo $form->pageNo;                  ?>" />
+    <input type="hidden" name="pageNo" id="pageNo"/>
     <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
 </form>
 
@@ -75,13 +74,6 @@ use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess');
 <!-- Confirmation box HTML: Ends -->
 
 <script type="text/javascript">
-    function submitPage(pageNo) {
-        
-        document.frmHiddenParam.pageNo.value = pageNo;
-        document.frmHiddenParam.hdnAction.value = 'paging';
-        document.getElementById('frmHiddenParam').submit();
-    
-    }
     var addProjectUrl = '<?php echo url_for('admin/saveProject'); ?>';
     var viewProjectUrl = '<?php echo url_for('admin/viewProjects'); ?>';
     var customers = <?php echo str_replace('&#039;', "'", $form->getCustomerListAsJson()) ?> ;
