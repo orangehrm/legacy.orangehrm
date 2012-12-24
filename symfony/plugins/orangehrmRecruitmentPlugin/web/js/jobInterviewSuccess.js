@@ -1,4 +1,4 @@
-var counter;
+var countArray = new Array();
 $(document).ready(function() {
     counter = 1;
     //Auto complete
@@ -12,24 +12,34 @@ $(document).ready(function() {
         //$("label.error").hide();
         validateInterviewerNames();
     });
-
+    
+    for(var i = 0; i <= numberOfInterviewers-2; i++){
+        $('#interviewer_'+(i+2)).hide();
+        countArray[i] = i+2;
+    }
+    countArray = countArray.reverse();
+    
     $("#addButton").live('click', function(){
-        counter++;
-        if(counter == numberOfInterviewers){
+
+        if(countArray.length == 1){
             $("#addButton").hide();
-        }        
-        $('#interviewer_'+counter).show();
+        }      
+        var index = countArray.pop();
+        $('#interviewer_'+index).show();
+        if ($('#jobInterview_interviewer_'+index).val() == '' || $('#jobInterview_interviewer_'+index).val() == lang_typeHint) {
+            $('#jobInterview_interviewer_'+index).addClass("inputFormatHint").val(lang_typeHint);
+        }
     });
     
     $('.removeText').live('click', function(){
         var result = /\d+(?:\.\d+)?/.exec(this.id);
         $('#interviewer_'+result).hide();
         $('#jobInterview_interviewer_'+result).val("");
-        counter--;
-        if(counter < numberOfInterviewers){
+        countArray.push(result);
+        if(countArray.length > 0){
             $("#addButton").show();
         }
-        validateInterviewerNames()
+        validateInterviewerNames();
         $(this).prev().removeClass('error');
         $(this).next().empty();
         $(this).next().hide();
