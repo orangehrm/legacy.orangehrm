@@ -141,7 +141,7 @@
 
                 <?php if ($isHrAdmin && ( $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SUBMITTED )) { ?>
                     <input type="button" class="" id="approveBtn" value="<?php echo __("Approve") ?>"  />
-<?php } ?>
+                <?php } ?>
 
                 <input type="button" class="reset" id="backBtn" value="<?php echo __("Back"); ?>" />
             </p>
@@ -256,9 +256,24 @@
 
         //Disable all fields
         $('#frmSave :input').attr("disabled", "disabled");
-        $('#saveBtn').removeAttr("disabled");
-        $('#submitBtn').removeAttr("disabled");
+        
+        //enable buttons
         $('#backBtn').removeAttr("disabled");
+        <?php if (($isReviwer && ($performanceReview->getState() <= PerformanceReview::PERFORMANCE_REVIEW_STATUS_BEING_REVIWED || $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_REJECTED)) || ( $isHrAdmin && $performanceReview->getState() != PerformanceReview::PERFORMANCE_REVIEW_STATUS_APPROVED)) { ?>
+            $('#saveBtn').removeAttr("disabled");
+        <?php } ?>
+
+        <?php if ($isReviwer && ( $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SCHDULED || $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_BEING_REVIWED || $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_REJECTED)) { ?>
+            $('#submitBtn').removeAttr("disabled");
+        <?php } ?>
+
+        <?php if ($isHrAdmin && $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SUBMITTED) { ?>
+            $('#rejectBtn').removeAttr("disabled");
+        <?php } ?>
+
+        <?php if ($isHrAdmin && ( $performanceReview->getState() == PerformanceReview::PERFORMANCE_REVIEW_STATUS_SUBMITTED )) { ?>
+            $('#approveBtn').removeAttr("disabled");
+        <?php } ?>          
 
         //When click edit button
         $("#saveBtn").click(function() {
