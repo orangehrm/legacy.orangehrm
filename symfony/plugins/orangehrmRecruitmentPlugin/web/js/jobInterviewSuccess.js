@@ -210,9 +210,6 @@ function validateInterviewerNames(){
                 errorElements[k].addClass(errorClass);
             }
         }
-    } else {
-        flag = false;
-        $('#addButton').after('<span class="validation-error">'+lang_interviewerRequired+'</span>')
     }
 
     return flag;
