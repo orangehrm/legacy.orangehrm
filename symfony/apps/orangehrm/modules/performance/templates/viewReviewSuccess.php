@@ -1,13 +1,6 @@
 <?php
-
 stylesheet_tag(theme_path('css/orangehrm.datepicker.css'));
 use_javascript('orangehrm.datepicker.js');
-
-/* For formatting date */
-$formatData['currentFormat'] = 'yyyy-mm-dd';
-$formatData['newFormat'] = 'dd/mm/yyyy';
-$formatData['currentSeparater'] = '-';
-$formatData['newSeparater'] = '/';
 ?>
 
 <div class="box searchForm toggableForm">     
@@ -26,7 +19,7 @@ $formatData['newSeparater'] = '/';
                             <label for="txtPeriodFromDate"><?php echo __('From') ?> </label>
                             <?php
                             $fromDate = new ohrmWidgetDatePicker(array(), array('id' => 'txtPeriodFromDate'));
-                            echo $fromDate->render('txtPeriodFromDate', $clues['from']);
+                            echo $fromDate->render('txtPeriodFromDate', set_datepicker_date_format($clues['from']));
                             ?>
                         </li>
 
@@ -34,7 +27,7 @@ $formatData['newSeparater'] = '/';
                             <label for="txtPeriodToDate"><?php echo __('To') ?> </label>
                             <?php
                             $toDate = new ohrmWidgetDatePicker(array(), array('id' => 'txtPeriodToDate'));
-                            echo $toDate->render('txtPeriodToDate', $clues['to']);
+                            echo $toDate->render('txtPeriodToDate', set_datepicker_date_format($clues['to']));
                             ?>
                         </li>
 
