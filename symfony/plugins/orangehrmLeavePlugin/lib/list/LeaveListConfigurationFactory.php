@@ -62,7 +62,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
         ));
 
         $header8->populateFromArray(array(
-            'name' => 'Leave Balance (Days)',
+            'name' => 'Current Leave Balance (Days)',
             'width' => '12%',
             'isSortable' => false,
             'elementType' => 'label',

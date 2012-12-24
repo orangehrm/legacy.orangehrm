@@ -26,7 +26,30 @@ class LeaveEntitlementService extends BaseService {
 
     protected $leaveConfigService;
     protected $leaveEntitlementDao;
-    protected $leaveEntitlementStrategy;
+    protected $leaveEntitlementStrategy;    
+    protected $leavePeriodService;
+
+    /**
+     * Returns Leave Period
+     * @return LeavePeriodService
+     */
+    public function getLeavePeriodService() {
+
+        if (is_null($this->leavePeriodService)) {
+            $leavePeriodService = new LeavePeriodService();
+            $leavePeriodService->setLeavePeriodDao(new LeavePeriodDao());
+            $this->leavePeriodService = $leavePeriodService;
+        }
+
+        return $this->leavePeriodService;
+    }
+    
+    /**
+     * Set Leave Period
+     */
+    public function setLeavePeriodService($leavePeriodService) {
+        $this->leavePeriodService = $leavePeriodService;
+    }    
     
     public function getLeaveEntitlementStrategy() {
         if (!isset($this->leaveEntitlementStrategy)) {
@@ -126,6 +149,19 @@ class LeaveEntitlementService extends BaseService {
     public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate = NULL, $date = NULL) {
         if (empty($asAtDate)) {
             $asAtDate = date('Y-m-d', time());
+        }
+        
+        // If end date is not defined, and leave period is forced, use end date of current leave period
+        // as the end date for leave balance calculation
+        if (empty($date)) {
+            $leavePeriodStatus = LeavePeriodService::getLeavePeriodStatus();
+            if ($leavePeriodStatus == LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED) {
+                $leavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($asAtDate);
+                
+                if (is_array($leavePeriod) && isset($leavePeriod[1])) {
+                    $date = $leavePeriod[1];
+                }
+            }
         }
 
         return $this->getLeaveEntitlementDao()->getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date);
