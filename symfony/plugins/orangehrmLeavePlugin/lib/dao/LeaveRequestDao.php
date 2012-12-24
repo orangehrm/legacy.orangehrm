@@ -684,7 +684,8 @@ class LeaveRequestDao extends BaseDao {
                     $q->execute();
 
                     // TODO: Optimize
-                    $query = "SELECT le.entitlement_id, le.length_days FROM ohrm_leave_leave_entitlement le " .
+                    // No longer needed, since entitlement.used values are updated when leave is applied/assigned
+                    /*$query = "SELECT le.entitlement_id, le.length_days FROM ohrm_leave_leave_entitlement le " .
                             "WHERE le.leave_id IN (" . implode(',', $ids) . ")";
 
                     $statement = $conn->prepare($query);
@@ -700,7 +701,7 @@ class LeaveRequestDao extends BaseDao {
                         while ($row = $statement->fetch()) {
                             $updateStatement->execute(array($row['length_days'], $row['entitlement_id']));
                         }
-                    }
+                    }*/
                 }
             }
             self::$doneMarkingApprovedLeaveAsTaken = true;
