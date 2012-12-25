@@ -24,6 +24,8 @@
  */
 class viewMyLeaveEntitlementsAction extends viewLeaveEntitlementsAction {
     
+    const FILTERS_ATTRIBUTE_NAME = 'myentitlementlist.filters';
+    
     public function execute($request) {
         parent::execute($request);
         $this->setTemplate('viewLeaveEntitlements');
@@ -45,10 +47,34 @@ class viewMyLeaveEntitlementsAction extends viewLeaveEntitlementsAction {
     protected function getDefaultFilters() {
         $filters = $this->form->getDefaults();
         
+        // Form defaults are in the user date format, convert to standard date format
+        $pattern = sfContext::getInstance()->getUser()->getDateFormat();        
+        $localizationService = new LocalizationService();
+        
+        $filters['date']['from'] = $localizationService->convertPHPFormatDateToISOFormatDate($pattern, $filters['date']['from']);
+        $filters['date']['to'] = $localizationService->convertPHPFormatDateToISOFormatDate($pattern, $filters['date']['to']);          
+        
         $employee = array('empId' => $this->getUser()->getAttribute('auth.empNumber'));
         $filters['employee'] = $employee;
         
         return $filters;
     }    
+    
+    /**
+     * Save search filters as user attribute
+     * @param array $filters
+     */
+    protected function saveFilters(array $filters) {
+        $this->getUser()->setAttribute(self::FILTERS_ATTRIBUTE_NAME, $filters, 'leave');
+    }    
+    
+    /**
+     * Get search filters from user attribute
+     * @param array $filters
+     * @return array
+     */
+    protected function getFilters() {
+        return $this->getUser()->getAttribute(self::FILTERS_ATTRIBUTE_NAME, null, 'leave');
+    }      
 
 }

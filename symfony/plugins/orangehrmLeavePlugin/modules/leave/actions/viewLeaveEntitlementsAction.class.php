@@ -52,7 +52,25 @@ class viewLeaveEntitlementsAction extends sfAction {
     }
     
     protected function getDefaultFilters() {
-        return $this->form->getDefaults();
+        $defaults = $this->form->getDefaults();
+        
+        // Form defaults are in the user date format, convert to standard date format
+        $pattern = sfContext::getInstance()->getUser()->getDateFormat();
+        $localizationService = new LocalizationService();
+        
+        $defaults['date']['from'] = $localizationService->convertPHPFormatDateToISOFormatDate($pattern, $defaults['date']['from']);
+        $defaults['date']['to'] = $localizationService->convertPHPFormatDateToISOFormatDate($pattern, $defaults['date']['to']);  
+
+        return $defaults;
+    }
+    
+    protected function setFormDefaults($filters) {
+        
+        // convert back to localized format before setting in form
+        $filters['date']['from'] = set_datepicker_date_format($filters['date']['from']);
+        $filters['date']['to'] = set_datepicker_date_format($filters['date']['to']);  
+        
+        $this->form->setDefaults($filters);
     }
     
     public function execute($request) {        
@@ -77,7 +95,7 @@ class viewLeaveEntitlementsAction extends sfAction {
             $filters = $this->getFilters();            
             $this->showResultTable = true;
 
-            $this->form->setDefaults($filters);
+            $this->setFormDefaults($filters);
         } else {
             $this->saveFilters(array());
         }

@@ -131,7 +131,7 @@ class addLeaveEntitlementAction extends sfAction {
                 $filters = $this->getFilters();
             }
             if (!empty($filters)) {
-                $this->form->setDefaults($filters);
+                $this->setFormDefaults($filters);
             }            
         }        
     }
@@ -148,8 +148,8 @@ class addLeaveEntitlementAction extends sfAction {
                 'empId' => $employee->getEmpNumber()),
             'leave_type' => $entitlement->getLeaveTypeId(),
             'date'=>array(
-                    'from'=>set_datepicker_date_format($entitlement->getFromDate()),
-                    'to'=>set_datepicker_date_format($entitlement->getToDate())
+                    'from'=> $entitlement->getFromDate(),
+                    'to'=> $entitlement->getToDate()
                     ),
             'entitlement' => $entitlement->getNoOfDays()
         );
@@ -159,6 +159,15 @@ class addLeaveEntitlementAction extends sfAction {
     
     protected function getForm() {
         return new LeaveEntitlementAddForm();
+    }
+    
+    protected function setFormDefaults($filters) {
+        
+        // convert back to localized format before setting in form
+        $filters['date']['from'] = set_datepicker_date_format($filters['date']['from']);
+        $filters['date']['to'] = set_datepicker_date_format($filters['date']['to']);  
+        
+        $this->form->setDefaults($filters);
     }
     
     /**
