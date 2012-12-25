@@ -29,6 +29,14 @@ class viewMyLeaveBalanceReportAction extends viewLeaveBalanceReportAction {
         return new MyLeaveBalanceReportForm(array(), $options);        
     }
     
+    protected function getFormDefaults() {
+        $defaults = parent::getFormDefaults();
+        
+        $defaults['employee'] = array('empId' => $this->getUser()->getAttribute('auth.empNumber'));
+                
+        return $defaults;
+    }
+    
     public function getMode() {
         return "my";
     }

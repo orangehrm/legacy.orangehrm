@@ -32,11 +32,27 @@ class viewLeaveBalanceReportAction extends sfAction {
         return "admin";
     }
     
+    protected function getFormDefaults() {
+        $defaults = $this->form->getDefaults();
+        
+        // Form defaults are in the user date format, convert to standard date format
+        $pattern = sfContext::getInstance()->getUser()->getDateFormat();
+        $localizationService = new LocalizationService();
+        
+        $defaults['date']['from'] = $localizationService->convertPHPFormatDateToISOFormatDate($pattern, $defaults['date']['from']);
+        $defaults['date']['to'] = $localizationService->convertPHPFormatDateToISOFormatDate($pattern, $defaults['date']['to']);  
+
+        return $defaults;
+    }
+    
     public function execute($request) {
        
         $this->form = $this->getForm();
         $this->mode = $this->getMode();
 
+        $runReport = false;
+        $values = array();
+        
         if ($request->isMethod('post')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
@@ -44,39 +60,51 @@ class viewLeaveBalanceReportAction extends sfAction {
             if ($this->form->isValid()) {
                 $reportType = $this->form->getValue('report_type');
                 if ($reportType != 0) {
-                    $values = $this->convertValues($this->form->getValues());
-                    $reportId = $reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE ? 2 : 1;
-                    $reportBuilder = new ReportBuilder();
-                    $numOfRecords = $reportBuilder->getNumOfRecords($reportId, $values);
-                    $maxPageLimit = $reportBuilder->getMaxPageLimit($reportId);
-                    
-                    $this->pager = new SimplePager('Report', $maxPageLimit);
-                    $this->pager->setPage(($request->getParameter('pageNo') != '') ? $request->getParameter('pageNo') : 0);
-
-                    $this->pager->setNumResults($numOfRecords);
-                    $this->pager->init();
-                    $offset = $this->pager->getOffset();
-                    $offset = empty($offset) ? 0 : $offset;
-                    $limit = $this->pager->getMaxPerPage();
-        
-                    $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
-                    $this->fixUnusedLeave();
-                    
-                    //var_dump($this->resultsSet[1]);
-                    $this->reportName = $this->getReportName($reportId);
-
-                    $headers = $reportBuilder->getDisplayHeaders($reportId);
-                    $this->tableHeaders = $this->fixTableHeaders($reportType, $headers);
-
-                    $this->headerInfo = $reportBuilder->getHeaderInfo($reportId);
-
-                    $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);
-                    
-                    $this->linkParams = $this->getLinkParams($reportType, $values);
-                    $this->reportType = $reportType;
-                }
+                    $values = $this->form->getValues();                    
+                    $runReport = true;
+                }   
             }
+        } else if ($this->mode == 'my') {
+            $reportType = LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE;
+            $values = $this->getFormDefaults();
+
+            $runReport = true;
         }
+        
+        if ($runReport) {
+            $reportId = ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) ? 2 : 1;
+            $values = $this->convertValues($values);
+
+            $reportBuilder = new ReportBuilder();
+            $numOfRecords = $reportBuilder->getNumOfRecords($reportId, $values);
+            $maxPageLimit = $reportBuilder->getMaxPageLimit($reportId);
+
+            $this->pager = new SimplePager('Report', $maxPageLimit);
+            $this->pager->setPage(($request->getParameter('pageNo') != '') ? $request->getParameter('pageNo') : 0);
+
+            $this->pager->setNumResults($numOfRecords);
+            $this->pager->init();
+            $offset = $this->pager->getOffset();
+            $offset = empty($offset) ? 0 : $offset;
+            $limit = $this->pager->getMaxPerPage();
+
+            $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
+            $this->fixUnusedLeave();
+
+            //var_dump($this->resultsSet[1]);
+            $this->reportName = $this->getReportName($reportId);
+
+            $headers = $reportBuilder->getDisplayHeaders($reportId);
+            $this->tableHeaders = $this->fixTableHeaders($reportType, $headers);
+
+            $this->headerInfo = $reportBuilder->getHeaderInfo($reportId);
+
+            $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);
+
+            $this->linkParams = $this->getLinkParams($reportType, $values);
+            $this->reportType = $reportType;
+            
+        }        
     }
     protected function getLinkParams($reportType, $values) {
         $linkParams = array(
