@@ -931,6 +931,10 @@ table thead tr .header {
 	background-position: 95% 55%;
 	cursor: pointer;
 }
+table.nosort thead tr .header {
+	background-image: none;
+	cursor: default;
+}
 table tbody tr.odd td, table tbody tr.odd td {
 	background-color:#eaeaea;
 }

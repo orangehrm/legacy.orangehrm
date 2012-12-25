@@ -41,7 +41,7 @@ use_stylesheets_for_form($form);
                 <?php include_partial('core/report_paging', array('pager' => $pager));?>                
             </div>
             <?php endif; ?> 
-            <table class="table" width="<?php echo $tableWidthInfo["tableWidth"];?>" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
+            <table class="table nosort" width="<?php echo $tableWidthInfo["tableWidth"];?>" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
 
             <?php $headers = $sf_data->getRaw('tableHeaders');
                   $headerInfo = $sf_data->getRaw('headerInfo');?>
