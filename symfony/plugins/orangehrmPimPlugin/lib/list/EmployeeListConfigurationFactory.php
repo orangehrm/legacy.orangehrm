@@ -57,7 +57,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header4->populateFromArray(array(
             'name' => 'Job Title',
-            'width' => '10%',
+            'width' => '20%',
             'isSortable' => true,
             'sortField' => 'jobTitle',
             'elementType' => 'label',
@@ -67,7 +67,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header5->populateFromArray(array(
             'name' => 'Employment Status',
-            'width' => '12%',
+            'width' => '15%',
             'isSortable' => true,
             'sortField' => 'employeeStatus',
             'elementType' => 'label',
@@ -77,7 +77,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header6->populateFromArray(array(
             'name' => 'Sub Unit',
-            'width' => '10%',
+            'width' => '15%',
             'isSortable' => true,
             'sortField' => 'subDivision',
             'elementType' => 'label',
@@ -87,7 +87,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header7->populateFromArray(array(
             'name' => 'Supervisor',
-            'width' => '43%',
+            'width' => '25%',
             'isSortable' => true,
             'sortField' => 'supervisor',
             'elementType' => 'label',
