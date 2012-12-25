@@ -26,7 +26,7 @@ function getListItemClass($menuItem, $currentItemDetails) {
 
 function getMenuUrl($menuItem) {
     
-    $url = '';
+    $url = '#';
     
     if (!empty($menuItem['module']) && !empty($menuItem['action'])) {
         $url = url_for($menuItem['module'] . '/'. $menuItem['action']);
