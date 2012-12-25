@@ -344,14 +344,16 @@ class EmailService extends BaseService {
                     
 
                     $message = Swift_Message::newInstance();
+                    $to = '';                    
                     
                     try {
 
                         if ($recipient instanceof Employee) {
-                            $message->setTo($recipient->getEmpWorkEmail());
+                            $to = $recipient->getEmpWorkEmail();
                         } else {
-                            $message->setTo($recipient);
+                            $to = $recipient;
                         }
+                        $message->setTo($to);
                         $message->setFrom(array($this->emailConfig->getSentAs() => 'OrangeHRM'));
 
                         $message->setSubject($emailSubject);
