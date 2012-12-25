@@ -21,6 +21,7 @@
 
 /**
  * Description of FIFOEntitlementConsumptionStrategyTest
+ * @group Leave 
  */
 class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase {
 

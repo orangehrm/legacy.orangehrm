@@ -21,7 +21,7 @@
 
 /**
  * Leave Type rule service
- * @group CoreLeave 
+ * @group Leave 
  */
  class LeaveTypeServiceTest extends PHPUnit_Framework_TestCase{
     
