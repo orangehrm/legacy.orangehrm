@@ -5259,7 +5259,10 @@
     <source>Replace With</source>
     <target>FR_Replace With</target>
    </trans-unit>
-
+   <trans-unit id="1147">
+    <source>Access Denied</source>
+    <target>FR_Access Denied</target>
+   </trans-unit>   
   </body>
  </file>
 </xliff>
