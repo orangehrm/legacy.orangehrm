@@ -60,7 +60,14 @@ class viewLeaveBalanceReportAction extends sfAction {
             if ($this->form->isValid()) {
                 $reportType = $this->form->getValue('report_type');
                 if ($reportType != 0) {
-                    $values = $this->form->getValues();                    
+                    $values = $this->form->getValues();          
+                    
+                    // check permission
+                    if (!$this->checkPermissions($this->mode, $reportType, $values)) {
+                        //$this->getUser()->setFlash('warning', TopLevelMessages::ACCESS_DENIED);
+                        return sfView::SUCCESS;
+                    }
+                                
                     $runReport = true;
                 }   
             }
@@ -73,8 +80,8 @@ class viewLeaveBalanceReportAction extends sfAction {
         
         if ($runReport) {
             $reportId = ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) ? 2 : 1;
-            $values = $this->convertValues($values);
-
+            $values = $this->convertValues($reportType, $values);
+            
             $reportBuilder = new ReportBuilder();
             $numOfRecords = $reportBuilder->getNumOfRecords($reportId, $values);
             $maxPageLimit = $reportBuilder->getMaxPageLimit($reportId);
@@ -122,7 +129,7 @@ class viewLeaveBalanceReportAction extends sfAction {
     }
 
     
-    protected function convertValues($values) {
+    protected function convertValues($reportType, $values) {
         
         $today = date('Y-m-d');
         $todayTimestamp = strtotime($today);
@@ -151,7 +158,38 @@ class viewLeaveBalanceReportAction extends sfAction {
             'asOfDate' => $asOfDate,            
         );
         
+        if ($this->mode != 'my') {
+                    
+            $userRoleManager = $this->getContext()->getUserRoleManager();
+            if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
+                $convertedValues['emp_numbers'] = $userRoleManager->getAccessibleEntityIds('Employee');
+            }
+        }
         return $convertedValues;
+    }
+    
+    protected function checkPermissions($mode, $reportType, $values) {
+        
+        $permitted = false;
+        
+        if ($mode == 'my') {
+            if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE) {
+                if ($values['employee']['empId'] == $this->getUser()->getAttribute('auth.empNumber')) {
+                    $permitted = true;
+                }
+            }
+        } else {
+            if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
+                $permitted = true;
+            } else if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE) {                
+                $userRoleManager = $this->getContext()->getUserRoleManager();
+                if ($userRoleManager->isEntityAccessible('Employee', $values['employee']['empId'])) {
+                    $permitted = true;
+                }
+            }
+        }        
+        
+        return $permitted;
     }
     
     /**

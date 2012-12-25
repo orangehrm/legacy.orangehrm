@@ -2108,10 +2108,11 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
 	<input_field type="text" name="fromDate" label="From"></input_field>
         <input_field type="text" name="toDate" label="To"></input_field>
         <input_field type="text" name="asOfDate" label="AsOf"></input_field>
+        <input_field type="text" name="emp_numbers" label="employees"></input_field>
 </filter_fields> 
 
 <sub_report type="sql" name="mainTable">       
-    <query>FROM hs_hr_employee ORDER BY hs_hr_employee.emp_lastname</query>
+    <query>FROM hs_hr_employee WHERE $X{IN,hs_hr_employee.emp_number,emp_numbers} ORDER BY hs_hr_employee.emp_lastname</query>
     <id_field>empNumber</id_field>
     <display_groups>
         <display_group name="personalDetails" type="one" display="true">
