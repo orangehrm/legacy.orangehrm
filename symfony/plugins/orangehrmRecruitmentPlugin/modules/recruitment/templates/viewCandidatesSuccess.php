@@ -22,13 +22,6 @@
 <?php use_stylesheets_for_form($form); ?>
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/viewCandidatesSuccess'); ?>
 
-<style type="text/css">
-    .searchForm form ol li span.validation-error {
-        left: 24px;
-    }
-</style>
-
-
 <div class="box searchForm toggableForm" id="srchCandidates">
     <div class="head">
         <h1><?php echo __('Candidates'); ?></h1>
