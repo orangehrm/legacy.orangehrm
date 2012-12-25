@@ -2111,7 +2111,7 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
 </filter_fields> 
 
 <sub_report type="sql" name="mainTable">       
-    <query>FROM hs_hr_employee ORDER BY hs_hr_employee.emp_number</query>
+    <query>FROM hs_hr_employee ORDER BY hs_hr_employee.emp_lastname</query>
     <id_field>empNumber</id_field>
     <display_groups>
         <display_group name="personalDetails" type="one" display="true">
