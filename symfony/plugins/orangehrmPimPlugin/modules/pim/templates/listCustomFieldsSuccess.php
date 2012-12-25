@@ -17,7 +17,23 @@
  * Boston, MA  02110-1301, USA
  *
  */
-?>  
+?>
+
+<?php
+
+function getSortClass($column, $sortField, $sortOrder) {
+    
+    if (isset($sortField) && isset($sortOrder) && $column == $sortField) {
+        $class = ' headerSort';
+        $class .= ($sortOrder == 'ASC')?'Up':'Down';
+        return $class;
+    }
+    
+    return '';
+    
+}
+
+?>
 
 <div id="customFieldAddPane" style="display: none;" class="box">
 
@@ -123,13 +139,13 @@
                             <?php } ?>
                         </th>
 
-                        <th class="fieldName" style="width:35%">
+                        <th class="fieldName header<?php echo getSortClass('name', $sortField, $sortOrder); ?>" style="width:35%">
                             <?php echo $sorter->sortLink('name', __('Custom Field Name'), '@customfield_list', ESC_RAW); ?>
                         </th>  	  
-                        <th style="width:35%">
+                        <th style="width:35%" class="header<?php echo getSortClass('screen', $sortField, $sortOrder); ?>">
                             <?php echo $sorter->sortLink('screen', __('Screen'), '@customfield_list', ESC_RAW); ?>
                         </th>
-                        <th style="width:28%">
+                        <th style="width:28%" class="header<?php echo getSortClass('type', $sortField, $sortOrder); ?>">
                             <?php echo $sorter->sortLink('type', __('Field Type'), '@customfield_list', ESC_RAW); ?>
                         </th>
 
