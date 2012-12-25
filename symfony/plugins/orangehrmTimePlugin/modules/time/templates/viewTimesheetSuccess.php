@@ -333,17 +333,17 @@ $actionName = sfContext::getInstance()->getActionName();
         <form action="updateComment" method="post" id="frmCommentSave">
             <fieldset>
                 <ol>
-                    <li>
+                    <li class="line">
                         <label><?php echo __("Project Name ") ?></label>
-                        <label id="commentProjectName"></label>
+                        <label id="commentProjectName" class="line"></label>
                     </li>
-                    <li>
+                    <li class="line">
                         <label><?php echo __("Activity Name ") ?></label>
-                        <label id="commentActivityName"></label>
+                        <label id="commentActivityName" class="line"></label>
                     </li>
-                    <li>
+                    <li class="line">
                         <label><?php echo __("Date ") ?></label>
-                        <label id="commentDate"></label>
+                        <label id="commentDate" class="line"></label>
                     </li>                    
                     <li>
                         <textarea name="leaveComment" id="timeComment"></textarea>

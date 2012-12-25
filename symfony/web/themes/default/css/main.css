@@ -1297,10 +1297,16 @@ color:#fff;
 .modal form ol li {
 	width:360px;
 }
+.modal form ol li.line {
+	width: 100%;
+}
 .modal form ol label {
 	float:left;
 	width:115px;
 	padding-top:3px;
+}
+.modal form ol label.line {
+	width: auto;
 }
 .modal form ol input {
 	width:220px;
