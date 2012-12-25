@@ -501,6 +501,9 @@ form ol li label {
 	width:150px;
 	float:left;
 }
+form ol li label.line {
+    width: auto;
+}
 
 /* eg: From label for date range. Left margin is 0 */
 form ol li label.sublabel1 {

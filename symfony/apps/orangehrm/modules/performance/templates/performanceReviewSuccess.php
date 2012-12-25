@@ -25,24 +25,24 @@
                 <ol>
                     <li>
                         <label><?php echo __("Employee") ?></label>
-                        <label><?php echo $performanceReview->getEmployee()->getFirstName() ?> 
+                        <label class="line"><?php echo $performanceReview->getEmployee()->getFirstName() ?> 
                             <?php echo $performanceReview->getEmployee()->getLastName() ?></label>
                     </li>
                     <li>
                         <label><?php echo __("Job Title") ?></label>
-                        <label><?php echo htmlspecialchars_decode($performanceReview->getJobTitle()->getJobTitleName()) ?> </label>
+                        <label class="line"><?php echo htmlspecialchars_decode($performanceReview->getJobTitle()->getJobTitleName()) ?> </label>
                     </li>
                     <li>
                         <label><?php echo __("Reviewer") ?></label>
-                        <label><?php echo $performanceReview->getReviewer()->getFirstName() ?> <?php echo $performanceReview->getReviewer()->getLastName() ?></label>
+                        <label class="line"><?php echo $performanceReview->getReviewer()->getFirstName() ?> <?php echo $performanceReview->getReviewer()->getLastName() ?></label>
                     </li>
                     <li>
                         <label><?php echo __("Review Period") ?></label>
-                        <label><?php echo set_datepicker_date_format($performanceReview->getPeriodFrom()) ?>-<?php echo set_datepicker_date_format($performanceReview->getPeriodTo()) ?></label>
+                        <label class="line"><?php echo set_datepicker_date_format($performanceReview->getPeriodFrom()) ?>-<?php echo set_datepicker_date_format($performanceReview->getPeriodTo()) ?></label>
                     </li>
                     <li>
                         <label><?php echo __("Status") ?></label>
-                        <label><?php echo __($performanceReview->getTextStatus()) ?> </label>
+                        <label class="line"><?php echo __($performanceReview->getTextStatus()) ?> </label>
                     </li>
                     <?php if (count($performanceReview->getPerformanceReviewComment()) > 0) { ?>
                         <li>
