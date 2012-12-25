@@ -13,7 +13,7 @@ use_stylesheets_for_form($form);
 <?php endif; ?>
 <div class="box" id="leave-balance-report">
     <div class="head">
-        <h1><?php echo __("Leave Entitlements and Usage Report");?></h1>
+        <h1><?php echo ($mode == 'my') ? __("My Leave Entitlements and Usage Report") : __("Leave Entitlements and Usage Report");?></h1>
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
