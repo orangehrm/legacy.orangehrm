@@ -5,7 +5,7 @@
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
         <form action="" id="employeeRecordsForm" method="post">
-            <p>
+            <div class="top">
                 <?php if ($allowedActions['Edit']) : ?>
                     <input type="button" class="edit" id="btnEdit" value="<?php echo __('Edit'); ?>" />
                 <?php endif; ?>
@@ -18,7 +18,7 @@
                 <?php if ($allowedActions['PunchOut']) : ?>
                     <input type="button" class="punch" id="btnPunchOut" value="<?php echo __('Add Attendance Records'); ?>" />
                 <?php endif; ?>
-            </p>
+            </div>
             <table class="table">
                 <thead id="tableHead" >
                     <tr>
