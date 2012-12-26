@@ -99,7 +99,7 @@ foreach ($jobVacancyList as $vacancy) {
                         <?php if ($candidateId > 0) : ?>
                             <?php $existingVacancyList = $actionForm->candidate->getJobCandidateVacancy(); ?>
                             <?php if ($existingVacancyList[0]->getVacancyId() > 0) : ?>
-                        <div id="actionPane" style="float:left; width:400px; padding-top:0px">
+                        <div id="actionPane" style="float:left; width:600px; padding-top:0px">
                                 <?php $i = 0 ?>
                                 <?php foreach ($existingVacancyList as $candidateVacancy) {
                                     ?>
