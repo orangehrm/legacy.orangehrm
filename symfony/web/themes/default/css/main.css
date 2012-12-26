@@ -477,6 +477,10 @@ textarea {
 .helpText { /* Used in attendance/viewAttendanceRecord */
 	color:#a9a9a9;
 }
+.borderBottom {
+    padding-bottom: 10px;
+    border-bottom:1px solid #dedede;
+}
 /* ================ General class styles: End ================ */
 
 /* ================ Form styles: Begin ================ */

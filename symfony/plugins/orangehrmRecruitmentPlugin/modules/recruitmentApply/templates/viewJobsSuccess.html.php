@@ -1,18 +1,23 @@
 <?php use_javascript('../orangehrmRecruitmentPlugin/js/viewJobsSuccess'); ?>
+
 <style type="text/css">
     
-    div.mainHeading {
-        margin: -20px 0px 0px 0px;
-        width:auto;
-        border:0;
-        background-color: #FAD163;
-        color: black;
-        text-align:left;
+    #content {
+        padding-top: 0;
+    }    
+    
+    pre {
+        overflow: auto;
+        white-space: pre-wrap;       /* css-3 */
+        white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
     }
-
+    
     #toggleJobList {
         float: right;
-        margin: -10px 20px 0px 0px;
+        margin: -2px 10px 0px 0px;
         font-size: 12px;
     }
 
@@ -23,9 +28,8 @@
 
     .vacancyDescription, .vacancyShortDescription {
         display: none;
-        font-size: 12px;
-        font-family: Arial,Verdana,Helvetica,sans-serif;
         line-height: 15px;
+        margin-bottom: 10px;
     }
 
     .vacancyShortDescription {
@@ -43,9 +47,11 @@
     .plusOrMinusmark {
         text-align: right;
         margin-top: 10px;
-        padding: 20px 25px 0px 0px;
-        font-weight: lighter;
+        padding-right: 3px;
         font-size: 12px;
+        position: relative;
+        top: 12px;
+        right: 8px;
     }
 
     .plusMark, .minusMark {
@@ -56,12 +62,12 @@
         display: none;
     }
 
-    .verticalLine {
-        border: medium none;
-        height: 2px;
-        margin: 20px 20px 10px;
+    h3 {
+        margin-bottom: 10px;
     }
+    
 </style>
+
 <div id="jobPage">
     <div class="box">
         <div class="maincontent">
@@ -89,12 +95,13 @@
 
                             <pre class="vacancyShortDescription"><?php echo getShortDescription($vacancy->getDescription(), 250, "..."); ?></pre>
                             <pre class="vacancyDescription"><?php echo $vacancy->getDescription(); ?></pre>
-
-                            <input type="button" class="apply" name="applyButton" value="<?php echo __("Apply"); ?>" onmouseout="moutButton(this);" onmouseover="moverButton(this);" />
-                            <a href="<?php echo public_path('index.php/recruitmentApply/applyVacancy/id/' . $vacancy->getId(), true); ?>" class="applyLink"></a>
-
+                            
+                            <p class="borderBottom">
+                                <input type="button" class="apply" name="applyButton" value="<?php echo __("Apply"); ?>" onmouseout="moutButton(this);" onmouseover="moverButton(this);" />
+                                <a href="<?php echo public_path('index.php/recruitmentApply/applyVacancy/id/' . $vacancy->getId(), true); ?>" class="applyLink"></a>
+                            </p>
+                            
                         </div>
-                        <hr class="verticalLine" />
                     <?php endforeach; ?>
                 <?php else: ?>
                     <span class="noVacanciesMessage"><?php echo __('No active job vacancies to display'); ?></span>

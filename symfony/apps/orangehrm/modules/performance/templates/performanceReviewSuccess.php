@@ -73,7 +73,7 @@
             </fieldset>
             <input type="hidden" name="validRate" id="validRate" value="1" />
 
-            <table class="table borderBottom">
+            <table class="table">
                 <thead>
                     <tr>
                         <th style="width:40%" scope="col"><?php echo __("Key Performance Indicator") ?></th>
