@@ -98,6 +98,7 @@
             }
             ,matchContains:true
         }).result(function(event, item) {
+            $("#employee").valid();
         });
         
         $("#employeeSelectForm").validate({
@@ -106,7 +107,8 @@
                 'time[employeeName]' : {
                     required:true,
                     maxlength: 200,
-                    validEmployeeName: true
+                    validEmployeeName: true,
+                    onkeyup: false
                 }
             },
             messages: {
