@@ -41,9 +41,9 @@ $(document).ready(function() {
         rules: {
             'firstName': {required: true },
             'lastName': { required: true },
-            'user_name': { validateLoginName: true },
-            'user_password': {validatePassword: true},
-            're_password': {validateReCheckPassword: true},
+            'user_name': { validateLoginName: true, onkeyup: 'if_invalid'},
+            'user_password': {validatePassword: true, onkeyup: 'if_invalid'},
+            're_password': {validateReCheckPassword: true, onkeyup: 'if_invalid'},
             'status': {validateStatusRequired: true },
             'location': {required: true }
         },
