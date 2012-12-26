@@ -66,16 +66,16 @@ class AddEmployeeForm extends sfForm {
             'firstName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
             'middleName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
             'lastName' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 30)),
-            'employeeId' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 10, "colspan" => 3)),
+            'employeeId' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 10)),
             'photofile' => new sfWidgetFormInputFileEditable(array('edit_mode' => false, 'with_delete' => false, 
-                'file_src' => ''), array("class" => "duplexBox", "colspan" => 3)),
-            'chkLogin' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1), array("colspan" => 3)),
-            'user_name' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 20, "colspan" => 3)),
+                'file_src' => ''), array("class" => "duplexBox")),
+            'chkLogin' => new sfWidgetFormInputCheckbox(array('value_attribute_value' => 1), array()),
+            'user_name' => new sfWidgetFormInputText(array(), array("class" => "formInputText", "maxlength" => 20)),
             'user_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText passwordRequired", 
-                "maxlength" => 20, "colspan" => 3)),
+                "maxlength" => 20)),
             're_password' => new sfWidgetFormInputPassword(array(), array("class" => "formInputText passwordRequired", 
-                "maxlength" => 20, "colspan" => 3)),
-            'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText", "colspan" => 3)),            
+                "maxlength" => 20)),
+            'status' => new sfWidgetFormSelect(array('choices' => $status), array("class" => "formInputText")),            
             'empNumber' => new sfWidgetFormInputHidden(),
         );
 
@@ -95,7 +95,12 @@ class AddEmployeeForm extends sfForm {
         $this->widgets['user_name']->setDefault($this->getOption('user_name'));
         $this->widgets['user_password']->setDefault($this->getOption('user_password'));
         $this->widgets['re_password']->setDefault($this->getOption('re_password'));
-        $this->widgets['status']->setDefault($this->getOption('status'));
+        
+        $selectedStatus = $this->getOption('status');
+        if (empty($selectedStatus) || !isset($status[$selectedStatus])) {
+            $selectedStatus = 'Enabled';
+        }
+        $this->widgets['status']->setDefault($selectedStatus);
 
         $this->setWidgets($this->widgets);
 

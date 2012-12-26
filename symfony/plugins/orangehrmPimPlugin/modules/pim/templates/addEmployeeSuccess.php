@@ -12,7 +12,7 @@
 <?php } else { ?>
 
     <div class="head">
-        <h1 id=""><?php echo __('Add Employee'); ?></h1>
+        <h1><?php echo __('Add Employee'); ?></h1>
     </div>
 
     <div class="inner" id="addEmployeeTbl">

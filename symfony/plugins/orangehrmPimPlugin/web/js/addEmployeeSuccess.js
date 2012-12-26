@@ -29,7 +29,7 @@ $(document).ready(function() {
         $("#user_name").val("");
         $("#user_password").val("");
         $("#re_password").val("");
-        $("#status").val("");
+        $("#status").val("Enabled");
 
         if($("#chkLogin").is(':checked')) {
             $(".loginSection").show();
