@@ -519,7 +519,7 @@ function validateProjectAdmins(element){
             break;
         }
     }
-    if(($('#'+element.id).parent().css('display') == "none") && (($('#'+element.id).val() == "") || ($('#'+element.id).val() == lang_typeHint))) {
+    if(($('#'+element.id).val() == "") || ($('#'+element.id).val() == lang_typeHint)) {
         temp = true;
     }
         
