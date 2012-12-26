@@ -10,3 +10,7 @@
 #resultTable {
     overflow: auto;
 } 
+
+table.valueListCell td {
+    white-space: nowrap;
+}
