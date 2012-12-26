@@ -54,7 +54,7 @@ use_javascript('../orangehrmRecruitmentPlugin/js/addJobVacancySuccess');
                         <?php echo $form['noOfPositions']->renderLabel(__('Number of Positions')); ?>
                         <?php echo $form['noOfPositions']->render(array("maxlength" => 2)); ?>
                     </li>
-                    <li>
+                    <li class="largeTextBox">
                         <?php echo $form['description']->renderLabel(__('Description')); ?>
                         <?php echo $form['description']->render(array("cols" => 30, "rows" => 9)); ?>
                     </li>
