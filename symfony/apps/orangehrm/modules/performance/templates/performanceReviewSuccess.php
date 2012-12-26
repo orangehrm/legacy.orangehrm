@@ -102,12 +102,14 @@
                                 <input type="hidden" name="max<?php echo $kpi->getId() ?>" id="max<?php echo $kpi->getId() ?>" value="<?php echo $kpi->getMaxRate() ?>" />
                                 <input type="hidden" name="min<?php echo $kpi->getId() ?>" id="min<?php echo $kpi->getId() ?>" value="<?php echo $kpi->getMinRate() ?>" />
                                 <input id="txtRate<?php echo $kpi->getId() ?>"  name="txtRate[<?php echo $kpi->getId() ?>]" type="text"  class="smallInput" value="<?php echo trim($kpi->getRate()) ?>"  maxscale="<?php echo $kpi->getMaxRate() ?>" minscale="<?php echo $kpi->getMinRate() ?>" valiadate="1" />
+                                <span class="validation-error"></span>
                             </td>
                             <td class="">
                                 <textarea id='txtComments' class="reviwerComment" name='txtComments[<?php echo $kpi->getId() ?>]'
                                           rows="2" cols="40">
                                               <?php echo htmlspecialchars_decode(trim($kpi->getComment())) ?>
                                 </textarea>
+                                <span class="validation-error"></span>
                             </td>
                         </tr>
                         <?php
@@ -120,7 +122,10 @@
                         ?>                        
                         <tr class="<?php echo ($i % 2 == 0) ? 'even' : 'odd'; ?>">
                             <td colspan="4" style="text-align:right"><?php echo __("Note") ?></td>
-                            <td><textarea id='txtMainComment' name='txtMainComment' class="formTextArea" rows="2" cols="40" ></textarea></td>
+                            <td>
+                                <textarea id='txtMainComment' name='txtMainComment' class="formTextArea" rows="2" cols="40" ></textarea>
+                                <span class="validation-error"></span>
+                            </td>
                         </tr>
 <?php endif; ?>                        
                 </tbody>
@@ -152,103 +157,63 @@
 </div> <!-- performanceReviewcontentContainer -->
 
 <script type="text/javascript">
-
-    //Check autosave
-    function autosave()
-    {
-        var t = setTimeout("autosave()", 20000);
-
-        var title = $("#txt_title").val();
-        var content = $("#txt_content").val();
-
-        if (title.length > 0 || content.length > 0)
-        {
-            $.ajax(
-            {
-                type: "POST",
-                url: "autosave.php",
-                data: "article_id=" + <?php echo $article_id ?>
-                    + "&title=" + title + "&content=" + content,
-                cache: false,
-                success: function(message)
-                {
-                    $("#timestamp").empty().append(message);
-                }
-            });
-        }
+    
+    function clearErrors() {
+        
+        $("span.validation-error").each(function(){
+            $(this).empty();
+        });
+        
+        $("input.smallInput").each(function(){
+            $(this).removeClass('validation-error');
+        });        
+        
     }
 
     //Check submit
     function checkSubmit(){
+        
+        clearErrors();
+        
         var valid = true ;
-        var msg	= '';
+        
         $("input.smallInput").each(function() {
+            
             max	=	parseFloat($(this).attr('maxscale'));
             min =   parseFloat($(this).attr('minscale'));
             rate =  parseFloat(this.value) ;
+            
+            if (this.value != '' && isNaN(rate)) {
+                valid = false;                
+                $(this).addClass('validation-error');
+                $(this).next('span.validation-error').text('<?php echo __('Should be a number'); ?>');
+            }
 
             if( !isNaN(max) || !isNaN(min)){
+                
                 if( isNaN(rate)){
+                    
                     valid = false;
-                    $(this).css('background-color', '#ffeeee');
-                    $(this).css('border', 'solid 1px #ffdddd');
+                    $(this).addClass('validation-error');
+                    $(this).next('span.validation-error').text('<?php echo __('Should be a number'); ?>');
+                    
                 } else {
+                    
                     if( (rate > max) || (rate <min) ){
-                        $(this).css('background-color', '#ffeeee');
-                        $(this).css('border', 'solid 1px #ffdddd');
-                        valid = false;
+                        
+                        valid = false;                        
+                        $(this).addClass('validation-error');
+                        $(this).next('span.validation-error').text('<?php echo __('Should be within Min and Max'); ?>');
 
-                    }else{
-                        $(this).css('background-color', '#ffffff');
-                        $(this).css('border', 'solid 1px #000000');
                     }
+                    
                 }
 
             }
         });
-        if( !valid ){
-            msg	= '<?php echo __('KPI Should Be a Number Within Minimum and Maximum Value'); ?>';
-            $("#messageBalloon_failure ul").html('<li>'+msg+'</li>');
-            $("#performanceError").show();
-        }
+
         return valid ;
-    }
-
-
-    //Check save
-    function checkSave(){
-        var valid	=	true ;
-        var msg	=	'';
-        $("input.smallInput").each(function() {
-            max	= parseFloat($(this).attr('maxscale'));
-            min = parseFloat($(this).attr('minscale'));
-            rate = parseFloat(this.value) ;
-
-            if(!isNaN(this.value)){
-                if( isNaN(rate)){
-                    valid = false;
-                    $(this).css('background-color', '#ffeeee');
-                    $(this).css('border', 'solid 1px #ffdddd');
-                }else{
-                    if( (rate > max) || (rate <min) ){
-                        $(this).css('background-color', '#ffeeee');
-                        $(this).css('border', 'solid 1px #ffdddd');
-                        valid = false;
-
-                    }else{
-                        $(this).css('background-color', '#ffffff');
-                        $(this).css('border', 'solid 1px #000000');
-                    }
-                }
-
-            }
-        });
-        if( !valid ){
-            msg	=	'<?php echo __('KPI Should Be a Number Within Minimum and Maximum Value'); ?>';
-            $("#messageBalloon_failure ul").html('<li>'+msg+'</li>');
-            $("#performanceError").show();
-        }
-        return valid ;
+        
     }
 
     $(document).ready(function(){
@@ -318,21 +283,6 @@
             location.href = "<?php echo url_for('performance/viewReview'); ?>";
         });
 
-        //Validate search form
-        $("#frmSave").validate({
-
-            rules: {
-                txtMainComment: {maxlength: 250},
-                validRate: {minmax:true	}
-
-            },
-            messages: {
-                txtMainComment: "<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)) ?>",
-                validRate: ""
-            }
-        });
-
-
         $.validator.addMethod("minmax", function(value, element) {
 
             if($('#validRate').val() == '1' )
@@ -341,84 +291,33 @@
                 return false;
         });
 
-        // check keyup on scale inputs
-        $("#frmSave").delegate("keyup", "input.smallInput", function(event) {
-            var id ;
-            var max ;
-            var min ;
-            var rate ;
-            var msg ;
-            var error = false;
-            $("input.smallInput").each(function() {
-
-                id	=	$(this).attr('id');
-                max	=	parseFloat($(this).attr('maxscale'));
-                min =   parseFloat($(this).attr('minscale'));
-                rate =  parseFloat(this.value) ;
-                if(!isNaN(this.value)){
-
-                    if( (rate > max) || (rate <min) ){
-                        $(this).css('background-color', '#ffeeee');
-                        $(this).css('border', 'solid 1px #ffdddd');
-                        msg = '<?php echo __('KPI Should Be a Number Within Minimum and Maximum Value') ?>';
-                        error = true;
-
-                    }else{
-                        $(this).css('background-color', '#ffffff');
-                        $(this).css('border', 'solid 1px #000000');
-                    }
-                }else{
-                    $(this).css('background-color', '#ffeeee');
-                    $(this).css('border', 'solid 1px #ffdddd');
-                    msg = '<?php echo __('KPI Should Be a Number Within Minimum and Maximum Value') ?>';
-                    error = true;
-                }
-            });
-
-            if(error){
-                $("#messageBalloon_failure ul").html('<li>'+msg+'</li>');
-                $("#performanceError").show();
-                $('#validRate').val('0');
-            }else
-            {
-                $("#performanceError").hide();
-                $('#validRate').val('1');
-            }
-
-            return false;
-        });
-
         //Check Reviwer comment
         $("#frmSave").delegate("keyup", "textarea.reviwerComment", function(event) {
             validateReviewerComment();
         });
 
         function validateReviewerComment() {
-            var error = false;
-            var msg ;
-            var flag = false;
+
+            var flag = true;
 
             $("textarea.reviwerComment").each(function() {
                 if(this.value.length >= 2000 ){
-                    $(this).css('background-color', '#ffeeee');
-                    $(this).css('border', 'solid 1px #ffdddd');
-                    error = true;
-                }else{
-                    $(this).css('background-color', '#ffffff');
-                    $(this).css('border', 'solid 1px #000000');
-                    flag = true;
+                    flag = false;
+                    $(this).addClass('validation-error');
+                    $(this).next('span.validation-error').text('<?php echo __('Should Be Less Than %amount% Characters', array('%amount%' => 2000)); ?>');                    
                 }
             });
-
-            if(error){
-                $("#messageBalloon_failure ul").html('<li><?php echo __('Comment Should Be Less Than %amount% Characters', array('%amount%' => 2000)); ?></li>');
-                $("#performanceError").show();
-                $('#validRate').val('0');
-            }else{
-                $("#performanceError").hide();
-                $('#validRate').val('1');
+            
+            var mainComment = $('#txtMainComment');
+            
+            if (mainComment.val().length > 250) {
+                flag = false;
+                mainComment.addClass('validation-error');
+                mainComment.next('span.validation-error').text('<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)) ?>');
             }
+
             return flag;
+            
         }
 
         //make sure all validations are performed before submit
@@ -426,5 +325,6 @@
             flag = validateReviewerComment();
             return flag;
         });
+        
     });
 </script>
