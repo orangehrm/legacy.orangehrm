@@ -5262,7 +5262,11 @@
    <trans-unit id="1147">
     <source>Access Denied</source>
     <target>FR_Access Denied</target>
-   </trans-unit>   
+   </trans-unit>  
+   <trans-unit id="1148">
+    <source>Add Another</source>
+    <target>FR_Add Another</target>
+   </trans-unit>
   </body>
  </file>
 </xliff>
