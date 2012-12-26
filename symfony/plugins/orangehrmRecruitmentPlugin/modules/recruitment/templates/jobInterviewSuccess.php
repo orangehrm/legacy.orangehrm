@@ -39,15 +39,15 @@ use_javascript('../orangehrmRecruitmentPlugin/js/jobInterviewSuccess');
                 <ol>
                     <li>
                         <label class="firstLabel"><?php echo __('Candidate Name'); ?></label>
-                        <label class="secondLabel"><?php echo $form->candidateName; ?></label>
+                        <label class="secondLabel line"><?php echo $form->candidateName; ?></label>
                     </li>
                     <li>
                         <label class="firstLabel"><?php echo __('Vacancy Name'); ?></label>
-                        <label class="secondLabel"><?php echo $form->vacancyName; ?></label>
+                        <label class="secondLabel line"><?php echo $form->vacancyName; ?></label>
                     </li>
                     <li>
                         <label class="firstLabel"><?php echo __('Current Status'); ?></label>
-                        <label class="secondLabel"><?php echo __($form->currentStatus); ?></label>
+                        <label class="secondLabel line"><?php echo __($form->currentStatus); ?></label>
                     </li>
                     <li>
                         <?php echo $form['name']->renderLabel(__('Interview Title') . ' <em>*</em>', array('class' => 'firstLabel')); ?>
