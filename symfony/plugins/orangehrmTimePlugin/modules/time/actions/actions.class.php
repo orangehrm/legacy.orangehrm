@@ -237,6 +237,9 @@ class timeActions extends sfActions {
 
     public function executeCreateTimesheetForSubourdinate($request) {
 
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewEmployeeTimesheet');
+
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
         $userId = $this->userObj->getUserId();
         $userEmployeeNumber = $this->userObj->getEmployeeNumber();
