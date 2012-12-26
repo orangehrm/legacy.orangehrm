@@ -29,7 +29,7 @@
             <fieldset>
                 <ol id="createTimesheet">
                     <li>
-                        <?php echo $createTimesheetForm['date']->renderLabel(__('Select a Day to Create Timesheet')); ?>
+                        <?php echo $createTimesheetForm['date']->renderLabel(__('Select a Day to Create Timesheet'), array('class' => 'line')); ?>
                         <?php echo $createTimesheetForm['date']->render(); ?>
                         <?php echo $createTimesheetForm['date']->renderError() ?>
                     </li>

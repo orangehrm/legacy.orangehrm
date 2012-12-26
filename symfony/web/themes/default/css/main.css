@@ -503,6 +503,7 @@ form ol li label {
 }
 form ol li label.line {
     width: auto;
+    margin-right: 10px;
 }
 
 /* eg: From label for date range. Left margin is 0 */
