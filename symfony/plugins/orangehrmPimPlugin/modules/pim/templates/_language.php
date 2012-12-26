@@ -197,7 +197,7 @@ $(document).ready(function() {
         $("#language_lang_type option").each(function() {
             $(this).show();
         });
-        $("#language_lang_type").val("0");
+        $("#language_lang_type").val("");
         var $table_tr = $("#lang_data_table tr");
         var i=0;
         //hide already added optons for selected language
