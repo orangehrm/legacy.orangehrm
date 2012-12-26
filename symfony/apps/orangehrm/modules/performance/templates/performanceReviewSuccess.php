@@ -304,7 +304,7 @@
                 if(this.value.length >= 2000 ){
                     flag = false;
                     $(this).addClass('validation-error');
-                    $(this).next('span.validation-error').text('<?php echo __('Should Be Less Than %amount% Characters', array('%amount%' => 2000)); ?>');                    
+                    $(this).next('span.validation-error').text('<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 2000)) ?>');                    
                 }
             });
             
