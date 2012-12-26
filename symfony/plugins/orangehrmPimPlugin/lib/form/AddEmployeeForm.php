@@ -124,9 +124,9 @@ class AddEmployeeForm extends sfForm {
         $formExtension->mergeForms($this, 'addEmployee', 'AddEmployeeForm');
         
         
-        $customRowFormats[0] = "<li class=\"line nameContainer\"><label class=\"hasTopFieldHelp\">Full Name</label><ol class=\"fieldsInLine\"><li><div class=\"fieldDescription\"><em>*</em> First Name</div>\n %field%%help%\n%hidden_fields%%error%</li>\n";
-        $customRowFormats[1] = "<li><div class=\"fieldDescription\">Middle Name</div>\n %field%%help%\n%hidden_fields%%error%</li>\n";
-        $customRowFormats[2] = "<li><div class=\"fieldDescription\"><em>*</em> Last Name</div>\n %field%%help%\n%hidden_fields%%error%</li>\n</ol>\n</li>";
+        $customRowFormats[0] = "<li class=\"line nameContainer\"><label class=\"hasTopFieldHelp\">". __('Full Name') . "</label><ol class=\"fieldsInLine\"><li><div class=\"fieldDescription\"><em>*</em> ". __('First Name') . "</div>\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        $customRowFormats[1] = "<li><div class=\"fieldDescription\">". __('Middle Name') . "</div>\n %field%%help%\n%hidden_fields%%error%</li>\n";
+        $customRowFormats[2] = "<li><div class=\"fieldDescription\"><em>*</em> ". __('Last Name') . "</div>\n %field%%help%\n%hidden_fields%%error%</li>\n</ol>\n</li>";
         $customRowFormats[6] = "<li class=\"loginSection\">%label%\n %field%%help%\n%hidden_fields%%error%</li>\n";
         $customRowFormats[7] = "<li class=\"loginSection\">%label%\n %field%%help%\n%hidden_fields%%error%</li>\n";
         $customRowFormats[8] = "<li class=\"loginSection\">%label%\n %field%%help%\n%hidden_fields%%error%</li>\n";

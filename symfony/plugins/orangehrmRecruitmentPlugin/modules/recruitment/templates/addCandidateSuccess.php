@@ -82,7 +82,7 @@ foreach ($jobVacancyList as $vacancy) {
 
                     <li>
 
-                        <?php echo $form['email']->renderLabel(__('Email' . ' <em>*</em>')); ?>
+                        <?php echo $form['email']->renderLabel(__('Email') . ' <em>*</em>'); ?>
                         <?php echo $form['email']->render(array("class" => "formInputText")); ?>
                     </li>
                     <li>
