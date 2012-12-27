@@ -1,5 +1,6 @@
-<?php use_javascripts_for_form($form) ?>
-<?php use_stylesheets_for_form($form) ?>
+<?php 
+use_stylesheet('/orangehrmPimPlugin/css/viewPersonalDetailsSuccess.css');
+?>
 
 <div class="box pimPane" id="employee-details">
     
