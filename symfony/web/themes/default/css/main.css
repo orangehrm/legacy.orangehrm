@@ -1428,6 +1428,11 @@ input.timeBox {
 	float:left;
 }
 */
+div#edit-timesheet table.table tbody tr td {
+    white-space: nowrap;
+    min-width: 70px;
+}
+
 .editTimesheet table.table td {
     vertical-align: top;
 }
