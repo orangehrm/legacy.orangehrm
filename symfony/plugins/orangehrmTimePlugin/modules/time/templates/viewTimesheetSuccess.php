@@ -98,7 +98,7 @@ $actionName = sfContext::getInstance()->getActionName();
                 ?>
                 <!-- colspan should be based on  the fields in a timesheet-->
                 <tr>
-                    <td id="noRecordsColumn" colspan="100"><?php echo TopLevelMessages::NO_RECORDS_FOUND; ?></td>
+                    <td id="noRecordsColumn" colspan="100"><?php echo __(TopLevelMessages::NO_RECORDS_FOUND); ?></td>
                 </tr>
                 <?php else:
                 // timesheet available 
