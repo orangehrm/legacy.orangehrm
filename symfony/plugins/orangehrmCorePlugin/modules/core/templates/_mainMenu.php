@@ -67,9 +67,8 @@ function getHtmlId($menuItem) {
             
         <li<?php echo getListItemClass($firstLevelItem, $currentItemDetails); ?>><a href="<?php echo getMenuUrl($firstLevelItem); ?>" id="<?php echo getHtmlId($firstLevelItem); ?>" class="firstLevelMenu"><b><?php echo __($firstLevelItem['menuTitle']) ?></b></a>
             
-            <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>
-            
-                <ul>
+            <ul>
+            <?php if (count($firstLevelItem['subMenuItems']) > 0) : ?>            
                     
                     <?php foreach ($firstLevelItem['subMenuItems'] as $secondLevelItem) : ?>
                     
@@ -92,11 +91,13 @@ function getHtmlId($menuItem) {
                         </li>   
                     
                     <?php endforeach; ?>
-
-                </ul> <!-- second level -->
-            
+            <?php else: 
+                // Empty li to add an orange bar and maintain uniform look.
+            ?>                        
+                        <li></li>
             <?php endif; ?>
                 
+                </ul> <!-- second level -->                        
             </li>
             
         <?php endforeach; ?>
