@@ -78,9 +78,8 @@ use_javascript('orangehrm.datepicker.js');
                                    value="<?php echo isset($clues['empName']) ? $clues['empName'] : __('Type for hints') . '...' ?>"
                                    tabindex="5" onblur="autoFill('txtEmpName', 'hdnEmpId', 
                                        <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?>);"/>
-                            <input type="text" name="hdnEmpId" id="hdnEmpId" 
-                                   value="<?php echo isset($clues['empId']) ? $clues['empId'] : '0' ?>" 
-                                   style="visibility:hidden;">
+                            <input type="hidden" name="hdnEmpId" id="hdnEmpId" 
+                                   value="<?php echo isset($clues['empId']) ? $clues['empId'] : '0' ?>">
                         </li>
                         <?php } // $loggedAdmin || $loggedReviewer:Ends    ?>
                             
@@ -92,9 +91,8 @@ use_javascript('orangehrm.datepicker.js');
                                        __('Type for hints') . '...' ?>" tabindex="6" 
                                        onblur="autoFill('txtReviewerName', 'hdnReviewerId', 
                                            <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?>);"/>
-                            <input type="text" name="hdnReviewerId" id="hdnReviewerId" 
-                                   value="<?php echo isset($clues['reviewerId']) ? $clues['reviewerId'] : '0' ?>" 
-                                   style="visibility:hidden;">
+                            <input type="hidden" name="hdnReviewerId" id="hdnReviewerId" 
+                                   value="<?php echo isset($clues['reviewerId']) ? $clues['reviewerId'] : '0' ?>">
                         </li>
                         <?php } // $loggedAdmin:Ends    ?>
                         
