@@ -36,7 +36,7 @@ class LocationHeaderFactory extends ohrmListConfigurationFactory {
 		    'name' => 'Country',
 		    'width' => '20%',
 		    'isSortable' => true,
-            'sortField' => 'countryName',
+                    'sortField' => 'countryName',
 		    'filters' => array('I18nCellFilter' => array()
                               ),
 		    'elementType' => 'label',
