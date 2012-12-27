@@ -23,10 +23,6 @@ if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->
     
     <div class="inner">
         
-        <div id="validationMsg">
-            <?php echo isset($messageData[0]) ? displayMainMessage($messageData[0], $messageData[1]) : ''; ?>
-        </div>
-        
         <form  id="punchTimeForm" method="post">
             <fieldset>
                 <ol>
@@ -41,9 +37,30 @@ if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->
                         <label class="line"><?php echo $punchInNote; ?></label>
                     </li>
                     <?php endif; ?> 
-                    <?php endif; ?>                    
+                    <?php endif; ?>      
                     
-                    <?php echo $form->render(); ?>
+                    <li>
+                        <label><?php echo $form['date']->renderLabel() ?></label>
+                        <?php echo $form['date']->render(); ?>
+                        <span id="dateErrorHolder" class="validation-error"></span>
+                    </li>
+                    <li>
+                        <label><?php echo $form['time']->renderLabel() ?></label>
+                        <?php echo $form['time']->render(); ?> <span class="fieldHelpRight">HH:MM</span>
+                        <span id="timeErrorHolder" class="validation-error"></span>
+                    </li>
+                    <li>
+                        <label><?php echo $form['timezone']->renderLabel() ?></label>
+                        <?php echo $form['timezone']->render(); ?>
+                        <span id="timezoneErrorHolder" class="validation-error"></span>
+                    </li>                    
+                    <li class="largeTextBox">
+                        <label><?php echo $form['note']->renderLabel() ?></label>
+                        <?php echo $form['note']->render(); ?>
+                        <span id="noteErrorHolder" class="validation-error"></span>
+                    </li>                    
+                    
+                    <?php echo $form['_csrf_token']; ?>
                     
                 </ol>
                 <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN, $sf_data->getRaw('allowedActions'))) : ?>

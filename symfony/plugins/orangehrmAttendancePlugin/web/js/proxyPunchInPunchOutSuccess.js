@@ -121,7 +121,6 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
@@ -141,7 +140,6 @@ $(document).ready(function()
                     if(flag2==0){
 
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -153,7 +151,6 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
@@ -175,7 +172,6 @@ $(document).ready(function()
                     if(flag3==0){
 
                         $('.punchInbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -192,7 +188,6 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
@@ -212,7 +207,6 @@ $(document).ready(function()
                     if(flag2==0){
 
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -224,7 +218,6 @@ $(document).ready(function()
 
                 if(!flag) {
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "message warning");
                 }
                 else{
                     $('.punchOutbutton').removeAttr('disabled');
@@ -246,7 +239,6 @@ $(document).ready(function()
                     if(flag3==0){
 
                         $('.punchInbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "message warning");
 
                     }
                 }
@@ -254,36 +246,16 @@ $(document).ready(function()
         });
 
         $(".note").change(function() {
-
-            var flag7= validateNote();
-
-            if(!flag7) {
-                $('.punchOutbutton').attr('disabled', 'disabled');
-                $('.punchInbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "message warning");
-            }
-            else{
-                $('.punchOutbutton').removeAttr('disabled');
-                $('.punchInbutton').removeAttr('disabled');
-                $(".note").removeClass('validation-error');
-            }
-
-
+            validateNote();
         });
 
         function validate() {
 
+            clearErrors();
 
-            var formtMonth;
-            var formtDate;
             var formtHour;
             var formtMin;
             errFlag = false;
-            $(".messageBalloon_success").remove();
-            $('#validationMsg').removeAttr('class');
-            $('#validationMsg').html("");
-
-            var errorStyle = "background-color:#FFDFDF;";
  
             var date=$(".date").val();
             var timeArray=$(".time").val().split(':')
@@ -293,9 +265,8 @@ $(document).ready(function()
             if(!validateDate(date, datepickerDateFormat)){
         
                 $('.punchOutbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "message warning");
-                $('#validationMsg').html(errorForInvalidDateFormat+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
                 $("#attendance_date").addClass("validation-error");
+                $('#dateErrorHolder').text(errorForInvalidDateFormat);
                 errFlag = true;
        
             }
@@ -310,9 +281,8 @@ $(document).ready(function()
             if((timeArray[0]>24)||(timeArray[0]<0)||(timeArray[1]>59)||(timeArray[1]<0)){
 
                 $('.punchOutbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "message warning");
-                $('#validationMsg').html(errorForInvalidTimeFormat+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
                 $(".time").addClass("validation-error");
+                $('#timeErrorHolder').text(errorForInvalidTimeFormat);
                 errFlag = true;
 
             }
@@ -364,10 +334,9 @@ $(document).ready(function()
                 if (!strToTime(formtedFullDate+" "+formtdFullTime, dateTimeFormat)) {
 
                     $('.punchOutbutton').attr('disabled', 'disabled');
-                    $('#validationMsg').attr('class', "message warning");
-                    $('#validationMsg').html(errorForInvalidFormat+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
                     $("#attendance_date").addClass("validation-error");
                     $(".time").addClass("validation-error");
+                    $('#timeErrorHolder').text(errorForInvalidFormat);
                     errFlag = true;
 
                 }
@@ -399,10 +368,9 @@ $(document).ready(function()
                     if (inTime > outTime) {
 
                         $('.punchOutbutton').attr('disabled', 'disabled');
-                        $('#validationMsg').attr('class', "message warning");
-                        $('#validationMsg').html(errorForInvalidTime+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
                         $(".time").addClass("validation-error");
                         $("#attendance_date").addClass("validation-error");
+                        $('#timeErrorHolder').text(errorForInvalidTime);
                         errFlag = true;
                     }
                 }
@@ -416,10 +384,8 @@ $(document).ready(function()
 
         function validatePunchOutOverLapping(){
 
+            clearErrors();
 
-            $(".messageBalloon_success").remove();
-            $('#validationMsg').removeAttr('class');
-            $('#validationMsg').html("");
             var timezoneArray= getTimezoneArray();
             var  timeZone=  timezoneArray[$(".timezone").val()];
               if(timeZone == 'GMT'){
@@ -444,16 +410,12 @@ $(document).ready(function()
                 }
             });
 
-
-            var errorStyle = "background-color:#FFDFDF;";
-
             if (isValid==0) {
 
                 $('.punchOutbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "message warning");
-                $('#validationMsg').html(errorForOverLappingTime+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
                 $(".time").addClass("validation-error");
                 $("#attendance_date").addClass("validation-error");
+                $('#timeErrorHolder').text(errorForOverLappingTime);
 
             }
 
@@ -463,10 +425,9 @@ $(document).ready(function()
 
 
         function validateForpunchInOverLapping(){
-            $(".messageBalloon_success").remove();
-            $('#validationMsg').removeAttr('class');
-            $('#validationMsg').html("");
-
+            
+            clearErrors();
+            
             var inTime =convertDateToYMDFormat($(".date").val())+" "+$(".time").val();
             var timezoneArray= getTimezoneArray();
             var  timeZone=  timezoneArray[$(".timezone").val()];
@@ -489,16 +450,13 @@ $(document).ready(function()
                 }
             });
 
-            var errorStyle = "background-color:#FFDFDF;";
-
             if (isValid==0) {
 
                 $('.punchInbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "message warning");
-                $('#validationMsg').html(errorForOverLappingTime+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
                 $(".time").addClass("validation-error");
                 $("#attendance_date").addClass("validation-error");
-
+                $('#timeErrorHolder').text(errorForOverLappingTime);
+                
             }
 
             return isValid;
@@ -562,20 +520,14 @@ function convertDateToYMDFormat(date){
 
         function validateNote(){
 
+            clearErrors();
             errFlag1 = false;
-
-            // $(".messageBalloon_success").remove();
-            $('#validationMsg').removeAttr('class');
-            $('#validationMsg').html("");
-
-            var errorStyle = "background-color:#FFDFDF;";
 
             if ($(".note").val().length > 250) {
                 $('.punchOutbutton').attr('disabled', 'disabled');
                 $('.punchInbutton').attr('disabled', 'disabled');
-                $('#validationMsg').attr('class', "message warning");
-                $('#validationMsg').html(errorForInvalidNote+"<a class='messageCloseButton' href='#'>"+closeText+"</a>");
                 $(".note").addClass("validation-error");
+                $('#noteErrorHolder').text(errorForInvalidNote);
                   
                 errFlag1 = true;
             }
@@ -583,5 +535,14 @@ function convertDateToYMDFormat(date){
             return !errFlag1;
 
         }
-
-
+        
+function clearErrors() {
+    $('#dateErrorHolder').empty();
+    $('#attendance_date').removeClass('validation-error');
+    $('#timeErrorHolder').empty();
+    $('#attendance_time').removeClass('validation-error');
+    $('#timezoneErrorHolder').empty();
+    $('#attendance_timezone').removeClass('validation-error');    
+    $('#noteErrorHolder').empty();
+    $('#attendance_note').removeClass('validation-error');    
+}

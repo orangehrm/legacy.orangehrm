@@ -461,7 +461,7 @@ function clearErrors() {
     $('#attendance_date').removeClass('validation-error');
     $('#timeErrorHolder').empty();
     $('#attendance_time').removeClass('validation-error');
-    $('#timeErrorHolder').empty();
+    $('#noteErrorHolder').empty();
     $('#attendance_note').removeClass('validation-error');    
 }
 
