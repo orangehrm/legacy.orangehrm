@@ -128,7 +128,7 @@ class viewCandidatesForm extends BaseForm {
                 'from_date' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false)),  
                 'to_date' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false)),
                 'required' => false
-            )),
+            ), array('invalid' => 'To date should be after from date')),
 //            'fromDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false),
 //                    array('invalid' => 'Date format should be ' . $inputDatePattern)),
 //            'toDate' => new ohrmDateValidator(array('date_format' => $inputDatePattern, 'required' => false),
