@@ -10,7 +10,7 @@ $(document).ready(function() {
     $("#addEmployeeTbl td div:empty").remove();
     $("#addEmployeeTbl td:empty").remove();
     
-    $('#photofile').after('<div class="fieldHelpBottom">'+fieldHelpBottom+'</div>');
+    $('#photofile').after('<label class="fieldHelpBottom">'+fieldHelpBottom+'</label>');
 
     if(createUserAccount == 0) {
         //hiding login section by default

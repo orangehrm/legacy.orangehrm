@@ -47,9 +47,9 @@ $hasAttachments = count($attachmentList) > 0;
                         <span id="currentFileSpan"></span>
                     </li>                     
                     <li class="fieldHelpContainer">
-                        <label><span id="selectFileSpan"><?php echo __("Select File") ?></span> <em>*</em></label>
+                        <label id="selectFileSpan"><?php echo __("Select File") ?> <em>*</em></label>
                         <?php echo $form['ufile']->render(array("class" => "atachment")); ?>
-                        <div class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></div>
+                        <label class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></label>
                     </li>
                     <li class="largeTextBox">
                         <?php echo $form['comment']->renderLabel(__('Comment')); ?>

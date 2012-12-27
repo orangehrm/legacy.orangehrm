@@ -50,10 +50,10 @@ $hasAttachments = count($attachmentList) > 0;
                         <span id="currentFileSpan"></span>
                     </li>                    
                     <li class="fieldHelpContainer">
-                        <label><span id="selectFileSpan"><?php echo __("Select File")?></span> <em>*</em></label>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-                        <div class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></div>
+                        <label id="selectFileSpan" style="height:100%"><?php echo __("Select File")?> <em>*</em></label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />                        
                         <input type="file" name="ufile" id="ufile" />
+                        <label class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></label>
                     </li>
                     <li class="largeTextBox">
                         <label><?php echo __("Comment")?></label>

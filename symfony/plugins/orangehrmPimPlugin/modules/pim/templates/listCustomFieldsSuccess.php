@@ -71,7 +71,7 @@ function getSortClass($column, $sortField, $sortOrder) {
                     <li style="display:<?php echo $showExtra; ?>;" id="selectOptions" class="fieldHelpContainer">
                         <?php echo $form['extra_data']->renderLabel(__('Select Options') . ' <em>*</em>'); ?>
                         <?php echo $form['extra_data']->render(); ?>
-                        <div class="fieldHelpBottom"><?php echo __("Enter allowed options separated by commas"); ?></div>
+                        <label class="fieldHelpBottom"><?php echo __("Enter allowed options separated by commas"); ?></label>
                     </li>
 
                     <li class="required">

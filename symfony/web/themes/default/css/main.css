@@ -458,13 +458,21 @@ textarea {
 .inputFormatHint {
     color: #A9A9A9;
 }
-.fieldHelpBottom {
-	position:absolute;
-	top:27px;
-	left:150px;   
-    margin-bottom: 10px;
+
+label.fieldHelpBottom {
+    display:block;
+    float:left;
     color: #A9A9A9;
+    clear: left;
+    margin-left: 150px;
+    width: auto;
 }
+
+li.noLabel label.fieldHelpBottom {
+    margin-left: 0px;
+}
+
+
 .fieldHelpRight {
     margin-left: 5px;
 }
@@ -569,7 +577,7 @@ form ol li input[type=text] {
 
 }
 form ol li input[type="file"] {
-    margin-bottom: 12px;
+    margin-bottom: 5px;
 }
 form ol li input.calendar {
 	width:165px;

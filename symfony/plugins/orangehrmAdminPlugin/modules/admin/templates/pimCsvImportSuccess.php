@@ -22,7 +22,7 @@
                     <li class="fieldHelpContainer">
                         <?php echo $form['csvFile']->renderLabel(__('Select File').' <em>*</em>'); ?>
                         <?php echo $form['csvFile']->render(); ?>
-                        <div class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></div>
+                        <label class="fieldHelpBottom"><?php echo __(CommonMessages::FILE_LABEL_SIZE); ?></label>
                     </li>
                     
                 </ol>

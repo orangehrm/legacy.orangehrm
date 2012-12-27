@@ -128,7 +128,7 @@ foreach ($jobVacancyList as $vacancy) {
                         if ($form->attachment == "") {
                             echo $form['resume']->renderLabel(__('Resume'), array("class " => "resume"));
                             echo $form['resume']->render();
-                            echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_DOC) . "</dvi>";
+                            echo "<label class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_DOC) . "</label>";
                         } else {
                             $attachment = $form->attachment;
                             $linkHtml = "<div id=\"fileLink\"><a target=\"_blank\" class=\"fileLink\" href=\"";
@@ -143,7 +143,7 @@ foreach ($jobVacancyList as $vacancy) {
                             echo "<li id=\"fileUploadSection\" class=\"noLabel\">";
                             echo $form['resume']->renderLabel(' ');
                             echo $form['resume']->render(array("class " => "duplexBox"));
-                            echo "<div class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_DOC) . "</div>";
+                            echo "<label class=\"fieldHelpBottom\">" . __(CommonMessages::FILE_LABEL_DOC) . "</label>";
                             echo "</li>";
                         }
                         ?>
