@@ -52,9 +52,6 @@ class viewPhotographAction extends basePimAction {
     }
 
     public function execute($request) {
-        
-        /* For highlighting corresponding menu item */
-        $request->setParameter('initialActionName', 'viewEmployeeList');
 
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
         $this->showBackButton = true;

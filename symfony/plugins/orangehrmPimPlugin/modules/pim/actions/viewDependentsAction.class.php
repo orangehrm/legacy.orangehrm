@@ -34,15 +34,7 @@ class viewDependentsAction extends basePimAction {
     }
 
     public function execute($request) {
-        
-        /* For highlighting corresponding menu item */
-        $initialActionName = $request->getParameter('initialActionName', '');
-        if (empty($initialActionName)) {
-            $request->setParameter('initialActionName', 'viewEmployeeList');
-        } else {
-            $request->setParameter('initialActionName', $initialActionName);
-        }
-        
+
         $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
         $this->showBackButton = true;
 

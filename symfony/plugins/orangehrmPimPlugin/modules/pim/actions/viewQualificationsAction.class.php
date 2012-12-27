@@ -70,14 +70,6 @@ class viewQualificationsAction extends basePimAction {
     
     public function execute($request) {
         
-        /* For highlighting corresponding menu item */
-        $initialActionName = $request->getParameter('initialActionName', '');
-        if (empty($initialActionName)) {
-            $request->setParameter('initialActionName', 'viewEmployeeList');
-        } else {
-            $request->setParameter('initialActionName', $initialActionName);
-        }
-        
         $this->showBackButton = false;
         $empNumber = $request->getParameter('empNumber');
         $this->empNumber = $empNumber;
