@@ -4558,7 +4558,6 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_attachments.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_customFields.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_education.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_language.php -text
-symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_leftmenu.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_license.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_photo.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/_pimLeftMenu.php -text
