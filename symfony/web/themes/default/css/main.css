@@ -979,15 +979,18 @@ table tfoot tr.total td strong {
 	font-weight:bold;
 	color:#fff;
 }
-
-
 table.hover tr:hover, 
 table.hover tr:hover td, 
 table.hover tr:hover td table tbody tr,
 table.hover tr:hover td table tbody tr td {
     background-color:#CCC;
 }
-
+table.data th { /* Used in performance/performanceReview */
+    background: #FFFFFF;
+    color: inherit;
+    border: none;
+    font-weight: bold;    
+}
 
 /* ================ Table styles: End ================ */
 

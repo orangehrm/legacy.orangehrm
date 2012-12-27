@@ -2,6 +2,9 @@
     table.table td {
         vertical-align: top;
     }
+    table.data {
+        width: 85%;
+    }
 </style>
 
 
@@ -47,11 +50,11 @@
                     <?php if (count($performanceReview->getPerformanceReviewComment()) > 0) { ?>
                         <li>
                             <label><?php echo __("Notes") ?></label>
-                            <table>
+                            <table class="table data">
                                 <tr>
-                                    <td style="width:100px"><?php echo __("Date") ?></td>
-                                    <td style="width:150px"><?php echo __("Employee") ?></td>
-                                    <td style="width:350px"><?php echo __("Comment") ?></td>
+                                    <th style="width:20%"><?php echo __("Date") ?></th>
+                                    <th style="width:30%"><?php echo __("Employee") ?></th>
+                                    <th style="width:50%"><?php echo __("Comment") ?></th>
                                 </tr>
                                 <?php
                                 $i = 1;
