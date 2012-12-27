@@ -1537,7 +1537,6 @@ div#edit-timesheet table.table tbody tr td {
 	border-top-right-radius: 3px;
 }
 .pimPane #profile-pic img {
-	border:1px solid #dedede;
 	border-top:none;
 }
 .pimPane form p.normal {
