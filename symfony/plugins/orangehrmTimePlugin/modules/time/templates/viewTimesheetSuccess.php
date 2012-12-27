@@ -122,7 +122,7 @@ $actionName = sfContext::getInstance()->getActionName();
 
                             if ($format == '1') {
                             ?>
-                            <td class="center">
+                            <td class="right">
                                 <?php echo ($timesheetItemObjects->getDuration() == null ) ? "0:00" : 
                                     $timesheetItemObjects->getConvertTime(); ?>
                                 <span class="commentIcon" data-toggle="modal" href="#commentDialog">
@@ -136,7 +136,7 @@ $actionName = sfContext::getInstance()->getActionName();
                             <?php } ?>
 
                             <?php if ($format == '2') { ?>
-                                <td class="center">
+                                <td class="right">
                                     <?php echo ($timesheetItemObjects->getDuration() == null ) ? "0.00" : 
                                         $timesheetItemObjects->getConvertTime(); ?>
                                     <span class="commentIcon" data-toggle="modal" href="#commentDialog">
@@ -157,12 +157,12 @@ $actionName = sfContext::getInstance()->getActionName();
                         ?>
 
                         <?php if ($format == '1') { ?>
-                        <td id= "total" class="center">
+                        <td id= "total" class="right">
                             <strong><?php echo $timeService->convertDurationToHours($total) ?></strong>
                         </td>
                         <?php } ?>
                         <?php if ($format == '2') { ?>
-                        <td id="total" class="center">
+                        <td id="total" class="right">
                             <strong><?php echo number_format($total, 2, '.', ''); ?></strong>
                         </td>
                         <?php } ?>
@@ -201,12 +201,12 @@ $actionName = sfContext::getInstance()->getActionName();
                         endforeach; 
                         ?>
                         <?php if ($format == '1') { ?>
-                            <td class="center">
+                            <td class="right">
                                 <?php echo $timeService->convertDurationToHours($verticalTotal); ?> 
                             </td>
                         <?php } ?>
                         <?php if ($format == '2') { ?>
-                            <td class="center">
+                            <td class="right">
                                 <?php echo number_format($verticalTotal, 2, '.', ''); ?> 
                             </td>
                         <?php } ?>
@@ -214,12 +214,12 @@ $actionName = sfContext::getInstance()->getActionName();
                         $weeksTotal+=$verticalTotal;
                     endforeach; ?>
                     <?php if ($format == '1') { ?>
-                    <td id="total" class="center">
+                    <td id="total" class="right">
                         <strong><?php echo $timeService->convertDurationToHours($weeksTotal); ?></strong>
                     </td>
                     <?php } ?>
                     <?php if ($format == '2') { ?>
-                    <td id="total" class="center">
+                    <td id="total" class="right">
                         <strong><?php echo number_format($weeksTotal, 2, '.', ''); ?></strong>
                     </td>
                     <?php } ?>
