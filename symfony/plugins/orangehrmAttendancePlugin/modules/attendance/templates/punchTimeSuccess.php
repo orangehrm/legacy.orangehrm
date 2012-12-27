@@ -66,12 +66,12 @@ if ($isPunchOutAllowed) {
                         <?php if ($isPunchOutAllowed) : ?>
                         <li>
                             <label><?php echo __('Punched in Time'); ?></label>
-                            <label><?php echo $punchInDisplayTime; ?></label>
+                            <label class="line"><?php echo $punchInDisplayTime; ?></label>
                         </li>
                         <?php if (!empty($punchInNote)) : ?>
                         <li>
                             <label><?php echo __('Punched in Note'); ?></label>
-                            <label><?php echo $punchInNote; ?></label>
+                            <label class="line"><?php echo $punchInNote; ?></label>
                         </li>
                         <?php endif; ?> 
                         <?php endif; ?> 

@@ -1,5 +1,19 @@
-
 <?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/proxyPunchInPunchOutSuccess'); ?>
+
+<?php
+
+$isPunchOutAllowed = false;
+
+if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) {
+    
+    $isPunchOutAllowed = true;
+    
+    $dateArray = explode(" ", $punchInTime);
+    $punchInDisplayTime = set_datepicker_date_format($dateArray[0]) . " " . $dateArray[1];
+    
+}
+
+?>
 
 <div class="box">
     
@@ -16,7 +30,21 @@
         <form  id="punchTimeForm" method="post">
             <fieldset>
                 <ol>
+                    <?php if ($isPunchOutAllowed) : ?>
+                    <li>
+                        <label><?php echo __('Punched in Time'); ?></label>
+                        <label class="line"><?php echo $punchInDisplayTime; ?></label>
+                    </li>
+                    <?php if (!empty($punchInNote)) : ?>
+                    <li>
+                        <label><?php echo __('Punched in Note'); ?></label>
+                        <label class="line"><?php echo $punchInNote; ?></label>
+                    </li>
+                    <?php endif; ?> 
+                    <?php endif; ?>                    
+                    
                     <?php echo $form->render(); ?>
+                    
                 </ol>
                 <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN, $sf_data->getRaw('allowedActions'))) : ?>
                     <p><input type="button" class="punchInbutton" name="button" id="btnPunch" value="<?php echo __('In'); ?>" /></p>
@@ -25,21 +53,7 @@
                 <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
                     <p><input type="button" class="punchOutbutton" name="button" id="btnPunch" value="<?php echo __('Out'); ?>" /></p>
                 <?php endif; ?>
-                
-                <?php if (in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT, $sf_data->getRaw('allowedActions'))) : ?>
-                    <?php $dateArray = explode(" ", $punchInTime) ?>
-                    <p>
-                        <?php echo __("Last punch in time") . " : "; ?>
-                        <?php echo set_datepicker_date_format($dateArray[0]) . " " . $dateArray[1]; ?>
-                    </p>
-                    <?php if (!empty($punchInNote)): ?>
-                    <p>
-                        <?php echo __("Note") . " : "; ?>
-                        <?php echo $punchInNote; ?>
-                    </p>
-                    <?php endif; ?>
-                <?php endif; ?>    
-                    
+  
             </fieldset>
         </form>
         
