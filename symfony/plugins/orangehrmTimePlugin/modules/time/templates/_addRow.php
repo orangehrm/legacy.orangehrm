@@ -37,9 +37,7 @@
             <td class="center comments">
                 <?php echo $form['initialRows'][$num][$j]->renderError() ?>
                 <?php echo $form['initialRows'][$num][$j]->render(array("class" => "timeBox")) ?>
-                <span class="" data-toggle="modal" href="#commentDialog">
-                    <?php echo image_tag(theme_path('images/comment.png'), 'id=commentBtn_' . $j . '_' . $num . " class=commentIcon ") ?>
-                </span>
+                <?php echo image_tag(theme_path('images/comment.png'), 'id=commentBtn_' . $j . '_' . $num . " class=commentIcon ") ?>
                 <?php echo $form['initialRows'][$num]['TimesheetItemId' . $j] ?>
             </td>
         <?php } ?>

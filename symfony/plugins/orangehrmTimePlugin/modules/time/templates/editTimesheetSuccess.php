@@ -99,9 +99,9 @@ form ol li.largeTextBox textarea {
                             <td class="center comments">
                                 <?php echo $timesheetForm['initialRows'][$i][$j]->renderError() ?>
                                 <?php echo $timesheetForm['initialRows'][$i][$j]->render(array("class" => 'timeBox')) ?>
-                                <span class="" data-toggle="modal" href="#commentDialog">
+<!--                                <span class="" data-toggle="modal" href="#commentDialog">-->
                                     <?php echo image_tag(theme_path('images/comment.png'), 'id=commentBtn_' . $j . '_' . $i . " class=commentIcon"); ?>
-                                </span>
+<!--                                </span>-->
                                 <?php echo $timesheetForm['initialRows'][$i]['TimesheetItemId' . $j] ?>
                             </td>
                         <?php } ?>
@@ -139,9 +139,9 @@ form ol li.largeTextBox textarea {
                                 <td class="center comments"> <!-- title="<?php echo $row['projectId'] . "##" . $row['activityId'] . "##" . $currentWeekDates[$j] . "##" . $row['timesheetItems'][$currentWeekDates[$j]]->getComment(); ?>" -->
                                     <?php echo $timesheetForm['initialRows'][$i][$j]->renderError(); ?>
                                     <?php echo $timesheetForm['initialRows'][$i][$j]->render(array("class" => $dltClassName." ".'timeBox')); ?>
-                                    <span class="" data-toggle="modal" href="#commentDialog">
+<!--                                    <span class="" data-toggle="modal" href="#commentDialog">-->
                                         <?php echo image_tag(theme_path('images/comment.png'), 'id=commentBtn_' . $j . '_' . $i . " class=commentIcon ".$dltClassName) ?>
-                                    </span>
+<!--                                    </span>-->
                                     <?php echo $timesheetForm['initialRows'][$i]['TimesheetItemId' . $j]?>
                                 </td>
                             <?php } ?>

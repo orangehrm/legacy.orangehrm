@@ -58,7 +58,7 @@ $(document).ready(function() {
         if($(element).val() == typeForHints){
             $(element).addClass("inputFormatHint");
         }
-	$(element).val($(element).val().replace("##", ""));
+        $(element).val($(element).val().replace("##", ""));
     });
 
     //Auto complete
@@ -190,7 +190,7 @@ $(document).ready(function() {
                 var temp=parseFloat($("#initialRows_"+j+"_"+id).val());
                 total=total+temp;
             } else if ($("#initialRows_"+j+"_"+id).val() == '') {
-            	total=total;
+                total=total;
             } else{
                 var temp = $("#initialRows_"+j+"_"+id).val().split(":");
                 temp[0]= parseFloat(temp[0]);
@@ -288,11 +288,11 @@ $(document).ready(function() {
         classStr = $(this).attr("id").split("_");
         deleteStr = $(this).attr("class").split(" ");
         if(deleteStr[1] == "deletedRow"){
-            $("#timeComment").attr("disabled", "disabled")
-            $("#commentSave").hide()
+            $("#timeComment").attr("disabled", "disabled");
+            $("#commentSave").hide();
         }else{
-            $("#timeComment").removeAttr("disabled")
-            $("#commentSave").show()
+            $("#timeComment").removeAttr("disabled");
+            $("#commentSave").show();
         }
         var rowNo = classStr[2];
         date = currentWeekDates[classStr[1]];
@@ -316,15 +316,16 @@ $(document).ready(function() {
                 break;
             }
         }
-        if($("#"+projectNameId).val()=="" || $("#"+projectNameId).val()=="Type for hints..." || $("#"+activityNameId).val()=='-1'){
+        if($("#"+projectNameId).val()=="" || $("#"+projectNameId).val() == typeForHints || $("#"+activityNameId).val()=='-1'){
             displayMessages('warning', lang_selectProjectAndActivity);  
         } else if( temp==false){
             displayMessages('warning', lang_enterExistingProject);  
-        }else{
+        } else {
             $("#commentProjectName").text($("#"+projectNameId).val());
             $("#commentActivityName").text($("#"+activityNameId+" :selected").text());
             var parsedDate = $.datepicker.parseDate("yy-mm-dd", date);
             $("#commentDate").text($.datepicker.formatDate(datepickerDateFormat, parsedDate));
+            $("#commentDialog").modal();
         }
     });
 
