@@ -124,8 +124,7 @@ $actionName = sfContext::getInstance()->getActionName();
                             ?>
                             <td class="right">
                                 <?php echo ($timesheetItemObjects->getDuration() == null ) ? "0:00" : 
-                                    $timesheetItemObjects->getConvertTime(); ?>
-                                <span class="commentIcon" data-toggle="modal" href="#commentDialog">
+                                    $timesheetItemObjects->getConvertTime(); ?><span class="commentIcon" data-toggle="modal" href="#commentDialog">
                                     <?php if ($timesheetItemObjects->getComment() != null)
                                         echo image_tag(theme_path('images/comment.png'), array('id' => 'callout_' . 
                                             $timesheetItemObjects->getTimesheetItemId(), 'class' => 'icon'));
@@ -136,10 +135,8 @@ $actionName = sfContext::getInstance()->getActionName();
                             <?php } ?>
 
                             <?php if ($format == '2') { ?>
-                                <td class="right">
-                                    <?php echo ($timesheetItemObjects->getDuration() == null ) ? "0.00" : 
-                                        $timesheetItemObjects->getConvertTime(); ?>
-                                    <span class="commentIcon" data-toggle="modal" href="#commentDialog">
+                                <td class="right"><?php echo ($timesheetItemObjects->getDuration() == null ) ? "0.00" : 
+                                        $timesheetItemObjects->getConvertTime(); ?><span class="commentIcon" data-toggle="modal" href="#commentDialog">
                                         <?php if ($timesheetItemObjects->getComment() != null)
                                             echo image_tag(theme_path('images/comment.png'), array('id' => 'callout_' . 
                                                 $timesheetItemObjects->getTimesheetItemId(), 'class' => 'icon'));
@@ -157,12 +154,12 @@ $actionName = sfContext::getInstance()->getActionName();
                         ?>
 
                         <?php if ($format == '1') { ?>
-                        <td id= "total" class="right">
+                        <td class="right total">
                             <strong><?php echo $timeService->convertDurationToHours($total) ?></strong>
                         </td>
                         <?php } ?>
                         <?php if ($format == '2') { ?>
-                        <td id="total" class="right">
+                        <td class="right total">
                             <strong><?php echo number_format($total, 2, '.', ''); ?></strong>
                         </td>
                         <?php } ?>
@@ -201,25 +198,21 @@ $actionName = sfContext::getInstance()->getActionName();
                         endforeach; 
                         ?>
                         <?php if ($format == '1') { ?>
-                            <td class="right">
-                                <?php echo $timeService->convertDurationToHours($verticalTotal); ?> 
-                            </td>
+                            <td class="right"><?php echo $timeService->convertDurationToHours($verticalTotal); ?></td>
                         <?php } ?>
                         <?php if ($format == '2') { ?>
-                            <td class="right">
-                                <?php echo number_format($verticalTotal, 2, '.', ''); ?> 
-                            </td>
+                            <td class="right"><?php echo number_format($verticalTotal, 2, '.', ''); ?></td>
                         <?php } ?>
                         <?php 
                         $weeksTotal+=$verticalTotal;
                     endforeach; ?>
                     <?php if ($format == '1') { ?>
-                    <td id="total" class="right">
+                    <td class="right total">
                         <strong><?php echo $timeService->convertDurationToHours($weeksTotal); ?></strong>
                     </td>
                     <?php } ?>
                     <?php if ($format == '2') { ?>
-                    <td id="total" class="right">
+                    <td class="right total">
                         <strong><?php echo number_format($weeksTotal, 2, '.', ''); ?></strong>
                     </td>
                     <?php } ?>

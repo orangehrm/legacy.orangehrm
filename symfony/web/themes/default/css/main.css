@@ -1365,6 +1365,23 @@ a.closeText {
 /* ================ Hyperlink styles: End ================ */
 
 /* ================ Timesheet styles: Begin ================ */
+.timesheet table.table td.right {
+    padding-right: 1px;
+}
+
+.timesheet table.table td.right.total {
+    padding-right: 17px;
+}
+
+.timesheet table.table tr.total td.right {
+    padding-right: 17px;
+}
+
+.timesheet table.table td.right span.commentIcon {
+    display: inline-block;
+    width: 14px;
+    margin-left: 2px;
+}
 .timesheet .top h3 {
 	font-size:18px;
 	float:left;
