@@ -19,15 +19,12 @@
  */
 
 /**
- * Description of I18nCellFilter
- *
+ * Cell filter to turn first letter upper case
  */
-class I18nCellFilter extends ohrmCellFilter {
+class UCFirstCellFilter extends ohrmCellFilter {
     
     public function filter($value) {
-        sfProjectConfiguration::getActive()->loadHelpers('I18N');
-        
-        return __($value);
+        return ucfirst(strtolower($value));
     }
 }
 
