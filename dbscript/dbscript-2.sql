@@ -466,7 +466,6 @@ INSERT INTO `hs_hr_province`(`id`, `province_name`, `province_code`, `cou_code`)
     (64, 'Armed Forces Middle East', 'AE', 'US'),
     (65, 'Armed Forces Pacific', 'AP', 'US');
 
-INSERT INTO `hs_hr_user_group` VALUES ('USG001','Admin','1');
 INSERT INTO `hs_hr_module` VALUES ('MOD001','Admin','OrangeHRM','info@orangehrm.com','VER001','HR Admin'),
 								  ('MOD002','PIM','OrangeHRM','info@orangehrm.com','VER001','HR Functions'),
 								  ('MOD004','Report','OrangeHRM','info@orangehrm.com','VER001','Reporting'),
@@ -475,15 +474,6 @@ INSERT INTO `hs_hr_module` VALUES ('MOD001','Admin','OrangeHRM','info@orangehrm.
 								  ('MOD007', 'Benefits', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Benefits Tracking'),
  	 							('MOD008', 'Recruitment', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Recruitment'),
  	 							('MOD009', 'Performance', 'OrangeHRM', 'info@orangehrm.com', 'VER001', 'Performance');
-INSERT INTO `hs_hr_rights` ( `userg_id` , `mod_id` , `addition` , `editing` , `deletion` , `viewing` )
-        VALUES  ('USG001', 'MOD001', '1', '1', '1', '1'),
-		('USG001', 'MOD002', '1', '1', '1', '1'),
-		('USG001', 'MOD004', '1', '1', '1', '1'),
-		('USG001', 'MOD005', '1', '1', '1', '1'),
-		('USG001', 'MOD006', '1', '1', '1', '1'),
-		('USG001', 'MOD007', '1', '1', '1', '1'),
- 	 	('USG001', 'MOD008', '1', '1', '1', '1'),
- 	 	('USG001', 'MOD009', '1', '1', '1', '1');
 
 INSERT INTO `ohrm_work_week` VALUES (1, NULL, 0, 0, 0, 0, 0, 8, 8);
 
@@ -527,16 +517,12 @@ INSERT INTO `ohrm_emp_reporting_method`(`reporting_method_id`, `reporting_method
 INSERT INTO `hs_hr_unique_id`(last_id, table_name, field_name) VALUES
     (0, 'hs_hr_employee', 'emp_number'),
     (6, 'hs_hr_module', 'mod_id'),
-    (1, 'hs_hr_user_group', 'userg_id'),
-    (0, 'hs_hr_empreport', 'rep_code'),
     (0, 'hs_hr_leave', 'leave_id'),
     (0, 'hs_hr_leavetype', 'leave_type_id'),
     (0, 'hs_hr_leave_requests', 'leave_request_id'),
     (0, 'hs_hr_custom_export', 'export_id'),
     (0, 'hs_hr_custom_import', 'import_id'),
     (0, 'hs_hr_pay_period', 'id'),
-    (0, 'hs_hr_hsp_summary', 'summary_id'),
-    (0, 'hs_hr_hsp_payment_request', 'id'),
     (0, 'hs_hr_kpi', 'id'),
     (0, 'hs_hr_performance_review', 'id'),
     (2, 'ohrm_emp_reporting_method', 'reporting_method_id'),

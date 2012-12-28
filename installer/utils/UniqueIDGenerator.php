@@ -170,13 +170,8 @@ class UniqueIDGenerator {
 
 		$idFields = array(
 		    //new IDField("hs_hr_users", "id", "USR"),
-		    new IDField("hs_hr_user_group", "userg_id", "USG"),
 		    new IDField("hs_hr_module", "mod_id", "MOD"),
-		    new IDField("hs_hr_empreport", "rep_code", "REP"),
 		    new IDField("hs_hr_employee", "emp_number"),
-		    new IDField("hs_hr_leave", "leave_id"),
-		    new IDField("hs_hr_leavetype", "leave_type_id", "LTY"),
-		    new IDField("hs_hr_leave_requests", "leave_request_id"),
 		    new IDField("hs_hr_custom_export", "export_id"),
 		    new IDField("hs_hr_custom_import", "import_id"),
 			/* Not used yet. Uncomment when we start using these
