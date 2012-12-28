@@ -1436,7 +1436,10 @@ input.timeBox {
 	float:left;
 }
 */
-div#edit-timesheet table.table tbody tr td {
+#projectColumn, #activityColumn { /* Used in view timesheets */
+    min-width: 200px;
+}
+div#timesheet table.table tbody tr td.comments, div#edit-timesheet table.table tbody tr td.comments {
     white-space: nowrap;
     min-width: 70px;
 }

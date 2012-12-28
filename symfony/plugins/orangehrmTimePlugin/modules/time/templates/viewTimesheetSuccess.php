@@ -57,8 +57,8 @@ $actionName = sfContext::getInstance()->getActionName();
                 ?>
             </h3>
             <form>
-                <ol class="normal">
-                    <li>
+                <ol class="normal" style="padding-bottom:0">
+                    <li style="margin-bottom:5px">
                         <?php echo $dateForm['startDates']->render(array('onchange' => 'clicked(event)')); ?>
                         <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))) : ?>
                             <a id="btnAddTimesheet" data-toggle="modal" href="#createTimesheet" class="fieldHelpRight"><?php echo __("Add Timesheet"); ?></a>
@@ -70,20 +70,20 @@ $actionName = sfContext::getInstance()->getActionName();
         </div>
 
         <div id="validationMsg"></div>
-        
-        <table cellpadding="0" cellspacing="0" width="100%" class="table">
+        <div class="tableWrapper" style="overflow:auto">
+        <table style="width:100%" class="table">
             <thead>
                 <tr>
-                    <th id="projectColumn" width="20%"><?php echo __("Project Name") ?></th>
-                    <th id ="activityColumn" width="15%"><?php echo __("Activity Name") ?></th>
+                    <th id="projectColumn" style="width:20%"><?php echo __("Project Name") ?></th>
+                    <th id ="activityColumn" style="width:15%"><?php echo __("Activity Name") ?></th>
                     <?php foreach ($rowDates as $data): ?>
-                        <th width="5%" class="center">
+                        <th style="width:5%" class="center">
                             <?php echo __(date('D', strtotime($data))); ?> 
                             <?php echo date('j', strtotime($data)); ?>
                         </th>
 <!--                        <th class="commentIcon"></th>-->
                     <?php endforeach; ?>
-                    <th width="6%" class="center"><?php echo __("Total") ?></th>
+                    <th style="width:6%" class="center"><?php echo __("Total") ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -122,7 +122,7 @@ $actionName = sfContext::getInstance()->getActionName();
 
                             if ($format == '1') {
                             ?>
-                            <td class="right">
+                            <td class="right comments">
                                 <?php echo ($timesheetItemObjects->getDuration() == null ) ? "0:00" : 
                                     $timesheetItemObjects->getConvertTime(); ?><span class="commentIcon" data-toggle="modal" href="#commentDialog">
                                     <?php if ($timesheetItemObjects->getComment() != null)
@@ -220,6 +220,7 @@ $actionName = sfContext::getInstance()->getActionName();
                 <?php endif; ?>
             </tbody>
         </table>
+        </div> <!-- tableWrapper -->
         <div class="bottom">
             <em><h2><?php echo __('Status').': ' ?><?php echo __(ucwords(strtolower($timesheet->getState()))); ?></h2></em>
             <form id="timesheetFrm" name="timesheetFrm"  method="post">

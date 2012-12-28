@@ -38,7 +38,7 @@ form ol li.largeTextBox textarea {
 <div class="box editTimesheet noHeader" id="edit-timesheet">
     <div class="inner">
         
-        <div class="top">
+        <div class="top" style="padding-bottom:5px">
             <h3>
                 <?php 
                 if ($noOfColumns == 7): 
@@ -66,14 +66,15 @@ form ol li.largeTextBox textarea {
         </div>
         
         <form class="timesheetForm" method="post" id="timesheetForm" >
-            <table cellpadding="0" cellspacing="0" width="100%" class="table">
+            <div class="tableWrapper" style="overflow:auto">
+            <table style="width:100%" class="table">
                 <thead>
                     <tr>
-                        <th width="2%" class="center"><input type="checkbox" style="display:none"></th>
-                        <th width="24%" id="projectName"><?php echo __('Project Name') ?></th>
-                        <th width="18%" id="activityName"><?php echo __('Activity Name') ?></th>
+                        <th style="width:2%" class="center"><input type="checkbox" style="display:none"></th>
+                        <th style="width:24%" id="projectName"><?php echo __('Project Name') ?></th>
+                        <th style="width:18%" id="activityName"><?php echo __('Activity Name') ?></th>
                         <?php foreach ($currentWeekDates as $date): ?>
-                            <th class="center" width="8%">
+                            <th class="center" style="width:8%">
                                 <?php echo __(date('D', strtotime($date))); ?> 
                                 <?php echo date('j', strtotime($date)); ?>
                             </th>
@@ -156,6 +157,7 @@ form ol li.largeTextBox textarea {
                         
                 </tbody>
             </table>
+            </div> <!-- tableWrapper -->
         
             <div class="bottom">
                 <p class="required">
