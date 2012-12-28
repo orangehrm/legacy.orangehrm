@@ -203,8 +203,8 @@ function resetForm() {
 }
 
 function clearErrors() {
-    $("label.error[generated='true']").each(function() {
-        $('#' + $(this).attr('for')).removeClass('error');
+    $("span.validation-error").each(function() {
+        $('#' + $(this).attr('for')).removeClass('validation-error');
         $(this).remove();
     });
 }
