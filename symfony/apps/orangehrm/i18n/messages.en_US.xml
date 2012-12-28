@@ -5212,9 +5212,61 @@
     <target>Export To CSV</target>
    </trans-unit>
    <trans-unit id="1135">
+    <source>User Role</source>
+    <target>User Role</target>
+   </trans-unit>
+   <trans-unit id="1136">
+    <source>Processing</source>
+    <target>Processing</target>
+   </trans-unit>
+   <trans-unit id="1137">
+    <source>Duration(Hours)</source>
+    <target>Duration(Hours)</target>
+   </trans-unit>
+   <trans-unit id="1138">
+    <source>Successfully Undeleted</source>
+    <target>Successfully Undeleted</target>
+   </trans-unit>
+   <trans-unit id="1139">
+    <source>Credentials Required</source>
+    <target>Credentials Required</target>
+   </trans-unit>
+   <trans-unit id="1140">
+    <source>Expand for Options</source>
+    <target>Expand for Options</target>
+   </trans-unit>
+   <trans-unit id="1141">
+    <source>Hide Options</source>
+    <target>Hide Options</target>
+   </trans-unit>
+   <trans-unit id="1142">
+    <source>Help &amp; Training</source>
+    <target>Help &amp; Training</target>
+   </trans-unit>   
+   <trans-unit id="1143">
+    <source>Join OrangeHRM Community</source>
+    <target>Join OrangeHRM Community</target>
+   </trans-unit>
+   <trans-unit id="1144">
+    <source>Qualifications</source>
+    <target>Qualifications</target>
+   </trans-unit> 
+   <trans-unit id="1145">
+    <source>Current File</source>
+    <target>Current File</target>
+   </trans-unit>
+   <trans-unit id="1146">
+    <source>Replace With</source>
+    <target>Replace With</target>
+   </trans-unit>
+   <trans-unit id="1147">
     <source>Access Denied</source>
     <target>Access Denied</target>
-   </trans-unit>      
+   </trans-unit>  
+   <trans-unit id="1148">
+    <source>Add Another</source>
+    <target>Add Another</target>
+   </trans-unit>        
   </body>
  </file>
 </xliff>
