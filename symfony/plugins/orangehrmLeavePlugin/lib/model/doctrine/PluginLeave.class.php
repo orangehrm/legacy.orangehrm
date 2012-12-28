@@ -48,7 +48,7 @@ abstract class PluginLeave extends BaseLeave {
     
     public static function getStatusTextList() {
         $leaveStatuses = array_map('strtolower', self::$leaveStatusText);
-        $leaveStatuses = array_map('ucfirst', $leaveStatuses);
+        $leaveStatuses = array_map('ucwords', $leaveStatuses);
         return $leaveStatuses;
     }
 

@@ -260,6 +260,90 @@
     <source>Edit Leave Type</source>
     <target>FR_Edit Leave Type</target>
    </trans-unit>
+   <trans-unit id="65">
+    <source>Entitlement Type</source>
+    <target>FR_Entitlement Type</target>
+   </trans-unit>
+   <trans-unit id="66">
+    <source>Updating Entitlement</source>
+    <target>FR_Updating Entitlement</target>
+   </trans-unit>                        
+   <trans-unit id="67">
+    <source>Leave Entitlements (Days)</source>
+    <target>FR_Leave Entitlements (Days)</target>
+   </trans-unit>     
+   <trans-unit id="68">
+    <source>FR_Leave Taken (Days)</source>
+    <target>FR_Leave Taken (Days)</target>
+   </trans-unit>        
+   <trans-unit id="69">
+    <source>Current Leave Balance (Days)</source>
+    <target>FR_Current Leave Balance (Days)</target>
+   </trans-unit> 
+   <trans-unit id="70">
+    <source>Is entitlement situational</source>
+    <target>FR_Is entitlement situational</target>
+   </trans-unit>    
+   <trans-unit id="71">
+    <source>Edit Leave Entitlement</source>
+    <target>FR_Edit Leave Entitlement</target>
+   </trans-unit>  
+   <trans-unit id="72">
+    <source>The selected leave entitlement will be applied to the following employees.</source>
+    <target>FR_The selected leave entitlement will be applied to the following employees.</target>
+   </trans-unit>
+   <trans-unit id="73">
+    <source>Old Entitlement</source>
+    <target>FR_Old Entitlement</target>
+   </trans-unit>
+   <trans-unit id="74">
+    <source>New Entitlement</source>
+    <target>FR_New Entitlement</target>
+   </trans-unit>         
+   <trans-unit id="75">
+    <source>Used amount exceeds the current amount</source>
+    <target>FR_Used amount exceeds the current amount</target>
+   </trans-unit>      
+   <trans-unit id="76">
+    <source>Leave Balance Details</source>
+    <target>FR_Leave Balance Details</target>
+   </trans-unit>      
+   <trans-unit id="77">
+    <source>Leave Balance Details</source>
+    <target>FR_Leave Balance Details</target>
+   </trans-unit>      
+   <trans-unit id="78">
+    <source>Entitled</source>
+    <target>FR_Entitled</target>
+   </trans-unit>     
+   <trans-unit id="79">
+    <source>Used</source>
+    <target>FR_Used</target>
+   </trans-unit>    
+   <trans-unit id="80">
+    <source>Balance</source>
+    <target>FR_Balance</target>
+   </trans-unit>    
+   <trans-unit id="81">
+    <source>Duration should be less than work shift length</source>
+    <target>FR_Duration should be less than work shift length</target>
+   </trans-unit>    
+   <trans-unit id="82">
+    <source>view details</source>
+    <target>FR_view details</target>
+   </trans-unit>    
+   <trans-unit id="83">
+    <source>As of date</source>
+    <target>FR_As of date</target>
+   </trans-unit>  
+   <trans-unit id="83">
+    <source>Overlapping Leave Requests Found</source>
+    <target>FR_Overlapping Leave Requests Found</target>
+   </trans-unit>  
+   <trans-unit id="83">
+    <source>My Leave Entitlements</source>
+    <target>FR_My Leave Entitlements</target>
+   </trans-unit>        
   </body>
  </file>
 </xliff>

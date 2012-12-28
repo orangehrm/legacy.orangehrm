@@ -33,7 +33,7 @@ class LeaveTypeForm extends orangehrmForm {
             'hdnLeaveTypeId' => new sfWidgetFormInputHidden()
         ));        
         
-        $this->getWidgetSchema()->setLabel('txtLeaveTypeName', 'Name <em>*</em>');
+        $this->getWidgetSchema()->setLabel('txtLeaveTypeName', __('Name') .' <em>*</em>');
         $this->getWidgetSchema()->setLabel('excludeIfNoEntitlement', '<a id="exclude_link" href="#">' . __('Is entitlement situational') . '</a>');
         
         $this->setValidators(array(

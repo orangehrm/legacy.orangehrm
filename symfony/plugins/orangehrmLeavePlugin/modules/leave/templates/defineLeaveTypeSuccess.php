@@ -16,10 +16,10 @@
 
             <fieldset>                
                 <ol>
-                    <ol><li><label for="leaveType_txtLeaveTypeName">Name <em>*</em></label>
+                    <ol><li><?php echo $form['txtLeaveTypeName']->renderLabel(); ?>
                             <?php echo $form['txtLeaveTypeName']->render(); ?>
                         </li>
-                        <li><label for="leaveType_excludeIfNoEntitlement"><a id="exclude_link" href="#">Is entitlement situational</a></label>
+                        <li><?php echo $form['excludeIfNoEntitlement']->renderLabel(); ?>
                             <?php echo $form['excludeIfNoEntitlement']; ?>
                             <?php echo $form['hdnOriginalLeaveTypeName']->render(); ?>
                             <?php echo $form['hdnLeaveTypeId']->render(); ?>

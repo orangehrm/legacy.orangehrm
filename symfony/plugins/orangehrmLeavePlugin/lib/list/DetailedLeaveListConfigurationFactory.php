@@ -61,7 +61,8 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
             'width' => '10%',
             'isSortable' => false,
             'elementType' => 'label',
-            'filters' => array('UCFirstCellFilter' => array(), 'I18nCellFilter' => array()
+            'filters' => array('CallbackCellFilter' => array('callback' => array('strtolower','ucwords')),
+                               'I18nCellFilter' => array()
                               ),
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(

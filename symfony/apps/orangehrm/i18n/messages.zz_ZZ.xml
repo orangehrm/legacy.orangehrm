@@ -5267,6 +5267,90 @@
     <source>Add Another</source>
     <target>FR_Add Another</target>
    </trans-unit>
+   <trans-unit id="1149">
+    <source>Start Month</source>
+    <target>FR_Start Month</target>
+   </trans-unit>   
+   <trans-unit id="1150">
+    <source>Cancelled</source>
+    <target>FR_Cancelled</target>
+   </trans-unit>     
+   <trans-unit id="1151">
+    <source>Add Leave Entitlement</source>
+    <target>FR_Add Leave Entitlement</target>
+   </trans-unit>       
+   <trans-unit id="1152">
+    <source>Add to Multiple Employees</source>
+    <target>FR_Add to Multiple Employees</target>
+   </trans-unit>     
+   <trans-unit id="1153">
+    <source>Entitlement</source>
+    <target>FR_Entitlement</target>
+   </trans-unit>   
+   <trans-unit id="1154">
+    <source>Matches one employee</source>
+    <target>FR_Matches one employee</target>
+   </trans-unit>   
+   <trans-unit id="1155">
+    <source>Matches %count% employees</source>
+    <target>FR_Matches %count% employees</target>
+   </trans-unit>   
+   <trans-unit id="1156">
+    <source>No matching employees</source>
+    <target>FR_No matching employees</target>
+   </trans-unit>      
+   <trans-unit id="1157">
+    <source>Entitlements</source>
+    <target>FR_Entitlements</target>
+   </trans-unit>   
+   <trans-unit id="1158">
+    <source>Add Entitlements</source>
+    <target>FR_Add Entitlements</target>
+   </trans-unit>   
+   <trans-unit id="1159">
+    <source>Employee Entitlements</source>
+    <target>FR_Employee Entitlements</target>
+   </trans-unit>               
+   <trans-unit id="1160">
+    <source>Valid From</source>
+    <target>FR_Valid From</target>
+   </trans-unit>    
+   <trans-unit id="1161">
+    <source>Valid To</source>
+    <target>FR_Valid To</target>
+   </trans-unit>       
+   <trans-unit id="1162">
+    <source>No employees match the selected filters</source>
+    <target>FR_No employees match the selected filters</target>
+   </trans-unit>       
+   <trans-unit id="1163">
+    <source>Leave Entitlements and Usage Report</source>
+    <target>FR_Leave Entitlements and Usage Report</target>
+   </trans-unit>  
+   <trans-unit id="1164">
+    <source>My Leave Entitlements and Usage Report</source>
+    <target>FR_My Leave Entitlements and Usage Report</target>
+   </trans-unit> 
+   <trans-unit id="1165">
+    <source>Matching Employees</source>
+    <target>FR_Matching Employees</target>
+   </trans-unit>
+   <trans-unit id="1166">
+    <source>Generate For</source>
+    <target>FR_Generate For</target>
+   </trans-unit>     
+   <trans-unit id="1167">
+    <source>Confirm</source>
+    <target>FR_Confirm</target>
+   </trans-unit>   
+   <trans-unit id="1168">
+    <source>To date should be after From date</source>
+    <target>FR_To date should be after From date</target>
+   </trans-unit>    
+   <trans-unit id="1169">
+    <source>My Entitlements</source>
+    <target>FR_My Entitlements</target>
+   </trans-unit>       
   </body>
  </file>
 </xliff>

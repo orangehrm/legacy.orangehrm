@@ -326,7 +326,7 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                                     $tdValue = $summary['summaryLabel'];
                                     $firstHeader = false;                                    
                                 }
-                                echo "<td>" . $tdValue . '</td>';
+                                echo "<td>" . __($tdValue) . '</td>';
                             }
                         }
                     ?>

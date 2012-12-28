@@ -55,7 +55,7 @@ class LeaveBalanceReportForm extends BaseForm {
     
     public function configure() {
 
-        $reportTypes = array(0 => 'Please Select', 
+        $reportTypes = array(0 => '-- ' . __('Select') . ' --', 
                             self::REPORT_TYPE_LEAVE_TYPE => 'Leave Type', 
                             self::REPORT_TYPE_EMPLOYEE => 'Employee');
         

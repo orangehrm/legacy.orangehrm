@@ -61,7 +61,7 @@ use_stylesheets_for_form($form);
 <div class="modal hide" id="noselection">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3><?php echo __('OrangeHRM - No matching employees'); ?></h3>
+    <h3><?php echo 'OrangeHRM - ' . __('No matching employees'); ?></h3>
   </div>
   <div class="modal-body">
     <p><?php echo __('No employees match the selected filters'); ?></p>
@@ -74,12 +74,12 @@ use_stylesheets_for_form($form);
 <div class="modal hide" id="preview" style="width:500px">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3><?php echo __('OrangeHRM - Matching Employees'); ?></h3>
+    <h3><?php echo 'OrangeHRM - ' . __('Matching Employees'); ?></h3>
   </div>
   <div class="modal-body">
       <span><?php echo __('The selected leave entitlement will be applied to the following employees.');?></span>
       <ol id="employee_list">  
-          <li><?php echo __('Loading...');?></li>
+          <li><?php echo __('Loading') . '...';?></li>
       </ol>
   </div>
   <div class="modal-footer">
@@ -92,12 +92,12 @@ use_stylesheets_for_form($form);
 <div class="modal hide" id="employeeEntitlement" style="width:500px">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3><?php echo __('OrangeHRM - Updating Entitlement'); ?></h3>
+    <h3><?php echo 'OrangeHRM - ' . __('Updating Entitlement'); ?></h3>
   </div>
   <div class="modal-body">
       
       <ol id="employee_entitlement_update">  
-          <li><?php echo __('Loading...');?></li>
+          <li><?php echo __('Loading') . '...';?></li>
       </ol>
   </div>
   <div class="modal-footer">

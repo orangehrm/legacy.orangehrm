@@ -58,8 +58,8 @@ class ohrmWidgetFormTimeRange extends sfWidgetForm {
         $this->addOption('show_duration', true);
 
         $this->addOption('from_label', 'from');
-        $this->addOption('to_label', 'to');
-        $this->addOption('duration_label', 'duration');        
+        $this->addOption('to_label', 'To');
+        $this->addOption('duration_label', 'Duration');        
 
         $this->addOption('from_label_template', "<label for='%for_id%' class='time_range_label'>%label%</label>");
         $this->addOption('to_label_template', "<label for='%for_id%' class='time_range_label'>%label%</label>");
