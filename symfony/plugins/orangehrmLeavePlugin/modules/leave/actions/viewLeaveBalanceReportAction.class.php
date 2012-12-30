@@ -84,7 +84,7 @@ class viewLeaveBalanceReportAction extends sfAction {
             
             $reportBuilder = new ReportBuilder();
             $numOfRecords = $reportBuilder->getNumOfRecords($reportId, $values);
-            $maxPageLimit = $reportBuilder->getMaxPageLimit($reportId);
+            $maxPageLimit = $noOfRecords = sfConfig::get('app_items_per_page'); //$reportBuilder->getMaxPageLimit($reportId);
 
             $this->pager = new SimplePager('Report', $maxPageLimit);
             $this->pager->setPage(($request->getParameter('pageNo') != '') ? $request->getParameter('pageNo') : 0);
