@@ -35,7 +35,7 @@ $(document).ready(function() {
         
         //Show From if same date
         if(trim($("#assignleave_txtFromDate").val()) != displayDateFormat && trim($("#assignleave_txtToDate").val()) != displayDateFormat){
-            if( trim($("#assignleave_txtFromDate").val()) == trim($("#assignleave_txtToDate").val())) {
+            if( trim($("#assignleave_txtFromDate").val()) == trim($("#assignleave_txtToDate").val()) && trim($("#assignleave_txtFromDate").val()) != '') {
                 showTimeControls(true);
             }
         }
