@@ -2095,10 +2095,21 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
         <input_field type="text" name="toDate" label="To"></input_field>
         <input_field type="text" name="asOfDate" label="AsOf"></input_field>
         <input_field type="text" name="emp_numbers" label="employees"></input_field>
+        <input_field type="text" name="job_title" label="Job Title"></input_field>
+        <input_field type="text" name="location" label="Location"></input_field>
+        <input_field type="text" name="sub_unit" label="Sub Unit"></input_field>
+        <input_field type="text" name="terminated" label="Terminated"></input_field>
 </filter_fields> 
 
 <sub_report type="sql" name="mainTable">       
-    <query>FROM hs_hr_employee WHERE $X{IN,hs_hr_employee.emp_number,emp_numbers} ORDER BY hs_hr_employee.emp_lastname</query>
+    <query>FROM hs_hr_employee 
+    LEFT JOIN hs_hr_emp_locations ON hs_hr_employee.emp_number = hs_hr_emp_locations.emp_number
+    WHERE $X{IN,hs_hr_employee.emp_number,emp_numbers} 
+    AND $X{=,hs_hr_employee.job_title_code,job_title}
+    AND $X{IN,hs_hr_employee.work_station,sub_unit}
+    AND $X{IN,hs_hr_emp_locations.location_id,location}
+    AND $X{IS NULL,hs_hr_employee.termination_id,terminated}
+    ORDER BY hs_hr_employee.emp_lastname</query>
     <id_field>empNumber</id_field>
     <display_groups>
         <display_group name="personalDetails" type="one" display="true">
@@ -2110,6 +2121,12 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
                     <display_name>Employee Number</display_name>
                     <width>1</width>	
                 </field>                
+                <field display="false">
+                    <field_name>hs_hr_employee.termination_id</field_name>
+                    <field_alias>termination_id</field_alias>
+                    <display_name>Termination ID</display_name>
+                    <width>1</width>	
+                </field>   
                 <field display="true">
                     <field_name>CONCAT(hs_hr_employee.emp_firstname, \' \', hs_hr_employee.emp_lastname)</field_name>
                     <field_alias>employeeName</field_alias>

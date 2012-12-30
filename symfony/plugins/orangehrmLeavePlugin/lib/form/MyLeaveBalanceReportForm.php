@@ -31,6 +31,10 @@ class MyLeaveBalanceReportForm extends LeaveBalanceReportForm {
         unset($this['report_type']);
         unset($this['employee']);
         unset($this['leave_type']);
+        unset($this['job_title']);
+        unset($this['location']);
+        unset($this['sub_unit']);
+        unset($this['include_terminated']);        
     }
     
     public function getValue($field) {

@@ -11,7 +11,7 @@ use_stylesheets_for_form($form);
         <?php include_partial('global/form_errors', array('form' => $form)); ?>
     </div>
 <?php endif; ?>
-<div class="box" id="leave-balance-report">
+<div class="box searchForm" id="leave-balance-report">
     <div class="head">
         <h1><?php echo ($mode == 'my') ? __("My Leave Entitlements and Usage Report") : __("Leave Entitlements and Usage Report");?></h1>
     </div>
@@ -152,22 +152,40 @@ use_stylesheets_for_form($form);
         var reportTypeLi = $('#leave_balance_leave_type').parent('li');
         var employeeNameLi = $('#leave_balance_employee_empName').parent('li');
         var dateLi = $('#date_from').parent('li');
+        var jobTitleLi = $('#leave_balance_job_title').parent('li');
+        var locationLi = $('#leave_balance_location').parent('li');
+        var subUnitLi = $('#leave_balance_sub_unit').parent('li');
+        var terminatedLi = $('#leave_balance_include_terminated').parent('li');
+        
         var viewBtn = $('#viewBtn');
 
         if (reportType == employeeReport) {
             reportTypeLi.hide();
             employeeNameLi.show(); 
             dateLi.show();
-            viewBtn.show();
+            jobTitleLi.hide();
+            locationLi.hide();
+            subUnitLi.hide();
+            terminatedLi.hide();
+            viewBtn.show();        
         } else if (reportType == leaveTypeReport) {
             reportTypeLi.show();
             employeeNameLi.hide();           
-            dateLi.show();
+            jobTitleLi.show();
+            locationLi.show();
+            subUnitLi.show();
+            terminatedLi.show();            
+            dateLi.show();            
             viewBtn.show();
         } else {
             reportTypeLi.hide();
             employeeNameLi.hide();                    
             dateLi.hide();
+            jobTitleLi.hide();
+            locationLi.hide();
+            subUnitLi.hide();
+            terminatedLi.hide();
+            
             viewBtn.hide();
         }        
     }   

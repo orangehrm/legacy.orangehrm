@@ -109,11 +109,14 @@ class SqlDataGenerator extends DataGenerator {
 
                     if ($operator == 'IN') {
                         
-                        if (!is_array($values[$name]) || count($values[$name]) == 0) {
-                            return "true";
-                        }
-                        
                         $valueArray = $values[$name];
+                        
+                        if (!is_array($valueArray) && is_string($valueArray)) {
+                            $valueArray = explode(',', $valueArray);
+                        }
+                        if (!is_array($valueArray) || count($valueArray) == 0) {
+                            return "true";
+                        }                        
 
                         $placeHolders = rtrim(str_repeat('?,', count($valueArray)), ',');
                         $clause = $field . " IN (" . $placeHolders . ")";
@@ -140,6 +143,16 @@ class SqlDataGenerator extends DataGenerator {
                     } else if ($operator == '<=') {
                         $clause = $field . ' <= ?';
                         $parameters[] = $values[$name];
+                    } else if ($operator == 'IS NOT NULL') {
+                        if ($values[$name] == 'TRUE') {
+                            $clause = $field . ' IS NOT NULL';
+                        }
+                    } else if ($operator == 'IS NULL') {
+                        if ($values[$name] == 'TRUE') {
+                            $clause = $field . ' IS NULL';
+                        } else {
+                            $clause = 'true';
+                        }
                     }
 
                     return $clause;

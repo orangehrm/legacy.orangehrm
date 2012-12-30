@@ -30,6 +30,11 @@ class LeaveBalanceReportForm extends BaseForm {
     protected $leaveTypeService;    
     
     protected $leavePeriodService;
+    protected $locationService;    
+    protected $jobTitleService;
+    
+    protected $locationChoices = null;
+    protected $jobTitleChoices = null;    
     
     public function getLeaveTypeService() {
         if (!isset($this->leaveTypeService)) {
@@ -53,6 +58,28 @@ class LeaveBalanceReportForm extends BaseForm {
         $this->leavePeriodService = $leavePeriodService;
     }
     
+    public function getLocationService() {
+        if (!($this->locationService instanceof LocationService)) {
+            $this->locationService = new LocationService();
+        }
+        return $this->locationService;
+    }    
+
+    public function setLocationService($locationService) {
+        $this->locationService = $locationService;
+    }
+    
+    public function getJobTitleService() {
+        if (!($this->jobTitleService instanceof JobTitleService)) {
+            $this->jobTitleService = new JobTitleService();
+        }
+        return $this->jobTitleService;
+    }
+    
+    public function setJobTitleService($jobTitleService) {
+        $this->jobTitleService = $jobTitleService;
+    }    
+    
     public function configure() {
 
         $reportTypes = array(0 => '-- ' . __('Select') . ' --', 
@@ -71,10 +98,19 @@ class LeaveBalanceReportForm extends BaseForm {
         $this->setValidator('employee', new ohrmValidatorEmployeeNameAutoFill());
         
         $this->_setLeaveTypeWidget();        
+                
+        $this->setWidget('date', new ohrmWidgetFormLeavePeriod(array()));
+         
+        $this->setWidget('job_title',  new sfWidgetFormChoice(array('choices' => $this->getJobTitleChoices())));
+        $this->setWidget('location', new sfWidgetFormChoice(array('choices' => $this->getLocationChoices())));
+        $this->setWidget('sub_unit', new ohrmWidgetSubDivisionList());
+        $this->setWidget('include_terminated', new sfWidgetFormInputCheckbox(array('value_attribute_value' => 'on')));           
         
-         $this->setWidget('date', new ohrmWidgetFormLeavePeriod(array()));
-        
-
+        $this->setValidator('location', new sfValidatorChoice(array('choices' => array_keys($this->getLocationChoices()))));
+        $this->setValidator('job_title', new sfValidatorChoice(array('choices' => array_keys($this->getJobTitleChoices()))));
+        $this->setValidator('sub_unit', new sfValidatorString(array('required' => false)));
+        $this->setValidator('include_terminated', new sfValidatorString(array('required' => false)));
+            
         $this->setValidator('date', new sfValidatorDateRange(array(
             'from_date' => new ohrmDateValidator(array('required' => true)),
             'to_date' => new ohrmDateValidator(array('required' => true))
@@ -89,6 +125,36 @@ class LeaveBalanceReportForm extends BaseForm {
         $this->getWidgetSchema()->setLabels($this->getFormLabels());
 
     }
+    
+    private function getJobTitleChoices() {
+
+        if (is_null($this->jobTitleChoices)) {
+            $jobTitleList = $this->getJobTitleService()->getJobTitleList();
+
+            $this->jobTitleChoices = array('0' => __('All'));
+
+            foreach ($jobTitleList as $jobTitle) {
+                $this->jobTitleChoices[$jobTitle->getId()] = $jobTitle->getJobTitleName();
+            }
+        }
+
+        return $this->jobTitleChoices;
+    }    
+    
+    protected function getLocationChoices() {
+
+        if (is_null($this->locationChoices)) {
+            $locationList = $this->getLocationService()->getLocationList();
+
+            $this->locationChoices = array('0' => __('All'));
+
+            foreach ($locationList as $location) {
+                $this->locationChoices[$location->getId()] = $location->getName();
+            }
+        }
+
+        return $this->locationChoices;
+    }    
     
     private function _setLeaveTypeWidget() {
 
@@ -123,7 +189,11 @@ class LeaveBalanceReportForm extends BaseForm {
             'report_type' => 'Generate For',
             'employee' => 'Employee',
             'leave_type' => 'Leave Type',
-            'date' => 'From'
+            'date' => 'From',
+            'location' => __('Location'),
+            'job_title' => __('Job Title'),
+            'sub_unit' => __('Sub Unit'),
+            'include_terminated' => __('Include Past Employees')
         );
         
         return $labels;

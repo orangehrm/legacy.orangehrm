@@ -96,7 +96,7 @@ class viewLeaveBalanceReportAction extends sfAction {
             $limit = $this->pager->getMaxPerPage();
 
             $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
-            $this->fixUnusedLeave();
+            $this->fixResultset();
 
             //var_dump($this->resultsSet[1]);
             $this->reportName = $this->getReportName($reportId);
@@ -157,6 +157,22 @@ class viewLeaveBalanceReportAction extends sfAction {
             'toDate' => $toDate,
             'asOfDate' => $asOfDate,            
         );
+        
+        if (isset($values['job_title']) && $values['job_title'] != 0) {
+            $convertedValues['job_title'] = $values['job_title'];
+        }
+        
+        if (isset($values['sub_unit']) && $values['sub_unit'] != 0) {
+            $convertedValues['sub_unit'] = $values['sub_unit'];
+        }
+
+        if (isset($values['location']) && $values['location'] != 0) {
+            $convertedValues['location'] = $values['location'];
+        }
+
+        if (!isset($values['include_terminated']) || $values['include_terminated'] != 'on') {
+            $convertedValues['terminated'] = 'TRUE';
+        }
         
         if ($this->mode != 'my') {
                     
@@ -248,7 +264,7 @@ class viewLeaveBalanceReportAction extends sfAction {
         return $tableHeaders;
     }
     
-    protected function fixUnusedLeave() {
+    protected function fixResultset() {
         $keep = array();
         
         for ($i = 0; $i < count($this->resultsSet); $i++) {
@@ -262,6 +278,11 @@ class viewLeaveBalanceReportAction extends sfAction {
             } else {
                 $unused = $this->getValue($total) - $this->getValue($scheduled) - $this->getValue($taken);
                 $this->resultsSet[$i]['unused'] = number_format($unused,2);
+                
+                if (isset($this->resultsSet[$i]['employeeName']) && isset($this->resultsSet[$i]['termination_id'])) {
+                    
+                    $this->resultsSet[$i]['employeeName'] = $this->resultsSet[$i]['employeeName'] . " (" . __("Past Employee") . ")";
+                }
                 $keep[] = $this->resultsSet[$i];
             }
         }
