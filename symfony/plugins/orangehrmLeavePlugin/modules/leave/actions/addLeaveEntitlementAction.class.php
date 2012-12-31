@@ -144,7 +144,7 @@ class addLeaveEntitlementAction extends sfAction {
         $filters = array(
             'id' => $id,
             'employee' => array(
-                'empName' => $employee->getFirstAndLastNames(),
+                'empName' => $employee->getFullName(),
                 'empId' => $employee->getEmpNumber()),
             'leave_type' => $entitlement->getLeaveTypeId(),
             'date'=>array(
