@@ -4314,6 +4314,10 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCan
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubject.txt -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberBody.txt -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberSubject.txt -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeBody.txt -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeSubject.txt -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeSubscriberBody.txt -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeSubscriberSubject.txt -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationBody.txt -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubject.txt -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubscriberBody.txt -text

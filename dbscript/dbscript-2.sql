@@ -1845,7 +1845,9 @@ INSERT INTO ohrm_email(`id`, `name`) VALUES
     (10, 'leave.cancel.applicant'),
     (11, 'leave.cancel.subscriber'),
     (12, 'leave.reject.applicant'),
-    (13, 'leave.reject.subscriber');
+    (13, 'leave.reject.subscriber'),
+    (14, 'leave.change.applicant'),
+    (15, 'leave.change.subscriber');
 
 INSERT INTO ohrm_email_template(`id`, `email_id`, `locale`, `body`, `subject`) VALUES 
     (1, 1, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt'),
@@ -1860,7 +1862,9 @@ INSERT INTO ohrm_email_template(`id`, `email_id`, `locale`, `body`, `subject`) V
     (10, 10, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubject.txt'),
     (11, 11, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberSubject.txt'),
     (12, 12, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubject.txt'),
-    (13, 13, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberSubject.txt');
+    (13, 13, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberSubject.txt'),
+    (14, 14, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeSubject.txt'),
+    (15, 15, 'en_US', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeSubscriberBody.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveChangeSubscriberSubject.txt');
 
 INSERT INTO  ohrm_email_processor(`id`, `email_id`, `class_name`) VALUES 
     (1, 1, 'LeaveApplySupervisorMailProcessor'),
