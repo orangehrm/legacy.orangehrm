@@ -103,7 +103,7 @@ use_stylesheets_for_form($form);
             $('#search_form').submit();
         });
         $('#btnAdd').click(function() {
-            location.href = "<?php echo url_for('leave/addLeaveEntitlement') ?>";
+            location.href = "<?php echo url_for('leave/addLeaveEntitlement') ?>?savedsearch=1";
         });        
        
         $('#btnDelete').attr('disabled','disabled');

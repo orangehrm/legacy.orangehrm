@@ -127,7 +127,7 @@ class addLeaveEntitlementAction extends sfAction {
             if ($request->hasParameter('id')) {                
                 $id = $request->getParameter('id');
                 $filters = $this->getFiltersFromEntitlement($id);  
-            } else {
+            } else if ($request->hasParameter('savedsearch')){
                 $filters = $this->getFilters();
             }
             if (!empty($filters)) {
