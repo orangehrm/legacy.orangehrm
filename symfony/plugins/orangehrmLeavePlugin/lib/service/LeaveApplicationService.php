@@ -133,17 +133,18 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
                     $loggedInEmpNumber = $user->getAttribute('auth.empNumber');
         
                     $leaveRequest = $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaves, $entitlements);
-                    $leaveComment = $leaveRequest->getComments();
+                    $leaveComment = trim($leaveRequest->getComments());
                                    
-                    if (!empty($loggedInEmpNumber)) {
-                        $employee = $this->getEmployeeService()->getEmployee($loggedInEmpNumber);
-                        $createdBy = $employee->getFullName();
-                    } else {
-                        $createdBy = $user->getAttribute('auth.firstName');
+                    if (!empty($leaveComment)) {                                                       
+                        if (!empty($loggedInEmpNumber)) {
+                            $employee = $this->getEmployeeService()->getEmployee($loggedInEmpNumber);
+                            $createdBy = $employee->getFullName();
+                        } else {
+                            $createdBy = $user->getAttribute('auth.firstName');
+                        }
+                        $this->getLeaveRequestService()->saveLeaveRequestComment($leaveRequest->getId(), 
+                                $leaveComment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
                     }
-                    $this->getLeaveRequestService()->saveLeaveRequestComment($leaveRequest->getId(), 
-                            $leaveComment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
-                    
 //                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
 //                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaves);
 //                    }

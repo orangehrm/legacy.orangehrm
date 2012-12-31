@@ -4251,6 +4251,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesA
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeesEntitlementAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getHolidayAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getLeaveBalanceAjaxAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getLeaveCommentsAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkWeekAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkshiftAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/isValidEntitlemnetAjaxAction.class.php -text
@@ -4381,6 +4382,7 @@ symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccessValidate.js -te
 symfony/plugins/orangehrmLeavePlugin/web/js/leaveTypeListSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewHolidayListSuccessSearch.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewLeaveListSuccess.js -text
+symfony/plugins/orangehrmLeavePlugin/web/js/viewLeaveRequestSuccess.js -text
 symfony/plugins/orangehrmPimPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmPimPlugin/config/list_component.yml -text
 symfony/plugins/orangehrmPimPlugin/config/routing.yml -text

@@ -138,6 +138,36 @@ class LeaveRequestDao extends BaseDao {
         }
     }
     
+    public function getLeaveRequestComments($leaveRequestId) {
+        try {
+            $q = Doctrine_Query::create()
+                    ->from('LeaveRequestComment c')
+                    ->andWhere("c.leave_request_id = ?", $leaveRequestId);
+
+
+            $comments = $q->execute();
+
+            return $comments;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
+        }
+    }
+
+    public function getLeaveComments($leaveId) {
+        try {
+            $q = Doctrine_Query::create()
+                    ->from('LeaveComment c')
+                    ->andWhere("c.leave_id = ?", $leaveId);
+
+
+            $comments = $q->execute();
+
+            return $comments;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
+        }
+    }    
+    
     public function saveLeave(Leave $leave) {
         try {
             $leave->save();

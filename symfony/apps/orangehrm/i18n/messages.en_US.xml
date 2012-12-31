@@ -5354,7 +5354,15 @@
    <trans-unit id="1170">
     <source>Should be a number with upto %count% decimal places</source>
     <target>Should be a number with upto %count% decimal places</target>
-   </trans-unit>          
+   </trans-unit>  
+   <trans-unit id="1171">
+    <source>Author</source>
+    <target>FR_Author</target>
+   </trans-unit>
+   <trans-unit id="1172">
+    <source>View Leave Request Comments</source>
+    <target>View Leave Request Comments</target>
+   </trans-unit>                              
   </body>
  </file>
 </xliff>

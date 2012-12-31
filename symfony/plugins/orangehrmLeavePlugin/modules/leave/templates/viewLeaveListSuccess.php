@@ -67,7 +67,7 @@ use_javascripts_for_form($form);
 <?php include_component('core', 'ohrmList'); ?>
 
 <!-- comment dialog -->
-<div class="modal hide" id="commentDialog">
+<div class="modal hide midsize" id="commentDialog">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
     <h3><?php echo __('Leave Request Comments'); ?></h3>
@@ -77,7 +77,11 @@ use_javascripts_for_form($form);
     <form action="updateComment" method="post" id="frmCommentSave">
         <input type="hidden" id="leaveId" />
         <input type="hidden" id="leaveOrRequest" />        
-        <textarea id="existingComments" cols="40" rows="10" class="commentTextArea" disabled="disabled"></textarea>
+        
+        <div id="existingComments">  
+            <span><?php echo __('Loading') . '...';?></span>
+        </div>
+
         <br class="clear" />
         <br class="clear" />
         <textarea name="leaveComment" id="leaveComment" cols="40" rows="4" class="commentTextArea"></textarea>
@@ -98,6 +102,7 @@ use_javascripts_for_form($form);
     var lang_typeHint = "<?php echo __("Type for hints"); ?>" + "...";
     var resetUrl = '<?php echo url_for($baseUrl . '?reset=1'); ?>';
     var commentUpdateUrl = '<?php echo public_path('index.php/leave/updateComment'); ?>';
+    var getCommentsUrl = '<?php echo url_for('leave/getLeaveCommentsAjax'); ?>';
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
@@ -111,6 +116,11 @@ use_javascripts_for_form($form);
     var leave_status_pending = '<?php echo PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL;?>';
     var ess_mode = '<?php echo ($essMode) ? '1' : '0'; ?>';
     var lang_Required = '<?php echo __(ValidationMessages::REQUIRED);?>';
+    var lang_Date = '<?php echo __('Date');?>';
+    var lang_Time = '<?php echo __('Time');?>';
+    var lang_Author = '<?php echo __('Author');?>';
+    var lang_Comment = '<?php echo __('Comment');?>';
+    var lang_Loading = '<?php echo __('Loading');?>...';
     
     function submitPage(pageNo) {
         //    location.href = '<?php //echo url_for($baseUrl . '?pageNo='); ?>' + pageNo;

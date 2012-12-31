@@ -133,7 +133,7 @@ class viewLeaveRequestAction extends sfAction {
         $leaveRequest = $this->getLeaveRequestService()->fetchLeaveRequest($this->leaveRequestId);
         $employee = $leaveRequest->getEmployee();
         
-        $this->requestComments = $this->getLeaveRequestComments($leaveRequest);
+        $this->requestComments = $leaveRequest->getLeaveRequestComment();
         
         $this->mode = $this->getMode($employee->getEmpNumber());
         $this->essMode = $this->isEssMode($employee->getEmpNumber());
@@ -145,25 +145,6 @@ class viewLeaveRequestAction extends sfAction {
 
         $this->setListComponent($list);
         $this->setTemplate('viewLeaveRequest');
-    }
-    
-    protected function getLeaveRequestComments($leaveRequest) {
-
-        $allComments = '';
-        
-        $leaveRequestComments = $leaveRequest->getLeaveRequestComment();
-        foreach ($leaveRequestComments as $comment) {
-
-            $created = new DateTime($comment->getCreated());
-            $createdAt = set_datepicker_date_format($created->format('Y-m-d')) . ' ' . $created->format('H:i');
-
-            $formatComment = $createdAt . ' ' . $comment->getCreatedByName() . "\n\n" .
-                    $comment->getComments();
-            $allComments = $formatComment . "\n\n" . $allComments;
-        }
-        
-        return $allComments;
-        
     }
 
     protected function setListComponent($leaveList) {

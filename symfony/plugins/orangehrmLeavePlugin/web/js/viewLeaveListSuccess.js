@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     });
 
-    //open when the pencil mark got clicked
+    //open comment icon is clicked
     $('.dialogInvoker').click(function() {
         $('#ajaxCommentSaveMsg').html('').removeAttr('class');      
         
@@ -54,102 +54,62 @@ $(document).ready(function() {
         if (!id) {
             id = $(this).parent().siblings('input[id^="hdnLeave_"]').val();
         }
-        var comment = $('#hdnLeaveComment-' + id).val();     
         
         $('#leaveId').val(id);
-        $('#existingComments').val(comment);
         $('#leaveComment').val('');
         
-        // If leave comment is empty , enable the edit mode
-//        if( $('#leaveComment').val().trim() =="") {
-//            $("#leaveComment").removeAttr("disabled");
-//            $("#commentSave").attr("value", lang_save);
-//        } else {
-//            $("#leaveComment").attr("disabled","disabled");
-//            $("#commentSave").attr("value", lang_edit);
-//        }
-        
-        $('#leaveOrRequest').val('request');
-
+        fetchComments(id);
+      
         $('#commentDialog').modal();
     });    
-
-//    $('#leaveComment').change(function() {
-//        
-//        var text = $(this).val();
-//        alert(text);
-//        if ($('#leaveComment').text().trim().length > 0) {
-//            $("#commentSave").removeAttr("disabled");            
-//        } else {
-//            $("#commentSave").attr('disabled', 'disabled');
-//        }
-//    });
     
     //on clicking on save button
     $("#commentSave").click(function() {
-//        if($("#commentSave").attr("value") == lang_edit) {
-//            $("#leaveComment").removeAttr("disabled");
-//            $("#commentSave").attr("value", lang_save);
-//            return;
-//        }
 
-            $('#commentError').html('').removeClass('validation-error');
-            var comment = $('#leaveComment').val().trim();
-            if(comment.length > 250) {
-                $('#commentError').html(lang_length_exceeded_error).addClass('validation-error');
-                return;
-            } else if (comment.length == 0) {
-                $('#commentError').html(lang_Required).addClass('validation-error');
-                return;                                
-            }
-
-            /* Setting the comment in the label */
-            var commentLabel = trimComment(comment);
-
-            /* Posting the comment */
-            var url = commentUpdateUrl;
-            var data = 'leaveRequestId=' + $('#leaveId').val() + '&leaveComment=' + encodeURIComponent(comment);
-
-            /* This is specially for detailed view */
-            if($('#leaveOrRequest').val() == 'leave') {
-                data = 'leaveId=' + $('#leaveId').val() + '&leaveComment=' + encodeURIComponent(comment);
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: data,
-                success: function(data) {
-                    $('#ajaxCommentSaveMsg').removeAttr('class').html('');
-                    $('.messageBalloon_success').remove();
-                    
-                    if(data != 0) {
-                        var id = $('#leaveId').val();
-                        $('#commentContainer-' + id).html(commentLabel);
-                        
-                        var currentComment = $('#hdnLeaveComment-' + id).val();
-                        var newComment = data + "\n\n" + currentComment;
-                        $('#hdnLeaveComment-' + id).val(newComment);
-                        $('#noActionsSelectedWarning').remove();
-                        
-                        //$('#helpText').before(content);
-                        
-                        //$('#ajaxCommentSaveMsg')
-                        $('#helpText').before('<div class="message success fadable">' + lang_comment_successfully_saved + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');
-                    } else {
-                        $('#helpText').before('<div class="message warning fadable">' + lang_comment_save_failed + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');                        
-                    }
-                    setTimeout(function(){
-                        $("div.fadable").fadeOut("slow", function () {
-                            $("div.fadable").remove();
-                        });
-                    }, 2000);
-                    
-                }
-            });
-
-            $("#commentDialog").modal('hide');
+        $('#commentError').html('').removeClass('validation-error');
+        var comment = $('#leaveComment').val().trim();
+        if(comment.length > 250) {
+            $('#commentError').html(lang_length_exceeded_error).addClass('validation-error');
             return;
+        } else if (comment.length == 0) {
+            $('#commentError').html(lang_Required).addClass('validation-error');
+            return;                                
+        }
+
+        /* Setting the comment in the label */
+        var commentLabel = trimComment(comment);
+
+        /* Posting the comment */
+        var data = 'leaveRequestId=' + $('#leaveId').val() + '&leaveComment=' + encodeURIComponent(comment);
+
+        $.ajax({
+            type: 'POST',
+            url: commentUpdateUrl,
+            data: data,
+            success: function(data) {
+                $('#ajaxCommentSaveMsg').removeAttr('class').html('');
+                $('.messageBalloon_success').remove();
+
+                if(data != 0) {
+                    var id = $('#leaveId').val();
+                    $('#commentContainer-' + id).html(commentLabel);                        
+                    $('#noActionsSelectedWarning').remove();
+
+                    $('#helpText').before('<div class="message success fadable">' + lang_comment_successfully_saved + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');
+                } else {
+                    $('#helpText').before('<div class="message warning fadable">' + lang_comment_save_failed + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');                        
+                }
+                setTimeout(function(){
+                    $("div.fadable").fadeOut("slow", function () {
+                        $("div.fadable").remove();
+                    });
+                }, 2000);
+
+            }
+        });
+
+        $("#commentDialog").modal('hide');
+        return;
 
     });
 
@@ -175,4 +135,40 @@ function trimComment(comment) {
         comment = comment.substr(0, 35) + '...';
     }
     return comment;
+}
+    
+function fetchComments(leaveRequestId) {
+
+    $('#existingComments').html(lang_Loading);
+    params = 'leaveRequestId=' + leaveRequestId;
+    $.ajax({
+        type: 'GET',
+        url: getCommentsUrl,
+        data: params,
+        dataType: 'json',
+        success: function(data) {                
+
+            var count = data.length;
+            var html = '';
+            var rows = 0;
+
+            $('#existingComments').html('');  
+            if (count > 0) {
+                html = "<table class='table'><tr><th>"+lang_Date+"</th><th>"+lang_Time+"</th><th>"+lang_Author+"</th><th>"+lang_Comment+"</th></tr>";
+                for (var i = 0; i < count; i++) {
+                    var css = "odd";
+                    rows++;
+                    if (rows % 2) {
+                        css = "even";
+                    }
+                    html = html + '<tr class="' + css + '"><td>'+data[i]['date']+'</td><td>'+data[i]['time']+'</td><td>'
+                        +data[i]['author']+'</td><td>'+data[i]['comments']+'</td></tr>';
+                }
+                html = html + '</table>';
+            } else {
+
+            }
+            $('#existingComments').append(html);
+        }
+    });
 }

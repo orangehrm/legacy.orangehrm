@@ -182,6 +182,14 @@ class LeaveRequestService extends BaseService {
         return $this->getLeaveRequestDao()->saveLeaveComment($leaveId, $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
     }
     
+    public function getLeaveRequestComments($leaveRequestId) {
+        return $this->getLeaveRequestDao()->getLeaveRequestComments($leaveRequestId);
+    }
+
+    public function getLeaveComments($leaveId) {
+        return $this->getLeaveRequestDao()->getLeaveComments($leaveId);
+    }    
+    
     /**
      *
      * @param Employee $employee
