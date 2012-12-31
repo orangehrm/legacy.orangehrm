@@ -4642,8 +4642,8 @@
     <target>FR_Due date should be after from date</target>
    </trans-unit>
    <trans-unit id="999">
-    <source>Successfully removed</source>
-    <target>FR_Successfully removed</target>
+    <source>Successfully Removed</source>
+    <target>FR_Successfully Removed</target>
    </trans-unit>
    <trans-unit id="1000">
     <source>Ok</source>

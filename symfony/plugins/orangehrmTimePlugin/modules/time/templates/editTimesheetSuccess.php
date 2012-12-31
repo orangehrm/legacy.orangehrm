@@ -243,7 +243,7 @@ form ol li.largeTextBox textarea {
     var lang_selectProjectAndActivity='<?php echo __('Select a Project and an Activity'); ?>';
     var lang_enterExistingProject='<?php echo __("Select a Project and an Activity"); ?>';
     var lang_noRecords='<?php echo __('Select Records to Remove'); ?>';
-    var lang_removeSuccess = '<?php echo __('Successfully removed')?>';
+    var lang_removeSuccess = '<?php echo __('Successfully Removed')?>';
     var lang_noChagesToDelete = '<?php echo __('No Changes to Delete');?>';
     var closeText = '<?php echo __('Close');?>';
     <?php
