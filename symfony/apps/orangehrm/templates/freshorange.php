@@ -40,7 +40,7 @@
         </div> <!-- wrapper -->
         
         <div id="footer">
-            OrangeHRM ver 3.0-alpha.12 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
+            OrangeHRM ver 3.0-rc.1 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
         </div> <!-- footer -->        
         
 <?php require_once '_footer.php'; ?>
