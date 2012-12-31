@@ -243,7 +243,7 @@ class addLeaveEntitlementAction extends sfAction {
             $leaveEntitlement->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
             $leaveEntitlement->setDeleted(0);            
         
-        
+            $leaveEntitlement->setNoOfDays(round($leaveEntitlement->getNoOfDays(), 2));
         
             $leaveEntitlement->setFromDate($values['date']['from']);
             $leaveEntitlement->setToDate($values['date']['to']);

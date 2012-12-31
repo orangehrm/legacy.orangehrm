@@ -169,6 +169,20 @@ function toggleFilters(show) {
         $('ol#filter li:not(:first)').find('input,select').change(function(){
            updateFilterMatches(); 
         });
+        
+    $.validator.addMethod("twoDecimals", function(value, element, params) {
+        
+        var isValid = false;
+
+        var match = value.match(/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/);
+        if(match) {
+            isValid = true;
+        }
+        if (value == ""){
+            isValid = true;
+        }
+        return isValid;
+    });        
  
         $('#frmLeaveEntitlementAdd').validate({
                 rules: {
@@ -214,6 +228,7 @@ function toggleFilters(show) {
                     'entitlements[entitlement]': {
                         required: true,
                         number: true,
+                        twoDecimals: true,
                         remote: {
                             url: validEntitlemnetUrl,
                             data: {
@@ -243,7 +258,8 @@ function toggleFilters(show) {
                     'entitlements[entitlement]': {
                         required: lang_required,
                         number: lang_number,
-                        remote : lang_valid_entitlement
+                        remote : lang_valid_entitlement,
+                        twoDecimals: lang_number
                     }                    
             }
 

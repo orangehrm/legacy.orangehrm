@@ -5351,6 +5351,10 @@
     <source>My Entitlements</source>
     <target>My Entitlements</target>
    </trans-unit>     
+   <trans-unit id="1170">
+    <source>Should be a number with upto %count% decimal places</source>
+    <target>Should be a number with upto %count% decimal places</target>
+   </trans-unit>          
   </body>
  </file>
 </xliff>
