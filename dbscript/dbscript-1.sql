@@ -1210,7 +1210,7 @@ CREATE TABLE `ohrm_leave_comment` (
   `leave_id` int(11) NOT NULL,
   `created` datetime default NULL,
   `created_by_name` varchar(255) NOT NULL,
-  `created_by_id` int(10) NOT NULL,
+  `created_by_id` int(10),
   `created_by_emp_number` int(7) default NULL,
   `comments` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
@@ -1218,10 +1218,10 @@ CREATE TABLE `ohrm_leave_comment` (
 
 CREATE TABLE `ohrm_leave_request_comment` (
   `id` int(11) NOT NULL  auto_increment,
-  `leave_request_id` int(11) NOT NULL,
+  `leave_request_id` int unsigned NOT NULL,
   `created` datetime default NULL,
   `created_by_name` varchar(255) NOT NULL,
-  `created_by_id` int(10) NOT NULL,
+  `created_by_id` int(10),
   `created_by_emp_number` int(7) default NULL,
   `comments` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
@@ -1332,7 +1332,7 @@ alter table ohrm_leave_comment
 
 alter table ohrm_leave_comment
     add constraint foreign key (created_by_id)
-        references ohrm_user(id) on delete set NULL;
+        references ohrm_user(`id`) on delete set NULL;
 
 alter table ohrm_leave_comment
     add constraint foreign key (created_by_emp_number)
@@ -1344,7 +1344,7 @@ alter table ohrm_leave_request_comment
 
 alter table ohrm_leave_request_comment
     add constraint foreign key (created_by_id)
-        references ohrm_user(id) on delete set NULL;
+        references ohrm_user(`id`) on delete set NULL;
 
 alter table ohrm_leave_request_comment
     add constraint foreign key (created_by_emp_number)
