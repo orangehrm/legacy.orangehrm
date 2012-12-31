@@ -122,28 +122,16 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
 
         $requestType = isset($data['requestType']) ? $data['requestType'] : 'request';
 
-        // Show individual comments in table if there are more than one leave 
-        // days with different comments        
+        // Show individual comments in table if there are any leave dates with comments
         $displayIndividualComments = false;
         if ($requestType == 'multiple' && count($data['days']) > 1) {
             
-            $firstComment = NULL;
-            $equalCount = 0;
-            
             foreach ($data['days'] as $leave) {
-                $thisLeaveComment = $leave->getComments();
-                if (is_null($firstComment)) {
-                    $firstComment = $thisLeaveComment;
-                    $equalCount++;
-                } else if ($thisLeaveComment == $firstComment) {                        
-                   $equalCount++;
-                } else {
+                $thisLeaveComment = $leave->getLatestCommentAsText();
+                if (!empty($thisLeaveComment)) {
+                    $displayIndividualComments = true;
                     break;
                 }
-            }
-            
-            if ($equalCount != count($data['days'])) {
-                $displayIndividualComments = true;
             }
         }
         
@@ -172,7 +160,7 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
                 $leaveDuration = $this->_fromatDuration($leaveDuration);
                 $details .= "$leaveDate            $leaveDuration";
                 if ($displayIndividualComments) {
-                    $details .= "            " . $leave->getComments();
+                    $details .= "                " . $this->trimComment($leave->getLatestCommentAsText());
                 }
                 $details .= "\n";
 
@@ -187,14 +175,13 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
         $leaveComment = '';
         
         if ($requestType == 'request') {
-            $leaveComment = $data['request']->getComments();
-        } elseif ($requestType == 'single' || !$displayIndividualComments) {
-            $leaveComment = $data['days'][0]->getComments();
+            $leaveComment = $data['request']->getCommentsAsText();
+        } elseif ($requestType == 'single') {
+            $leaveComment = $data['days'][0]->getCommentsAsText();
         }
 
-        $leaveComment = trim($leaveComment);
         if (!empty($leaveComment)) {
-            $details .= "Comment : $leaveComment";
+            $details .= "\n\nComments:\n=========\n$leaveComment";
             $details .= "\n";
         }
 
@@ -209,5 +196,12 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
         return $formattedDuration;
 
     }
+    
+    protected function trimComment($comment) {
+        if (strlen($comment) > 30) {
+            $comment = substr($comment, 0, 30) . '...';
+        }
+        return $comment;
+    }    
 }
 

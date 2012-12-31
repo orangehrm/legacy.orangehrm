@@ -88,4 +88,36 @@ abstract class PluginLeave extends BaseLeave {
         return set_datepicker_date_format($this->getDate());
     }
 
+    public function getLatestCommentAsText() {
+        $latestComment = '';
+        $leaveComments = $this->getLeaveComment();
+        
+        if (count($leaveComments) > 0) {
+            $lastComment = $leaveComments->getLast();
+            $latestComment = $lastComment->getComments();
+        }
+        
+        return $latestComment;
+    }
+
+    public function getCommentsAsText() {
+        $leaveComments = $this->getLeaveComment();
+        
+        $allComments = '';
+                
+        // show last comment only
+        if (count($leaveComments) > 0) {
+            
+            foreach ($leaveComments as $comment) {
+                $created = new DateTime($comment->getCreated());
+                $createdAt = set_datepicker_date_format($created->format('Y-m-d')) . ' ' . $created->format('H:i');
+                
+                $formatComment = $createdAt . ' ' . $comment->getCreatedByName() . "\n\n" .
+                        $comment->getComments();
+                $allComments = $formatComment . "\n\n" . $allComments;
+            }
+        }
+        
+        return $allComments;
+    }    
 }

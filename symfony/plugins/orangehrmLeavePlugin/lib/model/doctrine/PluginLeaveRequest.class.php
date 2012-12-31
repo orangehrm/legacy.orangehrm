@@ -214,5 +214,38 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
     public function getLeaveTypeName() {
         return $this->getLeaveType()->getName();
     }
+    
+    public function getLatestCommentAsText() {
+        $latestComment = '';
+        $leaveComments = $this->getLeaveRequestComment();
+        
+        if (count($leaveComments) > 0) {
+            $lastComment = $leaveComments->getLast();
+            $latestComment = $lastComment->getComments();
+        }
+        
+        return $latestComment;
+    }
+    
+    public function getCommentsAsText() {
+        $leaveComments = $this->getLeaveRequestComment();
+        
+        $allComments = '';
+                
+        // show last comment only
+        if (count($leaveComments) > 0) {
+            
+            foreach ($leaveComments as $comment) {
+                $created = new DateTime($comment->getCreated());
+                $createdAt = set_datepicker_date_format($created->format('Y-m-d')) . ' ' . $created->format('H:i');
+                
+                $formatComment = "(" . $createdAt . ' - ' . $comment->getCreatedByName() . ") \n" .
+                        $comment->getComments();
+                $allComments = $formatComment . "\n\n" . $allComments;
+            }
+        }
+        
+        return $allComments;
+    }     
 
 }
