@@ -1453,8 +1453,8 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (73, 'Reviews', 66, 68, 2, 500, '/mode/new', 1),
 (74, 'Entitlements', NULL, 41, 2, 300, NULL, 0),
 (75, 'Add Entitlements', 72, 74, 3, 100, NULL, 0),
-(76, 'My Entitlements', 70, 74, 3, 200, '/reset/1', 0),
-(77, 'Employee Entitlements', 69, 74, 3, 300, '/reset/1', 0),
+(76, 'My Entitlements', 70, 74, 3, 300, '/reset/1', 0),
+(77, 'Employee Entitlements', 69, 74, 3, 200, '/reset/1', 0),
 (78, 'Reports', NULL, 41, 2, 400, NULL, 0),
 (79, 'Leave Entitlements and Usage Report', 78, 78, 3, 100, NULL, 0),
 (80, 'My Leave Entitlements and Usage Report', 79, 78, 3, 200, NULL, 0);
