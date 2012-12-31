@@ -250,7 +250,7 @@ function updateLeaveBalance() {
                 $('#balance_used').text(balance.used);
                 $('#balance_scheduled').text(balance.scheduled);
                 $('#balance_pending').text(balance.pending);
-                $('#balance_total').text(balanceDays);                        
+                $('#balance_total').text(balanceDays.toFixed(2));                        
             }
         });
     }
