@@ -13,7 +13,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
         $header3 = new ListHeader();
         $header4 = new ListHeader();
         $header5 = new ListHeader();
-        $header6 = new ListHeader();
+        $header6 = new LeaveCommentHeader();
         $header7 = new LeaveListActionHeader();
         $header8 = new ListHeader();
 
@@ -93,10 +93,10 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
             'name' => 'Comments',
             'width' => '18%',
             'isSortable' => false,
-            'elementType' => 'comment',
+            'elementType' => 'leaveComment',
             'textAlignmentStyle' => 'left',
             'elementProperty' => array(
-                'getter' => 'getComments',
+                'getter' => 'getLeaveRequestComment',
                 'idPattern' => 'hdnLeaveComment-{id}',
                 'namePattern' => 'leaveComments[{id}]',
                 'placeholderGetters' => array('id' => 'getId'),

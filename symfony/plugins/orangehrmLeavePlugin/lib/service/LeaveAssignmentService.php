@@ -114,7 +114,22 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
         if ($holidayCount != count($leaveDays)) {
             if ($this->isEmployeeAllowedToApply($leaveType)) { // TODO: Should this be checked on Assign??
                 try {
-                    $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaveDays, $entitlements);
+                    
+                    $user = sfContext::getInstance()->getUser();
+                    $loggedInUserId = $user->getAttribute('auth.userId');
+                    $loggedInEmpNumber = $user->getAttribute('auth.empNumber');
+        
+                    $leaveRequest = $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaveDays, $entitlements);
+                    $leaveComment = $leaveRequest->getComments();
+                                   
+                    if (!empty($loggedInEmpNumber)) {
+                        $employee = $this->getEmployeeService()->getEmployee($loggedInEmpNumber);
+                        $createdBy = $employee->getFullName();
+                    } else {
+                        $createdBy = $user->getAttribute('auth.firstName');
+                    }
+                    $this->getLeaveRequestService()->saveLeaveRequestComment($leaveRequest->getId(), 
+                            $leaveComment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
 
 //                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
 //                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaveDays);

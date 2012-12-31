@@ -531,3 +531,91 @@ Holiday:
       local: operational_country_id
       foreign: id
       type: one
+      
+LeaveRequestComment:
+  tableName: ohrm_leave_request_comment
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    leave_request_id:
+      type: integer(4)
+      unsigned: true
+      notnull: true
+    created:
+      type: datetime
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    created_by_name:
+      type: string(255)
+      notnull: true      
+    created_by_id:
+      type: integer(10)
+      notnull: false
+    created_by_emp_number:
+      type: integer(4)
+      notnull: false
+    comments:
+      type: string(255)
+      notnull: false
+  relations:
+    Employee:
+      local: created_by_emp_number
+      foreign: emp_number
+      type: one
+    SystemUser:
+      local: created_by_id
+      foreign: id
+      type: one      
+    LeaveRequest:
+      local: leave_request_id
+      foreign: id
+      type: one
+  
+LeaveComment:
+  tableName: ohrm_leave_comment
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    leave_id:
+      type: integer(4)
+      unsigned: true
+      notnull: true
+    created:
+      type: datetime
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    created_by_name:
+      type: string(255)
+      notnull: true      
+    created_by_id:
+      type: integer(10)
+      notnull: false
+    created_by_emp_number:
+      type: integer(4)
+      notnull: false
+    comments:
+      type: string(255)
+      notnull: false
+  relations:
+    Employee:
+      local: created_by_emp_number
+      foreign: emp_number
+      type: one
+    SystemUser:
+      local: created_by_id
+      foreign: id
+      type: one      
+    Leave:
+      local: leave_id
+      foreign: id
+      type: one

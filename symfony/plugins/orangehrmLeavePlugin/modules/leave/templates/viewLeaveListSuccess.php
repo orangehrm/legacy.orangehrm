@@ -70,22 +70,24 @@ use_javascripts_for_form($form);
 <div class="modal hide" id="commentDialog">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3><?php echo __('Leave Comment'); ?></h3>
+    <h3><?php echo __('Leave Request Comments'); ?></h3>
   </div>
   <div class="modal-body">
     <p>
     <form action="updateComment" method="post" id="frmCommentSave">
         <input type="hidden" id="leaveId" />
-        <input type="hidden" id="leaveOrRequest" />
-        <textarea name="leaveComment" id="leaveComment" cols="40" rows="10" class="commentTextArea"></textarea>
+        <input type="hidden" id="leaveOrRequest" />        
+        <textarea id="existingComments" cols="40" rows="10" class="commentTextArea" disabled="disabled"></textarea>
         <br class="clear" />
-        <div id="commentError"></div>
+        <br class="clear" />
+        <textarea name="leaveComment" id="leaveComment" cols="40" rows="4" class="commentTextArea"></textarea>
+        <span id="commentError"></span>
 
     </form>        
     </p>
   </div>
   <div class="modal-footer">
-    <input type="button" class="btn" id="commentSave" value="<?php echo __('Edit'); ?>" />
+    <input type="button" class="btn" id="commentSave" value="<?php echo __('Save'); ?>" />
     <input type="button" class="btn reset" data-dismiss="modal" id="commentCancel" value="<?php echo __('Cancel'); ?>" />
   </div>
 </div>
@@ -100,13 +102,15 @@ use_javascripts_for_form($form);
     var lang_dateError = '<?php echo __("To date should be after from date") ?>';
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
     var lang_comment_successfully_saved = '<?php echo __(TopLevelMessages::SAVE_SUCCESS); ?>';
+    var lang_comment_save_failed = '<?php echo __(TopLevelMessages::SAVE_FAILURE); ?>';
     var lang_edit = '<?php echo __('Edit'); ?>';
     var lang_save = '<?php echo __('Save'); ?>';
-    var lang_length_exceeded_error = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>';    
+    var lang_length_exceeded_error = '<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 255)); ?>';    
     var lang_selectAction = '<?php echo __("Select Action");?>';
     var lang_Close = '<?php echo __('Close');?>';
     var leave_status_pending = '<?php echo PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL;?>';
     var ess_mode = '<?php echo ($essMode) ? '1' : '0'; ?>';
+    var lang_Required = '<?php echo __(ValidationMessages::REQUIRED);?>';
     
     function submitPage(pageNo) {
         //    location.href = '<?php //echo url_for($baseUrl . '?pageNo='); ?>' + pageNo;

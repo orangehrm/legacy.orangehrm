@@ -54,61 +54,57 @@ $(document).ready(function() {
         if (!id) {
             id = $(this).parent().siblings('input[id^="hdnLeave_"]').val();
         }
-        var comment = $('#hdnLeaveComment-' + id).val();
-
-        /* Extracting the status id */
-        var statusId = $(this).closest('td').prev('td').find('input[id^="hdnLeaveRequestStatus_'+id+'"]').val();
-        
-        $('#commentSave').show();
-        //disable edit comment for ess for pending approval leave
-        if(ess_mode == 1 && statusId != leave_status_pending) {
-            $('#commentSave').hide();
-        }
+        var comment = $('#hdnLeaveComment-' + id).val();     
         
         $('#leaveId').val(id);
-        $('#leaveComment').val(comment);
+        $('#existingComments').val(comment);
+        $('#leaveComment').val('');
         
         // If leave comment is empty , enable the edit mode
-        if( $('#leaveComment').val().trim() =="") {
-            $("#leaveComment").removeAttr("disabled");
-            $("#commentSave").attr("value", lang_save);
-        } else {
-            $("#leaveComment").attr("disabled","disabled");
-            $("#commentSave").attr("value", lang_edit);
-        }
+//        if( $('#leaveComment').val().trim() =="") {
+//            $("#leaveComment").removeAttr("disabled");
+//            $("#commentSave").attr("value", lang_save);
+//        } else {
+//            $("#leaveComment").attr("disabled","disabled");
+//            $("#commentSave").attr("value", lang_edit);
+//        }
         
         $('#leaveOrRequest').val('request');
 
         $('#commentDialog').modal();
     });    
 
+//    $('#leaveComment').change(function() {
+//        
+//        var text = $(this).val();
+//        alert(text);
+//        if ($('#leaveComment').text().trim().length > 0) {
+//            $("#commentSave").removeAttr("disabled");            
+//        } else {
+//            $("#commentSave").attr('disabled', 'disabled');
+//        }
+//    });
+    
     //on clicking on save button
     $("#commentSave").click(function() {
-        if($("#commentSave").attr("value") == lang_edit) {
-            $("#leaveComment").removeAttr("disabled");
-            $("#commentSave").attr("value", lang_save);
-            return;
-        }
+//        if($("#commentSave").attr("value") == lang_edit) {
+//            $("#leaveComment").removeAttr("disabled");
+//            $("#commentSave").attr("value", lang_save);
+//            return;
+//        }
 
-        if($('#commentSave').attr('value') == lang_save) {
-            $('#commentError').html('');
+            $('#commentError').html('').removeClass('validation-error');
             var comment = $('#leaveComment').val().trim();
             if(comment.length > 250) {
-                $('#commentError').html(lang_length_exceeded_error);
+                $('#commentError').html(lang_length_exceeded_error).addClass('validation-error');
                 return;
+            } else if (comment.length == 0) {
+                $('#commentError').html(lang_Required).addClass('validation-error');
+                return;                                
             }
 
             /* Setting the comment in the label */
             var commentLabel = trimComment(comment);
-
-            /* If there is no-change between original and updated comments then don't show success message */
-            if($('#hdnLeaveComment-' + $("#leaveId").val()).val().trim() == comment) {
-                $('#commentDialog').modal('hide');
-                return;
-            }
-
-            /* We set updated comment for the hidden comment field */
-            $('#hdnLeaveComment-' + $('#leaveId').val()).val(comment);
 
             /* Posting the comment */
             var url = commentUpdateUrl;
@@ -123,32 +119,38 @@ $(document).ready(function() {
                 type: 'POST',
                 url: url,
                 data: data,
-                success: function(flag) {
+                success: function(data) {
                     $('#ajaxCommentSaveMsg').removeAttr('class').html('');
                     $('.messageBalloon_success').remove();
-
-                    if(flag == 1) {
+                    
+                    if(data != 0) {
                         var id = $('#leaveId').val();
                         $('#commentContainer-' + id).html(commentLabel);
-                        $('#hdnLeaveComment-' + id).val(comment);
+                        
+                        var currentComment = $('#hdnLeaveComment-' + id).val();
+                        var newComment = data + "\n\n" + currentComment;
+                        $('#hdnLeaveComment-' + id).val(newComment);
                         $('#noActionsSelectedWarning').remove();
                         
                         //$('#helpText').before(content);
                         
                         //$('#ajaxCommentSaveMsg')
                         $('#helpText').before('<div class="message success fadable">' + lang_comment_successfully_saved + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');
-                        setTimeout(function(){
-                            $("div.fadable").fadeOut("slow", function () {
-                                $("div.fadable").remove();
-                            });
-                        }, 2000);
+                    } else {
+                        $('#helpText').before('<div class="message warning fadable">' + lang_comment_save_failed + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');                        
                     }
+                    setTimeout(function(){
+                        $("div.fadable").fadeOut("slow", function () {
+                            $("div.fadable").remove();
+                        });
+                    }, 2000);
+                    
                 }
             });
 
             $("#commentDialog").modal('hide');
             return;
-        }
+
     });
 
     $('#btnSearch').click(function() {

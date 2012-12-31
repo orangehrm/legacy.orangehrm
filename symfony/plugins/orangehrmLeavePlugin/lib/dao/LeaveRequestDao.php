@@ -39,7 +39,7 @@ class LeaveRequestDao extends BaseDao {
         
         try {
             $leaveRequest->save();
-
+            
             $current = array();
             if (isset($entitlements['current'])) {
                 $current = $entitlements['current'];
@@ -96,13 +96,48 @@ class LeaveRequestDao extends BaseDao {
             }
 
             $conn->commit();
-            return true;
+            return $leaveRequest;
         } catch (Exception $e) {
             $conn->rollback();
             throw new DaoException($e->getMessage());
         }
     }
 
+    public function saveLeaveRequestComment($leaveRequestId, $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber) {
+        try {
+            $leaveRequestComment = new LeaveRequestComment();
+            $leaveRequestComment->setLeaveRequestId($leaveRequestId);
+            $leaveRequestComment->setCreated(date('Y-m-d H:i:s'));
+            $leaveRequestComment->setCreatedByName($createdBy);
+            $leaveRequestComment->setCreatedById($loggedInUserId);
+            $leaveRequestComment->setCreatedByEmpNumber($loggedInEmpNumber);
+            $leaveRequestComment->setComments($comment);
+            
+            $leaveRequestComment->save();
+            
+            return $leaveRequestComment;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
+        }
+    }
+
+    public function saveLeaveComment($leaveId, $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber) {
+        try {
+            $leavetComment = new LeaveComment();
+            $leavetComment->setLeaveId($leaveId);
+            $leavetComment->setCreated(date('Y-m-d H:i:s'));
+            $leavetComment->setCreatedByName($createdBy);
+            $leavetComment->setCreatedById($loggedInUserId);
+            $leavetComment->setCreatedByEmpNumber($loggedInEmpNumber);
+            $leavetComment->setComments($comment);
+            
+            $leavetComment->save();
+            return $leavetComment;
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
+        }
+    }
+    
     public function saveLeave(Leave $leave) {
         try {
             $leave->save();

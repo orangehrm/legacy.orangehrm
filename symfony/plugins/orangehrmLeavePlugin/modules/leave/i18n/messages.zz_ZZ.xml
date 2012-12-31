@@ -343,7 +343,15 @@
    <trans-unit id="83">
     <source>My Leave Entitlements</source>
     <target>FR_My Leave Entitlements</target>
-   </trans-unit>        
+   </trans-unit>  
+   <trans-unit id="84">
+    <source>Leave Comments</source>
+    <target>FR_Leave Comments</target>
+   </trans-unit>                   
+   <trans-unit id="85">
+    <source>Leave Request Comments</source>
+    <target>FR_Leave Request Comments</target>
+   </trans-unit>     
   </body>
  </file>
 </xliff>

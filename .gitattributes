@@ -686,6 +686,8 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/HolidayTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/Leave.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveAdjustment.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveAdjustmentTable.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveComment.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveCommentTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlementAdjustment.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveEntitlementAdjustmentTable.class.php -text
@@ -697,6 +699,8 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveLeaveEntitlementTable.class
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeavePeriodHistoryTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequest.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequestComment.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequestCommentTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveRequestTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/LeaveType.class.php -text
@@ -706,12 +710,14 @@ symfony/lib/model/doctrine/orangehrmLeavePlugin/WorkWeekTable.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseHoliday.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeave.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveAdjustment.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveComment.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveEntitlementAdjustment.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveEntitlementType.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveLeaveEntitlement.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeavePeriodHistory.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveRequest.class.php -text
+symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveRequestComment.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseLeaveType.class.php -text
 symfony/lib/model/doctrine/orangehrmLeavePlugin/base/BaseWorkWeek.class.php -text
 symfony/lib/model/doctrine/orangehrmPimPlugin/CustomField.class.php -text
@@ -4156,6 +4162,8 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/sfWidgetFormSchemaFormatterPlain.p
 symfony/plugins/orangehrmLeavePlugin/lib/form/widget/ohrmWidgetFormLeavePeriod.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/DetailedLeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/HolidayListConfigurationFactory.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveCommentCell.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveCommentHeader.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementTypeCellFilter.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListActionCell.php -text
@@ -4186,6 +4194,8 @@ symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginHolidayTable.class
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeave.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveAdjustment.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveAdjustmentTable.class.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveComment.class.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveCommentTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlement.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlementAdjustment.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveEntitlementAdjustmentTable.class.php -text
@@ -4197,6 +4207,8 @@ symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveLeaveEntitlem
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodHistory.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeavePeriodHistoryTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequest.class.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequestComment.class.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequestCommentTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveRequestTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveTable.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/model/doctrine/PluginLeaveType.class.php -text
@@ -4274,6 +4286,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/i18n/messages.th_TH.xml -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/i18n/messages.vi_VN.xml -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/i18n/messages.zh_CN.xml -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/i18n/messages.zz_ZZ.xml -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/_leave_request_comments.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/_overlapping_leave.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/addLeaveEntitlementSuccess.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/templates/applyLeaveSuccess.php -text

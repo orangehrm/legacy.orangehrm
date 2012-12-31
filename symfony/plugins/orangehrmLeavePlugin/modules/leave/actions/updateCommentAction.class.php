@@ -25,47 +25,75 @@
  * updateComment
  */
 class updateCommentAction extends baseCoreLeaveAction {
+    
+    protected $employeeService;
+    
+    /**
+     *
+     * @return EmployeeService
+     */
+    public function getEmployeeService() {
+        if (!($this->employeeService instanceof EmployeeService)) {
+            $this->employeeService = new EmployeeService();
+        }
+        return $this->employeeService;
+    }
 
+    /**
+     *
+     * @param EmployeeService $service 
+     */
+    public function setEmployeeService(EmployeeService $service) {
+        $this->employeeService = $service;
+    }
+    
     public function execute($request) {
 
         $leaveRequestService = $this->getLeaveRequestService();
         $leaveRequestId = trim($request->getParameter("leaveRequestId"));
         $leaveId = trim($request->getParameter("leaveId"));
         $comment = trim($request->getParameter("leaveComment"));
+        
+        $user = $this->getUser();
+        $loggedInUserId = $user->getAttribute('auth.userId');
+        $loggedInEmpNumber = $user->getAttribute('auth.empNumber');
 
-        $essMode = $this->isEssMode();
+        if (!empty($loggedInEmpNumber)) {
+            $employee = $this->getEmployeeService()->getEmployee($loggedInEmpNumber);
+            $createdBy = $employee->getFullName();
+        } else {
+            $createdBy = $user->getAttribute('auth.firstName');
+        }
+        
+        $savedComment = NULL;
 
-        $flag = 0;
+                    
         if ($leaveRequestId != "") {
-            $leaveRequest = $leaveRequestService->fetchLeaveRequest($leaveRequestId);
-            $statusId = $leaveRequest->getLeaveStatusId();
-
-            if ($essMode && $statusId != PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL) { //ess can not comment on leaves other than status 'pending'
-                $flag = 0;
-            } else {
-                $leaveRequest->setComments($comment);
-                $leaves = $leaveRequestService->searchLeave($leaveRequestId);
-                $flag = $leaveRequestService->saveLeaveRequest($leaveRequest, $leaves);
-            }
+            
+            $savedComment = $leaveRequestService->saveLeaveRequestComment($leaveRequestId, 
+                $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
         }
 
         if ($leaveId != "") {
-            $leave = $leaveRequestService->readLeave($leaveId);
-            $statusId = $leave->getStatus();
-
-            if ($essMode && $statusId != PluginLeave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL) { //ess can not comment on leaves other than status 'pending'
-                $flag = 0;
-            } else {
-                $leave->setComments($comment);
-                $flag = $leaveRequestService->saveLeave($leave);
-            }
+            $savedComment = $leaveRequestService->saveLeaveComment($leaveId, 
+                $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber);             
+        }
+        
+        if (!empty($savedComment)) {
+                $created = new DateTime($savedComment->getCreated());
+                $createdAt = set_datepicker_date_format($created->format('Y-m-d')) . ' ' . $created->format('H:i');
+                
+                $returnText = $createdAt . ' ' . $savedComment->getCreatedByName() . "\n\n" .
+                        $savedComment->getComments();            
+        } else {
+            $returnText = 0;
         }
 
         if ($this->getUser()->hasFlash('myLeave')) {
             $this->getUser()->setFlash('myLeave', true);
         }
         
-        return $this->renderText($flag);
+        return $this->renderText($returnText);
     }
 
     protected function isEssMode() {

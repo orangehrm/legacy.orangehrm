@@ -171,11 +171,15 @@ class LeaveRequestService extends BaseService {
      * @return boolean
      */
     public function saveLeaveRequest( LeaveRequest $leaveRequest , $leaveList, $entitlements) {
+        return $this->getLeaveRequestDao()->saveLeaveRequest($leaveRequest, $leaveList, $entitlements);
+    }
+    
+    public function saveLeaveRequestComment($leaveRequestId, $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber) {
+        return $this->getLeaveRequestDao()->saveLeaveRequestComment($leaveRequestId, $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
+    }
 
-        $this->getLeaveRequestDao()->saveLeaveRequest( $leaveRequest, $leaveList, $entitlements);
-
-        return true ;
-
+    public function saveLeaveComment($leaveId, $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber) {
+        return $this->getLeaveRequestDao()->saveLeaveComment($leaveId, $comment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
     }
     
     /**

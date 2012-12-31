@@ -4,29 +4,31 @@
 <div id="msgPlace"></div>
 <!-- end of ajax message place -->
 
-<?php include_component('core', 'ohrmList'); ?>
+<?php include_component('core', 'ohrmList', array('requestComments' => $requestComments)); ?>
 <input type="hidden" name="hdnMode" value="<?php echo $mode; ?>" />
 
 <!-- comment dialog -->
 <div class="modal hide" id="commentDialog">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3><?php echo __('Leave Comment'); ?></h3>
+    <h3><?php echo __('Leave Comments'); ?></h3>
   </div>
   <div class="modal-body">
     <p>
     <form action="updateComment" method="post" id="frmCommentSave">
         <input type="hidden" id="leaveId" />
-        <input type="hidden" id="leaveOrRequest" />
-        <textarea name="leaveComment" id="leaveComment" cols="40" rows="10" class="commentTextArea"></textarea>
+        <input type="hidden" id="leaveOrRequest" />        
+        <textarea id="existingComments" cols="40" rows="10" class="commentTextArea" disabled="disabled"></textarea>
         <br class="clear" />
-        <div id="commentError"></div>
+        <br class="clear" />
+        <textarea name="leaveComment" id="leaveComment" cols="40" rows="4" class="commentTextArea"></textarea>
+        <span id="commentError"></span>
 
     </form>        
     </p>
   </div>
   <div class="modal-footer">
-    <input type="button" class="btn" id="commentSave" value="<?php echo __('Edit'); ?>" />
+    <input type="button" class="btn" id="commentSave" value="<?php echo __('Save'); ?>" />
     <input type="button" class="btn reset" data-dismiss="modal" id="commentCancel" value="<?php echo __('Cancel'); ?>" />
   </div>
 </div>
@@ -38,6 +40,10 @@
     var leaveRequestId = <?php echo $leaveRequestId; ?>;
     var leave_status_pending = 'Pending Approval'; // TO DO: Fix, check if compatible with localization
     var ess_mode = '<?php echo ($essMode) ? '1' : '0'; ?>';
+    var lang_Required = '<?php echo __(ValidationMessages::REQUIRED);?>';
+    var lang_comment_successfully_saved = '<?php echo __(TopLevelMessages::SAVE_SUCCESS); ?>';
+    var lang_comment_save_failed = '<?php echo __(TopLevelMessages::SAVE_FAILURE); ?>';    
+    var lang_Close = '<?php echo __('Close');?>';
     
     function handleSaveButton() {
         $('#processing').html('');
@@ -83,33 +89,22 @@
 
         //open when the pencil mark got clicked
         $('.dialogInvoker').click(function() {
-            $("#leaveComment").attr("disabled","disabled");
-            //removing errors message in the comment box
-            $("#commentError").html("");
 
-            $("#commentSave").attr("value", "<?php echo __('Edit'); ?>");
+            //removing errors message in the comment box
+            $('#commentError').html('').removeClass('validation-error');
 
             /* Extracting the request id */
             var id = $(this).parent().siblings('input[id^="hdnLeaveRequest_"]').val();
             if (!id) {
                 var id = $(this).parent().siblings('input[id^="hdnLeave_"]').val();
-            }
-            
-            /* Extracting the status text */
-            var status = $.trim($(this).closest('td').prev('td').text());
-
-            $('#commentSave').show();
-            //disable edit comment for ess for pending approval leave
-            if(ess_mode == 1 && status != leave_status_pending) {
-                $('#commentSave').hide();
-            }
+            }            
             
             var comment = $('#hdnLeaveComment-' + id).val();
             var typeOfView = (mode == 'compact') ? 'request' : 'leave';
 
             $('#leaveId').val(id);
-            $('#leaveComment').val(comment);
-            $('#leaveOrRequest').val(typeOfView);
+            $('#existingComments').val(comment);
+            $('#leaveComment').val('');
 
             $('#commentDialog').modal();
         });                
@@ -121,18 +116,15 @@
 
         //on clicking on save button
         $("#commentSave").click(function() {
-            if($("#commentSave").attr("value") == "<?php echo __('Edit'); ?>") {
-                $("#leaveComment").removeAttr("disabled");
-                $("#commentSave").attr("value", "<?php echo __('Save'); ?>");
-                return;
-            }
 
-            if($('#commentSave').attr('value') == "<?php echo __('Save'); ?>") {
-                $('#commentError').html('');
+                $('#commentError').html('').removeClass('validation-error');
                 var comment = $('#leaveComment').val().trim();
-                if(comment.length > 250) {
-                    $('#commentError').html('<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>');
+                if(comment.length > 255) {
+                    $('#commentError').html('<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 255)); ?>').addClass('validation-error');
                     return;
+                } else if (comment.length == 0) {
+                    $('#commentError').html(lang_Required).addClass('validation-error');
+                    return;                                
                 }
 
                 /* Setting the comment in the label */
@@ -144,12 +136,9 @@
                     return;
                 }
 
-                /* We set updated comment for the hidden comment field */
-                $('#hdnLeaveComment-' + $('#leaveId').val()).val(comment);
-
                 /* Posting the comment */
                 var url = '<?php echo public_path('index.php/leave/updateComment'); ?>';
-                var data = 'leaveRequestId=' + $('#leaveId').val() + '&leaveComment=' + encodeURIComponent(comment);
+                var data = 'leaveId=' + $('#leaveId').val() + '&leaveComment=' + encodeURIComponent(comment);
 
                 /* This is specially for detailed view */
                 if($('#leaveOrRequest').val() == 'leave') {
@@ -160,28 +149,39 @@
                     type: 'POST',
                     url: url,
                     data: data,
-                    success: function(flag) {
+                    success: function(data) {
                         $('#msgPlace').removeAttr('class');
                         $('.messageBalloon_success').remove();
                         $('#msgPlace').html('');
-                        if(flag == 1) {
+                        
+                        if(data != 0) {
                             var id = $('#leaveId').val();
                             $('#commentContainer-' + id).html(commentLabel);
-                            $('#hdnLeaveComment-' + id).val(comment);
-                            
-                            $('#helpText').before('<div class="message success fadable">' + '<?php echo __(TopLevelMessages::SAVE_SUCCESS); ?>' + '<a href="#" class="messageCloseButton">' + '<?php echo __('Close'); ?>' + '</a></div>');
-                            setTimeout(function(){
-                                $("div.fadable").fadeOut("slow", function () {
-                                    $("div.fadable").remove();
-                                });
-                            }, 2000);                            
+
+                            var currentComment = $('#hdnLeaveComment-' + id).val();
+                            var newComment = data + "\n\n" + currentComment;
+                            $('#hdnLeaveComment-' + id).val(newComment);
+                            $('#noActionsSelectedWarning').remove();
+
+                            //$('#helpText').before(content);
+
+                            //$('#ajaxCommentSaveMsg')
+                            $('#helpText').before('<div class="message success fadable">' + lang_comment_successfully_saved + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');
+                        } else {
+                            $('#helpText').before('<div class="message warning fadable">' + lang_comment_save_failed + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');                        
                         }
+                        setTimeout(function(){
+                            $("div.fadable").fadeOut("slow", function () {
+                                $("div.fadable").remove();
+                            });
+                        }, 2000);
+                    
                     }
                 });
 
                 $("#commentDialog").modal('hide');
                 return;
-            }
+
         });
 
 

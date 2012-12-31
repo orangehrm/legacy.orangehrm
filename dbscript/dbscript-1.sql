@@ -1205,6 +1205,28 @@ CREATE TABLE `ohrm_leave` (
   KEY `request_status` (`leave_request_id`,`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `ohrm_leave_comment` (
+  `id` int(11) NOT NULL  auto_increment,
+  `leave_id` int(11) NOT NULL,
+  `created` datetime default NULL,
+  `created_by_name` varchar(255) NOT NULL,
+  `created_by_id` int(10) NOT NULL,
+  `created_by_emp_number` int(7) default NULL,
+  `comments` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ohrm_leave_request_comment` (
+  `id` int(11) NOT NULL  auto_increment,
+  `leave_request_id` int(11) NOT NULL,
+  `created` datetime default NULL,
+  `created_by_name` varchar(255) NOT NULL,
+  `created_by_id` int(10) NOT NULL,
+  `created_by_emp_number` int(7) default NULL,
+  `comments` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create TABLE `ohrm_leave_leave_entitlement` (
     `id` int(11) NOT NULL   auto_increment,
     `leave_id` int(11) NOT NULL,
@@ -1303,6 +1325,30 @@ alter table ohrm_leave_entitlement_adjustment
 alter table ohrm_leave_entitlement_adjustment
     add constraint foreign key (adjustment_id)
         references ohrm_leave_adjustment (id) on delete cascade;
+
+alter table ohrm_leave_comment
+    add constraint foreign key (leave_id)
+        references ohrm_leave(id) on delete cascade;
+
+alter table ohrm_leave_comment
+    add constraint foreign key (created_by_id)
+        references ohrm_user(id) on delete set NULL;
+
+alter table ohrm_leave_comment
+    add constraint foreign key (created_by_emp_number)
+        references hs_hr_employee(emp_number) on delete cascade;
+
+alter table ohrm_leave_request_comment
+    add constraint foreign key (leave_request_id)
+        references ohrm_leave_request(id) on delete cascade;
+
+alter table ohrm_leave_request_comment
+    add constraint foreign key (created_by_id)
+        references ohrm_user(id) on delete set NULL;
+
+alter table ohrm_leave_request_comment
+    add constraint foreign key (created_by_emp_number)
+        references hs_hr_employee(emp_number) on delete cascade;
 
 alter table ohrm_menu_item 
        add constraint foreign key (screen_id)

@@ -1099,9 +1099,12 @@ form textarea.validation-error {
     color: #aa4935;
     background: #FFFFFE;
 }
-form ol li span.validation-error {
-    font-size: 12px;
+
+form span.validation-error {
     color: #aa4935;
+}
+form ol li span.validation-error {
+    font-size: 12px;    
 	display:block;
 	/*z-index:9999; This makes error to appear over menu */
 	position:absolute;

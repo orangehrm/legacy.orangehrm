@@ -345,6 +345,14 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
 ?>
             </div>
         </form> <!-- frmList_ohrmListComponent --> 
+                
+<?php if ($footerPartial != null): ?>
+        <div style="padding-left: 5px; padding-top: 5px;">
+<?php
+        include_partial($footerPartial, $sf_data->getRaw('params'));
+?>
+    </div>
+<?php endif; ?>
         
     </div> <!-- inner -->
         

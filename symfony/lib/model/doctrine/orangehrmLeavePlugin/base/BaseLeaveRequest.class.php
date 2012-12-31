@@ -13,23 +13,26 @@
  * @property LeaveType $LeaveType
  * @property Employee $Employee
  * @property Doctrine_Collection $Leave
+ * @property Doctrine_Collection $LeaveRequestComment
  * 
- * @method integer             getId()            Returns the current record's "id" value
- * @method integer             getLeaveTypeId()   Returns the current record's "leave_type_id" value
- * @method date                getDateApplied()   Returns the current record's "date_applied" value
- * @method integer             getEmpNumber()     Returns the current record's "emp_number" value
- * @method string              getComments()      Returns the current record's "comments" value
- * @method LeaveType           getLeaveType()     Returns the current record's "LeaveType" value
- * @method Employee            getEmployee()      Returns the current record's "Employee" value
- * @method Doctrine_Collection getLeave()         Returns the current record's "Leave" collection
- * @method LeaveRequest        setId()            Sets the current record's "id" value
- * @method LeaveRequest        setLeaveTypeId()   Sets the current record's "leave_type_id" value
- * @method LeaveRequest        setDateApplied()   Sets the current record's "date_applied" value
- * @method LeaveRequest        setEmpNumber()     Sets the current record's "emp_number" value
- * @method LeaveRequest        setComments()      Sets the current record's "comments" value
- * @method LeaveRequest        setLeaveType()     Sets the current record's "LeaveType" value
- * @method LeaveRequest        setEmployee()      Sets the current record's "Employee" value
- * @method LeaveRequest        setLeave()         Sets the current record's "Leave" collection
+ * @method integer             getId()                  Returns the current record's "id" value
+ * @method integer             getLeaveTypeId()         Returns the current record's "leave_type_id" value
+ * @method date                getDateApplied()         Returns the current record's "date_applied" value
+ * @method integer             getEmpNumber()           Returns the current record's "emp_number" value
+ * @method string              getComments()            Returns the current record's "comments" value
+ * @method LeaveType           getLeaveType()           Returns the current record's "LeaveType" value
+ * @method Employee            getEmployee()            Returns the current record's "Employee" value
+ * @method Doctrine_Collection getLeave()               Returns the current record's "Leave" collection
+ * @method Doctrine_Collection getLeaveRequestComment() Returns the current record's "LeaveRequestComment" collection
+ * @method LeaveRequest        setId()                  Sets the current record's "id" value
+ * @method LeaveRequest        setLeaveTypeId()         Sets the current record's "leave_type_id" value
+ * @method LeaveRequest        setDateApplied()         Sets the current record's "date_applied" value
+ * @method LeaveRequest        setEmpNumber()           Sets the current record's "emp_number" value
+ * @method LeaveRequest        setComments()            Sets the current record's "comments" value
+ * @method LeaveRequest        setLeaveType()           Sets the current record's "LeaveType" value
+ * @method LeaveRequest        setEmployee()            Sets the current record's "Employee" value
+ * @method LeaveRequest        setLeave()               Sets the current record's "Leave" collection
+ * @method LeaveRequest        setLeaveRequestComment() Sets the current record's "LeaveRequestComment" collection
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -99,6 +102,10 @@ abstract class BaseLeaveRequest extends sfDoctrineRecord
              'foreign' => 'emp_number'));
 
         $this->hasMany('Leave', array(
+             'local' => 'id',
+             'foreign' => 'leave_request_id'));
+
+        $this->hasMany('LeaveRequestComment', array(
              'local' => 'id',
              'foreign' => 'leave_request_id'));
     }

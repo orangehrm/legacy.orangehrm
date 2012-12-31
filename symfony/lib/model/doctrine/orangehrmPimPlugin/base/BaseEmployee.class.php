@@ -74,6 +74,8 @@
  * @property Doctrine_Collection $LeaveEntitlement
  * @property Doctrine_Collection $LeaveAdjustment
  * @property Doctrine_Collection $LeaveRequest
+ * @property Doctrine_Collection $LeaveRequestComment
+ * @property Doctrine_Collection $LeaveComment
  * @property Doctrine_Collection $subordinates
  * @property Doctrine_Collection $EmpPicture
  * @property Doctrine_Collection $EmployeeImmigrationRecord
@@ -161,6 +163,8 @@
  * @method Doctrine_Collection       getLeaveEntitlement()          Returns the current record's "LeaveEntitlement" collection
  * @method Doctrine_Collection       getLeaveAdjustment()           Returns the current record's "LeaveAdjustment" collection
  * @method Doctrine_Collection       getLeaveRequest()              Returns the current record's "LeaveRequest" collection
+ * @method Doctrine_Collection       getLeaveRequestComment()       Returns the current record's "LeaveRequestComment" collection
+ * @method Doctrine_Collection       getLeaveComment()              Returns the current record's "LeaveComment" collection
  * @method Doctrine_Collection       getSubordinates()              Returns the current record's "subordinates" collection
  * @method Doctrine_Collection       getEmpPicture()                Returns the current record's "EmpPicture" collection
  * @method Doctrine_Collection       getEmployeeImmigrationRecord() Returns the current record's "EmployeeImmigrationRecord" collection
@@ -247,6 +251,8 @@
  * @method Employee                  setLeaveEntitlement()          Sets the current record's "LeaveEntitlement" collection
  * @method Employee                  setLeaveAdjustment()           Sets the current record's "LeaveAdjustment" collection
  * @method Employee                  setLeaveRequest()              Sets the current record's "LeaveRequest" collection
+ * @method Employee                  setLeaveRequestComment()       Sets the current record's "LeaveRequestComment" collection
+ * @method Employee                  setLeaveComment()              Sets the current record's "LeaveComment" collection
  * @method Employee                  setSubordinates()              Sets the current record's "subordinates" collection
  * @method Employee                  setEmpPicture()                Sets the current record's "EmpPicture" collection
  * @method Employee                  setEmployeeImmigrationRecord() Sets the current record's "EmployeeImmigrationRecord" collection
@@ -575,6 +581,14 @@ abstract class BaseEmployee extends sfDoctrineRecord
         $this->hasMany('LeaveRequest', array(
              'local' => 'emp_number',
              'foreign' => 'emp_number'));
+
+        $this->hasMany('LeaveRequestComment', array(
+             'local' => 'emp_number',
+             'foreign' => 'created_by_emp_number'));
+
+        $this->hasMany('LeaveComment', array(
+             'local' => 'emp_number',
+             'foreign' => 'created_by_emp_number'));
 
         $this->hasMany('Employee as subordinates', array(
              'refClass' => 'ReportTo',

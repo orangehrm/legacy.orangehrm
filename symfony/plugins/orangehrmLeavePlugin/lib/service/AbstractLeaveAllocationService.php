@@ -332,7 +332,7 @@ abstract class AbstractLeaveAllocationService extends BaseService {
             $isHalfDayHoliday = $this->isHalfdayHoliday($leaveDate, $leaveAssignmentData);
             
             $leave->setDate($leaveDate);
-            $leave->setComments($leaveAssignmentData->getComment());
+            //$leave->setComments($leaveAssignmentData->getComment());
             $leave->setLengthDays($this->calculateDateDeference($leaveAssignmentData, $isWeekend, $isHoliday, $isHalfday, $isHalfDayHoliday));
             $leave->setStartTime(($leaveAssignmentData->getFromTime() != '') ? $leaveAssignmentData->getFromTime() : '00:00');
             $leave->setEndTime(($leaveAssignmentData->getToTime() != '') ? $leaveAssignmentData->getToTime() : '00:00');

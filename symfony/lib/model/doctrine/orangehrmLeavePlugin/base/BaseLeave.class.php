@@ -19,6 +19,7 @@
  * @property Doctrine_Collection $LeaveEntitlements
  * @property LeaveRequest $LeaveRequest
  * @property LeaveType $LeaveType
+ * @property Doctrine_Collection $LeaveComment
  * 
  * @method integer             getId()                Returns the current record's "id" value
  * @method date                getDate()              Returns the current record's "date" value
@@ -34,6 +35,7 @@
  * @method Doctrine_Collection getLeaveEntitlements() Returns the current record's "LeaveEntitlements" collection
  * @method LeaveRequest        getLeaveRequest()      Returns the current record's "LeaveRequest" value
  * @method LeaveType           getLeaveType()         Returns the current record's "LeaveType" value
+ * @method Doctrine_Collection getLeaveComment()      Returns the current record's "LeaveComment" collection
  * @method Leave               setId()                Sets the current record's "id" value
  * @method Leave               setDate()              Sets the current record's "date" value
  * @method Leave               setLengthHours()       Sets the current record's "length_hours" value
@@ -48,6 +50,7 @@
  * @method Leave               setLeaveEntitlements() Sets the current record's "LeaveEntitlements" collection
  * @method Leave               setLeaveRequest()      Sets the current record's "LeaveRequest" value
  * @method Leave               setLeaveType()         Sets the current record's "LeaveType" value
+ * @method Leave               setLeaveComment()      Sets the current record's "LeaveComment" collection
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -176,5 +179,9 @@ abstract class BaseLeave extends sfDoctrineRecord
         $this->hasOne('LeaveType', array(
              'local' => 'leave_type_id',
              'foreign' => 'id'));
+
+        $this->hasMany('LeaveComment', array(
+             'local' => 'id',
+             'foreign' => 'leave_id'));
     }
 }

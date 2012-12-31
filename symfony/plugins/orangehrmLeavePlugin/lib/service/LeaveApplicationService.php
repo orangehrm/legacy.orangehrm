@@ -128,8 +128,22 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
             if ($holidayCount != count($leaves)) {
             //if ($this->isValidLeaveRequest($leaveRequest, $leaves)) {
                 try {
-                    $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaves, $entitlements);
-
+                    $user = sfContext::getInstance()->getUser();
+                    $loggedInUserId = $user->getAttribute('auth.userId');
+                    $loggedInEmpNumber = $user->getAttribute('auth.empNumber');
+        
+                    $leaveRequest = $this->getLeaveRequestService()->saveLeaveRequest($leaveRequest, $leaves, $entitlements);
+                    $leaveComment = $leaveRequest->getComments();
+                                   
+                    if (!empty($loggedInEmpNumber)) {
+                        $employee = $this->getEmployeeService()->getEmployee($loggedInEmpNumber);
+                        $createdBy = $employee->getFullName();
+                    } else {
+                        $createdBy = $user->getAttribute('auth.firstName');
+                    }
+                    $this->getLeaveRequestService()->saveLeaveRequestComment($leaveRequest->getId(), 
+                            $leaveComment, $createdBy, $loggedInUserId, $loggedInEmpNumber);
+                    
 //                    if ($this->isOverlapLeaveRequest($leaveAssignmentData)) {
 //                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaves);
 //                    }
