@@ -245,11 +245,12 @@ function updateLeaveBalance() {
                 .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
                     lang_details + '</a>');
 
-                $('#balance_as_of').text(asAtDate);
-                $('#balance_entitled').text(balance.entitled);
-                $('#balance_used').text(balance.used);
-                $('#balance_scheduled').text(balance.scheduled);
-                $('#balance_pending').text(balance.pending);
+                $('#balance_as_of').text(asAtDate);                
+                $('#balance_entitled').text(Number(balance.entitled).toFixed(2));
+                $('#balance_used').text(Number(balance.used).toFixed(2));
+                $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));
+                $('#balance_pending').text(Number(balance.pending).toFixed(2));
+                        
                 $('#balance_total').text(balanceDays.toFixed(2));                        
             }
         });
