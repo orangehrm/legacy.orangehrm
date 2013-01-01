@@ -140,7 +140,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
                         var balance = data.balance;
                         var asAtDate = data.asAtDate;
                         var balanceDays = balance.entitled - balance.used;
-                        $('#applyleave_leaveBalance').text(balanceDays)
+                        $('#applyleave_leaveBalance').text(balanceDays.toFixed(2))
                             .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
                                 lang_details + '</a>');
                             
@@ -149,7 +149,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
                         $('#balance_used').text(balance.used);
                         $('#balance_scheduled').text(balance.scheduled);
                         $('#balance_pending').text(balance.pending);
-                        $('#balance_total').text(balanceDays);
+                        $('#balance_total').text(balanceDays.toFixed(2));
                     }
                 });
            }

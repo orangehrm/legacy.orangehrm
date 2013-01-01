@@ -241,7 +241,7 @@ function updateLeaveBalance() {
                 var balance = data.balance;
                 var asAtDate = data.asAtDate;
                 var balanceDays = balance.entitled - balance.used;
-                $('#assignleave_leaveBalance').text(balanceDays)
+                $('#assignleave_leaveBalance').text(balanceDays.toFixed(2))
                 .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
                     lang_details + '</a>');
 
