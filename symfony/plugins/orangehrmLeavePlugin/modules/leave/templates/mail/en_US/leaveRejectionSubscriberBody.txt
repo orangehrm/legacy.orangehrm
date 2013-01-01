@@ -1,4 +1,4 @@
-Hi,
+Hi %recipientFirstName%,
 
 %performerFullName% has rejected leave request of %applicantFullName%. The leave details:
 

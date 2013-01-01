@@ -350,8 +350,8 @@ class EmailService extends BaseService {
 
                         if ($recipient instanceof Employee) {
                             $to = $recipient->getEmpWorkEmail();
-                        } else {
-                            $to = $recipient;
+                        } else if ($recipient instanceof EmailSubscriber) {
+                            $to = $recipient->getEmail();
                         }
                         $message->setTo($to);
                         $message->setFrom(array($this->emailConfig->getSentAs() => 'OrangeHRM'));

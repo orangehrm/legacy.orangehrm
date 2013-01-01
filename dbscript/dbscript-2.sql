@@ -1879,7 +1879,9 @@ INSERT INTO  ohrm_email_processor(`id`, `email_id`, `class_name`) VALUES
     (10, 10, 'LeaveCancelApplicantMailProcessor'),
     (11, 11, 'LeaveCancelSubscriberMailProcessor'),
     (12, 12, 'LeaveRejectApplicantMailProcessor'),
-    (13, 13, 'LeaveRejectSubscriberMailProcessor');
+    (13, 13, 'LeaveRejectSubscriberMailProcessor'),
+    (14, 14, 'LeaveChangeApplicantMailProcessor'),
+    (15, 15, 'LeaveChangeSubscriberMailProcessor');
 
 INSERT INTO ohrm_leave_entitlement_type(`id`,`name`,`is_editable`) VALUES
     (1,'Added',1);

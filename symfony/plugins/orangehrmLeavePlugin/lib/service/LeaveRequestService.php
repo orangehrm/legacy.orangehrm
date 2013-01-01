@@ -532,6 +532,7 @@ class LeaveRequestService extends BaseService {
             $cancellationIds = array_keys(array_filter($changes, array($this, '_filterCancellations')));
 
             if ($changeType == 'change_leave_request') {
+                
                 foreach ($approvalIds as $leaveRequestId) {
                     $approvals = $this->searchLeave($leaveRequestId);
                     $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments[$leaveRequestId]);
@@ -558,20 +559,15 @@ class LeaveRequestService extends BaseService {
 
             } elseif ($changeType == 'change_leave') {
 
+                $actionTypes = 0;
+                
                 $approvals = array();
                 foreach ($approvalIds as $leaveId) {
                     $approvals[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                 }
                 if (count($approvals) > 0) {
-                    $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments);
-
-//                    foreach ($approvals as $approval) {
-//                        $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, array($approval), 
-//                                $changedByUserType, $changedUserId, 'single');
-//                    }
-
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, $approvals, 
-                            $changedByUserType, $changedUserId, 'multiple');                
+                    $actionTypes++;
+                    $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments);                    
                 }
                 
                 $rejections = array();
@@ -580,14 +576,8 @@ class LeaveRequestService extends BaseService {
                 }
                 
                 if (count($rejections) > 0) {
+                    $actionTypes++;
                     $this->_changeLeaveStatus($rejections, Leave::LEAVE_STATUS_LEAVE_REJECTED, $changeComments);
-
-//                    foreach ($rejections as $rejection) {
-//                        $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, array($rejection), 
-//                                $changedByUserType, $changedUserId, 'single');
-//                    }
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, $rejections, 
-                            $changedByUserType, $changedUserId, 'multiple');                    
                 }
                 $cancellations = array();
                 foreach ($cancellationIds as $leaveId) {
@@ -595,16 +585,49 @@ class LeaveRequestService extends BaseService {
                 }
                 
                 if (count($cancellations) > 0) {
+                    $actionTypes++;
                     $this->_changeLeaveStatus($cancellations, Leave::LEAVE_STATUS_LEAVE_CANCELLED);
-
-//                    foreach ($cancellations as $cancellation) {
-//
-//                        $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, array($cancellation), 
-//                                $changedByUserType, $changedUserId, 'single');
-//                    }
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
-                            $changedByUserType, $changedUserId, 'multiple');                
                 }
+                
+                // Notifications
+                if ($actionTypes > 0) {
+                    if ($actionTypes == 1) {
+                        if (count($approvals) > 0) {
+                            $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, $approvals, 
+                                    $changedByUserType, $changedUserId, 'multiple');                                            
+                        } else if (count($rejections) > 0) {
+                            $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, $rejections, 
+                                    $changedByUserType, $changedUserId, 'multiple');                                                
+                        } else if (count($cancellations) > 0) {
+                            $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
+                                    $changedByUserType, $changedUserId, 'multiple');                                            
+                        }
+                        
+                    } else {
+                        $changes = array();
+                        $allDays = array();
+                        
+                        if (count($approvals) > 0) {
+                            $changes[LeaveEvents::LEAVE_APPROVE] = $approvals;
+                            $allDays = array_merge($allDays, $approvals);
+                        }
+                        
+                        if (count($rejections) > 0) {
+                            $changes[LeaveEvents::LEAVE_REJECT] = $rejections;
+                            $allDays = array_merge($allDays + $rejections);
+                        }
+                        
+                        if (count($cancellations) > 0) {
+                            $changes[LeaveEvents::LEAVE_CANCEL] = $cancellations;
+                            $allDays = array_merge($allDays + $cancellations);
+                        }
+                        
+                        $this->_notifyLeaveMultiStatusChange($allDays, $changes, 
+                                    $changedByUserType, $changedUserId, 'multiple');                         
+                        
+                    }
+                }
+                //$allChangedItems = count($approvals) + count($rejections) + count()
             } else {
                 throw new LeaveServiceException('Wrong change type passed');
             }
@@ -652,6 +675,15 @@ class LeaveRequestService extends BaseService {
                            'empNumber' => $performerId, 
                            'requestType' => $requestType);
         $this->getDispatcher()->notify(new sfEvent($this, $eventType, $eventData));   
+    }
+    
+    private function _notifyLeaveMultiStatusChange($allDays, $leaveList, $performerType, $performerId, $requestType) {
+        $eventData = array('days' => $allDays,
+                           'changes' => $leaveList, 
+                           'performerType' => $performerType, 
+                           'empNumber' => $performerId, 
+                           'requestType' => $requestType);
+        $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_CHANGE, $eventData));   
     }    
 
     public function getScheduledLeavesSum($employeeId, $leaveTypeId, $leavePeriodId) {

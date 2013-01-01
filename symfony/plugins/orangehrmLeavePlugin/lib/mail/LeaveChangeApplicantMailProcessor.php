@@ -19,17 +19,32 @@
  */
 
 /**
- * Description of orangehrmLeavePluginConfiguration
+ * Description of LeaveChangeApplicantMailProcessor
  *
  */
-class orangehrmLeavePluginConfiguration extends sfPluginConfiguration {
+class LeaveChangeApplicantMailProcessor extends LeaveChangeMailProcessor {
+    
+    public function getRecipients($data) {
+        
+        $recipients = array();
+        $empNumber = $data['days'][0]->getEmpNumber();
+        $performer = $this->getEmployeeService()->getEmployee($empNumber);    
+        
+        $to = $performer->getEmpWorkEmail();
 
-    public function initialize() {
-        $this->dispatcher->connect(LeaveEvents::LEAVE_ASSIGN, array(new LeaveAssignMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_APPLY, array(new LeaveApplyMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_APPROVE, array(new LeaveApproveMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_REJECT, array(new LeaveRejectMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_CANCEL, array(new LeaveCancelMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_CHANGE, array(new LeaveChangeMailer(), 'listen'));
+        if (!empty($to)) {
+            $recipients[] = $performer;
+        }       
+        
+        return $recipients;
     }
+
+    public function getReplacements($data) {
+        $data['request'] = $data['days'][0]->getLeaveRequest();
+        $replacements = parent::getReplacements($data);
+        return $replacements;
+
+    }
+    
 }
+

@@ -19,17 +19,16 @@
  */
 
 /**
- * Description of orangehrmLeavePluginConfiguration
+ * Description of LeaveChangeMailer
  *
  */
-class orangehrmLeavePluginConfiguration extends sfPluginConfiguration {
-
-    public function initialize() {
-        $this->dispatcher->connect(LeaveEvents::LEAVE_ASSIGN, array(new LeaveAssignMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_APPLY, array(new LeaveApplyMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_APPROVE, array(new LeaveApproveMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_REJECT, array(new LeaveRejectMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_CANCEL, array(new LeaveCancelMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_CHANGE, array(new LeaveChangeMailer(), 'listen'));
+class LeaveChangeMailer implements ohrmObserver {
+    public function listen(sfEvent $event) {
+        $emailService = new EmailService();
+            
+        $emailService->sendEmailNotifications(array('leave.change.applicant', 'leave.change.subscriber'), 
+                $event->getParameters());  
+        
     }
 }
+

@@ -32,4 +32,5 @@ class LeaveEvents {
     const LEAVE_REJECT = 'leave.reject';
     const LEAVE_ASSIGN = 'leave.assign';
     const LEAVE_APPLY = 'leave.apply';
+    const LEAVE_CHANGE = 'leave.change';
 }

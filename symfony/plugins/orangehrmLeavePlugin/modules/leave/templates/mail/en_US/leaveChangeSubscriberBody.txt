@@ -1,9 +1,9 @@
-Hi,
+Hi %recipientFirstName%,
 
 %performerFullName% has done the following changes to leave request of %applicantFullName%. The leave details:
 
 %leaveDetails%
-You were sent this mail, as you have subscribed to OrangeHRM leave approvals.
+You were sent this mail, as you have subscribed to OrangeHRM leave changes.
 
 Thank you.
 

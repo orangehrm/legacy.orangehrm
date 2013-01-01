@@ -1,4 +1,4 @@
-Hi,
+Hi %recipientFirstName%,
 
 %performerFullName% has assigned leave to %assigneeFullName%. The leave details:
 

@@ -45,7 +45,7 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
         
         if ($performer instanceof Employee) {
             $replacements['performerFirstName'] = $performer->getFirstName();
-            $replacements['performerFullName'] = $performer->getFirstAndLastNames();
+            $replacements['performerFullName'] = $performer->getFullName();
         } else {
             $name = sfContext::getInstance()->getUser()->getAttribute('auth.firstName');
             
@@ -56,7 +56,10 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
 
         if ($data['recipient'] instanceof Employee) {
             $replacements['recipientFirstName'] = $data['recipient']->getFirstName();
-            $replacements['recipientFullName'] = $data['recipient']->getFirstAndLastNames();
+            $replacements['recipientFullName'] = $data['recipient']->getFullName();
+        } else if ($data['recipient'] instanceof EmailSubscriber) {
+            $replacements['recipientFirstName'] = $data['recipient']->getName();
+            $replacements['recipientFullName'] = $data['recipient']->getName();            
         }
 
         $applicantNo = $data['days'][0]->getEmpNumber();
@@ -64,7 +67,7 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
         $applicant = $this->getEmployeeService()->getEmployee($applicantNo);
         if ($applicant instanceof Employee) {
             $replacements['applicantFirstName'] = $applicant->getFirstName();
-            $replacements['applicantFullName'] = $applicant->getFirstAndLastNames();
+            $replacements['applicantFullName'] = $applicant->getFullName();
         }                
         
         $replacements = $this->_populateLeaveReplacements($data, $replacements);
@@ -85,7 +88,7 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
 
                 if ($subscription->getEmailNotification()->getIsEnable() == EmailNotification::ENABLED) {
 
-                    $recipients[] = $subscription->getEmail();
+                    $recipients[] = $subscription;
                 }
             }
         }
@@ -189,7 +192,7 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
 
     }
 
-    private function _fromatDuration($duration) {
+    protected function _fromatDuration($duration) {
 
         $formattedDuration = number_format($duration, 2);
 

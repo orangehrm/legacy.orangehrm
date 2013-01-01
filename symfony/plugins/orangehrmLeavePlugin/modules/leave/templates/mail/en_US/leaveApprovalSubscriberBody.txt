@@ -1,4 +1,4 @@
-Hi,
+Hi %recipientFirstName%,
 
 %performerFullName% has approved leave request of %applicantFullName%. The leave details:
 

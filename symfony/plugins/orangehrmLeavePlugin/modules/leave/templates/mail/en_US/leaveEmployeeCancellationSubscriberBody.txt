@@ -1,4 +1,4 @@
-Hi,
+Hi %recipientFirstName%,
 
 %performerFullName% has cancelled leave. The leave details:
 

@@ -4185,6 +4185,10 @@ symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveCancelEmployeeSubscriberMailP
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveCancelEmployeeSupervisorMailProcessor.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveCancelMailer.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveCancelSubscriberMailProcessor.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveChangeApplicantMailProcessor.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveChangeMailProcessor.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveChangeMailer.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveChangeSubscriberMailProcessor.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveEmailProcessor.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveRejectApplicantMailProcessor.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveRejectMailer.php -text
