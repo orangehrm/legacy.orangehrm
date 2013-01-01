@@ -1984,6 +1984,42 @@ ORDER BY A.leave_type_id
     </display_groups>
 </sub_report>
 
+<sub_report type="sql" name="takenQuery">
+<query>
+FROM ohrm_leave_type LEFT JOIN 
+ohrm_leave ON ohrm_leave_type.id = ohrm_leave.leave_type_id AND
+$X{=,ohrm_leave.emp_number,empNumber} AND
+ohrm_leave.status = 1 AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+WHERE
+ohrm_leave_type.deleted = 0
+
+GROUP BY ohrm_leave_type.id
+ORDER BY ohrm_leave_type.id
+</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+            <display_group name="g6" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave_type.id</field_name>
+                        <field_alias>leaveTypeId</field_alias>
+                        <display_name>Leave Type ID</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>pending</field_alias>
+                        <display_name>Leave Pending Approval (Days)</display_name>
+                        <width>120</width>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=1&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+    </sub_report>
+
 <sub_report type="sql" name="scheduledQuery">
 <query>
 FROM ohrm_leave_type LEFT JOIN 
@@ -2079,6 +2115,7 @@ ORDER BY ohrm_leave.leave_type_id
     <join>             
         <join_by sub_report="mainTable" id="leaveTypeId"></join_by>              
         <join_by sub_report="entitlementsTotal" id="leaveTypeId"></join_by> 
+        <join_by sub_report="pendingQuery" id="leaveTypeId"></join_by>  
         <join_by sub_report="scheduledQuery" id="leaveTypeId"></join_by>  
         <join_by sub_report="takenQuery" id="leaveTypeId"></join_by>  
         <join_by sub_report="unused" id="leaveTypeId"></join_by>  
@@ -2196,6 +2233,38 @@ ORDER BY A.emp_number
     </display_groups>
 </sub_report>
 
+<sub_report type="sql" name="pendingQuery">
+<query>
+FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
+status = 1 AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+GROUP BY emp_number
+ORDER BY ohrm_leave.emp_number
+</query>
+    <id_field>empNumber</id_field>
+    <display_groups>
+            <display_group name="g6" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave.emp_number</field_name>
+                        <field_alias>empNumber</field_alias>
+                        <display_name>Emp Number</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>pending</field_alias>
+                        <display_name>Leave Pending Approval (Days)</display_name>
+                        <width>121</width>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=1&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+</sub_report>
+
+
 <sub_report type="sql" name="scheduledQuery">
 <query>
 FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
@@ -2284,6 +2353,7 @@ ORDER BY ohrm_leave.emp_number
     <join>             
         <join_by sub_report="mainTable" id="empNumber"></join_by>            
         <join_by sub_report="entitlementsTotal" id="empNumber"></join_by> 
+        <join_by sub_report="pendingQuery" id="empNumber"></join_by>
         <join_by sub_report="scheduledQuery" id="empNumber"></join_by>
         <join_by sub_report="takenQuery" id="empNumber"></join_by> 
         <join_by sub_report="unused" id="empNumber"></join_by>  

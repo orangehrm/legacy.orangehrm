@@ -98,7 +98,6 @@ class viewLeaveBalanceReportAction extends sfAction {
             $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
             $this->fixResultset();
 
-            //var_dump($this->resultsSet[1]);
             $this->reportName = $this->getReportName($reportId);
 
             $headers = $reportBuilder->getDisplayHeaders($reportId);
@@ -267,16 +266,24 @@ class viewLeaveBalanceReportAction extends sfAction {
     protected function fixResultset() {
         $keep = array();
         
+        $configService = new LeaveConfigurationService();
+        $includePending = $configService->includePendingLeaveInBalance();        
+        
         for ($i = 0; $i < count($this->resultsSet); $i++) {
             $total = isset($this->resultsSet[$i]['entitlement_total']) ? $this->resultsSet[$i]['entitlement_total'] : 0;
             $scheduled = isset($this->resultsSet[$i]['scheduled']) ? $this->resultsSet[$i]['scheduled'] : 0;
             $taken = isset($this->resultsSet[$i]['taken']) ? $this->resultsSet[$i]['taken'] : 0;
+            $pending = isset($this->resultsSet[$i]['pending']) ? $this->resultsSet[$i]['pending'] : 0;
             $exclude = isset($this->resultsSet[$i]['exclude_if_no_entitlement']) ? $this->resultsSet[$i]['exclude_if_no_entitlement'] : 0;
             
             if (($total == 0) && ($scheduled == 0) && ($taken == 0) && ($exclude == 1)) {
 
             } else {
                 $unused = $this->getValue($total) - $this->getValue($scheduled) - $this->getValue($taken);
+                
+                if ($includePending) {
+                    $unused = $unused - $this->getValue($pending);
+                }
                 $this->resultsSet[$i]['unused'] = number_format($unused,2);
                 
                 if (isset($this->resultsSet[$i]['employeeName']) && isset($this->resultsSet[$i]['termination_id'])) {
