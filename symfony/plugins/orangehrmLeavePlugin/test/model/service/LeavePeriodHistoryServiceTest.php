@@ -56,7 +56,26 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         
         
         $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
-        $this->assertEquals(array(array('2010-01-01','2010-12-31'),array('2011-01-01','2011-12-31'),array('2012-01-01','2012-12-31'),array('2013-01-01','2013-12-31')),$result);
+        
+        $expected = array(
+            array('2010-01-01','2010-12-31'),
+            array('2011-01-01','2011-12-31'),
+            array('2012-01-01','2012-12-31'),
+            array('2013-01-01','2013-12-31'));
+        
+        // extend range till next year end:
+        $now = new DateTime();
+        
+        $nextYear = $now->format('Y') + 1;
+        $this->assertTrue($nextYear > 2012, 'System clock set to past!. Test should be run with system date 2012 or later.');
+        
+        if ($nextYear > 2013) {
+            for ($year = 2014; $year <= $nextYear; $year++) {
+                $expected[] = array($year . '-01-01', $year . '-12-31');
+            }
+        }
+        
+        $this->assertEquals($expected, $result);
         
         
     }
@@ -69,13 +88,31 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         
         $this->leavePeriodService->saveLeavePeriodHistory( $leavePeriodHistory );
         
+        $expected = array(
+            array('2010-01-01','2010-12-31'),
+            array('2011-01-01','2011-12-31'),
+            array('2012-01-01','2012-12-31'),
+            array('2013-01-01','2013-12-31'));
+        
+        // extend range till next year end:
+        $now = new DateTime();
+        
+        $nextYear = $now->format('Y') + 1;
+        $this->assertTrue($nextYear > 2012, 'System clock set to past!. Test should be run with system date 2012 or later.');
+        
+        if ($nextYear > 2013) {
+            for ($year = 2014; $year <= $nextYear; $year++) {
+                $expected[] = array($year . '-01-01', $year . '-12-31');
+            }
+        }
         
         $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
-        $this->assertEquals(array(array('2010-01-01','2010-12-31'),array('2011-01-01','2011-12-31'),array('2012-01-01','2012-12-31'),array('2013-01-01','2013-12-31')),$result);
+        $this->assertEquals($expected, $result);
         
         
     }
 
+     /* Fails if run in 2014 */
      public function testGetGeneratedLeavePeriodListForLeapYear(){
         $leavePeriodHistory = new LeavePeriodHistory();
         $leavePeriodHistory->setLeavePeriodStartMonth(3);
@@ -115,11 +152,29 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         
         
         $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
-        $this->assertEquals(array(array('2010-01-01','2010-12-31'),array('2011-01-01','2011-12-31'),array('2012-01-01','2012-12-31'),array('2013-01-01','2013-12-31')),$result);
         
+        $expected = array(array('2010-01-01','2010-12-31'),
+                          array('2011-01-01','2011-12-31'),
+                          array('2012-01-01','2012-12-31'),
+                          array('2013-01-01','2013-12-31'));
+        
+        // extend range till next year end:
+        $now = new DateTime();
+        
+        $nextYear = $now->format('Y') + 1;
+        $this->assertTrue($nextYear > 2012, 'System clock set to past!. Test should be run with system date 2012 or later.');
+        
+        if ($nextYear > 2013) {
+            for ($year = 2014; $year <= $nextYear; $year++) {
+                $expected[] = array($year . '-01-01', $year . '-12-31');
+            }
+        }
+        
+        $this->assertEquals($expected,$result);        
         
     }
     
+    /* Fails if run in 2014 */
      public function testGetGeneratedLeavePeriodListCase1(){
         $leavePeriodHistory = new LeavePeriodHistory();
         $leavePeriodHistory->setLeavePeriodStartMonth(1);
@@ -179,7 +234,25 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         $newLeavePeriodService->setLeaveEntitlementService($this->leavePeriodService->getLeaveEntitlementService());                
         $result= $newLeavePeriodService->getGeneratedLeavePeriodList();
 
-        $this->assertEquals(array(array('2009-02-01','2011-01-01'),array('2011-01-02','2012-01-01'),array('2012-01-02','2013-01-01'),array('2013-01-02','2014-01-01')),$result);
+        $expected = array(
+            array('2009-02-01','2011-01-01'),
+            array('2011-01-02','2012-01-01'),
+            array('2012-01-02','2013-01-01'),
+            array('2013-01-02','2014-01-01'));
+        
+        // extend range till next year end:
+        $now = new DateTime();
+        
+        $nextYear = $now->format('Y') + 1;
+        $this->assertTrue($nextYear > 2012, 'System clock set to past!. Test should be run with system date 2012 or later.');
+        
+        if ($nextYear > 2013) {
+            for ($year = 2014; $year <= $nextYear; $year++) {
+                $expected[] = array($year . '-01-02', ($year + 1) . '-01-01');
+            }
+        }        
+        
+        $this->assertEquals($expected, $result);
         
         
     }
