@@ -240,14 +240,14 @@ function updateLeaveBalance() {
             success: function(data) {
                 var balance = data.balance;
                 var asAtDate = data.asAtDate;
-                var balanceDays = balance.entitled - balance.used;
+                var balanceDays = balance.balance;
                 $('#assignleave_leaveBalance').text(balanceDays.toFixed(2))
                 .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
                     lang_details + '</a>');
 
                 $('#balance_as_of').text(asAtDate);                
                 $('#balance_entitled').text(Number(balance.entitled).toFixed(2));
-                $('#balance_used').text(Number(balance.used).toFixed(2));
+                $('#balance_taken').text(Number(balance.taken).toFixed(2));
                 $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));
                 $('#balance_pending').text(Number(balance.pending).toFixed(2));
                         

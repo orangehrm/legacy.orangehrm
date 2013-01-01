@@ -287,7 +287,8 @@ class LeaveEntitlementDao extends BaseDao {
         $sql = 'SELECT le.no_of_days AS entitled, ' . 
                       'le.days_used AS used, ' .
                       'sum(IF(l.status = 2, lle.length_days, 0)) AS scheduled, ' .
-                      'sum(IF(l.status = 1, lle.length_days, 0)) AS pending ' . 
+                      'sum(IF(l.status = 1, lle.length_days, 0)) AS pending, ' . 
+                      'sum(IF(l.status = 3, l.length_days, 0)) AS taken '.                
                'FROM ohrm_leave_entitlement le LEFT JOIN ' . 
                     'ohrm_leave_leave_entitlement lle ON le.id = lle.entitlement_id LEFT JOIN '.
                     'ohrm_leave l ON l.id = lle.leave_id ' .
@@ -308,7 +309,8 @@ class LeaveEntitlementDao extends BaseDao {
                         '0 AS entitled, '.
                         'SUM(l.length_days) AS used, '.
                         'sum(IF(l.status = 2, l.length_days, 0)) AS scheduled, '.
-                        'sum(IF(l.status = 1, l.length_days, 0)) AS pending '.
+                        'sum(IF(l.status = 1, l.length_days, 0)) AS pending, '.
+                        'sum(IF(l.status = 3, l.length_days, 0)) AS taken '.
                      'FROM ohrm_leave l '.
                         'LEFT JOIN ohrm_leave_leave_entitlement lle ON (lle.leave_id = l.id) '.
                       'WHERE (lle.leave_id IS NULL) AND l.emp_number = ? AND l.leave_type_id = ? AND l.status NOT IN (-1, 0) ';
@@ -320,7 +322,7 @@ class LeaveEntitlementDao extends BaseDao {
         
         $sql .= 'GROUP BY l.leave_type_id';
         
-        $sql = 'SELECT sum(a.entitled) as entitled, sum(a.used) as used, sum(a.scheduled) as scheduled, sum(a.pending) as pending ' .
+        $sql = 'SELECT sum(a.entitled) as entitled, sum(a.used) as used, sum(a.scheduled) as scheduled, sum(a.pending) as pending, sum(a.taken) as taken  ' .
                ' FROM (' . $sql . ') as a';
 
         $statement = $conn->prepare($sql);
@@ -341,8 +343,14 @@ class LeaveEntitlementDao extends BaseDao {
                 if (!empty($result['pending'])) {
                     $balance->setPending($result['pending']);
                 }
+                if (!empty($result['taken'])) {
+                    $balance->setTaken($result['taken']);
+                }                
+                
             }
         }        
+        
+        $balance->updateBalance();
 
         return $balance;    
     }

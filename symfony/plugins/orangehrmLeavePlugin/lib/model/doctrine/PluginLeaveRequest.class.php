@@ -77,7 +77,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         
         $leaveBalance = $leaveEntitlementService->getLeaveBalance( $employeeId ,$leaveTypeId);
         if( $leaveBalance instanceof LeaveBalance){
-            $balance = $leaveBalance->getEntitled()-$leaveBalance->getUsed();
+            $balance = $leaveBalance->getBalance();
         }
         
         return $balance;

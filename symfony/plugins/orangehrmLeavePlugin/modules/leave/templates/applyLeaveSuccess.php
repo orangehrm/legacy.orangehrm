@@ -49,19 +49,19 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
         <tbody>
                 <tr class="odd">
                     <td><?php echo __('Entitled'); ?></td>
-                    <td id="balance_entitled">0</td>
+                    <td id="balance_entitled">0.00</td>
                 </tr>
                 <tr class="even">
-                    <td><?php echo __('Used'); ?></td>
-                    <td id="balance_used">0</td>
+                    <td><?php echo __('Taken'); ?></td>
+                    <td id="balance_taken">0.00</td>
                 </tr>
                 <tr class="odd">
                     <td><?php echo __('Scheduled'); ?></td>
-                    <td id="balance_scheduled">0</td>
+                    <td id="balance_scheduled">0.00</td>
                 </tr>
                 <tr class="even">
                     <td><?php echo __('Pending Approval'); ?></td>
-                    <td id="balance_pending">0</td>
+                    <td id="balance_pending">0.00</td>
                 </tr>                    
         </tbody>
         <tfoot>
@@ -139,14 +139,14 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
                     success: function(data) {
                         var balance = data.balance;
                         var asAtDate = data.asAtDate;
-                        var balanceDays = balance.entitled - balance.used;
+                        var balanceDays = balance.balance;
                         $('#applyleave_leaveBalance').text(balanceDays.toFixed(2))
                             .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
                                 lang_details + '</a>');
                             
                         $('#balance_as_of').text(asAtDate);
                         $('#balance_entitled').text(Number(balance.entitled).toFixed(2));
-                        $('#balance_used').text(Number(balance.used).toFixed(2));
+                        $('#balance_taken').text(Number(balance.taken).toFixed(2));
                         $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));
                         $('#balance_pending').text(Number(balance.pending).toFixed(2));
                         $('#balance_total').text(balanceDays.toFixed(2));
