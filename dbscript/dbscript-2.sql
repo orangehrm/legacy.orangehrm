@@ -1984,7 +1984,7 @@ ORDER BY A.leave_type_id
     </display_groups>
 </sub_report>
 
-<sub_report type="sql" name="takenQuery">
+<sub_report type="sql" name="pendingQuery">
 <query>
 FROM ohrm_leave_type LEFT JOIN 
 ohrm_leave ON ohrm_leave_type.id = ohrm_leave.leave_type_id AND

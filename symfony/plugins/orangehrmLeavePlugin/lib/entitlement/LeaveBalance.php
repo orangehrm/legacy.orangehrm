@@ -56,7 +56,7 @@ class LeaveBalance {
     
     public function getBalance() {
 
-        return $this->balance();
+        return $this->balance;
     }
     
     public function getEntitled() {
