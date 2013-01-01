@@ -101,6 +101,7 @@ class viewLeaveListAction extends sfAction {
         $toDateParam = $request->getParameter('toDate');
         $leaveTypeId = $request->getParameter('leaveTypeId');
         $leaveStatusId = $request->getParameter('status');
+        $stdDate = $request->getParameter('stddate');
         
         if ($request->isMethod('post')) {
 
@@ -156,8 +157,13 @@ class viewLeaveListAction extends sfAction {
                     }
                     if (!empty($fromDateParam) && !empty($toDateParam)) {
 
-                        $values['calFromDate'] = $this->_getStandardDate($fromDateParam);
-                        $values['calToDate'] = $this->_getStandardDate($toDateParam);
+                        if (empty($stdDate) || $stdDate != 1) {                        
+                            $values['calFromDate'] = $this->_getStandardDate($fromDateParam);
+                            $values['calToDate'] = $this->_getStandardDate($toDateParam);
+                        } else {
+                            $values['calFromDate'] = $fromDateParam;
+                            $values['calToDate'] = $toDateParam;                            
+                        }
                         $this->form->setDefault('calFromDate', set_datepicker_date_format($values['calFromDate']));
                         $this->form->setDefault('calToDate', set_datepicker_date_format($values['calToDate']));
                     }
