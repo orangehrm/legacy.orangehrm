@@ -16,7 +16,7 @@ class defineWorkWeekAction extends baseCoreLeaveAction {
         $this->workWeekForm = new WorkWeekForm(array('workWeekEntity' => $workWeek));
 
         if ($request->isMethod(sfRequest::POST)) {
-            $workWeekService = $this->getWorkWeekService();
+
             $this->workWeekForm->bind($request->getParameter($this->workWeekForm->getName()));
 
             if ($this->workWeekForm->isValid()) {
@@ -31,14 +31,14 @@ class defineWorkWeekAction extends baseCoreLeaveAction {
                     $workWeek->setSun($this->workWeekForm->getValue('day_length_Sunday'));
                     
                     $this->getWorkWeekService()->saveWorkWeek($workWeek);
-                    $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS), false);
                    
                 } catch (Exception $e) {
-                    $this->getUser()->setFlash('failure', __(TopLevelMessages::SAVE_FAILURE));
+                    $this->getUser()->setFlash('failure', __(TopLevelMessages::SAVE_FAILURE), false);
                     
                 }
             } else {
-                $this->getUser()->setFlash('failure', __(TopLevelMessages::SAVE_FAILURE));
+                $this->getUser()->setFlash('failure', __(TopLevelMessages::SAVE_FAILURE), false);
             }
         }
     }
