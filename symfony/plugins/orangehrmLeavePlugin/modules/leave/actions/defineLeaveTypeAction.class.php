@@ -3,12 +3,12 @@
 class defineLeaveTypeAction extends orangehrmAction {
 
     protected $leaveTypeService;
-    
+
     public function execute($request) {
-        
+
         /* For highlighting corresponding menu item */
         $request->setParameter('initialActionName', 'leaveTypeList');
-        
+
         $this->form = $this->getForm();
 
         if ($request->isMethod('post')) {
@@ -19,11 +19,14 @@ class defineLeaveTypeAction extends orangehrmAction {
                 $leaveType = $this->form->getLeaveTypeObject();
                 $this->saveLeaveType($leaveType);
 
+                $eventType = ($request->getParameter('id') != null) ? LeaveEvents::LEAVE_TYPE_UPDATE : LeaveEvents::LEAVE_TYPE_ADD;
+                $this->dispatcher->notify(new sfEvent($this, $eventType,
+                                array('leaveType' => $leaveType)));
+
                 $this->redirect("leave/leaveTypeList");
             }
-        }
-        else {
-            
+        } else {
+
             $this->undeleteForm = $this->getUndeleteForm();
             $leaveTypeId = $request->getParameter('id'); // This comes as a GET request from Leave Type List page
 
@@ -31,13 +34,12 @@ class defineLeaveTypeAction extends orangehrmAction {
                 $this->form->setDefaultValues($leaveTypeId);
                 $this->form->setUpdateMode();
             }
-
         }
     }
 
     protected function saveLeaveType(LeaveType $leaveType) {
         $this->getLeaveTypeService()->saveLeaveType($leaveType);
-        $message = __(TopLevelMessages::SAVE_SUCCESS);        
+        $message = __(TopLevelMessages::SAVE_SUCCESS);
         $this->getUser()->setFlash('success', $message);
     }
 
@@ -46,7 +48,7 @@ class defineLeaveTypeAction extends orangehrmAction {
         $form->setLeaveTypeService($this->getLeaveTypeService());
         return $form;
     }
-    
+
     protected function getUndeleteForm() {
         return new UndeleteLeaveTypeForm(array(), array(), true);
     }
@@ -59,6 +61,5 @@ class defineLeaveTypeAction extends orangehrmAction {
 
         return $this->leaveTypeService;
     }
-
 
 }

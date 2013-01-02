@@ -26,6 +26,8 @@ class LeaveEvents {
     const ENTITLEMENT_ADD = 'leave_entitlement_add';
     const ENTITLEMENT_UPDATE = 'leave_entitlement_update';
     const ENTITLEMENT_BULK_ADD = 'leave_entitlement_bulk_update';
+    const LEAVE_TYPE_ADD = 'leave_type_add';
+    const LEAVE_TYPE_UPDATE = 'leave_type_update';
     
     const LEAVE_APPROVE = 'leave.approve';
     const LEAVE_CANCEL = 'leave.cancel';
