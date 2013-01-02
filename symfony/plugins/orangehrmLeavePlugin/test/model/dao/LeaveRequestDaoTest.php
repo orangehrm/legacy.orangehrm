@@ -362,7 +362,8 @@
         $request = $leaveRequestData[0];
         $leave = $leaveRequestData[1];
 
-        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($request, $leave, array()));
+        $leaveRequest = $this->leaveRequestDao->saveLeaveRequest($request, $leave, array());
+        $this->assertTrue($leaveRequest instanceof LeaveRequest);
         
         $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
         $this->assertEquals(1, count($leaveRequestList));  
@@ -406,7 +407,8 @@
             '2010-12-02' => array(1 => 1)
         ));
         
-        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements));
+        $leaveRequest = $this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements);
+        $this->assertTrue($leaveRequest instanceof LeaveRequest);
         
         $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
         $this->assertEquals(1, count($leaveRequestList));  
@@ -474,7 +476,8 @@
                 )
             );
         
-        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements));
+        $leaveRequest = $this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements);
+        $this->assertTrue($leaveRequest instanceof LeaveRequest);
         
         $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
         $this->assertEquals(1, count($leaveRequestList));  
@@ -577,7 +580,8 @@
                 )
             );
         
-        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements));
+        $leaveRequest = $this->leaveRequestDao->saveLeaveRequest($request, $leave, $entitlements);
+        $this->assertTrue($leaveRequest instanceof LeaveRequest);
         
         $leaveRequestList = $this->getNewLeaveRequests($leaveRequestIds);
         $this->assertEquals(1, count($leaveRequestList));  
@@ -793,7 +797,9 @@
          * saveLeaveRequest()
          */
 
-        $this->assertTrue($this->leaveRequestDao->saveLeaveRequest($leaveRequest, $leave));
+        $leaveRequest = $this->leaveRequestDao->saveLeaveRequest($leaveRequest, $leave);
+        $this->assertTrue($leaveRequest instanceof LeaveRequest);
+                
         $this->assertTrue($this->leaveRequestDao->modifyOverlapLeaveRequest($leaveRequest, $leave, $leavePeriod));
 
         $leaveRequestList = TestDataService::fetchLastInsertedRecords('LeaveRequest', 2);
