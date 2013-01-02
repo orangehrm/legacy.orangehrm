@@ -15,24 +15,12 @@
         <form id="frmLeaveType" name="frmLeaveType" method="post" action="<?php echo url_for('leave/defineLeaveType'); ?>">
 
             <fieldset>                
-                <ol>
-                    <ol><li><?php echo $form['txtLeaveTypeName']->renderLabel(); ?>
-                            <?php echo $form['txtLeaveTypeName']->render(); ?>
-                        </li>
-                        <li><?php echo $form['excludeIfNoEntitlement']->renderLabel(); ?>
-                            <?php echo $form['excludeIfNoEntitlement']; ?>
-                            <?php echo $form['hdnOriginalLeaveTypeName']->render(); ?>
-                            <?php echo $form['hdnLeaveTypeId']->render(); ?>
-                            <?php echo $form['_csrf_token']; ?>
-                        </li>
+                    <ol>
+                        <?php echo $form;?>                                              
                         <li class="required">
                             <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
                         </li> 
-                    </ol>                      
-
-
-
-
+                    </ol>
             </fieldset>
 
 
