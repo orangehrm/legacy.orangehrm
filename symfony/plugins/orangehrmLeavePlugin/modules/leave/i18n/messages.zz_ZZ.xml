@@ -333,8 +333,8 @@
     <target>FR_view details</target>
    </trans-unit>    
    <trans-unit id="83">
-    <source>As of date</source>
-    <target>FR_As of date</target>
+    <source>As of Date</source>
+    <target>FR_As of Date</target>
    </trans-unit>  
    <trans-unit id="83">
     <source>Overlapping Leave Requests Found</source>

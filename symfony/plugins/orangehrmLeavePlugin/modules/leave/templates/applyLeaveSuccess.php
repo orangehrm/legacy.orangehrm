@@ -44,7 +44,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
     <h3><?php echo 'OrangeHRM - ' . __('Leave Balance Details'); ?></h3>
   </div>
   <div class="modal-body">
-    <p><?php echo __('As of date') . ':'; ?> <span id="balance_as_of"></span></p>
+    <p><?php echo __('As of Date') . ':'; ?> <span id="balance_as_of"></span></p>
     <table border="0" cellspacing="0" cellpadding="0" class="table">
         <tbody>
                 <tr class="odd">

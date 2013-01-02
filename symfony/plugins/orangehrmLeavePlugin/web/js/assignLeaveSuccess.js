@@ -225,7 +225,10 @@ function updateLeaveBalance() {
     var startDate = $('#assignleave_txtFromDate').val();
     var endDate =  $('#assignleave_txtToDate').val();
     $('#assignleave_leaveBalance').text('--');
-    $('#leaveBalance_details_link').remove();            
+    $('#leaveBalance_details_link').remove();     
+    
+    $('#popup_emp_name').text($('#assignleave_txtEmployee_empName').val());
+    $('#popup_leave_type').text($('#assignleave_txtLeaveType option:selected').text()); 
 
     if (leaveType == "" || empId == "") {
     //$('#assignleave_leaveBalance').text('--');
@@ -245,7 +248,7 @@ function updateLeaveBalance() {
                 .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
                     lang_details + '</a>');
 
-                $('#balance_as_of').text(asAtDate);                
+                $('#balance_as_of').text(asAtDate);                       
                 $('#balance_entitled').text(Number(balance.entitled).toFixed(2));
                 $('#balance_taken').text(Number(balance.taken).toFixed(2));
                 $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));

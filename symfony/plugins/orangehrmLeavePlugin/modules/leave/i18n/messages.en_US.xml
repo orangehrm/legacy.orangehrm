@@ -333,8 +333,8 @@
     <target>view details</target>
    </trans-unit>    
    <trans-unit id="83">
-    <source>As of date</source>
-    <target>As of date</target>
+    <source>As of Date</source>
+    <target>As of Date</target>
    </trans-unit>  
    <trans-unit id="83">
     <source>Overlapping Leave Requests Found</source>
