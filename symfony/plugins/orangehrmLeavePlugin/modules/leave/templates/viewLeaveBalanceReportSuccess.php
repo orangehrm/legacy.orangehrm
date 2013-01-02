@@ -34,14 +34,14 @@ use_stylesheets_for_form($form);
 </div> 
 
 <?php if (!empty($resultsSet)) { ?>
-    <div id="report-results" class="box noHeader" style="display: inline-block">
+    <div id="report-results" class="box noHeader">
         <div class="inner">
             <?php if ($pager->haveToPaginate()):?>
-            <div class="top" style="padding-top:25px;">
+            <div class="top">
                 <?php include_partial('core/report_paging', array('pager' => $pager));?>                
             </div>
             <?php endif; ?> 
-            <table class="table nosort" width="<?php echo $tableWidthInfo["tableWidth"];?>" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
+            <table class="table nosort" cellspacing="0" cellpadding="0">
 
             <?php $headers = $sf_data->getRaw('tableHeaders');
                   $headerInfo = $sf_data->getRaw('headerInfo');?>
@@ -59,7 +59,7 @@ use_stylesheets_for_form($form);
                     <?php $i = 0; foreach($headers as $subHeaders): array_shift($subHeaders);?>
 
                             <?php foreach($subHeaders as $subHeader):?>
-                    <th class="header" style="text-align: center;" width="<?php echo $tableWidthInfo["columnWidth"][$i]; $i++;?>"><?php echo __($subHeader);?></th>
+                    <th class="header" style="text-align: center;" ><?php echo __($subHeader);?></th>
                             <?php endforeach;?>                    
                     <?php endforeach;?>
                 </tr>
@@ -81,7 +81,7 @@ use_stylesheets_for_form($form);
                                 $headInf = $info[$colKey];                                                                            
                                 if(($headInf["groupDisp"] == "true") && ($headInf["display"] == "true")):?>
                                     <!--<td><table>-->
-                                    <td width="<?php echo ($headInf["width"] ); ?>"><ul>                                      
+                                    <td><ul>                                      
                                         <ul>                                         
                                         <?php foreach($colVal as $data):?>
                                                <!--<tr style="height: 10px;"><td headers="10"><?php // echo __($data);?></td></tr>-->                                               
@@ -95,7 +95,7 @@ use_stylesheets_for_form($form);
                          else:
                              //echo $key . '-' . $column;
                             if(($info["groupDisp"] == "true") && ($info["display"] == "true")):?>
-                            <td width="<?php echo ($info["width"]);?>"><?php if(($column == "") || is_null($column)):
+                            <td><?php if(($column == "") || is_null($column)):
                                     echo "---";
                                 else :
                                     
@@ -128,6 +128,11 @@ use_stylesheets_for_form($form);
                  <?php endforeach;?>
                 </tbody>
             </table>
+            <?php if ($pager->haveToPaginate()):?>
+            <div class="bottom">
+                <?php include_partial('core/report_paging', array('pager' => $pager));?>                
+            </div>
+            <?php endif; ?>             
         </div>    
     </div>
 <?php } ?>
