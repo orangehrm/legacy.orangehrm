@@ -1084,14 +1084,12 @@ class EmployeeService extends BaseService {
         $noOfDays = floor($timeStampDiff / $secondsOfDay);
         $fromYear = date("Y", strtotime($fromDate));
         $toYear = date("Y", strtotime($toDate));
-        $ctr = $fromYear;
-        $daysCount = 0;
 
         list($fY, $fM, $fD) = explode("-", $fromDate);
         list($tY, $tM, $tD) = explode("-", $toDate);
         $years = $tY - $fY;
 
-        $temp = date("Y") . "-" . $fM . "-" . $fD;
+        $temp = $fromYear . "-" . $fM . "-" . $fD;
         $newFromMonthDay = date("m-d", strtotime("-1 day", strtotime($temp)));
         $toMonthDay = $tM . "-" . $tD;
 
