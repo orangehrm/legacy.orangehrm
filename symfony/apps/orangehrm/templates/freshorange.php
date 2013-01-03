@@ -1,4 +1,9 @@
-<?php require_once '_header.php'; ?>
+<?php 
+
+// Allow header partial to be overridden in individual actions
+// Can be overridden by: slot('header', get_partial('module/partial'));
+include_slot('header', get_partial('global/header'));
+?>
 
     </head>
     <body>
@@ -43,4 +48,5 @@
             OrangeHRM ver 3.0-rc.1 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
         </div> <!-- footer -->        
         
-<?php require_once '_footer.php'; ?>
+        
+<?php include_slot('footer', get_partial('global/footer'));?>
