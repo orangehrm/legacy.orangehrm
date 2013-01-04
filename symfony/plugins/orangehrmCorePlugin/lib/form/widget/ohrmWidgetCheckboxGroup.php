@@ -214,9 +214,14 @@ EOF;
         }
 
         $html = "";
+        
+        $class = $this->getOption('class');
+        if ($labelFirst) {
+            $class .= ' label_first';
+        }
 
         if ($rows) {
-            $html = $this->renderContentTag('div', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class'),
+            $html = $this->renderContentTag('div', implode($this->getOption('separator'), $rows), array('class' => $class,
                 'id' => $widget->getId()));
         }
 
