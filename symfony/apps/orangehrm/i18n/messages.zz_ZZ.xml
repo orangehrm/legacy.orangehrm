@@ -5362,7 +5362,11 @@
    <trans-unit id="1172">
     <source>View Leave Request Comments</source>
     <target>FR_View Leave Request Comments</target>
-   </trans-unit>                  
+   </trans-unit>  
+   <trans-unit id="1173">
+    <source>User Management</source>
+    <target>FR_User Management</target>
+   </trans-unit>                   
   </body>
  </file>
 </xliff>

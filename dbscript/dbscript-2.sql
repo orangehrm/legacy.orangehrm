@@ -1382,7 +1382,7 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 
 INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
 (1, 'Admin', 74, NULL, 1, 100, NULL, 1),
-(2, 'Users', 1, 1, 2, 100, NULL, 1),
+(2, 'User Management', NULL, 1, 2, 100, NULL, 1),
 (3, 'Project Info', NULL, 1, 2, 200, NULL, 1),
 (4, 'Customers', 36, 3, 3, 100, NULL, 1),
 (5, 'Projects', 37, 3, 3, 200, NULL, 1),
@@ -1458,7 +1458,8 @@ INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level
 (77, 'Employee Entitlements', 69, 74, 3, 200, '/reset/1', 0),
 (78, 'Reports', NULL, 41, 2, 400, NULL, 0),
 (79, 'Leave Entitlements and Usage Report', 78, 78, 3, 100, NULL, 0),
-(80, 'My Leave Entitlements and Usage Report', 79, 78, 3, 200, NULL, 0);
+(80, 'My Leave Entitlements and Usage Report', 79, 78, 3, 200, NULL, 0),
+(81, 'Users', 1, 2, 3, 100, NULL, 1);
 
 INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
 (1, 1, 1, 1, 1, 1),
