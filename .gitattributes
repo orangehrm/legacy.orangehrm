@@ -400,6 +400,7 @@ symfony/apps/orangehrm/modules/performance/templates/saveReviewSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/showDefineKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/updateKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/viewReviewSuccess.php -text
+symfony/apps/orangehrm/templates/_delete_confirmation.php -text
 symfony/apps/orangehrm/templates/_flash_messages.php -text
 symfony/apps/orangehrm/templates/_footer.php -text
 symfony/apps/orangehrm/templates/_form_errors.php -text
