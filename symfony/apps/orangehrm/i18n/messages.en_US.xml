@@ -5357,7 +5357,7 @@
    </trans-unit>  
    <trans-unit id="1171">
     <source>Author</source>
-    <target>FR_Author</target>
+    <target>Author</target>
    </trans-unit>
    <trans-unit id="1172">
     <source>View Leave Request Comments</source>
@@ -5366,7 +5366,11 @@
    <trans-unit id="1173">
     <source>User Management</source>
     <target>User Management</target>
-   </trans-unit>                            
+   </trans-unit> 
+   <trans-unit id="1174">
+    <source>User Roles</source>
+    <target>User Roles</target>
+   </trans-unit>                               
   </body>
  </file>
 </xliff>
