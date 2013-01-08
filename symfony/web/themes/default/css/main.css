@@ -948,7 +948,7 @@ table.nosort thead tr .header {
 	background-image: none;
 	cursor: default;
 }
-table tbody tr.odd td, table tbody tr.odd td {
+table tbody tr.odd td {
 	background-color:#eaeaea;
 }
 table tbody tr.total td {
