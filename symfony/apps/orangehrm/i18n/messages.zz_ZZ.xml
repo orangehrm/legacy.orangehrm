@@ -5366,11 +5366,7 @@
    <trans-unit id="1173">
     <source>User Management</source>
     <target>FR_User Management</target>
-   </trans-unit>   
-   <trans-unit id="1174">
-    <source>User Roles</source>
-    <target>FR_User Roles</target>
-   </trans-unit>                   
+   </trans-unit>                     
   </body>
  </file>
 </xliff>
