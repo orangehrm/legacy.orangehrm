@@ -189,6 +189,9 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
                         }
                         
                         foreach ($group->getHeaders() as $header) {
+                            
+                            $sortOrderStyle = 'null';
+                            
                             if ($header->isSortable()) {
                                 $nextSortOrder = ($currentSortOrder == 'ASC') ? 'DESC' : 'ASC';
                                 $nextSortOrder = ($currentSortField == $header->getSortField()) ? $nextSortOrder : 'ASC';

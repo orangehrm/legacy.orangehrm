@@ -13,7 +13,7 @@ class sfWidgetFormSchemaFormatterDefault extends sfWidgetFormSchemaFormatter {
 
     public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null) {
         
-        return strtr($this->getRowFormat($field), array(
+        return strtr($this->getRowFormatForField($field), array(
             '%label%' => $label,
             '%field%' => $field,
             '%error%' => $this->formatErrorsForRow($errors),
@@ -23,7 +23,7 @@ class sfWidgetFormSchemaFormatterDefault extends sfWidgetFormSchemaFormatter {
         
     }
     
-    public function getRowFormat($field) {
+    public function getRowFormatForField($field) {
         
         if (substr($field, 0, 9) == '<textarea') {
             return $this->textareaRowFormat;
