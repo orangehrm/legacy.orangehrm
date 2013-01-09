@@ -64,15 +64,21 @@ class getFilteredEmployeesEntitlementAjaxAction  extends sfAction {
        
         foreach($employees as $employee) {
             
+            $fromDate = isset($parameters['fd']) ? $parameters['fd'] : null;
+            $toDate =  isset($parameters['td']) ? $parameters['td'] : null;
+            $leaveType =  isset($parameters['lt']) ? $parameters['lt'] : null;
+            $newValue =  isset($parameters['ent']) ? $parameters['ent'] : null;
+            
+            
             $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
             $leaveEntitlementSearchParameterHolder->setEmpNumber($employee->getEmpNumber());
-            $leaveEntitlementSearchParameterHolder->setFromDate($parameters['fd']);
-            $leaveEntitlementSearchParameterHolder->setLeaveTypeId($parameters['lt']);
-            $leaveEntitlementSearchParameterHolder->setToDate($parameters['td']);
+            $leaveEntitlementSearchParameterHolder->setFromDate($fromDate);
+            $leaveEntitlementSearchParameterHolder->setLeaveTypeId($leaveType);
+            $leaveEntitlementSearchParameterHolder->setToDate($toDate);
             
             $entitlementList = $this->getEntitlementService()->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
             $oldValue = 0;
-            $newValue = $parameters['ent'];
+
             if(count($entitlementList) > 0){
                 $existingLeaveEntitlement = $entitlementList->getFirst();
                 $oldValue = $existingLeaveEntitlement->getNoOfDays();
