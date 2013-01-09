@@ -284,8 +284,8 @@ function theme_path($path) {
 
     $themeName = $sfUser->getAttribute('meta.themeName'); 
     
-    $themePath = public_path() . 'themes/' . $themeName . '/';
-    $themePath = empty($path)?$themePath:$themePath . $path;
+    $themePath = public_path('themes/' . $themeName . '/');
+    $themePath = empty($path)? $themePath : $themePath . $path;
     
     return $themePath;
     
