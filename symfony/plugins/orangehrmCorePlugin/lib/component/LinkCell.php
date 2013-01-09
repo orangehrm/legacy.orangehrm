@@ -25,7 +25,8 @@ class LinkCell extends Cell {
             $urlPattern = $this->getPropertyValue('urlPattern');
 
             $url = $urlPattern;
-            if (is_array($placeholderGetters)) {
+            
+            if (!is_null($placeholderGetters)) {
                 foreach ($placeholderGetters as $placeholder => $getter) {
                     $placeholderValue = is_array($this->dataObject) ? $this->dataObject[$getter] : $this->dataObject->$getter();
                     $url = preg_replace("/\{{$placeholder}\}/", $placeholderValue, $url);
