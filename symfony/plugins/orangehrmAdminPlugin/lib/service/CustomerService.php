@@ -68,7 +68,7 @@ class CustomerService extends BaseService {
      * @param type $activeOnly
      * @return type 
      */
-    public function getCustomerCount($activeOnly) {
+    public function getCustomerCount($activeOnly = true) {
         return $this->customerDao->getCustomerCount($activeOnly);
     }
 
