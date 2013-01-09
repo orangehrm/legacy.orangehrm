@@ -242,11 +242,11 @@ class SystemUserDao extends BaseDao {
         if (!empty($searchClues['employeeId'])) {
             $query->addWhere('u.emp_number = ?', $searchClues['employeeId']);
         }
-        if ($searchClues['status'] != '') {
+        if (isset($searchClues['status']) && $searchClues['status'] != '') {
             $query->addWhere('u.status = ?', $searchClues['status']);
         }
 
-        if ($searchClues['location'] && $searchClues['location'] != '-1') {
+        if (isset($searchClues['location']) && $searchClues['location'] && $searchClues['location'] != '-1') {
             $query->leftJoin('u.Employee e');
             $query->leftJoin('e.EmpLocations l');
             $query->whereIn('l.location_id', explode(',', $searchClues['location']));
