@@ -114,7 +114,7 @@ class saveProjectAction extends sfAction {
      * @param <type> $noOfRecords
      * @param <type> $pageNumber
      */
-    private function _setListComponent($customerList, $noOfRecords, $pageNumber) {
+    private function _setListComponent($customerList) {
 
         $configurationFactory = new ProjectActivityHeaderFactory();
         ohrmListComponent::setConfigurationFactory($configurationFactory);

@@ -21,7 +21,8 @@
 class PayGradeForm extends BaseForm {
 
 	private $payGradeId;
-	private $payGradeService;
+	protected $payGradeService;
+        protected $currencyService;
 
 	/**
 	 * Get CurrencyService

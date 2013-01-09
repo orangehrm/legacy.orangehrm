@@ -5,7 +5,7 @@
 use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess'); 
 ?>
 
-<?php $hasCurrencies = count($currencyList) > 0; ?>
+<?php $hasCurrencies = !empty($currencyList) && count($currencyList) > 0; ?>
 
 <div id="payGrade" class="box">
     
