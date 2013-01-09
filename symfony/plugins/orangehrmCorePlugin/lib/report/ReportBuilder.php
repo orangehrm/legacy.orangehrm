@@ -217,7 +217,7 @@ class ReportBuilder {
                 $headers[$attributes["name"]]["attr"] = array("type" => $attributes["type"],
                     "display" => $attributes["display"],
                     "header" => $groupHeader,
-                    "showHeader" => $attributes["show_header"]);
+                    "showHeader" => isset($attributes["show_header"]) ? $attributes["show_header"] : null);
 
                 $fields = array();
 

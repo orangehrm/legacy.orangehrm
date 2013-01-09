@@ -19,7 +19,7 @@
  *
  * @author samantha
  */
-class ohrmWidgetFormLeavePeriod  extends sfWidgetForm{
+class ohrmWidgetFormLeavePeriod  extends sfWidgetForm {
     /**
    * Configures the current widget.
    *
@@ -153,7 +153,7 @@ class ohrmWidgetFormLeavePeriod  extends sfWidgetForm{
         $leavePeriodWidget = $this->getOption('leave_period');
         
         $html = strtr($this->translate($this->getOption('template')), array(
-          '%leave_period%'=> $leavePeriodWidget->render(),
+          '%leave_period%'=> $leavePeriodWidget->render(null),
           '%from_date%' => $fromWidget->render($name.'[from]', $value['from'],array('id' => 'date_from')),
           '%to_date%' => $toWidget->render($name.'[to]', $value['to'],array('id' => 'date_to')),
         ));

@@ -76,7 +76,7 @@ class AssignLeaveForm extends sfForm {
      *
      * @return array
      */
-    protected function getLeaveTypeChoices($leaveTypeList) {
+    protected function getLeaveTypeChoices($leaveTypeList = null) {
 
         if (!$leaveTypeList) {
             $leaveTypeList = $this->getOption('leaveTypes');

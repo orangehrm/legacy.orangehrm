@@ -95,18 +95,6 @@ class viewHolidayListAction extends sfAction {
         $dateRange = $this->getLeavePeriodService()->getCalenderYearByDate(time());
         $startDate = $dateRange[0];
         $endDate = $dateRange[1];
-       // 
-        //$leavePeriodService = $this->getLeavePeriodService();
-
-        //retrieve current leave period id
-       // $leavePeriodId = (!$leavePeriodService->getCurrentLeavePeriod() instanceof LeavePeriod)?0:$leavePeriodService->getCurrentLeavePeriod()->getLeavePeriodId();
-
-       // $startDate = date("Y-m-d");
-       // $endDate = date("Y-m-d");
-       // if($leavePeriodService->getCurrentLeavePeriod() instanceof LeavePeriod) {
-       //     $startDate = $leavePeriodService->getCurrentLeavePeriod()->getStartDate();
-       //     $endDate = $leavePeriodService->getCurrentLeavePeriod()->getEndDate();
-       // }
 
         if($request->isMethod('post')) {
             
@@ -121,7 +109,6 @@ class viewHolidayListAction extends sfAction {
             }
         }
 
-        $this->leavePeriodId = $leavePeriodId;
         $this->daysLenthList = WorkWeek::getDaysLengthList();
         $this->yesNoList = WorkWeek::getYesNoList();
         $this->holidayList = $this->getHolidayService()->searchHolidays($startDate, $endDate);

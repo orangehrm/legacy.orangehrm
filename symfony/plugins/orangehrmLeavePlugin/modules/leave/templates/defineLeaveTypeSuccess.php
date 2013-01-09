@@ -32,7 +32,7 @@
                 $actionButtons = $form->getActionButtons();
 
                 foreach ($actionButtons as $button) {
-                    echo $button->render($id), "\n";
+                    echo $button->render(null), "\n";
                 }
                 ?>                    
             </p>                

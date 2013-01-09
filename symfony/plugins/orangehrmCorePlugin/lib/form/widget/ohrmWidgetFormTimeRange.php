@@ -102,7 +102,7 @@ class ohrmWidgetFormTimeRange extends sfWidgetForm {
         $fromLabel = $this->getOption('from_label');
 
         if (!empty($fromLabel)) {
-            $fromLabelHtml = strstr($this->getOption('from_label_template'), array(
+            $fromLabelHtml = strtr($this->getOption('from_label_template'), array(
                 '%for_id%' => $fromId,
                 '%label%' => $this->translate($fromLabel)
                     ));
