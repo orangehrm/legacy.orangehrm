@@ -103,7 +103,15 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
     <?php include_component('core', 'ohrmPluginPannel', array('location' => 'widget-panel-1')) ?>
     <?php include_component('core', 'ohrmPluginPannel', array('location' => 'widget-panel-2')) ?>
         
-    <form method="<?php echo $formMethod; ?>" action="<?php echo public_path($formAction); ?>" name="frmList_ohrmListComponent" id="frmList_ohrmListComponent">
+    <?php
+        if (strpos($formAction, 'index.php') === FALSE) {
+            $formUrl = url_for($formAction);
+        } else {
+            $formUrl = public_path($formAction);
+        }
+    ?>
+        
+    <form method="<?php echo $formMethod; ?>" action="<?php echo $formUrl; ?>" name="frmList_ohrmListComponent" id="frmList_ohrmListComponent">
         
 <?php if (count($buttons) > 0 || isset($extraButtons) || $pager->haveToPaginate()) : ?>        
  <div class="top">          

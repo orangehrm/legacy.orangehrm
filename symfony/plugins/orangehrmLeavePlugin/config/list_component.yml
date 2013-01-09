@@ -13,7 +13,7 @@ LeaveEntitlement:
     summaryFieldDecimals: 2
   buttonsPosition: before-data
   formMethod: post
-  formAction: 'index.php/leave/deleteLeaveEntitlements'
+  formAction: 'leave/deleteLeaveEntitlements'
   assets: []
   jsInitMethods: []
   
@@ -37,7 +37,7 @@ HolidayList:
       class: delete
   buttonsPosition: before-data
   formMethod: post
-  formAction: 'index.php/leave/deleteHoliday'
+  formAction: 'leave/deleteHoliday'
   assets:
   jsInitMethods: []  
   
@@ -61,7 +61,7 @@ LeaveTypeList:
       class: delete      
   buttonsPosition: before-data
   formMethod: post
-  formAction: 'index.php/leave/deleteLeaveType'
+  formAction: 'leave/deleteLeaveType'
   assets: []
   jsInitMethods: []
   
@@ -80,7 +80,7 @@ LeaveRequest:
       function: handleSaveButton
   buttonsPosition: after-data
   formMethod: post
-  formAction: 'index.php/leave/changeLeaveStatus'
+  formAction: 'leave/changeLeaveStatus'
   assets: []
   jsInitMethods: [setPage]
 
@@ -103,6 +103,6 @@ Leave:
       class: reset       
   buttonsPosition: after-data
   formMethod: post
-  formAction: 'index.php/leave/changeLeaveStatus'
+  formAction: 'leave/changeLeaveStatus'
   assets: []
   jsInitMethods: []   
