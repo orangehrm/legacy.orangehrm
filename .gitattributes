@@ -4944,6 +4944,7 @@ symfony/web/js/orangehrm.validate.js -text
 symfony/web/js/prototype.js -text
 symfony/web/orangehrm_dev.php -text
 symfony/web/robots.txt -text
+symfony/web/sf -text
 symfony/web/sfDoctrinePlugin -text
 symfony/web/themes/default/css/header.css -text
 symfony/web/themes/default/css/jquery/images/ui-bg_glass_55_fcf0ba_1x400.png -text
