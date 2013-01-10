@@ -31,7 +31,7 @@ class defaultActions extends sfActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
-        $this->redirect($this->getHomePageService()->getPathAfterLoggingIn($referer, $host));
+        $this->redirect($this->getHomePageService()->getPathAfterLoggingIn($this->getContext()));
     }
 
     /**

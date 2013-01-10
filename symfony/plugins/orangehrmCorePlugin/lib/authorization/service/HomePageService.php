@@ -136,31 +136,58 @@ class HomePageService {
         
     }
     
-    public function getPathAfterLoggingIn($referer, $host) {
+    public function getPathAfterLoggingIn(sfContext $context) {
         
         $redirectToReferer = true;
+                            
+        $referer = $context->getRequest()->getReferer();
+        $host = $context->getRequest()->getHost();           
         
-        if (strpos($referer, $this->loginPath)) { // Check whether referer is login page
-            
+        if (strpos($referer, $this->loginPath)) { // Check whether referer is login page            
             $redirectToReferer = false;
-
-        } elseif (strpos($referer, $this->validatePath)) { // Check whether referer is validate action
-            
-            $redirectToReferer = false;
-            
+        } elseif (strpos($referer, $this->validatePath)) { // Check whether referer is validate action            
+            $redirectToReferer = false;            
         } else {
             
-            if (!strpos($referer, $host)) { // Check whether from same host
-                
-                $redirectToReferer = false;
-                
-            }
-            
+            if (!strpos($referer, $host)) { // Check whether from same host                
+                $redirectToReferer = false;                
+            }            
         }
         
-        if ($redirectToReferer) {
-            return $referer;
-        }
+        /* 
+         * Try to get action and module, skip redirecting to referrer and show homepage if:
+         * 1) Action is not secure (probably a login related url we should not redirect to)
+         * 2) Action is not accessible to current user.
+         */        
+        if ($redirectToReferer) {            
+            try {
+                $params = $context->getRouting()->parse($referer);
+                if ($params && isset($params['module']) && isset($params['action'])) {
+
+                    $moduleName = $params['module'];
+                    $actionName = $params['action'];
+
+                    if ($context->getController()->actionExists($moduleName, $actionName)) {
+                        $action = $context->getController()->getAction($moduleName, $actionName);
+
+                        if ($action instanceof sfAction) {
+                            if ($action->isSecure()) {
+
+                                $permissions = $context->getUserRoleManager()->getScreenPermissions($moduleName, $actionName);
+                                if ($permissions instanceof ResourcePermission) {
+                                    if ($permissions->canRead()) {
+                                        return $referer;
+                                    }
+                                }
+                            }
+                        }
+                    }                
+                }
+            } catch (Exception $e) {
+                $logger = Logger::getLogger('core.homepageservice');
+                $logger->warn('Error when trying to get referrer action: ' . $e);
+            }
+        }        
         
         return $this->getHomePagePath();
         
