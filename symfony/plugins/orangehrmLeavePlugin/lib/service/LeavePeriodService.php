@@ -474,7 +474,7 @@ class LeavePeriodService extends BaseService {
      * Get Generated Leave Period List
      * @return type
      */
-    public function getGeneratedLeavePeriodList( ){
+    public function getGeneratedLeavePeriodList( $toDate = null ){
         $leavePeriodList = array();
         $leavePeriodHistoryList = $this->getLeavePeriodDao()->getLeavePeriodHistoryList();
         
@@ -483,8 +483,12 @@ class LeavePeriodService extends BaseService {
         
         if(empty($this->leavePeriodList)){
         
-            $endDate = new DateTime();
-            $endDate->add(new DateInterval('P1Y'));
+            $endDate = ($toDate != null)? new DateTime($toDate): new DateTime();
+            //If To Date is not specified return leave type till next leave period 
+            if(is_null( $toDate)){
+                $endDate->add(new DateInterval('P1Y'));
+            }
+            
 
             $firstCreatedDate = new DateTime($leavePeriodHistoryList->getFirst()->getCreatedAt());
             $startDate = new DateTime($firstCreatedDate->format('Y')."-".$leavePeriodHistoryList->getFirst()->getLeavePeriodStartMonth()."-".$leavePeriodHistoryList->getFirst()->getLeavePeriodStartDay());
