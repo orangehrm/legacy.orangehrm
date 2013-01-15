@@ -104,7 +104,9 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
     <?php include_component('core', 'ohrmPluginPannel', array('location' => 'widget-panel-2')) ?>
         
     <?php
-        if (strpos($formAction, 'index.php') === FALSE) {
+        if ($formAction == '#') {
+            $formUrl = '#';
+        } else if (strpos($formAction, 'index.php') === FALSE) {
             $formUrl = url_for($formAction);
         } else {
             $formUrl = public_path($formAction);
