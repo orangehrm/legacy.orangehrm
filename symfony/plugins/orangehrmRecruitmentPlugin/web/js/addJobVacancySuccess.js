@@ -12,8 +12,11 @@ $(document).ready(function() {
     //Auto complete
     $("#addJobVacancy_hiringManager").autocomplete(hiringManagers, {
         formatItem: function(item) {
-            return item.name;
+            return $('<div/>').text(item.name).html();
         },
+        formatResult: function(item) {
+            return item.name
+        },  
         matchContains:true
     }).result(function(event, item) {
         //$("#candidateSearch_selectedCandidate").val(item.id);

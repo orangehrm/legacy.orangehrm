@@ -151,9 +151,12 @@
 
 					//Auto complete
 					$("#txtEmployee").autocomplete(data, {
-					  formatItem: function(item) {
-					    return item.name;
-					  }
+                                            formatItem: function(item) {
+                                                return $('<div/>').text(item.name).html();
+                                            },
+                                            formatResult: function(item) {
+                                                return item.name
+                                            }                                            
 					}).result(function(event, item) {
 					  	$('#txtEmpId').val(item.id);
 					});

@@ -11,8 +11,11 @@ $(document).ready(function() {
     //Auto complete
     $(".formInputProjectAdmin").autocomplete(employees, {
         formatItem: function(item) {
-            return item.name;
+            return $('<div/>').text(item.name).html();
         },
+        formatResult: function(item) {
+            return item.name
+        },  
         matchContains:true
     }).result(function(event, item) {
         validateProjectAdminNames();

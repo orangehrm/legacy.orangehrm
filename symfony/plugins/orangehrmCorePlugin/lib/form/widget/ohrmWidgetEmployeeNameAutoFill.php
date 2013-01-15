@@ -81,9 +81,12 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
 
                     nameField.autocomplete(employees_%s, {
 
-                            formatItem: function(item) {
-                                return item.name;
-                            }
+                        formatItem: function(item) {
+                            return $('<div/>').text(item.name).html();
+                        },
+                        formatResult: function(item) {
+                            return item.name
+                        }
                       ,matchContains:true
                         }).result(function(event, item) {
                             idStoreField.val(item.id);
@@ -102,8 +105,12 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
                                      nameField.autocomplete(employeeList, {
 
                                                 formatItem: function(item) {
-                                                    return item.name;
+                                                    return $('<div/>').text(item.name).html();
+                                                },
+                                                formatResult: function(item) {
+                                                    return item.name
                                                 }
+                                                
                                                 ,matchContains:true
                                             }).result(function(event, item) {
                                                 idStoreField.val(item.id);

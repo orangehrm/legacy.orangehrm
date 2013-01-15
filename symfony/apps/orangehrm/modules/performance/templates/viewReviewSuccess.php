@@ -76,8 +76,7 @@ use_javascript('orangehrm.datepicker.js');
                             <label for="txtEmpName"><?php echo __('Employee') ?></label>
                             <input id="txtEmpName" name="txtEmpName" type="text" 
                                    value="<?php echo isset($clues['empName']) ? $clues['empName'] : __('Type for hints') . '...' ?>"
-                                   tabindex="5" onblur="autoFill('txtEmpName', 'hdnEmpId', 
-                                       <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?>);"/>
+                                   tabindex="5" onblur="autoFill('txtEmpName', 'hdnEmpId');"/>
                             <input type="hidden" name="hdnEmpId" id="hdnEmpId" 
                                    value="<?php echo isset($clues['empId']) ? $clues['empId'] : '0' ?>">
                         </li>
@@ -89,8 +88,7 @@ use_javascript('orangehrm.datepicker.js');
                             <input id="txtReviewerName"  name="txtReviewerName" type="text" class="formInputText" 
                                    value="<?php echo isset($clues['reviewerName']) ? $clues['reviewerName'] : 
                                        __('Type for hints') . '...' ?>" tabindex="6" 
-                                       onblur="autoFill('txtReviewerName', 'hdnReviewerId', 
-                                           <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?>);"/>
+                                       onblur="autoFill('txtReviewerName', 'hdnReviewerId');"/>
                             <input type="hidden" name="hdnReviewerId" id="hdnReviewerId" 
                                    value="<?php echo isset($clues['reviewerId']) ? $clues['reviewerId'] : '0' ?>">
                         </li>
@@ -290,8 +288,10 @@ use_javascript('orangehrm.datepicker.js');
     var lang_invalidDate = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, 
             array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
     
-    function autoFill(selector, filler, data) {
-        jQuery.each(data, function(index, item){
+    var empdata = <?php echo $form->getEmployeeListAsJson(); ?>;
+    
+    function autoFill(selector, filler) {
+        jQuery.each(empdata, function(index, item){
             if(item.name == $("#" + selector).val()) {
                 $("#" + filler).val(item.id);
                 return true;
@@ -307,14 +307,15 @@ use_javascript('orangehrm.datepicker.js');
             $('#txtPeriodToDate').val(displayDateFormat);
         }
         
-        <?php if ($loggedAdmin || $loggedReviewer) { ?>
-            
-            var empdata = <?php echo str_replace('&#039;', "'", $form->getEmployeeListAsJson()) ?>;
+        <?php if ($loggedAdmin || $loggedReviewer) { ?>            
             
             /* Auto completion of employees */
             $("#txtEmpName").autocomplete(empdata, {
                 formatItem: function(item) {
-                    return item.name;
+                    return $('<div/>').text(item.name).html();
+                },
+                formatResult: function(item) {
+                    return item.name
                 }, matchContains:"word"
             }).result(function(event, item) {
                 $('#hdnEmpId').val(item.id);
@@ -323,7 +324,10 @@ use_javascript('orangehrm.datepicker.js');
             /* Auto completion of reviewers */
             $("#txtReviewerName").autocomplete(empdata, {
                 formatItem: function(item) {
-                    return item.name;
+                    return $('<div/>').text(item.name).html();
+                },
+                formatResult: function(item) {
+                    return item.name
                 }, matchContains:"word"
             }).result(function(event, item) {
                 $('#hdnReviewerId').val(item.id);
