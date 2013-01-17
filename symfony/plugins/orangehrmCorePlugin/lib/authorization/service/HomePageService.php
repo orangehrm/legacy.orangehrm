@@ -138,19 +138,39 @@ class HomePageService {
     
     public function getPathAfterLoggingIn(sfContext $context) {
         
-        $redirectToReferer = true;
-                            
-        $referer = $context->getRequest()->getReferer();
-        $host = $context->getRequest()->getHost();           
+        $logger = Logger::getLogger('core.homepageservice');
+               
+        $redirectToReferer = true;                   
+        $request = $context->getRequest();
+        
+        $referer = $request->getReferer();
+        $host = $request->getHost();           
+        
+        // get base url: ie something like: http://host:port/symfony/web/index.php        
+        $baseUrl = $request->getUriPrefix() . $request->getPathInfoPrefix();
+        
+        if ($logger->isDebugEnabled()) {
+            $logger->debug("referer: $referer, host: $host, base url: $baseUrl");
+        }
         
         if (strpos($referer, $this->loginPath)) { // Check whether referer is login page            
             $redirectToReferer = false;
+            if ($logger->isDebugEnabled()) {        
+                $logger->debug("referrer is the login page. Skipping redirect:" . $this->loginPath);
+            }
         } elseif (strpos($referer, $this->validatePath)) { // Check whether referer is validate action            
             $redirectToReferer = false;            
+            
+            if ($logger->isDebugEnabled()) {        
+                $logger->debug("referrer is the validate action. Skipping redirect:" . $this->validatePath);
+            }
         } else {
             
-            if (!strpos($referer, $host)) { // Check whether from same host                
+            if (false === strpos($referer, $baseUrl)) { // Check whether from same host                
                 $redirectToReferer = false;                
+                if ($logger->isDebugEnabled()) {        
+                    $logger->debug("referrer does not have same base url. Skipping redirect");
+                }
             }            
         }
         
@@ -161,30 +181,48 @@ class HomePageService {
          */        
         if ($redirectToReferer) {            
             try {
-                $params = $context->getRouting()->parse($referer);
+                $moduleAndAction = str_replace($baseUrl, '', $referer);
+                if ($logger->isDebugEnabled()) {        
+                    $logger->debug('referrer module and action: ' . $moduleAndAction);
+                }
+                
+                $params = $context->getRouting()->parse($moduleAndAction);
                 if ($params && isset($params['module']) && isset($params['action'])) {
 
                     $moduleName = $params['module'];
                     $actionName = $params['action'];
 
+                    if ($logger->isDebugEnabled()) {
+                        $logger->debug("module: $moduleName, action: $actionName");
+                    }
+                    
                     if ($context->getController()->actionExists($moduleName, $actionName)) {
                         $action = $context->getController()->getAction($moduleName, $actionName);
 
                         if ($action instanceof sfAction) {
                             if ($action->isSecure()) {
 
-                                $permissions = $context->getUserRoleManager()->getScreenPermissions($moduleName, $actionName);
+                                $permissions = UserRoleManagerFactory::getUserRoleManager()->getScreenPermissions($moduleName, $actionName);
                                 if ($permissions instanceof ResourcePermission) {
                                     if ($permissions->canRead()) {
                                         return $referer;
                                     }
+                                } else {
+                                    $logger->debug("action does not exist");
                                 }
+                            } else {
+                                $logger->debug("action is not secure");
                             }
+                        } else {
+                            $logger->debug("action not an instance of sfAction");
                         }
+                    } else {
+                        $logger->debug("action does not exist");
                     }                
+                } else {
+                    $logger->debug("referrer does not match a route");
                 }
             } catch (Exception $e) {
-                $logger = Logger::getLogger('core.homepageservice');
                 $logger->warn('Error when trying to get referrer action: ' . $e);
             }
         }        
