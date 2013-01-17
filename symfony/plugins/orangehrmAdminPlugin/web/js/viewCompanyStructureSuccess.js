@@ -14,13 +14,6 @@ $(document).ready(function() {
         }
     });
 
-    $('span[id^=\"span_\"]').tooltip({
-        bodyHandler: function() {
-            var descript = loadToolTip(parseInt($(this).attr('id').replace('span_', '')));
-            return (descript != "") ? descript : lang_noDescriptionSpecified;
-        }
-    });
-
     $('#dialogYes').click(function(){
         nodeId = $('#dltNodeId').val()
         $.ajax({
@@ -105,24 +98,6 @@ function loadNode(nodeId) {
         }
     });
 }
-
-function loadToolTip(nodeId){
-    $.ajax({
-        async: false,
-        url: getSubunitUrl,
-        type: 'post',
-        data: {
-            'subunitId': nodeId
-        },
-        dataType: 'json',
-        success: function(obj) {
-            description = obj.description
-        }
-    });
-
-    return description;
-}
-
 
 function setViewMode(){
     $('.addButton').hide()
