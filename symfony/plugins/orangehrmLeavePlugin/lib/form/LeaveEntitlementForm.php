@@ -58,7 +58,7 @@ class LeaveEntitlementForm extends BaseForm {
 
         $this->setValidator('employee', new ohrmValidatorEmployeeNameAutoFill());
 
-        $this->_setLeaveTypeWidget();
+        $this->setLeaveTypeWidget();
         
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
         
@@ -87,7 +87,7 @@ class LeaveEntitlementForm extends BaseForm {
 
     }
 
-    private function _setLeaveTypeWidget() {
+    protected function setLeaveTypeWidget() {
 
         $choices = array();
         

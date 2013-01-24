@@ -24,7 +24,7 @@ class activateEmployementAction extends basePimAction {
         $employee = $this->getEmployeeService()->getEmployee($empNumber);
         $allowedActions = $this->getContext()->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_EMPLOYEE, $employee->getState());
 
-        $allowActivate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE, $allowedActions);
+        $allowActivate = isset($allowedActions[WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE]);;
 
         if ($allowActivate) {
             $this->getEmployeeService()->activateTerminatedEmployment($empNumber);

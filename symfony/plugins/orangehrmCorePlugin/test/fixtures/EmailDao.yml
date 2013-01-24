@@ -1,32 +1,25 @@
-OhrmEmail:
-  0: {id: 1, name: 'leave.apply.supervisor'}
-  1: {id: 2, name: 'leave.apply.subscriber'}
-  2: {id: 3, name: 'leave.approve.applicant'}
-  3: {id: 4, name: 'leave.approve.subscriber'}
-  4: {id: 5, name: 'leave.assign.assignee'}
-  5: {id: 6, name: 'leave.assign.supervisor'}
-  6: {id: 7, name: 'leave.assign.subscriber'}
-  7: {id: 8, name: 'leave.cancel_employee.supervisor'}
-  8: {id: 9, name: 'leave.cancel_employee.subscriber'}
-  9: {id: 10, name: 'leave.cancel.applicant'}
-  10: {id: 11, name: 'leave.cancel.subscriber'}
-  11: {id: 12, name: 'leave.reject.applicant'}
-  12: {id: 13, name: 'leave.reject.subscriber'}
+Email:
+  0: {id: 1, name: 'leave.apply'}
+  1: {id: 2, name: 'leave.assign'}
+  2: {id: 3, name: 'leave.approve'}
+  3: {id: 4, name: 'leave.cancel'}
+  4: {id: 5, name: 'leave.reject'}
+  5: {id: 6, name: 'leave.change'}
 
 EmailTemplate:
-  0: {id: 1, email_id: 1, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt'}
-  1: {id: 2, email_id: 2, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt'}
+  0: {id: 1, email_id: 1, locale: 'en_US', recipient_role: 'supervisor', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt'}
+  1: {id: 2, email_id: 1, locale: 'en_US', recipient_role: 'subscriber', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApplicationSubject.txt'}
   2: {id: 3, email_id: 3, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubject.txt'}
-  3: {id: 4, email_id: 4, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubscriberSubject.txt'}
-  4: {id: 5, email_id: 5, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubject.txt'}
-  5: {id: 6, email_id: 6, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentBodyForSupervisors.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubjectForSupervisors.txt'}
-  6: {id: 7, email_id: 7, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubscriberSubject.txt'}
-  7: {id: 8, email_id: 8, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubject.txt'}
-  8: {id: 9, email_id: 9, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubscriberSubject.txt'}
-  9: {id: 10, email_id: 10, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubject.txt'}
-  10: {id: 11, email_id: 11, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberSubject.txt'}
-  11: {id: 12, email_id: 12, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubject.txt'}
-  12: {id: 13, email_id: 13, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberSubject.txt'}
+  3: {id: 4, email_id: 3, locale: 'en_US', performer_role: 'ess', recipient_role: 'subscriber', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveApprovalSubscriberSubject.txt'}
+  4: {id: 5, email_id: 2, locale: 'en_US', recipient_role: 'ess', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubject.txt'}
+  5: {id: 6, email_id: 2, locale: 'en_US', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentBodyForSupervisors.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubjectForSupervisors.txt'}
+  6: {id: 7, email_id: 2, locale: 'en_US', recipient_role: 'subscriber', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveAssignmentSubscriberSubject.txt'}
+  7: {id: 8, email_id: 4, locale: 'en_US', performer_role: 'ess', recipient_role: 'supervisor', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubject.txt'}
+  8: {id: 9, email_id: 4, locale: 'en_US', performer_role: 'ess', recipient_role: 'subscriber', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveEmployeeCancellationSubscriberSubject.txt'}
+  9: {id: 10, email_id: 4, locale: 'en_US', recipient_role: 'ess', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubject.txt'}
+  10: {id: 11, email_id: 4, locale: 'en_US', recipient_role: 'subscriber', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveCancellationSubscriberSubject.txt'}
+  11: {id: 12, email_id: 5, locale: 'en_US', performer_role: 'supervisor', recipient_role: 'ess', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubject.txt'}
+  12: {id: 13, email_id: 5, locale: 'en_US', performer_role: 'supervisor', recipient_role: 'subscriber', body: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberBody.txt', subject: 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/leaveRejectionSubscriberSubject.txt'}
 
 EmailProcessor:
   0: {id: 1, email_id: 1, class_name: 'LeaveApplySupervisorMailProcessor'}
@@ -35,10 +28,3 @@ EmailProcessor:
   3: {id: 4, email_id: 4, class_name: 'LeaveApproveSubscriberMailProcessor'}
   4: {id: 5, email_id: 5, class_name: 'LeaveAssignAssigneeMailProcessor'}
   5: {id: 6, email_id: 6, class_name: 'LeaveAssignSupervisorMailProcessor'}
-  6: {id: 7, email_id: 7, class_name: 'LeaveAssignSubscriberMailProcessor'}
-  7: {id: 8, email_id: 8, class_name: 'LeaveCancelEmployeeSupervisorMailProcessor'}
-  8: {id: 9, email_id: 9, class_name: 'LeaveCancelEmployeeSubscriberMailProcessor'}
-  9: {id: 10, email_id: 10, class_name: 'LeaveCancelApplicantMailProcessor'}
-  10: {id: 11, email_id: 11, class_name: 'LeaveCancelSubscriberMailProcessor'}
-  11: {id: 12, email_id: 12, class_name: 'LeaveRejectApplicantMailProcessor'}
-  12: {id: 13, email_id: 13, class_name: 'LeaveRejectSubscriberMailProcessor'}

@@ -50,6 +50,11 @@ WorkflowStateMachine:
       name: resulting_state as resultingState
       type: string(255)
       notnull: true
+    roles_to_notify:
+      type: clob
+      notnull: false
+    priority:
+      type: int      
 
 ReportGroup:
   tableName: ohrm_report_group
@@ -730,7 +735,7 @@ MenuItem:
       local: screenId
       foreign: id
       type: one  
-OhrmEmail:
+Email:
   tableName: ohrm_email
   columns:
     id:
@@ -747,11 +752,11 @@ OhrmEmail:
       notnull: true
       autoincrement: false
   relations:
-    OhrmEmailProcessor:
+    EmailProcessor:
       local: id
       foreign: email_id
       type: many
-    OhrmEmailTemplate:
+    EmailTemplate:
       local: id
       foreign: email_id
       type: many
@@ -780,6 +785,14 @@ EmailTemplate:
       primary: false
       notnull: false
       autoincrement: false
+    performer_role:
+      type: string(50)
+      notnull: false
+      default: null
+    recipient_role:
+      type: string(50)
+      notnull: false
+      default: null
     subject:
       type: string(255)
       fixed: false
@@ -795,7 +808,7 @@ EmailTemplate:
       notnull: false
       autoincrement: false
   relations:
-    OhrmEmail:
+    Email:
       local: email_id
       foreign: id
       type: one 
@@ -825,7 +838,7 @@ EmailProcessor:
       notnull: false
       autoincrement: false
   relations:
-    OhrmEmail:
+    Email:
       local: email_id
       foreign: id
       type: one    

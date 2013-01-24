@@ -25,7 +25,7 @@ class LeaveRequestService extends BaseService {
     private $leaveEntitlementService;
     private $leavePeriodService;
     private $holidayService;
-
+    private $accessFlowStateMachineService;        
     private $leaveStateManager;
     private $userRoleManager;
     
@@ -162,6 +162,17 @@ class LeaveRequestService extends BaseService {
      */
     public function setUserRoleManager(AbstractUserRoleManager $userRoleManager) {
         $this->userRoleManager = $userRoleManager;
+    }
+    
+    public function getAccessFlowStateMachineService() {
+        if (is_null($this->accessFlowStateMachineService)) {
+            $this->accessFlowStateMachineService = new AccessFlowStateMachineService();
+        }
+        return $this->accessFlowStateMachineService;
+    }
+
+    public function setAccessFlowStateMachineService($accessFlowStateMachineService) {
+        $this->accessFlowStateMachineService = $accessFlowStateMachineService;
     }
     
     /**
@@ -519,6 +530,23 @@ class LeaveRequestService extends BaseService {
 
     }
 
+    function groupChanges($changes) {
+        $groupedChanges = array();
+        
+        foreach ($changes as $id => $value) {
+            if (strpos($value, 'WF') === 0) {
+                $workFlowId = substr($value, 2);
+                if (isset($groupedChanges[$workFlowId])) {
+                    $groupedChanges[$workFlowId][] = $id;
+                } else {
+                    $groupedChanges[$workFlowId] = array($id);
+                }
+            }
+        }
+        
+        return $groupedChanges;
+    }           
+        
     /**
      *
      * @param array $changes
@@ -526,106 +554,67 @@ class LeaveRequestService extends BaseService {
      * @return boolean
      */
     public function changeLeaveStatus($changes, $changeType, $changeComments = null, $changedByUserType = null, $changedUserId = null) {
-        if(is_array($changes)) {
-            $approvalIds = array_keys(array_filter($changes, array($this, '_filterApprovals')));
-            $rejectionIds = array_keys(array_filter($changes, array($this, '_filterRejections')));
-            $cancellationIds = array_keys(array_filter($changes, array($this, '_filterCancellations')));
+        if (is_array($changes)) {            
+            $groupedChanges = $this->groupChanges($changes);
 
+            $workflowService = $this->getAccessFlowStateMachineService();
+            
             if ($changeType == 'change_leave_request') {
-                
-                foreach ($approvalIds as $leaveRequestId) {
-                    $approvals = $this->searchLeave($leaveRequestId);
-                    $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments[$leaveRequestId]);
 
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, $approvals, 
-                            $changedByUserType, $changedUserId, 'request');
-                }
+                foreach ($groupedChanges as $workFlowId => $changedItems) {
+                    $workFlow = $workflowService->getWorkflowItem($workFlowId);
+                    $nextStateStr = $workFlow->getResultingState();                    
+                    $nextState = Leave::getLeaveStatusForText($nextStateStr);
 
-                foreach ($rejectionIds as $leaveRequestId) {
-                    $rejections = $this->searchLeave($leaveRequestId);
-                    $this->_changeLeaveStatus($rejections, Leave::LEAVE_STATUS_LEAVE_REJECTED, $changeComments[$leaveRequestId]);
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, $rejections, 
-                            $changedByUserType, $changedUserId, 'request');
-                }
+                    $event = LeaveEvents::LEAVE_CHANGE;
+                    //LeaveEvents::LEAVE_REJECT
+                    //LeaveEvents::LEAVE_CANCEL
 
-                foreach ($cancellationIds as $leaveRequestId) {
-                    $cancellations = $this->searchLeave($leaveRequestId);
-
-                    $this->_changeLeaveStatus($cancellations, Leave::LEAVE_STATUS_LEAVE_CANCELLED);
-                    
-                    $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
-                            $changedByUserType, $changedUserId, 'request');                  
+                    foreach ($changedItems as $leaveRequestId) {
+                        $changedLeave = $this->searchLeave($leaveRequestId);
+                        $this->_changeLeaveStatus($changedLeave, $nextState, $changeComments[$leaveRequestId]);
+                        $this->_notifyLeaveStatusChange($event, $workFlow, $changedLeave, 
+                                $changedByUserType, $changedUserId, 'request');                        
+                    }
                 }
 
             } elseif ($changeType == 'change_leave') {
-
-                $actionTypes = 0;
                 
-                $approvals = array();
-                foreach ($approvalIds as $leaveId) {
-                    $approvals[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
-                }
-                if (count($approvals) > 0) {
-                    $actionTypes++;
-                    $this->_changeLeaveStatus($approvals, Leave::LEAVE_STATUS_LEAVE_APPROVED, $changeComments);                    
-                }
+                $actionTypes = count($groupedChanges);
                 
-                $rejections = array();
-                foreach ($rejectionIds as $leaveId) {
-                    $rejections[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
-                }
+                $workFlowItems = array();
+                $changes = array();
+                $allDays = array();
                 
-                if (count($rejections) > 0) {
-                    $actionTypes++;
-                    $this->_changeLeaveStatus($rejections, Leave::LEAVE_STATUS_LEAVE_REJECTED, $changeComments);
-                }
-                $cancellations = array();
-                foreach ($cancellationIds as $leaveId) {
-                    $cancellations[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
-                }
-                
-                if (count($cancellations) > 0) {
-                    $actionTypes++;
-                    $this->_changeLeaveStatus($cancellations, Leave::LEAVE_STATUS_LEAVE_CANCELLED);
-                }
-                
-                // Notifications
-                if ($actionTypes > 0) {
-                    if ($actionTypes == 1) {
-                        if (count($approvals) > 0) {
-                            $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_APPROVE, $approvals, 
-                                    $changedByUserType, $changedUserId, 'multiple');                                            
-                        } else if (count($rejections) > 0) {
-                            $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_REJECT, $rejections, 
-                                    $changedByUserType, $changedUserId, 'multiple');                                                
-                        } else if (count($cancellations) > 0) {
-                            $this->_notifyLeaveStatusChange(LeaveEvents::LEAVE_CANCEL, $cancellations, 
-                                    $changedByUserType, $changedUserId, 'multiple');                                            
-                        }
-                        
-                    } else {
-                        $changes = array();
-                        $allDays = array();
-                        
-                        if (count($approvals) > 0) {
-                            $changes[LeaveEvents::LEAVE_APPROVE] = $approvals;
-                            $allDays = array_merge($allDays, $approvals);
-                        }
-                        
-                        if (count($rejections) > 0) {
-                            $changes[LeaveEvents::LEAVE_REJECT] = $rejections;
-                            $allDays = array_merge($allDays + $rejections);
-                        }
-                        
-                        if (count($cancellations) > 0) {
-                            $changes[LeaveEvents::LEAVE_CANCEL] = $cancellations;
-                            $allDays = array_merge($allDays + $cancellations);
-                        }
-                        
-                        $this->_notifyLeaveMultiStatusChange($allDays, $changes, 
-                                    $changedByUserType, $changedUserId, 'multiple');                         
-                        
+                foreach ($groupedChanges as $workFlowId => $changedItems) {
+                    $workFlow = $workflowService->getWorkflowItem($workFlowId);
+                    $workFlowItems[$workFlow->getId()] = $workFlow;
+                    
+                    $nextStateStr = $workFlow->getResultingState();                    
+                    $nextState = Leave::getLeaveStatusForText($nextStateStr);
+                    
+                    $event = LeaveEvents::LEAVE_CHANGE;
+                    //LeaveEvents::LEAVE_REJECT
+                    //LeaveEvents::LEAVE_CANCEL
+                    $changedLeave = array();
+                    foreach ($changedItems as $leaveId) {
+                        $changedLeave[] = $this->getLeaveRequestDao()->getLeaveById($leaveId);
                     }
+                    
+                    $this->_changeLeaveStatus($changedLeave, $nextState, $changeComments); 
+                    
+                    if ($actionTypes == 0) {
+                        $this->_notifyLeaveStatusChange($event, $workFlow, $changedLeave, 
+                                $changedByUserType, $changedUserId, 'multiple');                           
+                    } else {
+                        $changes[$workFlow->getId()] = $changedLeave;
+                        $allDays = $allDays + $changedLeave;
+                    }
+                }                
+                
+                if ($actionTypes > 0) {
+                    $this->_notifyLeaveMultiStatusChange($allDays, $changes, $workFlowItems,
+                                $changedByUserType, $changedUserId, 'multiple');                        
                 }
                 //$allChangedItems = count($approvals) + count($rejections) + count()
             } else {
@@ -669,20 +658,28 @@ class LeaveRequestService extends BaseService {
         }                
     }
     
-    private function _notifyLeaveStatusChange($eventType, $leaveList, $performerType, $performerId, $requestType) {
+    private function _notifyLeaveStatusChange($eventType, $workflow, $leaveList, $performerType, $performerId, $requestType) {
+        $request = $leaveList[0]->getLeaveRequest();
+        
         $eventData = array('days' => $leaveList, 
                            'performerType' => $performerType, 
                            'empNumber' => $performerId, 
-                           'requestType' => $requestType);
+                           'requestType' => $requestType,
+                           'request' => $request,
+                           'workFlow' => $workflow);
         $this->getDispatcher()->notify(new sfEvent($this, $eventType, $eventData));   
     }
     
-    private function _notifyLeaveMultiStatusChange($allDays, $leaveList, $performerType, $performerId, $requestType) {
+    private function _notifyLeaveMultiStatusChange($allDays, $leaveList, $workFlows, $performerType, $performerId, $requestType) {
+        $request = $allDays[0]->getLeaveRequest();
+        
         $eventData = array('days' => $allDays,
                            'changes' => $leaveList, 
                            'performerType' => $performerType, 
                            'empNumber' => $performerId, 
-                           'requestType' => $requestType);
+                           'requestType' => $requestType,
+                           'request' => $request,
+                           'workFlow' => $workFlows);
         $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_CHANGE, $eventData));   
     }    
 
@@ -718,11 +715,12 @@ class LeaveRequestService extends BaseService {
                 $status = Leave::LEAVE_STATUS_LEAVE_TYPE_DELETED_TEXT . ' ' . $status;
             }
 
-            $actionNames = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
-                    $status, $excludeRoles, $includeRoles);
+            $workFlowItems = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
+                    $status, $excludeRoles, $includeRoles, array('Employee' => $request->getEmpNumber()));
 
-            foreach ($actionNames as $name) {
-                $actions[$name] = ucfirst(strtolower($name));
+            foreach ($workFlowItems as $item) {
+                $name = $item->getAction();
+                $actions[$item->getId()] = ucfirst(strtolower($name));
             }         
         }
         
@@ -746,44 +744,17 @@ class LeaveRequestService extends BaseService {
         if ($leaveTypeDeleted) {
             $status = Leave::LEAVE_STATUS_LEAVE_TYPE_DELETED_TEXT . ' ' . $status;
         }
-            
-        $actionNames = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
-                $status, $excludeRoles, $includeRoles);
+        
+        $workFlowItems = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
+                $status, $excludeRoles, $includeRoles, array('Employee' => $leave->getEmpNumber()));
 
-        foreach ($actionNames as $name) {
-            $actions[$name] = ucfirst(strtolower($name));
-        }    
+        foreach ($workFlowItems as $item) {
+            $name = $item->getAction();
+            $actions[$item->getId()] = ucfirst(strtolower($name));
+        }        
         
         return $actions;
-    }
-
-    /**
-     *
-     * @param string $element
-     * @return boolean
-     */
-    private function _filterApprovals($element) {
-        return ($element == 'APPROVE');
-    }
-
-    /**
-     *
-     * @param unknown_type $element
-     * @return boolean
-     */
-    private function _filterRejections($element) {
-        return ($element == 'REJECT');
-    }
-
-    /**
-     *
-     * @param unknown_type $element
-     * @return boolean
-     */
-    private function _filterCancellations($element) {
-        return ($element == 'CANCEL');
-    }
-    
+    }    
 
     /**
      *

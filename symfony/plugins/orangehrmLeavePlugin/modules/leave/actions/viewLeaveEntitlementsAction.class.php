@@ -51,6 +51,10 @@ class viewLeaveEntitlementsAction extends sfAction {
         return 'Leave Entitlements';
     }
     
+    protected function getDataGroupPermissions() {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions(array('leave_entitlements'));
+    }
+    
     protected function getDefaultFilters() {
         $defaults = $this->form->getDefaults();
         
@@ -140,8 +144,10 @@ class viewLeaveEntitlementsAction extends sfAction {
         
         $configurationFactory = $this->getListConfigurationFactory($showLeaveType);
 
-        $permissions = $this->getContext()->get('screen_permissions');
-        
+        $dataGroupPermission = $this->getDataGroupPermissions();
+        $screenPermissions = $this->getContext()->get('screen_permissions');
+        $permissions = $screenPermissions->andWith($dataGroupPermission);
+                
         $runtimeDefinitions = array();
         $buttons = array();
 

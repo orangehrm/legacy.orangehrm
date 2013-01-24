@@ -24,17 +24,41 @@ abstract class PluginLeave extends BaseLeave {
         self::LEAVE_STATUS_LEAVE_TAKEN => 'TAKEN'       
     );
     
-    private $nonWorkingDayStatuses = array(
+    private static $nonWorkingDayStatuses = array(
         self::LEAVE_STATUS_LEAVE_WEEKEND,
         self::LEAVE_STATUS_LEAVE_HOLIDAY,
     );
 
+    private static $leaveStatusListFromDb;
+    
+    protected static function getLeaveStatusListFromDb() {
+        if (empty(self::$leaveStatusListFromDb)) {
+            
+            self::$leaveStatusListFromDb = array();
+            
+            $statusList = Doctrine::getTable('LeaveStatus')->findAll(Doctrine::HYDRATE_ARRAY);
+            foreach ($statusList as $status) {
+                self::$leaveStatusListFromDb[$status['status']] = $status['name'];
+            }
+        }
+        return self::$leaveStatusListFromDb;
+    }
     public function getTextLeaveStatus() {
+        
+        $statusList = self::getLeaveStatusListFromDb();
+        
+        
         $status = $this->getStatus();
         if (array_key_exists($status, self::$leaveStatusText)) {            
             return self::$leaveStatusText[$status];
         }
-
+        
+        // check in user defined statuses
+        $statusList = self::getLeaveStatusListFromDb();
+        if (array_key_exists($status, $statusList)) {            
+            return $statusList[$status];
+        }
+        
         return '';
     }
     
@@ -42,18 +66,48 @@ abstract class PluginLeave extends BaseLeave {
         if (array_key_exists($status, self::$leaveStatusText)) {            
             return self::$leaveStatusText[$status];
         }
+        
+        // check in user defined statuses
+        $statusList = self::getLeaveStatusListFromDb();
+        if (array_key_exists($status, $statusList)) {            
+            return $statusList[$status];
+        }        
 
         return '';        
     }
     
+    public static function getLeaveStatusForText($status) {
+        $statusInt = array_search($status, self::$leaveStatusText);
+        if ($statusInt === false) {
+            $statusList = self::getLeaveStatusListFromDb();
+            $statusInt = array_search($status, $statusList);
+        }
+        
+        if ($statusInt === false) {
+            return null;
+        } else {
+            return $statusInt;
+        }
+    }
+    
     public static function getStatusTextList() {
-        $leaveStatuses = array_map('strtolower', self::$leaveStatusText);
+        $statusList = self::getLeaveStatusListFromDb();
+        $workingStatuses = array();
+        
+        // filter out holidays
+        foreach ($statusList as $key => $status) {
+            if (!in_array($key, self::$nonWorkingDayStatuses)) {
+                $workingStatuses[$key] = $status;
+            }
+        }
+                        
+        $leaveStatuses = array_map('strtolower', $workingStatuses);
         $leaveStatuses = array_map('ucwords', $leaveStatuses);
         return $leaveStatuses;
     }
 
     public function isNonWorkingDay() {
-        if (($this->getLengthHours() == 0.00) && in_array($this->getStatus(), $this->nonWorkingDayStatuses)) {
+        if (($this->getLengthHours() == 0.00) && in_array($this->getStatus(), self::$nonWorkingDayStatuses)) {
             return true;
         }
         return false;
@@ -64,6 +118,7 @@ abstract class PluginLeave extends BaseLeave {
     }
 
     public function getLeaveBalance() {
+        $statusList = self::getLeaveStatusListFromDb();        
         return $this->getLeaveRequest()->getLeaveBalance();
     }
 

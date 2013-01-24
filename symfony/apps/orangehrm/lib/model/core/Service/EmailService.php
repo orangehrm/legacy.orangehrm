@@ -30,6 +30,8 @@ class EmailService extends BaseService {
 
     const SMTP_AUTH_NONE = 'none';
     const SMTP_AUTH_LOGIN = 'login';
+    
+    const FALLBACK_TEMPLATE_LOCALE = 'en_US';
 
     private $emailConfig;
     private $configSet = false;
@@ -43,6 +45,36 @@ class EmailService extends BaseService {
     
     protected $emailDao;
     
+    protected $logger;
+    
+    protected $configService;
+    
+    protected $mailer;
+
+    /**
+     * to get confuguration service
+     * @return <type>
+     */
+    public function getConfigService() {
+        if (is_null($this->configService)) {
+            $this->configService = new ConfigService();
+            $this->configService->setConfigDao(new ConfigDao());
+        }
+        return $this->configService;
+    }
+
+    /**
+     *  to set configuration service
+     * @param ConfigService $configService
+     */
+    public function setConfigService(ConfigService $configService) {
+        $this->configService = $configService;
+    }
+    
+    /**
+     * Get EmailDao
+     * @return EmailDao
+     */
     public function getEmailDao() {
         if (is_null($this->emailDao)) {
             $this->emailDao = new EmailDao();
@@ -89,10 +121,27 @@ class EmailService extends BaseService {
             $this->emailConfig->getMailType() == 'sendmail') {
             $this->configSet = true;
         }
+        
+        $this->logger = Logger::getLogger('core.email');
 
     }
 
-    private function _getMailer() {
+    protected function getMailer($recreate = false) {
+        
+        if (empty($this->mailer) || $recreate) {
+            $orangehrmMailTransport = new orangehrmMailTransport();
+            $transport = $orangehrmMailTransport->getTransport();
+            
+            if (!empty($transport)) {
+                $mailer = Swift_Mailer::newInstance($transport);
+            } else {
+                $this->logger->warn('Email configuration settings not available');
+            }                        
+        }
+        
+        return $mailer;
+    }
+    private function _getMailerDeprecated() {
 
         $mailer = null;
 
@@ -178,7 +227,7 @@ class EmailService extends BaseService {
 
             try {
 
-                $mailer = $this->_getMailer();
+                $mailer = $this->_getMailerDeprecated();
                 $message = $this->_getMessage();
 
                 $result = $mailer->send($message);
@@ -280,12 +329,6 @@ class EmailService extends BaseService {
 
     private function _logResult($type = '', $logMessage = '') {
 
-        $logPath = ROOT_PATH . '/lib/logs/notification_mails.log';
-
-        if (file_exists($logPath) && !is_writable($logPath)) {
-            throw new Exception("EmailService : Log file is not writable");
-        }
-
         $message = '========== Message Begins ==========';
         $message .= "\r\n\n";
         $message .= 'Time : '.date("F j, Y, g:i a");
@@ -297,36 +340,99 @@ class EmailService extends BaseService {
         $message .= '========== Message Ends ==========';
         $message .= "\r\n\n";
 
-        file_put_contents($logPath, $message, FILE_APPEND);
-
+        $this->logger->info($message);
     }
     
-    public function sendEmailNotification($emailName, $eventData) {
-        $email = $this->getEmailDao()->getEmailByName($emailName);
+    /**
+     * Get the best matching email template for the recipient and performer
+     * 
+     * @param Email $email The email object
+     * @param string $recipientRole Recipient role
+     * @param string $performerRole Performer role
+     * @return EmailTemplate Email Template or Null if no match
+     */
+    public function getEmailTemplateBestMatch(Email $email, $recipientRole, $performerRole) {
+        
+        $template = NULL;
+        
+        $defaultLocale = $this->getConfigService()->getAdminLocalizationDefaultLanguage(); 
+        $localesToTry = array($defaultLocale);
+        
+        if ($defaultLocale != self::FALLBACK_TEMPLATE_LOCALE) {
+            $localesToTry[] = self::FALLBACK_TEMPLATE_LOCALE;
+        }
+        
+        /* Look through the locals in preferred order */
+        foreach ($localesToTry as $locale) {
+            $templates = $this->getEmailDao()->getEmailTemplateMatches($email->getName(), $locale, $recipientRole, $performerRole);
+            if (count($templates) > 0) {
+                break;
+            } else {
+                $this->logger->debug("No Email templates found for $locale");
+            }
+        }        
+            
+        if (count($templates) == 1) {
+            $template = $templates[0];
+        } else if (count($templates) > 0) {
+            $maxWeight = -1;
+            
+            foreach ($templates as $t) {
+                $weight = 0;
+                if ($t->getPerformerRole() == $performerRole) {
+                    $weight += 1;
+                }
+                if ($t->getRecipientRole() == $recipientRole) {
+                    $weight += 2;
+                }
+                
+                if ($weight > $maxWeight) {
+                    $maxWeight = $weight;
+                    $template = $t;
+                }
+                
+            }
+        }
+        
+        return $template;
+    }
+    
+    public function sendEmailNotification($emailName, $recipientRole, $eventData, $performerRole = null) {
 
+        $this->logger->debug("Sending email : $emailName for role $recipientRole and performer Role: $performerRole");
+        
+        $mailer = $this->getMailer();
+        if (empty($mailer)) {
+            $this->logger->warn("Mail configuration not available. Skipping email sending");
+        }
+        
+        $email = $this->getEmailDao()->getEmailByName($emailName);
+                
         if (!empty($email)) {
 
-            $templates = $email->getEmailTemplate();
+            $template = $this->getEmailTemplateBestMatch($email, $recipientRole, $performerRole);
             
-            if (count($templates) > 0) {
-                
-                $orangehrmMailTransport = new orangehrmMailTransport();
-                $transport = $orangehrmMailTransport->getTransport();
-                $mailer = empty($transport) ? null : Swift_Mailer::newInstance($transport);
+            if (!empty($template)) {                
                     
-                $template = $templates[0];
                 $subject = $this->readFile($template->getSubject());
                 $body = $this->readFile($template->getBody());
                 
                 $processors = $email->getEmailProcessor();
                 $allRecipients = array();
                 
-                foreach ($processors as $processor) {
+                $this->logger->debug('email processor count : ' . count($processors));
+                
+                foreach ($processors as $processor) {                                        
                     $class = $processor->getClassName();
+                    
+                    $this->logger->debug('email processor class: ' . $class);
+                    
                     $processorObj = new $class();
-                    $recipients = $processorObj->getRecipients($eventData);
+                    $recipients = $processorObj->getRecipients($emailName, $recipientRole, $eventData);
                     $allRecipients = array_merge($allRecipients, $recipients);                            
                 }
+                
+                $this->logger->debug('recipient count : ' . count($allRecipients));
                 
                 foreach ($allRecipients as $recipient) {
                     
@@ -373,13 +479,21 @@ class EmailService extends BaseService {
                 }
                 
                                     
+            } else {
+                $this->logger->error("No email template found for: $emailName, role: $recipientRole");
             }
+        } else {
+            $this->logger->error("No email found for: $emailName, and role: $recipientRole");
         }
     }
     
-    public function sendEmailNotifications($emailNames, $eventData) {
-        foreach ($emailNames as $name) {
-            $this->sendEmailNotification($name, $eventData);
+    public function sendEmailNotifications($emailName, $recipientRoles, $eventData, $performerRole = null) {
+        
+        $mailer = $this->getMailer();
+        if (!empty($mailer)) {        
+            foreach ($recipientRoles as $role) {
+                $this->sendEmailNotification($emailName, $role, $eventData, $performerRole);
+            }
         }
     }
     

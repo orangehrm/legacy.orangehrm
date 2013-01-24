@@ -24,12 +24,15 @@
  */
 class orangehrmLeavePluginConfiguration extends sfPluginConfiguration {
 
+    protected static $eventsBound = false;
+    
     public function initialize() {
-        $this->dispatcher->connect(LeaveEvents::LEAVE_ASSIGN, array(new LeaveAssignMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_APPLY, array(new LeaveApplyMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_APPROVE, array(new LeaveApproveMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_REJECT, array(new LeaveRejectMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_CANCEL, array(new LeaveCancelMailer(), 'listen'));
-        $this->dispatcher->connect(LeaveEvents::LEAVE_CHANGE, array(new LeaveChangeMailer(), 'listen'));
+        
+        // plugin configuration can be instantiated twice when running symfony command line tasks
+        if (!self::$eventsBound) {
+            
+            $this->dispatcher->connect(LeaveEvents::LEAVE_CHANGE, array(new LeaveMailer(), 'listen'));            
+            self::$eventsBound = true;
+        }
     }
 }

@@ -26,6 +26,6 @@ interface orangehrmMailProcessor {
     
     public function getReplacements($data);
     
-    public function getRecipients($data);
+    public function getRecipients($emailName, $role, $data);
 }
 

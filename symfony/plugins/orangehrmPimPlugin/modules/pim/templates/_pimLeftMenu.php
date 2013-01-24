@@ -98,8 +98,8 @@ if($empNumber == sfContext::getInstance()->getUser()->getAttribute('auth.empNumb
             $dataGroupPermission = $userRoleManager->getDataGroupPermissions(array('job_details','job_attachment','job_custom_fields'), array(), array(), $self, $entities);
             $employee = $employeeService->getEmployee($empNumber);
             $allowedActions = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_EMPLOYEE, $employee->getState());
-            $allowActivate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE, $allowedActions);
-            $allowTerminate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_TERMINATE, $allowedActions);
+            $allowActivate = isset($allowedActions[WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE]);
+            $allowTerminate = isset($allowedActions[WorkflowStateMachine::EMPLOYEE_ACTION_TERMINATE]);
             
             if($dataGroupPermission->canRead() || $allowTerminate || $allowActivate) :
         ?>        

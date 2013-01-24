@@ -97,6 +97,17 @@ class LeaveEntitlementService extends BaseService {
         return $this->getLeaveEntitlementDao()->saveLeaveEntitlement($leaveEntitlement);
     }
     
+    /**
+     * Save Leave Adjustment and linked to relevent leave entitlement 
+     * 
+     * @param LeaveAdjustment $leaveAdjustment
+     * @return type
+     * @throws DaoException
+     */
+    public function saveLeaveAdjustment( LeaveAdjustment $leaveAdjustment){
+        return $this->getLeaveEntitlementDao()->saveLeaveAdjustment($leaveAdjustment);
+    }
+    
     public function deleteLeaveEntitlements($ids) {
         
         $deleted = 0;

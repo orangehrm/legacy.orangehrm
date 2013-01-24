@@ -33,6 +33,8 @@ class orangehrmLeavePluginAllTests {
         $suite->addTestFile(dirname(__FILE__) . '/model/service/HolidayServiceTest.php');
         $suite->addTestFile(dirname(__FILE__) . '/model/service/LeavePeriodHistoryServiceTest.php');
         
+        /* Mail related tests */
+        $suite->addTestFile(dirname(__FILE__) . '/mail/LeaveMailerTest.php');
         
         /* Other test cases */
         $suite->addTestFile(dirname(__FILE__) . '/entitlement/FIFOEntitlementConsumptionStrategyTest.php');

@@ -148,14 +148,14 @@ use_javascripts_for_form($form);
             } else {
                 selectedActions++;
                 $('#hdnLeaveRequest_' + id).attr('disabled', false);                
-                $('#hdnLeaveRequest_' + id).val($(this).val());
+                $('#hdnLeaveRequest_' + id).val('WF' + $(this).val());
             }
 
             if ($(this).val() == '') {
                 $('#hdnLeave_' + id).attr('disabled', true);
             } else {
                 $('#hdnLeave_' + id).attr('disabled', false); 
-                $('#hdnLeave_' + id).val($(this).val());
+                $('#hdnLeave_' + id).val('WF' + $(this).val());
             }
         });  
     

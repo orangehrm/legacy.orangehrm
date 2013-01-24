@@ -119,4 +119,19 @@ abstract class PluginWorkflowStateMachine extends BaseWorkflowStateMachine {
         }
         return $actionName;
     }
+    
+    /**
+     * Return roles to notify as an array of Role 
+     * @return array
+     */
+    public function getRolesToNotifyAsArray() {
+        $roles = array();
+        
+        $roleNames = parent::getRolesToNotify();
+        if (!empty($roleNames)) {
+            // filters out items that eval to false
+            $roles = array_filter(explode(',', $roleNames));
+        }
+        return $roles;
+    }
 }

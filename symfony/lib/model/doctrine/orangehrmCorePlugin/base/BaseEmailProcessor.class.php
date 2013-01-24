@@ -10,16 +10,16 @@ Doctrine_Manager::getInstance()->bindComponent('EmailProcessor', 'doctrine');
  * @property integer $id
  * @property integer $email_id
  * @property string $class_name
- * @property OhrmEmail $OhrmEmail
+ * @property Email $Email
  * 
  * @method integer        getId()         Returns the current record's "id" value
  * @method integer        getEmailId()    Returns the current record's "email_id" value
  * @method string         getClassName()  Returns the current record's "class_name" value
- * @method OhrmEmail      getOhrmEmail()  Returns the current record's "OhrmEmail" value
+ * @method Email          getEmail()      Returns the current record's "Email" value
  * @method EmailProcessor setId()         Sets the current record's "id" value
  * @method EmailProcessor setEmailId()    Sets the current record's "email_id" value
  * @method EmailProcessor setClassName()  Sets the current record's "class_name" value
- * @method EmailProcessor setOhrmEmail()  Sets the current record's "OhrmEmail" value
+ * @method EmailProcessor setEmail()      Sets the current record's "Email" value
  * 
  * @package    orangehrm
  * @subpackage model\core\base
@@ -62,7 +62,7 @@ abstract class BaseEmailProcessor extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('OhrmEmail', array(
+        $this->hasOne('Email', array(
              'local' => 'email_id',
              'foreign' => 'id'));
     }

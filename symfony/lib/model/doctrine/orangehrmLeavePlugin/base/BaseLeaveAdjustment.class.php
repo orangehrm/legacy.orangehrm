@@ -9,6 +9,8 @@
  * @property integer $emp_number
  * @property decimal $no_of_days
  * @property integer $leave_type_id
+ * @property timestamp $from_date
+ * @property timestamp $to_date
  * @property timestamp $credited_date
  * @property string $note
  * @property integer $deleted
@@ -22,6 +24,8 @@
  * @method integer         getEmpNumber()       Returns the current record's "emp_number" value
  * @method decimal         getNoOfDays()        Returns the current record's "no_of_days" value
  * @method integer         getLeaveTypeId()     Returns the current record's "leave_type_id" value
+ * @method timestamp       getFromDate()        Returns the current record's "from_date" value
+ * @method timestamp       getToDate()          Returns the current record's "to_date" value
  * @method timestamp       getCreditedDate()    Returns the current record's "credited_date" value
  * @method string          getNote()            Returns the current record's "note" value
  * @method integer         getDeleted()         Returns the current record's "deleted" value
@@ -34,6 +38,8 @@
  * @method LeaveAdjustment setEmpNumber()       Sets the current record's "emp_number" value
  * @method LeaveAdjustment setNoOfDays()        Sets the current record's "no_of_days" value
  * @method LeaveAdjustment setLeaveTypeId()     Sets the current record's "leave_type_id" value
+ * @method LeaveAdjustment setFromDate()        Sets the current record's "from_date" value
+ * @method LeaveAdjustment setToDate()          Sets the current record's "to_date" value
  * @method LeaveAdjustment setCreditedDate()    Sets the current record's "credited_date" value
  * @method LeaveAdjustment setNote()            Sets the current record's "note" value
  * @method LeaveAdjustment setDeleted()         Sets the current record's "deleted" value
@@ -85,6 +91,24 @@ abstract class BaseLeaveAdjustment extends sfDoctrineRecord
              'notnull' => true,
              'autoincrement' => false,
              'length' => 4,
+             ));
+        $this->hasColumn('from_date', 'timestamp', 25, array(
+             'type' => 'timestamp',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 25,
+             ));
+        $this->hasColumn('to_date', 'timestamp', 25, array(
+             'type' => 'timestamp',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 25,
              ));
         $this->hasColumn('credited_date', 'timestamp', 25, array(
              'type' => 'timestamp',

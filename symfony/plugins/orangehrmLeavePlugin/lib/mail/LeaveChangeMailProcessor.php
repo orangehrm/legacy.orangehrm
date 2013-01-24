@@ -22,7 +22,7 @@
  * Description of LeaveChangeMailProcessor
  *
  */
-abstract class LeaveChangeMailProcessor extends LeaveEmailProcessor {
+class LeaveChangeMailProcessor extends LeaveEmailProcessor {
     
     protected function _generateLeaveDetailsTable($data, $replacements) {
 
@@ -108,6 +108,42 @@ abstract class LeaveChangeMailProcessor extends LeaveEmailProcessor {
         return $details;
 
     }
+    
+    public function getReplacements($data) {
+        $data['request'] = $data['days'][0]->getLeaveRequest();
+        $replacements = parent::getReplacements($data);
+        return $replacements;
+
+    }    
+    
+    protected function getSubscribers($emailName, $data) {        
+
+        $workFlow = array_keys($data['workFlow']);
+        $recipients = array();
+
+        foreach ($workFlow as $item) {
+            $action = $item->getAction();
+            $eventRecipients = parent::getSubscribers('leave.' . $action, $data);
+            
+            // check if already there in recipients:
+            foreach ($eventRecipients as $new) {
+                $found = false;
+                
+                foreach ($recipients as $existing) {
+                    if ($existing->getEmail() == $new->getEmail()) {
+                        $found = true;
+                        break;
+                    }
+                }
+                
+                if (!$found) {
+                    $recipients[] = $new;
+                }
+            }            
+        }
+        
+        return $recipients;
+    }    
     
 }
 

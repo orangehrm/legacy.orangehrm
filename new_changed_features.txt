@@ -1,3 +1,9 @@
+New & Changed Features for OrangeHRM ver  
+    Changes
+    -------
+    Email log is moved to symfony/log/email.log
+    When adding subscribers to email notifications, display notification name in heading.
+
 New & Changed Features for OrangeHRM ver  3.0-rc.1
     New Features
     ------------

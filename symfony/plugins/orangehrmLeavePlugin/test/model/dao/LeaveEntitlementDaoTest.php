@@ -98,7 +98,34 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         
         $this->_compareEntitlements($expected, $results);           
-    }    
+    }  
+    
+    public function testSearchLeaveEntitlementsByValidDate() {
+        $parameterHolder = new LeaveEntitlementSearchParameterHolder();
+        $entitlementList = TestDataService::loadObjectList('LeaveEntitlement', $this->fixture, 'LeaveEntitlement');
+        
+        $parameterHolder->setValidDate('2013-08-06');
+        
+        $expected = array($entitlementList[1]);
+        $results = $this->dao->searchLeaveEntitlements($parameterHolder);
+        
+        $parameterHolder->setValidDate('2013-08-05');
+        
+        $expected = array($entitlementList[1]);
+        $results = $this->dao->searchLeaveEntitlements($parameterHolder);
+        
+        $parameterHolder->setValidDate('2013-09-01');
+        
+        $expected = array($entitlementList[1]);
+        $results = $this->dao->searchLeaveEntitlements($parameterHolder);
+        
+         $parameterHolder->setValidDate('2013-09-02');
+        
+        
+        $results = $this->dao->searchLeaveEntitlements($parameterHolder);
+        
+        $this->assertEquals(0, count($results)) ;    
+    }
 
     public function testSearchLeaveEntitlementsByLeaveType() {
         $parameterHolder = new LeaveEntitlementSearchParameterHolder();
@@ -607,7 +634,24 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
             $this->assertEquals(0, $entitlement->getDeleted(), 'id=' . $id);
         }        
         
-    }    
+    }  
+    
+    public function testSaveLeaveAdjustment(){
+        $leaveAdjustment = new LeaveAdjustment();
+        
+        $leaveAdjustment->setEmpNumber(1);
+        $leaveAdjustment->setNoOfDays(12);
+        $leaveAdjustment->setLeaveTypeId(2);
+        $leaveAdjustment->setFromDate('2012-09-13');
+        $leaveAdjustment->setToDate('2012-11-28');
+        $leaveAdjustment->setCreditedDate('2012-05-01');
+        $leaveAdjustment->setNote('Created by Unit test');
+        
+        $leaveAdjustment->setDeleted(0);
+        
+        $result = $this->dao->saveLeaveAdjustment($leaveAdjustment);
+        $this->assertFalse( is_null($result->getId()));
+    }
 }
 
     

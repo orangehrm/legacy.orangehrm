@@ -20,7 +20,7 @@
 
 /**
  * Description of MenuDaoTest
- *
+ * @group Core
  */
 class MenuDaoTest extends PHPUnit_Framework_TestCase {
     

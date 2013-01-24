@@ -296,11 +296,11 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
      * @param type $action
      * @return boolean 
      */
-    public function isActionAllowed($workFlowId, $state, $action, $rolesToExclude = array(), $rolesToInclude = array()){
+    public function isActionAllowed($workFlowId, $state, $action, $rolesToExclude = array(), $rolesToInclude = array(), $entities = array()){
         $accessFlowStateMachineService = new AccessFlowStateMachineService();
         $isAllowed = FALSE;
         
-        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude);
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude, $entities);
         
         foreach ($filteredRoles as $role) {
            $isAllowed = $accessFlowStateMachineService->isActionAllowed($workFlowId, $state, $role->getName(), $action);
@@ -312,26 +312,44 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     }
     
     /**
-     * Get allowed Actions for User
+     * Get allowed Workflow action items for User
      * 
-     * @param type $workflow
-     * @param type $state
-     * @return actionsArray 
+     * @param string $workflow Workflow Name
+     * @param string $state Workflow state
+     * @return array Array of workflow items with action name as array index 
      */
-    public function getAllowedActions($workflow, $state, $rolesToExclude = array(), $rolesToInclude = array()){
+    public function getAllowedActions($workflow, $state, $rolesToExclude = array(), $rolesToInclude = array(), $entities = array()){
         $accessFlowStateMachineService = new AccessFlowStateMachineService();
-        $allAction = array();
+        $allActions = array();
         
-        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude);
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude, $entities);
         
         foreach ($filteredRoles as $role) {        
-            $userAction = $accessFlowStateMachineService->getAllowedActions($workflow, $state, $role->getName());     
+            $workFlowItems = $accessFlowStateMachineService->getAllowedWorkflowItems($workflow, $state, $role->getName());     
 
-            if (count($userAction) > 0) {
-                $allAction = array_unique(array_merge($allAction, $userAction));
+            if (count($workFlowItems) > 0) {
+                $allActions = $this->getUniqueActionsBasedOnPriority($allActions, $workFlowItems);
             }
         }
-        return $allAction;
+        return $allActions;
+    }
+    
+    protected function getUniqueActionsBasedOnPriority($currentItems, $itemsToMerge) {
+        
+        foreach($itemsToMerge as $item) {
+            $actionName = $item->getAction();
+            if (!isset($currentItems[$actionName])) {
+                $currentItems[$actionName] = $item;
+            } else {                
+                $existing = $currentItems[$actionName];
+                
+                if ($item->getPriority() > $existing->getPriority()) {
+                    $currentItems[$actionName] = $item;
+                }
+            }
+        }
+        
+        return $currentItems;        
     }
     
 
@@ -426,7 +444,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                 if (!empty($supervisorRole)) {
                     $roles[] = $supervisorRole;
                 }
-            }
+            }                        
             
         }
         

@@ -934,7 +934,7 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
     
     public function testGetAllowedActionsForAdminUserRole() {
         $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');
-        $expected = array(3, 2);
+        $expected = array(14, 15);
         
         $defaultAdmin = $users[5];
         $this->manager->setUser($defaultAdmin);
@@ -944,7 +944,17 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         $result = $this->manager->getAllowedActions($workflow, $state);
         
         $this->assertEquals(2, count($result));
-        $this->compareArrays($expected, $result);
+        foreach ($expected as $expectedId) {
+            $found = false;
+            foreach($result as $workflowItem) {
+                if ($workflowItem->getId() == $expectedId) {
+                    $found = true;
+                    break;
+                }
+            }
+            $this->assertTrue($found);
+        }
+        
     }
     
     public function testIsActionAllowedForAdminAddEmployee() {

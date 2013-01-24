@@ -176,6 +176,20 @@ LeaveAdjustment:
       primary: false
       notnull: true
       autoincrement: false
+    from_date:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    to_date:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
     credited_date:
       type: timestamp(25)
       fixed: false
@@ -619,3 +633,27 @@ LeaveComment:
       local: leave_id
       foreign: id
       type: one
+      
+LeaveStatus:
+  tableName: ohrm_leave_status
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    status:
+      type: integer(2)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false    
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false

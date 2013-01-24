@@ -88,7 +88,7 @@ class viewHolidayListAction extends sfAction {
      */ 
     public function execute($request) {
         //Keep Menu in Leave/Config 
-        $request->setParameter('initialActionName', 'defineLeavePeriod'); 
+        $request->setParameter('initialActionName', 'viewHolidayList'); 
         
         $this->searchForm = $this->getSearchForm();
         

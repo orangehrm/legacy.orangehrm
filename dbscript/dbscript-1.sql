@@ -596,6 +596,8 @@ create table `ohrm_workflow_state_machine`(
   `role` varchar(255) not null,
   `action` varchar(255) not null,
   `resulting_state` varchar(255) not null,
+  `roles_to_notify` text,
+  `priority` int not null default 0 COMMENT 'lowest priority 0',
   primary key (`id`)
 ) engine=innodb default charset=utf8;
 
@@ -1035,6 +1037,8 @@ create table `ohrm_email_template` (
   `id` int(6) not null auto_increment,
   `email_id` int(6) not null,
   `locale` varchar(20),
+  `performer_role` varchar(50) default null,
+  `recipient_role` varchar(50) default null,
   `subject` varchar(255),
   `body` text,
   primary key  (`id`)
@@ -1113,7 +1117,8 @@ create table `ohrm_email_configuration` (
 
 CREATE TABLE ohrm_data_group (
     `id` int AUTO_INCREMENT, 
-    `name` VARCHAR(255), description VARCHAR(255), 
+    `name` VARCHAR(255) NOT NULL UNIQUE, 
+    description VARCHAR(255), 
     `can_read` TINYINT, can_create TINYINT, 
     `can_update` TINYINT, 
     `can_delete` TINYINT, 
@@ -1170,6 +1175,8 @@ CREATE TABLE ohrm_leave_adjustment (
   emp_number int(7) not null,
   no_of_days decimal(6,2) not null,
   leave_type_id int unsigned not null,
+  from_date datetime,
+  to_date datetime,
   credited_date datetime,
   note varchar(255) default null, 
   `deleted` tinyint(1) not null default 0,
@@ -1251,6 +1258,13 @@ CREATE TABLE `ohrm_leave_period_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `ohrm_leave_status` (
+  `id` int(11) NOT NULL auto_increment,
+  `status` smallint(6) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
 create table `ohrm_advanced_report` (
   `id` int(10) not null,
   `name` varchar(100) not null,

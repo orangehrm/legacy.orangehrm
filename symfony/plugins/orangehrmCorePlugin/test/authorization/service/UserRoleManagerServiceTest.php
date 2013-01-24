@@ -200,11 +200,11 @@ class UnitTestUserRoleManager extends AbstractUserRoleManager {
         
     }
 
-    protected function getAllowedActions($workFlowId, $state) {
+    protected function getAllowedActions($workFlowId, $state, $rolesToExclude = array(), $rolesToInclude = array(), $entities = array()) {
         
     }
 
-    protected function isActionAllowed($workFlowId, $state, $action) {
+    protected function isActionAllowed($workFlowId, $state, $action, $rolesToExclude = array(), $rolesToInclude = array(), $entities = array()) {
         
     }
 }

@@ -59,6 +59,8 @@ class viewJobDetailsAction extends basePimAction {
             'employee' => $employee,
             'loggedInUser' => $loggedInEmpNum,
             'loggedInUserName' => $loggedInUserName);
+        
+        $joinedDate = $employee->getJoinedDate();
 
         $this->form = new EmployeeJobDetailsForm(array(), $param, true);
         $this->employeeState = $employee->getState();
@@ -68,8 +70,8 @@ class viewJobDetailsAction extends basePimAction {
             $this->allowTerminate = FALSE;
         } else {
             $allowedActions = $this->getContext()->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_EMPLOYEE, $this->employeeState);
-            $this->allowActivate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE, $allowedActions);
-            $this->allowTerminate = in_array(WorkflowStateMachine::EMPLOYEE_ACTION_TERMINATE, $allowedActions);
+            $this->allowActivate = isset($allowedActions[WorkflowStateMachine::EMPLOYEE_ACTION_REACTIVE]);
+            $this->allowTerminate = isset($allowedActions[WorkflowStateMachine::EMPLOYEE_ACTION_TERMINATE]);            
         }
         
         $paramForTerminationForm = array('empNumber' => $empNumber,
@@ -91,6 +93,13 @@ class viewJobDetailsAction extends basePimAction {
                 if ($this->jobInformationPermission->canUpdate()) {
                     $service = new EmployeeService();
                     $service->saveEmployee($this->form->getEmployee(), false);
+                   
+                    if( $this->form->getIsJoinDateChanged()){
+                      
+                        $this->dispatcher->notify(new sfEvent($this, EmployeeEvents::JOINED_DATE_CHANGED,
+                                array('employee' => $this->form->getEmployee(),'previous_joined_date'=> $joinedDate)));
+
+                    }
                 }
 
                 $this->form->updateAttachment();

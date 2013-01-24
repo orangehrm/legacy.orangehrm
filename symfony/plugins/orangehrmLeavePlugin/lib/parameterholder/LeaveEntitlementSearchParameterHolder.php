@@ -27,9 +27,13 @@ class LeaveEntitlementSearchParameterHolder extends SearchParameterHolder {
     protected $leaveTypeId;    
     protected $fromDate;
     protected $toDate;
+    protected $validDate ;
     protected $deletedFlag = false;
     protected $idList = array();
     
+    
+    
+
     public function __construct() {
         $this->orderField = 'from_date';
     }
@@ -82,5 +86,11 @@ class LeaveEntitlementSearchParameterHolder extends SearchParameterHolder {
         $this->idList = $idList;
     }
 
-    
+    public function getValidDate() {
+        return $this->validDate;
+    }
+
+    public function setValidDate($validDate) {
+        $this->validDate = $validDate;
+    }
 }

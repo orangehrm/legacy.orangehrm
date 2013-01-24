@@ -22,7 +22,7 @@
  * Description of LeaveEmailProcessor
  *
  */
-abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
+class LeaveEmailProcessor implements orangehrmMailProcessor {
     
     protected $employeeService;
     
@@ -76,7 +76,7 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
 
     }   
 
-    protected function getSubscribers($event) {
+    protected function getSubscribersForEvent($event) {
         $recipients = array();
         
         $mailNotificationService = new EmailNotificationService();
@@ -205,6 +205,95 @@ abstract class LeaveEmailProcessor implements orangehrmMailProcessor {
             $comment = substr($comment, 0, 30) . '...';
         }
         return $comment;
+    }
+
+    public function getRecipients($emailName, $role, $data) {
+        
+        $recipients = array();
+        
+        switch ($role) {
+            case 'subscriber' :
+                $recipients = $this->getSubscribers($emailName);
+                break;
+            case 'supervisor':                
+                if (isset($data['days'][0])) {
+                    $recipients = $this->getSupervisors($data['days'][0]->getEmpNumber(), $data);
+                }
+                break;
+            case 'ess':                
+                if (isset($data['days'][0])) {
+                    $recipients = $this->getSelf($data['days'][0]->getEmpNumber());
+                }
+                break;            
+        }
+
+        return $recipients;
+    }
+    
+    protected function getSelf($empNumber) {
+        $recipients = array();
+        $performer = $this->getEmployeeService()->getEmployee($empNumber); 
+        
+        $to = $performer->getEmpWorkEmail();
+
+        if (!empty($to)) {
+            $recipients[] = $performer;
+        }                
+    }
+    
+    protected function getSubscribers($emailName, $data) {
+        $subscribers = array();
+        
+        $notification = NULL;
+        
+        switch ($emailName) {
+            case 'leave.apply':
+                $notification = EmailNotification::LEAVE_APPLICATION;
+                break;
+            case 'leave.assign':
+                $notification = EmailNotification::LEAVE_ASSIGNMENT;
+                break;
+            case 'leave.approve':
+                $notification = EmailNotification::LEAVE_APPROVAL;
+                break;
+            case 'leave.cancel':
+                $notification = EmailNotification::LEAVE_CANCELLATION;
+                break;
+            case 'leave.reject':
+                $notification = EmailNotification::LEAVE_REJECTION;
+                break;                
+        }
+        
+        if (!is_null($notification)) {
+            $subscribers = $this->getSubscribersForEvent($notification);
+        }
+        
+        return $subscribers;
+    }  
+    
+    public function getSupervisors($empNumber) {
+        
+        $recipients = array();
+        
+        $performer = $this->getEmployeeService()->getEmployee($empNumber);    
+        
+        // TODO: Do we need to send to supervisor chain?
+        $supervisors = $performer->getSupervisors();
+
+        if (count($supervisors) > 0) {
+
+            foreach ($supervisors as $supervisor) {
+
+                $to = $supervisor->getEmpWorkEmail();
+
+                if (!empty($to)) {
+                    $recipients[] = $supervisor;
+                }
+            }
+        }
+        
+        return $recipients;
     }    
+    
 }
 

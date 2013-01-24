@@ -51,7 +51,8 @@ class saveSubscriberAction extends sfAction {
         $this->setForm(new SubscriberForm(array(), $values));
 
         $subscriberList = $this->getEmailNotificationService()->getSubscribersByNotificationId($this->notificationId);
-        $this->_setListComponent($subscriberList);
+        $notification = $this->getEmailNotificationService()->getEmailNotification($this->notificationId);
+        $this->_setListComponent($subscriberList, $notification->getName());
         $params = array();
         $this->parmetersForListCompoment = $params;
 
@@ -65,9 +66,12 @@ class saveSubscriberAction extends sfAction {
         }
     }
 
-    private function _setListComponent($subscriberList) {
+    private function _setListComponent($subscriberList, $notificationName) {
 
         $configurationFactory = new SubscriberHeaderFactory();
+        $runtimeDefinitions = array('title' => __('Subscribers') . ' : ' . __($notificationName));
+        $configurationFactory->setRuntimeDefinitions($runtimeDefinitions);
+        
         ohrmListComponent::setConfigurationFactory($configurationFactory);
         ohrmListComponent::setListData($subscriberList);
     }

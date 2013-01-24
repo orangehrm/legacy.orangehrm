@@ -29,6 +29,7 @@ class EmployeeJobDetailsForm extends BaseForm {
     public $empTermination;
     private $companyStructureService;
     private $jobTitleService;
+    public $isJoinDateChanged = false;
 
     public function getJobTitleService() {
         if (is_null($this->jobTitleService)) {
@@ -41,6 +42,8 @@ class EmployeeJobDetailsForm extends BaseForm {
     const CONTRACT_KEEP = 1;
     const CONTRACT_DELETE = 2;
     const CONTRACT_UPLOAD = 3;
+    
+    
 
     public function configure() {
 
@@ -186,7 +189,7 @@ class EmployeeJobDetailsForm extends BaseForm {
 
         $employeeService = new EmployeeService();
         $employee = $employeeService->getEmployee($this->getValue('emp_number'));
-
+        $joinedDate = $employee->joined_date;
         $jobTitle = $this->getValue('job_title');
         $employee->job_title_code = $jobTitle;
         $empStatus = $this->getValue('emp_status');
@@ -204,6 +207,10 @@ class EmployeeJobDetailsForm extends BaseForm {
         }
         $employee->work_station = $this->getValue('sub_unit');
         $employee->joined_date = $this->getValue('joined_date');
+        
+        if( $joinedDate != '' && $joinedDate != $this->getValue('joined_date')){
+            $this->isJoinDateChanged = true ;
+        }
 
         // Location
 
@@ -402,6 +409,10 @@ class EmployeeJobDetailsForm extends BaseForm {
 
             $empAttachment->save();
         }
+    }
+    
+    public function getIsJoinDateChanged(){
+        return $this->isJoinDateChanged;
     }
 
 }

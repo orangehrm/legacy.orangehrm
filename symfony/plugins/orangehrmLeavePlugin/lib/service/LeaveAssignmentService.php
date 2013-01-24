@@ -137,8 +137,15 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 //                    }
 
                     /* Send notification to the when leave is assigned; TODO: Move to action? */
-                    $eventData = array('request' => $leaveRequest, 'days' => $leaveDays, 'empNumber' => $_SESSION['empNumber']);
-                    $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_ASSIGN, $eventData));
+                    
+                    /** TODO: Don't hard code 'ADMIN' here: Use method to get allowed actions ordered by priority and choose the assign action */
+                    
+                    $workFlow = $this->getWorkflowService()
+                             ->getWorkflowItemByStateActionAndRole(WorkflowStateMachine::FLOW_LEAVE, 'INITIAL', 'ASSIGN', 'ADMIN');
+                                        
+                    $eventData = array('request' => $leaveRequest, 'days' => $leaveDays, 'empNumber' => $_SESSION['empNumber'],
+                        'workFlow' => $workFlow);
+                    $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_CHANGE, $eventData));
 
 //                    return true;
                     return $leaveRequest;

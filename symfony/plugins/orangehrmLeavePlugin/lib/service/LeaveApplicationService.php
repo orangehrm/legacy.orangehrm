@@ -14,7 +14,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
     protected $leaveEntitlementService;
     protected $dispatcher;
     protected $logger;
-
+    
     /**
      * Get LeaveEntitlementService
      * @return LeaveEntitlementService
@@ -150,9 +150,13 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
 //                    }
 
                     //sending leave apply notification
+                    $workFlow = $this->getWorkflowService()
+                             ->getWorkflowItemByStateActionAndRole(WorkflowStateMachine::FLOW_LEAVE, 'INITIAL', 'APPLY', 'ESS');
+                    
                     $employee = $this->getLoggedInEmployee();
-                    $eventData = array('request' => $leaveRequest, 'days' => $leaves, 'empNumber' => $employee->getEmpNumber());
-                    $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_APPLY, $eventData));
+                    $eventData = array('request' => $leaveRequest, 'days' => $leaves, 'empNumber' => $employee->getEmpNumber(),
+                        'workFlow' => $workFlow);
+                    $this->getDispatcher()->notify(new sfEvent($this, LeaveEvents::LEAVE_CHANGE, $eventData));
                     
                     return $leaveRequest;
                 } catch (Exception $e) {

@@ -5,7 +5,7 @@ class defineWorkWeekAction extends baseCoreLeaveAction {
     public function execute($request) {
         
         //Keep Menu in Leave/Config 
-        $request->setParameter('initialActionName', 'defineLeavePeriod'); 
+        $request->setParameter('initialActionName', 'defineWorkWeek'); 
 
         $workWeek = $this->getWorkWeekService()->getWorkWeekOfOperationalCountry(null);
         

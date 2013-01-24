@@ -44,6 +44,10 @@ class viewMyLeaveEntitlementsAction extends viewLeaveEntitlementsAction {
         return 'My Leave Entitlements';
     }    
     
+    protected function getDataGroupPermissions() {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions(array('leave_entitlements'), array(), array(), true);
+    }
+    
     protected function getDefaultFilters() {
         $filters = $this->form->getDefaults();
         

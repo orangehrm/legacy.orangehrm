@@ -187,22 +187,26 @@ class viewLeaveBalanceReportAction extends sfAction {
         
         $permitted = false;
         
-        if ($mode == 'my') {
-            if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE) {
-                if ($values['employee']['empId'] == $this->getUser()->getAttribute('auth.empNumber')) {
-                    $permitted = true;
+        $dataGroupPermissions = $this->getDataGroupPermissions();
+        
+        if ($dataGroupPermissions->canRead()) {
+            if ($mode == 'my') {
+                if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE) {
+                    if ($values['employee']['empId'] == $this->getUser()->getAttribute('auth.empNumber')) {
+                        $permitted = true;
+                    }
                 }
-            }
-        } else {
-            if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
-                $permitted = true;
-            } else if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE) {                
-                $userRoleManager = $this->getContext()->getUserRoleManager();
-                if ($userRoleManager->isEntityAccessible('Employee', $values['employee']['empId'])) {
+            } else {
+                if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
                     $permitted = true;
+                } else if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_EMPLOYEE) {                
+                    $userRoleManager = $this->getContext()->getUserRoleManager();
+                    if ($userRoleManager->isEntityAccessible('Employee', $values['employee']['empId'])) {
+                        $permitted = true;
+                    }
                 }
-            }
-        }        
+            }        
+        }
         
         return $permitted;
     }
@@ -262,6 +266,10 @@ class viewLeaveBalanceReportAction extends sfAction {
         */
         return $tableHeaders;
     }
+    
+    protected function getDataGroupPermissions() {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions(array('leave_entitlements_usage_report'));
+    }    
     
     protected function fixResultset() {
         $keep = array();

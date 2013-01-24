@@ -743,7 +743,20 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
     public function testGetLeaveRequestActions() {
         $loggedInEmpNumber = 4;
         
-        $actions = array('APPROVE', 'CANCEL', 'REJECT');
+        $approveAction = new WorkflowStateMachine();
+        $approveAction->fromArray(array('id' => 2, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'APPROVE',
+            'resulting_state' => 'SCHEDULED','roles_to_notify' => '','priority' => 0));        
+        $cancelAction = new WorkflowStateMachine();
+        $cancelAction->fromArray(array('id' => 3, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'CANCEL',
+            'resulting_state' => 'CANCELLED','roles_to_notify' => '','priority' => 0));        
+        $rejectAction = new WorkflowStateMachine();
+        $rejectAction->fromArray(array('id' => 5, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'REJECT',
+            'resulting_state' => 'REJECTED','roles_to_notify' => '','priority' => 0));        
+        
+        $actions = array($approveAction, $cancelAction, $rejectAction);
         
         $leave = $this->getMock('LeaveRequest', array('isStatusDiffer', 'getEmpNumber', 'getLeaveStatusId'));
         $leave->expects($this->once())
@@ -772,7 +785,11 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
     public function testGetLeaveRequestActionsESS() {
         $loggedInEmpNumber = 4;
         
-        $actions = array('CANCEL');
+        $cancelAction = new WorkflowStateMachine();
+        $cancelAction->fromArray(array('id' => 3, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'CANCEL',
+            'resulting_state' => 'CANCELLED','roles_to_notify' => '','priority' => 0));           
+        $actions = array($cancelAction);
         
         $leave = $this->getMock('LeaveRequest', array('isStatusDiffer', 'getEmpNumber', 'getLeaveStatusId'));
         $leave->expects($this->once())
@@ -817,7 +834,11 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $leave->setStatus(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
         $leave->setEmpNumber($loggedInEmpNumber);
         
-        $actions = array('CANCEL');
+        $cancelAction = new WorkflowStateMachine();
+        $cancelAction->fromArray(array('id' => 3, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'CANCEL',
+            'resulting_state' => 'CANCELLED','roles_to_notify' => '','priority' => 0));           
+        $actions = array($cancelAction);
         
         $userManager = $this->getMock('BasicUserRoleManager', array('getAllowedActions'));
         $userManager->expects($this->any())
@@ -836,7 +857,20 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $leave->setStatus(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
         $leave->setEmpNumber(5);
         
-        $actions = array('APPROVE', 'CANCEL', 'REJECT');
+        $approveAction = new WorkflowStateMachine();
+        $approveAction->fromArray(array('id' => 2, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'APPROVE',
+            'resulting_state' => 'SCHEDULED','roles_to_notify' => '','priority' => 0));        
+        $cancelAction = new WorkflowStateMachine();
+        $cancelAction->fromArray(array('id' => 3, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'CANCEL',
+            'resulting_state' => 'CANCELLED','roles_to_notify' => '','priority' => 0));        
+        $rejectAction = new WorkflowStateMachine();
+        $rejectAction->fromArray(array('id' => 5, 'workflow' => 'leave',
+            'state' => 'PENDING APPROVAL','role' => 'ADMIN', 'action' => 'REJECT',
+            'resulting_state' => 'REJECTED','roles_to_notify' => '','priority' => 0));        
+        
+        $actions = array($approveAction, $cancelAction, $rejectAction);
         
         $userManager = $this->getMock('BasicUserRoleManager', array('getAllowedActions'));
         $userManager->expects($this->any())
@@ -854,8 +888,17 @@ class LeaveRequestServiceTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(count($actions), count($result));
         
         foreach ($actions as $action) {
-            $this->assertTrue(isset($result[$action]));
-            $this->assertEquals(ucfirst(strtolower($action)), $result[$action]);
+            $found = false;
+
+            foreach ($result as $id => $actionName) {
+
+                if ($action->getId() == $id &&
+                        ucfirst(strtolower($action->getAction())) == $actionName) {
+                    $found = true;
+                    break;
+                }                
+            }
+            $this->assertTrue($found);
         }
     }
     

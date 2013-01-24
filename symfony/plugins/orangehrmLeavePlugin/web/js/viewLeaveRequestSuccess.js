@@ -8,13 +8,13 @@ function handleSaveButton() {
         if ($(this).val() == '') {
             $('#hdnLeaveRequest_' + id).attr('disabled', true);
         } else {
-            $('#hdnLeaveRequest_' + id).val($(this).val());
+            $('#hdnLeaveRequest_' + id).val('WF' + $(this).val());
         }
 
         if ($(this).val() == '') {
             $('#hdnLeave_' + id).attr('disabled', true);
         } else {
-            $('#hdnLeave_' + id).val($(this).val());
+            $('#hdnLeave_' + id).val('WF' + $(this).val());
         }
     });
 

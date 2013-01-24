@@ -10,7 +10,18 @@ abstract class AbstractLeaveAllocationService extends BaseService {
     protected $holidayService;
     protected $overlapLeave;
     private $workScheduleService;
+    protected $workflowService;
     
+    public function getWorkflowService() {
+        if (empty($this->workflowService)) {
+            $this->workflowService = new AccessFlowStateMachineService();
+        }
+        return $this->workflowService;
+    }
+
+    public function setWorkflowService(AccessFlowStateMachineService $workflowService) {
+        $this->workflowService = $workflowService;
+    }        
     /**
      * Get work schedule service
      * @return WorkScheduleService

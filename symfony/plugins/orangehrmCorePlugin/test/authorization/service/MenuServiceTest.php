@@ -19,7 +19,7 @@
 
 /**
  * Description of MenuServiceTest
- *
+ * @group Core
  */
 class MenuServiceTest extends PHPUnit_Framework_TestCase {
     

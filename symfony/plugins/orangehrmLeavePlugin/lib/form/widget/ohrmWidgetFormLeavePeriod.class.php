@@ -63,6 +63,7 @@ class ohrmWidgetFormLeavePeriod  extends sfWidgetForm {
     $this->addOption('to_date');
     
     if( LeavePeriodService::getLeavePeriodStatus() == LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
+        $this->addOption('choices', null);
         $this->addOption('from_label', '');
         $this->addOption('to_label', '');
         $this->addOption('leave_period', '');
@@ -74,7 +75,7 @@ class ohrmWidgetFormLeavePeriod  extends sfWidgetForm {
         
         $this->setOption('from_date', new sfWidgetFormInputHidden(array(), array('id' => 'date_from')));
         $this->setOption('to_date', new sfWidgetFormInputHidden(array(), array('id' => 'date_to')));
-         $this->setOption('leave_period', new sfWidgetFormChoice(array('choices' => $this->getLeavePeriodList()),array('id' => 'period')));
+        $this->setOption('leave_period', new sfWidgetFormChoice(array('choices' => array()),array('id' => 'period')));
         
     }else{
         $this->addOption('from_label', '');
@@ -149,9 +150,9 @@ class ohrmWidgetFormLeavePeriod  extends sfWidgetForm {
     }    
     
     if( LeavePeriodService::getLeavePeriodStatus() == LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
-        
+        $choices = is_array($this->getOption('choices'))?$this->getOption('choices'):$this->getLeavePeriodList();
         $leavePeriodWidget = $this->getOption('leave_period');
-        
+        $leavePeriodWidget->setOption('choices',$choices);
         $html = strtr($this->translate($this->getOption('template')), array(
           '%leave_period%'=> $leavePeriodWidget->render(null),
           '%from_date%' => $fromWidget->render($name.'[from]', $value['from'],array('id' => 'date_from')),

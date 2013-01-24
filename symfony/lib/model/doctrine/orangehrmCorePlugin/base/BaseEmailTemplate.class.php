@@ -10,22 +10,28 @@ Doctrine_Manager::getInstance()->bindComponent('EmailTemplate', 'doctrine');
  * @property integer $id
  * @property integer $email_id
  * @property string $locale
+ * @property string $performer_role
+ * @property string $recipient_role
  * @property string $subject
  * @property string $body
- * @property OhrmEmail $OhrmEmail
+ * @property Email $Email
  * 
- * @method integer       getId()        Returns the current record's "id" value
- * @method integer       getEmailId()   Returns the current record's "email_id" value
- * @method string        getLocale()    Returns the current record's "locale" value
- * @method string        getSubject()   Returns the current record's "subject" value
- * @method string        getBody()      Returns the current record's "body" value
- * @method OhrmEmail     getOhrmEmail() Returns the current record's "OhrmEmail" value
- * @method EmailTemplate setId()        Sets the current record's "id" value
- * @method EmailTemplate setEmailId()   Sets the current record's "email_id" value
- * @method EmailTemplate setLocale()    Sets the current record's "locale" value
- * @method EmailTemplate setSubject()   Sets the current record's "subject" value
- * @method EmailTemplate setBody()      Sets the current record's "body" value
- * @method EmailTemplate setOhrmEmail() Sets the current record's "OhrmEmail" value
+ * @method integer       getId()             Returns the current record's "id" value
+ * @method integer       getEmailId()        Returns the current record's "email_id" value
+ * @method string        getLocale()         Returns the current record's "locale" value
+ * @method string        getPerformerRole()  Returns the current record's "performer_role" value
+ * @method string        getRecipientRole()  Returns the current record's "recipient_role" value
+ * @method string        getSubject()        Returns the current record's "subject" value
+ * @method string        getBody()           Returns the current record's "body" value
+ * @method Email         getEmail()          Returns the current record's "Email" value
+ * @method EmailTemplate setId()             Sets the current record's "id" value
+ * @method EmailTemplate setEmailId()        Sets the current record's "email_id" value
+ * @method EmailTemplate setLocale()         Sets the current record's "locale" value
+ * @method EmailTemplate setPerformerRole()  Sets the current record's "performer_role" value
+ * @method EmailTemplate setRecipientRole()  Sets the current record's "recipient_role" value
+ * @method EmailTemplate setSubject()        Sets the current record's "subject" value
+ * @method EmailTemplate setBody()           Sets the current record's "body" value
+ * @method EmailTemplate setEmail()          Sets the current record's "Email" value
  * 
  * @package    orangehrm
  * @subpackage model\core\base
@@ -63,6 +69,16 @@ abstract class BaseEmailTemplate extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 20,
              ));
+        $this->hasColumn('performer_role', 'string', 50, array(
+             'type' => 'string',
+             'notnull' => false,
+             'length' => 50,
+             ));
+        $this->hasColumn('recipient_role', 'string', 50, array(
+             'type' => 'string',
+             'notnull' => false,
+             'length' => 50,
+             ));
         $this->hasColumn('subject', 'string', 255, array(
              'type' => 'string',
              'fixed' => 0,
@@ -86,7 +102,7 @@ abstract class BaseEmailTemplate extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('OhrmEmail', array(
+        $this->hasOne('Email', array(
              'local' => 'email_id',
              'foreign' => 'id'));
     }

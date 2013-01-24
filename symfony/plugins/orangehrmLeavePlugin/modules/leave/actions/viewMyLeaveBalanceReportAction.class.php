@@ -46,4 +46,8 @@ class viewMyLeaveBalanceReportAction extends viewLeaveBalanceReportAction {
         parent::execute($request);
         $this->setTemplate('viewLeaveBalanceReport');
     }
+    
+    protected function getDataGroupPermissions() {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions(array('leave_entitlements_usage_report'), array(), array(), true);
+    }    
 }

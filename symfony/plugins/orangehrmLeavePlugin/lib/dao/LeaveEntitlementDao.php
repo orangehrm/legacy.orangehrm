@@ -35,6 +35,7 @@ class LeaveEntitlementDao extends BaseDao {
             $fromDate       = $searchParameters->getFromDate();            
             $toDate         = $searchParameters->getToDate();
             $idList         = $searchParameters->getIdList();
+            $validDate      = $searchParameters->getValidDate();  
             $orderField = $searchParameters->getOrderField();
             $order = $searchParameters->getOrderBy();
             
@@ -61,6 +62,10 @@ class LeaveEntitlementDao extends BaseDao {
                 
                 $params[':fromDate'] = $fromDate;
                 $params[':toDate'] = $toDate;
+            }
+            if( !empty( $validDate )){
+                 $q->addWhere('(:validDate BETWEEN le.from_date AND le.to_date)');
+                 $params[':validDate'] = $validDate ;
             }
             if(!empty( $idList )){
                 $q->andWhereIn('le.id',$idList);
@@ -428,5 +433,27 @@ class LeaveEntitlementDao extends BaseDao {
         } catch (Exception $e) {
             throw new DaoException($e->getMessage(), 0, $e);
         }        
+    }
+    
+    /**
+     * Save Leave Adjustment and linked to relevent leave entitlement 
+     * 
+     * @param LeaveAdjustment $leaveAdjustment
+     * @return type
+     * @throws DaoException
+     */
+    public function saveLeaveAdjustment( LeaveAdjustment $leaveAdjustment){
+        $conn = Doctrine_Manager::connection();
+        $conn->beginTransaction();  
+        
+        try {
+            $leaveAdjustment->save();
+            
+            $conn->commit();            
+            return $leaveAdjustment;
+        } catch (Exception $e) {
+            $conn->rollback();
+            throw new DaoException($e->getMessage(), 0, $e);
+        }
     }
 }
