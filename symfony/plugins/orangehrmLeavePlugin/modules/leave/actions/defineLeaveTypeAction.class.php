@@ -19,7 +19,8 @@ class defineLeaveTypeAction extends orangehrmAction {
                 $leaveType = $this->form->getLeaveTypeObject();
                 $this->saveLeaveType($leaveType);
 
-                $eventType = ($request->getParameter('id') != null) ? LeaveEvents::LEAVE_TYPE_UPDATE : LeaveEvents::LEAVE_TYPE_ADD;
+                
+                $eventType = ( $this->form->getValue('hdnLeaveTypeId') > 0) ? LeaveEvents::LEAVE_TYPE_UPDATE : LeaveEvents::LEAVE_TYPE_ADD;
                 $this->dispatcher->notify(new sfEvent($this, $eventType,
                                 array('leaveType' => $leaveType)));
 
