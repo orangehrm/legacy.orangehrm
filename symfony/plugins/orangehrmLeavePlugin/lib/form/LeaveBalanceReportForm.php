@@ -102,11 +102,11 @@ class LeaveBalanceReportForm extends BaseForm {
         $this->setWidget('date', new ohrmWidgetFormLeavePeriod(array()));
          
         $this->setWidget('job_title',  new sfWidgetFormChoice(array('choices' => $this->getJobTitleChoices())));
-        $this->setWidget('location', new sfWidgetFormChoice(array('choices' => $this->getLocationChoices())));
+        $this->setWidget('location', new ohrmReportWidgetOperationalCountryLocationDropDown());
         $this->setWidget('sub_unit', new ohrmWidgetSubDivisionList());
         $this->setWidget('include_terminated', new sfWidgetFormInputCheckbox(array('value_attribute_value' => 'on')));           
         
-        $this->setValidator('location', new sfValidatorChoice(array('choices' => array_keys($this->getLocationChoices()))));
+        $this->setValidator('location', new sfValidatorString(array('required' => false)));
         $this->setValidator('job_title', new sfValidatorChoice(array('choices' => array_keys($this->getJobTitleChoices()))));
         $this->setValidator('sub_unit', new sfValidatorString(array('required' => false)));
         $this->setValidator('include_terminated', new sfValidatorString(array('required' => false)));
