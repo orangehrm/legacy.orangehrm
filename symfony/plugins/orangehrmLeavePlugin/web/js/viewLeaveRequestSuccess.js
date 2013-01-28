@@ -43,10 +43,10 @@ $(document).ready(function(){
         //removing errors message in the comment box
         $('#commentError').html('').removeClass('validation-error');         
         $('#leaveId').val(leaveRequestId);
+        $('#leaveOrRequest').val('request');        
         fetchComments(leaveRequestId);
         
         $('#leaveComment').val('');
-        $('#leaveOrRequest').val('request');
         
         var leaveDate = $(this).parents('tr').find('td:eq(0)').text();        
         $('#commentDialog h3').html(lang_LeaveRequestComments);
