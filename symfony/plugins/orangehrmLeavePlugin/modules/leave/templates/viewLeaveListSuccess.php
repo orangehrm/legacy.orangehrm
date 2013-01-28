@@ -28,7 +28,7 @@ use_javascripts_for_form($form);
     </div>
 <?php endif; ?>
 
-<div class="box" id="leave-list-search">
+<div class="box toggableForm" id="leave-list-search">
     <div class="head">
         <h1><?php echo __($form->getTitle());?></h1>
     </div>
@@ -57,7 +57,7 @@ use_javascripts_for_form($form);
         </form>
         
     </div> <!-- inner -->
-    
+    <a href="#" class="toggle tiptip" title="<?php echo __(CommonMessages::TOGGABLE_DEFAULT_MESSAGE); ?>">&gt;</a>
 </div> <!-- leave-list-search -->
 
 <!--this is ajax message place -->

@@ -42,7 +42,7 @@ use_stylesheets_for_form($form);
     </div>
 <?php endif; ?>
 
-<div class="box searchForm" id="leave-entitlementsSearch">
+<div class="box searchForm toggableForm" id="leave-entitlementsSearch">
     <div class="head">
         <h1><?php echo __($title);?></h1>
     </div>
@@ -67,7 +67,7 @@ use_stylesheets_for_form($form);
         </form>
         
     </div> <!-- inner -->
-    
+    <a href="#" class="toggle tiptip" title="<?php echo __(CommonMessages::TOGGABLE_DEFAULT_MESSAGE); ?>">&gt;</a>
 </div> <!-- employee-information -->
 
 <?php if ($showResultTable) { ?>
