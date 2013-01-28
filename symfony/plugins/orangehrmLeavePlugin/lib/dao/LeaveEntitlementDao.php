@@ -29,7 +29,7 @@ class LeaveEntitlementDao extends BaseDao {
     public function getPendingStatusIds() {
         if (is_null(self::$pendingStatusIds)) {
             $q = Doctrine_Query::create()
-                    ->select('s.id')
+                    ->select('s.status')
                     ->from('LeaveStatus s')
                     ->where("s.name LIKE 'PENDING APPROVAL%'");
 
