@@ -19,7 +19,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header1->populateFromArray(array(
             'name' => 'Date',
-            'width' => '7%',
+            'width' => '19%',
             'isSortable' => false,
             'elementType' => 'link',
             'textAlignmentStyle' => 'left',
