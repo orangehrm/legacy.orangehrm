@@ -79,6 +79,8 @@ class viewLeaveBalanceReportAction extends sfAction {
         }
         
         if ($runReport) {
+            $this->reportType = $reportType;
+            
             $reportId = ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) ? 2 : 1;
             $values = $this->convertValues($reportType, $values);
             
@@ -96,7 +98,7 @@ class viewLeaveBalanceReportAction extends sfAction {
             $limit = $this->pager->getMaxPerPage();
 
             $this->resultsSet = $reportBuilder->buildReport($reportId, $offset, $limit, $values);
-            $this->fixResultset();
+            $this->fixResultset($values);
 
             $this->reportName = $this->getReportName($reportId);
 
@@ -108,7 +110,6 @@ class viewLeaveBalanceReportAction extends sfAction {
             $this->tableWidthInfo = $reportBuilder->getTableWidth($reportId);
 
             $this->linkParams = $this->getLinkParams($reportType, $values);
-            $this->reportType = $reportType;
             
         }        
     }
@@ -166,7 +167,9 @@ class viewLeaveBalanceReportAction extends sfAction {
         }
 
         if (isset($values['location']) && $values['location'] != 0) {
-            $convertedValues['location'] = $values['location'];
+            $location = $values['location'];
+            $locationIds = explode(',', $location);
+            $convertedValues['location'] = $locationIds;
         }
 
         if (!isset($values['include_terminated']) || $values['include_terminated'] != 'on') {
@@ -271,7 +274,7 @@ class viewLeaveBalanceReportAction extends sfAction {
         return $this->getContext()->getUserRoleManager()->getDataGroupPermissions(array('leave_entitlements_usage_report'));
     }    
     
-    protected function fixResultset() {
+    protected function fixResultset($values) {
         $keep = array();
         
         $configService = new LeaveConfigurationService();

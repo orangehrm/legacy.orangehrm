@@ -24,6 +24,21 @@
  */
 class LeaveEntitlementDao extends BaseDao {
     
+    protected static $pendingStatusIds = null;
+    
+    public function getPendingStatusIds() {
+        if (is_null(self::$pendingStatusIds)) {
+            $q = Doctrine_Query::create()
+                    ->select('s.id')
+                    ->from('LeaveStatus s')
+                    ->where("s.name LIKE 'PENDING APPROVAL%'");
+
+            self::$pendingStatusIds = $q->execute(array(), Doctrine_Core::HYDRATE_SINGLE_SCALAR);            
+        }
+        
+        return self::$pendingStatusIds;
+    }
+    
     public function searchLeaveEntitlements(LeaveEntitlementSearchParameterHolder $searchParameters) {
         try {
 
@@ -289,10 +304,14 @@ class LeaveEntitlementDao extends BaseDao {
     public function getLeaveBalance($empNumber, $leaveTypeId, $asAtDate, $date = NULL) {
         $conn = Doctrine_Manager::connection()->getDbh(); 
         
+        $pendingIds = $this->getPendingStatusIds();
+        
+        $pendingIdList = is_array($pendingIds) ? implode(',', $pendingIds) : $pendingIds;            
+
         $sql = 'SELECT le.no_of_days AS entitled, ' . 
                       'le.days_used AS used, ' .
                       'sum(IF(l.status = 2, lle.length_days, 0)) AS scheduled, ' .
-                      'sum(IF(l.status = 1, lle.length_days, 0)) AS pending, ' . 
+                      'sum(IF(l.status IN (' . $pendingIdList . '), lle.length_days, 0)) AS pending, ' . 
                       'sum(IF(l.status = 3, l.length_days, 0)) AS taken '.                
                'FROM ohrm_leave_entitlement le LEFT JOIN ' . 
                     'ohrm_leave_leave_entitlement lle ON le.id = lle.entitlement_id LEFT JOIN '.
