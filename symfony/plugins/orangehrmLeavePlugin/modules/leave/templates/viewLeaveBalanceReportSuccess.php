@@ -17,6 +17,7 @@ use_stylesheets_for_form($form);
     </div>
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
+        <?php if (!isset($hide_form)): ?>
         <form id="frmLeaveBalanceReport" name="frmLeaveBalanceReport" method="post" 
               action="">
 
@@ -29,7 +30,7 @@ use_stylesheets_for_form($form);
                 </p>
             </fieldset>
         </form>
-        
+        <?php endif;?>
     </div> <!-- inner -->    
 </div> 
 
