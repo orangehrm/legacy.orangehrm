@@ -43,9 +43,8 @@ $(document).ready(function() {
     });
 
     //open comment icon is clicked
-    $('.dialogInvoker').click(function() {
-        $('#ajaxCommentSaveMsg').html('').removeAttr('class');      
-        
+    $('.dialogInvoker').click(function() {   
+        $('div.message').remove();
         //removing errors message in the comment box
         $("#commentError").html("");
         
@@ -87,9 +86,7 @@ $(document).ready(function() {
             url: commentUpdateUrl,
             data: data,
             success: function(data) {
-                $('#ajaxCommentSaveMsg').removeAttr('class').html('');
-                $('.messageBalloon_success').remove();
-
+                $('div.message').remove();
                 if(data != 0) {
                     var id = $('#leaveId').val();
                     $('#commentContainer-' + id).html(commentLabel);                        

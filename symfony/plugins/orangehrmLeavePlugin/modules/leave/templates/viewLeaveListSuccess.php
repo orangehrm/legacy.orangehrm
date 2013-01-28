@@ -60,10 +60,6 @@ use_javascripts_for_form($form);
     <a href="#" class="toggle tiptip" title="<?php echo __(CommonMessages::TOGGABLE_DEFAULT_MESSAGE); ?>">&gt;</a>
 </div> <!-- leave-list-search -->
 
-<!--this is ajax message place -->
-<div id="ajaxCommentSaveMsg"></div>
-<!-- end of ajax message place -->
-
 <?php include_component('core', 'ohrmList'); ?>
 
 <!-- comment dialog -->
@@ -136,9 +132,7 @@ use_javascripts_for_form($form);
     function handleSaveButton() {
         $(this).attr('disabled', true);
         
-        $('#noActionsSelectedWarning').remove();
-        $('#leaveListActionMsg').remove();
-        $('#ajaxCommentSaveMsg').removeAttr('class').html('');
+        $('div.message').remove();
               
         var selectedActions = 0;
         
@@ -163,8 +157,12 @@ use_javascripts_for_form($form);
         if (selectedActions > 0) {
             $('#frmList_ohrmListComponent').submit();
         } else {
-            $('div#ajaxCommentSaveMsg').before('<div id="noActionsSelectedWarning" class="messageBalloon_warning"></div>');
-            $('#noActionsSelectedWarning').text(lang_selectAction);
+            $('#helpText').before('<div class="message warning fadable">' + lang_selectAction + '<a href="#" class="messageCloseButton">' + lang_Close + '</a></div>');
+            setTimeout(function(){
+                $("div.fadable").fadeOut("slow", function () {
+                    $("div.fadable").remove();
+                });
+            }, 2000);
             $(this).attr('disabled', false);      
             return false;
         }
