@@ -62,13 +62,17 @@ $(document).ready(function() {
             onClose: function() {
                 $("#assignleave_txtFromTime").valid();
             }
-        });        
+        });     
+        
+        
         
         //Validation
         $("#frmLeaveApply").validate({
             rules: {
                 'assignleave[txtEmployee][empName]':{
-                    required: true
+                    required: true,
+                    validEmployeeName: true,
+                    onkeyup: false
                 },
                 'assignleave[txtLeaveType]':{
                     required: true
@@ -116,7 +120,8 @@ $(document).ready(function() {
             },
             messages: {
                 'assignleave[txtEmployee][empName]':{
-                    required:lang_Required
+                    required:lang_Required,
+                    validEmployeeName: lang_validEmployee
                 },
                 'assignleave[txtLeaveType]':{
                     required:lang_Required
@@ -191,6 +196,16 @@ $(document).ready(function() {
             }
             
             return valid;  
+        });
+        
+        $.validator.addMethod("validEmployeeName", function(value, element) { 
+            return employeeAutoFill('assignleave_txtEmployee_empName', 'assignleave_txtEmployee_empId', employees_assignleave_txtEmployee);  
+            
+
+        });
+        
+       $("#assignleave_txtEmployee_empName").result(function(event, item) {
+            $("#assignleave_txtEmployee_empName").valid();
         });
         
         //Click Submit button
@@ -370,3 +385,15 @@ function setEmployeeWorkshift(empNumber) {
     });
         
 }    
+
+function employeeAutoFill(selector, filler, data) {
+        $("#" + filler).val("");
+        var valid = false;
+        $.each(data, function(index, item){
+            if(item.name.toLowerCase() == $("#" + selector).val().toLowerCase()) {
+                $("#" + filler).val(item.id);
+                valid = true;
+            }
+        });
+        return valid;
+    }

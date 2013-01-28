@@ -102,6 +102,7 @@ use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
     var lang_CommentLengthExceeded = "<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 250)); ?>";
     var lang_FromTimeLessThanToTime = "<?php echo __('From time should be less than To time'); ?>";
     var lang_DurationShouldBeLessThanWorkshift = "<?php echo __('Duration should be less than work shift length'); ?>";
+    var lang_validEmployee = "<?php echo __(ValidationMessages::INVALID); ?>";
 //]]>    
 </script>    
     
