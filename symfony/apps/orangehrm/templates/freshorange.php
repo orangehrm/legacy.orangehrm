@@ -45,7 +45,7 @@ include_slot('header', get_partial('global/header'));
         </div> <!-- wrapper -->
         
         <div id="footer">
-            OrangeHRM ver 3.0-rc.1 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
+            OrangeHRM ver 3.0-rc.2 &copy; <a href="http://www.orangehrm.com" target="_blank">OrangeHRM</a>. 2005 - 2012 All rights reserved.
         </div> <!-- footer -->        
         
         
