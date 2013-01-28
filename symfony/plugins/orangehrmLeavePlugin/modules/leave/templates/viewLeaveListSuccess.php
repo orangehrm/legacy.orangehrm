@@ -81,11 +81,12 @@ use_javascripts_for_form($form);
         <div id="existingComments">  
             <span><?php echo __('Loading') . '...';?></span>
         </div>
-
+        
         <br class="clear" />
         <br class="clear" />
         <textarea name="leaveComment" id="leaveComment" cols="40" rows="4" class="commentTextArea"></textarea>
-        <span id="commentError"></span>
+        <br class="clear" />
+        <span id="commentError" style="padding-left: 2px;" class="validation-error"></span>
 
     </form>        
     </p>
