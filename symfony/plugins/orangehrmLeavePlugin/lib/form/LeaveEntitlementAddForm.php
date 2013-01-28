@@ -46,6 +46,29 @@ class LeaveEntitlementAddForm extends LeaveEntitlementForm {
     
     }    
     
+    /**
+     *
+     * @return array
+     */
+    protected function getFormLabels() {
+        
+         $requiredMarker = ' <em>*</em>';
+
+        $labels = array(
+            'employee' => __('Employee').$requiredMarker,
+            'leave_type' => __('Leave Type').$requiredMarker
+            
+            
+        );
+        if( LeavePeriodService::getLeavePeriodStatus() == LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED){
+             $labels['date'] = __('Leave Period').$requiredMarker;
+        }else{
+            $labels['date'] = __('Earned Between').$requiredMarker;
+        }
+        $labels['entitlement'] = __('Entitlement').$requiredMarker;
+        return $labels;
+    }
+    
     public function setEditMode() {
         $this->getWidget('leave_type')->setAttribute('disabled', 'disabled');
         $this->getWidget('employee')->setAttribute('disabled', 'disabled');
