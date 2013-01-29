@@ -34,13 +34,17 @@ class LeaveMailerTest extends PHPUnit_Framework_TestCase {
         $workFlow = new WorkflowStateMachine();
         $workFlow->setAction('apply');
         $workFlow->setRolesToNotify('ESS,Supervisor,ABC');
+        $workFlow->setRole('ess');
         
         $eventData = array('workFlow' => $workFlow);
-        $leaveTypes = array('leave.apply.ess', 'leave.apply.supervisor', 'leave.apply.abc');
+        $emailType = 'leave.apply';
+        
+        $recipientRoles = array('ESS', 'Supervisor', 'ABC');
+        
         $mockService = $this->getMock('EmailService', array('sendEmailNotifications'));
         $mockService->expects($this->once())
                 ->method('sendEmailNotifications')
-                ->with($leaveTypes, $eventData);
+                ->with($emailType, $recipientRoles, $eventData, 'ess');
         
         $this->mailer->setEmailService($mockService);
         $sfEvent = new sfEvent($this, 'test', $eventData);
