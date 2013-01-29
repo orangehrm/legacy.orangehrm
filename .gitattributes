@@ -3568,6 +3568,7 @@ symfony/plugins/orangehrmCorePlugin/lib/component/ListComponentException.php -te
 symfony/plugins/orangehrmCorePlugin/lib/component/ListHeader.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ListHeaderException.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ListHeaderGroup.php -text
+symfony/plugins/orangehrmCorePlugin/lib/component/NumberFormatCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/PopulatableFromArray.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/PropertyPopulator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/SelectSingleCell.php -text

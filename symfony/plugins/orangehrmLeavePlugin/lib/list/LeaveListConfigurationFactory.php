@@ -67,6 +67,8 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'center',
+            'filters' => array('NumberFormatCellFilter' => array()
+                              ),            
             'elementProperty' => array('getter' => 'getLeaveBalance'),
         ));
 
