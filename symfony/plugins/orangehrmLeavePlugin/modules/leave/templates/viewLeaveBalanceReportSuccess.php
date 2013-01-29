@@ -173,7 +173,8 @@ use_stylesheets_for_form($form);
             locationLi.hide();
             subUnitLi.hide();
             terminatedLi.hide();
-            viewBtn.show();        
+            viewBtn.show();
+           
         } else if (reportType == leaveTypeReport) {
             reportTypeLi.show();
             employeeNameLi.hide();           
