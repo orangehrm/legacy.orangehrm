@@ -192,8 +192,13 @@ use_stylesheets_for_form($form);
             locationLi.hide();
             subUnitLi.hide();
             terminatedLi.hide();
-            
             viewBtn.hide();
+            
+            var reportTypeWidget = $("#leave_balance_report_type");
+            var empNameWidget = $("#leave_balance_employee_empName");
+            empNameWidget.innerWidth(reportTypeWidget.innerWidth());
+            
+            
         }        
     }   
    
