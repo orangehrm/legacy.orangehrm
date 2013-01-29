@@ -697,13 +697,15 @@ class LeaveRequestService extends BaseService {
     
     public function getLeaveRequestActions($request, $loggedInEmpNumber) {
         $actions = array();
-
+        
         if (!$request->isStatusDiffer()) {
             
             $includeRoles = array();
             $excludeRoles = array();
+            
+            $empNumber = $request->getEmpNumber();
 
-            if ($request->getEmpNumber() == $loggedInEmpNumber) {
+            if ($empNumber == $loggedInEmpNumber) {
                 $includeRoles = array('ESS');
             }            
             
@@ -716,7 +718,7 @@ class LeaveRequestService extends BaseService {
             }
 
             $workFlowItems = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
-                    $status, $excludeRoles, $includeRoles, array('Employee' => $request->getEmpNumber()));
+                    $status, $excludeRoles, $includeRoles, array('Employee' => $empNumber));
 
             foreach ($workFlowItems as $item) {
                 $name = $item->getAction();
