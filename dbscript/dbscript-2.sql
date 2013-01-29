@@ -1912,6 +1912,12 @@ INSERT INTO ohrm_advanced_report (id, name, definition) VALUES
                     <display_name>Exclude</display_name>
                     <width>1</width>	
                 </field>  
+                <field display="false">
+                    <field_name>ohrm_leave_type.deleted</field_name>
+                    <field_alias>leave_type_deleted</field_alias>
+                    <display_name>Leave Type Deleted</display_name>
+                    <width>1</width>	
+                </field>  
                 <field display="true">
                     <field_name>ohrm_leave_type.name</field_name>
                     <field_alias>leaveType</field_alias>

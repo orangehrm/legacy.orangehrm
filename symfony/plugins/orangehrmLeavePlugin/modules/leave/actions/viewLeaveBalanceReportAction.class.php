@@ -301,6 +301,13 @@ class viewLeaveBalanceReportAction extends sfAction {
                     
                     $this->resultsSet[$i]['employeeName'] = $this->resultsSet[$i]['employeeName'] . " (" . __("Past Employee") . ")";
                 }
+                if (isset($this->resultsSet[$i]['leaveType']) && isset($this->resultsSet[$i]['leave_type_deleted'])
+                        && $this->resultsSet[$i]['leave_type_deleted'] == 1) {
+                    
+                    $this->resultsSet[$i]['leaveType'] = $this->resultsSet[$i]['leaveType'] . " (" . __("Deleted") . ")";
+                }
+                
+                
                 $keep[] = $this->resultsSet[$i];
             }
         }
