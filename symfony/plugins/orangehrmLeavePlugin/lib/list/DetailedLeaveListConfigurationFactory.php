@@ -39,10 +39,10 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
 
         $header8->populateFromArray(array(
             'name' => 'Leave Balance (Days)',
-            'width' => '15%',
+            'width' => '10%',
             'isSortable' => false,
             'elementType' => 'label',
-            'textAlignmentStyle' => 'center',
+            'textAlignmentStyle' => 'right',
             'filters' => array('NumberFormatCellFilter' => array()
                               ),            
             'elementProperty' => array('getter' => 'getLeaveBalance'),
@@ -51,10 +51,10 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
         
         $header4->populateFromArray(array(
             'name' => 'Duration (Hours)',
-            'width' => '15%',
+            'width' => '10%',
             'isSortable' => false,
             'elementType' => 'label',
-            'textAlignmentStyle' => 'center',
+            'textAlignmentStyle' => 'right',
             'elementProperty' => array('getter' => 'getLengthHours', 'hideIfCallback' => 'isNonWorkingDay'),
         ));
 
@@ -83,7 +83,7 @@ class DetailedLeaveListConfigurationFactory extends ohrmListConfigurationFactory
 
         $header6->populateFromArray(array(
             'name' => 'Comments',
-            'width' => '20%',
+            'width' => '30%',
             'isSortable' => false,
             'elementType' => 'leaveComment',
             'textAlignmentStyle' => 'left',

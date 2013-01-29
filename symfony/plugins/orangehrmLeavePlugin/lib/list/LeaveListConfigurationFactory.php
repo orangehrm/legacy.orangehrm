@@ -57,7 +57,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
             'width' => '12%',
             'isSortable' => false,
             'elementType' => 'label',
-            'textAlignmentStyle' => 'center',
+            'textAlignmentStyle' => 'right',
             'elementProperty' => array('getter' => 'getNumberOfDays'),
         ));
 
@@ -66,7 +66,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
             'width' => '12%',
             'isSortable' => false,
             'elementType' => 'label',
-            'textAlignmentStyle' => 'center',
+            'textAlignmentStyle' => 'right',
             'filters' => array('NumberFormatCellFilter' => array()
                               ),            
             'elementProperty' => array('getter' => 'getLeaveBalance'),
