@@ -975,6 +975,10 @@ table.table th.checkbox-col {
 table.table td.right {
     text-align: right;
 }
+table.table td left {
+    text-align: left;
+}
+
 table tfoot tr.total td {
 	background-color:#555657;
 	color:#fff;

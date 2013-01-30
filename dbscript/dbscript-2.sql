@@ -1974,6 +1974,7 @@ ORDER BY A.leave_type_id
                         <field_alias>entitlement_total</field_alias>
                         <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
+                        <align>right</align>
                     </field>                                
                 </fields>
             </display_group>
@@ -2009,6 +2010,7 @@ ORDER BY ohrm_leave_type.id
                         <field_alias>pending</field_alias>
                         <display_name>Leave Pending Approval (Days)</display_name>
                         <width>120</width>
+                        <align>right</align>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=1&amp;stddate=1</link>
                     </field>                                
                 </fields>
@@ -2045,6 +2047,7 @@ ORDER BY ohrm_leave_type.id
                         <field_alias>scheduled</field_alias>
                         <display_name>Leave Scheduled (Days)</display_name>
                         <width>120</width>
+                        <align>right</align>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2&amp;stddate=1</link>
                     </field>                                
                 </fields>
@@ -2076,6 +2079,7 @@ ORDER BY ohrm_leave.leave_type_id
                         <field_alias>taken</field_alias>
                         <display_name>Leave Taken (Days)</display_name>
                         <width>120</width>
+                        <align>right</align>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3&amp;stddate=1</link>
                     </field>                                
                 </fields>
@@ -2101,6 +2105,7 @@ ORDER BY ohrm_leave.leave_type_id
                     <field_alias>unused</field_alias>
                     <display_name>Leave Balance (Days)</display_name>
                     <width>160</width>	
+                    <align>right</align>
                 </field>                                                                                                     
             </fields>
         </display_group>
@@ -2223,6 +2228,7 @@ ORDER BY A.emp_number
                         <field_alias>entitlement_total</field_alias>
                         <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
+                        <align>right</align>
                     </field>                                
                 </fields>
             </display_group>
@@ -2253,6 +2259,7 @@ ORDER BY ohrm_leave.emp_number
                         <field_alias>pending</field_alias>
                         <display_name>Leave Pending Approval (Days)</display_name>
                         <width>121</width>
+                        <align>right</align>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=1&amp;stddate=1</link>
                     </field>                                
                 </fields>
@@ -2285,6 +2292,7 @@ ORDER BY ohrm_leave.emp_number
                         <field_alias>scheduled</field_alias>
                         <display_name>Leave Scheduled (Days)</display_name>
                         <width>121</width>
+                        <align>right</align>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2&amp;stddate=1</link>
                     </field>                                
                 </fields>
@@ -2316,6 +2324,7 @@ ORDER BY ohrm_leave.emp_number
                         <field_alias>taken</field_alias>
                         <display_name>Leave Taken (Days)</display_name>
                         <width>120</width>
+                        <align>right</align>
                         <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3&amp;stddate=1</link>
                     </field>                                
                 </fields>
@@ -2340,6 +2349,7 @@ ORDER BY ohrm_leave.emp_number
                     <field_alias>unused</field_alias>
                     <display_name>Leave Balance (Days)</display_name>
                     <width>150</width>
+                    <align>right</align>
                 </field> 
                                                                                                
             </fields>

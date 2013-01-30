@@ -511,6 +511,13 @@ class ReportDefinition {
         }
         return $link;
     }
+    public function getFieldAlign($field) {
+        $align = null;
+        if (isset($field->align)) {
+            $align = (string) $field->align;
+        }
+        return $align;
+    }    
 
     /**
      * Gets the value of page limit element defined in the xml.

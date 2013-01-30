@@ -2,7 +2,7 @@
 
 use_javascripts_for_form($form);
 use_stylesheets_for_form($form);
-
+use_stylesheet(public_path('orangehrmLeavePlugin/css/viewLeaveBalanceReport'));
 ?>
 
 
@@ -77,6 +77,7 @@ use_stylesheets_for_form($form);
                 <tr class="<?php echo $rowCssClass;?>">
                 <?php foreach ($row as $key => $column):                            
                          $info = $headerInfo[$key];
+                         $tdClass = !empty($info['align']) ? " class='{$info['align']}'" : '';
                          if(is_array($column)):
                             foreach ($column as $colKey => $colVal):
                                 $headInf = $info[$colKey];                                                                            
@@ -96,8 +97,8 @@ use_stylesheets_for_form($form);
                          else:
                              //echo $key . '-' . $column;
                             if(($info["groupDisp"] == "true") && ($info["display"] == "true")):?>
-                            <td><?php if(($column == "") || is_null($column)):
-                                    echo "---";
+                            <td<?php echo $tdClass;?>><?php if(($column == "") || is_null($column)):
+                                    echo "0.00";
                                 else :
                                     
                                     if (isset($info['link'])):

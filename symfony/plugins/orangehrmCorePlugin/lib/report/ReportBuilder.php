@@ -260,6 +260,10 @@ class ReportBuilder {
                     if (isset($link)) {
                         $fieldData['link'] = $link;
                     }
+                    $align = $reportDefinition->getFieldAlign($displayField);
+                    if (isset($align)) {
+                        $fieldData['align'] = $align;
+                    }                    
                     
                     if ($fieldAlias != "") {
                         $fields[$fieldAlias] = $fieldData;
@@ -330,10 +334,14 @@ class ReportBuilder {
                             "display" => $fieldAttr["display"],
                             "group" => $groupHeader,
                             "groupDisp" => $values["attr"]["display"],
-                            "width" => $fieldAttr["width"]);
+                            "width" => $fieldAttr["width"],
+                            "align" => isset($fieldAttr['align']) ? $fieldAttr['align'] : '');
                         if (isset($fieldAttr['link'])) {
                             $data['link'] = $fieldAttr['link'];
                         }
+                        if (!empty($fieldAttr['align'])) {
+                            $data['align'] = $fieldAttr['align'];
+                        }                          
                         $headerInfo[$fieldKey] = $data;
                     } else if ($values["attr"]["type"] == "many") {
                         $data = array("type" => $values["attr"]["type"],
@@ -343,7 +351,10 @@ class ReportBuilder {
                             "width" => $fieldAttr["width"]);
                         if (isset($fieldAttr['link'])) {
                             $data['link'] = $fieldAttr['link'];
-                        }                        
+                        }            
+                        if (!empty($fieldAttr['align'])) {
+                            $data['align'] = $fieldAttr['align'];
+                        }            
                         $headerInfo[$groupHeader][$fieldKey] = $data;
                     } else {
                         throw new ReportException("Invalid XML Definition!!! ( Invalid group type '" . $values["attr"]["type"] . "' )");
