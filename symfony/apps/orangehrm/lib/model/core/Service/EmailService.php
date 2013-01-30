@@ -436,46 +436,49 @@ class EmailService extends BaseService {
                 
                 foreach ($allRecipients as $recipient) {
                     
-                    $data = $eventData;
-                    foreach ($processors as $processor) {
-                        $class = $processor->getClassName();
-                        $processorObj = new $class();
-                        $data['recipient'] = $recipient;
-                        $data = $processorObj->getReplacements($data);                            
+                    $to = null;
+
+                    if ($recipient instanceof Employee) {
+                        $to = $recipient->getEmpWorkEmail();
+                    } else if ($recipient instanceof EmailSubscriber) {
+                        $to = $recipient->getEmail();
                     }
-                    
-                    
-                    $emailBody = $this->replaceContent($body, $data);
-                    $emailSubject = $this->replaceContent($subject, $data);
-                    
-
-                    $message = Swift_Message::newInstance();
-                    $to = '';                    
-                    
-                    try {
-
-                        if ($recipient instanceof Employee) {
-                            $to = $recipient->getEmpWorkEmail();
-                        } else if ($recipient instanceof EmailSubscriber) {
-                            $to = $recipient->getEmail();
+                                                
+                    if (!empty($to)) {
+                        $data = $eventData;
+                        foreach ($processors as $processor) {
+                            $class = $processor->getClassName();
+                            $processorObj = new $class();
+                            $data['recipient'] = $recipient;
+                            $data = $processorObj->getReplacements($data);                            
                         }
-                        $message->setTo($to);
-                        $message->setFrom(array($this->emailConfig->getSentAs() => 'OrangeHRM'));
 
-                        $message->setSubject($emailSubject);
-                        $message->setBody($emailBody);
 
-                        $mailer->send($message);
+                        $emailBody = $this->replaceContent($body, $data);
+                        $emailSubject = $this->replaceContent($subject, $data);
 
-                        $logMessage = "Leave application email was sent to $to";
-                        $this->_logResult('Success', $logMessage);
-                    } catch (Exception $e) {
 
-                        $logMessage = "Couldn't send leave application email to $to";
-                        $logMessage .= '. Reason: ' . $e->getMessage();
-                        $this->_logResult('Failure', $logMessage);
-                    }                    
-        
+                        $message = Swift_Message::newInstance();
+          
+
+                        try {
+                            $message->setTo($to);
+                            $message->setFrom(array($this->emailConfig->getSentAs() => 'OrangeHRM'));
+
+                            $message->setSubject($emailSubject);
+                            $message->setBody($emailBody);
+
+                            $mailer->send($message);
+
+                            $logMessage = "Leave application email was sent to $to";
+                            $this->_logResult('Success', $logMessage);
+                        } catch (Exception $e) {
+
+                            $logMessage = "Couldn't send leave application email to $to";
+                            $logMessage .= '. Reason: ' . $e->getMessage();
+                            $this->_logResult('Failure', $logMessage);
+                        }                    
+                    }
                 }
                 
                                     

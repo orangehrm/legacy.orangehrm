@@ -238,7 +238,9 @@ class LeaveEmailProcessor implements orangehrmMailProcessor {
 
         if (!empty($to)) {
             $recipients[] = $performer;
-        }                
+        }            
+        
+        return $recipients;
     }
     
     protected function getSubscribers($emailName, $data) {
