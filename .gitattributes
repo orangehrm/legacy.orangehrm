@@ -3730,6 +3730,7 @@ symfony/plugins/orangehrmCorePlugin/lib/service/StateAccessibleByExecutionFilter
 symfony/plugins/orangehrmCorePlugin/lib/task/InstallPluginTask.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/task/InstallerDBCreator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/task/orangehrmPublishAssetsTask.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/task/phing/GetYmlPropertyTask.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/ExportDataRetriever.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/Exportable.php -text
 symfony/plugins/orangehrmCorePlugin/lib/utility/MessageRegistry.php -text
