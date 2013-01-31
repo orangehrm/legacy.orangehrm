@@ -45,6 +45,8 @@ function toggleFilters(show) {
         
         var params = '';
         
+        $('ol#employee_list').html('').append($('<li></li>').text(lang_Loading)); 
+                
         $('ol#filter li:not(:first)').find('input,select').each(function(index, element) {
             var name = $(this).attr('name');
             name = name.replace('entitlements[filters][', '');
@@ -53,7 +55,7 @@ function toggleFilters(show) {
 
             params = params + '&' + name + '=' + value;
         });
-        params = params + '&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&ed='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
+        params = params + '&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&td='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
         $.ajax({
             type: 'GET',
             url: getEmployeeUrl,
@@ -63,17 +65,16 @@ function toggleFilters(show) {
                 
                 var count = data.length;
                 var rows = $('ol#employee_list li').length;
-                var html = '';
-                
-                $('ol#employee_list').html('');                      
-                html = "<table class='table'><tr><th>"+lang_employee+"</th><th>"+lang_old_entitlement+"</th><th>"+lang_new_entitlement+"</th></tr>";
+                $('ol#employee_list').html('');
+                var html = "<table class='table'><tr><th>"+lang_employee+"</th><th>"+lang_old_entitlement+"</th><th>"+lang_new_entitlement+"</th></tr>";
                 for (var i = 0; i < count; i++) {
                     var css = "odd";
                     rows++;
                     if (rows % 2) {
                         css = "even";
                     }
-                    html = html + '<tr class="' + css + '"><td>'+data[i][0]+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td></tr>';
+                    var decodedName = $("<div/>").html(data[i][0]).text();
+                    html = html + '<tr class="' + css + '"><td>'+decodedName+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td></tr>';
                 }
                 html = html + '</table>';
                 $('ol#employee_list').append(html);
