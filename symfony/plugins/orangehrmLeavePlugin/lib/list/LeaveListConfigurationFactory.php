@@ -8,14 +8,14 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
     public function init() {
         sfContext::getInstance()->getConfiguration()->loadHelpers('OrangeDate');
         
-        $header1 = new ListHeader();
-        $header2 = new ListHeader();
-        $header3 = new ListHeader();
-        $header4 = new ListHeader();
-        $header5 = new ListHeader();
-        $header6 = new LeaveCommentHeader();
-        $header7 = new LeaveListActionHeader();
-        $header8 = new ListHeader();
+        $header1 = new LeaveListHeader();
+        $header2 = new LeaveListHeader();
+        $header3 = new LeaveListHeader();
+        $header4 = new LeaveListHeader();
+        $header5 = new LeaveListHeader();
+        $header6 = new LeaveListHeader();
+        $header7 = new LeaveListHeader();
+        $header8 = new LeaveListHeader();
 
         $header1->populateFromArray(array(
             'name' => 'Date',
@@ -62,14 +62,11 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
         ));
 
         $header8->populateFromArray(array(
-            'name' => 'Current Leave Balance (Days)',
+            'name' => 'Leave Balance (Days)',
             'width' => '12%',
             'isSortable' => false,
-            'elementType' => 'label',
+            'elementType' => 'leaveListBalance',
             'textAlignmentStyle' => 'right',
-            'filters' => array('NumberFormatCellFilter' => array()
-                              ),            
-            'elementProperty' => array('getter' => 'getLeaveBalance'),
         ));
 
         $header5->populateFromArray(array(

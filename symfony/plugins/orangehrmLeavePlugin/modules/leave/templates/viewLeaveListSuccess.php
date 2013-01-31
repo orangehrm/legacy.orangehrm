@@ -94,6 +94,24 @@ use_javascripts_for_form($form);
 </div>
 <!-- end of comment dialog-->
 
+<!-- Leave Balance Popup -->
+<div class="modal hide" id="leaveBalanceDialog">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo __('Leave Balance Details'); ?></h3>
+  </div>
+  <div class="modal-body">
+    <p>       
+        <table id="leaveBalanceTable" class='table'><tr><th><?php echo __('Period');?></th><th><?php echo __('Leave Balance');?></th></tr>
+        </table>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" value="<?php echo __('Ok'); ?>" />
+  </div>
+</div>
+<!-- Leave Balance Popup end -->
+
 <script type="text/javascript">
     //<![CDATA[
     var lang_typeHint = "<?php echo __("Type for hints"); ?>" + "...";
@@ -170,7 +188,23 @@ use_javascripts_for_form($form);
 
     function setPage() {}
 
+    function viewLeaveBalance(balances) {
+        $('#leaveBalanceTable tr:gt(0)').remove();
+        $('#leaveBalanceDialog').modal();
+        
+        var html = "";
+        var rows = 0;
+        for (var i = 0; i < balances.length; i++) {
+            rows++;
+            
+            var balance = balances[i];
+            var css = (rows % 2) ? "even" : "odd";
+            var row = '<tr class="' + css + '"><td>' + balance.start + ' - ' + balance.end + '</td><td class="right">' + balance.balance + '</td></tr>';
 
+            html = html + row;
+        }
+        $('#leaveBalanceTable').append(html);
+    }
     
     //]]>
 </script>

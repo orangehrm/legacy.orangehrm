@@ -20,10 +20,12 @@
  */
 
 /**
- * Description of LeaveCommentHeader
+ * Description of LeaveListHeader
  */
-class LeaveCommentHeader extends ListHeader {
+class LeaveListHeader extends ListHeader {
     public function  __construct() {
+        $this->elementTypes[] = 'leaveListAction';
         $this->elementTypes[] = 'leaveComment';
+        $this->elementTypes[] = 'leaveListBalance';
     }
 }

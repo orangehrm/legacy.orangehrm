@@ -115,6 +115,20 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
             return sprintf('%s %s %s', set_datepicker_date_format($leaveRequestStartDate), __('to'), set_datepicker_date_format($leaveRequestEndDate));
         }
     }
+    
+    public function getLeaveDates() {
+        
+        $this->_fetchLeave();      
+        
+        $dates = array();
+        if (count($this->leave) > 0) {
+            foreach ($this->leave as $leave) {
+                $dates[] = $leave->getDate();
+            }
+        }
+        
+        return $dates;        
+    }
 
     private function _parseLeave() {
         $this->numberOfDays = 0.0;

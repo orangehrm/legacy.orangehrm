@@ -4113,12 +4113,12 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/widget/ohrmWidgetFormLeavePeriod.c
 symfony/plugins/orangehrmLeavePlugin/lib/list/DetailedLeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/HolidayListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveCommentCell.php -text
-symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveCommentHeader.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveEntitlementTypeCellFilter.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListActionCell.php -text
-symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListActionHeader.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListBalanceCell.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListConfigurationFactory.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveListHeader.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/LeaveTypeListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveChangeMailProcessor.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/mail/LeaveEmailProcessor.php -text
