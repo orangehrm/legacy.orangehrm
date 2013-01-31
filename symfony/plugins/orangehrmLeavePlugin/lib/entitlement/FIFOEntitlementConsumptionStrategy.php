@@ -658,20 +658,21 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
                 $newEndDateForCurrentPeriod = $tmp->format('Y-m-d');
             }
                         
-            $queryCurrentPeriod = 'UPDATE ohrm_leave_entitlement e SET ' .
+         $queryCurrentPeriod = 'UPDATE ohrm_leave_entitlement e SET ' .
                     "e.to_date = '$newEndDateForCurrentPeriod' " .                    
-                    "WHERE e.deleted = 0 AND e.from_date = '{$leavePeriodForToday[0]}' AND e.to_date = '{$leavePeriodForToday[1]}'";
+                    "WHERE e.deleted = 0 AND e.from_date = :fromDate AND e.to_date = :toDate ";
                     
             $stmt = $pdo->prepare($queryCurrentPeriod);                        
-            $stmt->execute();
+            $stmt->execute(array(':fromDate'=> $leavePeriodForToday[0],':toDate'=>$leavePeriodForToday[1]));
                         
-            $queryFuturePeriods = 'UPDATE ohrm_leave_entitlement e SET ' .
-                    "e.from_date = CONCAT(YEAR(e.from_date), '-', $newMonth, '-', $newDay), " .
-                    "e.to_date = DATE_SUB(CONCAT(YEAR(e.from_date) + 1, '-', $newMonth, '-', $newDay), INTERVAL 1 DAY) " .                    
-                    "WHERE e.deleted = 0 AND MONTH(e.from_date) = $oldMonth AND DAY(e.from_date) = $oldDay AND e.from_date > '{$leavePeriodForToday[1]}'";
-
+           $queryFuturePeriods = 'UPDATE ohrm_leave_entitlement e SET ' .
+                    "e.from_date = CONCAT(YEAR(e.from_date), '-',:newMonth , '-', :newDay), " .
+                    "e.to_date = DATE_SUB(CONCAT(YEAR(e.from_date) + 1, '-', :newMonth, '-', :newDay), INTERVAL 1 DAY) " .                    
+                    "WHERE e.deleted = 0 AND MONTH(e.from_date) = :oldMonth AND DAY(e.from_date) = :oldDay AND e.from_date > :fromDate ";
+           
             $stmt = $pdo->prepare($queryFuturePeriods);                        
-            $stmt->execute();
+            $stmt->execute(array(':newMonth'=>$newMonth,':newDay'=>$newDay,':oldMonth'=>$oldMonth,':oldDay'=>$oldDay,':fromDate'=>$leavePeriodForToday[1]));
+
 
         } catch (DaoException $e) {
             throw new DaoException($e->getMessage(), 0, $e);
