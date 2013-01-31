@@ -218,7 +218,7 @@ class LeaveRequestDao extends BaseDao {
                     foreach ($change as $entitlementId => $length) {                                         
                         
                         $idList .= $separator . $entitlementId;
-                        $updateSql .= ' WHEN e.id = ' . $entitlementId . ' THEN e.days_used + ' . $length;
+                        $updateSql .= sprintf(' WHEN e.id = %d THEN e.days_used + %f',$entitlementId,$length);
                         $separator = ',';
                         
                         $entitlementAssignment = Doctrine_Query::create()
@@ -243,7 +243,7 @@ class LeaveRequestDao extends BaseDao {
                                 "SET e.days_used = CASE " . 
                                 $updateSql .
                                 " END " . 
-                                " WHERE e.id IN (" . $idList . ")"; 
+                                sprintf(" WHERE e.id IN (%s)",$idList); 
                         $conn->execute($query);
                     }
                 }                
@@ -322,7 +322,7 @@ class LeaveRequestDao extends BaseDao {
             $q = Doctrine_Query::create()
                     ->from('Leave l');
 
-            $q->andWhere('l.emp_number =' . $empId);
+            $q->andWhere('l.emp_number = ?' , $empId);
             $q->andWhereNotIn('l.status', array(Leave::LEAVE_STATUS_LEAVE_CANCELLED, Leave::LEAVE_STATUS_LEAVE_REJECTED, Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY));
 
             if ($leaveStartDate == $leaveEndDate) {
@@ -527,11 +527,11 @@ class LeaveRequestDao extends BaseDao {
         $toDate = $dateRange->getToDate();
 
         if (!empty($fromDate)) {
-            $q->andWhere("l.date >= '{$fromDate}'");
+            $q->andWhere("l.date >= ?",$fromDate);
         }
 
         if (!empty($toDate)) {
-            $q->andWhere("l.date <= '{$toDate}'");
+            $q->andWhere("l.date <= ?",$toDate);
         }
 
         if (!empty($statuses)) {
@@ -826,11 +826,11 @@ class LeaveRequestDao extends BaseDao {
         $toDate = $dateRange->getToDate();
 
         if (!empty($fromDate)) {
-            $q->andWhere("l.leave_date >= '{$fromDate}'");
+            $q->andWhere("l.leave_date >= ?",$fromDate);
         }
 
         if (!empty($toDate)) {
-            $q->andWhere("l.leave_date <= '{$toDate}'");
+            $q->andWhere("l.leave_date <= ?",$toDate);
         }
 
         if (!empty($statuses)) {
