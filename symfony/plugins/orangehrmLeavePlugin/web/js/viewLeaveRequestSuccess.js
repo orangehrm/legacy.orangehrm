@@ -87,6 +87,7 @@ $(document).ready(function(){
 
         $('#commentError').html('').removeClass('validation-error');
         var comment = $('#leaveComment').val().trim();
+        comment = $('<div/>').text(comment).html();
         if(comment.length > 255) {
             $('#commentError').html(lang_LengthExceeded).addClass('validation-error');
             return;

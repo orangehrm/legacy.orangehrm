@@ -67,6 +67,8 @@ $(document).ready(function() {
 
         $('#commentError').html('').removeClass('validation-error');
         var comment = $('#leaveComment').val().trim();
+        comment = $('<div/>').text(comment).html();
+        
         if(comment.length > 250) {
             $('#commentError').html(lang_length_exceeded_error).addClass('validation-error');
             return;
@@ -76,6 +78,7 @@ $(document).ready(function() {
         }
 
         /* Setting the comment in the label */
+         
         var commentLabel = trimComment(comment);
 
         /* Posting the comment */
