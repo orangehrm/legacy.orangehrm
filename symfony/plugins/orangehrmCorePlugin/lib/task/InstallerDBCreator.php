@@ -29,28 +29,45 @@ class InstallerDBCreator {
 
     }
     /**
-     *
+     * Build SQL Tables
+     * 
      * @return type null
      */
     public function buildDataTables() {
-
-
         try {
-           
-            $sqlString = file_get_contents(sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $this->installData['plugin_name'] . DIRECTORY_SEPARATOR . $this->installData['dbscript_path']);
-            if( !empty( $sqlString)){
-                $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-                $result = $q->execute($sqlString);
-                
-                echo "Execute ".$this->installData['dbscript_path']." file \n";
+
+            $sqlPaths = $this->installData['dbscript_path'];
+            
+            if (!is_array($sqlPaths)) {
+                $sqlPaths = array($sqlPaths);
             }
             
-        } catch (Exception $e) {
+            $sqlString = '';
+            
+            foreach ($sqlPaths as $sqlPath) {
+                $sqlString = $sqlString . file_get_contents(sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $this->installData['plugin_name'] . DIRECTORY_SEPARATOR . $sqlPath);
+            }
+            
+            if (!empty($sqlString)) {
+                $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+                $patterns = array();
+                $patterns[0] = '/DELIMITER \\$\\$/';
+                $patterns[1] = '/DELIMITER ;/';
+                $patterns[2] = '/\\$\\$/';
 
+                $new_sql_string = preg_replace($patterns, '', $sqlString);
+                $result = $q->exec($new_sql_string);
+
+
+                foreach ($sqlPaths as $value) {
+                    echo "Execute " . $value . " file \n";
+                }
+            }
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-       
     }
+    
     /**
      * do symfoony tasks
      */
