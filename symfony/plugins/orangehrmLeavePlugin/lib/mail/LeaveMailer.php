@@ -68,7 +68,8 @@ class LeaveMailer implements ohrmObserver {
                 
                 $emailType = 'leave.change';
                 
-                $performerRole = $workFlow[0]->getRole();
+                $firstFlow = array_shift(array_values($workFlow));
+                $performerRole = $firstFlow->getRole();
                 
                 foreach ($workFlow as $item) {
                     $roles = $item->getRolesToNotifyAsArray();

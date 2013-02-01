@@ -25,6 +25,18 @@
 class LeaveEmailProcessor implements orangehrmMailProcessor {
     
     protected $employeeService;
+    protected $logger;
+    
+    /**
+     * Get Logger instance
+     * @return Logger
+     */
+    public function getLogger() {
+        if (empty($this->logger)) {
+            $this->logger = Logger::getLogger('leave.leavemailer');
+        }
+        return $this->logger;
+    }    
     
     public function getEmployeeService() {
         if (!($this->employeeService instanceof EmployeeService)) {
@@ -213,7 +225,7 @@ class LeaveEmailProcessor implements orangehrmMailProcessor {
         
         switch ($role) {
             case 'subscriber' :
-                $recipients = $this->getSubscribers($emailName);
+                $recipients = $this->getSubscribers($emailName, $data);
                 break;
             case 'supervisor':                
                 if (isset($data['days'][0])) {

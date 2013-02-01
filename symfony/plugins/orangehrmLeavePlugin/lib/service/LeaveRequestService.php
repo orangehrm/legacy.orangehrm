@@ -603,20 +603,20 @@ class LeaveRequestService extends BaseService {
                     
                     $this->_changeLeaveStatus($changedLeave, $nextState, $changeComments); 
                     
-                    if ($actionTypes == 0) {
+                    if ($actionTypes == 1) {
                         $this->_notifyLeaveStatusChange($event, $workFlow, $changedLeave, 
                                 $changedByUserType, $changedUserId, 'multiple');                           
                     } else {
+                        
                         $changes[$workFlow->getId()] = $changedLeave;
-                        $allDays = $allDays + $changedLeave;
+                        $allDays = array_merge($allDays, $changedLeave);
                     }
-                }                
+                }                       
                 
-                if ($actionTypes > 0) {
+                if ($actionTypes > 1) {
                     $this->_notifyLeaveMultiStatusChange($allDays, $changes, $workFlowItems,
                                 $changedByUserType, $changedUserId, 'multiple');                        
                 }
-                //$allChangedItems = count($approvals) + count($rejections) + count()
             } else {
                 throw new LeaveServiceException('Wrong change type passed');
             }
