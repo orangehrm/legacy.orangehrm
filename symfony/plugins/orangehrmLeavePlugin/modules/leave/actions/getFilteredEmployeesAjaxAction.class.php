@@ -68,8 +68,8 @@ class getFilteredEmployeesAjaxAction  extends sfAction {
         $response->setHttpHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         $response->setHttpHeader("Cache-Control", "private", false);
 
-        echo json_encode($employees);
         
-        return sfView::NONE;        
+        return $this->renderText(json_encode($employees))  ; 
+               
     }
 }
