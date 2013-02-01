@@ -30,10 +30,27 @@ class LeaveEntitlementSearchParameterHolder extends SearchParameterHolder {
     protected $validDate ;
     protected $deletedFlag = false;
     protected $idList = array();
+    protected $empIdList = array();
+    protected $hydrationMode = null;
     
-    
-    
+    public function getHydrationMode() {
+        return $this->hydrationMode;
+    }
 
+    public function setHydrationMode($hydrationMode) {
+        $this->hydrationMode = $hydrationMode;
+    }
+
+        
+    public function getEmpIdList() {
+        return $this->empIdList;
+    }
+
+    public function setEmpIdList($empIdList) {
+        $this->empIdList = $empIdList;
+    }
+
+    
     public function __construct() {
         $this->orderField = 'from_date';
     }

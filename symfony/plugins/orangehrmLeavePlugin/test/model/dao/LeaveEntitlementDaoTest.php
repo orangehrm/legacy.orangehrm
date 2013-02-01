@@ -652,6 +652,32 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $result = $this->dao->saveLeaveAdjustment($leaveAdjustment);
         $this->assertFalse( is_null($result->getId()));
     }
+    
+    public function testBulkAssignLeaveEntitlements() {
+        
+        $empList = array(1,2,3);
+       
+       
+        $leaveEntitlement = new LeaveEntitlement();
+        $leaveEntitlement->setLeaveTypeId(1);
+
+        $leaveEntitlement->setCreditedDate(date('Y-m-d'));
+
+
+        $leaveEntitlement->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+        $leaveEntitlement->setDeleted(0);
+
+        $leaveEntitlement->setNoOfDays(2);
+        $leaveEntitlement->setFromDate('2012-01-01');
+        $leaveEntitlement->setToDate('2012-08-01');
+
+        $result = $this->dao->bulkAssignLeaveEntitlements($empList, $leaveEntitlement);
+       
+       
+        $this->assertEquals(count($empList),$result);
+        
+       
+    }
 }
 
     

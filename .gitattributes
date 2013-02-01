@@ -4305,6 +4305,7 @@ symfony/plugins/orangehrmLeavePlugin/test/model/service/LeaveTypeServiceTest.php
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkScheduleServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/service/WorkWeekServiceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/orangehrmLeavePluginAllTests.php -text
+symfony/plugins/orangehrmLeavePlugin/test/performance/LeavePerformanceTest.php -text
 symfony/plugins/orangehrmLeavePlugin/web/css/addLeaveEntitlementSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/applyLeaveSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/assignLeaveSuccess.css -text
@@ -4794,6 +4795,7 @@ symfony/symfony -text
 symfony/test/AdminModuleAllTests.php -text
 symfony/test/AllTests.php -text
 symfony/test/AppsOrangeHRMAllTests.php -text
+symfony/test/PerformanceTests.php -text
 symfony/test/PluginAllTests.php -text
 symfony/test/RecruitmentModuleAllTests.php -text
 symfony/test/actions/PerformanceActionsTest.php -text
