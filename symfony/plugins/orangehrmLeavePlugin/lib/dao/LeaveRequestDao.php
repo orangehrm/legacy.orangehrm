@@ -773,31 +773,31 @@ class LeaveRequestDao extends BaseDao {
         }
     }
 
-    public function xgetLeaveRequestSearchResultAsArray($searchParameters) {
+    public function getLeaveRequestSearchResultAsArray($searchParameters) {
         $this->_markApprovedLeaveAsTaken();
 
         $q = $this->getSearchBaseQuery($searchParameters);
 
-        $q->select('lr.date_applied, lr.leave_type_name, lr.leave_comments, sum(l.leave_length_hours) leave_length_hours_total, sum(l.leave_length_days) as total_leave_length_days,em.firstName, em.middleName, em.lastName' .
-                        ', sum(IF(l.leave_status = 2, l.leave_length_days, 0)) as scheduled, ' .
-                        ', sum(IF(l.leave_status = 0, l.leave_length_days, 0)) as cancelled, ' .
-                        ', sum(IF(l.leave_status = 3, l.leave_length_days, 0)) as taken, ' .
-                        ', sum(IF(l.leave_status = -1, l.leave_length_days, 0)) as rejected, ' .
-                        ', sum(IF(l.leave_status = 1, l.leave_length_days, 0)) as pending_approval, ' .
-                        'concat(l.leave_status)')
-                ->groupBy('lr.leave_request_id');
+        $q->select('lr.date_applied, lt.name, lr.comments, sum(l.length_hours) leave_length_hours_total, sum(l.length_days) as total_leave_length_days,em.firstName, em.middleName, em.lastName' .
+                        ', sum(IF(l.status = 2, l.length_days, 0)) as scheduled, ' .
+                        ', sum(IF(l.status = 0, l.length_days, 0)) as cancelled, ' .
+                        ', sum(IF(l.status = 3, l.length_days, 0)) as taken, ' .
+                        ', sum(IF(l.status = -1, l.length_days, 0)) as rejected, ' .
+                        ', sum(IF(l.status = 1, l.length_days, 0)) as pending_approval, ' .
+                        'concat(l.status)')
+                ->groupBy('lr.id');
 
         return $q->execute(array(), Doctrine::HYDRATE_SCALAR);
     }
 
-    public function xgetDetailedLeaveRequestSearchResultAsArray($searchParameters) {
+    public function getDetailedLeaveRequestSearchResultAsArray($searchParameters) {
 
         $this->_markApprovedLeaveAsTaken();
 
         $q = $this->getSearchBaseQuery($searchParameters);
 
-        $q->select('l.leave_date, lr.leave_type_name, l.leave_length_hours, ' .
-                'l.leave_status,l.leave_comments, em.firstName, em.middleName, em.lastName ');
+        $q->select('lr.date_applied,l.date, lt.name, l.length_hours, ' .
+                'l.status,l.comments, em.firstName, em.middleName, em.lastName ');
 
         return $q->execute(array(), Doctrine::HYDRATE_SCALAR);
     }
@@ -826,15 +826,15 @@ class LeaveRequestDao extends BaseDao {
         $toDate = $dateRange->getToDate();
 
         if (!empty($fromDate)) {
-            $q->andWhere("l.leave_date >= ?",$fromDate);
+            $q->andWhere("l.date >= ?",$fromDate);
         }
 
         if (!empty($toDate)) {
-            $q->andWhere("l.leave_date <= ?",$toDate);
+            $q->andWhere("l.date <= ?",$toDate);
         }
 
         if (!empty($statuses)) {
-            $q->whereIn("l.leave_status", $statuses);
+            $q->whereIn("l.status", $statuses);
         }
 
         if (!empty($employeeFilter)) {
@@ -856,10 +856,10 @@ class LeaveRequestDao extends BaseDao {
             }
         }
 
-        if (trim($fromDate) == "" && trim($toDate) == "" && !empty($leavePeriod)) {
-            $leavePeriodId = ($leavePeriod instanceof LeavePeriod) ? $leavePeriod->getLeavePeriodId() : $leavePeriod;
-            $q->andWhere('lr.leave_period_id = ?', (int) $leavePeriodId);
-        }
+//        if (trim($fromDate) == "" && trim($toDate) == "" && !empty($leavePeriod)) {
+//            $leavePeriodId = ($leavePeriod instanceof LeavePeriod) ? $leavePeriod->getLeavePeriodId() : $leavePeriod;
+//            $q->andWhere('lr.leave_period_id = ?', (int) $leavePeriodId);
+//        }
 
         if (!empty($leaveType)) {
             $leaveTypeId = ($leaveType instanceof LeaveType) ? $leaveType->getLeaveTypeId() : $leaveType;
@@ -906,7 +906,7 @@ class LeaveRequestDao extends BaseDao {
             $q->andWhereIn('loc.id', $locations);
         }
 
-        $q->orderBy('l.leave_date DESC, em.emp_lastname ASC, em.emp_firstname ASC');
+        $q->orderBy('l.date DESC, em.emp_lastname ASC, em.emp_firstname ASC');
 
         return $q;
     }
