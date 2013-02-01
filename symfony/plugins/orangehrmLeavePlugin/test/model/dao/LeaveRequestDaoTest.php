@@ -1218,6 +1218,7 @@
         
         // Employees under engineering, and support (2,5) : employees 2,5,6
         $searchParameters->setParameter('subUnit', 2);
+        $searchParameters->setParameter('noOfRecordsPerPage', 50);
         $leaveFixture = $this->fixture['LeaveRequest'];
         $expected = array($leaveFixture[18], $leaveFixture[19], $leaveFixture[16],
                           $leaveFixture[13], $leaveFixture[12], $leaveFixture[11],
@@ -1255,6 +1256,7 @@
         
         // need to include terminated since employee 1 is terminated.
         $searchParameters->setParameter('cmbWithTerminated', true);
+        $searchParameters->setParameter('noOfRecordsPerPage', 50);
         $leaveFixture = $this->fixture['LeaveRequest'];
         $expected = array($leaveFixture[7], $leaveFixture[6], $leaveFixture[5],
                           $leaveFixture[4], $leaveFixture[3], $leaveFixture[2],
