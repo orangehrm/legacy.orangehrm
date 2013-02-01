@@ -84,6 +84,10 @@ function toggleFilters(show) {
 
     $(document).ready(function() {               
         
+        if(mode == 'update'){
+            $('#filter').hide();
+        }
+        
         if ($('#entitlements_filters_bulk_assign').is(':checked')) {
             toggleFilters(true);    
             $('#entitlements_employee_empName').parent('li').hide();

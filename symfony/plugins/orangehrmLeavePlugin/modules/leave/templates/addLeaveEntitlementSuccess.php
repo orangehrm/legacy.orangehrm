@@ -133,4 +133,6 @@ use_stylesheets_for_form($form);
         
     var filterMatchingEmployees = 0;
     
+    var mode = '<?php echo ($addMode)?'add':'update'; ?>';
+    
 </script>
