@@ -224,6 +224,7 @@ class LeaveEntitlementDao extends BaseDao {
         try {
             $collection = new Doctrine_Collection('LeaveEntitlement');
             $updateEmpList = array();
+            $updateEntitlementIdList = array();
             $savedCount = 0;
 
             $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
@@ -231,43 +232,69 @@ class LeaveEntitlementDao extends BaseDao {
             $leaveEntitlementSearchParameterHolder->setLeaveTypeId($leaveEntitlement->getLeaveTypeId());
             $leaveEntitlementSearchParameterHolder->setToDate($leaveEntitlement->getToDate());
             $leaveEntitlementSearchParameterHolder->setEmpIdList($employeeNumbers);
+            $leaveEntitlementSearchParameterHolder->setHydrationMode(Doctrine::HYDRATE_ARRAY);
 
             $entitlementList = $this->searchLeaveEntitlements( $leaveEntitlementSearchParameterHolder );
+            if( count($entitlementList) > 0){
+                foreach( $entitlementList as $updateEntitlement){
+                    $entitlement    = new LeaveEntitlement(); 
+                    $noOfDays       =   $leaveEntitlement->getNoOfDays();
+                    $entitlement->setEmpNumber($updateEntitlement['emp_number']);
+                    $entitlement->setLeaveTypeId($updateEntitlement['leave_type_id']);
 
-            foreach( $entitlementList as $entitlement){
-                $noOfDays  = $leaveEntitlement->getNoOfDays()+ $entitlement->getNoOfDays();
-                $entitlement->setNoOfDays($noOfDays);
-                $collection->add($entitlement);
-                $updateEmpList[] = $entitlement->getEmpNumber();
-                $savedCount++;
+                    $entitlement->setCreditedDate($leaveEntitlement->getCreditedDate());
+                    $entitlement->setCreatedById($leaveEntitlement->getCreatedById());
+                    $entitlement->setCreatedByName($leaveEntitlement->getCreatedByName());        
+
+                    $entitlement->setEntitlementType($leaveEntitlement->getEntitlementType());
+                    $entitlement->setDeleted(0);            
+
+                    $entitlement->setNoOfDays($leaveEntitlement->getNoOfDays());
+                    $entitlement->setFromDate($leaveEntitlement->getFromDate());
+                    $entitlement->setToDate($leaveEntitlement->getToDate());     
+
+                    $collection->add($entitlement);
+                    $updateEmpList[] = $updateEntitlement['emp_number'];
+                    $updateEntitlementIdList[] = $updateEntitlement['id'];
+                    $savedCount++;
+                }
+            
+            
+                $updateQuery = sprintf(" UPDATE ohrm_leave_entitlement SET no_of_days=no_of_days+ %d WHERE id IN (%s)",$leaveEntitlement->getNoOfDays(),  implode(',', $updateEntitlementIdList));
+                $updateStmt = $pdo->prepare($updateQuery);
+                $updateStmt->execute();
             }
-            $query = " INSERT INTO ohrm_leave_entitlement(`emp_number`,`leave_type_id`,`from_date`,`to_date`,`no_of_days`,`entitlement_type`) VALUES";
-            foreach( array_diff($employeeNumbers, $updateEmpList) as $empNumber){
-                $entitlement    = new LeaveEntitlement(); 
-                $noOfDays       =   $leaveEntitlement->getNoOfDays();
-                $entitlement->setEmpNumber($empNumber);
-                $entitlement->setLeaveTypeId($leaveEntitlement->getLeaveTypeId());
+            
+            $newEmployeeList = array_diff($employeeNumbers, $updateEmpList);
+            if( count($newEmployeeList) > 0 ){
+                $query = " INSERT INTO ohrm_leave_entitlement(`emp_number`,`leave_type_id`,`from_date`,`to_date`,`no_of_days`,`entitlement_type`) VALUES";
 
-                $entitlement->setCreditedDate($leaveEntitlement->getCreditedDate());
-                $entitlement->setCreatedById($leaveEntitlement->getCreatedById());
-                $entitlement->setCreatedByName($leaveEntitlement->getCreatedByName());        
+                foreach( $newEmployeeList as $empNumber){
+                    $entitlement    = new LeaveEntitlement(); 
+                    $noOfDays       =   $leaveEntitlement->getNoOfDays();
+                    $entitlement->setEmpNumber($empNumber);
+                    $entitlement->setLeaveTypeId($leaveEntitlement->getLeaveTypeId());
 
-                $entitlement->setEntitlementType($leaveEntitlement->getEntitlementType());
-                $entitlement->setDeleted(0);            
+                    $entitlement->setCreditedDate($leaveEntitlement->getCreditedDate());
+                    $entitlement->setCreatedById($leaveEntitlement->getCreatedById());
+                    $entitlement->setCreatedByName($leaveEntitlement->getCreatedByName());        
 
-                $entitlement->setNoOfDays($noOfDays);
-                $entitlement->setFromDate($leaveEntitlement->getFromDate());
-                $entitlement->setToDate($leaveEntitlement->getToDate());            
-               // $collection->add($entitlement);
-                $savedCount++;
-                
-                $query .= sprintf("('%d','%d','%s','%s','%f','%d'),",$empNumber,$leaveEntitlement->getLeaveTypeId(),$leaveEntitlement->getFromDate(),$leaveEntitlement->getToDate(),$noOfDays,  LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+                    $entitlement->setEntitlementType($leaveEntitlement->getEntitlementType());
+                    $entitlement->setDeleted(0);            
+
+                    $entitlement->setNoOfDays($noOfDays);
+                    $entitlement->setFromDate($leaveEntitlement->getFromDate());
+                    $entitlement->setToDate($leaveEntitlement->getToDate());            
+                    $collection->add($entitlement);
+                    $savedCount++;
+
+                    $query .= sprintf("('%d','%d','%s','%s','%f','%d'),",$empNumber,$leaveEntitlement->getLeaveTypeId(),$leaveEntitlement->getFromDate(),$leaveEntitlement->getToDate(),$noOfDays,  LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+                }
+                $query = substr($query, 0, -1);
+
+                $stmt = $pdo->prepare($query);
+                $stmt->execute();
             }
-            $query = substr($query, 0, -1);
-           // print($query);
-            $stmt = $pdo->prepare($query);
-            $stmt->execute();
-            $collection->save();
             
             foreach( $collection as $leaveEntitlement){
                 $this->linkLeaveToUnusedLeaveEntitlement($leaveEntitlement);

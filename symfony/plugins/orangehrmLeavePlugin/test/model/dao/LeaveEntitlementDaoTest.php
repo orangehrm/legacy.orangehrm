@@ -653,6 +653,20 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse( is_null($result->getId()));
     }
     
+    public function testSearchLeaveEntitlementsHydrationMode(){
+         $parameterHolder = new LeaveEntitlementSearchParameterHolder();
+         $parameterHolder->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+         $parameterHolder->setEmpIdList(array(1,2,3));
+         $parameterHolder->setFromDate('2012-01-01');
+         $parameterHolder->setToDate('2012-08-01');
+         
+         $result = $this->dao->searchLeaveEntitlements($parameterHolder);
+         
+         $this->assertEquals(3,count($result));
+         
+         
+    }
+    
     public function testBulkAssignLeaveEntitlements() {
         
         $empList = array(1,2,3);
@@ -674,8 +688,16 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $result = $this->dao->bulkAssignLeaveEntitlements($empList, $leaveEntitlement);
        
        
-        $this->assertEquals(count($empList),$result);
+        $this->assertEquals(count($empList),3);
         
+        
+        $result = $this->dao->bulkAssignLeaveEntitlements($empList, $leaveEntitlement);
+        $leaveEntitlement->setNoOfDays(1);
+        
+        $result = $this->dao->bulkAssignLeaveEntitlements($empList, $leaveEntitlement);
+       
+       
+        $this->assertEquals(count($empList),$result);
        
     }
 }
