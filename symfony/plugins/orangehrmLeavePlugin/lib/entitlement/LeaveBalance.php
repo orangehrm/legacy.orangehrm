@@ -29,20 +29,24 @@ class LeaveBalance {
     public $pending;
     public $notLinked;
     public $taken;
+    public $adjustment ;
     
-    public function __construct($entitled = 0, $used = 0, $scheduled = 0, $pending = 0, $notLinked = 0, $taken = 0) {
+    
+
+        
+    public function __construct($entitled = 0, $used = 0, $scheduled = 0, $pending = 0, $notLinked = 0, $taken = 0 ,$adjustment =0 ) {
         $this->entitled = $entitled;
         $this->used = $used;
         $this->scheduled = $scheduled;
         $this->pending = $pending;
         $this->notLinked = $notLinked;
         $this->taken = $taken;
-        
+        $this->adjustment = $adjustment;
         $this->updateBalance();
     }
     
     public function updateBalance() {
-        $balance = $this->entitled - $this->scheduled - $this->taken;
+        $balance = $this->entitled - ( $this->scheduled + $this->taken + $this->adjustment);
         
         $configService = new LeaveConfigurationService();
         $includePending = $configService->includePendingLeaveInBalance();
@@ -52,6 +56,14 @@ class LeaveBalance {
         }
         
         $this->balance = $balance;
+    }
+    
+    public function getAdjustment() {
+        return $this->adjustment;
+    }
+
+    public function setAdjustment($adjustment) {
+        $this->adjustment = $adjustment;
     }
     
     public function getBalance() {
