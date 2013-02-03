@@ -1,8 +1,7 @@
 
-<script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/jquery.form.js')?>"></script>
-
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/payGradeSuccess'); 
+use_javascript('jquery/jquery.form');
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/payGradeSuccess')); 
 ?>
 
 <?php $hasCurrencies = !empty($currencyList) && count($currencyList) > 0; ?>

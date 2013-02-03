@@ -20,8 +20,8 @@
 ?>
 
 <?php
-use_stylesheet('../orangehrmRecruitmentPlugin/css/addJobVacancySuccess');
-use_javascript('../orangehrmRecruitmentPlugin/js/addJobVacancySuccess');
+use_stylesheet(plugin_web_path('orangehrmRecruitmentPlugin', 'css/addJobVacancySuccess'));
+use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/addJobVacancySuccess'));
 ?>
 
 <div class="box" id="addJobVacancy">

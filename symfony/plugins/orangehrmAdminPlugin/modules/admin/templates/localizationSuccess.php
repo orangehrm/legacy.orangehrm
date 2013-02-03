@@ -1,5 +1,5 @@
 
-<?php use_javascript('../orangehrmAdminPlugin/js/localizationSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/localizationSuccess')); ?>
 
 <div id="localization" class="box">
     

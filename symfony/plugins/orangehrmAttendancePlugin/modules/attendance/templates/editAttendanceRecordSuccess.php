@@ -1,5 +1,5 @@
 
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/editAttendanceRecordSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/editAttendanceRecordSuccess')); ?>
 
 <div class="box miniList ">
     

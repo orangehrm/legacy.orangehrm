@@ -1,6 +1,6 @@
 
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/viewAttendanceRecordSuccess'); ?>
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/getRelatedAttendanceRecordsSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/viewAttendanceRecordSuccess')); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/getRelatedAttendanceRecordsSuccess')); ?>
 
 <div class="box">
 

@@ -1,5 +1,5 @@
-<?php use_stylesheet('../orangehrmLeavePlugin/css/defineLeavePeriodSuccess.css'); ?>
-<?php use_javascript('../orangehrmLeavePlugin/js/defineLeavePeriodSuccess.js'); ?>
+<?php use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/defineLeavePeriodSuccess.css')); ?>
+<?php use_javascript(plugin_web_path('orangehrmLeavePlugin', 'js/defineLeavePeriodSuccess.js')); ?>
 
 <div id="location" class="box">
 

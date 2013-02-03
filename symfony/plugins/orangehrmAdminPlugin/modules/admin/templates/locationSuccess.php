@@ -1,5 +1,5 @@
 
-<?php use_javascript('../orangehrmAdminPlugin/js/locationSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/locationSuccess')); ?>
 
 <div id="location" class="box">
     

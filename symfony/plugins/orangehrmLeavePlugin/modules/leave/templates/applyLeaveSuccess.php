@@ -1,7 +1,7 @@
 <?php
 use_javascripts_for_form($applyLeaveForm);
 use_stylesheets_for_form($applyLeaveForm);
-use_stylesheet('../orangehrmLeavePlugin/css/assignLeaveSuccess.css');
+use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.css'));
 ?>
 
 <?php include_partial('overlapping_leave', array('overlapLeave' => $overlapLeave));?>

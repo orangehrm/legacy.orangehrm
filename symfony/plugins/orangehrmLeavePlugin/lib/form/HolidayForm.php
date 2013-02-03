@@ -213,8 +213,8 @@ class HolidayForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmLeavePlugin/js/defineHolidaySuccess.js';
-        $javaScripts[] = '/orangehrmLeavePlugin/js/defineHolidaySuccessValidate.js';
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/defineHolidaySuccess.js');
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/defineHolidaySuccessValidate.js');
 
         return $javaScripts;
     }    

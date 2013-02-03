@@ -1,4 +1,4 @@
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/proxyPunchInPunchOutSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/proxyPunchInPunchOutSuccess')); ?>
 
 <?php
 

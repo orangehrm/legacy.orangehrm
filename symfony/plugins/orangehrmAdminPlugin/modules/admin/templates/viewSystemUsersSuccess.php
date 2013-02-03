@@ -22,7 +22,7 @@
 ?>
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/viewSystemUserSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewSystemUserSuccess')); 
 ?>
 
 <div id="systemUser-information" class="box searchForm toggableForm">

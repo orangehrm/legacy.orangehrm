@@ -1,5 +1,5 @@
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/viewLocationsSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewLocationsSuccess')); 
 ?>
 
 <div id="location-information" class="box searchForm toggableForm">

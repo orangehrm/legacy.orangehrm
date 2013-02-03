@@ -230,7 +230,7 @@ EOF;
 
     public function getStylesheets() {
         $styleSheets = parent::getStylesheets();
-        $styleSheets['/orangehrmCorePlugin/css/ohrmWidgetCheckboxGroup.css'] = 'all';
+        $styleSheets[plugin_web_path('orangehrmCorePlugin', 'css/ohrmWidgetCheckboxGroup.css')] = 'all';
 
         return($styleSheets);
     }

@@ -22,7 +22,7 @@
 ?>
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/viewJobTitleListSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewJobTitleListSuccess')); 
 ?>
 
 <div id="jobTitleList">

@@ -20,7 +20,7 @@
 ?>
 
 <?php 
-use_javascript('../orangehrmPimPlugin/js/viewReportToDetailsSuccess');
+use_javascript(plugin_web_path('orangehrmPimPlugin', 'js/viewReportToDetailsSuccess'));
 
 $numSupDetails = count($supDetails);
 $hasSupDetails = $numSupDetails > 0;

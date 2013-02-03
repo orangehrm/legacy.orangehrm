@@ -1,5 +1,5 @@
 
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/viewMyAttendanceRecordSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/viewMyAttendanceRecordSuccess')); ?>
 
 <div class="box">
     <div class="head">

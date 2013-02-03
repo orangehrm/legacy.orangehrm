@@ -1,4 +1,4 @@
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/getMyRelatedAttendanceRecordsSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/getMyRelatedAttendanceRecordsSuccess')); ?>
 
     
 <div class="box miniList noHeader" id="recordsTable">

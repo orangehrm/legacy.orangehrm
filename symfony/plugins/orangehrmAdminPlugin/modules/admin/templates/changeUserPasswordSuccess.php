@@ -1,6 +1,6 @@
 
-<?php use_javascript('../orangehrmAdminPlugin/js/changeUserPasswordSuccess'); ?>
-<?php use_javascript('../orangehrmAdminPlugin/js/password_strength'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/changeUserPasswordSuccess')); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/password_strength')); ?>
    
 <div id="systemUser"class="box">
         <div class="head"><h1 id="UserHeading"><?php echo __("Change Password"); ?></h1></div>

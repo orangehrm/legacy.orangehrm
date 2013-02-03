@@ -21,7 +21,7 @@
 <?php use_javascripts_for_form($form) ?>
 <?php use_stylesheets_for_form($form) ?>
 
-<?php use_javascript('../orangehrmRecruitmentPlugin/js/addCandidateSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/addCandidateSuccess')); ?>
 <?php $title = ($candidateId > 0) ? __('Candidate') : __('Add Candidate'); ?>
 <?php
 $allVacancylist[] = array("id" => "", "name" => __('-- Select --'));

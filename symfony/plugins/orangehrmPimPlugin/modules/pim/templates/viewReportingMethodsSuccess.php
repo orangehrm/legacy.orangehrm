@@ -19,7 +19,7 @@
  */
 ?>
 
-<?php use_javascript('../orangehrmPimPlugin/js/viewReportingMethodsSuccess');  ?>
+<?php use_javascript(plugin_web_path('orangehrmPimPlugin', 'js/viewReportingMethodsSuccess'));  ?>
 
 <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>
 

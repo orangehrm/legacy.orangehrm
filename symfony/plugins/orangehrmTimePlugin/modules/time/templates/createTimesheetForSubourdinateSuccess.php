@@ -16,7 +16,7 @@
  * Boston, MA  02110-1301, USA
  */ ?>
 
-<?php echo javascript_include_tag('../orangehrmTimePlugin/js/createTimesheetForSubourdinateSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmTimePlugin', 'js/createTimesheetForSubourdinateSuccess')); ?>
 
 <div class="box noHeader">
     <div class="inner">

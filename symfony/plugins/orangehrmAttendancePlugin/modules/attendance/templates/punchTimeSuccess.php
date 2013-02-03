@@ -22,7 +22,7 @@
     <body id="b" onload="JavaScript:timedRefresh(1);">
 <?php endif; ?>
         
-<?php echo javascript_include_tag('../orangehrmAttendancePlugin/js/punchTimeSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/punchTimeSuccess')); ?>
 
 <!-- 
 TODO: Use field level validation 

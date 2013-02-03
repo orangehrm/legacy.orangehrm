@@ -19,14 +19,7 @@
 ?>
 
 <?php
-//use_stylesheet('../../../themes/orange/css/ui-lightness/jquery-ui-1.7.2.custom.css');
-//use_javascript('../../../scripts/jquery/ui/ui.core.js');
-//use_javascript('../../../scripts/jquery/ui/ui.draggable.js');
-//use_javascript('../../../scripts/jquery/ui/ui.resizable.js');
-//use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
-
-//use_stylesheet('../orangehrmCoreLeavePlugin/css/leaveTypeListSuccess');
-use_javascript('../orangehrmLeavePlugin/js/leaveTypeListSuccess');
+use_javascript(plugin_web_path('orangehrmLeavePlugin', 'js/leaveTypeListSuccess'));
 
 ?>
 

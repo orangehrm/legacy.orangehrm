@@ -22,7 +22,7 @@
 ?>
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/emailNotificationSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/emailNotificationSuccess')); 
 ?>
 
 <div id="EmailNotificationList">

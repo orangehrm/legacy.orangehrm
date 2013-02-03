@@ -1,4 +1,4 @@
-<?php use_javascript('../orangehrmRecruitmentPlugin/js/viewJobsSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/viewJobsSuccess')); ?>
 
 <style type="text/css">
     

@@ -1,6 +1,6 @@
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/membershipSuccess');
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/membershipSuccess'));
 ?>
 
 <div id="membership" class="box">

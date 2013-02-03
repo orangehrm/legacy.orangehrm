@@ -20,7 +20,7 @@
 ?>
 <?php use_javascripts_for_form($form); ?>
 <?php use_stylesheets_for_form($form); ?>
-<?php use_javascript('../orangehrmRecruitmentPlugin/js/viewCandidatesSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/viewCandidatesSuccess')); ?>
 
 <div class="box searchForm toggableForm" id="srchCandidates">
     <div class="head">

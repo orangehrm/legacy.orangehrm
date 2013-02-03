@@ -22,7 +22,7 @@
 <?php use_stylesheets_for_form($form) ?>
 
 <?php
-use_javascript('../orangehrmRecruitmentPlugin/js/jobInterviewSuccess');
+use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/jobInterviewSuccess'));
 ?>
 
 <div class="box" id="jobInterview">

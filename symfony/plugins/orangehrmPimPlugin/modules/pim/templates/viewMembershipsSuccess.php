@@ -21,7 +21,7 @@
 <?php use_javascripts_for_form($form); ?>
 <?php use_stylesheets_for_form($form); ?>
 <?php 
-use_javascript('../orangehrmPimPlugin/js/viewMembershipsSuccess');
+use_javascript(plugin_web_path('orangehrmPimPlugin', 'js/viewMembershipsSuccess'));
 
 $numMemDetails = count($membershipDetails);
 $hasMemDetails = $numMemDetails > 0;

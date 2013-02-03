@@ -18,7 +18,7 @@
  *
  */
 ?>
-<?php use_javascript('../orangehrmAdminPlugin/js/saveJobTitleSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/saveJobTitleSuccess')); ?>
 
 <div id="saveHobTitle" class="box">
     

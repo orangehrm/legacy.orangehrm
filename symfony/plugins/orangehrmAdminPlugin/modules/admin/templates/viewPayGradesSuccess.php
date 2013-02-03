@@ -1,6 +1,6 @@
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/viewPayGradesSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewPayGradesSuccess')); 
 ?>
 
 <div id="jobTitleList">

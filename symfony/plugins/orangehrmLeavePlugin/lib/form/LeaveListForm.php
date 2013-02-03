@@ -196,7 +196,7 @@ class LeaveListForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmLeavePlugin/js/viewLeaveListSuccess.js';
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/viewLeaveListSuccess.js');
         
         return $javaScripts;
     }

@@ -21,7 +21,7 @@ $havePassports = $numContacts>0;
     var recordsAsJSON = new Array();
     //]]>
 </script>
-<?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewImmigrationSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmPimPlugin', 'js/viewImmigrationSuccess')); ?>
 
 <div class="box pimPane">
     

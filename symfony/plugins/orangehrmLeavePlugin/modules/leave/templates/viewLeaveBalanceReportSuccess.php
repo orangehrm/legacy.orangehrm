@@ -2,7 +2,7 @@
 
 use_javascripts_for_form($form);
 use_stylesheets_for_form($form);
-use_stylesheet(public_path('orangehrmLeavePlugin/css/viewLeaveBalanceReport'));
+use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/viewLeaveBalanceReport'));
 ?>
 
 

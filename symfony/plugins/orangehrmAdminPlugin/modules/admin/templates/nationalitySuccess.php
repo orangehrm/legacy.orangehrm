@@ -1,6 +1,6 @@
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/nationalitySuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/nationalitySuccess')); 
 ?>
 
 <div id="nationality" class="box">

@@ -20,8 +20,8 @@
 $noOfColumns = sizeof($currentWeekDates);
 $width = 450 + $noOfColumns * 75;
 ?>
-<?php echo javascript_include_tag('../orangehrmTimePlugin/js/editTimesheet'); ?>
-<?php echo javascript_include_tag('../orangehrmTimePlugin/js/editTimesheetPartial'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmTimePlugin', 'js/editTimesheet')); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmTimePlugin', 'js/editTimesheetPartial')); ?>
 
 <style type="text/css">
 form ol li.largeTextBox textarea {

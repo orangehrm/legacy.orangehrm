@@ -1,5 +1,5 @@
 <?php
-use_javascript('../orangehrmAdminPlugin/js/addCustomerSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/addCustomerSuccess')); 
 ?>
 
 <div class="box"  id="addCustomer">

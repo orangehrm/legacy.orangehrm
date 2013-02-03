@@ -1,5 +1,5 @@
 
-<?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewUsTaxExemptionsSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmPimPlugin', 'js/viewUsTaxExemptionsSuccess')); ?>
 
 <div class="box pimPane">
     

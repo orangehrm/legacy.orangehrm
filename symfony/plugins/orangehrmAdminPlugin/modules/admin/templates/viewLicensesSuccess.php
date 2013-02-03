@@ -20,7 +20,7 @@
 ?>
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/viewLicensesSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewLicensesSuccess')); 
 ?>
 
 <div class="box" id="saveFormDiv">

@@ -197,7 +197,7 @@ class AssignLeaveForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmLeavePlugin/js/assignLeaveSuccess.js';
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/assignLeaveSuccess.js');
 
         return $javaScripts;
     }     

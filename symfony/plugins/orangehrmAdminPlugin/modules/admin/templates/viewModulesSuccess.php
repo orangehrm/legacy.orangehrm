@@ -93,7 +93,7 @@
 
 
 
-<?php use_javascript('../orangehrmAdminPlugin/js/viewModulesSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewModulesSuccess')); ?>
 
 <script type="text/javascript">
 //<![CDATA[	    

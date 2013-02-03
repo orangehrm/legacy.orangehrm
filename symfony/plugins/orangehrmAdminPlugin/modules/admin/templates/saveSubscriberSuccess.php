@@ -1,5 +1,5 @@
 
-<?php use_javascript('../orangehrmAdminPlugin/js/saveSubscriberSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/saveSubscriberSuccess')); ?>
 
 <div id="subscriber" class="box">
     

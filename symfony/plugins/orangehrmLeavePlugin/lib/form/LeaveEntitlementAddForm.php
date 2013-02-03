@@ -82,7 +82,7 @@ class LeaveEntitlementAddForm extends LeaveEntitlementForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmLeavePlugin/js/addLeaveEntitlementSuccess.js';
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/addLeaveEntitlementSuccess.js');
         
 
         return $javaScripts;

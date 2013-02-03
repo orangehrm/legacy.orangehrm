@@ -78,7 +78,7 @@ class HolidayListSearchForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmLeavePlugin/js/viewHolidayListSuccessSearch.js';
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/viewHolidayListSuccessSearch.js');
         
         return $javaScripts;
     }    

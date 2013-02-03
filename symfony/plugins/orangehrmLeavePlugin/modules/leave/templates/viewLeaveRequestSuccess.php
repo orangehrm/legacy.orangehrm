@@ -1,4 +1,4 @@
-<?php use_javascript(public_path('orangehrmLeavePlugin/js/viewLeaveRequestSuccess.js'));?>
+<?php use_javascript(plugin_web_path('orangehrmLeavePlugin', 'js/viewLeaveRequestSuccess.js'));?>
 <div id="processing"></div>
 
 <!--this is ajax message place -->

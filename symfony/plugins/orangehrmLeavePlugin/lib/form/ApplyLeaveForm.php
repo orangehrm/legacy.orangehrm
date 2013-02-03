@@ -472,8 +472,8 @@ class ApplyLeaveForm extends sfForm {
     public function getStylesheets() {
         $styleSheets = parent::getStylesheets();
         
-        $styleSheets['/orangehrmCoreLeavePlugin/css/applyLeaveSuccess.css'] = 'all';
-        $styleSheets['/orangehrmCoreLeavePlugin/css/common.css'] = 'all';
+        $styleSheets[plugin_web_path('orangehrmCoreLeavePlugin', 'css/applyLeaveSuccess.css')] = 'all';
+        $styleSheets[plugin_web_path('orangehrmCoreLeavePlugin', 'css/common.css')] = 'all';
         
         return $styleSheets;
     }

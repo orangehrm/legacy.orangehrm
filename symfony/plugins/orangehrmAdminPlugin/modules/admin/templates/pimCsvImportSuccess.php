@@ -1,5 +1,5 @@
 
-<?php use_javascript('../orangehrmAdminPlugin/js/pimCsvImport'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/pimCsvImport')); ?>
 
 <div id="pimCsvImport" class="box">
     

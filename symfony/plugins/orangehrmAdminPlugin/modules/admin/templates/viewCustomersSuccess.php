@@ -22,7 +22,7 @@
 ?>
 
 <?php
-use_javascript('../orangehrmAdminPlugin/js/viewCustomersSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewCustomersSuccess')); 
 ?>
 
 <div id="customerList">

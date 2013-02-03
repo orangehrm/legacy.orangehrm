@@ -1,4 +1,4 @@
-<?php use_javascript('../orangehrmAdminPlugin/js/workShiftSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/workShiftSuccess')); ?>
 
 <div id="workShift" class="box">
     

@@ -18,8 +18,8 @@
  *
  */
 ?>
-<?php use_stylesheet('../orangehrmRecruitmentPlugin/css/changeCandidateVacancyStatusSuccess'); ?>
-<?php use_javascript('../orangehrmRecruitmentPlugin/js/changeCandidateVacancyStatusSuccess'); ?>
+<?php use_stylesheet(plugin_web_path('orangehrmRecruitmentPlugin', 'css/changeCandidateVacancyStatusSuccess')); ?>
+<?php use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/changeCandidateVacancyStatusSuccess')); ?>
 
 <div class="box" id="addJobVacancy">
 

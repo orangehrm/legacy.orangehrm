@@ -19,7 +19,7 @@
  */
 ?>
 
-<?php echo javascript_include_tag('../orangehrmAdminPlugin/js/viewOrganizationGeneralInformationSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmAdminPlugin', 'js/viewOrganizationGeneralInformationSuccess')); ?>
 
 <div id="general-info" class="box twoColumn">
         

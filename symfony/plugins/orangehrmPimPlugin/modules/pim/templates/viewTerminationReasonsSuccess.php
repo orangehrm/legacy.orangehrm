@@ -19,7 +19,7 @@
  */
 ?>
 
-<?php use_javascript('../orangehrmPimPlugin/js/viewTerminationReasonsSuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmPimPlugin', 'js/viewTerminationReasonsSuccess')); ?>
 
 <div id="saveFormDiv" class="box">
     

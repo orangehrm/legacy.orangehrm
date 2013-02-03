@@ -1,5 +1,5 @@
 
-<?php use_javascript('../orangehrmTimePlugin/js/viewEmployeeTimesheet'); ?>
+<?php use_javascript(plugin_web_path('orangehrmTimePlugin', 'js/viewEmployeeTimesheet')); ?>
 
 <div class="box">
     <div class="head">

@@ -19,7 +19,7 @@
  */
 ?>
 
-<?php use_javascript('../orangehrmRecruitmentPlugin/js/applyVacancySuccess'); ?>
+<?php use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/applyVacancySuccess')); ?>
 
 <style type="text/css">
     #content {

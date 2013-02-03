@@ -1,5 +1,5 @@
 <?php 
-use_stylesheet('/orangehrmPimPlugin/css/viewPersonalDetailsSuccess.css');
+use_stylesheet(plugin_web_path('orangehrmPimPlugin', 'css/viewPersonalDetailsSuccess.css'));
 ?>
 
 <div class="box pimPane" id="employee-details">
@@ -166,4 +166,4 @@ use_stylesheet('/orangehrmPimPlugin/css/viewPersonalDetailsSuccess.css');
     //]]>
 </script>
 
-<?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewPersonalDetailsSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmPimPlugin', 'js/viewPersonalDetailsSuccess')); ?>

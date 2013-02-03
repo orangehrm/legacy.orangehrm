@@ -9,7 +9,7 @@
 <?php use_javascripts_for_form($licenseForm) ?>
 <?php use_stylesheets_for_form($licenseForm) ?>
 
-<?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewQualificationsSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmPimPlugin', 'js/viewQualificationsSuccess')); ?>
 
 <?php
 $haveWorkExperience = count($workExperienceForm->workExperiences)>0;

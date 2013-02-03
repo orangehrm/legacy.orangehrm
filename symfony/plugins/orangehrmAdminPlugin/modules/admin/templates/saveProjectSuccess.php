@@ -1,5 +1,5 @@
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/saveProjectSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/saveProjectSuccess')); 
 ?>
 
 <div id="addProject" class="box">

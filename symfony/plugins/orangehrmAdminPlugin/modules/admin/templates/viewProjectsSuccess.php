@@ -22,7 +22,7 @@
 ?>
 
 <?php 
-use_javascript('../orangehrmAdminPlugin/js/viewProjectsSuccess'); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewProjectsSuccess')); 
 ?>
 
 <div id="searchProject" class="box searchForm toggableForm">

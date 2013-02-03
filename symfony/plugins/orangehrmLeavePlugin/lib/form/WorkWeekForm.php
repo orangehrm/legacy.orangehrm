@@ -202,8 +202,8 @@ class WorkWeekForm extends sfForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmLeavePlugin/js/defineWorkWeekSuccess.js';
-        $javaScripts[] = '/orangehrmLeavePlugin/js/defineWorkWeekSuccessValidate.js';
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/defineWorkWeekSuccess.js');
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/defineWorkWeekSuccessValidate.js');
 
         return $javaScripts;
     }    

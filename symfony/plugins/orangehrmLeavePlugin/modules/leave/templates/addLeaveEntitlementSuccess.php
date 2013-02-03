@@ -20,7 +20,7 @@
 ?>
 
 <?php
-use_stylesheet('../orangehrmLeavePlugin/css/addLeaveEntitlementSuccess.css');
+use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/addLeaveEntitlementSuccess.css'));
 use_javascripts_for_form($form);
 use_stylesheets_for_form($form);
 

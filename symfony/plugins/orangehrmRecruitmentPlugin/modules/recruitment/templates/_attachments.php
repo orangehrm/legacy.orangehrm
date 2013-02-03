@@ -20,7 +20,7 @@
 ?>
 
 <?php
-use_javascript('../orangehrmRecruitmentPlugin/js/attachmentsPartial');
+use_javascript(plugin_web_path('orangehrmRecruitmentPlugin', 'js/attachmentsPartial'));
 ?>
 
 <?php

@@ -20,8 +20,8 @@
 ?>
 
 <?php 
-use_stylesheet('../orangehrmAdminPlugin/css/viewEducationSuccess'); 
-use_javascript('../orangehrmAdminPlugin/js/viewEducationSuccess'); 
+use_stylesheet(plugin_web_path('orangehrmAdminPlugin', 'css/viewEducationSuccess')); 
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/viewEducationSuccess')); 
 ?>
 
 <?php echo isset($templateMessage) ? templateMessage($templateMessage) : ''; ?>

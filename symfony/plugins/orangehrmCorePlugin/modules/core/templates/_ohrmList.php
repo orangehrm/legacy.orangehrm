@@ -1,4 +1,4 @@
-<?php echo use_stylesheet('../orangehrmCorePlugin/css/_ohrmList.css'); ?>
+<?php echo use_stylesheet(plugin_web_path('orangehrmCorePlugin', 'css/_ohrmList.css')); ?>
 <?php
 if ($tableWidth == 'auto') {
     $outboxWidth = 0;
@@ -27,19 +27,19 @@ function renderActionBar($buttons, $condition = true) {
 <?php
 }
 
-function printAssetPaths($assets, $assestsPath = '') {
+function printAssetPaths($assets, $plugin = '') {
 
     if (count($assets) > 0) {
 
         foreach ($assets as $key => $asset) {
             $assetType = substr($asset, strrpos($asset, '.') + 1);
 
-            if ($assestsPath == '') {
+            if ($plugin == '') {
                 echo javascript_include_tag($asset);
             } elseif ($assetType == 'js') {
-                echo javascript_include_tag($assestsPath . 'js/' . $asset);
+                echo javascript_include_tag(plugin_web_path($plugin, 'js/' . $asset));
             } elseif ($assetType == 'css') {
-                echo stylesheet_tag($assestsPath . 'css/' . $asset);
+                echo stylesheet_tag(plugin_web_path($plugin, 'css/' . $asset));
             } else {
                 echo $assetType;
             }
@@ -371,13 +371,12 @@ function getHeaderCellClassHtml($isSortable, $sortOrder) {
         
 </div> <!-- search-results -->
 
-<?php echo javascript_include_tag('../orangehrmCorePlugin/js/_ohrmList.js'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmCorePlugin', 'js/_ohrmList.js')); ?>
 
 <?php
-                    $assestsPath = "../{$pluginName}/";
 
                     if (isset($assets)) {
-                        printAssetPaths($assets, $assestsPath);
+                        printAssetPaths($assets, $pluginName);
                     }
 
                     if (isset($extraAssets)) {

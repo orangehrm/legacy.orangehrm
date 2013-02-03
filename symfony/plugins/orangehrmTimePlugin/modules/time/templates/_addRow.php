@@ -17,7 +17,7 @@
  * Boston, MA  02110-1301, USA
  */
 ?>
-<?php echo javascript_include_tag('../orangehrmTimePlugin/js/editTimesheet'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmTimePlugin', 'js/editTimesheet')); ?>
 <table id="newRow">
     <tr class="<?php echo ($num & 1) ? 'even' : 'odd' ?>">
         <td id="">

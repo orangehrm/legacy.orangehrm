@@ -74,4 +74,4 @@
     //]]>
 </script>
 
-<?php echo javascript_include_tag('../orangehrmPimPlugin/js/viewPhotographSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmPimPlugin', 'js/viewPhotographSuccess')); ?>

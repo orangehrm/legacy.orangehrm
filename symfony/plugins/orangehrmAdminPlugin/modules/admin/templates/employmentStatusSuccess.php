@@ -1,6 +1,6 @@
 
 <?php
-use_javascript('../orangehrmAdminPlugin/js/employmentStatusSuccess'); ?>
+use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/employmentStatusSuccess')); ?>
 
 <div class="box" id="empStatus">
     

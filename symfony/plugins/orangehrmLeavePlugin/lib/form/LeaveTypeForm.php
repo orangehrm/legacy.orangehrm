@@ -124,7 +124,7 @@ class LeaveTypeForm extends orangehrmForm {
     
     public function getJavaScripts() {
         $javaScripts = parent::getJavaScripts();
-        $javaScripts[] = '/orangehrmLeavePlugin/js/defineLeaveTypeSuccess.js';
+        $javaScripts[] = plugin_web_path('orangehrmLeavePlugin', 'js/defineLeaveTypeSuccess.js');
         
         return $javaScripts;
     }

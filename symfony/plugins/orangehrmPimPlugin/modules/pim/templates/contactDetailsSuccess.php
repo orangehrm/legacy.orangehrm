@@ -1,5 +1,5 @@
 
-<?php echo javascript_include_tag('../orangehrmPimPlugin/js/contactDetailsSuccess'); ?>
+<?php echo javascript_include_tag(plugin_web_path('orangehrmPimPlugin', 'js/contactDetailsSuccess')); ?>
 
 <script type="text/javascript">
     //<![CDATA[
