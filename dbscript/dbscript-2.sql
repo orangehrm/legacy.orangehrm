@@ -1945,6 +1945,7 @@ FROM ohrm_leave_entitlement LEFT JOIN ohrm_leave_leave_entitlement ON
     ( $X{&gt;,ohrm_leave.date,toDate} OR $X{&lt;,ohrm_leave.date,fromDate} )
 
 WHERE ohrm_leave_entitlement.deleted=0 AND $X{=,ohrm_leave_entitlement.emp_number,empNumber} AND 
+    $X{IN,ohrm_leave_entitlement.leave_type_id,leaveTypeId} AND
     (
       ( $X{&lt;=,ohrm_leave_entitlement.from_date,fromDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,fromDate} ) OR
       ( $X{&lt;=,ohrm_leave_entitlement.from_date,toDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,toDate} ) OR 
@@ -1989,7 +1990,8 @@ $X{=,ohrm_leave.emp_number,empNumber} AND
 ohrm_leave.status = 1 AND
 $X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 WHERE
-ohrm_leave_type.deleted = 0
+ohrm_leave_type.deleted = 0 AND
+$X{IN,ohrm_leave_type.id,leaveTypeId}
 
 GROUP BY ohrm_leave_type.id
 ORDER BY ohrm_leave_type.id
@@ -2026,7 +2028,8 @@ $X{=,ohrm_leave.emp_number,empNumber} AND
 ohrm_leave.status = 2 AND
 $X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 WHERE
-ohrm_leave_type.deleted = 0
+ohrm_leave_type.deleted = 0 AND
+$X{IN,ohrm_leave_type.id,leaveTypeId}
 
 GROUP BY ohrm_leave_type.id
 ORDER BY ohrm_leave_type.id
@@ -2059,6 +2062,7 @@ ORDER BY ohrm_leave_type.id
 <query>
 FROM ohrm_leave WHERE $X{=,emp_number,empNumber} AND
 status = 3 AND
+$X{IN,ohrm_leave.leave_type_id,leaveTypeId} AND
 $X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 GROUP BY leave_type_id
 ORDER BY ohrm_leave.leave_type_id
@@ -2088,7 +2092,7 @@ ORDER BY ohrm_leave.leave_type_id
     </sub_report>
 
 <sub_report type="sql" name="unused">       
-    <query>FROM ohrm_leave_type WHERE deleted = 0 ORDER BY ohrm_leave_type.id</query>
+    <query>FROM ohrm_leave_type WHERE deleted = 0 AND $X{IN,ohrm_leave_type.id,leaveTypeId} ORDER BY ohrm_leave_type.id</query>
     <id_field>leaveTypeId</id_field>
     <display_groups>
         <display_group name="unused" type="one" display="true">
@@ -2198,7 +2202,8 @@ FROM ohrm_leave_entitlement LEFT JOIN ohrm_leave_leave_entitlement ON
     LEFT JOIN ohrm_leave ON ohrm_leave.id = ohrm_leave_leave_entitlement.leave_id AND 
     ( $X{&gt;,ohrm_leave.date,toDate} OR $X{&lt;,ohrm_leave.date,fromDate} )
 
-WHERE ohrm_leave_entitlement.deleted=0 AND $X{=,ohrm_leave_entitlement.leave_type_id,leaveType} AND 
+WHERE ohrm_leave_entitlement.deleted=0 AND $X{=,ohrm_leave_entitlement.leave_type_id,leaveType}
+    AND $X{IN,ohrm_leave_entitlement.emp_number,empNumber} AND
     (
       ( $X{&lt;=,ohrm_leave_entitlement.from_date,fromDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,fromDate} ) OR
       ( $X{&lt;=,ohrm_leave_entitlement.from_date,toDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,toDate} ) OR 
@@ -2239,6 +2244,7 @@ ORDER BY A.emp_number
 <query>
 FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
 status = 1 AND
+$X{IN,ohrm_leave.emp_number,empNumber} AND
 $X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 GROUP BY emp_number
 ORDER BY ohrm_leave.emp_number
@@ -2272,6 +2278,7 @@ ORDER BY ohrm_leave.emp_number
 <query>
 FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
 status = 2 AND
+$X{IN,ohrm_leave.emp_number,empNumber} AND
 $X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 GROUP BY emp_number
 ORDER BY ohrm_leave.emp_number
@@ -2304,6 +2311,7 @@ ORDER BY ohrm_leave.emp_number
 <query>
 FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
 status = 3 AND
+$X{IN,ohrm_leave.emp_number,empNumber} AND
 $X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
 GROUP BY emp_number
 ORDER BY ohrm_leave.emp_number
@@ -2332,7 +2340,7 @@ ORDER BY ohrm_leave.emp_number
     </display_groups>
 </sub_report>
 <sub_report type="sql" name="unused">       
-    <query>FROM hs_hr_employee ORDER BY hs_hr_employee.emp_number</query>
+    <query>FROM hs_hr_employee WHERE $X{IN,hs_hr_employee.emp_number,empNumber} ORDER BY hs_hr_employee.emp_number</query>
     <id_field>empNumber</id_field>
     <display_groups>
         <display_group name="unused" type="one" display="true">

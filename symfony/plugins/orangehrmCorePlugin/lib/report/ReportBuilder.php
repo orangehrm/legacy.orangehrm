@@ -49,7 +49,9 @@ class ReportBuilder {
             throw new ReportException("Invalid XML Definition!!! ( At least one sub report should be defined )");
         }
 
-        $emptyMainTable = TRUE;
+        $firstSubQuery = TRUE;
+        $firstSubQueryName = NULL;
+        $firstSubQueryFieldValues = array();
 
         while (!is_null($subReport)) {
             $type = $reportDefinitionObject->getSubReportType($subReport);
@@ -63,18 +65,46 @@ class ReportBuilder {
             }
 
             if ($type == "sql") {
+                
+                $filterValues = $values;
+                
+                if (!$firstSubQuery) {
+                    // Get ID field values from first sub query.
+                    $idField = $reportDefinitionObject->getSubReportIdField($subReport);
+                    
+                    if (!isset($firstSubQueryFieldValues[$idField])) {
+                        
+                        // Get the id field values from each subarray of the first sub query results:
+                        $idFieldValues = array_map(function($item) use ($idField) {
+                                return $item[$idField];
+                            }, $resultSetArray[$firstSubQueryName]);
+                            
+                        $firstSubQueryFieldValues[$idField] = $idFieldValues;
+                    }
+                    $filterValues[$idField] = $firstSubQueryFieldValues[$idField];
+                    
+                    // Turn off offset, page limit for all queries other than the main query, since values of current
+                    // page are already filtered.
+                    $offset = NULL;
+                    $pageLimit = NULL;
+                        
+                }
                 $sqlDataGenerator = new SqlDataGenerator($reportDefinitionObject);
-                $resultSetArray[$subReportName] = $sqlDataGenerator->getResultSet($offset, $pageLimit, $values);
+                $resultSetArray[$subReportName] = $sqlDataGenerator->getResultSet($offset, $pageLimit, $filterValues);
 
 
-                if ($emptyMainTable) {
+                // First subQuery is considered the main query
+                if ($firstSubQuery) {
+                    
+                    // If first subquery is empty, no need to run other queries
                     if (empty($resultSetArray[$subReportName])) {
                         return $resultSetArray[$subReportName];
                     }
-                    $emptyMainTable = FALSE;
+                    
+                    $firstSubQuery = FALSE;
+                    $firstSubQueryName = $subReportName;
                 }
 
-                //$values = NULL;
             }
             $subReport = $reportDefinitionObject->getNextSubReport();
         }
