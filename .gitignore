@@ -30,6 +30,8 @@ symfony/plugins/orangehrmCorePlugin/lib/service/.SampleService.php.swp
 symfony/plugins/orangehrmPimPlugin/lib/dao/.EmployeeDao.php.swp
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/._leftmenu.php.swp
 symfony/web/orangehrm*Plugin
+symfony/web/resource_dir_inc.php
 symfony/web/sf
+symfony/web/webres_*
 upgrader/cache/*
 upgrader/log/*
