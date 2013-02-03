@@ -21,24 +21,28 @@ $cultureElements = explode('_', $sf_user->getCulture());
         
         <!-- Custom CSS files -->
         <link href="<?php echo theme_path('css/main.css')?>" rel="stylesheet" type="text/css"/>
-       
-        <!-- Library JavaScript files -->
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery-1.7.2.min.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/validate/jquery.validate.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.core.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.autocomplete.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.autocomplete.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.ui.datepicker.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.form.js')?>"></script>        
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.tipTip.minified.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/bootstrap-modal.js')?>"></script>
-        <script type="text/javascript" src="<?php echo public_path('jquery/jquery.clickoutside.js')?>"></script>
-
-        <!-- Custom JavaScript files -->
-        <script type="text/javascript" src="<?php echo public_path('js/orangehrm.validate.js');?>"></script>       
-        <script type="text/javascript" src="<?php echo public_path('js/archive.js');?>"></script>
         
-        <?php 
+        <?php       
+        // Library JavaScript files
+
+        echo javascript_include_tag('jquery/jquery-1.7.2.min.js');
+
+        echo javascript_include_tag('jquery/validate/jquery.validate.js');
+        
+        echo javascript_include_tag('jquery/jquery.ui.core.js');
+        echo javascript_include_tag('jquery/jquery.autocomplete.js');
+        echo javascript_include_tag('orangehrm.autocomplete.js');
+        echo javascript_include_tag('jquery/jquery.ui.datepicker.js');
+        echo javascript_include_tag('jquery/jquery.form.js');
+        echo javascript_include_tag('jquery/jquery.tipTip.minified.js');
+        echo javascript_include_tag('jquery/bootstrap-modal.js');
+        echo javascript_include_tag('jquery/jquery.clickoutside.js');
+
+        // Custom JavaScript files
+        echo javascript_include_tag('orangehrm.validate.js');
+        echo javascript_include_tag('archive.js');
+        
+
         /* Note: use_javascript() doesn't work well when we need to maintain the order of JS inclutions.
          * Ex: It may include a jQuery plugin before jQuery core file. There are two position options as
          * 'first' and 'last'. But they don't seem to resolve the issue.

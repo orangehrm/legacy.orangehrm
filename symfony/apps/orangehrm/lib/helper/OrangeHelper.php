@@ -284,9 +284,18 @@ function theme_path($path) {
 
     $themeName = $sfUser->getAttribute('meta.themeName'); 
     
-    $themePath = public_path('themes/' . $themeName . '/');
+    $resourceDir = sfConfig::get('ohrm_resource_dir');
+    $themePath = public_path($resourceDir . '/themes/' . $themeName . '/');
     $themePath = empty($path)? $themePath : $themePath . $path;
     
     return $themePath;
     
+}
+
+function plugin_web_path($plugin, $path) {
+    
+    $resourceDir = sfConfig::get('ohrm_resource_dir');
+    $path = public_path($resourceDir . '/' . $plugin . '/' . $path);
+    
+    return $path;    
 }

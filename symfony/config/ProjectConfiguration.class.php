@@ -18,5 +18,14 @@ class ProjectConfiguration extends sfProjectConfiguration
     $logConfig = (sfConfig::get('sf_environment') == 'test') ? 'log4php_test.properties' : 'log4php.properties';
 
     Logger::configure(dirname(__FILE__) . '/' . $logConfig, 'OrangeHRMLogConfigurator');
+    
+    // set up resource dir
+    $resourceIncFile = dirname(__FILE__) . '/../web/resource_dir_inc.php';
+    
+    if (file_exists($resourceIncFile)) {
+        require_once $resourceIncFile;
+    } else {
+        sfConfig::set('ohrm_resource_dir', sfConfig::get('sf_web_dir'));
+    }
   }
 }
