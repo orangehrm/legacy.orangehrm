@@ -166,6 +166,9 @@ class EmployeeJobDetailsForm extends BaseForm {
                     'callback' => array($this, 'postValidate')
                 ))
         );
+        
+        $formExtension = PluginFormMergeManager::instance();
+        $formExtension->mergeForms($this, 'viewJobDetails', 'EmployeeJobDetailsForm');        
     }
 
     public function postValidate($validator, $values) {
