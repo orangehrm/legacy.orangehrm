@@ -48,7 +48,7 @@ use_javascripts_for_form($form);
                     }
                     ?>                    
                     <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_1')); ?>
-                    <input type="hidden" name="pageNo" id="pageNo" value="<?php echo $form->pageNo; ?>" />
+                    <input type="hidden" name="pageNo" id="pageNo" value="" />
                     <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
                     
                 </p>                
