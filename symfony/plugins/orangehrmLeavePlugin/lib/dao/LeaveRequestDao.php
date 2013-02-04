@@ -563,7 +563,12 @@ class LeaveRequestDao extends BaseDao {
                 foreach ($employeeFilter as $employee) {
                     $empNumbers[] = ($employee instanceof Employee) ? $employee->getEmpNumber() : $employee;
                 }
-                $q->whereIn('lr.emp_number', $empNumbers);
+                
+                // Here, ->whereIn() is very slow when employee number count is very high (around 5000).
+                // this seems to be due to the time taken by Doctrine to replace the 5000 question marks in the query.
+                // Therefore, replaced with manually built IN clause.
+                // Note: $empNumbers is not based on user input and therefore is safe to use in the query.
+                $q->andWhere('lr.emp_number IN (' . implode(',', $empNumbers) . ')');
             }
         } else {
             // empty array does not match any results.
@@ -626,9 +631,9 @@ class LeaveRequestDao extends BaseDao {
             $q->andWhereIn('loc.id', $locations);
         }
 
-        $q->orderBy('l.date DESC, em.emp_lastname ASC, em.emp_firstname ASC');
-
         $count = $q->count();
+
+        $q->orderBy('l.date DESC, em.emp_lastname ASC, em.emp_firstname ASC');        
 
         if ($isCSVPDFExport) {
             $limit = $count;
