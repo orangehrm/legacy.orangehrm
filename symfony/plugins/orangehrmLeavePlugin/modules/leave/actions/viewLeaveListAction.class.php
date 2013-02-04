@@ -247,7 +247,7 @@ class viewLeaveListAction extends sfAction {
     }
     
     protected function searchLeaveRequests($searchParams, $page) {
-        $result = $this->getLeaveRequestService()->searchLeaveRequests($searchParams, $page);
+        $result = $this->getLeaveRequestService()->searchLeaveRequests($searchParams, $page, false, false, true, true);
         return $result;
     }
     

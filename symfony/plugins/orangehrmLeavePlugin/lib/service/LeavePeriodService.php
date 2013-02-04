@@ -33,6 +33,10 @@ class LeavePeriodService extends BaseService {
     private $leavePeriodList = null;
     protected $leaveEntitlementService = null;
     
+    private static $leavePeriodStatus = null;
+    private static $currentLeavePeriodStartDateAndMonth = null;
+    private static $leavePeriodHistoryList = null;
+    
     
     /**
      * Sets the instance of LeaveEntitlementService class
@@ -257,7 +261,7 @@ class LeavePeriodService extends BaseService {
             OrangeConfig::getInstance()->setAppConfValue(ConfigService::KEY_LEAVE_PERIOD_DEFINED, 'Yes');
 
             if ($isLeavePeriodDefined && !empty($currentLeavePeriod)) {
-                $leavePeriodForToday = $this->getCurrentLeavePeriodByDate(date('Y-m-d'));
+                $leavePeriodForToday = $this->getCurrentLeavePeriodByDate(date('Y-m-d'), true);
                 $oldStartMonth = $currentLeavePeriod->getLeavePeriodStartMonth();
                 $oldStartDay = $currentLeavePeriod->getLeavePeriodStartDay();
                 $newStartMonth = $leavePeriodHistory->getLeavePeriodStartMonth();
@@ -277,20 +281,35 @@ class LeavePeriodService extends BaseService {
     
     /**
      * Get Latest Leave period start date and month 
+     * @param bool $forceReload (if false, will use cached value from previous method call)
+     * value is cached in a static constant.
      * @return type
      */
-    public function getCurrentLeavePeriodStartDateAndMonth(){
-        $leavePeriodHistory = $this->getLeavePeriodDao()->getCurrentLeavePeriodStartDateAndMonth();
-        return $leavePeriodHistory;
+    public function getCurrentLeavePeriodStartDateAndMonth($forceReload = false){
+        
+        if ($forceReload || is_null(self::$currentLeavePeriodStartDateAndMonth)) {
+            self::$currentLeavePeriodStartDateAndMonth = $this->getLeavePeriodDao()->getCurrentLeavePeriodStartDateAndMonth();
+        }
+        
+        return self::$currentLeavePeriodStartDateAndMonth;
+    }
+    
+    protected function _getLeavePeriodHistoryList($forceReload = false) {
+        
+        if ($forceReload || is_null(self::$leavePeriodHistoryList)) {
+            self::$leavePeriodHistoryList = $this->getLeavePeriodDao()->getLeavePeriodHistoryList();
+        }
+        
+        return self::$leavePeriodHistoryList;
     }
     
     /**
      * Get Generated Leave Period List
      * @return type
      */
-    public function getGeneratedLeavePeriodList( $toDate = null ){
+    public function getGeneratedLeavePeriodList($toDate = null, $forceReload = false){
         $leavePeriodList = array();
-        $leavePeriodHistoryList = $this->getLeavePeriodDao()->getLeavePeriodHistoryList();
+        $leavePeriodHistoryList = $this->_getLeavePeriodHistoryList($forceReload);
         
         if(count($leavePeriodHistoryList) == 0)
             throw new ServiceException("Leave Period Start date is not defined");
@@ -345,9 +364,9 @@ class LeavePeriodService extends BaseService {
      * Get Current Leave Period a
      * @param type $date
      */
-    public function getCurrentLeavePeriodByDate( $date ){
+    public function getCurrentLeavePeriodByDate($date, $forceReload = false){
         $matchLeavePeriod = null;
-        $this->leavePeriodList = $this->getGeneratedLeavePeriodList();
+        $this->leavePeriodList = $this->getGeneratedLeavePeriodList(null, $forceReload);
         $currentDate = new DateTime($date);
         foreach( $this->leavePeriodList as $leavePeriod){
             $startDate = new DateTime($leavePeriod[0]);
@@ -362,8 +381,12 @@ class LeavePeriodService extends BaseService {
         return $matchLeavePeriod;
     }
     
-    public static function getLeavePeriodStatus( ){
-        return OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_LEAVE_PERIOD_STATUS);
+    public static function getLeavePeriodStatus($forceReload = false) {
+        
+        if ($forceReload || is_null(self::$leavePeriodStatus)) {
+            self::$leavePeriodStatus = OrangeConfig::getInstance()->getAppConfValue(ConfigService::KEY_LEAVE_PERIOD_STATUS);
+        }
+        return self::$leavePeriodStatus;
     }
 
     /**

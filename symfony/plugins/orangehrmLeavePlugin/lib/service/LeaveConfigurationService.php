@@ -28,6 +28,8 @@ class LeaveConfigurationService extends ConfigService {
     const KEY_LEAVE_WORK_SCHEDULE_IMPLEMENTATION = "leave.work_schedule_implementation";
     const KEY_INCLUDE_PENDING_LEAVE_IN_BALANCE = 'leave.include_pending_leave_in_balance';
     
+    protected static $includePendingLeaveInBalance = null;
+    
     public function getLeaveEntitlementConsumptionStrategy() {
         return $this->_getConfigValue(self::KEY_LEAVE_ENTITLEMENT_CONSUMPTION_STRATEGY);
     }
@@ -36,12 +38,14 @@ class LeaveConfigurationService extends ConfigService {
         return $this->_getConfigValue(self::KEY_LEAVE_WORK_SCHEDULE_IMPLEMENTATION);
     }
     
-    public function includePendingLeaveInBalance() {
+    public function includePendingLeaveInBalance($forceReload = false) {
         $include = true;
         
-        $value = $this->_getConfigValue(self::KEY_INCLUDE_PENDING_LEAVE_IN_BALANCE);
+        if ($forceReload || is_null(self::$includePendingLeaveInBalance)) {
+            self::$includePendingLeaveInBalance = $this->_getConfigValue(self::KEY_INCLUDE_PENDING_LEAVE_IN_BALANCE);
+        }
         
-        if ($value == 0) {
+        if (self::$includePendingLeaveInBalance == 0) {
             $include = false;
         }
         

@@ -42,7 +42,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
      */
     public function testGetGeneratedLeavePeriodListDateIsNotSet(){
 
-        $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
+        $result = $this->leavePeriodService->getGeneratedLeavePeriodList(null, true);
        
     }
     
@@ -55,7 +55,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         $this->leavePeriodService->saveLeavePeriodHistory( $leavePeriodHistory );
         
         
-        $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
+        $result = $this->leavePeriodService->getGeneratedLeavePeriodList(null, true);
         
         $expected = array(
             array('2010-01-01','2010-12-31'),
@@ -106,7 +106,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
             }
         }
         
-        $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
+        $result = $this->leavePeriodService->getGeneratedLeavePeriodList(null, true);
         $this->assertEquals($expected, $result);
         
         
@@ -122,7 +122,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         $this->leavePeriodService->saveLeavePeriodHistory( $leavePeriodHistory );
         
         
-        $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
+        $result = $this->leavePeriodService->getGeneratedLeavePeriodList(null, true);
         $this->assertEquals(array(array('2009-03-01','2010-02-28'),array('2010-03-01','2011-02-28'),array('2011-03-01','2012-02-29'),array('2012-03-01','2013-02-28'),array('2013-03-01','2014-02-28')),$result);
         
         
@@ -151,7 +151,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         $this->leavePeriodService->saveLeavePeriodHistory( $leavePeriodHistory );
         
         
-        $result = $this->leavePeriodService->getGeneratedLeavePeriodList();
+        $result = $this->leavePeriodService->getGeneratedLeavePeriodList(null, true);
         
         $expected = array(array('2010-01-01','2010-12-31'),
                           array('2011-01-01','2011-12-31'),
@@ -200,7 +200,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         // work around for cached generated leave period list
         $newLeavePeriodService = new LeavePeriodService();
         $newLeavePeriodService->setLeaveEntitlementService($this->leavePeriodService->getLeaveEntitlementService());                
-        $result= $newLeavePeriodService->getGeneratedLeavePeriodList();
+        $result= $newLeavePeriodService->getGeneratedLeavePeriodList(null, true);
         
         $this->assertEquals(array(array('2010-01-01','2010-12-31'),array('2011-01-01','2012-01-31'),array('2012-02-01','2013-02-28'),array('2013-03-01','2014-02-28')),$result);
         
@@ -232,7 +232,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         // work around for cached generated leave period list
         $newLeavePeriodService = new LeavePeriodService();
         $newLeavePeriodService->setLeaveEntitlementService($this->leavePeriodService->getLeaveEntitlementService());                
-        $result= $newLeavePeriodService->getGeneratedLeavePeriodList();
+        $result= $newLeavePeriodService->getGeneratedLeavePeriodList(null, true);
 
         $expected = array(
             array('2009-02-01','2011-01-01'),
@@ -266,11 +266,11 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         $this->leavePeriodService->saveLeavePeriodHistory( $leavePeriodHistory );
         
         
-        $result = $this->leavePeriodService->getCurrentLeavePeriodByDate('2012-01-01');
+        $result = $this->leavePeriodService->getCurrentLeavePeriodByDate('2012-01-01', true);
        
         $this->assertEquals(array('2012-01-01','2012-12-31'),$result);
         
-         $result = $this->leavePeriodService->getCurrentLeavePeriodByDate('2013-01-04');
+         $result = $this->leavePeriodService->getCurrentLeavePeriodByDate('2013-01-04', true);
        
         $this->assertEquals(array('2013-01-01','2013-12-31'),$result);
      

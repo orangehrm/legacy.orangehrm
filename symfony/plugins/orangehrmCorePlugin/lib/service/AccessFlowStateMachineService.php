@@ -21,6 +21,8 @@
 class AccessFlowStateMachineService {
 
     private $accessFlowStateMachineDao;
+    
+    private static $allowedWorkflowItemCache = array();
 
     public function getAccessFlowStateMachineDao() {
 
@@ -65,7 +67,11 @@ class AccessFlowStateMachineService {
     }
     
     public function getAllowedWorkflowItems($workflow, $state, $role) {
-        return $this->getAccessibleFlowStateMachineDao()->getAllowedWorkflowItems($workflow, $state, $role);
+        $key = $workflow . '-' . $state . '-' . $role;
+        if (!isset(self::$allowedWorkflowItemCache[$key])) {
+            self::$allowedWorkflowItemCache[$key] = $this->getAccessibleFlowStateMachineDao()->getAllowedWorkflowItems($workflow, $state, $role);
+        }
+        return self::$allowedWorkflowItemCache[$key];
     }
     
     /**

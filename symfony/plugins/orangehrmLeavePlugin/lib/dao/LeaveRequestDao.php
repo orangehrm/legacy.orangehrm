@@ -491,13 +491,15 @@ class LeaveRequestDao extends BaseDao {
      * @param int $page $status Page Number
      * @param bool $isCSVPDFExport If true, returns all results (ignores paging) as an array
      * @param bool $isMyLeaveList If true, ignores setting to skip terminated employees.
+     * @param bool $prefetchComments If true, will prefetch leave comments for faster access.
      * 
      * @return array Returns results and record count in the following format:
      *               array('list' => results, 'meta' => array('record_count' => count)
      * 
      *               If $isCSVPDFExport is true, returns just an array of results.
      */
-    public function searchLeaveRequests($searchParameters, $page = 1, $isCSVPDFExport = false, $isMyLeaveList = false) {
+    public function searchLeaveRequests($searchParameters, $page = 1, $isCSVPDFExport = false, $isMyLeaveList = false,
+            $prefetchLeave = false, $prefetchComments = false) {
         $this->_markApprovedLeaveAsTaken();
 
         $limit = !is_null($searchParameters->getParameter('noOfRecordsPerPage')) ? $searchParameters->getParameter('noOfRecordsPerPage') : sfConfig::get('app_items_per_page');
@@ -505,13 +507,26 @@ class LeaveRequestDao extends BaseDao {
 
         $list = array();
 
+        $select = 'lr.*, em.firstName, em.lastName, em.middleName, em.termination_id, lt.*';
+        
+        if ($prefetchComments) {
+            $select .= ', lc.*';
+        }
+        if ($prefetchLeave) {
+            $select .= ', l.*';
+        }
+        
         $q = Doctrine_Query::create()
-                ->select('lr.*, em.firstName, em.lastName, em.middleName, em.termination_id, lt.*')
+                ->select($select)
                 ->from('LeaveRequest lr')
                 ->leftJoin('lr.Leave l')
                 ->leftJoin('lr.Employee em')
                 ->leftJoin('lr.LeaveType lt');
 
+        if ($prefetchComments) {
+            $q->leftJoin('lr.LeaveRequestComment lc');
+        }
+        
         $dateRange = $searchParameters->getParameter('dateRange', new DateRange());
         $statuses = $searchParameters->getParameter('statuses');
         $employeeFilter = $searchParameters->getParameter('employeeFilter');

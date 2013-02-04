@@ -85,8 +85,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
 
     private function _fetchLeave() {
         if (is_null($this->leave)) {
-            $leaveRequestDao = new LeaveRequestDao();
-            $this->leave = $leaveRequestDao->fetchLeave($this->getId());
+            $this->leave = $this->getLeave();
             $this->_parseLeave();
         }
     }
@@ -228,6 +227,7 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
     public function getLeaveTypeName() {
         return $this->getLeaveType()->getName();
     }
+    
     
     public function getLatestCommentAsText() {
         $latestComment = '';
