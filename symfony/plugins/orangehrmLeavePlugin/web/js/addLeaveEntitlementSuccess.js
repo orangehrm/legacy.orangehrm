@@ -73,7 +73,7 @@ function toggleFilters(show) {
                     if (rows % 2) {
                         css = "even";
                     }
-                    var decodedName = $("<div/>").html(data[i][0]).text();
+                    var decodedName = $("<div/>").text(data[i][0]).html();
                     html = html + '<tr class="' + css + '"><td>'+decodedName+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td></tr>';
                 }
                 html = html + '</table>';
