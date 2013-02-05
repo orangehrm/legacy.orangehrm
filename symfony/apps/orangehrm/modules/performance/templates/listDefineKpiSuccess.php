@@ -27,7 +27,7 @@
                                 echo 'selected';
                             }
                                 ?>><?php
-                                    echo htmlspecialchars_decode($jobTitle->getJobTitleName());
+                                    echo $jobTitle->getJobTitleName();
                                     if (!$jobTitle->getIsDeleted() == JobTitle::ACTIVE) {
                                         echo ' (' . __('Deleted') . ')';
                                     }
@@ -129,7 +129,7 @@
                                         <a href="<?php echo url_for('performance/updateKpi?id=' . $kpi->getId()) ?>"><?php echo $kpi->getDesc() ?></a>
                                     </td>
                                     <td class="">
-                                        <?php echo htmlspecialchars_decode($kpi->getJobTitle()->getJobTitleName()) ?>
+                                        <?php echo $kpi->getJobTitle()->getJobTitleName(); ?>
                                     </td>
                                     <td class="">
                                         <?php echo ($kpi->getRateMin() != '') ? $kpi->getRateMin() : '-' ?>

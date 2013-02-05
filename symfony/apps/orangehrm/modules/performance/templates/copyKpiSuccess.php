@@ -37,7 +37,7 @@
                          <option value="">--<?php echo __("Select") ?>--</option>
                           <?php foreach ($listAllJobTitle as $jobTitle) { ?>
                          <option value="<?php echo $jobTitle->getId() ?>" <?php if ($fromJobTitle == $jobTitle->getId()) { print("selected"); } ?>>
-                          <?php echo htmlspecialchars_decode($jobTitle->getJobTitleName()) ?>
+                          <?php echo $jobTitle->getJobTitleName(); ?>
                           <?php echo ($jobTitle->getIsDeleted() == JobTitle::DELETED) ? ' ('.__('Deleted').')' : '' ?>
                          </option>
                         <?php } ?>
@@ -50,7 +50,7 @@
                          <option value="">--<?php echo __("Select") ?>--</option>
                           <?php foreach ($listJobTitle as $jobTitle) { ?>
                          <option value="<?php echo $jobTitle->getId() ?>"<?php if ($toJobTitle == $jobTitle->getId()) { print("selected"); } ?>>
-                         <?php echo htmlspecialchars_decode($jobTitle->getJobTitleName()) ?></option>
+                         <?php echo $jobTitle->getJobTitleName(); ?></option>
                          <?php } ?>              
                         </select>
                     </li>

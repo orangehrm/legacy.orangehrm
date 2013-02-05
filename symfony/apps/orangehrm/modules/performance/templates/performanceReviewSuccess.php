@@ -33,7 +33,7 @@
                     </li>
                     <li>
                         <label><?php echo __("Job Title") ?></label>
-                        <label class="line"><?php echo htmlspecialchars_decode($performanceReview->getJobTitle()->getJobTitleName()) ?> </label>
+                        <label class="line"><?php echo $performanceReview->getJobTitle()->getJobTitleName(); ?> </label>
                     </li>
                     <li>
                         <label><?php echo __("Reviewer") ?></label>
@@ -109,7 +109,7 @@
                             </td>
                             <td class="">
                                 <textarea id='txtComments' class="reviwerComment" name='txtComments[<?php echo $kpi->getId() ?>]'
-                                          rows="2" cols="40"><?php echo htmlspecialchars_decode(trim($kpi->getComment())) ?></textarea>
+                                          rows="2" cols="40"><?php echo trim($kpi->getComment()); ?></textarea>
                                 <span class="validation-error"></span>
                             </td>
                         </tr>

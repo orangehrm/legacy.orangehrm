@@ -19,7 +19,7 @@
                         <select name="txtJobTitle" id="txtJobTitle" tabindex="1" >
                      	<option value=""><?php echo __('Select Job Title')?></option>
 	                     <?php foreach($listJobTitle as $jobTitle){?>
-                        <option value="<?php echo $jobTitle->getId()?>" <?php if($kpi->getJobtitlecode() ==  $jobTitle->getId()){ echo "selected";}?>><?php echo htmlspecialchars_decode($jobTitle->getJobTitleName())?><?php echo ($jobTitle->getIsDeleted()==JobTitle::DELETED)?' ('.__('Deleted').')':''?></option>
+                        <option value="<?php echo $jobTitle->getId()?>" <?php if($kpi->getJobtitlecode() ==  $jobTitle->getId()){ echo "selected";}?>><?php echo $jobTitle->getJobTitleName(); ?><?php echo ($jobTitle->getIsDeleted()==JobTitle::DELETED)?' ('.__('Deleted').')':''?></option>
 	                     <?php }?>
                         </select>
                     </li>
