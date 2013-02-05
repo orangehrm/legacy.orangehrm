@@ -51,6 +51,10 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
                     <td><?php echo __('Entitled'); ?></td>
                     <td id="balance_entitled">0.00</td>
                 </tr>
+                <tr class="odd" id="container-adjustment">
+                    <td><?php echo __('Adjustment'); ?></td>
+                    <td id="balance_adjustment">0.00</td>
+                </tr>
                 <tr class="even">
                     <td><?php echo __('Taken'); ?></td>
                     <td id="balance_taken">0.00</td>
@@ -149,7 +153,12 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
                         $('#balance_taken').text(Number(balance.taken).toFixed(2));
                         $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));
                         $('#balance_pending').text(Number(balance.pending).toFixed(2));
+                        $('#balance_adjustment').text(Number(balance.adjustment).toFixed(2));
                         $('#balance_total').text(balanceDays.toFixed(2));
+                        
+                        if(Number(balance.adjustment) == 0 ){
+                            $('#container-adjustment').hide();
+                        }
                     }
                 });
            }

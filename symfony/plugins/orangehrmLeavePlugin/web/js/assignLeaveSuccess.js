@@ -271,8 +271,12 @@ function updateLeaveBalance() {
                 $('#balance_taken').text(Number(balance.taken).toFixed(2));
                 $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));
                 $('#balance_pending').text(Number(balance.pending).toFixed(2));
-                        
-                $('#balance_total').text(balanceDays.toFixed(2));                        
+                $('#balance_adjustment').text(Number(balance.adjustment).toFixed(2));        
+                $('#balance_total').text(balanceDays.toFixed(2));
+                
+                if(Number(balance.adjustment) == 0 ){
+                    $('#container-adjustment').hide();
+                }
             }
         });
     }

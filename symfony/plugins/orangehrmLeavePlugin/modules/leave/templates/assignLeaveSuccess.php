@@ -55,6 +55,10 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
                     <td><?php echo __('Entitled'); ?></td>
                     <td id="balance_entitled">0.00</td>
                 </tr>
+                <tr class="odd" id="container-adjustment">
+                    <td><?php echo __('Adjustment'); ?></td>
+                    <td id="balance_adjustment">0.00</td>
+                </tr>
                 <tr class="even">
                     <td><?php echo __('Taken'); ?></td>
                     <td id="balance_taken">0.00</td>
