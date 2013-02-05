@@ -46,7 +46,7 @@ class LeaveBalance {
     }
     
     public function updateBalance() {
-        $balance = $this->entitled - ( $this->scheduled + $this->taken + $this->adjustment);
+        $balance = ($this->entitled + $this->adjustment) - ( $this->scheduled + $this->taken );
         
         $configService = new LeaveConfigurationService();
         $includePending = $configService->includePendingLeaveInBalance();
