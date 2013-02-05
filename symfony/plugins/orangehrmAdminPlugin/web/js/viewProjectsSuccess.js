@@ -31,8 +31,11 @@ $(document).ready(function() {
     //Auto complete
     $("#searchProject_customer").autocomplete(customers, {
         formatItem: function(item) {
-            return item.name;
+            return $('<div/>').text(item.name).html();
         },
+        formatResult: function(item) {
+            return item.name
+        },  
         matchContains:true
     }).result(function(event, item) {
         //$("#candidateSearch_candidateName").valid();
@@ -40,8 +43,11 @@ $(document).ready(function() {
     //Auto complete
     $("#searchProject_project").autocomplete(projects, {
         formatItem: function(item) {
-            return item.name;
+            return $('<div/>').text(item.name).html();
         },
+        formatResult: function(item) {
+            return item.name
+        },  
         matchContains:true
     }).result(function(event, item) {
         //$("#candidateSearch_candidateName").valid();
