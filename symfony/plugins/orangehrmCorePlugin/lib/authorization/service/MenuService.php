@@ -161,28 +161,31 @@ class MenuService {
         $parentIdArray  = $details['parentIdArray'];
         $levelArray     = $details['levelArray'];
         
-        $currentItemId = $actionArray[$module . '_' . $action];
-        $level = $levelArray[$currentItemId];
-        $currentItemDetails = array('level1' => '', 'level2' => '', 'level3' => '');
-        
-        if ($level == 1) {
-            
-            $currentItemDetails['level1'] = $currentItemId;
-            return $currentItemDetails;
-            
-        } elseif ($level == 2) {
-            
-            $currentItemDetails['level2'] = $currentItemId;
-            $currentItemDetails['level1'] = $parentIdArray[$currentItemId];
-            return $currentItemDetails;
-            
-        } elseif ($level == 3) {
-            
-            $currentItemDetails['level3'] = $currentItemId;
-            $currentItemDetails['level2'] = $parentIdArray[$currentItemId];
-            $currentItemDetails['level1'] = $parentIdArray[$currentItemDetails['level2']];
-            return $currentItemDetails;
-            
+        if (isset($actionArray[$module . '_' . $action])) {
+            $currentItemId = $actionArray[$module . '_' . $action];
+
+            $level = $levelArray[$currentItemId];
+            $currentItemDetails = array('level1' => '', 'level2' => '', 'level3' => '');
+
+            if ($level == 1) {
+
+                $currentItemDetails['level1'] = $currentItemId;
+                return $currentItemDetails;
+
+            } elseif ($level == 2) {
+
+                $currentItemDetails['level2'] = $currentItemId;
+                $currentItemDetails['level1'] = $parentIdArray[$currentItemId];
+                return $currentItemDetails;
+
+            } elseif ($level == 3) {
+
+                $currentItemDetails['level3'] = $currentItemId;
+                $currentItemDetails['level2'] = $parentIdArray[$currentItemId];
+                $currentItemDetails['level1'] = $parentIdArray[$currentItemDetails['level2']];
+                return $currentItemDetails;
+
+            }
         }
         
     }
