@@ -46,7 +46,7 @@ use_javascript('orangehrm.datepicker.js');
                                     if ($job->getIsDeleted() == JobTitle::DELETED) {
                                         $jobName = $jobName . ' (' . __('Deleted') . ')';
                                     }
-                                    echo "<option value=\"" . $job->getId() . "\"" . $selected . ">" . htmlspecialchars_decode($jobName) . "</option>\n";
+                                    echo "<option value=\"" . $job->getId() . "\"" . $selected . ">" . $jobName . "</option>\n";
                                 }
                                 ?>
                             </select>
@@ -212,7 +212,7 @@ use_javascript('orangehrm.datepicker.js');
                                             ?>
                                         </td>
                                         <td class="">
-                                            <?php echo htmlspecialchars_decode($review->getJobTitle()->getJobTitleName()); ?>
+                                            <?php echo $review->getJobTitle()->getJobTitleName(); ?>
                                         </td>
                                         <td class="">
                                             <?php echo set_datepicker_date_format($review->getperiodFrom()) . ' - ' . 
