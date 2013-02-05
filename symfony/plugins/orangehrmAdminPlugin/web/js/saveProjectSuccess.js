@@ -24,7 +24,7 @@ $(document).ready(function() {
     //customer auto complete
     $(".formInputCustomer").autocomplete(customers, {
         formatItem: function(item) {
-            return item.name;
+            return $('<div/>').text(item.name).html();
         },
         matchContains:true
     }).result(function(event, item) {
