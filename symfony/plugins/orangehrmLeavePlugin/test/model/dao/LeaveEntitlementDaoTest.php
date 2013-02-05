@@ -667,6 +667,39 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
          
     }
     
+    public function testSearchLeaveEntitlementsSamePeriod() {
+        Doctrine_Query::create()->delete()->from('LeaveEntitlement')->execute();
+
+        $leaveEntitlements = array(
+            array('id' => 1, 'leave_type_id' => 1, 'emp_number' => 1, 'no_of_days' => 3, 'from_date' => '2013-01-01 00:00:00',
+                'to_date' => '2013-12-31 00:00:00', 'entitlement_type' => 1, 'deleted' => 0),
+            array('id' => 2, 'leave_type_id' => 1, 'emp_number' => 2, 'no_of_days' => 3, 'from_date' => '2013-01-01 00:00:00',
+                'to_date' => '2013-12-31 00:00:00', 'entitlement_type' => 1, 'deleted' => 0),
+        );
+
+        foreach ($leaveEntitlements as $entitlement) {
+            $leaveEntitlement = new LeaveEntitlement();
+            $leaveEntitlement->fromArray($entitlement);
+            $leaveEntitlement->save();
+        }
+
+        $fromDate = '2013-01-01';
+        $toDate = '2013-12-31';
+        $employeeNumbers = array(1, 2);
+        $leaveTypeId = 1;
+        
+        $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
+        $leaveEntitlementSearchParameterHolder->setFromDate($fromDate);
+        $leaveEntitlementSearchParameterHolder->setLeaveTypeId($leaveTypeId);
+        $leaveEntitlementSearchParameterHolder->setToDate($toDate);
+        $leaveEntitlementSearchParameterHolder->setEmpIdList($employeeNumbers);
+        $leaveEntitlementSearchParameterHolder->setHydrationMode(Doctrine::HYDRATE_ARRAY);
+
+        $entitlementList = $this->dao->searchLeaveEntitlements($leaveEntitlementSearchParameterHolder);
+        
+        $this->assertEquals(2, count($entitlementList));
+    }
+    
     public function testBulkAssignLeaveEntitlements() {
         
         $empList = array(1,2,3);

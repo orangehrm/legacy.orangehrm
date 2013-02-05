@@ -90,10 +90,18 @@ class LeaveEntitlementDao extends BaseDao {
                 $q->andWhereIn('le.id', $idList);
             }
             if (!empty($empIdList)) {
-                $q->andWhere('le.emp_number IN (:empIdList)');
-                $params[':empIdList'] = implode(',', $empIdList);
+                
+                // filter empIdList and create comma separated string.
+                $filteredIds = array_map(function($item) {
+                                return filter_var($item, FILTER_VALIDATE_INT);
+                            }, $empIdList);
+                            
+                // Remove items which did not validate as int (they will be set to false)
+                // NOTE: This doesn't cause SQL injection issues because we filter the array
+                // and only allow integers in the array.
+                $filteredIds = array_filter($filteredIds);                            
+                $q->andWhere('le.emp_number IN (' . implode(',', $filteredIds) . ')');
             }
-
 
             // We need leave type name
             $q->leftJoin('le.LeaveType l');
