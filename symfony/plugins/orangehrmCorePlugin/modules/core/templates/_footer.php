@@ -1,7 +1,7 @@
 <?php
 $imagePath = theme_path("images/login");
 $version = '3.0-rc.3';
-$copyrightYear = '2012';
+$copyrightYear = date('Y');
 ?>
 
 <style type="text/css">
