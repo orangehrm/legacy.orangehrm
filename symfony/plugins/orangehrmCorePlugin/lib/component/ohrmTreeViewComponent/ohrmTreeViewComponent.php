@@ -215,10 +215,8 @@ class ohrmTreeViewComponent extends ohrmComponent {
 
         $html = '';
 
-        $html .= content_tag('script', '', array(
-                    'type' => 'text/javascript',
-                    'src' => public_path('jquery/jquery.treeview.min.js'),
-                ));
+        $html .= javascript_include_tag('jquery/jquery.treeview.min.js');
+
         if ($this->type == null) {
             $html .= tag('link', array(
                         'rel' => 'stylesheet',
