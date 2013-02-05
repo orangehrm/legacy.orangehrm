@@ -71,8 +71,12 @@ class viewLeaveEntitlementsAction extends sfAction {
     protected function setFormDefaults($filters) {
         
         // convert back to localized format before setting in form
-        $filters['date']['from'] = set_datepicker_date_format($filters['date']['from']);
-        $filters['date']['to'] = set_datepicker_date_format($filters['date']['to']);  
+        if (isset($filters['date']['from'])) {
+            $filters['date']['from'] = set_datepicker_date_format($filters['date']['from']);
+        }
+        if (isset($filters['date']['to'])) {
+            $filters['date']['to'] = set_datepicker_date_format($filters['date']['to']);  
+        }
         
         $this->form->setDefaults($filters);
     }
