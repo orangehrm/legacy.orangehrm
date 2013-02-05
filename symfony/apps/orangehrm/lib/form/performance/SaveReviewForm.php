@@ -47,13 +47,14 @@ class SaveReviewForm extends BaseForm {
             'dueDate' => new ohrmWIdgetDatePicker(array(), array('id' => 'due_date')),
         ));
 
+        $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
         $this->setValidators(array(
             'reviewId' => new sfValidatorString(array('required' => false)),
             'employeeName' => new ohrmValidatorEmployeeNameAutoFill(array('required' => true)),
             'reviewerName' => new ohrmValidatorEmployeeNameAutoFill(array('required' => true)),
-            'from_date' => new ohrmDateValidator(array('required' => true)),
-            'to_date' => new ohrmDateValidator(array('required' => true)),
-            'dueDate' => new ohrmDateValidator(array('required' => true)),
+            'from_date' => new ohrmDateValidator(array('date_format'=>$inputDatePattern, 'required'=>true)),
+            'to_date' => new ohrmDateValidator(array('date_format'=>$inputDatePattern, 'required'=>true)),
+            'dueDate' => new ohrmDateValidator(array('date_format'=>$inputDatePattern, 'required'=>true)),
         ));
 
         $this->__setDefaultValues();
@@ -78,9 +79,9 @@ class SaveReviewForm extends BaseForm {
                 'reviewId' => $review->getId(),
                 'employeeName' => $employee,
                 'reviewerName' => $reviewer,
-                'from_date' => $review->getPeriodFrom(),
-                'to_date' => $review->getPeriodTo(),
-                'dueDate' => $review->getDueDate(),
+                'from_date' => set_datepicker_date_format($review->getPeriodFrom()),
+                'to_date' => set_datepicker_date_format($review->getPeriodTo()),
+                'dueDate' => set_datepicker_date_format($review->getDueDate()),
             ));
         }
         if ($this->getOption('redirect')) {

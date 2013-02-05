@@ -595,12 +595,9 @@ class performanceActions extends sfActions {
                 $review->setCreationDate(date('Y-m-d'));
                 $localizationService = new LocalizationService();
                 $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
-                $review->setPeriodFrom(date("Y-m-d", strtotime($localizationService->convertPHPFormatDateToISOFormatDate(
-                                                $inputDatePattern, $this->form->getValue('from_date')))));
-                $review->setPeriodTo(date("Y-m-d", strtotime($localizationService->convertPHPFormatDateToISOFormatDate(
-                                                $inputDatePattern, $this->form->getValue('to_date')))));
-                $review->setDueDate(date("Y-m-d", strtotime($localizationService->convertPHPFormatDateToISOFormatDate(
-                                                $inputDatePattern, $this->form->getValue('dueDate')))));
+                $review->setPeriodFrom($this->form->getValue('from_date'));
+                $review->setPeriodTo($this->form->getValue('to_date'));
+                $review->setDueDate($this->form->getValue('dueDate'));
                 $review->setState(PerformanceReview::PERFORMANCE_REVIEW_STATUS_SCHDULED);
                 $review->setKpis($xmlStr);
 
