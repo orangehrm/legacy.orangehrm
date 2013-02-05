@@ -35,8 +35,9 @@
               
                 <ol>
                     <?php echo $form->render(); ?>
+                    <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_1')); ?>
                 </ol>
-                
+                            
                 <p>
                     <input type="button" id="btnSrch" value="<?php echo __("Search") ?>" name="btnSrch" />
                     <input type="button" class="reset" id="btnRst" value="<?php echo __("Reset") ?>" name="btnSrch" />                    
@@ -44,7 +45,7 @@
             </fieldset>
 
 
-            <?php include_component('core', 'ohrmPluginPannel', array('location' => 'listing_layout_navigation_bar_1')); ?>
+
 
             
         </form>
