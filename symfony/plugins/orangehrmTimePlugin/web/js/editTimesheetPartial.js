@@ -82,6 +82,7 @@ $(document).ready(function() {
                             success: function(state){
                             }
                         });
+                        _showMessage('success', lang_removeSuccess);
                         $('form#timesheetForm').submit();
                     }
                 }
@@ -143,4 +144,14 @@ function displayMessages(messageType, message) {
 //    $('#msgDiv').fadeOut($msgDelayTime, function(){
 //        $('#msgDiv').remove();
 //    });
+}
+
+function _showMessage(messageType, message) {  
+    _clearMessage();
+    $('#validationMsg').append('<div class="message ' + messageType + '" id="divMessageBar" generated="true">'+ message + 
+        "<a class='messageCloseButton' href='#'>"+closeText+"</a>" +  '</div>');
+}
+
+function _clearMessage() {
+    $('#validationMsg div[generated="true"]').remove();
 }
