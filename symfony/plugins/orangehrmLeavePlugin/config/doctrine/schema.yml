@@ -204,6 +204,14 @@ LeaveAdjustment:
       primary: false
       notnull: false
       autoincrement: false
+    adjustment_type:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      default: '0'
+      autoincrement: false
     deleted:
       type: integer(1)
       fixed: false
@@ -237,6 +245,10 @@ LeaveAdjustment:
       type: one
     SystemUser:
       local: created_by_id
+      foreign: id
+      type: one
+    LeaveEntitlementType:
+      local: adjustment_type
       foreign: id
       type: one
 

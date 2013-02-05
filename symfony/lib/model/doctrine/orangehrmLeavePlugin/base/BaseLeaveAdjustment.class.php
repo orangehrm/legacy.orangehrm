@@ -13,41 +13,47 @@
  * @property timestamp $to_date
  * @property timestamp $credited_date
  * @property string $note
+ * @property integer $adjustment_type
  * @property integer $deleted
  * @property integer $created_by_id
  * @property string $created_by_name
  * @property LeaveType $LeaveType
  * @property Employee $Employee
  * @property SystemUser $SystemUser
+ * @property LeaveEntitlementType $LeaveEntitlementType
  * 
- * @method integer         getId()              Returns the current record's "id" value
- * @method integer         getEmpNumber()       Returns the current record's "emp_number" value
- * @method decimal         getNoOfDays()        Returns the current record's "no_of_days" value
- * @method integer         getLeaveTypeId()     Returns the current record's "leave_type_id" value
- * @method timestamp       getFromDate()        Returns the current record's "from_date" value
- * @method timestamp       getToDate()          Returns the current record's "to_date" value
- * @method timestamp       getCreditedDate()    Returns the current record's "credited_date" value
- * @method string          getNote()            Returns the current record's "note" value
- * @method integer         getDeleted()         Returns the current record's "deleted" value
- * @method integer         getCreatedById()     Returns the current record's "created_by_id" value
- * @method string          getCreatedByName()   Returns the current record's "created_by_name" value
- * @method LeaveType       getLeaveType()       Returns the current record's "LeaveType" value
- * @method Employee        getEmployee()        Returns the current record's "Employee" value
- * @method SystemUser      getSystemUser()      Returns the current record's "SystemUser" value
- * @method LeaveAdjustment setId()              Sets the current record's "id" value
- * @method LeaveAdjustment setEmpNumber()       Sets the current record's "emp_number" value
- * @method LeaveAdjustment setNoOfDays()        Sets the current record's "no_of_days" value
- * @method LeaveAdjustment setLeaveTypeId()     Sets the current record's "leave_type_id" value
- * @method LeaveAdjustment setFromDate()        Sets the current record's "from_date" value
- * @method LeaveAdjustment setToDate()          Sets the current record's "to_date" value
- * @method LeaveAdjustment setCreditedDate()    Sets the current record's "credited_date" value
- * @method LeaveAdjustment setNote()            Sets the current record's "note" value
- * @method LeaveAdjustment setDeleted()         Sets the current record's "deleted" value
- * @method LeaveAdjustment setCreatedById()     Sets the current record's "created_by_id" value
- * @method LeaveAdjustment setCreatedByName()   Sets the current record's "created_by_name" value
- * @method LeaveAdjustment setLeaveType()       Sets the current record's "LeaveType" value
- * @method LeaveAdjustment setEmployee()        Sets the current record's "Employee" value
- * @method LeaveAdjustment setSystemUser()      Sets the current record's "SystemUser" value
+ * @method integer              getId()                   Returns the current record's "id" value
+ * @method integer              getEmpNumber()            Returns the current record's "emp_number" value
+ * @method decimal              getNoOfDays()             Returns the current record's "no_of_days" value
+ * @method integer              getLeaveTypeId()          Returns the current record's "leave_type_id" value
+ * @method timestamp            getFromDate()             Returns the current record's "from_date" value
+ * @method timestamp            getToDate()               Returns the current record's "to_date" value
+ * @method timestamp            getCreditedDate()         Returns the current record's "credited_date" value
+ * @method string               getNote()                 Returns the current record's "note" value
+ * @method integer              getAdjustmentType()       Returns the current record's "adjustment_type" value
+ * @method integer              getDeleted()              Returns the current record's "deleted" value
+ * @method integer              getCreatedById()          Returns the current record's "created_by_id" value
+ * @method string               getCreatedByName()        Returns the current record's "created_by_name" value
+ * @method LeaveType            getLeaveType()            Returns the current record's "LeaveType" value
+ * @method Employee             getEmployee()             Returns the current record's "Employee" value
+ * @method SystemUser           getSystemUser()           Returns the current record's "SystemUser" value
+ * @method LeaveEntitlementType getLeaveEntitlementType() Returns the current record's "LeaveEntitlementType" value
+ * @method LeaveAdjustment      setId()                   Sets the current record's "id" value
+ * @method LeaveAdjustment      setEmpNumber()            Sets the current record's "emp_number" value
+ * @method LeaveAdjustment      setNoOfDays()             Sets the current record's "no_of_days" value
+ * @method LeaveAdjustment      setLeaveTypeId()          Sets the current record's "leave_type_id" value
+ * @method LeaveAdjustment      setFromDate()             Sets the current record's "from_date" value
+ * @method LeaveAdjustment      setToDate()               Sets the current record's "to_date" value
+ * @method LeaveAdjustment      setCreditedDate()         Sets the current record's "credited_date" value
+ * @method LeaveAdjustment      setNote()                 Sets the current record's "note" value
+ * @method LeaveAdjustment      setAdjustmentType()       Sets the current record's "adjustment_type" value
+ * @method LeaveAdjustment      setDeleted()              Sets the current record's "deleted" value
+ * @method LeaveAdjustment      setCreatedById()          Sets the current record's "created_by_id" value
+ * @method LeaveAdjustment      setCreatedByName()        Sets the current record's "created_by_name" value
+ * @method LeaveAdjustment      setLeaveType()            Sets the current record's "LeaveType" value
+ * @method LeaveAdjustment      setEmployee()             Sets the current record's "Employee" value
+ * @method LeaveAdjustment      setSystemUser()           Sets the current record's "SystemUser" value
+ * @method LeaveAdjustment      setLeaveEntitlementType() Sets the current record's "LeaveEntitlementType" value
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -128,6 +134,16 @@ abstract class BaseLeaveAdjustment extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 255,
              ));
+        $this->hasColumn('adjustment_type', 'integer', 4, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'default' => '0',
+             'autoincrement' => false,
+             'length' => 4,
+             ));
         $this->hasColumn('deleted', 'integer', 1, array(
              'type' => 'integer',
              'fixed' => 0,
@@ -171,6 +187,10 @@ abstract class BaseLeaveAdjustment extends sfDoctrineRecord
 
         $this->hasOne('SystemUser', array(
              'local' => 'created_by_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('LeaveEntitlementType', array(
+             'local' => 'adjustment_type',
              'foreign' => 'id'));
     }
 }

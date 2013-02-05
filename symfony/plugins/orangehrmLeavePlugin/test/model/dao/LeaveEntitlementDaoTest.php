@@ -646,6 +646,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $leaveAdjustment->setToDate('2012-11-28');
         $leaveAdjustment->setCreditedDate('2012-05-01');
         $leaveAdjustment->setNote('Created by Unit test');
+        $leaveAdjustment->setAdjustmentType(1);
         
         $leaveAdjustment->setDeleted(0);
         

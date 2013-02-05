@@ -1178,7 +1178,8 @@ CREATE TABLE ohrm_leave_adjustment (
   from_date datetime,
   to_date datetime,
   credited_date datetime,
-  note varchar(255) default null, 
+  note varchar(255) default null,
+  adjustment_type int unsigned not null default 0, 
   `deleted` tinyint(1) not null default 0,
   created_by_id int(10),
   created_by_name varchar(255),
@@ -1303,6 +1304,10 @@ alter table ohrm_leave_adjustment
 alter table ohrm_leave_adjustment
     add foreign key (created_by_id)
         references ohrm_user(`id`) on delete set null;
+
+alter table ohrm_leave_adjustment
+    add foreign key (adjustment_type)
+        references ohrm_leave_entitlement_type(id) on delete cascade;
 
 alter table ohrm_leave_request
     add constraint foreign key (emp_number)

@@ -9,15 +9,18 @@
  * @property string $name
  * @property integer $is_editable
  * @property Doctrine_Collection $LeaveEntitlement
+ * @property Doctrine_Collection $LeaveAdjustment
  * 
  * @method integer              getId()               Returns the current record's "id" value
  * @method string               getName()             Returns the current record's "name" value
  * @method integer              getIsEditable()       Returns the current record's "is_editable" value
  * @method Doctrine_Collection  getLeaveEntitlement() Returns the current record's "LeaveEntitlement" collection
+ * @method Doctrine_Collection  getLeaveAdjustment()  Returns the current record's "LeaveAdjustment" collection
  * @method LeaveEntitlementType setId()               Sets the current record's "id" value
  * @method LeaveEntitlementType setName()             Sets the current record's "name" value
  * @method LeaveEntitlementType setIsEditable()       Sets the current record's "is_editable" value
  * @method LeaveEntitlementType setLeaveEntitlement() Sets the current record's "LeaveEntitlement" collection
+ * @method LeaveEntitlementType setLeaveAdjustment()  Sets the current record's "LeaveAdjustment" collection
  * 
  * @package    orangehrm
  * @subpackage model\leave\base
@@ -64,5 +67,9 @@ abstract class BaseLeaveEntitlementType extends sfDoctrineRecord
         $this->hasMany('LeaveEntitlement', array(
              'local' => 'id',
              'foreign' => 'entitlement_type'));
+
+        $this->hasMany('LeaveAdjustment', array(
+             'local' => 'id',
+             'foreign' => 'adjustment_type'));
     }
 }
