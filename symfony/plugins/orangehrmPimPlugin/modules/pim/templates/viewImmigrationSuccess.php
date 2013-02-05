@@ -182,7 +182,7 @@ $havePassports = $numContacts>0;
                                     <?php echo ($record->type == EmployeeImmigrationRecord::TYPE_PASSPORT) ? __("Passport") : __("Visa"); ?>
                                     <?php } ?>
                                 </td>
-                                <td><?php echo $record->number; ?></td>
+                                <td><?php echo htmlentities($record->number); ?></td>
                                 <td><?php echo empty($record->countryCode) ? '' : __($countries[$record->countryCode]); ?></td>
                                 <td><?php echo $issuedDate; ?></td>
                                 <td><?php echo $expiryDate; ?></td>
