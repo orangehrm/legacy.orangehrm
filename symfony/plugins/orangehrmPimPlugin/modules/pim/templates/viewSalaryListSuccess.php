@@ -195,12 +195,12 @@
                                 <td>
                                     <?php if ($hasDirectDeposit) { ?>
                                     <input type="checkbox" class="chkbox displayDirectDeposit" value="<?php echo $salary->id; ?>"/>
-                                    <input type="hidden" id="dd_id_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($directDeposit->id); ?>" />
-                                    <input type="hidden" id="dd_account_type_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($accountType); ?>" />
-                                    <input type="hidden" id="dd_other_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($otherType); ?>" />
-                                    <input type="hidden" id="dd_account_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($directDeposit->account); ?>" />
-                                    <input type="hidden" id="dd_routing_num_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($directDeposit->routing_num); ?>" />
-                                    <input type="hidden" id="dd_amount_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($directDeposit->amount); ?>" />
+                                    <input type="hidden" id="dd_id_<?php echo $salary->id; ?>" value="<?php echo $directDeposit->id; ?>" />
+                                    <input type="hidden" id="dd_account_type_<?php echo $salary->id; ?>" value="<?php echo $accountType; ?>" />
+                                    <input type="hidden" id="dd_other_<?php echo $salary->id; ?>" value="<?php echo $otherType; ?>" />
+                                    <input type="hidden" id="dd_account_<?php echo $salary->id; ?>" value="<?php echo $directDeposit->account; ?>" />
+                                    <input type="hidden" id="dd_routing_num_<?php echo $salary->id; ?>" value="<?php echo $directDeposit->routing_num; ?>" />
+                                    <input type="hidden" id="dd_amount_<?php echo $salary->id; ?>" value="<?php echo $directDeposit->amount; ?>" />
                                     <?php } ?>
                                     <input type="hidden" id="sal_grd_code_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($salaryGrade); ?>" />
                                     <input type="hidden" id="currency_id_<?php echo $salary->id; ?>" value="<?php echo htmlspecialchars($currencyId); ?>" />
@@ -231,10 +231,10 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><?php echo htmlspecialchars($directDeposit->account); ?></td>
-                                                    <td><?php echo htmlspecialchars($accountTypeStr); ?></td>
-                                                    <td><?php echo htmlspecialchars($directDeposit->routing_num); ?></td>
-                                                    <td><?php echo htmlspecialchars($directDeposit->amount); ?></td>
+                                                    <td><?php echo $directDeposit->account; ?></td>
+                                                    <td><?php echo $accountTypeStr; ?></td>
+                                                    <td><?php echo $directDeposit->routing_num; ?></td>
+                                                    <td><?php echo $directDeposit->amount; ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
