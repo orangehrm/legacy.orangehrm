@@ -1264,67 +1264,7 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $this->assertEquals($expected, $results);
     }      
    
-    public function testHandleLeavePeriodChange() {
-        
-        $entitlementsBefore = $this->getEntitlements();
-        $deletedEntitlementsBefore = $this->getDeletedEntitlements();
-        
-        $this->strategy->handleLeavePeriodChange(array('2012-01-01', '2012-12-31'), 1, 1, 3, 27);
-        
-        $entitlementsAfter = $this->getEntitlements();
-        $deletedEntitlementsAfter = $this->getDeletedEntitlements();
-        
-        $this->assertEquals(count($entitlementsBefore), count($entitlementsAfter));
-        $this->assertEquals(count($deletedEntitlementsBefore), count($deletedEntitlementsAfter));
 
-        // to do fix.
-        $currentYear = 2012;
-        
-        foreach ($entitlementsAfter as $id => $entitlement) {
-            $this->assertTrue(isset($entitlementsBefore[$id]));            
-                                    
-            $dateFromBefore = DateTime::createFromFormat('Y-m-d G:i:s', $entitlementsBefore[$id]->getFromDate());
-
-            $year = $dateFromBefore->format('Y');
-            
-            if ($year < $currentYear) {
-                // verify no change to entitlements in prev years.
-                $this->_compareEntitlement($entitlementsBefore[$id], $entitlement);
-            } else {
-                
-                // only end date changed for entitlements in current year
-                // both start end dates changed for future entitlements                
-                $dateFromAfter = DateTime::createFromFormat('Y-m-d G:i:s', $entitlement->getFromDate());
-
-                $dateToBefore = DateTime::createFromFormat('Y-m-d G:i:s', $entitlementsBefore[$id]->getFromDate());
-                $dateToAfter = DateTime::createFromFormat('Y-m-d G:i:s', $entitlementsBefore[$id]->getToDate());
-                $expectedDateTo = $dateToBefore->setDate($dateToBefore->format('Y') + 1, 3, 26);
-
-                if ($year == $currentYear) {
-                    $expectedDateFrom = $dateFromBefore;
-                } else {
-                    $expectedDateFrom = $dateFromBefore->setDate($dateFromBefore->format('Y'), 3, 27);                    
-                } 
-                
-                // check year not changed, but month and date changed
-                $this->assertEquals($expectedDateFrom, $dateFromAfter);
-                $this->assertEquals($expectedDateTo, $dateToAfter);
-                
-                $expected = $entitlementsBefore[$id];
-                $expected->setFromDate($expectedDateFrom->format('Y-m-d G:i:s'));
-                $expected->setToDate($expectedDateTo->format('Y-m-d G:i:s'));
-                $this->_compareEntitlement($expected, $entitlement);
-            }
-            
-        }
-        
-        // Verify no change to deleted entitlements
-        foreach ($deletedEntitlementsAfter as $id => $entitlement) {
-            $this->assertTrue(isset($deletedEntitlementsBefore[$id]));
-            $this->_compareEntitlement($deletedEntitlementsBefore[$id], $entitlement);
-        }        
-        
-    }
     
     // Check leap year
     
@@ -1383,22 +1323,7 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         
         return $deletedEntitlements;
     }    
-    
-    
-    /** 
-     * Verify no change to deleted entitlements;
-     */
-    public function xtestHandleLeavePeriodChangeX() {
-        $this->strategy->handleLeavePeriodChange(1, 1, 3, 27);
         
-                $fromDb = Doctrine_Query::create()
-                                ->from('LeaveEntitlement le')
-                                ->where('le.id = ? ', $id);
-    }
-    
-    public function testHandleLeaveCancel() {
-        
-    }
     
     /**
      * Verify entitlement results

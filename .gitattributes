@@ -4079,6 +4079,7 @@ symfony/plugins/orangehrmLeavePlugin/config/view.yml -text
 symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByEmployee.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/leaveBalanceByLeaveType.sql -text
 symfony/plugins/orangehrmLeavePlugin/install/upgrade.sql -text
+symfony/plugins/orangehrmLeavePlugin/lib/dao/FIFOEntitlementConsumptionStrategyDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/HolidayDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeaveEntitlementDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/dao/LeavePeriodDao.php -text
@@ -4286,6 +4287,7 @@ symfony/plugins/orangehrmLeavePlugin/test/fixtures/WorkWeekDao.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/WorkWeekService.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/fixtures/leavePeriod.yml -text
 symfony/plugins/orangehrmLeavePlugin/test/mail/LeaveMailerTest.php -text
+symfony/plugins/orangehrmLeavePlugin/test/model/dao/FIFOEntitlementConsumptionStrategyDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/HolidayDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeaveEntitlementDaoTest.php -text
 symfony/plugins/orangehrmLeavePlugin/test/model/dao/LeavePeriodDaoTest.php -text

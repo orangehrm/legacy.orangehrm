@@ -25,6 +25,20 @@
 class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrategy {
     
     protected $leaveEntitlementService;
+    protected $dao;
+    
+    public function getDao() {
+        if (empty($this->dao)) {
+            $this->dao = new FIFOEntitlementConsumptionStrategyDao();
+        }
+        
+        return $this->dao;
+    }
+
+    public function setDao($dao) {
+        $this->dao = $dao;
+    }
+
     
     public function getLeaveEntitlementService() {
         if (empty($this->leaveEntitlementService)) {
@@ -640,43 +654,6 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
     }
     
     public function handleLeavePeriodChange($leavePeriodForToday, $oldMonth, $oldDay, $newMonth, $newDay) {
-        
-        try {
-            
-            $pdo = Doctrine_Manager::connection()->getDbh();
-
-            $leavePeriodStartDate = new DateTime($leavePeriodForToday[0]);
-            $leavePeriodEndDate = new DateTime($leavePeriodForToday[1]);
-            
-            // If current leave period start date is 1/1 and new date is 1/1, 
-            if ($leavePeriodStartDate->format('n') == 1 && $leavePeriodStartDate->format('j') == 1 && $newMonth == 1 && $newDay == 1) {
-                $newEndDateForCurrentPeriod = $leavePeriodStartDate->format('Y') . '-12-31';
-            } else {
-                $tmp = new DateTime();
-                $tmp->setDate($leavePeriodStartDate->format('Y') + 1, $newMonth, $newDay);
-                $tmp->sub(new DateInterval('P1D'));
-                $newEndDateForCurrentPeriod = $tmp->format('Y-m-d');
-            }
-                        
-         $queryCurrentPeriod = 'UPDATE ohrm_leave_entitlement e SET ' .
-                    "e.to_date = '$newEndDateForCurrentPeriod' " .                    
-                    "WHERE e.deleted = 0 AND e.from_date = :fromDate AND e.to_date = :toDate ";
-                    
-            $stmt = $pdo->prepare($queryCurrentPeriod);                        
-            $stmt->execute(array(':fromDate'=> $leavePeriodForToday[0],':toDate'=>$leavePeriodForToday[1]));
-                        
-           $queryFuturePeriods = 'UPDATE ohrm_leave_entitlement e SET ' .
-                    "e.from_date = CONCAT(YEAR(e.from_date), '-',:newMonth , '-', :newDay), " .
-                    "e.to_date = DATE_SUB(CONCAT(YEAR(e.from_date) + 1, '-', :newMonth, '-', :newDay), INTERVAL 1 DAY) " .                    
-                    "WHERE e.deleted = 0 AND MONTH(e.from_date) = :oldMonth AND DAY(e.from_date) = :oldDay AND e.from_date > :fromDate ";
-           
-            $stmt = $pdo->prepare($queryFuturePeriods);                        
-            $stmt->execute(array(':newMonth'=>$newMonth,':newDay'=>$newDay,':oldMonth'=>$oldMonth,':oldDay'=>$oldDay,':fromDate'=>$leavePeriodForToday[1]));
-
-
-        } catch (DaoException $e) {
-            throw new DaoException($e->getMessage(), 0, $e);
-        }
-        
+        return $this->getDao()->handleLeavePeriodChange($leavePeriodForToday, $oldMonth, $oldDay, $newMonth, $newDay);        
     }
 }
