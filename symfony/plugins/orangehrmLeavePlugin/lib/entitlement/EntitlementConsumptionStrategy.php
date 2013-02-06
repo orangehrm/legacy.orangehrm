@@ -35,4 +35,16 @@ interface EntitlementConsumptionStrategy {
     public function handleEntitlementStatusChange();
     
     public function handleLeavePeriodChange($leavePeriodForToday, $oldStartMonth, $oldStartDay, $newStartMonth, $newStartDay);
+    
+    /**
+     * Get date limits for considering leave without entitlements in leave balance for the given start, end date.
+     * 
+     * @param String $balanceStartDate Date string for balance start date
+     * @param String $balanceEndDate Date string for balance end date
+     * 
+     * @return Mixed Array with two dates giving period inside which leave without entitlements should count towards the leave balance.
+     *               If false is returned, leave without entitlements are not considered for leave balance.
+     * 
+     */
+    public function getLeaveWithoutEntitlementDateLimitsForLeaveBalance($balanceStartDate, $balanceEndDate);
 }

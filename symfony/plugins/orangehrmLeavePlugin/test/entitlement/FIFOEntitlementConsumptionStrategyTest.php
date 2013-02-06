@@ -1263,6 +1263,23 @@ class FIFOEntitlementConsumptionStrategyTest extends PHPUnit_Framework_TestCase 
         $expected = array('current' => array('2012-09-11' => array(6=>1), '2012-09-12' => array(6=>1)), 'change' => array());
         $this->assertEquals($expected, $results);
     }      
+    
+    public function testGetLeaveWithoutEntitlementDateLimitsForLeaveBalance() {
+        
+        $mockService = $this->getMock('LeavePeriodService', array('getCurrentLeavePeriodByDate'));
+        $mockService->expects($this->any())
+                ->method('getCurrentLeavePeriodByDate')
+                ->will($this->returnValue(array('2012-01-01', '2012-12-31')));
+        
+        $this->strategy->setLeavePeriodService($mockService);
+        
+        $result = $this->strategy->getLeaveWithoutEntitlementDateLimitsForLeaveBalance('2012-01-03', '2012-02-02');
+        
+        $this->assertEquals(2, count($result));
+        
+        $this->assertEquals('2012-01-01', $result[0]);
+        $this->assertEquals('2012-12-31', $result[1]);                        
+    }
    
 
     

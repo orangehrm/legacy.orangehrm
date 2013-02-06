@@ -26,6 +26,29 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
     
     protected $leaveEntitlementService;
     protected $dao;
+    protected $leavePeriodService;
+
+    /**
+     * Returns Leave Period
+     * @return LeavePeriodService
+     */
+    public function getLeavePeriodService() {
+
+        if (is_null($this->leavePeriodService)) {
+            $leavePeriodService = new LeavePeriodService();
+            $leavePeriodService->setLeavePeriodDao(new LeavePeriodDao());
+            $this->leavePeriodService = $leavePeriodService;
+        }
+
+        return $this->leavePeriodService;
+    }
+    
+    /**
+     * Set Leave Period
+     */
+    public function setLeavePeriodService($leavePeriodService) {
+        $this->leavePeriodService = $leavePeriodService;
+    }   
     
     public function getDao() {
         if (empty($this->dao)) {
@@ -655,5 +678,27 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
     
     public function handleLeavePeriodChange($leavePeriodForToday, $oldMonth, $oldDay, $newMonth, $newDay) {
         return $this->getDao()->handleLeavePeriodChange($leavePeriodForToday, $oldMonth, $oldDay, $newMonth, $newDay);        
+    }
+
+    public function getLeaveWithoutEntitlementDateLimitsForLeaveBalance($balanceStartDate, $balanceEndDate) {
+        
+        $limits = false;
+        
+        $startPeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($balanceStartDate);
+        
+        if (is_array($startPeriod) && count($startPeriod) == 2) {
+            $startDate = $startPeriod[0];
+            $endDate = $startPeriod[1];
+
+            if (!empty($balanceEndDate)) {
+                $endPeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($balanceEndDate);
+                if (is_array($endPeriod) && isset($endPeriod[1])) {
+                    $endDate = $endPeriod[1];
+                }
+            }
+            $limits = array($startDate, $endDate);
+        }
+        
+        return $limits;
     }
 }

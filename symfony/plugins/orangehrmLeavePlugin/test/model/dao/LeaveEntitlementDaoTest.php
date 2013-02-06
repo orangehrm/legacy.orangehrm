@@ -44,7 +44,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
     public function testSearchLeaveEntitlementsWithNoFilters() {
         $parameterHolder = new LeaveEntitlementSearchParameterHolder();
         $entitlementList = TestDataService::loadObjectList('LeaveEntitlement', $this->fixture, 'LeaveEntitlement');
-        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3], $entitlementList[1]);
+        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3], $entitlementList[5], $entitlementList[1]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         
         $this->_compareEntitlements($expected, $results);                
@@ -59,7 +59,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $parameterHolder->setOrderBy('Desc');
         $parameterHolder->setOrderField('leave_type');
 
-        $expected = array($entitlementList[1], $entitlementList[2], $entitlementList[3], $entitlementList[0]);
+        $expected = array($entitlementList[1], $entitlementList[2], $entitlementList[3], $entitlementList[0], $entitlementList[5]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         $this->_compareEntitlements($expected, $results);  
         
@@ -68,7 +68,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $parameterHolder->setOrderBy('Asc');
         $parameterHolder->setOrderField('employee_name');
 
-        $expected = array($entitlementList[1], $entitlementList[0], $entitlementList[2], $entitlementList[3]);
+        $expected = array($entitlementList[1], $entitlementList[5], $entitlementList[0], $entitlementList[2], $entitlementList[3]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         $this->_compareEntitlements($expected, $results);          
         
@@ -119,12 +119,14 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $expected = array($entitlementList[1]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         
-         $parameterHolder->setValidDate('2013-09-02');
+        $parameterHolder->setValidDate('2013-09-02');
+        $results = $this->dao->searchLeaveEntitlements($parameterHolder);        
+        $this->assertEquals(1, count($results)) ;    
         
-        
-        $results = $this->dao->searchLeaveEntitlements($parameterHolder);
-        
+        $parameterHolder->setValidDate('2014-01-02');
+        $results = $this->dao->searchLeaveEntitlements($parameterHolder);        
         $this->assertEquals(0, count($results)) ;    
+        
     }
 
     public function testSearchLeaveEntitlementsByLeaveType() {
@@ -227,7 +229,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $entitlementList = TestDataService::loadObjectList('LeaveEntitlement', $this->fixture, 'LeaveEntitlement');
         
         // default - non-deleted
-        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3], $entitlementList[1]);
+        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3], $entitlementList[5], $entitlementList[1]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         
         $this->_compareEntitlements($expected, $results);          
@@ -241,7 +243,7 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         
         // both deleted and non-deleted
         $parameterHolder->setDeletedFlag(NULL);
-        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3], $entitlementList[4], $entitlementList[1]);
+        $expected = array($entitlementList[0], $entitlementList[2], $entitlementList[3], $entitlementList[4], $entitlementList[5], $entitlementList[1]);
         $results = $this->dao->searchLeaveEntitlements($parameterHolder);
         
         $this->_compareEntitlements($expected, $results);         
@@ -366,8 +368,16 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         
     public function testGetLeaveBalance() {
         
+        $unlinkedDateLimits = array('2001-01-01', '2020-01-01');
+        
+        $mockStrategy = $this->getMock('FIFOEntitlementConsumptionStrategy', array('getLeaveWithoutEntitlementDateLimitsForLeaveBalance'));
+        $mockStrategy->expects($this->any())
+                    ->method('getLeaveWithoutEntitlementDateLimitsForLeaveBalance')
+                    //->with($parameterHolder)
+                    ->will($this->returnValue($unlinkedDateLimits));        
         // Using AsAt
-
+        $this->dao->setLeaveEntitlementStrategy($mockStrategy);
+        
         // As at before entitlement start:         
         $balance = $this->dao->getLeaveBalance(2, 6, '2013-08-01');
         $expected = new LeaveBalance(4, 1, 0, 0.5, 0);
@@ -525,6 +535,79 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $balance);   
         
     }
+    
+    
+    public function testGetLeaveBalanceWithUnlinkedLeave() {
+        
+        $unlinkedDateLimits = array('2013-01-01', '2013-12-31');
+        
+        $mockStrategy = $this->getMock('FIFOEntitlementConsumptionStrategy', array('getLeaveWithoutEntitlementDateLimitsForLeaveBalance'));
+        $mockStrategy->expects($this->once())
+                    ->method('getLeaveWithoutEntitlementDateLimitsForLeaveBalance')
+                    ->with('2013-01-01', '2013-12-31')
+                    ->will($this->returnValue($unlinkedDateLimits));        
+        // Using AsAt
+        $this->dao->setLeaveEntitlementStrategy($mockStrategy);
+        
+        $balance = $this->dao->getLeaveBalance(7, 1, '2013-01-01', '2013-12-31');
+        
+        // $entitled = 0, $used = 0, $scheduled = 0, $pending = 0, $notLinked = 0, $taken = 0 ,$adjustment =0 
+        $expected = new LeaveBalance(5, 3, 3, 0, 1, 0, 0);
+        $this->assertEquals($expected, $balance);        
+    }
+    
+    public function testGetLeaveBalanceExcludingUnlinkedLeaveWhenAfterPeriod() {
+        $unlinkedDateLimits = array('2013-01-01', '2014-12-31');
+        
+        $mockStrategy = $this->getMock('FIFOEntitlementConsumptionStrategy', array('getLeaveWithoutEntitlementDateLimitsForLeaveBalance'));
+        $mockStrategy->expects($this->once())
+                    ->method('getLeaveWithoutEntitlementDateLimitsForLeaveBalance')
+                    ->with('2013-01-01', '2013-12-31')
+                    ->will($this->returnValue($unlinkedDateLimits));        
+        // Using AsAt
+        $this->dao->setLeaveEntitlementStrategy($mockStrategy);
+        
+        $balance = $this->dao->getLeaveBalance(7, 1, '2013-01-01', '2013-12-31');
+        
+        // $entitled = 0, $used = 0, $scheduled = 0, $pending = 0, $notLinked = 0, $taken = 0 ,$adjustment =0 
+        $expected = new LeaveBalance(5, 5, 5, 0, 3, 0, 0);
+        $this->assertEquals($expected, $balance);          
+    }
+    
+    public function testGetLeaveBalanceExcludingUnlinkedBeforePeriod() {
+        $unlinkedDateLimits = array('2012-01-01', '2013-12-31');
+        
+        $mockStrategy = $this->getMock('FIFOEntitlementConsumptionStrategy', array('getLeaveWithoutEntitlementDateLimitsForLeaveBalance'));
+        $mockStrategy->expects($this->once())
+                    ->method('getLeaveWithoutEntitlementDateLimitsForLeaveBalance')
+                    ->with('2013-01-01', '2013-12-31')
+                    ->will($this->returnValue($unlinkedDateLimits));        
+        // Using AsAt
+        $this->dao->setLeaveEntitlementStrategy($mockStrategy);
+        
+        $balance = $this->dao->getLeaveBalance(7, 1, '2013-01-01', '2013-12-31');
+        
+        // $entitled = 0, $used = 0, $scheduled = 0, $pending = 0, $notLinked = 0, $taken = 0 ,$adjustment =0 
+        $expected = new LeaveBalance(5, 4, 4, 0, 2, 0, 0);
+        $this->assertEquals($expected, $balance);          
+    }    
+    
+    public function testGetLeaveBalanceExcludingUnlinkedLeave() {
+        
+        $mockStrategy = $this->getMock('FIFOEntitlementConsumptionStrategy', array('getLeaveWithoutEntitlementDateLimitsForLeaveBalance'));
+        $mockStrategy->expects($this->once())
+                    ->method('getLeaveWithoutEntitlementDateLimitsForLeaveBalance')
+                    ->with('2013-01-01', '2013-12-31')
+                    ->will($this->returnValue(false));        
+        // Using AsAt
+        $this->dao->setLeaveEntitlementStrategy($mockStrategy);
+        
+        $balance = $this->dao->getLeaveBalance(7, 1, '2013-01-01', '2013-12-31');
+        
+        // $entitled = 0, $used = 0, $scheduled = 0, $pending = 0, $notLinked = 0, $taken = 0 ,$adjustment =0 
+        $expected = new LeaveBalance(5, 2, 2, 0, 0, 0, 0);
+        $this->assertEquals($expected, $balance);          
+    }    
     
     public function testGetLinkedLeaveRequests() {
         $requests = $this->dao->getLinkedLeaveRequests(array(3, 4), 

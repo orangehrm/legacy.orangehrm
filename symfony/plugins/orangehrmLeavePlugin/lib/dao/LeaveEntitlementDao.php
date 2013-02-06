@@ -25,6 +25,33 @@
 class LeaveEntitlementDao extends BaseDao {
 
     protected static $pendingStatusIds = null;
+    protected $leaveEntitlementStrategy;
+    protected $leaveConfigService;
+    
+    public function getLeaveConfigService() {
+        if (!($this->leaveConfigService instanceof LeaveConfigurationService)) {
+            $this->leaveConfigService = new LeaveConfigurationService();
+        }        
+        return $this->leaveConfigService;
+    }
+
+    public function setLeaveConfigService($leaveConfigService) {
+        $this->leaveConfigService = $leaveConfigService;
+    }
+    
+    public function getLeaveEntitlementStrategy() {
+        if (!isset($this->leaveEntitlementStrategy)) {
+            
+            $strategyClass = $this->getLeaveConfigService()->getLeaveEntitlementConsumptionStrategy();            
+            $this->leaveEntitlementStrategy = new $strategyClass;
+        }
+        
+        return $this->leaveEntitlementStrategy;
+    }
+    
+    public function setLeaveEntitlementStrategy($leaveEntitlementStrategy) {
+        $this->leaveEntitlementStrategy = $leaveEntitlementStrategy;
+    }    
 
     public function getPendingStatusIds() {
         if (is_null(self::$pendingStatusIds)) {
@@ -381,7 +408,7 @@ class LeaveEntitlementDao extends BaseDao {
                 'le.days_used AS used, ' .
                 'sum(IF(l.status = 2, lle.length_days, 0)) AS scheduled, ' .
                 'sum(IF(l.status IN (' . $pendingIdList . '), lle.length_days, 0)) AS pending, ' .
-                'sum(IF(l.status = 3, l.length_days, 0)) AS taken ' .
+                'sum(IF(l.status = 3, l.length_days, 0)) AS taken, 0 as notLinked ' .
                 'FROM ohrm_leave_entitlement le LEFT JOIN ' .
                 'ohrm_leave_leave_entitlement lle ON le.id = lle.entitlement_id LEFT JOIN ' .
                 'ohrm_leave l ON l.id = lle.leave_id ' .
@@ -396,26 +423,36 @@ class LeaveEntitlementDao extends BaseDao {
         }
 
         $sql .= ' GROUP BY le.id';
+        
+        $dateLimits = $this->getLeaveEntitlementStrategy()->getLeaveWithoutEntitlementDateLimitsForLeaveBalance($asAtDate, $date);
 
-        $sql .= ' UNION ' .
-                'SELECT ' .
-                '0 AS entitled, ' .
-                'SUM(l.length_days) AS used, ' .
-                'sum(IF(l.status = 2, l.length_days, 0)) AS scheduled, ' .
-                'sum(IF(l.status = 1, l.length_days, 0)) AS pending, ' .
-                'sum(IF(l.status = 3, l.length_days, 0)) AS taken ' .
-                'FROM ohrm_leave l ' .
-                'LEFT JOIN ohrm_leave_leave_entitlement lle ON (lle.leave_id = l.id) ' .
-                'WHERE (lle.leave_id IS NULL) AND l.emp_number = ? AND l.leave_type_id = ? AND l.status NOT IN (-1, 0) ';
+        if (is_array($dateLimits) && count($dateLimits) > 0) {
+            $sql .= ' UNION ' .
+                    'SELECT ' .
+                    '0 AS entitled, ' .
+                    'SUM(l.length_days) AS used, ' .
+                    'sum(IF(l.status = 2, l.length_days, 0)) AS scheduled, ' .
+                    'sum(IF(l.status = 1, l.length_days, 0)) AS pending, ' .
+                    'sum(IF(l.status = 3, l.length_days, 0)) AS taken, ' .
+                    'sum(l.length_days) AS notLinked ' .
+                    'FROM ohrm_leave l ' .
+                    'LEFT JOIN ohrm_leave_leave_entitlement lle ON (lle.leave_id = l.id) ' .
+                    'WHERE (lle.leave_id IS NULL) AND l.emp_number = ? AND l.leave_type_id = ? AND l.status NOT IN (-1, 0) ' .
+                    ' AND l.date BETWEEN ? AND ? ';
 
-        $parameters[] = $empNumber;
-        $parameters[] = $leaveTypeId;
-        //$parameters[] = $asAtDate;        
+            $parameters[] = $empNumber;
+            $parameters[] = $leaveTypeId;
+            $parameters[] = $dateLimits[0];
+            $parameters[] = $dateLimits[1];
+
+            //$parameters[] = $asAtDate;        
 
 
-        $sql .= 'GROUP BY l.leave_type_id';
-
-        $sql = 'SELECT sum(a.entitled) as entitled, sum(a.used) as used, sum(a.scheduled) as scheduled, sum(a.pending) as pending, sum(a.taken) as taken  ' .
+            $sql .= 'GROUP BY l.leave_type_id';
+        }
+        
+        $sql = 'SELECT sum(a.entitled) as entitled, sum(a.used) as used, sum(a.scheduled) as scheduled, ' . 
+                      'sum(a.pending) as pending, sum(a.taken) as taken, sum(a.notLinked) as notLinked  ' .
                 ' FROM (' . $sql . ') as a';
 
         $statement = $conn->prepare($sql);
@@ -450,6 +487,9 @@ class LeaveEntitlementDao extends BaseDao {
                 if (!empty($result['taken'])) {
                     $balance->setTaken($result['taken']);
                 }
+                if (!empty($result['notLinked'])) {
+                    $balance->setNotLinked($result['notLinked']);
+                }                
             }
         }
 
