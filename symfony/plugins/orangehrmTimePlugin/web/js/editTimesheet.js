@@ -19,6 +19,7 @@ var classStr;
 var activityId;
 var date;
 var cmnt;
+var hiddenCommentInput;
 $(document).ready(function() {
     var currentId;
 
@@ -65,7 +66,11 @@ $(document).ready(function() {
     function initAutoComplete(element) {
         element.autocomplete(projectsForAutoComplete, {
             formatItem: function(item) {
-                var temp = $("<div/>").html(item.name).text();
+                var temp = $("<div/>").text(item.name).html();
+                return temp.replace("##", "");
+            },
+            formatResult: function(item) {
+                var temp = item.name;
                 return temp.replace("##", "");
             },
             matchContains:true
@@ -73,7 +78,7 @@ $(document).ready(function() {
             currentId = $(this).attr('id');
             var temparray = currentId.split('_');
             var temp = '#'+temparray[0]+'_'+temparray[1]+'_'+'projectActivityName';
-            var decodedfullName = $("<div/>").html(item.name).text();
+            var decodedfullName = $("<div/>").text(item.name).html();
            
             var array = decodedfullName.split(' - ##');
     
@@ -81,8 +86,7 @@ $(document).ready(function() {
                 type: 'POST',
                 url: getActivitiesLink,
                 data: {
-                    customerName: array[0],
-                    projectName: array[1]
+                    projectId: item.id
                 },
                
                 success: function(msg){
@@ -106,7 +110,12 @@ $(document).ready(function() {
     $("#commentSave").click(function() {
         if ($("#frmCommentSave").valid()) {
             var comment = $("#timeComment").val();
-            saveComment(timesheetId, activityId, date, comment, employeeId);
+            if (comment != '') {
+                var timesheetItemId = saveComment(timesheetId, activityId, date, comment, employeeId);
+                if (hiddenCommentInput != '') {                    
+                    $("#"+hiddenCommentInput).val(timesheetItemId); 
+                }
+            }
             $('#commentDialog').modal('hide');
         }
     });
@@ -250,7 +259,7 @@ $(document).ready(function() {
     
     }));
 
-    function validateProject() {
+    function validateProject() {        
         var flag = true;
         displayMessages('reset', '');
         var errorStyle = "background-color:#FFDFDF;";
@@ -264,7 +273,7 @@ $(document).ready(function() {
             var i;
             for (i=0; i < projectCount; i++) {
                 arrayName = projectsArray[i].name.toLowerCase().replace("##", "");
-                arrayName = $("<div/>").html(arrayName).text();
+                arrayName = $("<div/>").text(arrayName).html();
                 if (proName == arrayName) {
                     
                     temp = true;
@@ -281,6 +290,7 @@ $(document).ready(function() {
     }
 
     $('.commentIcon').click(function(){
+        hiddenCommentInput = null;
         $("#commentError").html("");
         $('#frmCommentSave').validate().resetForm();
         $('#timeComment').removeClass('validation-error');
@@ -295,6 +305,7 @@ $(document).ready(function() {
             $("#commentSave").show();
         }
         var rowNo = classStr[2];
+        hiddenCommentInput = "initialRows_" + classStr[2] + "_TimesheetItemId" + classStr[1];
         date = currentWeekDates[classStr[1]];
         var activityNameId = "initialRows_"+rowNo+"_projectActivityName";
         activityId = $("#"+activityNameId).val();

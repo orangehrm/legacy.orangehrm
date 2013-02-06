@@ -75,12 +75,13 @@ class timeActions extends sfActions {
             $newTimesheetItem->setEmployeeId($employeeId);
             $newTimesheetItem->setActivityId($activityId);
 
-            $dao->saveTimesheetItem($newTimesheetItem);
+            $resultItem = $dao->saveTimesheetItem($newTimesheetItem);
         } else {
             $timesheetItem[0]->setComment(trim($comment));
-            $dao->saveTimesheetItem($timesheetItem[0]);
+            $resultItem = $dao->saveTimesheetItem($timesheetItem[0]);
         }
-        return sfView::NONE;
+        
+        return $this->renderText($resultItem->getTimesheetItemId());
     }
 
     public function executeShowTimesheetItemComment($request) {
@@ -112,21 +113,21 @@ class timeActions extends sfActions {
 
     public function executeGetRelatedActiviesForAutoCompleteAjax(sfWebRequest $request) {
 
-        $this->backAction = $this->getContext()->getUser()->getFlash('actionName');
+//        $this->backAction = $this->getContext()->getUser()->getFlash('actionName');
         $this->getContext()->getUser()->setFlash('actionName', $this->backAction);
-
-        $customerName = $request->getParameter('customerName');
-
-        $projectName = $request->getParameter('projectName');
-//        $projectName = htmlspecialchars($projectName, ENT_QUOTES);
-//        $customerName = htmlspecialchars($customerName, ENT_QUOTES);
+//
+//        $customerName = $request->getParameter('customerName');
+//
+//        $projectName = $request->getParameter('projectName');
+////        $projectName = htmlspecialchars($projectName, ENT_QUOTES);
+////        $customerName = htmlspecialchars($customerName, ENT_QUOTES);
         $timesheetDao = new TimesheetDao();
-        $customer = $timesheetDao->getCustomerByName($customerName);
-        $customerId = $customer->getCustomerId();
-
-        $project = $timesheetDao->getProjectByProjectNameAndCustomerId($projectName, $customerId);
-
-        $projectId = $project->getProjectId();
+//        $customer = $timesheetDao->getCustomerByName($customerName);
+//        $customerId = $customer->getCustomerId();
+//
+//        $project = $timesheetDao->getProjectByProjectNameAndCustomerId($projectName, $customerId);
+//
+        $projectId = $request->getParameter('projectId');
 
         $this->activityList = $timesheetDao->getProjectActivitiesByPorjectId($projectId);
     }

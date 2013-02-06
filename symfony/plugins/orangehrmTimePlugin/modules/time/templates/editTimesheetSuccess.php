@@ -82,7 +82,8 @@ form ol li.largeTextBox textarea {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 0 ?>
+                    <?php $i = 0;
+                    echo $timesheetForm['_csrf_token']->render(); ?>
                     <?php if ($timesheetItemValuesArray == null): ?>
                     <tr class="odd">
                         <td id=""><?php echo $timesheetForm['initialRows'][$i]['toDelete'] ?></td>
