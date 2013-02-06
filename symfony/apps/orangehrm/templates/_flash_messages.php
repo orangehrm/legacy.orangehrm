@@ -43,7 +43,18 @@ foreach ($messageTypes as $messageType) :
     if (!is_null($message)) : 
 ?>
 <div class="message <?php echo $cssClass;?>">
-    <?php echo $message;?>
+<?php
+
+    if (is_array($message) || $message instanceof sfOutputEscaperArrayDecorator) :
+        echo "<ol>";
+        foreach ($message as $m):
+            echo "<li>" . $m . "</li>";
+        endforeach;
+        echo "</ol>";
+    else:
+        echo $message;
+    endif;
+?>   
     <a href="#" class="messageCloseButton"><?php echo __('Close');?></a>
 </div>
 <?php

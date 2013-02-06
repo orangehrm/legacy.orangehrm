@@ -1093,6 +1093,17 @@ ul.helpList li { /* Used in admin/viewEmailNotification */
 .success a {
 	background:url(../images/success-btn.png) no-repeat;
 }
+
+div.message ol {
+    border-bottom: 0;
+    margin: 0;
+    padding: 0;
+}
+
+div.message ol li {
+    margin: 3px 0 10px;
+}
+
 /* ================ Top level message styles: End ================ */
 
 /* ================ Field level message styles: Begin ================ */
