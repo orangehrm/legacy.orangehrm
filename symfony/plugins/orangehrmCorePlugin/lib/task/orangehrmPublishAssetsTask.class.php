@@ -82,9 +82,9 @@ EOF;
         }
         
         $propertiesToSet = array(
-            'sf_web_css_dir_name' => $uniqueResourceDir . DIRECTORY_SEPARATOR . 'css',
-            'sf_web_js_dir_name' => $uniqueResourceDir . DIRECTORY_SEPARATOR . 'js',
-            'sf_web_images_dir_name' => $uniqueResourceDir . DIRECTORY_SEPARATOR . 'images',
+            'sf_web_css_dir_name' => $uniqueResourceDir .  '/css',
+            'sf_web_js_dir_name' => $uniqueResourceDir . '/js',
+            'sf_web_images_dir_name' => $uniqueResourceDir . '/images',
             );
         
         $content = "<?php \n";
