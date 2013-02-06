@@ -30,8 +30,14 @@ class LeaveConfigurationService extends ConfigService {
     
     protected static $includePendingLeaveInBalance = null;
     
-    public function getLeaveEntitlementConsumptionStrategy() {
-        return $this->_getConfigValue(self::KEY_LEAVE_ENTITLEMENT_CONSUMPTION_STRATEGY);
+    protected static $leaveConsumptionStrategy = null;
+    
+    public function getLeaveEntitlementConsumptionStrategy($forceReload = false) {
+        if ($forceReload || is_null(self::$leaveConsumptionStrategy)) {
+            self::$leaveConsumptionStrategy = $this->_getConfigValue(self::KEY_LEAVE_ENTITLEMENT_CONSUMPTION_STRATEGY);
+        }
+        
+        return self::$leaveConsumptionStrategy;        
     }
     
     public function getWorkScheduleImplementation() {
