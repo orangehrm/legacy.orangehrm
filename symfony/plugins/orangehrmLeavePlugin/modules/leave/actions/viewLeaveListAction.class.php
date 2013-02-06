@@ -233,7 +233,7 @@ class viewLeaveListAction extends sfAction {
 
         $list = empty($list) ? null : $list;
         $this->form->setList($list);
-        $this->form->setEmployeeList($this->getEmployeeList());
+        //$this->form->setEmployeeList($this->getEmployeeList());
         
         $this->message = $message;
         $this->messageType = $messageType;
