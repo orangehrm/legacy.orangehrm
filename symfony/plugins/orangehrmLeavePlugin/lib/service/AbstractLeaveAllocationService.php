@@ -237,32 +237,36 @@ abstract class AbstractLeaveAllocationService extends BaseService {
         
         if ($fromDate == $toDate) {
             $totalDuration = $this->getLeaveRequestService()->getTotalLeaveDuration($empNumber, $fromDate);
-        }
+            $workShiftLength = $this->getWorkShiftDurationForEmployee($empNumber);
+            $totalLeaveTime = $leaveAssignmentData->getLeaveTotalTime();
+            
+            // We only show workshift exceeded warning for partial leave days (length < workshift)
+            
+            if (($totalDuration < $workShiftLength) && ($totalLeaveTime < $workShiftLength) &&
+                ($totalDuration + $totalLeaveTime) > $workShiftLength) {
 
+                $dateRange = new DateRange();
+                $dateRange->setFromDate($fromDate);
+                $dateRange->setToDate($fromDate);
 
-        $workShiftLength = $this->getWorkShiftDurationForEmployee($empNumber);
-        if (($totalDuration + $leaveAssignmentData->getLeaveTotalTime()) > $workShiftLength) {
+                $searchParameters['dateRange'] = $dateRange;
+                $searchParameters['employeeFilter'] = $empNumber;
 
-            $dateRange = new DateRange();
-            $dateRange->setFromDate($fromDate);
-            $dateRange->setToDate($toDate);
+                $parameter = new ParameterObject($searchParameters);
+                $leaveRequests = $this->getLeaveRequestService()->searchLeaveRequests($parameter);
 
-            $searchParameters['dateRange'] = $dateRange;
-            $searchParameters['employeeFilter'] = $empNumber;
-
-            $parameter = new ParameterObject($searchParameters);
-            $leaveRequests = $this->getLeaveRequestService()->searchLeaveRequests($parameter);
-
-            if (count($leaveRequests['list']) > 0) {
-                foreach ($leaveRequests['list'] as $leaveRequest) {
-                    $this->overlapLeaves[] = $leaveRequest->getLeave();
+                if (count($leaveRequests['list']) > 0) {
+                    foreach ($leaveRequests['list'] as $leaveRequest) {
+                        $this->overlapLeaves[] = $leaveRequest->getLeave();
+                    }
                 }
-            }
 
-            return true;
-        } else {
-            return false;
+                return true;
+            }
+            
         }
+        
+        return false;
     }
 
     /**
