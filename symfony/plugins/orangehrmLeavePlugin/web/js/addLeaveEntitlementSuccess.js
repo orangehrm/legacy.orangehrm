@@ -1,4 +1,7 @@
-function toggleFilters(show) {
+    var abortEmployeeLoad = false;
+    var matchingCount = false;
+    
+    function toggleFilters(show) {
         if (show) {
            $('ol#filter li:not(:first)').show();                
         } else {
@@ -8,6 +11,8 @@ function toggleFilters(show) {
     
     
     function updateFilterMatches() {
+        
+        matchingCount = false;
         
         var params = '';
         
@@ -36,17 +41,23 @@ function toggleFilters(show) {
                     text = lang_matchesNone;
                 }
 
+                matchingCount = data;
                 $('ol#filter li:first').append('<span id="ajax_count">(' + text + ')</span>');
             }
         });
     }
-
-    function updateEmployeeList() {
-        
+    
+    function fetchEmployees(offset) {
         var params = '';
         
-        $('ol#employee_list').html('').append($('<li></li>').text(lang_Loading)); 
-                
+        if (offset == 0) {
+            abortEmployeeLoad = false;
+            $('div#employee_list').html(''); 
+            
+            var progress = matchingCount ? '(0 / ' + matchingCount + ')' : '0';
+            $('div#employee_loading').html(lang_Loading + '... ' + progress + ' ').show();
+        }
+        
         $('ol#filter li:not(:first)').find('input,select').each(function(index, element) {
             var name = $(this).attr('name');
             name = name.replace('entitlements[filters][', '');
@@ -55,31 +66,62 @@ function toggleFilters(show) {
 
             params = params + '&' + name + '=' + value;
         });
-        params = params + '&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&td='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
+        params = params + '&offset=' + offset + '&lt=' + $('#entitlements_leave_type').val() + '&fd='+$('#date_from').val()+ '&td='+ $('#date_to').val()+'&ent='+$('#entitlements_entitlement').val();
         $.ajax({
             type: 'GET',
             url: getEmployeeUrl,
             data: params,
             dataType: 'json',
-            success: function(data) {                
-                
+            success: function(results) {                
+                var offset = parseInt(results.offset, 10);
+                var pageSize = parseInt(results.pageSize, 10);
+                var data = results.data;
                 var count = data.length;
-                var rows = $('ol#employee_list li').length;
-                $('ol#employee_list').html('');
-                var html = "<table class='table'><tr><th>"+lang_employee+"</th><th>"+lang_old_entitlement+"</th><th>"+lang_new_entitlement+"</th></tr>";
-                for (var i = 0; i < count; i++) {
-                    var css = "odd";
-                    rows++;
-                    if (rows % 2) {
-                        css = "even";
+                var finishedLoading = true;
+                
+                if (offset == 0) {
+                    if (count == 0) {
+                        $('div#employee_list').html(lang_NoResultsFound);
+                    } else {
+                        $('div#employee_list').html("<table class='table'><tr><th>"+lang_employee+"</th><th>"+lang_old_entitlement+"</th><th>"+lang_new_entitlement+"</th></tr></table>");                    
                     }
-                    var decodedName = $("<div/>").text(data[i][0]).html();
-                    html = html + '<tr class="' + css + '"><td>'+decodedName+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td></tr>';
+                }                
+                
+                if (count > 0) {
+                    var rows = $('div#employee_list table tr').length - 1;
+
+                    var html = '';
+                    for (var i = 0; i < count; i++) {
+                        rows++;                        
+                        var css = rows % 2 ? "even" : "odd";
+
+                        var decodedName = $("<div/>").text(data[i][0]).html();
+                        html = html + '<tr class="' + css + '"><td>'+decodedName+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td></tr>';
+                    }
+
+                    $('div#employee_list table.table').append(html);
+                    
+                    if ((count == pageSize)) {
+                        finishedLoading = false;
+                        
+                        if (!abortEmployeeLoad) {                            
+                            fetchEmployees(offset + pageSize);
+                        }
+                    }
                 }
-                html = html + '</table>';
-                $('ol#employee_list').append(html);
+                
+                if (finishedLoading) {
+                    $('div#employee_loading').html('').hide();
+                } else {
+                    var progress = matchingCount ? '(' + rows + ' / ' + matchingCount + ') ' : rows;
+                    $('div#employee_loading').html(lang_Loading + '... ' + progress + ' ');
+                }
             }
-        });
+        });        
+    }
+
+    function updateEmployeeList() {        
+        fetchEmployees(0);
     }
 
     $(document).ready(function() {               
@@ -144,7 +186,14 @@ function toggleFilters(show) {
         });        
         
         $('#dialogConfirmBtn').click(function() {
+            var loadingMsg = lang_BulkAssignPleaseWait.replace('%count%', matchingCount);
+            $('#buildAssignWait').text(loadingMsg + '...');
+            $('#bulkAssignWaitDlg').modal();
             $('#frmLeaveEntitlementAdd').submit();
+        });        
+        
+        $('#bulkAssignCancelBtn').click(function() {
+            abortEmployeeLoad = true;
         });
         
         $('#dialogUpdateEntitlementConfirmBtn').click(function() {

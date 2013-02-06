@@ -24,25 +24,17 @@ ol#filter span#ajax_count {
     margin-left: 20px;
 }
 
-ol#employee_list {
+div#employee_list {
     margin-top: 20px;
     height: 200px;
     overflow-y: scroll;
     margin-left: 20px;
     margin-right: 20px;
 }
-ol#employee_list li {
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 2px;
-    padding-right: 2px;
 
-}    
-ol#employee_list li.odd {
-    background-color: #EAEAEA;
-}
-
-ol#employee_list li.even {
-
+div#preview div.loading_message {
+    float: right; 
+    margin-right: 20px; 
+    margin-top: 10px;
 }
     

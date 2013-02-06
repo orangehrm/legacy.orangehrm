@@ -2090,6 +2090,7 @@ class EmployeeDao extends BaseDao {
         $offset     = $parameterHolder->getOffset();
         $limit      = $parameterHolder->getLimit();
         $filters    = $parameterHolder->getFilters();
+        $returnType = $parameterHolder->getReturnType();
 
         $select = '';
         $query = '';
@@ -2117,73 +2118,76 @@ class EmployeeDao extends BaseDao {
         $statement = $conn->prepare($completeQuery);
         $result = $statement->execute($bindParams);
        
-        
-        $employees = new Doctrine_Collection(Doctrine::getTable('Employee'));
+        if ($returnType == EmployeeSearchParameterHolder::RETURN_TYPE_OBJECT) {
+            $employees = new Doctrine_Collection(Doctrine::getTable('Employee'));
 
-        if ($result) {
-            while ($row = $statement->fetch() ) {
-                $employee = new Employee();
+            if ($result) {
+                while ($row = $statement->fetch() ) {
+                    $employee = new Employee();
 
-                $employee->setEmpNumber($row['empNumber']);
-                $employee->setEmployeeId($row['employeeId']);
-                $employee->setFirstName($row['firstName']);
-                $employee->setMiddleName($row['middleName']);
-                $employee->setLastName($row['lastName']);
-                $employee->setTerminationId($row['terminationId']);
+                    $employee->setEmpNumber($row['empNumber']);
+                    $employee->setEmployeeId($row['employeeId']);
+                    $employee->setFirstName($row['firstName']);
+                    $employee->setMiddleName($row['middleName']);
+                    $employee->setLastName($row['lastName']);
+                    $employee->setTerminationId($row['terminationId']);
 
-                $jobTitle = new JobTitle();
-                $jobTitle->setId($row['jobTitleId']);
-                $jobTitle->setJobTitleName($row['jobTitle']);
-                $jobTitle->setIsDeleted($row['isDeleted']);
-                $employee->setJobTitle($jobTitle);
+                    $jobTitle = new JobTitle();
+                    $jobTitle->setId($row['jobTitleId']);
+                    $jobTitle->setJobTitleName($row['jobTitle']);
+                    $jobTitle->setIsDeleted($row['isDeleted']);
+                    $employee->setJobTitle($jobTitle);
 
-                $employeeStatus = new EmploymentStatus();
-                $employeeStatus->setId($row['employeeStatusId']);
-                $employeeStatus->setName($row['employeeStatus']);
-                $employee->setEmployeeStatus($employeeStatus);
+                    $employeeStatus = new EmploymentStatus();
+                    $employeeStatus->setId($row['employeeStatusId']);
+                    $employeeStatus->setName($row['employeeStatus']);
+                    $employee->setEmployeeStatus($employeeStatus);
 
-                $workStation = new SubUnit();
-                $workStation->setName($row['subDivision']);
-                $workStation->setId($row['subDivisionId']);
-                $employee->setSubDivision($workStation);
+                    $workStation = new SubUnit();
+                    $workStation->setName($row['subDivision']);
+                    $workStation->setId($row['subDivisionId']);
+                    $employee->setSubDivision($workStation);
 
-                $supervisorList = isset($row['supervisors'])?$row['supervisors']:'';
+                    $supervisorList = isset($row['supervisors'])?$row['supervisors']:'';
 
-                if (!empty($supervisorList)) {
+                    if (!empty($supervisorList)) {
 
-                    $supervisors = new Doctrine_Collection(Doctrine::getTable('Employee'));
+                        $supervisors = new Doctrine_Collection(Doctrine::getTable('Employee'));
 
-                    $supervisorArray = explode(',', $supervisorList);
-                    foreach ($supervisorArray as $supervisor) {
-                        list($first, $middle, $last) = explode('##', $supervisor);
-                        $supervisor = new Employee();
-                        $supervisor->setFirstName($first);
-                        $supervisor->setMiddleName($middle);
-                        $supervisor->setLastName($last);
-                        $employee->supervisors[] = $supervisor;
+                        $supervisorArray = explode(',', $supervisorList);
+                        foreach ($supervisorArray as $supervisor) {
+                            list($first, $middle, $last) = explode('##', $supervisor);
+                            $supervisor = new Employee();
+                            $supervisor->setFirstName($first);
+                            $supervisor->setMiddleName($middle);
+                            $supervisor->setLastName($last);
+                            $employee->supervisors[] = $supervisor;
+                        }
                     }
-                }
-                
-                $locationList = $row['locationIds'];
 
-                if (!empty($locationList)) {
+                    $locationList = $row['locationIds'];
 
-//                    $locations = new Doctrine_Collection(Doctrine::getTable('EmpLocations'));
+                    if (!empty($locationList)) {
 
-                    $locationArray = explode(',', $locationList);
-                    foreach ($locationArray as $location) {
-                        list($id, $name) = explode('##', $location);
-                        $empLocation = new Location();
-                        $empLocation->setId($id);
-                        $empLocation->setName($name);
-                        $employee->locations[] = $empLocation;
+    //                    $locations = new Doctrine_Collection(Doctrine::getTable('EmpLocations'));
+
+                        $locationArray = explode(',', $locationList);
+                        foreach ($locationArray as $location) {
+                            list($id, $name) = explode('##', $location);
+                            $empLocation = new Location();
+                            $empLocation->setId($id);
+                            $empLocation->setName($name);
+                            $employee->locations[] = $empLocation;
+                        }
                     }
-                }
 
-                $employees[] = $employee;
+                    $employees[] = $employee;
+                }
             }
         }
-
+        else {
+            return $statement->fetchAll();
+        }
         return $employees;
 
     }

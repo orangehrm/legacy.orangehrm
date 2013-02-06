@@ -82,13 +82,15 @@ use_stylesheets_for_form($form);
   </div>
   <div class="modal-body">
       <span><?php echo __('The selected leave entitlement will be applied to the following employees.');?></span>
-      <ol id="employee_list">  
-          <li><?php echo __('Loading') . '...';?></li>
-      </ol>
+      
+      <div id="employee_list">  
+
+      </div>
   </div>
   <div class="modal-footer">
     <input type="button" class="btn" data-dismiss="modal" id="dialogConfirmBtn" value="<?php echo __('Confirm'); ?>" />
-    <input type="button" class="cancel" data-dismiss="modal" id="dialogCancelBtn" value="<?php echo __('Cancel'); ?>" />
+    <input type="button" class="cancel" data-dismiss="modal" id="bulkAssignCancelBtn" value="<?php echo __('Cancel'); ?>" />
+    <div id="employee_loading" class="loading_message"><?php echo __('Loading') . '...';?></div>
   </div>
 </div>
 
@@ -107,6 +109,16 @@ use_stylesheets_for_form($form);
   <div class="modal-footer">
     <input type="button" class="btn" data-dismiss="modal" id="dialogUpdateEntitlementConfirmBtn" value="<?php echo __('Confirm'); ?>" />
     <input type="button" class="cancel" data-dismiss="modal" id="dialogUpdateEntitlementCancelBtn" value="<?php echo __('Cancel'); ?>" />
+  </div>
+</div>
+
+<!-- Confirmation box for employee entitlement-->
+<div class="modal hide" id="bulkAssignWaitDlg" style="width:500px">
+  <div class="modal-header">
+    <h3><?php echo 'OrangeHRM - ' . __('Updating Entitlement'); ?></h3>
+  </div>
+  <div class="modal-body">
+      <p id="buildAssignWait" class="loading_message"></p>
   </div>
 </div>
 
@@ -129,7 +141,10 @@ use_stylesheets_for_form($form);
     var lang_number = '<?php echo __("Should be a number with upto %count% decimal places", array('%count%' => 2)); ?>';
     var lang_valid_entitlement = '<?php echo __("Used amount exceeds the current amount"); ?>';
     var validEntitlemnetUrl =  '<?php echo url_for('leave/isValidEntitlemnetAjax');?>';
-    var lang_Loading = '<?php echo __('Loading') . '...';?>';
+    var lang_Loading = '<?php echo __('Loading');?>';
+    var lang_Employees = '<?php echo __('Employees');?>';
+    var lang_NoResultsFound = '<?php echo __("No Records Found");?>';
+    var lang_BulkAssignPleaseWait = '<?php echo __('Bulk Assigning Leave Entitlement to %count% Employees. Please Wait');?>';
         
     var filterMatchingEmployees = 0;
     

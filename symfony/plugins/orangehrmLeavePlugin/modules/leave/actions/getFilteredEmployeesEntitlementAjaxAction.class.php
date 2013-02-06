@@ -55,22 +55,26 @@ class getFilteredEmployeesEntitlementAjaxAction  extends sfAction {
         $filters = array('location' => $parameters['location'],
             'sub_unit' => $parameters['subunit']);
 
-        $parameterHolder->setFilters($filters);
-        $parameterHolder->setLimit(NULL);
-        $employees = $this->getEmployeeService()->searchEmployees($parameterHolder);
-
-
         $fromDate = isset($parameters['fd']) ? $parameters['fd'] : null;
         $toDate =  isset($parameters['td']) ? $parameters['td'] : null;
         $leaveType =  isset($parameters['lt']) ? $parameters['lt'] : null;
         $newValue =  isset($parameters['ent']) ? $parameters['ent'] : null;
+        $offset = isset($parameters['offset']) ? $parameters['offset'] : 0;
+        $pageSize = sfConfig::get('app_items_per_page');
+
+        $parameterHolder->setFilters($filters);
+        $parameterHolder->setOffset($offset);
+        $parameterHolder->setLimit($pageSize);
+        $parameterHolder->setReturnType(EmployeeSearchParameterHolder::RETURN_TYPE_ARRAY);
+        
+        $employees = $this->getEmployeeService()->searchEmployees($parameterHolder);
             
         $names = array();
        
         foreach($employees as $employee) {
                                     
             $leaveEntitlementSearchParameterHolder = new LeaveEntitlementSearchParameterHolder();
-            $leaveEntitlementSearchParameterHolder->setEmpNumber($employee->getEmpNumber());
+            $leaveEntitlementSearchParameterHolder->setEmpNumber($employee['empNumber']);
             $leaveEntitlementSearchParameterHolder->setFromDate($fromDate);
             $leaveEntitlementSearchParameterHolder->setLeaveTypeId($leaveType);
             $leaveEntitlementSearchParameterHolder->setToDate($toDate);
@@ -83,11 +87,17 @@ class getFilteredEmployeesEntitlementAjaxAction  extends sfAction {
                 $oldValue = $existingLeaveEntitlement->getNoOfDays();
                 
             } 
-            
-            $names[] = array($employee->getFullName(),$oldValue,$newValue+$oldValue);
+
+            $names[] = array($employee['firstName'] . ' ' . $employee['middleName'] . ' ' . $employee['lastName'],$oldValue,$newValue+$oldValue);
         }        
 
-        return $names;
+        $data = array(
+            'offset' => $offset,
+            'pageSize' => $pageSize,
+            'data' => $names
+        );
+        
+        return $data;
     }
     
     public function execute($request) {

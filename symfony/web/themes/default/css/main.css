@@ -1401,6 +1401,13 @@ a.closeText {
 }
 /* ================ Hyperlink styles: End ================ */
 
+/* ================ Ajax loader styles: Begin ================ */
+.loading_message {
+    background: url('../images/loading.gif') right center no-repeat;
+    padding-right: 18px;
+}
+/* ================ Ajax loader styles: End ================ */
+
 /* ================ Timesheet styles: Begin ================ */
 .timesheet table.table td.right {
     padding-right: 1px;

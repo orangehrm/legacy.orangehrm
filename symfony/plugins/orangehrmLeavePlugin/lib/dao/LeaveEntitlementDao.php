@@ -200,6 +200,11 @@ class LeaveEntitlementDao extends BaseDao {
         if ($balance > 0) {
             $leaveList = $this->getLeaveWithoutEntitlements($leaveEntitlement->getEmpNumber(), $leaveEntitlement->getLeaveTypeId(), $leaveEntitlement->getFromDate(), $leaveEntitlement->getToDate());
 
+            $query = Doctrine_Query::create()
+                        ->from('LeaveLeaveEntitlement l')
+                        ->where('l.leave_id = ?')
+                        ->andWhere('l.entitlement_id = ?');
+            
             foreach ($leaveList as $leave) {
                 $daysLeft = $leave['days_left'];
                 $leaveId = $leave['id'];
@@ -209,11 +214,7 @@ class LeaveEntitlementDao extends BaseDao {
                 $balance -= $daysToAssign;
 
                 // assign to leave
-                $entitlementAssignment = Doctrine_Query::create()
-                        ->from('LeaveLeaveEntitlement l')
-                        ->where('l.leave_id = ?', $leaveId)
-                        ->andWhere('l.entitlement_id = ?', $entitlementId)
-                        ->fetchOne();
+                $entitlementAssignment = $query->fetchOne(array($leaveId, $entitlementId));
 
                 if ($entitlementAssignment === false) {
                     $entitlementAssignment = new LeaveLeaveEntitlement();
@@ -224,6 +225,7 @@ class LeaveEntitlementDao extends BaseDao {
                     $entitlementAssignment->setLengthDays($entitlementAssignment->getLengthDays() + $daysToAssign);
                 }
                 $entitlementAssignment->save();
+                $entitlementAssignment->free();
 
                 if ($balance <= 0) {
                     break;
@@ -283,6 +285,7 @@ class LeaveEntitlementDao extends BaseDao {
                     $entitlement->setNoOfDays($leaveEntitlement->getNoOfDays());
                     $entitlement->setFromDate($leaveEntitlement->getFromDate());
                     $entitlement->setToDate($leaveEntitlement->getToDate());
+                    $entitlement->setId($updateEntitlement['id']);
 
                     $collection->add($entitlement);
                     $updateEmpList[] = $updateEntitlement['emp_number'];
@@ -298,8 +301,10 @@ class LeaveEntitlementDao extends BaseDao {
 
             $newEmployeeList = array_diff($employeeNumbers, $updateEmpList);
             if (count($newEmployeeList) > 0) {
-                $query = " INSERT INTO ohrm_leave_entitlement(`emp_number`,`leave_type_id`,`from_date`,`to_date`,`no_of_days`,`entitlement_type`) VALUES";
-
+                $query = " INSERT INTO ohrm_leave_entitlement(`emp_number`,`leave_type_id`,`from_date`,`to_date`,`no_of_days`,`entitlement_type`) VALUES " .
+                         "(?, ?, ?, ?, ?, ?)";
+                $stmt = $pdo->prepare($query);
+                
                 foreach ($newEmployeeList as $empNumber) {
                     $entitlement = new LeaveEntitlement();
                     $noOfDays = $leaveEntitlement->getNoOfDays();
@@ -316,15 +321,14 @@ class LeaveEntitlementDao extends BaseDao {
                     $entitlement->setNoOfDays($noOfDays);
                     $entitlement->setFromDate($leaveEntitlement->getFromDate());
                     $entitlement->setToDate($leaveEntitlement->getToDate());
+                    
+                    $params = array($empNumber, $leaveEntitlement->getLeaveTypeId(), $leaveEntitlement->getFromDate(), $leaveEntitlement->getToDate(), $noOfDays, LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+                    $stmt->execute($params);
+                    $entitlement->setId($pdo->lastInsertId());
+                            
                     $collection->add($entitlement);
                     $savedCount++;
-
-                    $query .= sprintf("('%d','%d','%s','%s','%f','%d'),", $empNumber, $leaveEntitlement->getLeaveTypeId(), $leaveEntitlement->getFromDate(), $leaveEntitlement->getToDate(), $noOfDays, LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
                 }
-                $query = substr($query, 0, -1);
-
-                $stmt = $pdo->prepare($query);
-                $stmt->execute();
             }
 
             foreach ($collection as $leaveEntitlement) {

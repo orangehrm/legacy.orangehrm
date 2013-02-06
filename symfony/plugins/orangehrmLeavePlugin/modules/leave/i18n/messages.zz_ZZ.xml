@@ -352,6 +352,10 @@
     <source>Leave Request Comments</source>
     <target>FR_Leave Request Comments</target>
    </trans-unit>     
+   <trans-unit id="86">
+    <source>Bulk Assigning Leave Entitlement to %count% Employees. Please Wait</source>
+    <target>FR_Bulk Assigning Leave Entitlement to %count% Employees. Please Wait</target>
+   </trans-unit>           
   </body>
  </file>
 </xliff>
