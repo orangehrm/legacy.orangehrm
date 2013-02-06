@@ -106,7 +106,7 @@ class LeaveListForm extends sfForm {
                 BasicUserRoleManager::PERMISSION_TYPE_ACTION => array('view_leave_list'));
             
             $widgets['txtEmployee'] = new ohrmWidgetEmployeeNameAutoFill(
-                    array('employeeList' => $this->getEmployeeList(),
+                    array('loadingMethod'=>'ajax',
                           'requiredPermissions' => $requiredPermissions));
             
             $labels['txtEmployee'] = __('Employee');
