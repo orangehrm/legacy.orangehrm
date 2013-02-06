@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     $("#submitRemoveRows").click(function(){
         if(!isRowsSelected()){
-            displayMessages('warning', lang_noRecords);
+            _showMessage('warning', lang_noRecords);
         }
         else if(isDeleteAllRows()){
             $(".toDelete").each(function(){
@@ -35,10 +35,11 @@ $(document).ready(function() {
                 }
             });
             if(status){
+                _showMessage('success', lang_removeSuccess);
                 $('form#timesheetForm').submit();
             }
             else{
-                displayMessages('warning', lang_noChagesToDelete);
+                _showMessage('warning', lang_noChagesToDelete);
             }
         }
         else{
@@ -62,11 +63,11 @@ $(document).ready(function() {
                         $('form#timesheetForm').submit();
                     }
                     else if((array=="") && ($(".toDelete").size()==1)){
-                        displayMessages('warning', lang_noChagesToDelete);
+                        _showMessage('warning', lang_noChagesToDelete);
                     }
                     else if((array=="") && ($(".toDelete").size()!=1)){
                         $(".messageBalloon_warning").remove();
-                        displayMessages('success', lang_removeSuccess);
+                        _showMessage('success', lang_removeSuccess);
                         $(element).parent().parent().remove();
                     }
                     else if((array!="") && ($(".toDelete").size()!=1)){
@@ -144,6 +145,16 @@ function displayMessages(messageType, message) {
 //    $('#msgDiv').fadeOut($msgDelayTime, function(){
 //        $('#msgDiv').remove();
 //    });
+}
+
+function _showMessage(messageType, message) {  
+    _clearMessage();
+    $('#validationMsg').append('<div class="message ' + messageType + '" id="divMessageBar" generated="true">'+ message + 
+        "<a class='messageCloseButton' href='#'>"+closeText+"</a>" +  '</div>');
+}
+
+function _clearMessage() {
+    $('#validationMsg div[generated="true"]').remove();
 }
 
 function _showMessage(messageType, message) {  
