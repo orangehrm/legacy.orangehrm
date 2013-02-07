@@ -28,4 +28,10 @@ class ProjectConfiguration extends sfProjectConfiguration
         sfConfig::set('ohrm_resource_dir', sfConfig::get('sf_web_dir'));
     }
   }
+  
+  public function configureDoctrine(Doctrine_Manager $manager)
+  {
+    // Enable callbacks so that softDelete behavior can be used
+    $manager->setAttribute(Doctrine_Core::ATTR_USE_DQL_CALLBACKS, true);
+  }
 }
