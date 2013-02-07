@@ -167,7 +167,7 @@ class LeaveEntitlementService extends BaseService {
         if (empty($date)) {
             $leavePeriodStatus = LeavePeriodService::getLeavePeriodStatus();
             if ($leavePeriodStatus == LeavePeriodService::LEAVE_PERIOD_STATUS_FORCED) {
-                $leavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($asAtDate);
+                $leavePeriod = $this->getLeaveEntitlementStrategy()->getLeavePeriod($asAtDate, $empNumber, $leaveTypeId);
                 
                 if (is_array($leavePeriod) && isset($leavePeriod[1])) {
                     $date = $leavePeriod[1];

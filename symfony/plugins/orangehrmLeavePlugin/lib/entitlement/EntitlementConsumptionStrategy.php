@@ -47,4 +47,14 @@ interface EntitlementConsumptionStrategy {
      * 
      */
     public function getLeaveWithoutEntitlementDateLimitsForLeaveBalance($balanceStartDate, $balanceEndDate);
+    
+    /**
+     * Get leave period
+     * 
+     * @param string $date Date for which leave period is required
+     * @param int $empNumber Employee Number
+     * @param int $leaveTypeId Leave Type ID
+     * @return array Array with start date at index 0 and end date at index 1
+     */
+    public function getLeavePeriod($date, $empNumber = null, $leaveTypeId = null);
 }

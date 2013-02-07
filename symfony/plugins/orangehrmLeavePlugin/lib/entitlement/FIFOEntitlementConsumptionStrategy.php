@@ -701,4 +701,9 @@ class FIFOEntitlementConsumptionStrategy implements EntitlementConsumptionStrate
         
         return $limits;
     }
+    
+    public function getLeavePeriod($date, $empNumber = null, $leaveTypeId = null) {
+        $leavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($date);        
+        return $leavePeriod;
+    }
 }

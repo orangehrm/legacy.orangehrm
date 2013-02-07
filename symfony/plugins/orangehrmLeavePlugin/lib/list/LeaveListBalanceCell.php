@@ -28,7 +28,7 @@ class LeaveListBalanceCell extends Cell {
         
         $request = $this->dataObject;        
         $leaveEntitlementService = new LeaveEntitlementService();
-        $leavePeriodService = $leaveEntitlementService->getLeavePeriodService();
+        $leaveStrategy = $leaveEntitlementService->getLeaveEntitlementStrategy();
         
         $empNumber = $request->getEmpNumber();
         $leaveTypeId = $request->getLeaveTypeId();        
@@ -44,8 +44,8 @@ class LeaveListBalanceCell extends Cell {
             $startDate = $dates[0];
             $endDate = $dates[count($dates) - 1];
             
-            $leavePeriodForStartDate = $leavePeriodService->getCurrentLeavePeriodByDate($startDate);
-            $leavePeriodForEndDate = $leavePeriodService->getCurrentLeavePeriodByDate($endDate);
+            $leavePeriodForStartDate = $leaveStrategy->getLeavePeriod($startDate, $empNumber, $leaveTypeId);
+            $leavePeriodForEndDate = $leaveStrategy->getLeavePeriod($endDate, $empNumber, $leaveTypeId);
             
             // check if start date and end date are in the same leave period            
             if (($leavePeriodForStartDate[0] == $leavePeriodForEndDate[0]) && 
