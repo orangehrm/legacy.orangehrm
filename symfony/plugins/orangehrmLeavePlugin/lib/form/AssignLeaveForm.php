@@ -212,7 +212,7 @@ class AssignLeaveForm extends sfForm {
             'txtEmployee' => new ohrmWidgetEmployeeNameAutoFill(array('jsonList' => $this->getEmployeeListAsJson())),
             'txtEmpWorkShift' => new sfWidgetFormInputHidden(),
             'txtLeaveType' => new sfWidgetFormChoice(array('choices' => $this->getLeaveTypeChoices())),
-            'leaveBalance' => new ohrmWidgetDiv(array(), array('style' => 'float:left;padding-top: 6px;')),
+            'leaveBalance' => new ohrmWidgetDiv(array()),
             'txtFromDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtFromDate')),
             'txtToDate' => new ohrmWidgetDatePicker(array(), array('id' => 'assignleave_txtToDate')),
             'time' => new ohrmWidgetFormTimeRange(array(

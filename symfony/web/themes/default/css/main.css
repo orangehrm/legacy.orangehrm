@@ -1082,6 +1082,12 @@ ul.helpList li { /* Used in admin/viewEmailNotification */
 	color:#aa4935;
 	background-color:#f1c6bd;
 }
+a.error {
+	border: 0;
+	color:#aa4935;
+	background-color: inherit;
+}
+
 .error a {
 	background:url(../images/error-btn.png) no-repeat;
 }

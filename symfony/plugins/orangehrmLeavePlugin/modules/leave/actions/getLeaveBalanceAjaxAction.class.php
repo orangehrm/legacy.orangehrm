@@ -26,7 +26,9 @@ class getLeaveBalanceAjaxAction extends sfAction {
 
     protected $leavePeriodService;
     protected $leaveEntitlementService;
-
+    protected $workScheduleService;
+    protected $leaveAssignmentService;        
+    
     /**
      * Get leave balance for given leave type
      * Request parameters:
@@ -84,25 +86,120 @@ class getLeaveBalanceAjaxAction extends sfAction {
 
             $endDateTimeStamp = strtotime($endDate);
             
-            if ($endDateTimeStamp) {
-                // TODO: Check for entitlement availability for this period
-                // may need to call: createLeaveObjectListForAppliedRange()
-            }            
-
-            $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
-
-            $asAtDate = set_datepicker_date_format($startDate);
+            $leaveByPeriods = array();            
             
-            $result = array(
-                'balance' => $balance,
-                'asAtDate' => $asAtDate
-            );
+            if ($endDateTimeStamp && ($endDateTimeStamp > $startDateTimeStamp)) {
+                
+                $leaveParameterObject = $this->getLeaveParameterObject($empNumber, $leaveTypeId, $startDate, $endDate);
+                $leaveDays =$this->getLeaveAssignmentService()->createLeaveObjectListForAppliedRange($leaveParameterObject);
+                
+                $holidays = array(Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY);
+
+                $currentLeavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($startDate);
+                $leavePeriodNdx = 0;
+                $leaveByPeriods[$leavePeriodNdx] = array(
+                    'period' => $currentLeavePeriod,
+                    'balance' => false,
+                    'days' => array()
+                );
+                
+                foreach ($leaveDays as $k => $leave) {
+                    
+                    $leaveDate = $leave->getDate();
+                    
+                    // Get next leave period if request spans leave periods.
+                    if (strtotime($leaveDate) > strtotime($leaveByPeriods[$leavePeriodNdx]['period'][1])) {
+                        $currentLeavePeriod = $this->getLeavePeriodService()->getCurrentLeavePeriodByDate($leaveDate);
+                        $leavePeriodNdx++;
+                        $leaveByPeriods[$leavePeriodNdx] = array(
+                            'period' => $currentLeavePeriod,
+                            'balance' => false,
+                            'days' => array()
+                        );                        
+                    }
+                    
+                    if (in_array($leave->getStatus(), $holidays)) {
+                        $leaveByPeriods[$leavePeriodNdx]['days'][$leaveDate] = array('length' => 0, 'balance' => false, 
+                            'desc' => ucfirst(strtolower($leave->getTextLeaveStatus())));
+                    } else {
+                        $leaveByPeriods[$leavePeriodNdx]['days'][$leaveDate] = array('length' => 1, 'balance' => false, 'desc' => '');
+                    }
+                }                 
+            }            
+            
+            // If request spans leave periods
+            $negativeBalance = false;
+            
+            if (count($leaveByPeriods) > 0) {
+                foreach ($leaveByPeriods as $i => $leavePeriod) {
+                    $leaveBalanceObj = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, 
+                            $leavePeriod['period'][0], $leavePeriod['period'][1]);
+                    
+                    $leaveByPeriods[$i]['balance'] = $leaveBalanceObj;
+                    
+                    $leaveBalance = $leaveBalanceObj->getBalance();
+                    
+                    $days = $leavePeriod['days'];
+                    foreach ($days as $date => $leaveDateData) {
+                        $leaveDateLength = $leaveDateData['length'];
+                        if ($leaveDateLength > 0) {
+                            $leaveBalance -= $leaveDateLength;
+                            $leaveByPeriods[$i]['days'][$date]['balance'] = $leaveBalance;
+                        }
+                    }
+                    
+                    if ($leaveBalance < 0) {
+                        $negativeBalance = true;
+                    }  
+                    
+                    // localize data
+                    $leaveByPeriods[$i]['period'][0] = set_datepicker_date_format($leaveByPeriods[$i]['period'][0]);
+                    $leaveByPeriods[$i]['period'][1] = set_datepicker_date_format($leaveByPeriods[$i]['period'][1]);
+                }
+                
+                $result = array(
+                    'multiperiod' => true,
+                    'negative' => $negativeBalance,
+                    'data' => $leaveByPeriods
+                );
+            }
+             
+            if (count($leaveByPeriods) == 0 || (count($leaveByPeriods) == 1 && !$negativeBalance)) {
+                $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
+                $asAtDate = set_datepicker_date_format($startDate);
+
+                $result = array(
+                    'multiperiod' => false,
+                    'balance' => $balance,
+                    'asAtDate' => $asAtDate
+                );                
+            }
+            
             
             echo json_encode($result);
         }
 
         return sfView::NONE;
     }
+    
+    /**
+     * @param array $formValues
+     * @return LeaveParameterObject
+     */
+    protected function getLeaveParameterObject($empNumber, $leaveTypeId, $fromDate, $toDate) {
+        
+        $formValues = array();
+        
+        $formValues['txtEmpID'] = $empNumber;
+        $formValues['txtFromDate'] = $fromDate;
+        $formValues['txtToDate'] = $toDate;        
+        $formValues['txtLeaveType'] = $leaveTypeId;
+        
+        $workSchedule = $this->getWorkScheduleService()->getWorkSchedule($empNumber);        
+        $formValues['txtEmpWorkShift'] = $workSchedule->getWorkShiftLength();   
+        
+        return new LeaveParameterObject($formValues);
+    }    
 
     /**
      * @return LeavePeriodService
@@ -141,6 +238,45 @@ class getLeaveBalanceAjaxAction extends sfAction {
     public function setLeaveEntitlementService(LeaveEntitlementService $leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }
+    
+    /**
+     * Get work schedule service
+     * @return WorkScheduleService
+     */
+    public function getWorkScheduleService() {
+        if (!($this->workScheduleService instanceof WorkScheduleService)) {
+            $this->workScheduleService = new WorkScheduleService();
+        }
+        return $this->workScheduleService;
+    }
 
+    /**
+     *
+     * @param WorkScheduleService $service 
+     */
+    public function setWorkScheduleService(WorkScheduleService $service) {
+        $this->workScheduleService = $service;
+    }      
+
+    /**
+     * Get leave assignment service instance
+     * 
+     * @return LeaveAssignmentService
+     */
+    public function getLeaveAssignmentService() {
+        if (!($this->leaveAssignmentService instanceof LeaveAssignmentService)) {
+            $this->leaveAssignmentService = new LeaveAssignmentService();
+        }
+        return $this->leaveAssignmentService;
+    }
+
+    /**
+     * Set leave assignmente service instance
+     * @param LeaveAssignmentService $service 
+     */
+    public function setLeaveAssignmentService(LeaveAssignmentService $service) {
+        $this->leaveAssignmentService = $service;
+    }        
+        
 }
 

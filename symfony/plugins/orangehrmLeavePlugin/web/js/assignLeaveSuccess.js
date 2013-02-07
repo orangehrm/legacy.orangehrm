@@ -34,6 +34,7 @@ $(document).ready(function() {
         
         $('#assignleave_txtToDate').change(function() {
             toDateBlur($(this).val());
+            updateLeaveBalance();
         });          
         
         //Show From if same date
@@ -247,36 +248,91 @@ function updateLeaveBalance() {
     
     $('#popup_emp_name').text($('#assignleave_txtEmployee_empName').val());
     $('#popup_leave_type').text($('#assignleave_txtLeaveType option:selected').text()); 
+    $('#multiperiod_emp_name').text($('#assignleave_txtEmployee_empName').val());
+    $('#multiperiod_leave_type').text($('#assignleave_txtLeaveType option:selected').text());
 
     if (leaveType == "" || empId == "") {
     //$('#assignleave_leaveBalance').text('--');
     //$('#leaveBalance_details_link').remove();
     } else {
-        $('#assignleave_leaveBalance').append('');
+        $('#assignleave_leaveBalance').text('').addClass('loading_message');        
         $.ajax({
             type: 'GET',
             url: leaveBalanceUrl,
             data: '&leaveType=' + leaveType+'&empNumber=' + empId + '&startDate=' + startDate + '&endDate=' + endDate,
             dataType: 'json',
-            success: function(data) {
-                var balance = data.balance;
-                var asAtDate = data.asAtDate;
-                var balanceDays = balance.balance;
-                $('#assignleave_leaveBalance').text(balanceDays.toFixed(2))
-                .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
-                    lang_details + '</a>');
-
-                $('#balance_as_of').text(asAtDate);                       
-                $('#balance_entitled').text(Number(balance.entitled).toFixed(2));
-                $('#balance_taken').text(Number(balance.taken).toFixed(2));
-                $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));
-                $('#balance_pending').text(Number(balance.pending).toFixed(2));
-                $('#balance_adjustment').text(Number(balance.adjustment).toFixed(2));        
-                $('#balance_total').text(balanceDays.toFixed(2));
+            success: function(data) {                                
                 
-                if(Number(balance.adjustment) == 0 ){
-                    $('#container-adjustment').hide();
+                if (data.multiperiod == true) {
+                    
+                    var leavePeriods = data.data;
+                    var leavePeriodCount = leavePeriods.length;
+                    
+                    var linkTxt = data.negative ? lang_BalanceNotSufficient : lang_details;
+                    var balanceTxt = leavePeriodCount == 1 ? leavePeriods[0].balance.balance : '';
+                    var linkCss = data.negative ? ' class="error" ' : "";
+                    
+                    $('#assignleave_leaveBalance').text(balanceTxt)
+                    .append('<a href="#multiperiod_balance" data-toggle="modal" id="leaveBalance_details_link"' + linkCss + '>' + 
+                        linkTxt + '</a>');
+
+                    var html = '';
+                    
+                    var rows = 0;
+                    for (var i = 0; i < leavePeriodCount; i++) {
+                        var leavePeriod = leavePeriods[i];
+                        var days = leavePeriod['days'];
+                        var leavePeriodFirstRow = true;                        
+
+                        for (var leaveDate in days) {
+                            if (days.hasOwnProperty(leaveDate)) {
+                                var leaveDateDetails = days[leaveDate];
+                                
+                                rows++;                        
+                                var css = rows % 2 ? "even" : "odd";                                
+                                
+                                var thisLeavePeriod = leavePeriod['period'];
+                                var leavePeriodTxt = '';
+                                var leavePeriodInitialBalance = '';
+                                
+                                if (leavePeriodFirstRow) {
+                                    leavePeriodTxt = thisLeavePeriod[0] + ' - ' + thisLeavePeriod[1];
+                                    leavePeriodInitialBalance = leavePeriod.balance.balance;
+                                    leavePeriodFirstRow = false;                                    
+                                }
+                                
+                                var balanceValue = leaveDateDetails.balance === false ? leaveDateDetails.desc : leaveDateDetails.balance;
+                                
+                                html += '<tr class="' + css + '"><td>' + leavePeriodTxt + '</td><td class="right">' + leavePeriodInitialBalance +
+                                    '</td><td>' + leaveDate + '</td><td class="right">' + balanceValue + '</td></tr>';                                
+                            }
+                        }                    
+                        
+                        $('div#multiperiod_balance table.table tbody').html('').append(html);
+                    }
+                    
+                } else {
+                    var balance = data.balance;
+                    var asAtDate = data.asAtDate;
+                    var balanceDays = balance.balance;
+                    $('#assignleave_leaveBalance').text(balanceDays.toFixed(2))
+                    .append('<a href="#balance_details" data-toggle="modal" id="leaveBalance_details_link">' + 
+                        lang_details + '</a>');
+
+                    $('#balance_as_of').text(asAtDate);                       
+                    $('#balance_entitled').text(Number(balance.entitled).toFixed(2));
+                    $('#balance_taken').text(Number(balance.taken).toFixed(2));
+                    $('#balance_scheduled').text(Number(balance.scheduled).toFixed(2));
+                    $('#balance_pending').text(Number(balance.pending).toFixed(2));
+                    $('#balance_adjustment').text(Number(balance.adjustment).toFixed(2));        
+                    $('#balance_total').text(balanceDays.toFixed(2));
+
+                    if(Number(balance.adjustment) == 0 ){
+                        $('#container-adjustment').hide();
+                    }
                 }
+                
+                $('#assignleave_leaveBalance').removeClass('loading_message');                
             }
         });
     }

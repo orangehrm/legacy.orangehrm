@@ -84,6 +84,41 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
     <input type="button" class="btn" data-dismiss="modal" id="closeButton" value="<?php echo __('Ok'); ?>" />
   </div>
 </div>
+
+<!-- leave balance details HTML: Begins -->
+<div class="modal hide" id="multiperiod_balance">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><?php echo 'OrangeHRM - ' . __('Leave Balance Details'); ?></h3>
+  </div>
+  <div class="modal-body">
+      <dl class="search-params">
+        <dt><?php echo __('Employee Name');?></dt>
+        <dd id="multiperiod_emp_name"></dd>
+        <dt><?php echo __('Leave Type');?></dt>
+        <dd id="multiperiod_leave_type"></dd>        
+     </dl>
+    <table border="0" cellspacing="0" cellpadding="0" class="table">
+        <thead>
+            <tr>
+                <th><?php echo __('Leave Period');?></th>
+                <th><?php echo __('Initial Balance');?></th>
+                <th><?php echo __('Leave Date');?></th>
+                <th><?php echo __('Available Balance');?></th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr class="odd">
+                    <td></td>
+                </tr>                    
+        </tbody>       
+    </table>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="closeButton" value="<?php echo __('Ok'); ?>" />
+  </div>
+</div>
+
 <?php include_component('core', 'ohrmPluginPannel', array('location' => 'assign-leave-javascript'))?>
 <!-- leave balance details HTML: Ends -->
 
@@ -107,6 +142,7 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
     var lang_FromTimeLessThanToTime = "<?php echo __('From time should be less than To time'); ?>";
     var lang_DurationShouldBeLessThanWorkshift = "<?php echo __('Duration should be less than work shift length'); ?>";
     var lang_validEmployee = "<?php echo __(ValidationMessages::INVALID); ?>";
+    var lang_BalanceNotSufficient = "<?php echo __("Balance not sufficient");?>";
 //]]>    
 </script>    
     
