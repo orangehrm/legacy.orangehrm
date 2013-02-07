@@ -181,7 +181,7 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
                             var leavePeriodCount = leavePeriods.length;
 
                             var linkTxt = data.negative ? lang_BalanceNotSufficient : lang_details;
-                            var balanceTxt = leavePeriodCount == 1 ? leavePeriods[0].balance.balance : '';
+                            var balanceTxt = leavePeriodCount == 1 ? leavePeriods[0].balance.balance.toFixed(2) : '';
                             var linkCss = data.negative ? ' class="error" ' : "";
 
                             $('#applyleave_leaveBalance').text(balanceTxt)
@@ -209,11 +209,11 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
 
                                         if (leavePeriodFirstRow) {
                                             leavePeriodTxt = thisLeavePeriod[0] + ' - ' + thisLeavePeriod[1];
-                                            leavePeriodInitialBalance = leavePeriod.balance.balance;
+                                            leavePeriodInitialBalance = leavePeriod.balance.balance.toFixed(2);
                                             leavePeriodFirstRow = false;                                    
                                         }
 
-                                        var balanceValue = leaveDateDetails.balance === false ? leaveDateDetails.desc : leaveDateDetails.balance;
+                                        var balanceValue = leaveDateDetails.balance === false ? leaveDateDetails.desc : leaveDateDetails.balance.toFixed(2);
 
                                         html += '<tr class="' + css + '"><td>' + leavePeriodTxt + '</td><td class="right">' + leavePeriodInitialBalance +
                                             '</td><td>' + leaveDate + '</td><td class="right">' + balanceValue + '</td></tr>';                                
