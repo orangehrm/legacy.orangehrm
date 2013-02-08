@@ -295,4 +295,27 @@ class SystemUserDao extends BaseDao {
         
     }
     
+     public function getEmployeesByUserRole($roleName, $includeInactive = false, $includeTerminated = false) {
+         
+        try {
+            $query = Doctrine_Query::create()
+                   ->from('Employee e')
+                   ->innerJoin('e.SystemUser s')
+                   ->leftJoin('s.UserRole r')
+                   ->where('r.name = ?', $roleName);
+
+           if (!$includeInactive) {
+               $query->andWhere('s.deleted = 0');
+           }
+
+           if (!$includeTerminated) {
+               $query->andWhere('e.termination_id IS NULL');
+           }
+
+           return $query->execute();        
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }
+     }    
+    
 }
