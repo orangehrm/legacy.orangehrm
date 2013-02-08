@@ -592,27 +592,35 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         $this->manager = new TestBasicUserRoleManager();
         $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');
         
-        // 0 - Admin (also ESS?)
+        // id is not preserved in loadObjectList()
+        $users[0]->id = 11;
+        
+        // 0 - Admin (also ESS?)        
         $roles = $this->manager->getUserRolesPublic($users[0]);
         $this->compareUserRoles(array('Admin', 'ESS'), $roles);
         
         // 1 - ESS, Supervisor   
+        $users[1]->id = 12;
         $roles = $this->manager->getUserRolesPublic($users[1]);
         $this->compareUserRoles(array('ESS', 'Supervisor'), $roles);
         
-        // 2 - ESS
+        // 2 - ESS        
+        $users[2]->id = 13;             
         $roles = $this->manager->getUserRolesPublic($users[2]);
         $this->compareUserRoles(array('ESS'), $roles);
         
         // 3 - Admin, Supervisor
+        $users[0]->id = 14;
         $roles = $this->manager->getUserRolesPublic($users[3]);
         $this->compareUserRoles(array('Admin', 'Supervisor', 'ESS'), $roles);
         
         // 4 - ESS
+        $users[3]->id = 15;
         $roles = $this->manager->getUserRolesPublic($users[4]);
         $this->compareUserRoles(array('ESS'), $roles);
         
         // 5 - Admin (Default admin) - does not have ESS role
+        $users[4]->id = 16;
         $roles = $this->manager->getUserRolesPublic($users[5]);
         $this->compareUserRoles(array('Admin'), $roles);       
     }
