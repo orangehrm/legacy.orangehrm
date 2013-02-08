@@ -15,6 +15,8 @@ abstract class PluginLeave extends BaseLeave {
     const LEAVE_STATUS_LEAVE_TYPE_DELETED_TEXT = 'LEAVE TYPE DELETED';
     
     const LEAVE_STATUS_LEAVE_PENDING_APPROVAL_TEXT = 'Pending Approval';
+    
+    const PENDING_APPROVAL_STATUS_PREFIX = 'PENDING APPROVAL';
 
     private static $leaveStatusText = array(
         self::LEAVE_STATUS_LEAVE_REJECTED => 'REJECTED',
@@ -106,6 +108,17 @@ abstract class PluginLeave extends BaseLeave {
         return $leaveStatuses;
     }
 
+    public static function getPendingLeaveStatusList() {
+        $pendingStatusList = array();
+        $statusList = self::getLeaveStatusListFromDb();
+        foreach($statusList as $key => $status) {
+            if (0 === strpos($status, self::PENDING_APPROVAL_STATUS_PREFIX)) {
+                $pendingStatusList[$key] = $status;
+            }
+        }
+        
+        return $pendingStatusList;
+    }
     public function isNonWorkingDay() {
         if (($this->getLengthHours() == 0.00) && in_array($this->getStatus(), self::$nonWorkingDayStatuses)) {
             return true;

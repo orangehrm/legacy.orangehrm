@@ -84,7 +84,7 @@ class LeaveListForm extends sfForm {
         if ($this->mode == self::MODE_MY_LEAVE_LIST) {
             $defaultStatuses = array_keys($leaveStatusChoices);
         } else {
-            $defaultStatuses = array(Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL);
+            $defaultStatuses = array_keys(Leave::getPendingLeaveStatusList());
         }
         
         $widgets['chkSearchFilter'] = new ohrmWidgetCheckboxGroup(
