@@ -11,6 +11,10 @@ New & Changed Features for OrangeHRM ver 3.0
     When adding subscribers to email notifications, display notification name in heading.
 
     Bug Fixes
+    0000415 - [recruitmentApply] - When have a long sentence for description of vacancy, it display in one line all over the page till end
+    0000414 - Review Period-> When date format is long,it displayed in 3 lines
+    0000413 - [ Time -> Timesheet]No records Found Message is not converted in view timesheet
+    0000412 - [AddJobVacancy] - 'Should be less than 40000 characters' message appears inside text box
     0000411 - Employee list: Supervisor name doesn't show the middle name in the list
     0000410 - [viewJobDetails] - When take the mouse over the record, it doesn't get selected
     0000409 - [CompanyStructure] - Validation messages are not cleared properly.
@@ -29,8 +33,14 @@ New & Changed Features for OrangeHRM ver 3.0
     0000396 - [Admin/saveProject]- When click Edit , it take a long time for 'Add Customer' link to be appeared.
     0000395 - Reset doesn't clear the validation message of test mail address field in email configuration.
     0000394 - Login Details, Status * should be 'Enable' by default
-    0000413 - [ Time -> Timesheet]No records Found Message is not converted in view timesheet
-    0000412 - [AddJobVacancy] - 'Should be less than 40000 characters' message appears inside text box
+    0000390 - Direct deposit Detail-> Account Number is not properly display when add special values
+    0000389 - Job title is not properly display in Add KPI and KPI List
+    0000388 - [XSS Injection] - XSS attacks is possible for Performance module
+    0000387 - [Performance] - Search Performance Review page alignment issue
+    0000386 - [XSS Injection] - It is possible to have XSS injection in Add Project form
+    0000385 - [XSS Injection] - Possible in Admin->Project Info-Projects search page
+    0000384 - [XSS Injection] - XSS injection is possible for employee name
+    0000383 - [XSS Injection] - XSS injection is possible for Number field in Immigration
 
 New & Changed Features for OrangeHRM ver  2.7.1-rc.1
 
