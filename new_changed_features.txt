@@ -1,14 +1,36 @@
-New & Changed Features for OrangeHRM ver  
+New & Changed Features for OrangeHRM ver 3.0
+
+    New Features
+    ------------
+    All UI's converted to new UI theme
+    New implementation of open source leave module
+
     Changes
     -------
     Email log is moved to symfony/log/email.log
     When adding subscribers to email notifications, display notification name in heading.
 
-New & Changed Features for OrangeHRM ver  3.0-rc.1
-    New Features
-    ------------
-    All UI's converted to new UI theme
-    New implementation of open source leave module
+    Bug Fixes
+    0000411 - Employee list: Supervisor name doesn't show the middle name in the list
+    0000410 - [viewJobDetails] - When take the mouse over the record, it doesn't get selected
+    0000409 - [CompanyStructure] - Validation messages are not cleared properly.
+    0000408 - Custom Fields: Delete confirmation pop-up: Two sentences looks like a broken sentence
+    0000407 - [Pim->listCustomFields]- Drop down values for custom fields should be in the tab order in PIM
+    0000406 - [PIM -> Immigration] - "Assigned Immigration Documents" need to be renamed as "Assigned Immigration Records"
+    0000405 - [PIM->Memberships] - Membership – Tab should be renamed as Memberships.
+    0000404 - [PIM -> Attachment Comment] - Length validation is appearing in middle of the text box
+    0000403 - [Recruitment/jobInterview] - Required validation appears near "Interviewer Name" text box.
+    0000402 - [Recruitment/jobInterview] - "Type for hints" help text is missing in newly added text box.
+    0000401 - [Performance/Review] - "Reject" and "Approve" buttons in detailed review form is not enabled in view mode
+    0000400 - [Performance/Review] - Submit Button is not enabled in detailed review form view mode
+    0000399 - Unicode characters are displayed not as it is in following lists in PIM > Qualification
+    0000398 - Pagination is not implemented in Admin > Project Info > Project list
+    0000397 - [Performance/saveReview]- "When save review without having KPI's defined for job title,error message is not correct
+    0000396 - [Admin/saveProject]- When click Edit , it take a long time for 'Add Customer' link to be appeared.
+    0000395 - Reset doesn't clear the validation message of test mail address field in email configuration.
+    0000394 - Login Details, Status * should be 'Enable' by default
+    0000413 - [ Time -> Timesheet]No records Found Message is not converted in view timesheet
+    0000412 - [AddJobVacancy] - 'Should be less than 40000 characters' message appears inside text box
 
 New & Changed Features for OrangeHRM ver  2.7.1-rc.1
 
