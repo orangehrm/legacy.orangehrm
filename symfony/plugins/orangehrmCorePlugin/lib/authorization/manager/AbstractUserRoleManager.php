@@ -61,6 +61,10 @@ abstract class AbstractUserRoleManager {
     public abstract function areEntitiesAccessible($entityType, $entityIds, $operation = null, 
             $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array());
     
+    public abstract function getAccessibleEntityProperties($entityType, $properties = array(), 
+            $orderField = null, $orderBy = null, $rolesToExclude = array(), 
+            $rolesToInclude = array(), $requiredPermissions = array());
+            
     public abstract function getAccessibleModules();
     
     public abstract function getAccessibleMenuItemDetails();
@@ -72,6 +76,8 @@ abstract class AbstractUserRoleManager {
     public abstract function getScreenPermissions($module, $screen);
     
     public abstract function isFieldAccessible($module, $screen, $field);
+    
+    public abstract function getEmployeesWithRole($roleName, $entities = array());        
     
     protected abstract function getUserRoles(SystemUser $user);    
     

@@ -4,6 +4,7 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
 
     protected $leaveEntitlementService;
     protected $dispatcher;
+    protected $assignWorkflowItem;
 
     /**
      * Get LeaveEntitlementService
@@ -165,7 +166,10 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
      * @param type $leaveDate
      * @return type 
      */
-    public function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate) {
+    public function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate, LeaveParameterObject $leaveAssignmentData) {
+        
+        // TODO: Change here for leave workflow
+        
         $status = null;
 
         if ($isWeekend) {
@@ -176,13 +180,58 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
             return Leave::LEAVE_STATUS_LEAVE_HOLIDAY;
         }
 
-        if (strtotime($leaveDate) < strtotime(date('Y-m-d'))) {
-            $status = Leave::LEAVE_STATUS_LEAVE_TAKEN;
-        } else {
-            $status = Leave::LEAVE_STATUS_LEAVE_APPROVED;
+        if (is_null($status)) {
+            
+            $workFlowItem = $this->getWorkflowItemForAssignAction($leaveAssignmentData);
+            if (!is_null($workFlowItem)) {
+                $status = Leave::getLeaveStatusForText($workFlowItem->getResultingState());
+            } else {                
+                throw new LeaveAllocationServiceException('Not Allowed to Assign Leave to Selected Employee!');
+            }                        
+            
+            if (($status == Leave::LEAVE_STATUS_LEAVE_APPROVED) && (strtotime($leaveDate) < strtotime(date('Y-m-d')))) {
+                $status = Leave::LEAVE_STATUS_LEAVE_TAKEN;
+            }
         }
-
+        
         return $status;
     }
+    
+    protected function getWorkflowItemForAssignAction(LeaveParameterObject $leaveAssignmentData) {
+        
+        if (is_null($this->assignWorkflowItem)) {
+
+            $empNumber = $leaveAssignmentData->getEmployeeNumber();            
+            $workFlowItems = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
+                    'INITIAL', array(), array(), array('Employee' => $empNumber));
+
+            // get apply action
+            foreach ($workFlowItems as $item) {
+                if ($item->getAction() == 'ASSIGN') {
+                    $this->assignWorkflowItem = $item;
+                    break;
+                }
+            }        
+        }
+        
+        if (is_null($this->assignWorkflowItem)) {
+            $this->getLogger()->error("No workflow item found for ASSIGN leave action!");
+        }
+        
+        return $this->assignWorkflowItem;
+    }    
+    
+    /**
+     * Get Logger instance. Creates if not already created.
+     *
+     * @return Logger
+     */
+    protected function getLogger() {
+        if (is_null($this->logger)) {
+            $this->logger = Logger::getLogger('leave.LeaveAssignmentService');
+        }
+
+        return($this->logger);
+    }     
 
 }

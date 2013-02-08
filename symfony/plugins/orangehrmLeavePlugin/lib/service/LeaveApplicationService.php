@@ -14,6 +14,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
     protected $leaveEntitlementService;
     protected $dispatcher;
     protected $logger;
+    protected $applyWorkflowItem = null;
     
     /**
      * Get LeaveEntitlementService
@@ -149,9 +150,8 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
 //                        $this->getLeaveRequestService()->modifyOverlapLeaveRequest($leaveRequest, $leaves);
 //                    }
 
-                    //sending leave apply notification
-                    $workFlow = $this->getWorkflowService()
-                             ->getWorkflowItemByStateActionAndRole(WorkflowStateMachine::FLOW_LEAVE, 'INITIAL', 'APPLY', 'ESS');
+                    //sending leave apply notification                   
+                    $workFlow = $this->getWorkflowItemForApplyAction($leaveAssignmentData);
                     
                     $employee = $this->getLoggedInEmployee();
                     $eventData = array('request' => $leaveRequest, 'days' => $leaves, 'empNumber' => $employee->getEmpNumber(),
@@ -187,9 +187,10 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
      * @todo Check usage of $leaveDate
      * 
      */
-    public function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate) {
-        $status = Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL;
+    public function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate, LeaveParameterObject $leaveAssignmentData) {
 
+        $status = null;
+        
         if ($isWeekend) {
             $status = Leave::LEAVE_STATUS_LEAVE_WEEKEND;
         }
@@ -198,7 +199,42 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
             $status = Leave::LEAVE_STATUS_LEAVE_HOLIDAY;
         }
 
+        if (is_null($status)) {
+            
+            $workFlowItem = $this->getWorkflowItemForApplyAction($leaveAssignmentData);
+            
+            if (!is_null($workFlowItem)) {
+                $status = Leave::getLeaveStatusForText($workFlowItem->getResultingState());
+            } else {                
+                $status = Leave::LEAVE_STATUS_LEAVE_PENDING_APPROVAL;     
+            }
+        }
+
         return $status;
+    }
+    
+    protected function getWorkflowItemForApplyAction(LeaveParameterObject $leaveAssignmentData) {
+        
+        if (is_null($this->applyWorkflowItem)) {
+
+            $empNumber = $leaveAssignmentData->getEmployeeNumber();            
+            $workFlowItems = $this->getUserRoleManager()->getAllowedActions(WorkflowStateMachine::FLOW_LEAVE, 
+                    'INITIAL', array(), array(), array('Employee' => $empNumber));
+
+            // get apply action
+            foreach ($workFlowItems as $item) {
+                if ($item->getAction() == 'APPLY') {
+                    $this->applyWorkflowItem = $item;
+                    break;
+                }
+            }        
+        }
+        
+        if (is_null($this->applyWorkflowItem)) {
+            $this->getLogger()->error("No workflow item found for APPLY leave action!");
+        }
+        
+        return $this->applyWorkflowItem;
     }
 
     /**

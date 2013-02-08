@@ -25,6 +25,7 @@
 class LeaveEmailProcessor implements orangehrmMailProcessor {
     
     protected $employeeService;
+    protected $userRoleManager;
     protected $logger;
     
     /**
@@ -48,6 +49,25 @@ class LeaveEmailProcessor implements orangehrmMailProcessor {
     public function setEmployeeService($employeeService) {
         $this->employeeService = $employeeService;
     }
+    
+    /**
+     * Get User role manager instance
+     * @return AbstractUserRoleManager
+     */
+    public function getUserRoleManager() {
+        if (!($this->userRoleManager instanceof AbstractUserRoleManager)) {
+            $this->userRoleManager = UserRoleManagerFactory::getUserRoleManager();
+        }
+        return $this->userRoleManager;
+    }
+
+    /**
+     * Set user role manager instance
+     * @param AbstractUserRoleManager $userRoleManager
+     */
+    public function setUserRoleManager(AbstractUserRoleManager $userRoleManager) {
+        $this->userRoleManager = $userRoleManager;
+    }   
     
     public function getReplacements($data) {
 
@@ -237,9 +257,23 @@ class LeaveEmailProcessor implements orangehrmMailProcessor {
                     $recipients = $this->getSelf($data['days'][0]->getEmpNumber());
                 }
                 break;            
+            default:
+                if (isset($data['days'][0])) {
+                    $recipients = $this->getEmployeesWithRole($role, $data['days'][0]->getEmpNumber());
+                }
+                break;
         }
 
         return $recipients;
+    }
+    
+    protected function getEmployeesWithRole($role, $empNumber) {
+        
+        $entities = array('Employee' => $empNumber);
+        $employees = $this->getUserRoleManager()->getEmployeesWithRole($role, $entities);
+        
+        return $employees;
+            
     }
     
     protected function getSelf($empNumber) {

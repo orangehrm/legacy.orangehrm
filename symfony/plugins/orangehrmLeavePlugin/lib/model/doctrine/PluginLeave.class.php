@@ -45,42 +45,42 @@ abstract class PluginLeave extends BaseLeave {
     }
     public function getTextLeaveStatus() {
         
-        $statusList = self::getLeaveStatusListFromDb();
-        
-        
         $status = $this->getStatus();
-        if (array_key_exists($status, self::$leaveStatusText)) {            
-            return self::$leaveStatusText[$status];
-        }
         
         // check in user defined statuses
         $statusList = self::getLeaveStatusListFromDb();
         if (array_key_exists($status, $statusList)) {            
             return $statusList[$status];
         }
+                        
+        if (array_key_exists($status, self::$leaveStatusText)) {            
+            return self::$leaveStatusText[$status];
+        }        
         
         return '';
     }
     
     public static function getTextForLeaveStatus($status) {
-        if (array_key_exists($status, self::$leaveStatusText)) {            
-            return self::$leaveStatusText[$status];
-        }
         
         // check in user defined statuses
         $statusList = self::getLeaveStatusListFromDb();
         if (array_key_exists($status, $statusList)) {            
             return $statusList[$status];
         }        
+        
+        if (array_key_exists($status, self::$leaveStatusText)) {            
+            return self::$leaveStatusText[$status];
+        }        
 
         return '';        
     }
     
     public static function getLeaveStatusForText($status) {
-        $statusInt = array_search($status, self::$leaveStatusText);
+        $statusList = self::getLeaveStatusListFromDb();
+        $statusInt = array_search($status, $statusList);
+            
         if ($statusInt === false) {
-            $statusList = self::getLeaveStatusListFromDb();
-            $statusInt = array_search($status, $statusList);
+            $statusInt = array_search($status, self::$leaveStatusText);
         }
         
         if ($statusInt === false) {

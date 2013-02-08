@@ -62,7 +62,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                     }
 
                     foreach ($configuraiton as $roleName => $roleObj) {
-                        $this->userRoleClasses[$roleName] = new $roleObj['class']($this, $roleName);
+                        $this->userRoleClasses[$roleName] = new $roleObj['class']($roleName, $this);
                     }
                 }
             }
@@ -83,7 +83,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                     }
 
                     foreach ($configuraiton as $roleName => $roleObj) {
-                        $this->userRoleClasses[$roleName] = new $roleObj['class']($this, $roleName ,$this->userRoleClasses[$roleName]);
+                        $this->userRoleClasses[$roleName] = new $roleObj['class']($roleName, $this, $this->userRoleClasses[$roleName]);
                     }
                 }
             }
@@ -383,6 +383,17 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         }
 
         return $accessible;
+    }
+    
+    public function getEmployeesWithRole($roleName, $entities = array()) {
+        
+        $employees = array();
+        $roleClass = $this->getUserRoleClass($roleName);
+        if (!empty($roleClass)) {
+            $employees = $roleClass->getEmployeesWithRole($entities);
+        }
+        
+        return $employees;
     }
 
     public function getAccessibleModules() {

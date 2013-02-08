@@ -11,7 +11,8 @@ abstract class AbstractLeaveAllocationService extends BaseService {
     protected $overlapLeave;
     private $workScheduleService;
     protected $workflowService;
-    
+    protected $userRoleManager;
+        
     public function getWorkflowService() {
         if (empty($this->workflowService)) {
             $this->workflowService = new AccessFlowStateMachineService();
@@ -52,7 +53,7 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      * @param bool $isWeekend
      * @return int
      */
-    protected abstract function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate);
+    protected abstract function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate, LeaveParameterObject $leaveAssignmentData);
 
     /**
      *
@@ -167,6 +168,25 @@ abstract class AbstractLeaveAllocationService extends BaseService {
     public function setHolidayService(HolidayService $service) {
         $this->holidayService = $service;
     }
+    
+    /**
+     * Get User role manager instance
+     * @return AbstractUserRoleManager
+     */
+    public function getUserRoleManager() {
+        if (!($this->userRoleManager instanceof AbstractUserRoleManager)) {
+            $this->userRoleManager = UserRoleManagerFactory::getUserRoleManager();
+        }
+        return $this->userRoleManager;
+    }
+
+    /**
+     * Set user role manager instance
+     * @param AbstractUserRoleManager $userRoleManager
+     */
+    public function setUserRoleManager(AbstractUserRoleManager $userRoleManager) {
+        $this->userRoleManager = $userRoleManager;
+    }    
     
     /**
      *
@@ -352,7 +372,7 @@ abstract class AbstractLeaveAllocationService extends BaseService {
             $leave->setStartTime(($leaveAssignmentData->getFromTime() != '') ? $leaveAssignmentData->getFromTime() : '00:00');
             $leave->setEndTime(($leaveAssignmentData->getToTime() != '') ? $leaveAssignmentData->getToTime() : '00:00');
             $leave->setLengthHours($this->calculateTimeDeference($leaveAssignmentData, $isWeekend, $isHoliday, $isHalfday, $isHalfDayHoliday));
-            $leave->setStatus($this->getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate));
+            $leave->setStatus($this->getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate, $leaveAssignmentData));
 
             array_push($leaveList, $leave);
         }

@@ -45,7 +45,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header3->populateFromArray(array(
             'name' => 'Leave Type',
-            'width' => '12%',
+            'width' => '10%',
             'isSortable' => false,
             'elementType' => 'label',
             'textAlignmentStyle' => 'left',
@@ -71,7 +71,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header5->populateFromArray(array(
             'name' => 'Status',
-            'width' => '9%',
+            'width' => '12%',
             'isSortable' => false,
             'elementType' => 'link',
             'filters' => array('I18nCellFilter' => array()
@@ -90,7 +90,7 @@ class LeaveListConfigurationFactory extends ohrmListConfigurationFactory {
 
         $header6->populateFromArray(array(
             'name' => 'Comments',
-            'width' => '18%',
+            'width' => '17%',
             'isSortable' => false,
             'elementType' => 'leaveComment',
             'textAlignmentStyle' => 'left',

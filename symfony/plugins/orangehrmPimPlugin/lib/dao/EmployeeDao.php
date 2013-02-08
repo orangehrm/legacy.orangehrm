@@ -1087,7 +1087,7 @@ class EmployeeDao extends BaseDao {
      * @return Array of SubordinateId List
      * @throws DaoException
      */
-    public function getSubordinateIdListBySupervisorId($supervisorId, $includeChain = false, $supervisorIdStack = array ()) {
+    public function getSubordinateIdListBySupervisorId($supervisorId, $includeChain = false, $supervisorIdStack = array (), $maxDepth = NULL, $depth = 1) {
         
         try {
             $employeeIdList = array();
@@ -1103,10 +1103,11 @@ class EmployeeDao extends BaseDao {
             
             foreach ($subordinates as $subordinate) {
                 array_push($employeeIdList, $subordinate['erep_sub_emp_number']);
-                if ($includeChain) {
+                
+                if ($includeChain || (!is_null($maxDepth) && ($depth < $maxDepth))) {
                     if (!in_array($subordinate['erep_sub_emp_number'], $supervisorIdStack)) {
                         $supervisorIdStack[] = $subordinate['erep_sub_emp_number'];
-                        $subordinateIdList = $this->getSubordinateIdListBySupervisorId($subordinate['erep_sub_emp_number'], $includeChain, $supervisorIdStack);
+                        $subordinateIdList = $this->getSubordinateIdListBySupervisorId($subordinate['erep_sub_emp_number'], $includeChain, $supervisorIdStack, $maxDepth, $depth + 1);
                         if (count($subordinateIdList) > 0) {
                             foreach ($subordinateIdList as $id) {
                                 array_push($employeeIdList, $id);
@@ -1185,7 +1186,8 @@ class EmployeeDao extends BaseDao {
      * 
      * @todo Use a parameter object
      */
-    public function getSubordinatePropertyListBySupervisorId($supervisorId, $properties, $includeChain = false, $orderField, $orderBy, $includeTerminated = false, $supervisorIdStack = array()) {
+    public function getSubordinatePropertyListBySupervisorId($supervisorId, $properties, $includeChain = false, $orderField = NULL, 
+            $orderBy = NULL, $includeTerminated = false, $supervisorIdStack = array(), $maxDepth = NULL, $depth = 1) {
 
         try {
 
@@ -1213,10 +1215,12 @@ class EmployeeDao extends BaseDao {
             $subordinates =  $q->fetchArray();
             foreach ($subordinates as $subordinate) {
                 $employeePropertyList[$subordinate['subordinateId']] = $subordinate['subordinate'];
-                if ($subordinate['isSupervisor'] && $includeChain) {
+                
+                if ($subordinate['isSupervisor'] && ($includeChain || (!is_null($maxDepth) && ($depth < $maxDepth))) ) {
                     if (!in_array($subordinate['subordinateId'], $supervisorIdStack)) {
                         $supervisorIdStack[] = $subordinate['subordinateId'];
-                        $subordinatePropertyList = $this->getSubordinatePropertyListBySupervisorId($subordinate['subordinateId'], $properties, $includeChain, $orderField, $orderBy, $includeTerminated, $supervisorIdStack);
+                        $subordinatePropertyList = $this->getSubordinatePropertyListBySupervisorId($subordinate['subordinateId'], $properties, 
+                                $includeChain, $orderField, $orderBy, $includeTerminated, $supervisorIdStack, $maxDepth, $depth - 1);
                         if (count($subordinatePropertyList) > 0) {
                             foreach ($subordinatePropertyList as $key => $value) {
                                 $employeePropertyList[$key] = $value;

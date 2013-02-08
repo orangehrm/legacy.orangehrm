@@ -207,4 +207,12 @@ class UnitTestUserRoleManager extends AbstractUserRoleManager {
     protected function isActionAllowed($workFlowId, $state, $action, $rolesToExclude = array(), $rolesToInclude = array(), $entities = array()) {
         
     }
+
+    public function getAccessibleEntityProperties($entityType, $properties = array(), $orderField = null, $orderBy = null, $rolesToExclude = array(), $rolesToInclude = array(), $requiredPermissions = array()) {
+        
+    }
+
+    public function getEmployeesWithRole($roleName, $entities = array()) {
+        
+    }
 }

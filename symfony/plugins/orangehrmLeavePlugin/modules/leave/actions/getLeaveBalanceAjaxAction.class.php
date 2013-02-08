@@ -26,7 +26,7 @@ class getLeaveBalanceAjaxAction extends sfAction {
 
     protected $leaveEntitlementService;
     protected $workScheduleService;
-    protected $leaveAssignmentService;        
+    protected $leaveApplicationService;        
     
     /**
      * Get leave balance for given leave type
@@ -90,7 +90,7 @@ class getLeaveBalanceAjaxAction extends sfAction {
             if ($endDateTimeStamp && ($endDateTimeStamp > $startDateTimeStamp)) {
                 
                 $leaveParameterObject = $this->getLeaveParameterObject($empNumber, $leaveTypeId, $startDate, $endDate);
-                $leaveDays =$this->getLeaveAssignmentService()->createLeaveObjectListForAppliedRange($leaveParameterObject);
+                $leaveDays =$this->getLeaveApplicationService()->createLeaveObjectListForAppliedRange($leaveParameterObject);
                 
                 $holidays = array(Leave::LEAVE_STATUS_LEAVE_WEEKEND, Leave::LEAVE_STATUS_LEAVE_HOLIDAY);
 
@@ -246,23 +246,23 @@ class getLeaveBalanceAjaxAction extends sfAction {
     }      
 
     /**
-     * Get leave assignment service instance
+     * Get leave application service instance
      * 
-     * @return LeaveAssignmentService
+     * @return LeaveApplicationService
      */
-    public function getLeaveAssignmentService() {
-        if (!($this->leaveAssignmentService instanceof LeaveAssignmentService)) {
-            $this->leaveAssignmentService = new LeaveAssignmentService();
+    public function getLeaveApplicationService() {
+        if (!($this->leaveApplicationService instanceof LeaveApplicationService)) {
+            $this->leaveApplicationService = new LeaveApplicationService();
         }
-        return $this->leaveAssignmentService;
+        return $this->leaveApplicationService;
     }
 
     /**
-     * Set leave assignmente service instance
-     * @param LeaveAssignmentService $service 
+     * Set leave application service instance
+     * @param LeaveApplicationService $service 
      */
-    public function setLeaveAssignmentService(LeaveAssignmentService $service) {
-        $this->leaveAssignmentService = $service;
+    public function setLeaveApplicationService(LeaveApplicationService $service) {
+        $this->leaveApplicationService = $service;
     }        
         
 }

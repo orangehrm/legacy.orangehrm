@@ -984,6 +984,19 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         
         $this->assertTrue(!$isAllowed);
     }
+    
+    public function testGetEmployeesWithRole() {
+        $employees = $this->manager->getEmployeesWithRole('Admin');
+        $this->assertEquals(2, count($employees));
+        
+        $expected = array(1, 4);
+        foreach ($employees as $employee) {
+            $id = array_search($employee->getEmpNumber(), $expected);
+            $this->assertTrue($id !== false);
+            unset($expected[$id]);
+        }
+        $this->assertEquals(0, count($expected));
+    }
 }
 
 /* Extend class to get access to protected method */
