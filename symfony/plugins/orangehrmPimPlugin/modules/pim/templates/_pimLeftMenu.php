@@ -140,7 +140,7 @@ if($empNumber == sfContext::getInstance()->getUser()->getAttribute('auth.empNumb
         ?>        
             <li<?php echo getListClassHtml('viewMemberships'); ?>><a href="<?php echo url_for('pim/viewMemberships?empNumber=' . $empNumber);?>"><?php echo __("Memberships"); ?></a></li>
         <?php endif; ?>
-    
+            <?php include_component('core', 'ohrmPluginPannel', array('location' => 'pim_left_menu_bottom')); ?>
     </ul>
 
 </div> <!-- sidebar -->
