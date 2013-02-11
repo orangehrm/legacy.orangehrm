@@ -56,6 +56,13 @@ abstract class AbstractLeaveAllocationService extends BaseService {
     protected abstract function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate, LeaveParameterObject $leaveAssignmentData);
 
     /**
+     * Get Logger instance. Creates if not already created.
+     *
+     * @return Logger
+     */
+    protected abstract function getLogger();
+    
+    /**
      *
      * @return LeaveRequestService
      */
@@ -255,16 +262,26 @@ abstract class AbstractLeaveAllocationService extends BaseService {
         $fromDate = $leaveAssignmentData->getFromDate();
         $toDate = $leaveAssignmentData->getToDate();
         
+        $logger = $this->getLogger();
+        
         if ($fromDate == $toDate) {
             $totalDuration = $this->getLeaveRequestService()->getTotalLeaveDuration($empNumber, $fromDate);
             $workShiftLength = $this->getWorkShiftDurationForEmployee($empNumber);
             $totalLeaveTime = $leaveAssignmentData->getLeaveTotalTime();
-            
+
+            if ($logger->isDebugEnabled()) {
+                $logger->debug("fromDate=$fromDate, toDate=$toDate, totalDuration=$totalDuration, " . 
+                        "workShiftLength=$workShiftLength, totalLeaveTime=$totalLeaveTime");                            
+            }
+
             // We only show workshift exceeded warning for partial leave days (length < workshift)
             
-            if (($totalDuration < $workShiftLength) && ($totalLeaveTime < $workShiftLength) &&
-                ($totalDuration + $totalLeaveTime) > $workShiftLength) {
+            if (($totalDuration + $totalLeaveTime) > $workShiftLength) {
 
+                if ($logger->isDebugEnabled()) {
+                    $logger->debug('Workshift length exceeded!');
+                }
+                
                 $dateRange = new DateRange();
                 $dateRange->setFromDate($fromDate);
                 $dateRange->setToDate($fromDate);
@@ -276,9 +293,12 @@ abstract class AbstractLeaveAllocationService extends BaseService {
                 $leaveRequests = $this->getLeaveRequestService()->searchLeaveRequests($parameter);
 
                 if (count($leaveRequests['list']) > 0) {
+                    $overlapLeave = array();                    
                     foreach ($leaveRequests['list'] as $leaveRequest) {
-                        $this->overlapLeaves[] = $leaveRequest->getLeave();
+                        $overlapLeave = $leaveRequest->getLeave();
                     }
+                    
+                    $this->setOverlapLeave($overlapLeave);
                 }
 
                 return true;

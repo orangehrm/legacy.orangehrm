@@ -56,14 +56,15 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
             throw new LeaveAllocationServiceException('Invalid Employee');
         }
 
+        if ($this->hasOverlapLeave($leaveAssignmentData)) {
+            return false;
+        }
+        
         if ($this->applyMoreThanAllowedForADay($leaveAssignmentData)) {
             throw new LeaveAllocationServiceException('Failed to Assign: Work Shift Length Exceeded');
-        } else {
-            if (!$this->hasOverlapLeave($leaveAssignmentData)) {
-                return $this->saveLeaveRequest($leaveAssignmentData);
-//                return true;
-            }
         }
+                
+        return $this->saveLeaveRequest($leaveAssignmentData);
     }
 
     /**

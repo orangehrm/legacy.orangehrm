@@ -63,16 +63,15 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
      */
     public function applyLeave(LeaveParameterObject $leaveAssignmentData) {
 
+        if ($this->hasOverlapLeave($leaveAssignmentData)) {
+            return false;
+        }
+                
         if ($this->applyMoreThanAllowedForADay($leaveAssignmentData)) {
             throw new LeaveAllocationServiceException('Failed to Submit: Work Shift Length Exceeded');
         }
 
-        if (!$this->hasOverlapLeave($leaveAssignmentData)) {
-            return $this->saveLeaveRequest($leaveAssignmentData);
-        }
-        
-        return false;
-        
+        return $this->saveLeaveRequest($leaveAssignmentData);        
     }
 
     /**
