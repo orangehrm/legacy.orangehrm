@@ -5382,7 +5382,15 @@
    <trans-unit id="1177">
     <source>Balance not sufficient</source>
     <target>Balance not sufficient</target>
-   </trans-unit>                                                                                               
+   </trans-unit>     
+   <trans-unit id="1178">
+    <source>Email Configuration</source>
+    <target>Email Configuration</target>
+   </trans-unit>  
+   <trans-unit id="1179">
+    <source>Email Subscriptions</source>
+    <target>Email Subscriptions</target>
+   </trans-unit>                                                                                                                                                                                                                                                                                                                                                                                      
   </body>
  </file>
 </xliff>

@@ -190,8 +190,8 @@ class MenuService {
         
     }
     
-    public function enableModuleMenuItems($moduleName) {
-        return $this->getMenuDao()->enableModuleMenuItems($moduleName);
+    public function enableModuleMenuItems($moduleName, $menuTitles = array()) {
+        return $this->getMenuDao()->enableModuleMenuItems($moduleName, $menuTitles);
     }
 
     private function _extractMenuItemToArray(MenuItem $menuItem) {

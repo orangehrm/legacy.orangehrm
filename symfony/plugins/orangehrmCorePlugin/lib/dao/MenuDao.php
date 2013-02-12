@@ -61,7 +61,7 @@ class MenuDao {
         
     }
     
-    public function enableModuleMenuItems($moduleName) {
+    public function enableModuleMenuItems($moduleName, $menuTitles = array()) {
         
         try {
             
@@ -71,7 +71,9 @@ class MenuDao {
                     ->leftJoin('sc.Module mo')
                     ->andWhere('mo.name = ?', $moduleName)
                     ->andWhere('mi.status = ?', MenuItem::STATUS_DISABLED);
-
+            if (!empty($menuTitles)) {
+                $query->andWhereIn('mi.menu_title', $menuTitles);
+            }
             $menuItemList = $query->execute();
             $i = 0;
             

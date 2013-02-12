@@ -142,6 +142,38 @@ class MenuDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('Apply', $menuItemList[9]->getMenuTitle());
         
     }    
+    
+    public function testEnableModuleMenuItems() {
+        $conn = Doctrine_Manager::connection()->getDbh();
+        $statement = $conn->prepare('UPDATE ohrm_menu_item SET status = 0 WHERE parent_id IN (12, 13)');
+        $this->assertTrue($statement->execute());
+        
+        // Items with screen_id NULL are not enabled (because they are not linked to a screen and hense to a module)
+        $count = $this->menuDao->enableModuleMenuItems('leave');
+        $this->assertEquals(7, $count);
+
+        $statement = $conn->prepare('SELECT count(*) FROM ohrm_menu_item WHERE status = 0 AND parent_id IN (12, 13) AND screen_id IS NOT NULL');
+        $this->assertTrue($statement->execute()); 
+        
+        $count = $statement->fetchColumn();        
+        $this->assertEquals(0, $count);
+    }
+    
+    public function testEnableModuleMenuItemsByTitle() {
+        $conn = Doctrine_Manager::connection()->getDbh();
+        $statement = $conn->prepare('UPDATE ohrm_menu_item SET status = 0 WHERE parent_id IN (12, 13)');
+        $this->assertTrue($statement->execute());
+        
+        // Items with screen_id NULL are not enabled (because they are not linked to a screen and hense to a module)
+        $count = $this->menuDao->enableModuleMenuItems('leave', array('Leave Types', 'Leave Summary'));
+        $this->assertEquals(2, $count);
+
+        $statement = $conn->prepare('SELECT count(*) FROM ohrm_menu_item WHERE status = 0 AND id IN (15,16)');
+        $this->assertTrue($statement->execute()); 
+        
+        $count = $statement->fetchColumn();        
+        $this->assertEquals(0, $count);
+    }    
 
 }
 

@@ -49,6 +49,7 @@ class defineTimesheetPeriodAction extends sfAction {
                 $results = $this->form->save();
                 $this->getMenuService()->enableModuleMenuItems('time');
                 $this->getMenuService()->enableModuleMenuItems('attendance');
+                $this->getMenuService()->enableModuleMenuItems('admin', array('Project Info', 'Customers', 'Projects'));
                 $this->getUser()->getAttributeHolder()->remove(mainMenuComponent::MAIN_MENU_USER_ATTRIBUTE);
             }
             $this->redirect('time/viewEmployeeTimesheet');
@@ -56,5 +57,3 @@ class defineTimesheetPeriodAction extends sfAction {
     }
 
 }
-
-?>
