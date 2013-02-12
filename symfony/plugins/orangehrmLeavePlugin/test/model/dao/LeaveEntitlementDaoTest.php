@@ -817,6 +817,35 @@ class LeaveEntitlementDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(count($empList),$result);
        
     }
+    
+    public function testBulkAssignLeaveEntitlementsLinkingOfUnlinkedLeave() {
+        $empList = array(7);
+             
+        $leaveEntitlement = new LeaveEntitlement();
+        $leaveEntitlement->setLeaveTypeId(1);
+        $leaveEntitlement->setCreditedDate(date('Y-m-d'));
+        $leaveEntitlement->setEntitlementType(LeaveEntitlement::ENTITLEMENT_TYPE_ADD);
+        $leaveEntitlement->setDeleted(0);
+        $leaveEntitlement->setNoOfDays(3);
+        $leaveEntitlement->setFromDate('2014-01-01');
+        $leaveEntitlement->setToDate('2014-12-31');
+
+        $result = $this->dao->bulkAssignLeaveEntitlements($empList, $leaveEntitlement);              
+        $this->assertEquals(count($empList), $result);
+        
+        // verify unlinked leave is now linked
+        $conn = Doctrine_Manager::connection()->getDbh();
+        $statement = $conn->prepare('SELECT * FROM ohrm_leave_leave_entitlement e WHERE e.leave_id = ?');
+        $leaveIds = array(11, 12);
+        
+        foreach ($leaveIds as $leaveId) {
+            $this->assertTrue($statement->execute(array($leaveId)));
+            $results = $statement->fetchAll();
+            $this->assertEquals(1, count($results));
+            $this->assertEquals($leaveId, $results[0]['leave_id']);
+            $this->assertEquals(1, $results[0]['length_days']);
+        }    
+    }
 }
 
     
