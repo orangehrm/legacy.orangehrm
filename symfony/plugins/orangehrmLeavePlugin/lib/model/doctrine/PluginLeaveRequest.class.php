@@ -109,9 +109,17 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         if ($leaveCount == 1) {
             return set_datepicker_date_format($this->leave[0]->getDate());
         } else {
-            $leaveRequestStartDate = $this->leave[0]->getDate();
-            $leaveRequestEndDate = $this->leave[$leaveCount - 1]->getDate();
-            return sprintf('%s %s %s', set_datepicker_date_format($leaveRequestStartDate), __('to'), set_datepicker_date_format($leaveRequestEndDate));
+            $firstDate = $this->leave[0]->getDate();
+            $lastDate = $this->leave[$leaveCount - 1]->getDate();
+            
+            if (strtotime($firstDate) > strtotime($lastDate)) {
+                $startDate = $lastDate;
+                $endDate = $firstDate;
+            } else {
+                $startDate = $firstDate;
+                $endDate = $lastDate;                
+            }
+            return sprintf('%s %s %s', set_datepicker_date_format($startDate), __('to'), set_datepicker_date_format($endDate));
         }
     }
     
