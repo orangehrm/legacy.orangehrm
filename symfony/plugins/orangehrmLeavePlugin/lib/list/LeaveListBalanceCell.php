@@ -25,55 +25,6 @@
 class LeaveListBalanceCell extends Cell {
     
     public function __toString() {
-        
-        $request = $this->dataObject;        
-        $leaveEntitlementService = new LeaveEntitlementService();
-        $leaveStrategy = $leaveEntitlementService->getLeaveEntitlementStrategy();
-        
-        $empNumber = $request->getEmpNumber();
-        $leaveTypeId = $request->getLeaveTypeId();        
-
-        $dates = $request->getLeaveDates();
-
-        $leaveBalance = NULL;
-
-        if (count($dates) == 1) {
-            $startDate = $dates[0];
-            $leaveBalance = $leaveEntitlementService->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
-        } else {
-            $startDate = $dates[0];
-            $endDate = $dates[count($dates) - 1];
-            
-            $leavePeriodForStartDate = $leaveStrategy->getLeavePeriod($startDate, $empNumber, $leaveTypeId);
-            $leavePeriodForEndDate = $leaveStrategy->getLeavePeriod($endDate, $empNumber, $leaveTypeId);
-            
-            // check if start date and end date are in the same leave period            
-            if (($leavePeriodForStartDate[0] == $leavePeriodForEndDate[0]) && 
-                    ($leavePeriodForStartDate[1] == $leavePeriodForEndDate[1])) {
-                $leaveBalance = $leaveEntitlementService->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
-            } else {
-                $startPeriodBalance = $leaveEntitlementService->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
-                $endPeriodBalance = $leaveEntitlementService->getLeaveBalance($empNumber, $leaveTypeId, $endDate);
-                
-                $leaveBalance = array(
-                    array('start' => set_datepicker_date_format($leavePeriodForStartDate[0]), 
-                          'end' => set_datepicker_date_format($leavePeriodForStartDate[1]), 
-                          'balance' => $startPeriodBalance->getBalance()),
-                    array('start' => set_datepicker_date_format($leavePeriodForEndDate[0]), 
-                          'end' => set_datepicker_date_format($leavePeriodForEndDate[1]), 
-                          'balance' => $endPeriodBalance->getBalance())
-                );
-            }            
-        }
-        
-        if ($leaveBalance instanceof LeaveBalance) {
-            return number_format($leaveBalance->getBalance(), 2);        
-        } else if (is_array($leaveBalance)) {
-
-
-            $html = "<a href='#' onclick='viewLeaveBalance(" . json_encode($leaveBalance) . ")' ?>" . __('View') . "</a>";
-            return $html;
-        }
+        return "<span class='loading_message'>&nbsp;&nbsp;&nbsp;</span>";
     }
-
 }

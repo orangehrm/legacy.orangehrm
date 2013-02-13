@@ -4192,6 +4192,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getLeaveCommentsAjaxA
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkWeekAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getWorkshiftAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/isValidEntitlemnetAjaxAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/leaveListBalanceAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/leaveTypeListAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadActiveLeaveTypesJsonAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/loadDatesforMonthAction.class.php -text

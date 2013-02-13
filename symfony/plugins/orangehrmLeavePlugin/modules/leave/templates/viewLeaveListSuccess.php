@@ -136,6 +136,34 @@ use_javascripts_for_form($form);
     var lang_Author = '<?php echo __('Author');?>';
     var lang_Comment = '<?php echo __('Comment');?>';
     var lang_Loading = '<?php echo __('Loading');?>...';
+    var lang_View = '<?php echo __('View');?>';
+    var balanceData = false;
+    
+    $.ajax({
+       type: "POST",
+       url: '<?php echo url_for('leave/leaveListBalanceAjax');?>',
+       data: {data : <?php echo $sf_data->getRaw('balanceQueryData');?>},
+       dataType: 'json',       
+         success: function(data) {
+             balanceData = data;
+           $(document).ready(function() { 
+               $('#resultTable tbody tr').each(function(index) {
+                   if (index < balanceData.length) {
+                       var balance = balanceData[index];
+                       var content = '';
+                       if ($.isArray(balance)) {
+                           content = "<a href='#' onclick='viewLeaveBalance(balanceData[" + index + "])'>" + lang_View + "</a>";
+                       } else {
+                           content = balance;
+                       }
+                       
+                       $(this).find('td:nth-child(4)').html(content);
+                   }
+               });
+           });
+         }
+       });
+        
     
     function submitPage(pageNo) {
         //    location.href = '<?php //echo url_for($baseUrl . '?pageNo='); ?>' + pageNo;

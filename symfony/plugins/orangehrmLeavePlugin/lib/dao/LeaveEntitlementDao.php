@@ -523,7 +523,7 @@ class LeaveEntitlementDao extends BaseDao {
                     '0 AS entitled, ' .
                     'SUM(l.length_days) AS used, ' .
                     'sum(IF(l.status = 2, l.length_days, 0)) AS scheduled, ' .
-                    'sum(IF(l.status = 1, l.length_days, 0)) AS pending, ' .
+                    'sum(IF(l.status IN (' . $pendingIdList . '), l.length_days, 0)) AS pending, ' .
                     'sum(IF(l.status = 3, l.length_days, 0)) AS taken, ' .
                     'sum(l.length_days) AS notLinked ' .
                     'FROM ohrm_leave l ' .

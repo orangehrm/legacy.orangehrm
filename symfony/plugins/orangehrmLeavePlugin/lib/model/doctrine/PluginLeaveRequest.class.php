@@ -123,6 +123,30 @@ abstract class PluginLeaveRequest extends BaseLeaveRequest {
         }
     }
     
+    public function getLeaveStartAndEndDate() {
+
+        $this->_fetchLeave();
+        $leaveCount = count($this->leave);
+        
+
+        if ($leaveCount == 1) {
+            $startDate = $endDate = $this->leave[0]->getDate();
+        } else {
+            $firstDate = $this->leave[0]->getDate();
+            $lastDate = $this->leave[$leaveCount - 1]->getDate();
+            
+            if (strtotime($firstDate) > strtotime($lastDate)) {
+                $startDate = $lastDate;
+                $endDate = $firstDate;
+            } else {
+                $startDate = $firstDate;
+                $endDate = $lastDate;                
+            }
+        }
+        
+        return array($startDate, $endDate);
+    }    
+    
     public function getLeaveDates() {
         
         $this->_fetchLeave();      

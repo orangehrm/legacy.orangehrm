@@ -242,6 +242,15 @@ class viewLeaveListAction extends sfAction {
         $this->_setPage($mode, $page);
         
         $this->setListComponent($list, $recordCount, $page);
+        
+        $balanceRequest = array();
+        
+        foreach ($list as $row) {
+            $dates = $row->getLeaveStartAndEndDate();
+            $balanceRequest[] = array($row->getEmpNumber(), $row->getLeaveTypeId(), $dates[0], $dates[1]);
+        }
+        
+        $this->balanceQueryData = json_encode($balanceRequest);
 
         $this->setTemplate('viewLeaveList');
     }
