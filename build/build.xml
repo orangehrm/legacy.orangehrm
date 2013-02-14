@@ -87,6 +87,7 @@
             <!-- <exclude name="symfony/cache/*/**"/> -->
             <!-- <exclude name="symfony/log/*"/> -->
             <exclude name="symfony/lib/vendor/symfony/test/**"/>
+            <exclude name="symfony/plugins/orangehrmFunctionalTestPlugin/**"/>
         </fileset>
     </copy>
 
