@@ -114,13 +114,17 @@ class viewLeaveEntitlementsAction extends sfAction {
             if (empty($empNumber)) {
                 $this->showResultTable = false;
             } else {
-                $results = $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
+                $results = $this->searchLeaveEntitlements($searchParameters);
                 
                 // Show leave Type column if displaying all leave types
                 $showLeaveType = empty($filters['leave_type']);
                 $this->setListComponent($results, 0, 0, $showLeaveType);        
             }
         }
+    }
+    
+    protected function searchLeaveEntitlements($searchParameters) {
+        return $this->getLeaveEntitlementService()->searchLeaveEntitlements($searchParameters);
     }
     
     protected function getSearchParameterObject($filters) {
