@@ -813,6 +813,9 @@ input[type=submit].reset {
 .searchForm form ol li input.calendar {
 	width:165px;
 }
+.searchForm form ol li input[type=checkbox] {
+	width:auto;
+}
 /* ================ searchForm styles: end ================ */
 
 /* ================ Two column styles: Begin ================ */
