@@ -504,6 +504,15 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $empList1;
     }
     
+    /**
+     * Filter the given $userRoles array according to the given parameters
+     * 
+     * @param Array $userRoles Array of UserRole objects
+     * @param Array $rolesToExclude Array of User role names to exclude. These user roles will be removed from $userRoles
+     * @param Array $rolesToInclude Array of User role names to include. If not empty, only these user roles will be included.
+     * @param Array $entities Array of details relevent to deciding if a particular user role applies to this 
+     * @return Array $userRoles array filtered as described above.
+     */
     protected function filterRoles($userRoles, $rolesToExclude, $rolesToInclude, $entities = array()) {
 
         
@@ -540,8 +549,20 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                 $include = true;
                 
                 if ($role->getName() == 'Supervisor') {
+                                    
+                    // If Employee entitiy is given, supervisor role will only 
+                    // apply if current employee is the supervisor for the given employee
                     if (isset($entities['Employee'])) {
                         if (!$this->isSupervisorFor($entities['Employee'])) {
+                            $include = false;
+                        }
+                    }
+                } else if ($role->getName() == 'ESS') {
+                    
+                    // If Employee entity is given, the ESS role will only apply
+                    // If current logged in employee is the same as the passed entity.
+                    if (isset($entities['Employee'])) {
+                        if ($this->user->getEmpNumber() != $entities['Employee']) {
                             $include = false;
                         }
                     }

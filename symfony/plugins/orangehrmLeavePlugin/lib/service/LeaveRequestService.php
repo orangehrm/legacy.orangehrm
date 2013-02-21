@@ -707,6 +707,7 @@ class LeaveRequestService extends BaseService {
             
             $empNumber = $request->getEmpNumber();
 
+            // If looking at own leave request, only consider ESS role
             if ($empNumber == $loggedInEmpNumber) {
                 $includeRoles = array('ESS');
             }            
@@ -737,6 +738,7 @@ class LeaveRequestService extends BaseService {
         $includeRoles = array();
         $excludeRoles = array();
 
+        // If looking at own leave, only consider ESS role
         if ($leave->getEmpNumber() == $loggedInEmpNumber) {
             $includeRoles = array('ESS');
         }
