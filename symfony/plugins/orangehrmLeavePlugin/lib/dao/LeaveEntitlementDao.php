@@ -27,6 +27,20 @@ class LeaveEntitlementDao extends BaseDao {
     protected static $pendingStatusIds = null;
     protected $leaveEntitlementStrategy;
     protected $leaveConfigService;
+    protected $logger;
+    
+    /**
+     * Get Logger instance. Creates if not already created.
+     *
+     * @return Logger
+     */
+    protected function getLogger() {
+        if (is_null($this->logger)) {
+            $this->logger = Logger::getLogger('leave.LeaveEntitlementDao');
+        }
+
+        return($this->logger);
+    }
     
     public function getLeaveConfigService() {
         if (!($this->leaveConfigService instanceof LeaveConfigurationService)) {
@@ -58,9 +72,14 @@ class LeaveEntitlementDao extends BaseDao {
             $q = Doctrine_Query::create()
                     ->select('s.status')
                     ->from('LeaveStatus s')
-                    ->where("s.name LIKE 'PENDING APPROVAL%'");
+                    ->where("s.name LIKE '%PENDING APPROVAL%'");
 
             self::$pendingStatusIds = $q->execute(array(), Doctrine_Core::HYDRATE_SINGLE_SCALAR);
+            if (count(self::$pendingStatusIds) == 0) {
+                $logger = $this->getLogger();
+                $logger->error('No PENDING APPROVAL leave status found!');
+                throw new DaoException("No PENDING APPROVAL leave statuses in ohrm_leave_status table!");
+            }
         }
 
         return self::$pendingStatusIds;
