@@ -145,6 +145,7 @@ use_stylesheets_for_form($form);
     var lang_Employees = '<?php echo __('Employees');?>';
     var lang_NoResultsFound = '<?php echo __("No Records Found");?>';
     var lang_BulkAssignPleaseWait = '<?php echo __('Bulk Assigning Leave Entitlement to %count% Employees. Please Wait');?>';
+    var lang_PleaseWait = '<?php echo __('Assigning Leave Entitlement. Please Wait');?>';
         
     var filterMatchingEmployees = 0;
     

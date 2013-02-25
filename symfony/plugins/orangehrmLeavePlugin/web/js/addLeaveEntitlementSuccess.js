@@ -124,6 +124,11 @@
         fetchEmployees(0);
     }
 
+    function showProgressDialog(message) {
+        $('#buildAssignWait').text(message);
+        $('#bulkAssignWaitDlg').modal();        
+    }
+    
     $(document).ready(function() {               
         
         if(mode == 'update'){
@@ -171,6 +176,8 @@
                                         $('ol#employee_entitlement_update').append(html);
                                         $('#employeeEntitlement').modal();
                                     }else{
+                                        var loadingMsg = lang_PleaseWait + '...';
+                                        showProgressDialog(loadingMsg);                                            
                                         $('#frmLeaveEntitlementAdd').submit();
                                     }
 
@@ -186,9 +193,8 @@
         });        
         
         $('#dialogConfirmBtn').click(function() {
-            var loadingMsg = lang_BulkAssignPleaseWait.replace('%count%', matchingCount);
-            $('#buildAssignWait').text(loadingMsg + '...');
-            $('#bulkAssignWaitDlg').modal();
+            var loadingMsg = lang_BulkAssignPleaseWait.replace('%count%', matchingCount) + '...';
+            showProgressDialog(loadingMsg);
             $('#frmLeaveEntitlementAdd').submit();
         });        
         
@@ -197,6 +203,8 @@
         });
         
         $('#dialogUpdateEntitlementConfirmBtn').click(function() {
+            var loadingMsg = lang_PleaseWait + '...';
+            showProgressDialog(loadingMsg);            
             $('#frmLeaveEntitlementAdd').submit();
         });
 
@@ -239,6 +247,7 @@
     });        
  
         $('#frmLeaveEntitlementAdd').validate({
+                ignore: [],
                 rules: {
                     'entitlements[employee][empName]': {
                         required: function(element) {
@@ -252,7 +261,7 @@
                         }
                     },
                     'entitlements[leave_type]':{required: true },
-                    'entitlements[date_from]': {
+                    'entitlements[date][from]': {
                         required: true,
                         valid_date: function() {
                             return {
@@ -262,7 +271,7 @@
                             }
                         }
                     },
-                    'entitlements[date_to]': {
+                    'entitlements[date][to]': {
                         required: true,
                         valid_date: function() {
                             return {

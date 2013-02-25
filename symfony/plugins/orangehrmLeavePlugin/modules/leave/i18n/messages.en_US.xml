@@ -355,7 +355,11 @@
    <trans-unit id="86">
     <source>Bulk Assigning Leave Entitlement to %count% Employees. Please Wait</source>
     <target>Bulk Assigning Leave Entitlement to %count% Employees. Please Wait</target>
-   </trans-unit>                  
+   </trans-unit>
+   <trans-unit id="87">
+    <source>Assigning Leave Entitlement. Please Wait</source>
+    <target>Assigning Leave Entitlement. Please Wait</target>
+   </trans-unit>      
   </body>
  </file>
 </xliff>
