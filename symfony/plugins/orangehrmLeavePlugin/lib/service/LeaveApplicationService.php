@@ -120,7 +120,7 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
                 $empNumber = $employee->getEmpNumber();
                 $entitlements = $strategy->handleLeaveCreate($empNumber, $leaveType->getId(), $nonHolidayLeaveDays, false);
 
-                if ($entitlements == false) {
+                if (!$this->allowToExceedLeaveBalance() && $entitlements == false) {
                     throw new LeaveAllocationServiceException('Leave Balance Exceeded');
                 }
             }            
@@ -210,6 +210,10 @@ class LeaveApplicationService extends AbstractLeaveAllocationService {
         }
 
         return $status;
+    }
+    
+    protected function allowToExceedLeaveBalance() {
+        return false;
     }
     
     protected function getWorkflowItemForApplyAction(LeaveParameterObject $leaveAssignmentData) {

@@ -55,6 +55,8 @@ abstract class AbstractLeaveAllocationService extends BaseService {
      */
     protected abstract function getLeaveRequestStatus($isWeekend, $isHoliday, $leaveDate, LeaveParameterObject $leaveAssignmentData);
 
+    protected abstract function allowToExceedLeaveBalance();
+    
     /**
      * Get Logger instance. Creates if not already created.
      *

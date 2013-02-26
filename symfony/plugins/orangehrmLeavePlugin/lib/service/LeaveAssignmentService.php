@@ -198,6 +198,10 @@ class LeaveAssignmentService extends AbstractLeaveAllocationService {
         return $status;
     }
     
+    protected function allowToExceedLeaveBalance() {
+        return true;
+    }
+    
     protected function getWorkflowItemForAssignAction(LeaveParameterObject $leaveAssignmentData) {
         
         if (is_null($this->assignWorkflowItem)) {
