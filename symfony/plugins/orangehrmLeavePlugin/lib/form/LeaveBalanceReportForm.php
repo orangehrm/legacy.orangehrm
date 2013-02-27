@@ -186,8 +186,8 @@ class LeaveBalanceReportForm extends BaseForm {
     protected function getFormLabels() {
 
         $labels = array(
-            'report_type' => 'Generate For',
-            'employee' => 'Employee',
+            'report_type' => __('Generate For')  . '<em> *</em>',
+            'employee' => __('Employee') . '<em> *</em>',
             'leave_type' => 'Leave Type',
             'date' => 'From',
             'location' => __('Location'),
