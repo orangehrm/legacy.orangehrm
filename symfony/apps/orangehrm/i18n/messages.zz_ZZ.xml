@@ -5390,7 +5390,27 @@
    <trans-unit id="1179">
     <source>Email Subscriptions</source>
     <target>FR_Email Subscriptions</target>
-   </trans-unit>                   
+   </trans-unit>
+   <trans-unit id="1180">
+       <source>Assets</source>
+       <target>FR_Assets</target>
+   </trans-unit>
+   <trans-unit id="1181">
+       <source>View Assets</source>
+       <target>FR_View Assets</target>
+   </trans-unit>
+   <trans-unit id="1182">
+       <source>Brands</source>
+       <target>FR_Brands</target>
+   </trans-unit>
+   <trans-unit id="1183">
+       <source>Categories</source>
+       <target>FR_Categories</target>
+   </trans-unit>
+   <trans-unit id="1184">
+       <source>Vendors</source>
+       <target>FR_Vendors</target>
+   </trans-unit>                      
   </body>
  </file>
 </xliff>
