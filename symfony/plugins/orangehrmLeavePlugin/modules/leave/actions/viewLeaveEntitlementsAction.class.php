@@ -27,6 +27,7 @@ class viewLeaveEntitlementsAction extends sfAction {
     const FILTERS_ATTRIBUTE_NAME = 'entitlementlist.filters';
     
     protected $leaveEntitlementService;
+    protected $employeeService;
     
     public function getLeaveEntitlementService() {
         if (empty($this->leaveEntitlementService)) {
@@ -38,6 +39,26 @@ class viewLeaveEntitlementsAction extends sfAction {
     public function setLeaveEntitlementService($leaveEntitlementService) {
         $this->leaveEntitlementService = $leaveEntitlementService;
     }    
+    
+    /**
+     * Get EmployeeService
+     * @returns EmployeeService
+     */
+    public function getEmployeeService() {
+        if(is_null($this->employeeService)) {
+            $this->employeeService = new EmployeeService();
+            $this->employeeService->setEmployeeDao(new EmployeeDao());
+        }
+        return $this->employeeService;
+    }
+
+    /**
+     * Set EmployeeService
+     * @param EmployeeService $employeeService
+     */
+    public function setEmployeeService(EmployeeService $employeeService) {
+        $this->employeeService = $employeeService;
+    }
     
     protected function getForm() {
         return new LeaveEntitlementSearchForm();
@@ -103,6 +124,15 @@ class viewLeaveEntitlementsAction extends sfAction {
             $filters = $this->getFilters();            
             $this->showResultTable = true;
 
+            $this->setFormDefaults($filters);
+        } else if ($request->hasParameter('empNumber') 
+                && $request->hasParameter('fromDate')
+                && $request->hasParameter('toDate')
+                && $request->hasParameter('leaveTypeId')) {
+            
+            // Parameters in GET request
+            $filters = $this->getFiltersFromGetParameters($request);  
+            $this->showResultTable = true;
             $this->setFormDefaults($filters);
         } else {
             $this->saveFilters(array());
@@ -209,5 +239,26 @@ class viewLeaveEntitlementsAction extends sfAction {
     protected function getFilters() {
         return $this->getUser()->getAttribute(self::FILTERS_ATTRIBUTE_NAME, null, 'leave');
     }        
+    
+    protected function getFiltersFromGetParameters($request) {
+        $filters = array();
+        
+        $empNumber = $request->getParameter('empNumber');
+        $fromDate = $request->getParameter('fromDate');
+        $toDate = $request->getParameter('toDate');
+        $leaveTypeId = $request->getParameter('leaveTypeId');
+        
+        if (!empty($empNumber) && !empty($fromDate) && !empty($toDate) && !empty($leaveTypeId)) {
+            
+            $employee = $this->getEmployeeService()->getEmployee($empNumber);
+            if ($employee instanceof Employee) {
+                $employeeName = $employee->getFullName();
+                $filters['employee'] = array('empId' => $empNumber, 'empName' => $employeeName);
+                $filters['leave_type'] = $leaveTypeId;
+                $filters['date'] = array('from' => $fromDate, 'to' => $toDate);
+            }
+        }
+        return $filters;
+    }
 }
 

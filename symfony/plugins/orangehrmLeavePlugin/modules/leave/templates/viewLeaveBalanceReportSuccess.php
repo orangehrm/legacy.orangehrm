@@ -100,30 +100,31 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/viewLeaveBalanceRepo
                          else:
                              //echo $key . '-' . $column;
                             if(($info["groupDisp"] == "true") && ($info["display"] == "true")):?>
-                            <td<?php echo $tdClass;?>><?php if(($column == "") || is_null($column)):
-                                    echo "0.00";
-                                else :
+                            <td<?php echo $tdClass;?>>
+                          <?php if (($column == "") || is_null($column)) {
+                                    $column = "0.00";
+                                }
                                     
-                                    if (isset($info['link'])):
-                                        if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE):
-                                            $linkParamsRaw['empNumber'] = array($row['empNumber']);
-                                        else:
-                                            $linkParamsRaw['leaveType'] = array($row['leaveTypeId']);
-                                        endif;
- 
-                                        $link = $info['link'];
-                                        if ($mode == 'my') {
-                                            $link = str_replace('viewLeaveList', 'viewMyLeaveList', $link);
-                                        }
-                                        $url = $reportBuilder->replaceHeaderParam($link, $linkParamsRaw);
-                                        echo link_to(esc_specialchars(__($column)), $url);
-                                    
-                                    else:
-                                        echo esc_specialchars(__($column));
+                                if (isset($info['link'])) {
+                                    if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
+                                        $linkParamsRaw['empNumber'] = array($row['empNumber']);
+                                    } else {
+                                        $linkParamsRaw['leaveType'] = array($row['leaveTypeId']);
+                                    }
 
-                                    endif;                                    
+                                    $link = $info['link'];
+                                    if ($mode == 'my') {
+                                        $link = str_replace('viewLeaveList', 'viewMyLeaveList', $link);
+                                    }
+                                    $url = $reportBuilder->replaceHeaderParam($link, $linkParamsRaw);
+                                    echo link_to(esc_specialchars(__($column)), $url);
+
+                                } else {
+                                    echo esc_specialchars(__($column));
+
+                                };                                    
                                 
-                                endif;?></td>
+                                ?></td>
                       <?php else: ?>
                             <input type="hidden" name="<?php echo $key;?>[]" value="<?php echo $column;?>"/>
                       <?php endif;

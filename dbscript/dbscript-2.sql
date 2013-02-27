@@ -1975,6 +1975,7 @@ ORDER BY A.leave_type_id
                         <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
+                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2233,6 +2234,7 @@ ORDER BY A.emp_number
                         <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
+                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2373,7 +2375,7 @@ ORDER BY ohrm_leave.emp_number
     </join>
     <page_limit>20</page_limit>       
 </report>'); 
-
+ 
 
 INSERT INTO `ohrm_leave_status` (`status`,`name`) VALUES
 (-1, 'REJECTED'),
