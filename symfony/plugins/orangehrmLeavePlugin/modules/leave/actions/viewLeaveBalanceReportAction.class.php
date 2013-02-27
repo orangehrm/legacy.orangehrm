@@ -166,7 +166,7 @@ class viewLeaveBalanceReportAction extends sfAction {
             $convertedValues['sub_unit'] = $values['sub_unit'];
         }
 
-        if (isset($values['location']) && $values['location'] != 0) {
+        if (isset($values['location']) && $values['location'] != 0 && $values['location'] != -1) {
             $location = $values['location'];
             $locationIds = explode(',', $location);
             $convertedValues['location'] = $locationIds;
