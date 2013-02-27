@@ -567,6 +567,12 @@ form ol li select {
 	margin-top:1px;
     padding:3px 6px;
 }
+
+form ol li select.auto-width {
+    min-width:239px;
+    width: auto;
+}
+
 form ol li textarea {
 	float:left;
 	width:250px;
