@@ -120,7 +120,7 @@ class viewLeaveBalanceReportAction extends sfAction {
         );
         
         if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
-            $linkParams['leaveType'] = array($values['leaveType']);
+            $linkParams['leaveTypeId'] = array($values['leaveType']);
         } else {
             $linkParams['empNumber'] = array($values['empNumber']);
         }

@@ -1974,7 +1974,7 @@ ORDER BY A.leave_type_id
                         <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
-                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;stddate=1</link>
+                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2012,7 +2012,7 @@ ORDER BY ohrm_leave_type.id
                         <display_name>Leave Pending Approval (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
-                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=1&amp;stddate=1</link>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=1&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2050,7 +2050,7 @@ ORDER BY ohrm_leave_type.id
                         <display_name>Leave Scheduled (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
-                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2&amp;stddate=1</link>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=2&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2083,7 +2083,7 @@ ORDER BY ohrm_leave.leave_type_id
                         <display_name>Leave Taken (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
-                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3&amp;stddate=1</link>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=3&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2233,7 +2233,7 @@ ORDER BY A.emp_number
                         <display_name>Leave Entitlements (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
-                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;stddate=1</link>
+                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2266,7 +2266,7 @@ ORDER BY ohrm_leave.emp_number
                         <display_name>Leave Pending Approval (Days)</display_name>
                         <width>121</width>
                         <align>right</align>
-                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=1&amp;stddate=1</link>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=1&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2300,7 +2300,7 @@ ORDER BY ohrm_leave.emp_number
                         <display_name>Leave Scheduled (Days)</display_name>
                         <width>121</width>
                         <align>right</align>
-                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=2&amp;stddate=1</link>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=2&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
@@ -2333,7 +2333,7 @@ ORDER BY ohrm_leave.emp_number
                         <display_name>Leave Taken (Days)</display_name>
                         <width>120</width>
                         <align>right</align>
-                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveType}&amp;status=3&amp;stddate=1</link>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=3&amp;stddate=1</link>
                     </field>                                
                 </fields>
             </display_group>
