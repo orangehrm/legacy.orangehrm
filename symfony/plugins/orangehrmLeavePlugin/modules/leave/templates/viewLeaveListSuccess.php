@@ -169,7 +169,10 @@ use_javascripts_for_form($form);
         //    location.href = '<?php //echo url_for($baseUrl . '?pageNo='); ?>' + pageNo;
         document.frmFilterLeave.pageNo.value = pageNo;
         document.frmFilterLeave.hdnAction.value = 'paging';
-        if ($('#leaveList_txtEmployee_empName').val() == lang_typeHint) {
+        var autoCompleteField = $('#leaveList_txtEmployee_empName');
+        if ((autoCompleteField.val() === lang_typeHint) ||
+                autoCompleteField.hasClass('ac_loading') || 
+                autoCompleteField.hasClass('inputFormatHint')) {
             $('#leaveList_txtEmployee_empName').val('');
         }
         document.getElementById('frmFilterLeave').submit();        

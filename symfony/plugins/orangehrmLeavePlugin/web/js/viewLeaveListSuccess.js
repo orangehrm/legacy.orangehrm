@@ -115,6 +115,7 @@ $(document).ready(function() {
 
     $('#btnSearch').click(function() {
         $('#frmFilterLeave input.inputFormatHint').val('');
+        $('#frmFilterLeave input.ac_loading').val('');
         $('#frmFilterLeave').submit();
     });
 

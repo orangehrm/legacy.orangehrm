@@ -61,8 +61,11 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
                 var typeHint = '%s';
                 var hintClass = 'inputFormatHint';
                 var loadingMethod = '%s';
+                var loadingHint = '%s';
             
                 nameField.data('typeHint', typeHint);
+                nameField.data('loadingHint', loadingHint);
+                
                 nameField.one('focus', function() {
 
                         if ($(this).hasClass(hintClass)) {
@@ -95,7 +98,7 @@ class ohrmWidgetEmployeeNameAutoFill extends sfWidgetFormInput {
                     );
                  }else{
                         var value = nameField.val().trim();
-                        nameField.val('%s').addClass('ac_loading');
+                        nameField.val(loadingHint).addClass('ac_loading');
                         $.ajax({
                                url: "%s",
                                data: "",
@@ -140,8 +143,8 @@ EOF
                         $hiddenFieldId,
                         $typeHint,
                         $this->getOption('loadingMethod'),
+                        __('Loading'),                
                         $this->generateId($name),
-                        __('Loading'),
                         url_for('pim/getEmployeeListAjax'));
                         
         
