@@ -116,6 +116,7 @@
         $('#searchBtn').click(function() {
             $("#empsearch_isSubmitted").val('yes');
             $('#search_form input.inputFormatHint').val('');
+            $('#search_form input.ac_loading').val('');
             $('#search_form').submit();
         });
 
@@ -153,6 +154,7 @@
         document.frmEmployeeSearch.pageNo.value = pageNo;
         document.frmEmployeeSearch.hdnAction.value = 'paging';
         $('#search_form input.inputFormatHint').val('');
+        $('#search_form input.ac_loading').val('');
         $("#empsearch_isSubmitted").val('no');
         document.getElementById('search_form').submit();
     }   
