@@ -254,9 +254,12 @@
                             return !$('#entitlements_filters_bulk_assign').is(':checked');
                         },
                         no_default_value: function(element) {
-
-                            return {
-                                defaults: $(element).data('typeHint')
+                            if ($('#entitlements_filters_bulk_assign').is(':checked')) {
+                                return false;
+                            } else {
+                                return {
+                                    defaults: $(element).data('typeHint')
+                                }
                             }
                         }
                     },
