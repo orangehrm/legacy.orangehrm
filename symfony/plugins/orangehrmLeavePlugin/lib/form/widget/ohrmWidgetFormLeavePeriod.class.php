@@ -171,9 +171,16 @@ class ohrmWidgetFormLeavePeriod  extends sfWidgetForm {
         $('#period').val(intialFrom+'$$'+intialTo);
         
         $('#period').change(function() {
-            var selectValue = $(this).val().split('$$');
-            $('#date_from').val(selectValue[0]);
-            $('#date_to').val(selectValue[1]);
+            var val = $(this).val();
+            
+            if (typeof val == 'string') {
+                var selectValue = val.split('$$');
+                $('#date_from').val(selectValue[0]);
+                $('#date_to').val(selectValue[1]);
+            } else {
+                $('#date_from').val('');
+                $('#date_to').val('');                        
+            }
           });
         
     });
