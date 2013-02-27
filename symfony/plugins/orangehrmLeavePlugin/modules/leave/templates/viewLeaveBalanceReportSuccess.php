@@ -106,17 +106,13 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/viewLeaveBalanceRepo
                                 }
                                     
                                 if (isset($info['link'])) {
-                                    if ($reportType == LeaveBalanceReportForm::REPORT_TYPE_LEAVE_TYPE) {
-                                        $linkParamsRaw['empNumber'] = array($row['empNumber']);
-                                    } else {
-                                        $linkParamsRaw['leaveType'] = array($row['leaveTypeId']);
-                                    }
+                                    $mergedLinkParams = array_merge($linkParamsRaw, $row);
 
                                     $link = $info['link'];
                                     if ($mode == 'my') {
                                         $link = str_replace('viewLeaveList', 'viewMyLeaveList', $link);
                                     }
-                                    $url = $reportBuilder->replaceHeaderParam($link, $linkParamsRaw);
+                                    $url = $reportBuilder->replaceHeaderParam($link, $mergedLinkParams);
                                     echo link_to(esc_specialchars(__($column)), $url);
 
                                 } else {

@@ -775,7 +775,8 @@ class ReportBuilder {
 
         $callback = function( $matches ) use ( $formParam ) {
                     $name = $matches[1];
-                    $valStr = implode(",", $formParam[$name]);;
+                    
+                    $valStr = is_array($formParam[$name]) ? implode(",", $formParam[$name]) : $formParam[$name];
                                      
                     return $valStr;
                 };
