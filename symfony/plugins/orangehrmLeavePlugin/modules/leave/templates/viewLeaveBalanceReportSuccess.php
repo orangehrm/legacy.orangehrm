@@ -213,7 +213,9 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/viewLeaveBalanceRepo
         
         $('#report-results table.table thead.fixedHeader tr:first').hide();
         
-        $('#viewBtn').click(function() {
+        $('#viewBtn').click(function() {       
+            $('#frmLeaveBalanceReport input.inputFormatHint').val('');
+            $('#frmLeaveBalanceReport input.ac_loading').val('');        
             $('#frmLeaveBalanceReport').submit();
         });
         
@@ -225,7 +227,7 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/viewLeaveBalanceRepo
                 rules: {
                     'leave_balance[employee][empName]': {
                         required: function(element) {
-                            return $("#leave_balance_report_type").val() == leaveTypeReport;
+                            return $("#leave_balance_report_type").val() == employeeReport;
                         },
                         no_default_value: function(element) {
                             return {
