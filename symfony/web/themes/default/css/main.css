@@ -602,9 +602,14 @@ form ol li.required {
 	color:#a9a9a9;
 	font-size:11px;
 }
+div.searchForm ol li.required {
+    clear:both;
+}
+
 form ol li.required em {
 	color:#aa4935;
 }
+
 form ol li label em {
 	color:#aa4935;
 }

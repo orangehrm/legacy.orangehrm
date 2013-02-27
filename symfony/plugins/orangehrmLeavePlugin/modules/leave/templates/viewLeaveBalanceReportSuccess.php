@@ -24,6 +24,9 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/viewLeaveBalanceRepo
             <fieldset>                
                 <ol>
                     <?php echo $form->render(); ?>
+                    <li class="required">
+                        <em>*</em> <?php echo __(CommonMessages::REQUIRED_FIELD); ?>
+                    </li>                    
                 </ol>                   
                 <p>
                     <input type="button" name="view" id="viewBtn" value="<?php echo __('View');?>"/>                    
