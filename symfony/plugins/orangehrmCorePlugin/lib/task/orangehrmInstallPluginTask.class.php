@@ -1,10 +1,14 @@
 <?php
 
-class InstallPluginTask extends sfBaseTask{
-
+class orangehrmInstallPluginTask extends sfBaseTask{
 
   protected function configure()  {
     
+    // for backwards compatibility, name is optional and we allow user to specify the name
+    // using --plugin="orangehrmAbcPlugin"      
+    $this->addArguments(array(
+      new sfCommandArgument('name', sfCommandArgument::OPTIONAL, 'The plugin name'),
+    ));      
 
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
@@ -14,10 +18,16 @@ class InstallPluginTask extends sfBaseTask{
       
     ));
 
+    $this->aliases = array('orangehrm:Install-plugin'); // for backwards compatibility
     $this->namespace        = 'orangehrm';
-    $this->name             = 'Install-plugin';
-    $this->briefDescription = 'This task will create database table and doctrine classes to run the  plugin';
-    $this->detailedDescription = '';
+    $this->name             = 'install-plugin';
+    $this->briefDescription = 'Installs the given OrangeHRM plugin';
+    $this->detailedDescription = <<<EOF
+The [orangehrm:install-plugin|INFO] task installs a plugin:
+
+  [./symfony orangehrm:install-plugin orangehrmAbcPlugin|INFO]
+EOF;
+  
   }
 
   protected function execute($arguments = array(), $options = array()){
@@ -25,8 +35,15 @@ class InstallPluginTask extends sfBaseTask{
         $databaseManager    = new sfDatabaseManager($this->configuration);
         $connection         = $databaseManager->getDatabase($options['connection'])->getConnection();
         
-        if( empty($options['plugin'])){
-            throw new Exception("Plugin name is empty");
+        $pluginName = null;
+        if (!empty($options['plugin'])) {
+            $pluginName = $options['plugin'];
+        } else if (isset($arguments['name'])) {
+            $pluginName = $arguments['name'];
+        }
+        
+        if (empty($pluginName)) {
+            throw new sfCommandException('Plugin name must be specified as an argument');
         }
 
         define('SF_ROOT_DIR', realpath(dirname(__FILE__). DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..'));
@@ -38,17 +55,9 @@ class InstallPluginTask extends sfBaseTask{
         $configuration = ProjectConfiguration::getApplicationConfiguration('orangehrm', 'prod', true);
         sfContext::createInstance($configuration);
 
-        $pluginName = $options['plugin'];
+        $installer = new PluginInstaller($this);
+        $installer->installPlugin($pluginName);
 
-        $installerDBCreator = new InstallerDBCreator();
-        $installerDBCreator->readInstallerData($pluginName);
-        $installerDBCreator->buildDataTables();
-        $installerDBCreator->doSymfonyTaks();
-        echo $pluginName." installed \n";
-   
-    
-    
-    
-   
+        $this->logSection('orangehrm', $pluginName . " installed");   
   }
 }
