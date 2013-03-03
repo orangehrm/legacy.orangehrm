@@ -1325,10 +1325,6 @@ alter table ohrm_leave
     add constraint foreign key (leave_type_id)
         references ohrm_leave_type (id) on delete cascade;
 
-alter table ohrm_leave
-    add constraint foreign key (leave_type_id)
-        references ohrm_leave_type (id) on delete cascade;
-
 alter table ohrm_leave_leave_entitlement
     add constraint foreign key (entitlement_id)
         references ohrm_leave_entitlement (id) on delete cascade;
