@@ -2386,7 +2386,25 @@ INSERT INTO `ohrm_leave_status` (`status`,`name`) VALUES
 (5, 'HOLIDAY');
 
 INSERT INTO ohrm_home_page (`user_role_id`, `action`, `enable_class`, `priority`) VALUES 
-(1, 'pim/viewEmployeeList', NULL, 0),
+(1, 'pim/viewEmployeeList', NULL, 10),
 (2, 'pim/viewMyDetails', NULL, 0);
 
-
+INSERT INTO ohrm_module_default_page (`module_id`, `user_role_id`, `action`, `enable_class`, `priority`) VALUES 
+(2, 1, 'admin/viewSystemUsers', NULL, 20),
+(3, 1, 'pim/viewEmployeeList', NULL, 20),
+(3, 3, 'pim/viewEmployeeList', NULL, 10),
+(3, 2, 'pim/viewMyDetails', NULL, 0),
+(4, 1, 'leave/viewLeaveList/reset/1', NULL, 20),
+(4, 3, 'leave/viewLeaveList/reset/1', NULL, 10),
+(4, 2, 'leave/viewMyLeaveList', NULL, 0),
+(4, 1, 'leave/defineLeavePeriod', 'HomePageEnableIfLeavePeriodDefined', 100),
+(4, 2, 'leave/showLeavePeriodNotDefinedWarning', 'HomePageEnableIfLeavePeriodDefined', 90);
+(5, 1, 'time/viewEmployeeTimesheet', NULL, 20),
+(5, 2, 'time/viewMyTimesheet', NULL, 0),
+(5, 1, 'time/defineTimesheetPeriod', 'HomePageEnableIfTimesheetPeriodDefined', 100),
+(5, 2, 'time/defineTimesheetPeriod', 'HomePageEnableIfTimesheetPeriodDefined', 100),
+(8, 1, 'recruitment/viewCandidates', NULL, 20),
+(8, 5, 'recruitment/viewCandidates', NULL, 10),
+(8, 6, 'recruitment/viewCandidates', NULL, 5),
+(9, 1, 'performance/viewReview', NULL, 20),
+(9, 2, 'performance/viewReview', NULL, 0);
