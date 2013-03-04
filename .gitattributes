@@ -3538,6 +3538,7 @@ symfony/plugins/orangehrmCorePlugin/lib/action/displayReportCriteriaAction.php -
 symfony/plugins/orangehrmCorePlugin/lib/action/ohrmExportableAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/action/orangehrmAction.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/DataGroupDao.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/HomePageDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/dao/ScreenPermissionDao.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/entity/ResourcePermission.php -text
@@ -3767,6 +3768,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedRepo
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/DataGroupDaoTest.php -text
+symfony/plugins/orangehrmCorePlugin/test/authorization/dao/HomePageDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/MenuDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenDaoTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/dao/ScreenPermissionDaoTest.php -text
@@ -3798,6 +3800,7 @@ symfony/plugins/orangehrmCorePlugin/test/fixtures/BasicUserRoleManager.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ConfigDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/DataGroupDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/EmailDao.yml -text
+symfony/plugins/orangehrmCorePlugin/test/fixtures/HomePageDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/MenuDao.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportGeneratorService.yml -text
 symfony/plugins/orangehrmCorePlugin/test/fixtures/ReportableDao.yml -text

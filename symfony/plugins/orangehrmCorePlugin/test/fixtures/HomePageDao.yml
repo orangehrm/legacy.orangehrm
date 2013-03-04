@@ -1,0 +1,25 @@
+Module:
+  0: {id: 1, name: 'admin', status: 1}
+  1: {id: 2, name: 'pim', status: 1}
+  2: {id: 3, name: 'leave', status: 1}  
+  3: {id: 4, name: 'time', status: 1}
+  4: {id: 5, name: 'recruitment', status: 1}
+  5: {id: 6, name: 'performance', status: 1}
+  6: {id: 7, name: 'benefits', status: 0}
+  
+UserRole:
+  0: {id: 1, name: Admin, display_name: Admin, is_assignable: 1, is_predefined: 1}
+  1: {id: 2, name: ESS, display_name: ESS, is_assignable: 1, is_predefined: 1}
+  2: {id: 3, name: Supervisor, display_name: Supervisor, is_assignable: 0, is_predefined: 1}
+  3: {id: 4, name: 'TestAdmin', display_name: 'TestAdmin', is_assignable: 1, is_predefined: 0}
+  4: {id: 5, name: 'UserRole1', display_name: 'UserRole1', is_assignable: 1, is_predefined: 0}
+  5: {id: 6, name: 'UserRole2', display_name: 'UserRole2', is_assignable: 1, is_predefined: 0}
+  6: {id: 7, name: 'UserRole3', display_name: 'UserRole3', is_assignable: 1, is_predefined: 0}
+  7: {id: 8, name: 'Admin2', display_name: 'Admin2', is_assignable: 1, is_predefined: 0}  
+  
+HomePage:
+  0: {id: 1, user_role_id: 1, action: 'pim/viewEmployeeList', priority: 10}
+  1: {id: 2, user_role_id: 2, action: 'pim/viewMyDetails', enable_class: 'TestClass', priority: 0}
+  2: {id: 3, user_role_id: 1, action: 'pim/viewSystemUsers', enable_class: 'SystemUserViewEnableClass', priority: 30}
+  3: {id: 4, user_role_id: 1, action: 'pim/viewEmployeeTimesheets', enable_class: 'TestViewEnableClass', priority: 50}  
+  4: {id: 5, user_role_id: 3, action: 'pim/viewEmployeeList', priority: 30}   
