@@ -50,4 +50,20 @@ class HomePageDao extends BaseDao {
             throw new DaoException($e->getMessage(), $e->getCode(), $e);
         }        
     }
+    
+    /**
+     * Get module default page records for the given module and given user role ids in priority order. 
+     * (Descending order of the priority field).
+     * If two records have the same priority, the higher ID will be returned first. (Assuming the later entry was 
+     * intended to override the earlier entry).
+     * 
+     * @param Array $userRoleIds Array of user role ids
+     * @param String $moduleName Module Name
+     * @return Doctrine_Collection List of matching default page entries
+     * 
+     * @throws DaoException on an error from the database layer
+     */
+    public function getModuleDefaultPagesInPriorityOrder($moduleName, $userRoleIds) {
+       
+    }    
 }

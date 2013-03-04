@@ -92,4 +92,58 @@ class HomePageDaoTest extends PHPUnit_Framework_TestCase {
             $this->assertEquals($exp['priority'], $res->getPriority());
         }
     }
+    
+    public function xtestGetModuleDefaultPagesInPriorityOrderOneRole() {
+        $homePagesFixture = $this->testData['HomePage'];
+        $expected = array($homePagesFixture[3], $homePagesFixture[2], $homePagesFixture[0]);
+        $homePages = $this->homePageDao->getHomePagesInPriorityOrder(array(1));
+        $this->compareHomePages($expected, $homePages);
+        
+        $expected = array($homePagesFixture[1]);
+        $homePages = $this->homePageDao->getHomePagesInPriorityOrder(array(2));
+        $this->compareHomePages($expected, $homePages);
+        
+        $expected = array($homePagesFixture[4]);
+        $homePages = $this->homePageDao->getHomePagesInPriorityOrder(array(3));
+        $this->compareHomePages($expected, $homePages);        
+        
+    }
+    
+    public function xtestGetModuleDefaultPagesInPriorityOrderMultipleRole() {
+        $homePagesFixture = $this->testData['HomePage'];
+        $expected = array($homePagesFixture[3], $homePagesFixture[4], $homePagesFixture[2], $homePagesFixture[0], $homePagesFixture[1]);
+        $homePages = $this->homePageDao->getHomePagesInPriorityOrder(array(1, 2, 3));
+        $this->compareHomePages($expected, $homePages);
+    }    
+    
+    /**
+     * Test case for no matching home pages for user role
+     */
+    public function xtestGetModuleDefaultPagesInPriorityOrderNoMatches() {
+        $homePages = $this->homePageDao->getHomePagesInPriorityOrder(array(4));
+        $this->assertEquals(0, count($homePages));
+    }    
+    
+    /**
+     * Test case for no matching home pages for user role
+     */
+    public function xtestGetModuleDefaultPagesInPriorityNoUserRoles() {
+        $homePages = $this->homePageDao->getHomePagesInPriorityOrder(array());
+        $this->assertEquals(0, count($homePages));
+    }     
+    
+    protected function compareModuleDefaultPages($expected, $result) {
+        $this->assertEquals(count($expected), count($result));
+        
+        for($i = 0; $i < count($expected); $i++) {
+            $exp = $expected[$i];
+            $res = $result[$i];
+            
+            $this->assertEquals($exp['id'], $res->getId());
+            $this->assertEquals($exp['user_role_id'], $res->getUserRoleId());
+            $this->assertEquals($exp['action'], $res->getAction());
+            $this->assertEquals($exp['enable_class'], $res->getEnableClass());
+            $this->assertEquals($exp['priority'], $res->getPriority());
+        }
+    }    
 }
