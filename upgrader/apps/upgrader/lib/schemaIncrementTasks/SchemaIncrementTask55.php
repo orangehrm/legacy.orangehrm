@@ -22,15 +22,7 @@
 /**
  * Upgrade for menu changes, new ui changes and leave changes:
  * 
- * TODO: Improve
- * **************** IMPORTANT *********************
- * UPGRADE IS NOT ONLY COMPATIBLE WITH A PLAIN OS INSTALL.
- * If ab addon is installed, those add-ons may
- * have added records to ohrm_user_role and related tables. Therefore, the SQL in 
- * here has to be improved to not hard code IDs.
- * 
- * For an example, see: rangehrmRegionalAdminAuthorizationPlugin/trunk/install/dbscript.sql
- * ******************************************************
+ * NOTE: Assumes that only the default Screen, data group entries are available.
  */
 class SchemaIncrementTask55 extends SchemaIncrementTask {
     public $userInputs;
@@ -45,6 +37,8 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
             $result[] = $this->upgradeUtility->executeSql($sql);
         }
 
+        $this->addLeaveEntitlement();
+        
         $this->checkTransactionComplete($result);
         $this->updateOhrmUpgradeInfo($this->transactionComplete, $this->incrementNumber);
         $this->upgradeUtility->finalizeTransaction($this->transactionComplete);
@@ -61,6 +55,34 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
 
     public function loadSql() {
 
+        /* ------------ New database tables ---------------- */
+
+        $sql[] = "create table `ohrm_email` (
+                    `id` int(6) not null auto_increment,
+                    `name` varchar(100) not null unique,
+                    primary key  (`id`),
+                    unique key ohrm_email_name(`name`)
+                  ) engine=innodb default charset=utf8;";
+
+        $sql[] = "create table `ohrm_email_template` (
+                    `id` int(6) not null auto_increment,
+                    `email_id` int(6) not null,
+                    `locale` varchar(20),
+                    `performer_role` varchar(50) default null,
+                    `recipient_role` varchar(50) default null,
+                    `subject` varchar(255),
+                    `body` text,
+                    primary key  (`id`)
+                  ) engine=innodb default charset=utf8;";
+
+
+        $sql[] = "create table `ohrm_email_processor` (
+                `id` int(6) not null auto_increment,
+                `email_id` int(6) not null,
+                `class_name` varchar(100),
+                primary key  (`id`)
+              ) engine=innodb default charset=utf8;";
+
         $sql[] = "create table `ohrm_menu_item` (
                     `id` int not null auto_increment, 
                     `menu_title` varchar(255) not null, 
@@ -72,26 +94,51 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                     `status` tinyint not null default 1,
                     primary key (`id`)
                  ) engine=innodb default charset=utf8;";
-        
+
         $sql[] = "CREATE TABLE ohrm_leave_type (
-                `id` int unsigned not null auto_increment,
-                `name` varchar(50) not null,
-                `deleted` tinyint(1) not null default 0,
-                `operational_country_id` int unsigned default null,
-                primary key  (`id`)
-              ) engine=innodb default charset=utf8;";
+                    `id` int unsigned not null auto_increment,
+                    `name` varchar(50) not null,
+                    `deleted` tinyint(1) not null default 0,
+                    `exclude_in_reports_if_no_entitlement` tinyint(1) not null default 0,
+                    `operational_country_id` int unsigned default null,
+                    primary key  (`id`)
+                  ) engine=innodb default charset=utf8;";
+
+        $sql[] = "CREATE TABLE ohrm_leave_entitlement_type(
+                    `id` int unsigned not null auto_increment,
+                    `name` varchar(50) not null,
+                    `is_editable`  tinyint(1) not null default 0,
+                    PRIMARY KEY(`id`)
+                  )ENGINE = INNODB DEFAULT CHARSET=utf8;";
 
         $sql[] = "CREATE TABLE ohrm_leave_entitlement (
                     `id` int unsigned not null auto_increment,
                     emp_number int(7) not null,
-                    no_of_days int not null,
+                    no_of_days decimal(6,2) not null,
                     days_used decimal(4,2) not null default 0,
                     leave_type_id int unsigned not null,
                     from_date datetime not null,
                     to_date datetime,
                     credited_date datetime,
                     note varchar(255) default null, 
-                    entitlement_type decimal(6,2) not null,
+                    entitlement_type int unsigned not null,
+                    `deleted` tinyint(1) not null default 0,
+                    created_by_id int(10),
+                    created_by_name varchar(255),
+                    PRIMARY KEY(`id`)
+                  ) ENGINE = INNODB DEFAULT CHARSET=utf8;";
+
+
+        $sql[] = "CREATE TABLE ohrm_leave_adjustment (
+                    `id` int unsigned not null auto_increment,
+                    emp_number int(7) not null,
+                    no_of_days decimal(6,2) not null,
+                    leave_type_id int unsigned not null,
+                    from_date datetime,
+                    to_date datetime,
+                    credited_date datetime,
+                    note varchar(255) default null,
+                    adjustment_type int unsigned not null default 0, 
                     `deleted` tinyint(1) not null default 0,
                     created_by_id int(10),
                     created_by_name varchar(255),
@@ -123,82 +170,250 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                     KEY `leave_request_type_emp`(`leave_request_id`,`leave_type_id`,`emp_number`),
                     KEY `request_status` (`leave_request_id`,`status`)
                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-    
+
+        $sql[] = "CREATE TABLE `ohrm_leave_comment` (
+          `id` int(11) NOT NULL  auto_increment,
+          `leave_id` int(11) NOT NULL,
+          `created` datetime default NULL,
+          `created_by_name` varchar(255) NOT NULL,
+          `created_by_id` int(10),
+          `created_by_emp_number` int(7) default NULL,
+          `comments` varchar(255) default NULL,
+          PRIMARY KEY  (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+        $sql[] = "CREATE TABLE `ohrm_leave_request_comment` (
+          `id` int(11) NOT NULL  auto_increment,
+          `leave_request_id` int unsigned NOT NULL,
+          `created` datetime default NULL,
+          `created_by_name` varchar(255) NOT NULL,
+          `created_by_id` int(10),
+          `created_by_emp_number` int(7) default NULL,
+          `comments` varchar(255) default NULL,
+          PRIMARY KEY  (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
         $sql[] = "create TABLE `ohrm_leave_leave_entitlement` (
-                `id` int(11) NOT NULL   auto_increment,
-                `leave_id` int(11) NOT NULL,
-                `entitlement_id` int unsigned NOT NULL,
-                `length_days` decimal(4,2) unsigned default NULL,
-                PRIMARY KEY  (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-        
-         $sql[] = "CREATE TABLE `ohrm_leave_period` (
-                    `leave_period_id` int(11) NOT NULL,
-                    `leave_period_start_date` date NOT NULL,
-                    `leave_period_end_date` date NOT NULL,
-                    PRIMARY KEY (`leave_period_id`)
-                  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-        
+            `id` int(11) NOT NULL   auto_increment,
+            `leave_id` int(11) NOT NULL,
+            `entitlement_id` int unsigned NOT NULL,
+            `length_days` decimal(4,2) unsigned default NULL,
+            PRIMARY KEY  (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+        $sql[] = "create TABLE `ohrm_leave_entitlement_adjustment` (
+            `id` int(11) NOT NULL   auto_increment,
+            `adjustment_id` int unsigned NOT NULL,
+            `entitlement_id` int unsigned NOT NULL,
+            `length_days` decimal(4,2) unsigned default NULL,
+            PRIMARY KEY  (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+        $sql[] = "CREATE TABLE `ohrm_leave_period_history` (
+          `id` int(11) NOT NULL auto_increment,
+          `leave_period_start_month` int NOT NULL,
+          `leave_period_start_day` int NOT NULL,
+          `created_at` date NOT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+        $sql[] = "CREATE TABLE `ohrm_leave_status` (
+          `id` int(11) NOT NULL auto_increment,
+          `status` smallint(6) NOT NULL,
+          `name` varchar(100) NOT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+        $sql[] = "create table `ohrm_advanced_report` (
+          `id` int(10) not null,
+          `name` varchar(100) not null,
+          `definition` longtext not null,
+          primary key (`id`)
+        ) engine=innodb default charset=utf8;";
+
+        /* ------------ Foreign key constraints for new tables ---------------- */        
         $sql[] = "alter table ohrm_leave_type
                 add foreign key (operational_country_id)
                     references ohrm_operational_country(id) on delete set null;";
-        
-        $sql[] = "alter table ohrm_leave_entitlement
-                add foreign key (leave_type_id)
-                    references ohrm_leave_type(id) on delete cascade;";
 
-        $sql[] = "alter table ohrm_leave_entitlement
-                    add foreign key (emp_number)
-                        references hs_hr_employee(emp_number) on delete cascade;";
+        $sql[] = "ALTER TABLE `ohrm_leave_entitlement`
+            ADD CONSTRAINT FOREIGN KEY (`leave_type_id`) REFERENCES `ohrm_leave_type` (`id`) ON DELETE CASCADE,
+            ADD CONSTRAINT FOREIGN KEY (`emp_number`) REFERENCES `hs_hr_employee` (`emp_number`) ON DELETE CASCADE,
+            ADD CONSTRAINT FOREIGN KEY (`entitlement_type`) REFERENCES `ohrm_leave_entitlement_type` (`id`) ON DELETE CASCADE,
+            ADD CONSTRAINT FOREIGN KEY (`created_by_id`) REFERENCES `ohrm_user` (`id`) ON DELETE SET NULL;";
 
-        $sql[] = "alter table ohrm_leave_entitlement
-            add foreign key (created_by_id)
-                references ohrm_user(`id`) on delete set null;";
+        $sql[] = "ALTER TABLE `ohrm_leave_adjustment`
+        ADD CONSTRAINT FOREIGN KEY (`adjustment_type`) REFERENCES `ohrm_leave_entitlement_type` (`id`) ON DELETE CASCADE,
+        ADD CONSTRAINT FOREIGN KEY (`leave_type_id`) REFERENCES `ohrm_leave_type` (`id`) ON DELETE CASCADE,
+        ADD CONSTRAINT FOREIGN KEY (`emp_number`) REFERENCES `hs_hr_employee` (`emp_number`) ON DELETE CASCADE,
+        ADD CONSTRAINT FOREIGN KEY (`created_by_id`) REFERENCES `ohrm_user` (`id`) ON DELETE SET NULL;";
 
-        $sql[] = "alter table ohrm_leave_request
-            add constraint foreign key (emp_number)
-                references hs_hr_employee (emp_number) on delete cascade;";
 
         $sql[] = "alter table ohrm_leave_request
-            add constraint foreign key (leave_type_id)
-                references ohrm_leave_type (id) on delete cascade;";
+            add constraint foreign key (emp_number) references hs_hr_employee (emp_number) on delete cascade,
+            add constraint foreign key (leave_type_id) references ohrm_leave_type (id) on delete cascade;";
 
-        $sql[] = "alter table ohrm_leave
-            add foreign key (leave_request_id)
-                references ohrm_leave_request(id) on delete cascade;";
-
-        $sql[] = "alter table ohrm_leave
-            add constraint foreign key (leave_type_id)
-                references ohrm_leave_type (id) on delete cascade";
-
-        $sql[] = "alter table ohrm_leave
-            add constraint foreign key (leave_type_id)
-                references ohrm_leave_type (id) on delete cascade";
+        $sql[] = "alter table ohrm_leave 
+            add constraint foreign key (leave_request_id) references ohrm_leave_request(id) on delete cascade,
+            add constraint foreign key (leave_type_id) references ohrm_leave_type (id) on delete cascade";
 
         $sql[] = "alter table ohrm_leave_leave_entitlement
-            add constraint foreign key (entitlement_id)
-                references ohrm_leave_entitlement (id) on delete cascade";
+            add constraint foreign key (entitlement_id) references ohrm_leave_entitlement (id) on delete cascade,
+            add constraint foreign key (leave_id) references ohrm_leave (id) on delete cascade";
+        $sql[] = "alter table ohrm_leave_entitlement_adjustment
+            add constraint foreign key (entitlement_id) references ohrm_leave_entitlement (id) on delete cascade;
+            add constraint foreign key (adjustment_id) references ohrm_leave_adjustment (id) on delete cascade;";
 
-        $sql[] = "alter table ohrm_leave_leave_entitlement
-            add constraint foreign key (leave_id)
-                references ohrm_leave (id) on delete cascade";
+        $sql[] = "alter table ohrm_leave_comment
+        add constraint foreign key (leave_id) references ohrm_leave(id) on delete cascade;
+        add constraint foreign key (created_by_id) references ohrm_user(`id`) on delete set NULL
+        add constraint foreign key (created_by_emp_number) references hs_hr_employee(emp_number) on delete cascade;";
 
+        $sql[] = "alter table ohrm_leave_request_comment
+        add constraint foreign key (leave_request_id) references ohrm_leave_request(id) on delete cascade,
+        add constraint foreign key (created_by_id) references ohrm_user(`id`) on delete set NULL,
+        add constraint foreign key (created_by_emp_number) references hs_hr_employee(emp_number) on delete cascade;";
 
         $sql[] = "alter table ohrm_menu_item 
-               add constraint foreign key (screen_id)
-                                     references ohrm_screen(id) on delete cascade;";        
+        add constraint foreign key (screen_id) references ohrm_screen(id) on delete cascade;";
 
-        $sql[] = "INSERT INTO `hs_hr_config`(`key`, `value`) VALUES ('themeName', 'default'),
+
+        $sql[] = "alter table ohrm_email_template
+        add foreign key (email_id) references ohrm_email(id) on delete cascade;";
+
+        $sql[] = "alter table ohrm_email_processor
+        add foreign key (email_id) references ohrm_email(id) on delete cascade;";
+
+
+        /* ------------ Modifications to existing tables ---------------- */
+        $sql[] = "alter table ohrm_data_group modify column `name` varchar(255) NOT NULL UNIQUE";
+
+        /* ------------ Data Changes ---------------- */
+        $sql[] = "INSERT INTO `hs_hr_config`(`key`, `value`) VALUES 
+                    ('themeName', 'default'),
                     ('leave.entitlement_consumption_algorithm', 'FIFOEntitlementConsumptionStrategy'),
-                    ('leave.work_schedule_implementation', 'BasicWorkSchedule');";
+                    ('leave.work_schedule_implementation', 'BasicWorkSchedule'),
+                    ('leave.leavePeriodStatus', 1),
+                    ('leave.include_pending_leave_in_balance', 1)";
+
+        /* ------------ Inserts to new tables -------------- */
+        $sql[] = "INSERT INTO `ohrm_leave_entitlement_type` (`id`, `name`, `is_editable`) VALUES
+                    (1, 'Added', 1);";
         
-        $sql[] = "DELETE FROM `ohrm_user_role` WHERE id = 6;";
+        $sql[] = "INSERT INTO `ohrm_advanced_report` (`id`, `name`, `definition`) VALUES
+            (1, 'Leave Entitlements and Usage Report', '{$this->getReportForEmployee()}'),
+            (2, 'Leave Entitlements and Usage Report', '{$this->getReportForLeaveType()}');";
+
+
+        $sql[] = "INSERT INTO `ohrm_email` (`id`, `name`) VALUES
+            (1, 'leave.apply'),
+            (3, 'leave.approve'),
+            (2, 'leave.assign'),
+            (4, 'leave.cancel'),
+            (6, 'leave.change'),
+            (5, 'leave.reject');";
+
+        $sql[] = "INSERT INTO `ohrm_email_processor` (`id`, `email_id`, `class_name`) VALUES
+            (1, 1, 'LeaveEmailProcessor'),
+            (2, 2, 'LeaveEmailProcessor'),
+            (3, 3, 'LeaveEmailProcessor'),
+            (4, 4, 'LeaveEmailProcessor'),
+            (5, 5, 'LeaveEmailProcessor'),
+            (6, 6, 'LeaveChangeMailProcessor');";
+
+        $sql[] = "INSERT INTO `ohrm_email_template` (`id`, `email_id`, `locale`, `performer_role`, `recipient_role`, `subject`, `body`) VALUES
+        (1, 1, 'en_US', NULL, 'supervisor', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/apply/leaveApplicationSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/apply/leaveApplicationBody.txt'),
+        (2, 1, 'en_US', NULL, 'subscriber', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/apply/leaveApplicationSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/apply/leaveApplicationSubscriberBody.txt'),
+        (3, 3, 'en_US', NULL, 'ess', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/approve/leaveApprovalSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/approve/leaveApprovalBody.txt'),
+        (4, 3, 'en_US', NULL, 'subscriber', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/approve/leaveApprovalSubscriberSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/approve/leaveApprovalSubscriberBody.txt'),
+        (5, 2, 'en_US', NULL, 'ess', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/assign/leaveAssignmentSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/assign/leaveAssignmentBody.txt'),
+        (6, 2, 'en_US', NULL, 'supervisor', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/assign/leaveAssignmentSubjectForSupervisors.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/assign/leaveAssignmentBodyForSupervisors.txt'),
+        (7, 2, 'en_US', NULL, 'subscriber', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/assign/leaveAssignmentSubscriberSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/assign/leaveAssignmentSubscriberBody.txt'),
+        (8, 4, 'en_US', 'ess', 'supervisor', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveEmployeeCancellationSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveEmployeeCancellationBody.txt'),
+        (9, 4, 'en_US', 'ess', 'subscriber', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveEmployeeCancellationSubscriberSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveEmployeeCancellationSubscriberBody.txt'),
+        (10, 4, 'en_US', NULL, 'ess', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveCancellationSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveCancellationBody.txt'),
+        (11, 4, 'en_US', NULL, 'subscriber', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveCancellationSubscriberSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/cancel/leaveCancellationSubscriberBody.txt'),
+        (12, 5, 'en_US', NULL, 'ess', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/reject/leaveRejectionSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/reject/leaveRejectionBody.txt'),
+        (13, 5, 'en_US', NULL, 'subscriber', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/reject/leaveRejectionSubscriberSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/reject/leaveRejectionSubscriberBody.txt'),
+        (14, 6, 'en_US', NULL, 'ess', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/change/leaveChangeSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/change/leaveChangeBody.txt'),
+        (15, 6, 'en_US', NULL, 'subscriber', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/change/leaveChangeSubscriberSubject.txt', 'orangehrmLeavePlugin/modules/leave/templates/mail/en_US/change/leaveChangeSubscriberBody.txt');";
+
+        $sql[] = "INSERT INTO `ohrm_leave_status` (`id`, `status`, `name`) VALUES
+                    (1, -1, 'REJECTED'),
+                    (2, 0, 'CANCELLED'),
+                    (3, 1, 'PENDING APPROVAL'),
+                    (4, 2, 'SCHEDULED'),
+                    (5, 3, 'TAKEN'),
+                    (6, 4, 'WEEKEND'),
+                    (7, 5, 'HOLIDAY');";        
         
-        $sql[] = "INSERT INTO `ohrm_user_role` (`id`, `name`, `display_name`, `is_assignable`, `is_predefined`) VALUES
+        /* -- Enable time module menu items if timesheet period is defined -- */
+        $sql[] = "UPDATE `ohrm_menu_item` menu
+            SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'timesheet_period_set') 
+            WHERE screen_id in 
+            (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id 
+            where m.`name` IN ('time', 'attendance'))
+            OR (menu.menu_title in ('Project Info', 'Customers', 'Projects'));";
+     
+
+        /* -- Enable leave module menu items if leave period is defined */
+        $sql[] = "UPDATE `ohrm_menu_item` 
+            SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'leave_period_defined') 
+            WHERE screen_id in 
+            (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id where m.`name` = 'leave')";
+        
+        /*-------- Workflow State machine entries -------------*/        
+        $sql[] = "alter table `ohrm_workflow_state_machine` 
+            add column `roles_to_notify` text,
+            add column `priority` int(11) NOT NULL DEFAULT '0' COMMENT 'lowest priority 0';";
+
+        // make id field auto_increment for easier data insert
+        $sql[] = "ALTER TABLE ohrm_workflow_state_machine MODIFY COLUMN `id` bigint(20) NOT NULL AUTO_INCREMENT;";
+        
+        $sql[] = "INSERT INTO `ohrm_workflow_state_machine` 
+            (`workflow`, `state`, `role`, `action`, `resulting_state`, `roles_to_notify`, `priority`) VALUES
+            ('4', 'INITIAL', 'ESS', 'APPLY', 'PENDING APPROVAL', 'supervisor,subscriber', 0),
+            ('4', 'INITIAL', 'ADMIN', 'ASSIGN', 'SCHEDULED', 'ess,supervisor,subscriber', 0),
+            ('4', 'INITIAL', 'SUPERVISOR', 'ASSIGN', 'SCHEDULED', 'ess,supervisor,subscriber', 0),
+            ('4', 'PENDING APPROVAL', 'ADMIN', 'APPROVE', 'SCHEDULED', 'ess,subscriber', 0),
+            ('4', 'PENDING APPROVAL', 'SUPERVISOR', 'APPROVE', 'SCHEDULED', 'ess,subscriber', 0),
+            ('4', 'PENDING APPROVAL', 'ESS', 'CANCEL', 'CANCELLED', 'supervisor,subscriber', 0),
+            ('4', 'PENDING APPROVAL', 'ADMIN', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'PENDING APPROVAL', 'SUPERVISOR', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'PENDING APPROVAL', 'ADMIN', 'REJECT', 'REJECTED', 'ess,subscriber', 0),
+            ('4', 'PENDING APPROVAL', 'SUPERVISOR', 'REJECT', 'REJECTED', 'ess,subscriber', 0),
+            ('4', 'SCHEDULED', 'ESS', 'CANCEL', 'CANCELLED', 'supervisor,subscriber', 0),
+            ('4', 'SCHEDULED', 'ADMIN', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'SCHEDULED', 'SUPERVISOR', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'TAKEN', 'ADMIN', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'LEAVE TYPE DELETED PENDING APPROVAL', 'ESS', 'CANCEL', 'CANCELLED', 'supervisor,subscriber', 0),
+            ('4', 'LEAVE TYPE DELETED PENDING APPROVAL', 'ADMIN', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'LEAVE TYPE DELETED PENDING APPROVAL', 'SUPERVISOR', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'LEAVE TYPE DELETED SCHEDULED', 'ESS', 'CANCEL', 'CANCELLED', 'supervisor,subscriber', 0),
+            ('4', 'LEAVE TYPE DELETED SCHEDULED', 'ADMIN', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'LEAVE TYPE DELETED SCHEDULED', 'SUPERVISOR', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0),
+            ('4', 'LEAVE TYPE DELETED TAKEN', 'ADMIN', 'CANCEL', 'CANCELLED', 'ess,subscriber', 0);";
+
+        // update last id
+        $sql[] = "UPDATE `hs_hr_unique_id` SET
+            last_id = (select MAX(`id`) FROM ohrm_workflow_state_machine) 
+            WHERE table_name = 'ohrm_workflow_state_machine' AND `field_name` = 'id';";
+        
+        // Remove auto increment since this is not part of 3.0
+        $sql[] = "ALTER TABLE ohrm_workflow_state_machine MODIFY COLUMN `id` bigint(20) NOT NULL;";
+        
+        /*-------- END Workflow State machine entries -------------*/  
+        
+        /*--------- Needs improvement for compatibility if data group, screen entries modified ----*/
+        $sql[] = "DELETE FROM `ohrm_user_role` WHERE id = 6 AND name = 'Offerer';";
+
+        $sql[] = "INSERT INTO `ohrm_user_role` 
+                (`id`, `name`, `display_name`, `is_assignable`, `is_predefined`) VALUES
                 (6, 'HiringManager', 'HiringManager', 0, 1),
                 (7, 'Reviewer', 'Reviewer', 0, 1);";
-
-
+        
+        
+        /*-------- Screen Entries -------*/
         $sql[] = "INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
                     (20, 'General Information', 2, 'viewOrganizationGeneralInformation'),
                     (21, 'Location List', 2, 'viewLocations'),
@@ -261,206 +476,243 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                     (78, 'Leave Balance Report', 4, 'viewLeaveBalanceReport'),
                     (79, 'My Leave Balance Report', 4, 'viewMyLeaveBalanceReport');";
 
-        $sql[] = "INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
-                    (1, 'Admin', 74, NULL, 1, 100, NULL, 1),
-                    (2, 'Users', 1, 1, 2, 100, NULL, 1),
-                    (3, 'Project Info', NULL, 1, 2, 200, NULL, 1),
-                    (4, 'Customers', 36, 3, 3, 100, NULL, 1),
-                    (5, 'Projects', 37, 3, 3, 200, NULL, 1),
-                    (6, 'Job', NULL, 1, 2, 300, NULL, 1),
-                    (7, 'Job Titles', 23, 6, 3, 100, NULL, 1),
-                    (8, 'Pay Grades', 24, 6, 3, 200, NULL, 1),
-                    (9, 'Employment Status', 25, 6, 3, 300, NULL, 1),
-                    (10, 'Job Categories', 26, 6, 3, 400, NULL, 1),
-                    (11, 'Work Shifts', 27, 6, 3, 500, NULL, 1),
-                    (12, 'Organization', NULL, 1, 2, 400, NULL, 1),
-                    (13, 'General Information', 20, 12, 3, 100, NULL, 1),
-                    (14, 'Locations', 21, 12, 3, 200, NULL, 1),
-                    (15, 'Structure', 22, 12, 3, 300, NULL, 1),
-                    (16, 'Qualifications', NULL, 1, 2, 500, NULL, 1),
-                    (17, 'Skills', 28, 16, 3, 100, NULL, 1),
-                    (18, 'Education', 29, 16, 3, 200, NULL, 1),
-                    (19, 'Licenses', 30, 16, 3, 300, NULL, 1),
-                    (20, 'Languages', 31, 16, 3, 400, NULL, 1),
-                    (21, 'Memberships', 32, 1, 2, 600, NULL, 1),
-                    (22, 'Nationalities', 33, 1, 2, 700, NULL, 1),
-                    (23, 'Email Notifications', NULL, 1, 2, 800, NULL, 1),
-                    (24, 'Configuration', 34, 23, 3, 100, NULL, 1),
-                    (25, 'Subscribe', 35, 23, 3, 200, NULL, 1),
-                    (26, 'Configuration', NULL, 1, 2, 900, NULL, 1),
-                    (27, 'Localization', 38, 26, 3, 100, NULL, 1),
-                    (28, 'Modules', 39, 26, 3, 200, NULL, 1),
-                    (30, 'PIM', 75, NULL, 1, 200, NULL, 1),
-                    (31, 'Configuration', NULL, 30, 2, 100, NULL, 1),
-                    (32, 'Optional Fields', 40, 31, 3, 100, NULL, 1),
-                    (33, 'Custom Fields', 41, 31, 3, 200, NULL, 1),
-                    (34, 'Data Import', 42, 31, 3, 300, NULL, 1),
-                    (35, 'Reporting Methods', 43, 31, 3, 400, NULL, 1),
-                    (36, 'Termination Reasons', 44, 31, 3, 500, NULL, 1),
-                    (37, 'Employee List', 5, 30, 2, 200, '/reset/1', 1),
-                    (38, 'Add Employee', 4, 30, 2, 300, NULL, 1),
-                    (39, 'Reports', 45, 30, 2, 400, '/reportGroup/3/reportType/PIM_DEFINED', 1),
-                    (40, 'My Info', 46, NULL, 1, 700, NULL, 1),
-                    (41, 'Leave', 68, NULL, 1, 300, NULL, 1),
-                    (42, 'Configure', NULL, 41, 2, 400, NULL, 0),
-                    (43, 'Leave Period', 47, 42, 3, 100, NULL, 0),
-                    (44, 'Leave Types', 7, 42, 3, 200, NULL, 0),
-                    (45, 'Work Week', 14, 42, 3, 300, NULL, 0),
-                    (46, 'Holidays', 11, 42, 3, 400, NULL, 0),
-                    (47, 'Leave Summary', 18, 41, 2, 500, NULL, 0),
-                    (48, 'Leave List', 16, 41, 2, 600, '/reset/1', 0),
-                    (49, 'Assign Leave', 17, 41, 2, 700, NULL, 0),
-                    (50, 'My Leave', 48, 41, 2, 800, '/reset/1', 0),
-                    (51, 'Apply', 49, 41, 2, 900, NULL, 0),
-                    (52, 'Time', 67, NULL, 1, 400, NULL, 1),
-                    (53, 'Timesheets', NULL, 52, 2, 100, NULL, 1),
-                    (54, 'My Timesheets', 51, 53, 3, 100, NULL, 0),
-                    (55, 'Employee Timesheets', 52, 53, 3, 200, NULL, 0),
-                    (56, 'Attendance', NULL, 52, 2, 200, NULL, 1),
-                    (57, 'My Records', 53, 56, 3, 100, NULL, 0),
-                    (58, 'Punch In/Out', 54, 56, 3, 200, NULL, 0),
-                    (59, 'Employee Records', 55, 56, 3, 300, NULL, 0),
-                    (60, 'Configuration', 56, 56, 3, 400, NULL, 0),
-                    (61, 'Reports', NULL, 52, 2, 300, NULL, 1),
-                    (62, 'Project Reports', 57, 61, 3, 100, '?reportId=1', 0),
-                    (63, 'Employee Reports', 58, 61, 3, 200, '?reportId=2', 0),
-                    (64, 'Attendance Summary', 59, 61, 3, 300, '?reportId=4', 0),
-                    (65, 'Recruitment', 76, NULL, 1, 500, NULL, 1),
-                    (66, 'Candidates', 60, 65, 2, 100, NULL, 1),
-                    (67, 'Vacancies', 61, 65, 2, 200, NULL, 1),
-                    (68, 'Performance', 77, NULL, 1, 600, NULL, 1),
-                    (69, 'KPI List', 62, 68, 2, 100, NULL, 1),
-                    (70, 'Add KPI', 63, 68, 2, 200, NULL, 1),
-                    (71, 'Copy KPI', 64, 68, 2, 300, NULL, 1),
-                    (72, 'Add Review', 65, 68, 2, 400, NULL, 1),
-                    (73, 'Reviews', 66, 68, 2, 500, '/mode/new', 1),
-                    (74, 'Entitlements', NULL, 41, 2, 100, NULL, 0),
-                    (75, 'Add Entitlements', 72, 74, 3, 100, NULL, 0),
-                    (76, 'My Entitlements', 70, 74, 3, 200, '/reset/1', 0),
-                    (77, 'Employee Entitlements', 69, 74, 3, 300, '/reset/1', 0),
-                    (78, 'Reports', NULL, 41, 2, 200, NULL, 0),
-                    (79, 'Leave Balance', 78, 78, 3, 100, NULL, 0),
-                    (80, 'My Leave Balance', 79, 78, 3, 200, NULL, 0);";
 
-        /** TODO: Improve here to support upgrading installs with modified user role tables. */        
+
+        // Menu entries - assumes id's haven't changed from 2.7.1 install
+        $sql[] = "INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
+                (1, 'Admin', 74, NULL, 1, 100, NULL, 1),
+                (2, 'User Management', NULL, 1, 2, 100, NULL, 1),
+                (3, 'Project Info', NULL, 52, 2, 400, NULL, 0),
+                (4, 'Customers', 36, 3, 3, 100, NULL, 0),
+                (5, 'Projects', 37, 3, 3, 200, NULL, 0),
+                (6, 'Job', NULL, 1, 2, 300, NULL, 1),
+                (7, 'Job Titles', 23, 6, 3, 100, NULL, 1),
+                (8, 'Pay Grades', 24, 6, 3, 200, NULL, 1),
+                (9, 'Employment Status', 25, 6, 3, 300, NULL, 1),
+                (10, 'Job Categories', 26, 6, 3, 400, NULL, 1),
+                (11, 'Work Shifts', 27, 6, 3, 500, NULL, 1),
+                (12, 'Organization', NULL, 1, 2, 400, NULL, 1),
+                (13, 'General Information', 20, 12, 3, 100, NULL, 1),
+                (14, 'Locations', 21, 12, 3, 200, NULL, 1),
+                (15, 'Structure', 22, 12, 3, 300, NULL, 1),
+                (16, 'Qualifications', NULL, 1, 2, 500, NULL, 1),
+                (17, 'Skills', 28, 16, 3, 100, NULL, 1),
+                (18, 'Education', 29, 16, 3, 200, NULL, 1),
+                (19, 'Licenses', 30, 16, 3, 300, NULL, 1),
+                (20, 'Languages', 31, 16, 3, 400, NULL, 1),
+                (21, 'Memberships', 32, 16, 3, 500, NULL, 1),
+                (22, 'Nationalities', 33, 1, 2, 700, NULL, 1),
+                (23, 'Configuration', NULL, 1, 2, 900, NULL, 1),
+                (24, 'Email Configuration', 34, 23, 3, 100, NULL, 1),
+                (25, 'Email Subscriptions', 35, 23, 3, 200, NULL, 1),
+                (27, 'Localization', 38, 23, 3, 300, NULL, 1),
+                (28, 'Modules', 39, 23, 3, 400, NULL, 1),
+                (30, 'PIM', 75, NULL, 1, 200, NULL, 1),
+                (31, 'Configuration', NULL, 30, 2, 100, NULL, 1),
+                (32, 'Optional Fields', 40, 31, 3, 100, NULL, 1),
+                (33, 'Custom Fields', 41, 31, 3, 200, NULL, 1),
+                (34, 'Data Import', 42, 31, 3, 300, NULL, 1),
+                (35, 'Reporting Methods', 43, 31, 3, 400, NULL, 1),
+                (36, 'Termination Reasons', 44, 31, 3, 500, NULL, 1),
+                (37, 'Employee List', 5, 30, 2, 200, '/reset/1', 1),
+                (38, 'Add Employee', 4, 30, 2, 300, NULL, 1),
+                (39, 'Reports', 45, 30, 2, 400, '/reportGroup/3/reportType/PIM_DEFINED', 1),
+                (40, 'My Info', 46, NULL, 1, 700, NULL, 1),
+                (41, 'Leave', 68, NULL, 1, 300, NULL, 1),
+                (42, 'Configure', NULL, 41, 2, 500, NULL, 0),
+                (43, 'Leave Period', 47, 42, 3, 100, NULL, 0),
+                (44, 'Leave Types', 7, 42, 3, 200, NULL, 0),
+                (45, 'Work Week', 14, 42, 3, 300, NULL, 0),
+                (46, 'Holidays', 11, 42, 3, 400, NULL, 0),
+                (48, 'Leave List', 16, 41, 2, 600, '/reset/1', 0),
+                (49, 'Assign Leave', 17, 41, 2, 700, NULL, 0),
+                (50, 'My Leave', 48, 41, 2, 200, '/reset/1', 0),
+                (51, 'Apply', 49, 41, 2, 100, NULL, 0),
+                (52, 'Time', 67, NULL, 1, 400, NULL, 1),
+                (53, 'Timesheets', NULL, 52, 2, 100, NULL, 1),
+                (54, 'My Timesheets', 51, 53, 3, 100, NULL, 0),
+                (55, 'Employee Timesheets', 52, 53, 3, 200, NULL, 0),
+                (56, 'Attendance', NULL, 52, 2, 200, NULL, 1),
+                (57, 'My Records', 53, 56, 3, 100, NULL, 0),
+                (58, 'Punch In/Out', 54, 56, 3, 200, NULL, 0),
+                (59, 'Employee Records', 55, 56, 3, 300, NULL, 0),
+                (60, 'Configuration', 56, 56, 3, 400, NULL, 0),
+                (61, 'Reports', NULL, 52, 2, 300, NULL, 1),
+                (62, 'Project Reports', 57, 61, 3, 100, '?reportId=1', 0),
+                (63, 'Employee Reports', 58, 61, 3, 200, '?reportId=2', 0),
+                (64, 'Attendance Summary', 59, 61, 3, 300, '?reportId=4', 0),
+                (65, 'Recruitment', 76, NULL, 1, 500, NULL, 1),
+                (66, 'Candidates', 60, 65, 2, 100, NULL, 1),
+                (67, 'Vacancies', 61, 65, 2, 200, NULL, 1),
+                (68, 'Performance', 77, NULL, 1, 600, NULL, 1),
+                (69, 'KPI List', 62, 68, 2, 100, NULL, 1),
+                (70, 'Add KPI', 63, 68, 2, 200, NULL, 1),
+                (71, 'Copy KPI', 64, 68, 2, 300, NULL, 1),
+                (72, 'Add Review', 65, 68, 2, 400, NULL, 1),
+                (73, 'Reviews', 66, 68, 2, 500, '/mode/new', 1),
+                (74, 'Entitlements', NULL, 41, 2, 300, NULL, 0),
+                (75, 'Add Entitlements', 72, 74, 3, 100, NULL, 0),
+                (76, 'My Entitlements', 70, 74, 3, 300, '/reset/1', 0),
+                (77, 'Employee Entitlements', 69, 74, 3, 200, '/reset/1', 0),
+                (78, 'Reports', NULL, 41, 2, 400, NULL, 0),
+                (79, 'Leave Entitlements and Usage Report', 78, 78, 3, 100, NULL, 0),
+                (80, 'My Leave Entitlements and Usage Report', 79, 78, 3, 200, NULL, 0),
+                (81, 'Users', 1, 2, 3, 100, NULL, 1);";
+
+        /** TODO: Improve here to support upgrading installs with modified user role tables. */
         $sql[] = "DELETE FROM ohrm_user_role_screen";
         $sql[] = "ALTER TABLE ohrm_user_role_screen AUTO_INCREMENT = 0";
+
         $sql[] = "INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
-                    (1, 1, 1, 1, 1, 1),
-                    (1, 2, 1, 1, 1, 1),
-                    (2, 2, 0, 0, 0, 0),
-                    (3, 2, 0, 0, 0, 0),
-                    (1, 3, 1, 1, 1, 1),
-                    (2, 3, 0, 0, 0, 0),
-                    (3, 3, 0, 0, 0, 0),
-                    (1, 4, 1, 1, 1, 1),
-                    (1, 5, 1, 1, 1, 1),
-                    (3, 5, 1, 0, 0, 0),
-                    (1, 6, 1, 0, 0, 1),
-                    (1, 7, 1, 1, 1, 1),
-                    (1, 8, 1, 1, 1, 1),
-                    (1, 9, 1, 1, 1, 1),
-                    (1, 10, 1, 1, 1, 1),
-                    (1, 11, 1, 1, 1, 1),
-                    (1, 12, 1, 1, 1, 1),
-                    (1, 13, 1, 1, 1, 1),
-                    (1, 14, 1, 1, 1, 1),
-                    (1, 16, 1, 1, 1, 0),
-                    (3, 16, 1, 1, 1, 0),
-                    (1, 17, 1, 1, 1, 0),
-                    (3, 17, 1, 1, 1, 0),
-                    (1, 18, 1, 1, 1, 0),
-                    (2, 18, 1, 0, 0, 0),
-                    (3, 18, 1, 0, 0, 0),
-                    (1, 19, 1, 1, 1, 1),
-                    (1, 20, 1, 1, 1, 1),
-                    (1, 21, 1, 1, 1, 1),
-                    (1, 22, 1, 1, 1, 1),
-                    (1, 23, 1, 1, 1, 1),
-                    (1, 24, 1, 1, 1, 1),
-                    (1, 25, 1, 1, 1, 1),
-                    (1, 26, 1, 1, 1, 1),
-                    (1, 27, 1, 1, 1, 1),
-                    (1, 28, 1, 1, 1, 1),
-                    (1, 29, 1, 1, 1, 1),
-                    (1, 30, 1, 1, 1, 1),
-                    (1, 31, 1, 1, 1, 1),
-                    (1, 32, 1, 1, 1, 1),
-                    (1, 33, 1, 1, 1, 1),
-                    (1, 34, 1, 1, 1, 1),
-                    (1, 35, 1, 1, 1, 1),
-                    (1, 36, 1, 1, 1, 1),
-                    (1, 37, 1, 1, 1, 1),
-                    (4, 37, 1, 0, 0, 0),
-                    (1, 38, 1, 1, 1, 1),
-                    (1, 39, 1, 1, 1, 1),
-                    (1, 40, 1, 1, 1, 1),
-                    (1, 41, 1, 1, 1, 1),
-                    (1, 42, 1, 1, 1, 1),
-                    (1, 43, 1, 1, 1, 1),
-                    (1, 44, 1, 1, 1, 1),
-                    (1, 45, 1, 1, 1, 1),
-                    (2, 46, 1, 1, 1, 1),
-                    (1, 47, 1, 1, 1, 1),
-                    (2, 48, 1, 1, 1, 0),
-                    (2, 49, 1, 1, 1, 1),
-                    (1, 50, 1, 1, 1, 1),
-                    (2, 50, 1, 0, 0, 0),
-                    (2, 51, 1, 1, 1, 1),
-                    (1, 52, 1, 1, 1, 1),
-                    (3, 52, 1, 1, 1, 1),
-                    (2, 53, 1, 1, 0, 0),
-                    (2, 54, 1, 1, 1, 1),
-                    (1, 55, 1, 1, 0, 1),
-                    (3, 55, 1, 1, 0, 0),
-                    (1, 56, 1, 1, 1, 1),
-                    (1, 57, 1, 1, 1, 1),
-                    (4, 57, 1, 1, 1, 1),
-                    (1, 58, 1, 1, 1, 1),
-                    (3, 58, 1, 1, 1, 1),
-                    (1, 59, 1, 1, 1, 1),
-                    (3, 59, 1, 1, 1, 1),
-                    (1, 60, 1, 1, 1, 1),
-                    (6, 60, 1, 1, 1, 1),
-                    (5, 60, 1, 0, 1, 0),
-                    (1, 61, 1, 1, 1, 1),
-                    (1, 62, 1, 1, 1, 1),
-                    (1, 63, 1, 1, 1, 1),
-                    (1, 64, 1, 1, 1, 1),
-                    (1, 65, 1, 1, 1, 1),
-                    (1, 66, 1, 1, 1, 1),
-                    (2, 66, 1, 0, 1, 0),
-                    (7, 66, 1, 0, 1, 0),
-                    (1, 67, 1, 1, 1, 1),
-                    (2, 67, 1, 0, 1, 0),
-                    (3, 67, 1, 0, 1, 0),
-                    (1, 68, 1, 1, 1, 1),
-                    (2, 68, 1, 0, 1, 0),
-                    (3, 68, 1, 0, 1, 0),
-                    (1, 69, 1, 1, 1, 1),
-                    -- (2, 69, 0, 0, 0, 0),
-                    (3, 69, 1, 0, 0, 0),
-                    -- (1, 70, 0, 0, 0, 0),
-                    (2, 70, 1, 0, 0, 0),
-                    -- (3, 70, 0, 0, 0, 0),
-                    (1, 71, 1, 0, 0, 1),
-                    (1, 72, 1, 1, 1, 0),
-                    (1, 73, 1, 0, 1, 0),
-                    (1, 74, 1, 1, 1, 1),
-                    (4, 74, 1, 1, 1, 1),
-                    (1, 75, 1, 1, 1, 1),
-                    (3, 75, 1, 1, 1, 1),
-                    (1, 76, 1, 1, 1, 1),
-                    (5, 76, 1, 1, 1, 1),
-                    (6, 76, 1, 1, 1, 1),
-                    (1, 77, 1, 1, 1, 1),
-                    (2, 77, 1, 1, 1, 1),
-                    (7, 77, 1, 1, 1, 1),
-                    (1, 78, 1, 0, 0, 0),
-                    (3, 78, 1, 0, 0, 0),
-                    (2, 79, 1, 0, 0, 0);";
-                               
-        /* Importing leave type and entitlement data */
+                (1, 1, 1, 1, 1, 1),
+                (1, 2, 1, 1, 1, 1),
+                (2, 2, 0, 0, 0, 0),
+                (3, 2, 0, 0, 0, 0),
+                (1, 3, 1, 1, 1, 1),
+                (2, 3, 0, 0, 0, 0),
+                (3, 3, 0, 0, 0, 0),
+                (1, 4, 1, 1, 1, 1),
+                (1, 5, 1, 1, 1, 1),
+                (3, 5, 1, 0, 0, 0),
+                (1, 6, 1, 0, 0, 1),
+                (1, 7, 1, 1, 1, 1),
+                (1, 8, 1, 1, 1, 1),
+                (1, 9, 1, 1, 1, 1),
+                (1, 10, 1, 1, 1, 1),
+                (1, 11, 1, 1, 1, 1),
+                (1, 12, 1, 1, 1, 1),
+                (1, 13, 1, 1, 1, 1),
+                (1, 14, 1, 1, 1, 1),
+                (1, 16, 1, 1, 1, 0),
+                (3, 16, 1, 1, 1, 0),
+                (1, 17, 1, 1, 1, 0),
+                (3, 17, 1, 1, 1, 0),
+                (1, 18, 1, 1, 1, 0),
+                (2, 18, 1, 0, 0, 0),
+                (3, 18, 1, 0, 0, 0),
+                (1, 19, 1, 1, 1, 1),
+                (1, 20, 1, 1, 1, 1),
+                (1, 21, 1, 1, 1, 1),
+                (1, 22, 1, 1, 1, 1),
+                (1, 23, 1, 1, 1, 1),
+                (1, 24, 1, 1, 1, 1),
+                (1, 25, 1, 1, 1, 1),
+                (1, 26, 1, 1, 1, 1),
+                (1, 27, 1, 1, 1, 1),
+                (1, 28, 1, 1, 1, 1),
+                (1, 29, 1, 1, 1, 1),
+                (1, 30, 1, 1, 1, 1),
+                (1, 31, 1, 1, 1, 1),
+                (1, 32, 1, 1, 1, 1),
+                (1, 33, 1, 1, 1, 1),
+                (1, 34, 1, 1, 1, 1),
+                (1, 35, 1, 1, 1, 1),
+                (1, 36, 1, 1, 1, 1),
+                (1, 37, 1, 1, 1, 1),
+                (4, 37, 1, 0, 0, 0),
+                (1, 38, 1, 1, 1, 1),
+                (1, 39, 1, 1, 1, 1),
+                (1, 40, 1, 1, 1, 1),
+                (1, 41, 1, 1, 1, 1),
+                (1, 42, 1, 1, 1, 1),
+                (1, 43, 1, 1, 1, 1),
+                (1, 44, 1, 1, 1, 1),
+                (1, 45, 1, 1, 1, 1),
+                (2, 46, 1, 1, 1, 1),
+                (1, 47, 1, 1, 1, 1),
+                (2, 48, 1, 1, 1, 0),
+                (2, 49, 1, 1, 1, 1),
+                (1, 50, 1, 1, 1, 1),
+                (2, 50, 1, 0, 0, 0),
+                (2, 51, 1, 1, 1, 1),
+                (1, 52, 1, 1, 1, 1),
+                (3, 52, 1, 1, 1, 1),
+                (2, 53, 1, 1, 0, 0),
+                (2, 54, 1, 1, 1, 1),
+                (1, 55, 1, 1, 0, 1),
+                (3, 55, 1, 1, 0, 0),
+                (1, 56, 1, 1, 1, 1),
+                (1, 57, 1, 1, 1, 1),
+                (4, 57, 1, 1, 1, 1),
+                (1, 58, 1, 1, 1, 1),
+                (3, 58, 1, 1, 1, 1),
+                (1, 59, 1, 1, 1, 1),
+                (3, 59, 1, 1, 1, 1),
+                (1, 60, 1, 1, 1, 1),
+                (6, 60, 1, 1, 1, 1),
+                (5, 60, 1, 0, 1, 0),
+                (1, 61, 1, 1, 1, 1),
+                (1, 62, 1, 1, 1, 1),
+                (1, 63, 1, 1, 1, 1),
+                (1, 64, 1, 1, 1, 1),
+                (1, 65, 1, 1, 1, 1),
+                (1, 66, 1, 1, 1, 1),
+                (2, 66, 1, 0, 1, 0),
+                (7, 66, 1, 0, 1, 0),
+                (1, 67, 1, 1, 1, 1),
+                (2, 67, 1, 0, 1, 0),
+                (3, 67, 1, 0, 1, 0),
+                (1, 68, 1, 1, 1, 1),
+                (2, 68, 1, 0, 1, 0),
+                (3, 68, 1, 0, 1, 0),
+                (1, 69, 1, 1, 1, 1),
+                -- (2, 69, 0, 0, 0, 0),
+                (3, 69, 1, 0, 0, 0),
+                -- (1, 70, 0, 0, 0, 0),
+                (2, 70, 1, 0, 0, 0),
+                -- (3, 70, 0, 0, 0, 0),
+                (1, 71, 1, 0, 0, 1),
+                (1, 72, 1, 1, 1, 0),
+                (1, 73, 1, 0, 1, 0),
+                (1, 74, 1, 1, 1, 1),
+                (1, 75, 1, 1, 1, 1),
+                (3, 75, 1, 1, 1, 1),
+                (1, 76, 1, 1, 1, 1),
+                (5, 76, 1, 1, 1, 1),
+                (6, 76, 1, 1, 1, 1),
+                (1, 77, 1, 1, 1, 1),
+                (2, 77, 1, 1, 1, 1),
+                (7, 77, 1, 1, 1, 1),
+                (1, 78, 1, 0, 0, 0),
+                (3, 78, 1, 0, 0, 0),
+                (2, 79, 1, 0, 0, 0);";
+
+        /* ----------- Start Data group related data ---------- */
+
+        $sql[] = "DELETE FROM `ohrm_user_role_data_group WHERE id = 40`;";
+
+        $sql[] = "INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
+            (40, 'leave_entitlements', 'Leave - Leave Entitlements', 1, 1, 1, 1),
+            (41, 'leave_entitlements_usage_report', 'Leave - Leave Entitlements and Usage Report', 1, NULL, NULL, NULL);";
+
+        $sql[] = "INSERT INTO `ohrm_user_role_data_group` 
+            (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
+
+            (1, 40, 1, 1, 1, 1, 0),
+            (1, 41, 1, NULL, NULL, NULL, 0),
+ 
+            (1, 40, 1, 1, 1, 1, 1),
+            (1, 41, 1, NULL, NULL, NULL, 1),
+         
+            (2, 40, 1, 0, 0, 0, 1),
+            (2, 41, 1, NULL, NULL, NULL, 1),
+            
+            (3, 40, 1, 0, 0, 0, 0),
+            (3, 41, 1, NULL, NULL, NULL, 0),
+            
+            (3, 40, 1, 0, 0, 0, 1),
+            (3, 41, 1, NULL, NULL, NULL, 1);";
+
+        /* ----------- End Data group related data ---------- */        
+        
+
+        /* insert leave period data to ohrm_leave_period_history */
+        
+        $sql[] = "INSERT INTO `ohrm_leave_period_history` (`id`, `leave_period_start_month`, `leave_period_start_day`, `created_at` )
+                SELECT old_lp.`leave_period_id`, MONTH(old_lp.`leave_period_start_date`), DAY(old_lp.`leave_period_start_date`), old_lp.`leave_period_start_date`
+                FROM `hs_hr_leave_period` old_lp ORDER BY old_lp.leave_period_id ASC;";
+
+        /* ------------ Importing leave type and entitlement data -------------- */        
         $sql[] = "alter table `hs_hr_leavetype` add column int_id int not null auto_increment unique key;";
 
         $sql[] = "INSERT INTO `ohrm_leave_type` (`id`, `name`, `deleted`, `operational_country_id`)
@@ -472,20 +724,707 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                                         credited_date, note, entitlement_type, `deleted`)
                     SELECT q.employee_id, q.no_of_days_allotted, lt.int_id, p.leave_period_start_date, p.leave_period_end_date, 
                     p.leave_period_start_date, 'record created by upgrade', 1, 0
-                    FROM `hs_hr_employee_leave_quota` q LEFT JOIN `hs_hr_leavetype` lt ON lt.leave_type_id = q.leave_type_id
-                    LEFT JOIN hs_hr_leave_period p ON p.leave_period_id = q.leave_period_id;";
+                    FROM `hs_hr_employee_leave_quota` q, `hs_hr_leavetype` lt, hs_hr_leave_period p WHERE lt.leave_type_id = q.leave_type_id AND p.leave_period_id = q.leave_period_id;";
+
+        /* insert data to ohrm_leave_request */
+        $sql[] = "INSERT INTO `ohrm_leave_request` (`id`, `leave_type_id`, `date_applied`, `emp_number`, `comments`)
+		SELECT old_lr.`leave_request_id`, (SELECT old_lt.int_id FROM `hs_hr_leavetype` old_lt WHERE old_lt.leave_type_id = old_lr.leave_type_id), old_lr.`date_applied`, old_lr.`employee_id`, old_lr.`leave_comments` FROM  hs_hr_leave_requests old_lr;";
+
+
+
+
+
+        $sql[] = "SET foreign_key_checks = 0;";
+
+        $sql[] = "UPDATE `hs_hr_employee_leave_quota` lq SET lq.`leave_type_id` = (SELECT lt.`int_id` FROM `hs_hr_leavetype` lt WHERE lt.`leave_type_id` = lq.`leave_type_id`);";
+
+        //$sql[] = "alter table `hs_hr_employee_leave_quota` add column new_leave_start_date date not null;";
+        //$sql[] = "alter table `hs_hr_employee_leave_quota` add column new_leave_end_date date not null;";
+//$sql[] = "UPDATE `hs_hr_employee_leave_quota` lq SET lq.new_leave_start_date = (SELECT olp.leave_period_start_date FROM ohrm_leave_period olp WHERE olp.leave_period_id = lq.leave_period_id), lq.new_leave_end_date = (SELECT olp.leave_period_end_date FROM ohrm_leave_period olp WHERE olp.leave_period_id = lq.leave_period_id);";
+//taking leave_taken is NOT correct, should take SUM(leave_length_days) 
+//$sql[] = "UPDATE `ohrm_leave_entitlement` le SET le.`days_used` = (SELECT old_lq.`leave_taken` FROM `hs_hr_employee_leave_quota` old_lq WHERE old_lq.`employee_id` = le.`emp_number` AND old_lq.`leave_type_id` = le.leave_type_id AND old_lq.new_leave_start_date = DATE(le.from_date) AND old_lq.new_leave_end_date = DATE(le.to_date));";
+
+
+
+        $sql[] = "UPDATE `hs_hr_leave` lq SET lq.`leave_type_id` = (SELECT lt.`int_id` FROM `hs_hr_leavetype` lt WHERE lt.leave_type_id = lq.leave_type_id);";
+
+
+        //$sql[] = "alter table `hs_hr_leave` add column int_leave_type_id int not null;";
+
+
+        $sql[] = "INSERT INTO `ohrm_leave` (`id`, `date`, `length_hours`, `length_days`, `status`, `comments`, `leave_request_id`, `leave_type_id`, `emp_number`, `start_time`, `end_time`) 
+    SELECT old_l.leave_id, old_l.leave_date, old_l.leave_length_hours, old_l.leave_length_days, old_l.leave_status, old_l.leave_comments, old_l.leave_request_id, old_l.`leave_type_id`, old_l.employee_id, old_l.`start_time`, old_l.`end_time` FROM `hs_hr_leave` old_l;";
+
+        //newly added - must be changed again, days used must be updated
+        $sql[] = "UPDATE `ohrm_leave_entitlement` le SET le.`days_used` = (SELECT SUM(l.`length_days`) FROM `ohrm_leave` l WHERE l.`emp_number` = le.`emp_number` AND l.`leave_type_id` = le.leave_type_id AND l.date BETWEEN le.from_date AND le.to_date);";
+
+
+        $sql[] = "alter table `ohrm_leave` add column new_entitlement_id int not null;";
+
+        //this is incorrect
+        //$sql[] = "UPDATE `ohrm_leave` l SET l.`new_entitlement_id` = (SELECT lp.leave_period_id FROM ohrm_leave_period lp WHERE l.date BETWEEN lp.leave_period_start_date AND lp.leave_period_end_date);";
+        //$sql[] = "UPDATE `ohrm_leave` l SET l.`new_entitlement_id` = (SELECT le.id FROM ohrm_leave_entitlement le WHERE le.emp_number = l.emp_number AND le.leave_type_id = l.leave_type_id  AND (l.date BETWEEN le.from_date AND le.to_date));";
+        $sql[] = "UPDATE `ohrm_leave` l SET l.`new_entitlement_id` = (SELECT le.id FROM ohrm_leave_entitlement le WHERE le.emp_number = l.emp_number AND le.leave_type_id = l.leave_type_id  AND (l.date >= le.from_date AND l.date <= le.to_date));";
+
+
+        //instead of inserting from here, insert from the php script
+        //$sql[] = "INSERT INTO `ohrm_leave_leave_entitlement` (`leave_id`, `entitlement_id`, `length_days`) 
+        //SELECT l.`id`, l.`new_entitlement_id`, l.length_days FROM `ohrm_leave` l WHERE l.status<>4 AND l.status<>5;";
+        //add leave request comments
+        $sql[] = "INSERT INTO `ohrm_leave_request_comment` (`leave_request_id`, `created`, `created_by_name`, `created_by_id`, `created_by_emp_number`, `comments`)
+    SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FROM `ohrm_user` u WHERE u.`id` = 1), l.`comments` FROM `ohrm_leave_request` l;";
+
+        //add leave comments
+        $sql[] = "INSERT INTO `ohrm_leave_comment` (`leave_id`, `created`, `created_by_name`, `created_by_id`, `created_by_emp_number`, `comments`)
+SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FROM `ohrm_user` u WHERE u.`id` = 1), l.`comments` FROM `ohrm_leave` l;";
+
+        //Update Time (hours) to Time (Hours) - labels should be consistent for gettin the total
+        $sql[] = "UPDATE `ohrm_summary_display_field` SET `label` = 'Time (Hours)' WHERE `summary_display_field_id` = 2;";
 
         $sql[] = "alter table `hs_hr_leavetype` drop column int_id;";
 
-        $sql[] = "INSERT INTO `ohrm_leave_period`(leave_period_id, leave_period_start_date, leave_period_end_date) 
-                    SELECT leave_period_id, leave_period_start_date, leave_period_end_date FROM hs_hr_leave_period";
-        
-        /* TODO: Import rest of leave data - leave requests etc. */
-        
+
+        $sql[] = "DROP TABLE `hs_hr_employee_leave_quota`;";
+        $sql[] = "DROP TABLE `hs_hr_empreport`;";
+        $sql[] = "DROP TABLE `hs_hr_emprep_usergroup`;";
+        $sql[] = "DROP TABLE `hs_hr_hsp`;";
+        $sql[] = "DROP TABLE `hs_hr_hsp_payment_request`;";
+        $sql[] = "DROP TABLE `hs_hr_hsp_summary`;";
+        $sql[] = "DROP TABLE `hs_hr_leave`;";
+        $sql[] = "DROP TABLE `hs_hr_leavetype`;";
+        $sql[] = "DROP TABLE `hs_hr_leave_period`;";
+        $sql[] = "DROP TABLE `hs_hr_leave_requests`;";
+        $sql[] = "DROP TABLE `hs_hr_rights`;";
+        $sql[] = "DROP TABLE `hs_hr_user_group`;";
+
+        $sql[] = "SET foreign_key_checks = 1;";
+
+
         $this->sql = $sql;
+    }
+    
+    protected function addLeaveEntitlement() {
+        $result = $this->upgradeUtility->executeSql("SELECT * FROM `ohrm_leave`");
+
+        while ($leave = mysqli_fetch_row($result)) {
+
+            $status = $leave['status'];
+            $new_entitlement_id = $leave['new_entitlement_id'];
+            $length_days = $leave['length_days'];
+            $leave_id = $leave['id'];
+            $emp_number = $leave['emp_number'];
+            $leave_type_id = $leave['leave_type_id'];
+            $date = $leave['date'];
+
+            if (($status != 4) && ($status != 5)) {
+                $lengthCountRes = $this->upgradeUtility->executeSql("SELECT SUM(`length_days`) FROM `ohrm_leave` WHERE `entitlement_id` = " . $new_entitlement_id);
+                $lengthCountRow = mysqli_fetch_row($lengthCountRes);
+                $leave_sum = $lengthCountRow[0];
+
+                $daysUsedRes = $this->upgradeUtility->executeSql("SELECT `no_of_days` - `days_used` FROM `ohrm_leave_entitlement` WHERE `id` = " . $new_entitlement_id);
+                $daysUsedResRow = mysqli_fetch_row($daysUsedRes);
+                $curr_bal = $daysUsedResRow[0];
+
+                //if no matching leave quota is there, you need to add to the ohrm_leave_entitlement, & take the leave entitlement id
+                if ($new_entitlement_id == 0) {
+
+                    //$insert_ohrm_leave_entitlement_sql = "INSERT INTO `ohrm_leave_entitlement` (emp_number, no_of_days, leave_type_id, from_date, to_date, credited_date, note, entitlement_type, `deleted`) VALUES (" . $emp_number . ", 0.00, ". $leave_type_id . ", CONCAT(YEAR(" . $date . "), '-01-01'), CONCAT(YEAR(" . $date . "), '-12-31'), CONCAT(YEAR(" . $date . "), '-01-01'), 'added by the script', 1, 0) ;";
+                    $from_date = date('Y', strtotime($date)) . "-01-01";
+                    $to_date = date('Y', strtotime($date)) . "-12-31";
+
+                    $insertOhrmLeaveEntitlementSql = "INSERT INTO `ohrm_leave_entitlement` (emp_number, no_of_days, leave_type_id, from_date, to_date, credited_date, note, entitlement_type, `deleted`) VALUES (" . $emp_number . ", 0.00, " . $leave_type_id . ", '" . $from_date . "', '" . $to_date . "', '" . $from_date . "', 'added by the script', 1, 0) ;";
+
+                    $added1 = $this->upgradeUtility->executeSql($insertOhrmLeaveEntitlementSql);
+
+                    if ($added1) {
+                        echo ">>>Added ohrm_leave_entitlement <br/>";
+
+                        $lastIdRes = $this->upgradeUtility->executeSql("SELECT LAST_INSERT_ID()");
+                        $lastIdRow = mysqli_fetch_row($lastIdRes);
+                        $new_entitlement_id = $lastIdRow[0];
+                        
+                    } else {
+                        UpgradeLogger::writeErrorMessage("Could not add: " . $new_entitlement_id . "!\nError: " . mysql_error());
+                        throw new Exception("Upgrade Failed");
+                    }
+                }
+
+
+
+                if ($leave_sum <= $curr_bal) {
+                    //insert length_days
+                    $insert_leave_leave_entitlement_sql = "INSERT INTO `ohrm_leave_leave_entitlement` (`leave_id`, `entitlement_id`, `length_days`) VALUES (" . $leave_id . ", " . $new_entitlement_id . ", " . $length_days . ");";
+                } elseif ($curr_bal > 0) {
+                    //insert curr_bal
+                    $insert_leave_leave_entitlement_sql = "INSERT INTO `ohrm_leave_leave_entitlement` (`leave_id`, `entitlement_id`, `length_days`) VALUES (" . $leave_id . ", " . $new_entitlement_id . ", " . $curr_bal . ");";
+                }
+
+                if ($insert_leave_leave_entitlement_sql != NULL) {
+
+                    $added = $this->upgradeUtility->executeSql($insert_leave_leave_entitlement_sql);
+
+                    if (!$added) {
+                        UpgradeLogger::writeErrorMessage("Could not add: " . $new_entitlement_id . "!\nError: " . mysql_error());
+                        throw new Exception("Upgrade Failed");                        
+                    }
+                }
+                $insert_leave_leave_entitlement_sql = NULL;
+            }
+        }
+
+
+        //drop unwanted column
+        $drop_new_entitlement_id_sql = "alter table `ohrm_leave` drop column new_entitlement_id;";
+        $dropped = $this->upgradeUtility->executeSql($drop_new_entitlement_id_sql);
+
+        if (!$dropped) {
+            UpgradeLogger::writeErrorMessage("Could not drop column: " . $drop_new_entitlement_id_sql . "!\nError: " . mysql_error());
+            throw new Exception("Upgrade Failed");   
+        }
+
+        //set days_used
+        $set_days_used_sql = "UPDATE `ohrm_leave_entitlement` le SET le.`days_used` = (SELECT SUM(l.`length_days`) FROM `ohrm_leave` l WHERE l.`emp_number` = le.`emp_number` AND l.`leave_type_id` = le.leave_type_id AND l.date BETWEEN le.from_date AND le.to_date);";
+        $saved = $this->upgradeUtility->executeSql($set_days_used_sql);
+
+        if (!$saved) {
+            UpgradeLogger::writeErrorMessage("Could not save leave entitlement!\nError: " . mysql_error());
+            throw new Exception("Upgrade Failed");  
+        }
+
+        //updating terminated employees - specific to internal system due to some issues related to old upgrades
+        $get_to_be_terminated_employees_sql = "SELECT emp_number FROM hs_hr_employee WHERE termination_id IS NULL AND emp_status = 1;";
+        $get_to_be_terminated_employees_result = $this->upgradeUtility->executeSql($get_to_be_terminated_employees_sql);
+
+        while ($get_to_be_terminated_employees_row = mysqli_fetch_row($get_to_be_terminated_employees_result)) {
+            $empNum = $get_to_be_terminated_employees_row['emp_number'];
+
+            $add_missing_termination_sql = "INSERT INTO ohrm_emp_termination (`emp_number`, `reason_id`, `termination_date`) VALUES (" . $empNum . ", 1, date(now()));";
+
+            $savedTerm = $this->upgradeUtility->executeSql($add_missing_termination_sql);
+
+            if ($savedTerm) {
+                echo ">>> Saved missing emp termination <br/>";
+
+                $update_sql = "UPDATE hs_hr_employee e SET e.termination_id=(SELECT t.id FROM ohrm_emp_termination t WHERE t.emp_number = " . $empNum . " AND t.termination_date = date(now())) WHERE e.emp_number = " . $empNum . ";";
+
+                $updatedTerm = $this->upgradeUtility->executeSql($update_sql);
+
+                if ($updatedTerm) {
+                    echo ">>> Updated missing emp termination <br/>";
+                } else {
+                    die("Could not Update!\nError: " . mysql_error());
+                }
+            } else {
+                die("Could not Save!\nError: " . mysql_error());
+            }
+        }
+        /////////////////////////////////////
     }
 
     public function getNotes() {
         return array();
     }
+    
+    protected function getReportForEmployee() {
+        $report = '<report>
+    <settings>
+        <csv>
+            <include_group_header>1</include_group_header>
+            <include_header>1</include_header>
+        </csv>
+    </settings>
+<filter_fields>
+	<input_field type="text" name="empNumber" label="Employee Number"></input_field>
+	<input_field type="text" name="fromDate" label="From"></input_field>
+        <input_field type="text" name="toDate" label="To"></input_field>
+        <input_field type="text" name="asOfDate" label="AsOf"></input_field>
+</filter_fields> 
+
+<sub_report type="sql" name="mainTable">       
+    <query>FROM ohrm_leave_type WHERE (deleted = 0) OR (SELECT count(l.id) FROM ohrm_leave l WHERE l.status = 3 AND l.leave_type_id = ohrm_leave_type.id) > 0 ORDER BY ohrm_leave_type.id</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+        <display_group name="leavetype" type="one" display="true">
+            <group_header></group_header>
+            <fields>
+                <field display="false">
+                    <field_name>ohrm_leave_type.id</field_name>
+                    <field_alias>leaveTypeId</field_alias>
+                    <display_name>Leave Type ID</display_name>
+                    <width>1</width>	
+                </field>   
+                <field display="false">
+                    <field_name>ohrm_leave_type.exclude_in_reports_if_no_entitlement</field_name>
+                    <field_alias>exclude_if_no_entitlement</field_alias>
+                    <display_name>Exclude</display_name>
+                    <width>1</width>	
+                </field>  
+                <field display="false">
+                    <field_name>ohrm_leave_type.deleted</field_name>
+                    <field_alias>leave_type_deleted</field_alias>
+                    <display_name>Leave Type Deleted</display_name>
+                    <width>1</width>	
+                </field>  
+                <field display="true">
+                    <field_name>ohrm_leave_type.name</field_name>
+                    <field_alias>leaveType</field_alias>
+                    <display_name>Leave Type</display_name>
+                    <width>160</width>	
+                </field>s                                                                                                     
+            </fields>
+        </display_group>
+    </display_groups> 
+</sub_report>
+
+<sub_report type="sql" name="entitlementsTotal">
+                    <query>
+
+FROM (
+SELECT ohrm_leave_entitlement.id as id, 
+       ohrm_leave_entitlement.leave_type_id as leave_type_id,
+       ohrm_leave_entitlement.no_of_days as no_of_days,
+       sum(IF(ohrm_leave.status = 2, ohrm_leave_leave_entitlement.length_days, 0)) AS scheduled,
+       sum(IF(ohrm_leave.status = 3, ohrm_leave_leave_entitlement.length_days, 0)) AS taken
+       
+FROM ohrm_leave_entitlement LEFT JOIN ohrm_leave_leave_entitlement ON
+    ohrm_leave_entitlement.id = ohrm_leave_leave_entitlement.entitlement_id
+    LEFT JOIN ohrm_leave ON ohrm_leave.id = ohrm_leave_leave_entitlement.leave_id AND 
+    ( $X{&gt;,ohrm_leave.date,toDate} OR $X{&lt;,ohrm_leave.date,fromDate} )
+
+WHERE ohrm_leave_entitlement.deleted=0 AND $X{=,ohrm_leave_entitlement.emp_number,empNumber} AND 
+    $X{IN,ohrm_leave_entitlement.leave_type_id,leaveTypeId} AND
+    (
+      ( $X{&lt;=,ohrm_leave_entitlement.from_date,fromDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,fromDate} ) OR
+      ( $X{&lt;=,ohrm_leave_entitlement.from_date,toDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,toDate} ) OR 
+      ( $X{&gt;=,ohrm_leave_entitlement.from_date,fromDate} AND $X{&lt;=,ohrm_leave_entitlement.to_date,toDate} ) 
+    )
+    
+GROUP BY ohrm_leave_entitlement.id
+) AS A
+
+GROUP BY A.leave_type_id
+ORDER BY A.leave_type_id
+
+</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+            <display_group name="g2" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>A.leave_type_id</field_name>
+                        <field_alias>leaveTypeId</field_alias>
+                        <display_name>Leave Type ID</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(A.no_of_days) - sum(A.scheduled) - sum(A.taken)</field_name>
+                        <field_alias>entitlement_total</field_alias>
+                        <display_name>Leave Entitlements (Days)</display_name>
+                        <width>120</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+</sub_report>
+
+<sub_report type="sql" name="pendingQuery">
+<query>
+FROM ohrm_leave_type LEFT JOIN 
+ohrm_leave ON ohrm_leave_type.id = ohrm_leave.leave_type_id AND
+$X{=,ohrm_leave.emp_number,empNumber} AND
+ohrm_leave.status = 1 AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+WHERE
+ohrm_leave_type.deleted = 0 AND
+$X{IN,ohrm_leave_type.id,leaveTypeId}
+
+GROUP BY ohrm_leave_type.id
+ORDER BY ohrm_leave_type.id
+</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+            <display_group name="g6" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave_type.id</field_name>
+                        <field_alias>leaveTypeId</field_alias>
+                        <display_name>Leave Type ID</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>pending</field_alias>
+                        <display_name>Leave Pending Approval (Days)</display_name>
+                        <width>120</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=1&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+    </sub_report>
+
+<sub_report type="sql" name="scheduledQuery">
+<query>
+FROM ohrm_leave_type LEFT JOIN 
+ohrm_leave ON ohrm_leave_type.id = ohrm_leave.leave_type_id AND
+$X{=,ohrm_leave.emp_number,empNumber} AND
+ohrm_leave.status = 2 AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+WHERE
+ohrm_leave_type.deleted = 0 AND
+$X{IN,ohrm_leave_type.id,leaveTypeId}
+
+GROUP BY ohrm_leave_type.id
+ORDER BY ohrm_leave_type.id
+</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+            <display_group name="g5" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave_type.id</field_name>
+                        <field_alias>leaveTypeId</field_alias>
+                        <display_name>Leave Type ID</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>scheduled</field_alias>
+                        <display_name>Leave Scheduled (Days)</display_name>
+                        <width>120</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=2&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+    </sub_report>
+
+<sub_report type="sql" name="takenQuery">
+<query>
+FROM ohrm_leave WHERE $X{=,emp_number,empNumber} AND
+status = 3 AND
+$X{IN,ohrm_leave.leave_type_id,leaveTypeId} AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+GROUP BY leave_type_id
+ORDER BY ohrm_leave.leave_type_id
+</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+            <display_group name="g4" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave.leave_type_id</field_name>
+                        <field_alias>leaveTypeId</field_alias>
+                        <display_name>Leave Type ID</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>taken</field_alias>
+                        <display_name>Leave Taken (Days)</display_name>
+                        <width>120</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=3&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+    </sub_report>
+
+<sub_report type="sql" name="unused">       
+    <query>FROM ohrm_leave_type WHERE deleted = 0 AND $X{IN,ohrm_leave_type.id,leaveTypeId} ORDER BY ohrm_leave_type.id</query>
+    <id_field>leaveTypeId</id_field>
+    <display_groups>
+        <display_group name="unused" type="one" display="true">
+            <group_header></group_header>
+            <fields>
+                <field display="false">
+                    <field_name>ohrm_leave_type.id</field_name>
+                    <field_alias>leaveTypeId</field_alias>
+                    <display_name>Leave Type ID</display_name>
+                    <width>1</width>	
+                </field>   
+                <field display="true">
+                    <field_name>ohrm_leave_type.name</field_name>
+                    <field_alias>unused</field_alias>
+                    <display_name>Leave Balance (Days)</display_name>
+                    <width>160</width>	
+                    <align>right</align>
+                </field>                                                                                                     
+            </fields>
+        </display_group>
+    </display_groups> 
+</sub_report>
+
+
+    <join>             
+        <join_by sub_report="mainTable" id="leaveTypeId"></join_by>              
+        <join_by sub_report="entitlementsTotal" id="leaveTypeId"></join_by> 
+        <join_by sub_report="pendingQuery" id="leaveTypeId"></join_by>  
+        <join_by sub_report="scheduledQuery" id="leaveTypeId"></join_by>  
+        <join_by sub_report="takenQuery" id="leaveTypeId"></join_by>  
+        <join_by sub_report="unused" id="leaveTypeId"></join_by>  
+
+    </join>
+    <page_limit>100</page_limit>        
+</report>';
+        return $report;
+    }
+    
+    protected function getReportForLeaveType() {
+        $report = '<report>
+    <settings>
+        <csv>
+            <include_group_header>1</include_group_header>
+            <include_header>1</include_header>
+        </csv>
+    </settings>
+<filter_fields>
+	<input_field type="text" name="leaveType" label="Leave Type"></input_field>
+	<input_field type="text" name="fromDate" label="From"></input_field>
+        <input_field type="text" name="toDate" label="To"></input_field>
+        <input_field type="text" name="asOfDate" label="AsOf"></input_field>
+        <input_field type="text" name="emp_numbers" label="employees"></input_field>
+        <input_field type="text" name="job_title" label="Job Title"></input_field>
+        <input_field type="text" name="location" label="Location"></input_field>
+        <input_field type="text" name="sub_unit" label="Sub Unit"></input_field>
+        <input_field type="text" name="terminated" label="Terminated"></input_field>
+</filter_fields> 
+
+<sub_report type="sql" name="mainTable">       
+    <query>FROM hs_hr_employee 
+    LEFT JOIN hs_hr_emp_locations ON hs_hr_employee.emp_number = hs_hr_emp_locations.emp_number
+    WHERE $X{IN,hs_hr_employee.emp_number,emp_numbers} 
+    AND $X{=,hs_hr_employee.job_title_code,job_title}
+    AND $X{IN,hs_hr_employee.work_station,sub_unit}
+    AND $X{IN,hs_hr_emp_locations.location_id,location}
+    AND $X{IS NULL,hs_hr_employee.termination_id,terminated}
+    ORDER BY hs_hr_employee.emp_lastname</query>
+    <id_field>empNumber</id_field>
+    <display_groups>
+        <display_group name="personalDetails" type="one" display="true">
+            <group_header></group_header>
+            <fields>
+                <field display="false">
+                    <field_name>hs_hr_employee.emp_number</field_name>
+                    <field_alias>empNumber</field_alias>
+                    <display_name>Employee Number</display_name>
+                    <width>1</width>	
+                </field>                
+                <field display="false">
+                    <field_name>hs_hr_employee.termination_id</field_name>
+                    <field_alias>termination_id</field_alias>
+                    <display_name>Termination ID</display_name>
+                    <width>1</width>	
+                </field>   
+                <field display="true">
+                    <field_name>CONCAT(hs_hr_employee.emp_firstname, \' \', hs_hr_employee.emp_lastname)</field_name>
+                    <field_alias>employeeName</field_alias>
+                    <display_name>Employee</display_name>
+                    <width>150</width>
+                </field>                                                                                               
+            </fields>
+        </display_group>
+    </display_groups> 
+</sub_report>
+
+<sub_report type="sql" name="entitlementsTotal">
+                    <query>
+
+FROM (
+SELECT ohrm_leave_entitlement.id as id, 
+       ohrm_leave_entitlement.emp_number as emp_number,
+       ohrm_leave_entitlement.no_of_days as no_of_days,
+       sum(IF(ohrm_leave.status = 2, ohrm_leave_leave_entitlement.length_days, 0)) AS scheduled,
+       sum(IF(ohrm_leave.status = 3, ohrm_leave_leave_entitlement.length_days, 0)) AS taken
+       
+FROM ohrm_leave_entitlement LEFT JOIN ohrm_leave_leave_entitlement ON
+    ohrm_leave_entitlement.id = ohrm_leave_leave_entitlement.entitlement_id
+    LEFT JOIN ohrm_leave ON ohrm_leave.id = ohrm_leave_leave_entitlement.leave_id AND 
+    ( $X{&gt;,ohrm_leave.date,toDate} OR $X{&lt;,ohrm_leave.date,fromDate} )
+
+WHERE ohrm_leave_entitlement.deleted=0 AND $X{=,ohrm_leave_entitlement.leave_type_id,leaveType}
+    AND $X{IN,ohrm_leave_entitlement.emp_number,empNumber} AND
+    (
+      ( $X{&lt;=,ohrm_leave_entitlement.from_date,fromDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,fromDate} ) OR
+      ( $X{&lt;=,ohrm_leave_entitlement.from_date,toDate} AND $X{&gt;=,ohrm_leave_entitlement.to_date,toDate} ) OR 
+      ( $X{&gt;=,ohrm_leave_entitlement.from_date,fromDate} AND $X{&lt;=,ohrm_leave_entitlement.to_date,toDate} ) 
+    )
+    
+GROUP BY ohrm_leave_entitlement.id
+) AS A
+
+GROUP BY A.emp_number
+ORDER BY A.emp_number
+
+</query>
+    <id_field>empNumber</id_field>
+    <display_groups>
+            <display_group name="g2" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>A.emp_number</field_name>
+                        <field_alias>empNumber</field_alias>
+                        <display_name>Emp Number</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(A.no_of_days) - sum(A.scheduled) - sum(A.taken)</field_name>
+                        <field_alias>entitlement_total</field_alias>
+                        <display_name>Leave Entitlements (Days)</display_name>
+                        <width>120</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveEntitlements?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+</sub_report>
+
+<sub_report type="sql" name="pendingQuery">
+<query>
+FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
+status = 1 AND
+$X{IN,ohrm_leave.emp_number,empNumber} AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+GROUP BY emp_number
+ORDER BY ohrm_leave.emp_number
+</query>
+    <id_field>empNumber</id_field>
+    <display_groups>
+            <display_group name="g6" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave.emp_number</field_name>
+                        <field_alias>empNumber</field_alias>
+                        <display_name>Emp Number</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>pending</field_alias>
+                        <display_name>Leave Pending Approval (Days)</display_name>
+                        <width>121</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=1&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+</sub_report>
+
+
+<sub_report type="sql" name="scheduledQuery">
+<query>
+FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
+status = 2 AND
+$X{IN,ohrm_leave.emp_number,empNumber} AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+GROUP BY emp_number
+ORDER BY ohrm_leave.emp_number
+</query>
+    <id_field>empNumber</id_field>
+    <display_groups>
+            <display_group name="g5" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave.emp_number</field_name>
+                        <field_alias>empNumber</field_alias>
+                        <display_name>Emp Number</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>scheduled</field_alias>
+                        <display_name>Leave Scheduled (Days)</display_name>
+                        <width>121</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=2&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+</sub_report>
+
+<sub_report type="sql" name="takenQuery">
+<query>
+FROM ohrm_leave WHERE $X{=,ohrm_leave.leave_type_id,leaveType} AND
+status = 3 AND
+$X{IN,ohrm_leave.emp_number,empNumber} AND
+$X{&gt;=,ohrm_leave.date,fromDate} AND $X{&lt;=,ohrm_leave.date,toDate}
+GROUP BY emp_number
+ORDER BY ohrm_leave.emp_number
+</query>
+    <id_field>empNumber</id_field>
+    <display_groups>
+            <display_group name="g4" type="one" display="true">
+                <group_header></group_header>
+                <fields>
+                    <field display="false">
+                        <field_name>ohrm_leave.emp_number</field_name>
+                        <field_alias>empNumber</field_alias>
+                        <display_name>Emp Number</display_name>
+                        <width>1</width>
+                    </field>                                
+                    <field display="true">
+                        <field_name>sum(length_days)</field_name>
+                        <field_alias>taken</field_alias>
+                        <display_name>Leave Taken (Days)</display_name>
+                        <width>120</width>
+                        <align>right</align>
+                        <link>leave/viewLeaveList?empNumber=$P{empNumber}&amp;fromDate=$P{fromDate}&amp;toDate=$P{toDate}&amp;leaveTypeId=$P{leaveTypeId}&amp;status=3&amp;stddate=1</link>
+                    </field>                                
+                </fields>
+            </display_group>
+    </display_groups>
+</sub_report>
+<sub_report type="sql" name="unused">       
+    <query>FROM hs_hr_employee WHERE $X{IN,hs_hr_employee.emp_number,empNumber} ORDER BY hs_hr_employee.emp_number</query>
+    <id_field>empNumber</id_field>
+    <display_groups>
+        <display_group name="unused" type="one" display="true">
+            <group_header></group_header>
+            <fields>    
+                <field display="false">
+                    <field_name>hs_hr_employee.emp_number</field_name>
+                    <field_alias>empNumber</field_alias>
+                    <display_name>Employee Number</display_name>
+                    <width>1</width>	
+                </field>                
+                <field display="true">
+                    <field_name>hs_hr_employee.emp_firstname</field_name>
+                    <field_alias>unused</field_alias>
+                    <display_name>Leave Balance (Days)</display_name>
+                    <width>150</width>
+                    <align>right</align>
+                </field> 
+                                                                                               
+            </fields>
+        </display_group>
+    </display_groups> 
+</sub_report>
+    <join>             
+        <join_by sub_report="mainTable" id="empNumber"></join_by>            
+        <join_by sub_report="entitlementsTotal" id="empNumber"></join_by> 
+        <join_by sub_report="pendingQuery" id="empNumber"></join_by>
+        <join_by sub_report="scheduledQuery" id="empNumber"></join_by>
+        <join_by sub_report="takenQuery" id="empNumber"></join_by> 
+        <join_by sub_report="unused" id="empNumber"></join_by>  
+    </join>
+    <page_limit>20</page_limit>       
+</report>';
+        return $report;
+    }
 }
+
