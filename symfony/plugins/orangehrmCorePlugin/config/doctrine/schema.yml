@@ -856,3 +856,63 @@ AdvancedReport:
     definition:
       type: clob
       notnull: true      
+      
+HomePage:
+  tableName: ohrm_home_page
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    user_role_id:
+      type: integer
+      notnull: true
+    action:
+      type: string(255)
+      notnull: false
+    enable_class:
+      type: string(100)
+      notnull: false
+    priority:
+      type: integer
+      default: '0'
+      notnull: true
+  relations:
+    UserRole:
+      local: user_role_id
+      foreign: id
+      type: one
+      
+ModuleDefaultPage:
+  tableName: ohrm_module_default_page
+  columns:
+    id:
+      type: integer
+      primary: true
+      autoincrement: true
+    module_id:
+      type: integer
+      notnull: true
+    user_role_id:
+      type: integer
+      notnull: true
+    action:
+      type: string(255)
+      notnull: false
+    enable_class:
+      type: string(100)
+      notnull: false
+    priority:
+      type: integer(4)
+      default: '0'
+      notnull: true
+  relations:
+    UserRole:
+      local: user_role_id
+      foreign: id
+      type: one
+    Module:
+      local: module_id
+      foreign: id
+      type: one
+      

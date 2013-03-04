@@ -2385,5 +2385,8 @@ INSERT INTO `ohrm_leave_status` (`status`,`name`) VALUES
 (4, 'WEEKEND'),
 (5, 'HOLIDAY');
 
+INSERT INTO ohrm_home_page (`user_role_id`, `action`, `enable_class`, `priority`) VALUES 
+(1, 'pim/viewEmployeeList', NULL, 0),
+(2, 'pim/viewMyDetails', NULL, 0);
 
 

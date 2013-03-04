@@ -1273,6 +1273,32 @@ create table `ohrm_advanced_report` (
   primary key (`id`)
 ) engine=innodb default charset=utf8;
 
+create table ohrm_home_page (
+    `id` int(11) not null auto_increment,
+    `user_role_id` int not null,
+    `action` varchar(255),
+    `enable_class` varchar(100) default null,
+    `priority` int not null default 0 COMMENT 'lowest priority 0',
+    primary key (`id`)
+) engine=innodb default charset=utf8;
+
+create table ohrm_module_default_page (
+    `id` int(11) not null auto_increment,
+    `module_id` int not null,
+    `user_role_id` int not null,
+    `action` varchar(255),
+    `enable_class` varchar(100) default null,
+    `priority` int not null default 0 COMMENT 'lowest priority 0',
+    primary key (`id`)
+) engine=innodb default charset=utf8;
+
+alter table ohrm_home_page 
+    add foreign key (user_role_id) references ohrm_user_role(id) on delete cascade;
+
+alter table ohrm_module_default_page 
+    add foreign key (user_role_id) references ohrm_user_role(id) on delete cascade,
+    add foreign key (module_id) references ohrm_module(id) on delete cascade;
+
 alter table ohrm_leave_type
     add foreign key (operational_country_id)
         references ohrm_operational_country(id) on delete set null;

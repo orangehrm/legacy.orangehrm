@@ -617,8 +617,12 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/FilterField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/FilterFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/GroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/GroupFieldTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/HomePage.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/HomePageTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/MenuItem.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/MenuItemTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/ModuleDefaultPage.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/ModuleDefaultPageTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/Report.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ReportGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ReportGroupTable.class.php -text
@@ -665,7 +669,9 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseEmailProcessor.class.php
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseEmailTemplate.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseFilterField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseGroupField.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseHomePage.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseMenuItem.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseModuleDefaultPage.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseReport.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseReportGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseScreen.class.php -text
@@ -3666,8 +3672,12 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginFilterField.class.p
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginFilterFieldTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginGroupField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginGroupFieldTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginHomePage.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginHomePageTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginMenuItem.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginMenuItemTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginModuleDefaultPage.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginModuleDefaultPageTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReport.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReportGroup.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginReportGroupTable.class.php -text
