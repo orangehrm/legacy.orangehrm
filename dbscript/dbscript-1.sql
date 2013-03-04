@@ -590,7 +590,7 @@ create table `ohrm_timesheet_action_log`(
 ) engine=innodb default charset=utf8;
 
 create table `ohrm_workflow_state_machine`(
-  `id` bigint(20) not null,
+  `id` bigint(20) not null auto_increment,
   `workflow` varchar(255) not null,
   `state` varchar(255) not null,
   `role` varchar(255) not null,
