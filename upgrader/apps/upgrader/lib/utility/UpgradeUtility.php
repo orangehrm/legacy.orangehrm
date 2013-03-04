@@ -100,7 +100,7 @@ class Conf {
         }
         \$this->dbuser    = '$dbOHRMUser';
         \$this->dbpass  = '$dbOHRMPassword';
-        \$this->version = '2.7-rc.1';
+        \$this->version = '3.0.1';
 
         \$this->emailConfiguration = dirname(__FILE__).'/mailConf.php';
         \$this->errorLog =  realpath(dirname(__FILE__).'/../logs/').'/';
@@ -193,7 +193,7 @@ CONFCONT;
      */
     public function getEndIncrementNumber() {
         
-        return 55;
+        return 56;
         
     }
     
@@ -232,6 +232,7 @@ CONFCONT;
         $a['2.6.12.1']  = 50;
         $a['2.7']       = 51;
         $a['2.7.1']     = 55;
+        $a['3.0.1']     = 56;
         
         return $a;
         
@@ -242,18 +243,20 @@ CONFCONT;
      */
     public function getNewVersion() {
         
-        return '3.0';
+        return '3.0.1';
         
     }
     
     /**
      * @todo Get the current version of the system
+     * 
+     * unused, therefore commented out.
      */
-    public function getCurrentVersion($incrementNumber) {
+    /*public function getCurrentVersion($incrementNumber) {
         
         return '2.11.3';
         
-    }
+    }*/
     
     /**
      * @todo Check for upgrade info table and return true/false
