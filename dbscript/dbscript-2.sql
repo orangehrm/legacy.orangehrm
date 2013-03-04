@@ -2398,7 +2398,7 @@ INSERT INTO ohrm_module_default_page (`module_id`, `user_role_id`, `action`, `en
 (4, 3, 'leave/viewLeaveList/reset/1', NULL, 10),
 (4, 2, 'leave/viewMyLeaveList', NULL, 0),
 (4, 1, 'leave/defineLeavePeriod', 'HomePageEnableIfLeavePeriodDefined', 100),
-(4, 2, 'leave/showLeavePeriodNotDefinedWarning', 'HomePageEnableIfLeavePeriodDefined', 90);
+(4, 2, 'leave/showLeavePeriodNotDefinedWarning', 'HomePageEnableIfLeavePeriodDefined', 90),
 (5, 1, 'time/viewEmployeeTimesheet', NULL, 20),
 (5, 2, 'time/viewMyTimesheet', NULL, 0),
 (5, 1, 'time/defineTimesheetPeriod', 'HomePageEnableIfTimesheetPeriodDefined', 100),
