@@ -402,35 +402,38 @@ function getTotalTime() {
     return total;        
 }
     
-function fromDateBlur(date){
-    var fromDateValue 	= 	trim(date);
-    if(fromDateValue != displayDateFormat && fromDateValue != ""){
-        var toDateValue	=	trim($("#assignleave_txtToDate").val());
-        if(validateDate(fromDateValue, datepickerDateFormat)){
-            if(fromDateValue == toDateValue) {
-                showTimeControls(true);
+function fromDateBlur(date) {
+    var singleDayLeaveRequest = false;
+    var fromDateValue = trim(date);
+    if (fromDateValue != displayDateFormat && fromDateValue != "") {
+        var toDateValue = trim($("#assignleave_txtToDate").val());
+        if (validateDate(fromDateValue, datepickerDateFormat)) {
+            if (fromDateValue == toDateValue) {
+                singleDayLeaveRequest = true;
             }
-                
-            if(!validateDate(toDateValue, datepickerDateFormat)){
+
+            if (!validateDate(toDateValue, datepickerDateFormat)) {
                 $('#assignleave_txtToDate').val(fromDateValue);
-                showTimeControls(true);
+                singleDayLeaveRequest = true;
             }
-        } else {
-            showTimeControls(false);
         }
     }
+
+    showTimeControls(singleDayLeaveRequest);
 }
     
-function toDateBlur(date){
-    var toDateValue	=	trim(date);
-    if(toDateValue != displayDateFormat && toDateValue != ""){
+function toDateBlur(date) {
+    var singleDayLeaveRequest = false;
+    var toDateValue = trim(date);
+    if (toDateValue != displayDateFormat && toDateValue != "") {
         var fromDateValue = trim($("#assignleave_txtFromDate").val());
-            
-        if(validateDate(fromDateValue, datepickerDateFormat) && validateDate(toDateValue, datepickerDateFormat)){
-                
-            showTimeControls((fromDateValue == toDateValue));
+
+        if (validateDate(fromDateValue, datepickerDateFormat) && validateDate(toDateValue, datepickerDateFormat)) {
+            singleDayLeaveRequest = (fromDateValue == toDateValue);
         }
     }
+
+    showTimeControls(singleDayLeaveRequest);
 }
     
 function setEmployeeWorkshift(empNumber) {

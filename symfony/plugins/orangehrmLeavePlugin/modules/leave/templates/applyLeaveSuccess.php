@@ -442,35 +442,38 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
     }
     
 
-    function fromDateBlur(date){
-        var fromDateValue 	= 	trim(date);
-        if(fromDateValue != displayDateFormat && fromDateValue != "") {
-            var toDateValue	=	trim($("#applyleave_txtToDate").val());
-            if(validateDate(fromDateValue, datepickerDateFormat)){
-                if(fromDateValue == toDateValue) {
-                    showTimeControls(true);
+    function fromDateBlur(date) {
+        var singleDayLeaveRequest = false;
+        var fromDateValue = trim(date);
+        if (fromDateValue != displayDateFormat && fromDateValue != "") {
+            var toDateValue = trim($("#applyleave_txtToDate").val());
+            if (validateDate(fromDateValue, datepickerDateFormat)) {
+                if (fromDateValue == toDateValue) {
+                    singleDayLeaveRequest = true;
                 }
 
-                if(!validateDate(toDateValue, datepickerDateFormat)){
+                if (!validateDate(toDateValue, datepickerDateFormat)) {
                     $('#applyleave_txtToDate').val(fromDateValue);
-                        showTimeControls(true);
-                    }
-                } else {
-                    showTimeControls(false);
+                    singleDayLeaveRequest = true;
                 }
-        }
-    }
-
-    function toDateBlur(date){
-        var toDateValue	=	trim(date);
-        if(toDateValue != displayDateFormat && toDateValue != ""){
-            var fromDateValue = trim($("#applyleave_txtFromDate").val());
-
-            if(validateDate(fromDateValue, datepickerDateFormat) && validateDate(toDateValue, datepickerDateFormat)){
-
-                showTimeControls((fromDateValue == toDateValue));
             }
         }
+
+        showTimeControls(singleDayLeaveRequest);
     }
+
+    function toDateBlur(date) {
+        var singleDayLeaveRequest = false;
+        var toDateValue = trim(date);
+        if (toDateValue != displayDateFormat && toDateValue != "") {
+            var fromDateValue = trim($("#applyleave_txtFromDate").val());
+
+            if (validateDate(fromDateValue, datepickerDateFormat) && validateDate(toDateValue, datepickerDateFormat)) {
+                singleDayLeaveRequest = (fromDateValue == toDateValue);
+            }
+        }
+
+        showTimeControls(singleDayLeaveRequest);
+    }    
     //]]>
 </script>
