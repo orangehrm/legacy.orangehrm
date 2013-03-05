@@ -93,15 +93,15 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
             (4, 1, 'leave/viewLeaveList/reset/1', NULL, 20),
             (4, 3, 'leave/viewLeaveList/reset/1', NULL, 10),
             (4, 2, 'leave/viewMyLeaveList', NULL, 0),
-            (4, 1, 'leave/defineLeavePeriod', 'HomePageEnableIfLeavePeriodDefined', 100),
-            (4, 2, 'leave/showLeavePeriodNotDefinedWarning', 'HomePageEnableIfLeavePeriodDefined', 90);
+            (4, 1, 'leave/defineLeavePeriod', 'LeavePeriodDefinedHomePageEnabler', 100),
+            (4, 2, 'leave/showLeavePeriodNotDefinedWarning', 'LeavePeriodDefinedHomePageEnabler', 90),
             (5, 1, 'time/viewEmployeeTimesheet', NULL, 20),
             (5, 2, 'time/viewMyTimesheet', NULL, 0),
-            (5, 1, 'time/defineTimesheetPeriod', 'HomePageEnableIfTimesheetPeriodDefined', 100),
-            (5, 2, 'time/defineTimesheetPeriod', 'HomePageEnableIfTimesheetPeriodDefined', 100),
-            (8, 1, 'recruitment/viewCandidates', NULL, 20),
-            (8, 5, 'recruitment/viewCandidates', NULL, 10),
-            (8, 6, 'recruitment/viewCandidates', NULL, 5),
+            (5, 1, 'time/defineTimesheetPeriod', 'TimesheetPeriodDefinedHomePageEnabler', 100),
+            (5, 2, 'time/defineTimesheetPeriod', 'TimesheetPeriodDefinedHomePageEnabler', 100),
+            (7, 1, 'recruitment/viewCandidates', NULL, 20),
+            (7, 5, 'recruitment/viewCandidates', NULL, 10),
+            (7, 6, 'recruitment/viewCandidates', NULL, 5),
             (9, 1, 'performance/viewReview', NULL, 20),
             (9, 2, 'performance/viewReview', NULL, 0);";
 

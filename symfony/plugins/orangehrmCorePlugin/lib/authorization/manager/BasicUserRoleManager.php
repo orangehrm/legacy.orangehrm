@@ -37,6 +37,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $menuService;
     protected $projectService;
     protected $vacancyService;
+    protected $homePageDao;
     
     protected $userRoleClasses;
 
@@ -198,6 +199,17 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
     public function setVacancyService($vacancyService) {
         $this->vacancyService = $vacancyService;
+    }    
+    
+    public function getHomePageDao() {
+        if (!$this->homePageDao instanceof HomePageDao) {
+            $this->homePageDao = new HomePageDao();
+        }
+        return $this->homePageDao;
+    }
+
+    public function setHomePageDao($homePageDao) {
+        $this->homePageDao = $homePageDao;
     }    
 
     public function getAccessibleEntities($entityType, $operation = null, $returnType = null,
@@ -666,6 +678,59 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $resourcePermission;
     }
     
+    public function getModuleDefaultPage($module) {
+        $action = NULL;
+        
+        $userRoleIds = array();
+        foreach ($this->userRoles as $role) {
+            $userRoleIds[] = $role->getId();
+        }
+        $defaultPages = $this->getHomePageDao()->getModuleDefaultPagesInPriorityOrder($module, $userRoleIds);
+
+        foreach ($defaultPages as $defaultPage) {
+            $enabled = true;
+            $enableClass = $defaultPage->getEnableClass();
+
+            if (!empty($enableClass) && class_exists($enableClass)) {
+                $enableClassInstance = new $enableClass();
+                if ($enableClassInstance instanceof HomePageEnablerInterface) {
+                    $enabled = $enableClassInstance->isEnabled($this->getUser());
+                }
+            }
+            
+            if ($enabled) {
+                $action = $defaultPage->getAction();
+                break;
+            }
+        }
+        
+        return $action;        
+    }
     
-    
+    public function getHomePage() {
+        $action = NULL;
+        
+        $userRoleIds = array();
+        foreach ($this->userRoles as $role) {
+            $userRoleIds[] = $role->getId();
+        }
+        $defaultPages = $this->getHomePageDao()->getHomePagesInPriorityOrder($userRoleIds);
+        
+        foreach ($defaultPages as $defaultPage) {
+            $enabled = true;
+            $enableClass = $defaultPage->getEnableClass();
+            if (!empty($enableClass) && class_exists($enableClass)) {
+                $enableClassInstance = new $enableClass();
+                if ($enableClassInstance instanceof HomePageEnablerInterface) {
+                    $enabled = $enableClassInstance->isEnabled($this->getUser());
+                }
+            }
+            if ($enabled) {
+                $action = $defaultPage->getAction();
+                break;
+            }
+        }
+        
+        return $action;        
+    }    
 }

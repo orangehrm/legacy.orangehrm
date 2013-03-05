@@ -839,6 +839,85 @@ class BasicUserRoleManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(array($userRoles[1], $userRoles[2]), $roles);
     }
     
+    public function testGetHomePage() {
+        $userRoleIds = array(1, 2, 3);
+        
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');        
+        $adminUserSupervisor = $users[3];
+        $this->manager->setUser($adminUserSupervisor);
+        
+        $homePage1 = new HomePage();
+        $homePage1->fromArray(array('id' => 4, "user_role_id" => 1, "action" => 'pim/viewEmployeeTimesheets', 
+            "enable_class" => 'TestEnableClass', "priority" => 50));
+        
+        $homePage2 = new HomePage();
+        $homePage2->fromArray(array('id' => 5, "user_role_id" => 1, "action" => 'pim/viewEmployeeList', "priority" => 30));
+        
+        $homePage3 = new HomePage();
+        $homePage3->fromArray(array('id' => 3, "user_role_id" => 1, "action" => 'pim/viewSystemUsers', "priority" => 30));
+                
+        $homePage4 = new HomePage();
+        $homePage4->fromArray(array('id' => 1, "user_role_id" => 1, "action" => 'pim/viewEmployeeList2', "priority" => 10));
+        
+        $homePage5 = new HomePage();
+        $homePage5->fromArray(array('id' => 2, "user_role_id" => 1, "action" => 'pim/viewMyDetails', "priority" => 0));
+              
+        $homePages = array(
+            $homePage1, $homePage2, $homePage3, $homePage4, $homePage5
+        );
+        $mockDao = $this->getMock('HomePageDao', array('getHomePagesInPriorityOrder'));
+        $mockDao->expects($this->once())
+                 ->method('getHomePagesInPriorityOrder')
+                ->with($userRoleIds)
+                ->will($this->returnValue($homePages));
+       
+
+        
+        $this->manager->setHomePageDao($mockDao);
+        $homePage = $this->manager->getHomePage();
+        
+        $this->assertEquals('pim/viewEmployeeList', $homePage);
+    }
+    
+    public function testGetModuleDefaultPage() {
+        $userRoleIds = array(1, 2, 3);
+        
+        $users = TestDataService::loadObjectList('SystemUser', $this->fixture, 'SystemUser');        
+        $adminUserSupervisor = $users[3];
+        $this->manager->setUser($adminUserSupervisor);
+        $module = "time";
+        
+        $defaultPage1 = new HomePage();
+        $defaultPage1->fromArray(array('id' => 4, "module_id" => 5, "user_role_id" => 1, "action" => 'pim/viewEmployeeTimesheets', 
+            "enable_class" => 'TestEnableClass', "priority" => 50));
+        
+        $defaultPage2 = new HomePage();
+        $defaultPage2->fromArray(array('id' => 5, "module_id" => 5, "user_role_id" => 1, "action" => 'pim/viewEmployeeList', "priority" => 30));
+        
+        $defaultPage3 = new HomePage();
+        $defaultPage3->fromArray(array('id' => 3, "module_id" => 5, "user_role_id" => 1, "action" => 'pim/viewSystemUsers', "priority" => 30));
+                
+        $defaultPage4 = new HomePage();
+        $defaultPage4->fromArray(array('id' => 1, "module_id" => 5, "user_role_id" => 1, "action" => 'pim/viewEmployeeList2', "priority" => 10));
+        
+        $defaultPage5 = new HomePage();
+        $defaultPage5->fromArray(array('id' => 2, "module_id" => 5, "user_role_id" => 1, "action" => 'pim/viewMyDetails', "priority" => 0));
+              
+        $defaultPages = array(
+            $defaultPage1, $defaultPage2, $defaultPage3, $defaultPage4, $defaultPage5
+        );
+        $mockDao = $this->getMock('HomePageDao', array('getModuleDefaultPagesInPriorityOrder'));
+        $mockDao->expects($this->once())
+                 ->method('getModuleDefaultPagesInPriorityOrder')
+                ->with($module, $userRoleIds)
+                ->will($this->returnValue($defaultPages));
+               
+        $this->manager->setHomePageDao($mockDao);
+        $homePage = $this->manager->getModuleDefaultPage($module);
+        
+        $this->assertEquals('pim/viewEmployeeList', $homePage);
+    }
+    
     private function __convertRoleNamesToObjects(array $roleNames) {
         $roles = array();
         
@@ -1018,4 +1097,10 @@ class TestBasicUserRoleManager extends BasicUserRoleManager {
     }
 }
 
+class TestEnableClass implements HomePageEnablerInterface {
+    public function isEnabled($systemUser) {
+        
+        return false;
+    }    
+}
 

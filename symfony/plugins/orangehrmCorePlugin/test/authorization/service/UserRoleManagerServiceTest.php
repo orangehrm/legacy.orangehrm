@@ -215,4 +215,12 @@ class UnitTestUserRoleManager extends AbstractUserRoleManager {
     public function getEmployeesWithRole($roleName, $entities = array()) {
         
     }
+
+    public function getHomePage() {
+        
+    }
+
+    public function getModuleDefaultPage($module) {
+        
+    }
 }

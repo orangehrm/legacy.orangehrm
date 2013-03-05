@@ -26,114 +26,54 @@ class HomePageService {
     protected $configService;
     protected $loginPath = 'auth/login';
     protected $validatePath = 'auth/validateCredentials';
-
-    public function getConfigService() {
-        
-        if (!$this->configService instanceof ConfigService) {
-            $this->configService = new ConfigService();
-        }
-        
-        return $this->configService;
-        
+    protected $homePageDao;
+    protected $userRoleManager;
+    
+    public function getUserRoleManager() {
+        if (!$this->userRoleManager instanceof AbstractUserRoleManager) {
+            $this->userRoleManager = UserRoleManagerFactory::getUserRoleManager();
+        }        
+        return $this->userRoleManager;
     }
 
-    public function setConfigService($configService) {
-        $this->configService = $configService;
-    }    
+    public function setUserRoleManager($userRoleManager) {
+        $this->userRoleManager = $userRoleManager;
+    }  
     
     public function __construct(myUser $userSession) {
         $this->userSession = $userSession;
     }
     
     public function getHomePagePath() {
-        
-        if ($this->userSession->getAttribute('auth.isAdmin') == 'Yes') {
-            return 'pim/viewEmployeeList';
-        } else {
-            return 'pim/viewMyDetails';
-        }
-        
+        return $this->getUserRoleManager()->getHomePage();
     }
     
     public function getTimeModuleDefaultPath() {
-        
-        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
-        
-        if ($this->getConfigService()->isTimesheetPeriodDefined()) {
-            
-            if ($isAdmin) {
-                return 'time/viewEmployeeTimesheet';
-            } else {
-                return 'time/viewMyTimesheet';
-            }
-            
-        } else {
-            
-            return 'time/defineTimesheetPeriod';
-            
-        }
-        
+        return $this->getModuleDefaultPage('time'); 
     }
     
     public function getLeaveModuleDefaultPath() {
-        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
-        $isSupervisor = ($this->userSession->getAttribute('auth.isSupervisor'));
-        
-        if ($this->getConfigService()->isLeavePeriodDefined()) {
-            
-            if ($isAdmin || $isSupervisor) {
-                return 'leave/viewLeaveList/reset/1';
-            } else {
-                return 'leave/viewMyLeaveList';
-            }
-            
-        } else {
-            if ($isAdmin) {
-                return 'leave/defineLeavePeriod';
-            } else {
-                return 'leave/showLeavePeriodNotDefinedWarning';
-            }
-            
-        }
-
+        return $this->getModuleDefaultPage('leave');  
     }
     
     public function getAdminModuleDefaultPath() {
-        
-        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
-        $isProjectAdmin = ($this->userSession->getAttribute('auth.isProjectAdmin'));    
-        
-        if ($isAdmin) {
-            return 'admin/viewSystemUsers';
-        } elseif ($isProjectAdmin) {
-            return 'admin/viewProjects';
-        }         
-        
+        return $this->getModuleDefaultPage('admin');           
     }
     
     public function getPimModuleDefaultPath() {
-        
-        $isAdmin = ($this->userSession->getAttribute('auth.isAdmin') == 'Yes');
-        $isSupervisor = ($this->userSession->getAttribute('auth.isSupervisor'));    
-        
-        if ($isAdmin || $isSupervisor) {
-            return 'pim/viewEmployeeList';
-        } else {
-            return 'pim/viewMyDetails';
-        }        
-        
+        return $this->getModuleDefaultPage('pim');   
     }
     
     public function getRecruitmentModuleDefaultPath() {
-        
-        return 'recruitment/viewCandidates';
-        
+        return $this->getModuleDefaultPage('recruitment'); 
     }
     
-    public function getPerformanceModuleDefaultPath() {
-        
-        return 'performance/viewReview';
-        
+    public function getPerformanceModuleDefaultPath() {        
+        return $this->getModuleDefaultPage('performance');        
+    }
+    
+    public function getModuleDefaultPage($module) {
+        return $this->getUserRoleManager()->getModuleDefaultPage($module);
     }
     
     public function getPathAfterLoggingIn(sfContext $context) {
