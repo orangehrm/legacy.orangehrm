@@ -104,6 +104,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
             'isSortable' => false,
             'elementType' => 'link',
             'textAlignmentStyle' => 'right',
+            'filters' => array('NumberFormatCellFilter' => array()),              
             'elementProperty' => array(
                 'linkable' => $this->allowEdit,
                 'labelGetter' => array('getNoOfDays'),
