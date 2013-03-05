@@ -105,9 +105,13 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
             (9, 1, 'performance/viewReview', NULL, 20),
             (9, 2, 'performance/viewReview', NULL, 0);";
 
-        $this->sql = $sql;
+        $sql[] = "ALTER TABLE ohrm_leave_entitlement 
+            MODIFY COLUMN no_of_days decimal(19,15) not null,
+            MODIFY COLUMN days_used decimal(8,4) not null default 0;";
+        
+        $sql[] = "ALTER TABLE ohrm_leave_adjustment  
+            MODIFY COLUMN no_of_days decimal(19,15) not null;";        
     }
-
     public function getNotes() {
         return array();
     }

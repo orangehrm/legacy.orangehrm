@@ -1156,8 +1156,8 @@ CREATE TABLE ohrm_leave_entitlement_type(
 CREATE TABLE ohrm_leave_entitlement (
   `id` int unsigned not null auto_increment,
   emp_number int(7) not null,
-  no_of_days decimal(6,2) not null,
-  days_used decimal(4,2) not null default 0,
+  no_of_days decimal(19,15) not null,
+  days_used decimal(8,4) not null default 0,
   leave_type_id int unsigned not null,
   from_date datetime not null,
   to_date datetime,
@@ -1173,7 +1173,7 @@ CREATE TABLE ohrm_leave_entitlement (
 CREATE TABLE ohrm_leave_adjustment (
   `id` int unsigned not null auto_increment,
   emp_number int(7) not null,
-  no_of_days decimal(6,2) not null,
+  no_of_days decimal(19,15) not null,
   leave_type_id int unsigned not null,
   from_date datetime,
   to_date datetime,
