@@ -64,6 +64,21 @@ class HomePageDao extends BaseDao {
      * @throws DaoException on an error from the database layer
      */
     public function getModuleDefaultPagesInPriorityOrder($moduleName, $userRoleIds) {
-       
+        try {
+            if (empty($userRoleIds)) {
+                return new Doctrine_Collection('ModuleDefaultPage');
+            } else {
+                $query = Doctrine_Query::create()
+                        ->from('ModuleDefaultPage p')
+                        ->leftJoin('p.Module m')
+                        ->whereIn('p.user_role_id', $userRoleIds)
+                        ->andWhere('m.name = ?', $moduleName)
+                        ->orderBy('p.priority DESC, p.id DESC');
+
+                return $query->execute();
+            }
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }         
     }    
 }

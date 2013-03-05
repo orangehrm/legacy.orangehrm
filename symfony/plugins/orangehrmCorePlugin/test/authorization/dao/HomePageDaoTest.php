@@ -98,30 +98,30 @@ class HomePageDaoTest extends PHPUnit_Framework_TestCase {
         $pagesFixture = $this->testData['ModuleDefaultPage'];
         $expected = array($pagesFixture[7], $pagesFixture[4]);
         $homePages = $this->homePageDao->getModuleDefaultPagesInPriorityOrder('leave', array(1));
-        $this->compareHomePages($expected, $homePages);
+        $this->compareModuleDefaultPages($expected, $homePages);
         
-        $expected = array($pagesFixture[1]);
-        $homePages = $this->homePageDao->getModuleDefaultPagesInPriorityOrder(array(2));
-        $this->compareHomePages($expected, $homePages);
+        $expected = array($pagesFixture[3]);
+        $homePages = $this->homePageDao->getModuleDefaultPagesInPriorityOrder('pim', array(2));
+        $this->compareModuleDefaultPages($expected, $homePages);
         
-        $expected = array($pagesFixture[4]);
-        $homePages = $this->homePageDao->getModuleDefaultPagesInPriorityOrder(array(3));
-        $this->compareHomePages($expected, $homePages);        
+        $expected = array($pagesFixture[5]);
+        $homePages = $this->homePageDao->getModuleDefaultPagesInPriorityOrder('leave', array(3));
+        $this->compareModuleDefaultPages($expected, $homePages);        
         
     }
     
-    public function xtestGetModuleDefaultPagesInPriorityOrderMultipleRole() {
+    public function testGetModuleDefaultPagesInPriorityOrderMultipleRole() {
         $pagesFixture = $this->testData['ModuleDefaultPage'];
-        $expected = array($pagesFixture[3], $pagesFixture[4], $pagesFixture[2], $pagesFixture[0], $pagesFixture[1]);
-        $homePages = $this->homePageDao->getModuleDefaultPagesInPriorityOrder(array(1, 2, 3));
-        $this->compareHomePages($expected, $homePages);
+        $expected = array($pagesFixture[7], $pagesFixture[8], $pagesFixture[4], $pagesFixture[5], $pagesFixture[6]);
+        $homePages = $this->homePageDao->getModuleDefaultPagesInPriorityOrder('leave', array(1, 2, 3));
+        $this->compareModuleDefaultPages($expected, $homePages);
     }    
     
     /**
      * Test case for no matching home pages for user role
      */
-    public function xtestGetModuleDefaultPagesInPriorityOrderNoMatches() {
-        $pagesFixture = $this->homePageDao->getModuleDefaultPagesInPriorityOrder(array(4));
+    public function testGetModuleDefaultPagesInPriorityOrderNoMatches() {
+        $pagesFixture = $this->homePageDao->getModuleDefaultPagesInPriorityOrder('leave', array(4));
         $this->assertEquals(0, count($pagesFixture));
     }    
     
@@ -141,6 +141,7 @@ class HomePageDaoTest extends PHPUnit_Framework_TestCase {
             $res = $result[$i];
             
             $this->assertEquals($exp['id'], $res->getId());
+            $this->assertEquals($exp['module_id'], $res->getModuleId());
             $this->assertEquals($exp['user_role_id'], $res->getUserRoleId());
             $this->assertEquals($exp['action'], $res->getAction());
             $this->assertEquals($exp['enable_class'], $res->getEnableClass());
