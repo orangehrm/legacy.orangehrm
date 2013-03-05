@@ -3627,6 +3627,9 @@ symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetOperationalCountry
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetSelectableGroupDropDown.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetSubUnitDropDown.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetTimeDropDown.php -text
+symfony/plugins/orangehrmCorePlugin/lib/homepage/HomePageEnablerInterface.php -text
+symfony/plugins/orangehrmCorePlugin/lib/homepage/LeavePeriodDefinedHomePageEnabler.php -text
+symfony/plugins/orangehrmCorePlugin/lib/homepage/TimesheetPeriodDefinedHomePageEnabler.php -text
 symfony/plugins/orangehrmCorePlugin/lib/import/CsvDataImport.php -text
 symfony/plugins/orangehrmCorePlugin/lib/import/CsvDataImportFactory.php -text
 symfony/plugins/orangehrmCorePlugin/lib/import/PimCsvDataImport.php -text

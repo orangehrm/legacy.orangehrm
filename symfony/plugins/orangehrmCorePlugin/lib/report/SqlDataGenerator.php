@@ -63,6 +63,7 @@ class SqlDataGenerator extends DataGenerator {
             throw new ReportException("Both offset and page limit should have a value or both should not have a value!!!!");
         }
 
+        print_r($query); print_r($parameters);
         $results = $this->executeQuery($query, $parameters);
         return $results;
     }
