@@ -274,7 +274,7 @@ class viewLeaveBalanceReportAction extends sfAction {
         return $this->getContext()->getUserRoleManager()->getDataGroupPermissions(array('leave_entitlements_usage_report'));
     }    
     
-    protected function fixResultset($values) {
+    protected function fixResultset($values, $formatNumbers = true) {
         $keep = array();
         
         $configService = new LeaveConfigurationService();
@@ -307,6 +307,13 @@ class viewLeaveBalanceReportAction extends sfAction {
                     $this->resultsSet[$i]['leaveType'] = $this->resultsSet[$i]['leaveType'] . " (" . __("Deleted") . ")";
                 }
                 
+                if ($formatNumbers) {
+                    $this->resultsSet[$i]['entitlement_total'] = number_format($this->resultsSet[$i]['entitlement_total'], 2);
+                    $this->resultsSet[$i]['scheduled'] = number_format($this->resultsSet[$i]['scheduled'], 2);
+                    $this->resultsSet[$i]['pending'] = number_format($this->resultsSet[$i]['pending'], 2);
+                    $this->resultsSet[$i]['taken'] = number_format($this->resultsSet[$i]['taken'], 2);
+                    $this->resultsSet[$i]['unused'] = number_format($this->resultsSet[$i]['unused'], 2);
+                }
                 
                 $keep[] = $this->resultsSet[$i];
             }
