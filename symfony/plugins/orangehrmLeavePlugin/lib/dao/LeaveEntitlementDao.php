@@ -537,7 +537,7 @@ class LeaveEntitlementDao extends BaseDao {
         $dateLimits = $this->getLeaveEntitlementStrategy()->getLeaveWithoutEntitlementDateLimitsForLeaveBalance($asAtDate, $date);
 
         if (is_array($dateLimits) && count($dateLimits) > 0) {
-            $sql .= ' UNION ' .
+            $sql .= ' UNION ALL ' .
                     'SELECT ' .
                     '0 AS entitled, ' .
                     'SUM(l.length_days) AS used, ' .

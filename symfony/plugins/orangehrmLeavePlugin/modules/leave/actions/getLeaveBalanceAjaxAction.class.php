@@ -132,14 +132,22 @@ class getLeaveBalanceAjaxAction extends sfAction {
             
             if (count($leaveByPeriods) > 0) {
                 foreach ($leaveByPeriods as $i => $leavePeriod) {
+                    
+                    $days = $leavePeriod['days'];
+                    if (count($days) > 0) {
+                        $firstDayInPeriod = array_shift(array_keys($days));
+                        $lastDayInPeriod = array_pop(array_keys($days));
+                    } else {
+                        $firstDayInPeriod = $leavePeriod['period'][0];
+                        $lastDayInPeriod = $leavePeriod['period'][1];                        
+                    }
                     $leaveBalanceObj = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, 
-                            $leavePeriod['period'][0], $leavePeriod['period'][1]);
+                            $firstDayInPeriod, $lastDayInPeriod);
                     
                     $leaveByPeriods[$i]['balance'] = $leaveBalanceObj;
                     
                     $leaveBalance = $leaveBalanceObj->getBalance();
                     
-                    $days = $leavePeriod['days'];
                     foreach ($days as $date => $leaveDateData) {
                         $leaveDateLength = $leaveDateData['length'];
                         if ($leaveDateLength > 0) {
@@ -165,7 +173,9 @@ class getLeaveBalanceAjaxAction extends sfAction {
             }
              
             if (count($leaveByPeriods) == 0 || (count($leaveByPeriods) == 1 && !$negativeBalance)) {
-                $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, $startDate);
+                
+                $endDateParam = !empty($endDateTimeStamp) ? $endDate : NULL;
+                $balance = $this->getLeaveEntitlementService()->getLeaveBalance($empNumber, $leaveTypeId, $startDate, $endDateParam);
                 $asAtDate = set_datepicker_date_format($startDate);
 
                 $result = array(
