@@ -139,6 +139,7 @@ installer/utils/UniqueIDGenerator.php -text
 installer/utils/UniqueIDGeneratorTest.php -text
 installer/utils/installUtil.php -text
 installer/welcome.php -text
+/jobs.php -text
 lib/confs/Conf-auto.php -text
 lib/confs/Conf.php-distribution -text
 lib/confs/cryptokeys/.htaccess -text
