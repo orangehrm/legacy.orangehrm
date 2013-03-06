@@ -167,7 +167,8 @@ class addLeaveEntitlementAction extends sfAction {
         // convert back to localized format before setting in form
         $filters['date']['from'] = set_datepicker_date_format($filters['date']['from']);
         $filters['date']['to'] = set_datepicker_date_format($filters['date']['to']);  
-        
+        $filters['entitlement'] = number_format($filters['entitlement'], 2);
+               
         $this->form->setDefaults($filters);
     }
     
