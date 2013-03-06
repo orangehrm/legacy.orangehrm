@@ -201,7 +201,7 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         $newLeavePeriodService->setLeaveEntitlementService($this->leavePeriodService->getLeaveEntitlementService());                
         $result= $newLeavePeriodService->getGeneratedLeavePeriodList(null, true);
         
-        $this->assertEquals(array(array('2010-01-01','2010-12-31'),array('2011-01-01','2012-01-31'),array('2012-02-01','2013-02-28'),array('2013-03-01','2014-02-28')),$result);
+        $this->assertEquals(array(array('2010-01-01','2010-12-31'),array('2011-01-01','2012-01-31'),array('2012-02-01','2013-02-28'),array('2013-03-01','2014-02-28'),array('2014-03-01','2015-02-28')),$result);
         
         
     }
