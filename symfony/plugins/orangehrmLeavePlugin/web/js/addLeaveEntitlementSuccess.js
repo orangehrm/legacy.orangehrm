@@ -96,7 +96,10 @@
                         var css = rows % 2 ? "even" : "odd";
 
                         var decodedName = $("<div/>").text(data[i][0]).html();
-                        html = html + '<tr class="' + css + '"><td>'+decodedName+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td></tr>';
+                        var oldValue = parseFloat(data[i][1]);
+                        var newValue = parseFloat(data[i][2]);
+                        
+                        html = html + '<tr class="' + css + '"><td>'+decodedName+'</td><td>'+oldValue.toFixed(2)+'</td><td>'+newValue.toFixed(2)+'</td></tr>';
                     }
 
                     $('div#employee_list table.table').append(html);
@@ -170,9 +173,13 @@
                                 data: params,
                                 dataType: 'json',
                                 success: function(data) {                
-                                    if( !isNaN(data[0]) && parseInt(data[0])!=0 ){
+                                    if( !isNaN(data[0]) && parseFloat(data[0])!=0 ){
+                                        
+                                        var oldValue = parseFloat(data[0]);
+                                        var newValue = parseFloat(data[1]);
+                        
                                         $('ol#employee_entitlement_update').html(''); 
-                                        var html = '<span>Existing Entitlement value '+ data[0]+' will be updated to '+ data[1] +'</span>'
+                                        var html = '<span>Existing Entitlement value '+ oldValue.toFixed(2)+' will be updated to '+ newValue.toFixed(2) +'</span>'
                                         $('ol#employee_entitlement_update').append(html);
                                         $('#employeeEntitlement').modal();
                                     }else{
