@@ -1200,7 +1200,7 @@ CREATE TABLE `ohrm_leave` (
   `id` int(11) NOT NULL  auto_increment,
   `date` date default NULL,
   `length_hours` decimal(6,2) unsigned default NULL,
-  `length_days` decimal(4,2) unsigned default NULL,
+  `length_days` decimal(6,4) unsigned default NULL,
   `status` smallint(6) default NULL,
   `comments` varchar(256) default NULL,
   `leave_request_id`int unsigned NOT NULL,
@@ -1239,7 +1239,7 @@ create TABLE `ohrm_leave_leave_entitlement` (
     `id` int(11) NOT NULL   auto_increment,
     `leave_id` int(11) NOT NULL,
     `entitlement_id` int unsigned NOT NULL,
-    `length_days` decimal(4,2) unsigned default NULL,
+    `length_days` decimal(6,4) unsigned default NULL,
     PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

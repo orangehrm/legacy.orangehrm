@@ -111,6 +111,12 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
         
         $sql[] = "ALTER TABLE ohrm_leave_adjustment  
             MODIFY COLUMN no_of_days decimal(19,15) not null;";        
+        
+        $sql[] = "ALTER TABLE ohrm_leave  
+            MODIFY COLUMN `length_days` decimal(6,4) unsigned default NULL;"; 
+        
+        $sql[] = "ALTER TABLE ohrm_leave_leave_entitlement  
+            MODIFY COLUMN `length_days` decimal(6,4) unsigned default NULL;";         
     }
     public function getNotes() {
         return array();
