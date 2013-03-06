@@ -1,5 +1,8 @@
 $(document).ready(function() {
         
+    leaveBalanceNegative = false;
+    lastLeaveBalance = 0.0;
+    
     if (haveLeaveTypes) {
         showTimeControls(false);
         
@@ -147,7 +150,35 @@ $(document).ready(function() {
                 'assignleave[time][to]':{
                     validTotalTime : lang_Required
                 }
-            }
+            },
+            submitHandler: function(form) {
+                var showConfirm = false;
+                if (leaveBalanceNegative) {
+                    showConfirm = true;
+                } else {
+                    var fromdate = $('#assignleave_txtFromDate').val();
+                    var todate = $('#assignleave_txtToDate').val();
+                    if (fromdate == todate) {
+                        var totalTime = getTotalTime();
+                        var workShift = $('#assignleave_txtEmpWorkShift').val();
+                        var leaveInDays = totalTime / parseFloat(workShift);
+                        
+                        if (!isNaN(leaveInDays)) {
+                            // only consider first two decimals
+                            leaveInDays = (Math.floor(leaveInDays * 100)) / 100;
+                            if (leaveInDays > lastLeaveBalance) {
+                                showConfirm = true;
+                            }
+                        }
+                    }
+                }
+                
+                if (showConfirm) {
+                    $('#leaveBalanceConfirm').modal();
+                } else {
+                    form.submit();
+                }
+            }                    
         });
         
         $.validator.addMethod("validTotalTime", function(value, element) {
@@ -209,6 +240,10 @@ $(document).ready(function() {
             $("#assignleave_txtEmployee_empName").valid();
         });
         
+        $('#confirmOkButton').click(function(event) {
+            $("#frmLeaveApply").get(0).submit();
+        });
+        
         //Click Submit button
        $('#assignBtn').click(function(event) {
         	event.preventDefault();
@@ -255,7 +290,8 @@ function updateLeaveBalance() {
     //$('#assignleave_leaveBalance').text('--');
     //$('#leaveBalance_details_link').remove();
     } else {
-        $('#assignleave_leaveBalance').text('').addClass('loading_message');        
+        $('#assignleave_leaveBalance').text('').addClass('loading_message');   
+        $('#assignBtn').attr("disabled", "disabled");
         $.ajax({
             type: 'GET',
             url: leaveBalanceUrl,
@@ -269,6 +305,8 @@ function updateLeaveBalance() {
                     var leavePeriodCount = leavePeriods.length;
                     
                     var linkTxt = data.negative ? lang_BalanceNotSufficient : lang_details;
+                    leaveBalanceNegative = data.negative;
+                    
                     var balanceTxt = leavePeriodCount == 1 ? leavePeriods[0].balance.balance.toFixed(2) : '';
                     var linkCss = data.negative ? ' class="error" ' : "";
                     
@@ -330,9 +368,13 @@ function updateLeaveBalance() {
                     if(Number(balance.adjustment) == 0 ){
                         $('#container-adjustment').hide();
                     }
+                    
+                    leaveBalanceNegative = false;
+                    lastLeaveBalance = balanceDays;                    
                 }
                 
-                $('#assignleave_leaveBalance').removeClass('loading_message');                
+                $('#assignleave_leaveBalance').removeClass('loading_message');   
+                $('#assignBtn').removeAttr("disabled");
             }
         });
     }

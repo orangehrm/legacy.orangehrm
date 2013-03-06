@@ -359,7 +359,19 @@
    <trans-unit id="87">
     <source>Assigning Leave Entitlement. Please Wait</source>
     <target>Assigning Leave Entitlement. Please Wait</target>
-   </trans-unit>      
+   </trans-unit>   
+   <trans-unit id="88">
+    <source>Confirm Leave Assignment</source>
+    <target>Confirm Leave Assignment</target>
+   </trans-unit>   
+   <trans-unit id="89">
+    <source>Employee does not have sufficient leave balance for leave request.</source>
+    <target>Employee does not have sufficient leave balance for leave request.</target>
+   </trans-unit>       
+   <trans-unit id="90">
+    <source>Click OK to confirm leave assignment.</source>
+    <target>Click OK to confirm leave assignment.</target>
+   </trans-unit>       
   </body>
  </file>
 </xliff>

@@ -360,6 +360,26 @@
     <source>Assigning Leave Entitlement. Please Wait</source>
     <target>FR_Assigning Leave Entitlement. Please Wait</target>
    </trans-unit>               
+   <trans-unit id="88">
+    <source>Calculating Leave Balance</source>
+    <target>FR_Calculating Leave Balance</target>
+   </trans-unit>   
+   <trans-unit id="89">
+    <source>Calculating Leave Balance, Please Wait</source>
+    <target>FR_Calculating Leave Balance, Please Wait</target>
+   </trans-unit>
+   <trans-unit id="88">
+    <source>Confirm Leave Assignment</source>
+    <target>FR_Confirm Leave Assignment</target>
+   </trans-unit>   
+   <trans-unit id="89">
+    <source>Employee does not have sufficient leave balance for leave request.</source>
+    <target>FR_Employee does not have sufficient leave balance for leave request.</target>
+   </trans-unit>       
+   <trans-unit id="90">
+    <source>Click OK to confirm leave assignment.</source>
+    <target>FR_Click OK to confirm leave assignment.</target>
+   </trans-unit>                
   </body>
  </file>
 </xliff>

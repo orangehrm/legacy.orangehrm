@@ -119,6 +119,21 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/assignLeaveSuccess.c
   </div>
 </div>
 
+<!-- Confirmation box for leave balance update -->
+<div class="modal hide" id="leaveBalanceConfirm" style="width:500px">
+  <div class="modal-header">
+    <h3><?php echo 'OrangeHRM - ' . __('Confirm Leave Assignment'); ?></h3>
+  </div>
+  <div class="modal-body">
+      <p><?php echo __('Employee does not have sufficient leave balance for leave request.');?></p>
+      <p><?php echo __('Click OK to confirm leave assignment.');?></p>
+  </div>
+  <div class="modal-footer">
+    <input type="button" class="btn" data-dismiss="modal" id="confirmOkButton" value="<?php echo __('Ok'); ?>" />
+    <input type="button" class="reset" data-dismiss="modal" id="confirmCancelButton" value="<?php echo __('Cancel'); ?>" />    
+  </div>    
+</div>
+
 <?php include_component('core', 'ohrmPluginPannel', array('location' => 'assign-leave-javascript'))?>
 <!-- leave balance details HTML: Ends -->
 
