@@ -123,9 +123,8 @@ class LeavePeriodHistoryServiceTest extends PHPUnit_Framework_TestCase {
         
         
         $result = $this->leavePeriodService->getGeneratedLeavePeriodList(null, true);
-        $this->assertEquals(array(array('2009-03-01','2010-02-28'),array('2010-03-01','2011-02-28'),array('2011-03-01','2012-02-29'),array('2012-03-01','2013-02-28'),array('2013-03-01','2014-02-28')),$result);
         
-        
+        $this->assertEquals(array(array('2009-03-01','2010-02-28'),array('2010-03-01','2011-02-28'),array('2011-03-01','2012-02-29'),array('2012-03-01','2013-02-28'),array('2013-03-01','2014-02-28'), array('2014-03-01','2015-02-28')),$result);                
     }
     
     public function testGetGeneratedLeavePeriodListDefineAs2010Jan1stAnd2012Jan1st(){
