@@ -1,4 +1,3 @@
-
 <?php
 /**
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
@@ -18,21 +17,16 @@
  * Boston, MA  02110-1301, USA
  */
 
-/* For logging PHP errors */
-include_once('lib/confs/log_settings.php');
-
-$installed = true;
-
 define('ROOT_PATH', dirname(__FILE__));
 
-if (!is_file(ROOT_PATH . '/lib/confs/Conf.php')) {
-    $installed = false;
-}
-
-if (!$installed) {
-    header('Location: ./install.php');
-    exit();    
-}
-
-header("Location: ./symfony/web/index.php/recruitmentApply/jobs.html");
-exit();
+$url = 'symfony/web/index.php/recruitmentApply/jobs.html';
+?>
+<html>
+<head>
+<title>Job Vacancies</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<iframe align="center" src="<?php echo $url; ?>" id="rightMenu" name="rightMenu" width="100%" height="100%" frameborder="0"></iframe>
+</body>
+</html>
