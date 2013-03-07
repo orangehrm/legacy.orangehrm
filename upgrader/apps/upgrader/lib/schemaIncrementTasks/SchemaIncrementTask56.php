@@ -52,6 +52,19 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
         
     }
 
+    protected function getUserRoles() {
+        $result = $this->upgradeUtility->executeSql('SELECT name, id FROM ohrm_user_role');
+        $userRoles = array();
+        
+        while ($row = mysqli_fetch_array($result)) {
+            $userRoles[$row['name']] = $row['id'];
+        }            
+        
+        $logMessage = print_r($userRoles, true);
+        UpgradeLogger::writeLogMessage($logMessage);
+        return $userRoles;        
+    }
+    
     public function loadSql() {
 
         $sql = array();   
@@ -83,29 +96,31 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
             add foreign key (user_role_id) references ohrm_user_role(id) on delete cascade,
             add foreign key (module_id) references ohrm_module(id) on delete cascade;";
         
+        $userRoles = $this->getUserRoles();
+        
         $sql[] = "INSERT INTO ohrm_home_page (`user_role_id`, `action`, `enable_class`, `priority`) VALUES 
-            (1, 'pim/viewEmployeeList', NULL, 10),
-            (2, 'pim/viewMyDetails', NULL, 0);";
+            ({$userRoles['Admin']}, 'pim/viewEmployeeList', NULL, 10),
+            ({$userRoles['ESS']}, 'pim/viewMyDetails', NULL, 0);";
 
         $sql[] = "INSERT INTO ohrm_module_default_page (`module_id`, `user_role_id`, `action`, `enable_class`, `priority`) VALUES 
-            (2, 1, 'admin/viewSystemUsers', NULL, 20),
-            (3, 1, 'pim/viewEmployeeList', NULL, 20),
-            (3, 3, 'pim/viewEmployeeList', NULL, 10),
-            (3, 2, 'pim/viewMyDetails', NULL, 0),
-            (4, 1, 'leave/viewLeaveList/reset/1', NULL, 20),
-            (4, 3, 'leave/viewLeaveList/reset/1', NULL, 10),
-            (4, 2, 'leave/viewMyLeaveList', NULL, 0),
-            (4, 1, 'leave/defineLeavePeriod', 'LeavePeriodDefinedHomePageEnabler', 100),
-            (4, 2, 'leave/showLeavePeriodNotDefinedWarning', 'LeavePeriodDefinedHomePageEnabler', 90),
-            (5, 1, 'time/viewEmployeeTimesheet', NULL, 20),
-            (5, 2, 'time/viewMyTimesheet', NULL, 0),
-            (5, 1, 'time/defineTimesheetPeriod', 'TimesheetPeriodDefinedHomePageEnabler', 100),
-            (5, 2, 'time/defineTimesheetPeriod', 'TimesheetPeriodDefinedHomePageEnabler', 100),
-            (7, 1, 'recruitment/viewCandidates', NULL, 20),
-            (7, 5, 'recruitment/viewCandidates', NULL, 10),
-            (7, 6, 'recruitment/viewCandidates', NULL, 5),
-            (9, 1, 'performance/viewReview', NULL, 20),
-            (9, 2, 'performance/viewReview', NULL, 0);";
+            (2, {$userRoles['Admin']}, 'admin/viewSystemUsers', NULL, 20),
+            (3, {$userRoles['Admin']}, 'pim/viewEmployeeList', NULL, 20),
+            (3, {$userRoles['Supervisor']}, 'pim/viewEmployeeList', NULL, 10),
+            (3, {$userRoles['ESS']}, 'pim/viewMyDetails', NULL, 0),
+            (4, {$userRoles['Admin']}, 'leave/viewLeaveList/reset/1', NULL, 20),
+            (4, {$userRoles['Supervisor']}, 'leave/viewLeaveList/reset/1', NULL, 10),
+            (4, {$userRoles['ESS']}, 'leave/viewMyLeaveList', NULL, 0),
+            (4, {$userRoles['Admin']}, 'leave/defineLeavePeriod', 'LeavePeriodDefinedHomePageEnabler', 100),
+            (4, {$userRoles['ESS']}, 'leave/showLeavePeriodNotDefinedWarning', 'LeavePeriodDefinedHomePageEnabler', 90),
+            (5, {$userRoles['Admin']}, 'time/viewEmployeeTimesheet', NULL, 20),
+            (5, {$userRoles['ESS']}, 'time/viewMyTimesheet', NULL, 0),
+            (5, {$userRoles['Admin']}, 'time/defineTimesheetPeriod', 'TimesheetPeriodDefinedHomePageEnabler', 100),
+            (5, {$userRoles['ESS']}, 'time/defineTimesheetPeriod', 'TimesheetPeriodDefinedHomePageEnabler', 100),
+            (7, {$userRoles['Admin']}, 'recruitment/viewCandidates', NULL, 20),
+            (7, {$userRoles['Interviewer']}, 'recruitment/viewCandidates', NULL, 10),
+            (7, {$userRoles['HiringManager']}, 'recruitment/viewCandidates', NULL, 5),
+            (9, {$userRoles['Admin']}, 'performance/viewReview', NULL, 20),
+            (9, {$userRoles['ESS']}, 'performance/viewReview', NULL, 0);";
 
         $sql[] = "ALTER TABLE ohrm_leave_entitlement 
             MODIFY COLUMN no_of_days decimal(19,15) not null,
