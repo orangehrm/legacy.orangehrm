@@ -37,7 +37,7 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
             $result[] = $this->upgradeUtility->executeSql($sql);
         }
 
-        $this->addLeaveEntitlement();
+        //$this->addLeaveEntitlement();
         
         $this->checkTransactionComplete($result);
         $this->updateOhrmUpgradeInfo($this->transactionComplete, $this->incrementNumber);
@@ -51,6 +51,30 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
 
     public function setUserInputs() {
         
+    }
+    
+    protected function getScalarValueFromQuery($query) {
+        $result = $this->upgradeUtility->executeSql($query);
+        $row = mysqli_fetch_row($result);
+        
+        $logMessage = print_r($row, true);
+        UpgradeLogger::writeLogMessage($logMessage);
+        $value = $row[0];        
+        UpgradeLogger::writeLogMessage('value = ' . $value . ' value + 1 = ' . ($value + 1));        
+        
+        return $value + 1;        
+    }
+    
+    protected function getNextUserRoleId() {
+        return $this->getScalarValueFromQuery('SELECT MAX(id) FROM ohrm_user_role');
+    }
+    
+    protected function getNextScreenId() {
+        return $this->getScalarValueFromQuery('SELECT MAX(id) FROM ohrm_screen');
+    }    
+    
+    protected function getNextDataGroupId() {
+        return $this->getScalarValueFromQuery('SELECT MAX(id) FROM ohrm_data_group');       
     }
 
     public function loadSql() {
@@ -261,12 +285,12 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
             add constraint foreign key (entitlement_id) references ohrm_leave_entitlement (id) on delete cascade,
             add constraint foreign key (leave_id) references ohrm_leave (id) on delete cascade";
         $sql[] = "alter table ohrm_leave_entitlement_adjustment
-            add constraint foreign key (entitlement_id) references ohrm_leave_entitlement (id) on delete cascade;
+            add constraint foreign key (entitlement_id) references ohrm_leave_entitlement (id) on delete cascade,
             add constraint foreign key (adjustment_id) references ohrm_leave_adjustment (id) on delete cascade;";
 
         $sql[] = "alter table ohrm_leave_comment
-        add constraint foreign key (leave_id) references ohrm_leave(id) on delete cascade;
-        add constraint foreign key (created_by_id) references ohrm_user(`id`) on delete set NULL
+        add constraint foreign key (leave_id) references ohrm_leave(id) on delete cascade,
+        add constraint foreign key (created_by_id) references ohrm_user(`id`) on delete set NULL,
         add constraint foreign key (created_by_emp_number) references hs_hr_employee(emp_number) on delete cascade;";
 
         $sql[] = "alter table ohrm_leave_request_comment
@@ -347,21 +371,6 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
                     (6, 4, 'WEEKEND'),
                     (7, 5, 'HOLIDAY');";        
         
-        /* -- Enable time module menu items if timesheet period is defined -- */
-        $sql[] = "UPDATE `ohrm_menu_item` menu
-            SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'timesheet_period_set') 
-            WHERE screen_id in 
-            (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id 
-            where m.`name` IN ('time', 'attendance'))
-            OR (menu.menu_title in ('Project Info', 'Customers', 'Projects'));";
-     
-
-        /* -- Enable leave module menu items if leave period is defined */
-        $sql[] = "UPDATE `ohrm_menu_item` 
-            SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'leave_period_defined') 
-            WHERE screen_id in 
-            (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id where m.`name` = 'leave')";
-        
         /*-------- Workflow State machine entries -------------*/        
         $sql[] = "alter table `ohrm_workflow_state_machine` 
             add column `roles_to_notify` text,
@@ -407,305 +416,308 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
         /*--------- Needs improvement for compatibility if data group, screen entries modified ----*/
         $sql[] = "DELETE FROM `ohrm_user_role` WHERE id = 6 AND name = 'Offerer';";
 
+        $hiringManagerId = $this->getNextUserRoleId(); // 6
+        $reviewerId = $hiringManagerId + 1; // 7
+        
         $sql[] = "INSERT INTO `ohrm_user_role` 
                 (`id`, `name`, `display_name`, `is_assignable`, `is_predefined`) VALUES
-                (6, 'HiringManager', 'HiringManager', 0, 1),
-                (7, 'Reviewer', 'Reviewer', 0, 1);";
+                ($hiringManagerId, 'HiringManager', 'HiringManager', 0, 1),
+                ($reviewerId, 'Reviewer', 'Reviewer', 0, 1);";
         
+        $startScreenId = $this->getNextScreenId(); //20
+        $id = $startScreenId; 
         
         /*-------- Screen Entries -------*/
-        $sql[] = "INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
-                    (20, 'General Information', 2, 'viewOrganizationGeneralInformation'),
-                    (21, 'Location List', 2, 'viewLocations'),
-                    (22, 'View Company Structure', 2, 'viewCompanyStructure'),
-                    (23, 'Job Title List', 2, 'viewJobTitleList'),
-                    (24, 'Pay Grade List', 2, 'viewPayGrades'),
-                    (25, 'Employment Status List', 2, 'employmentStatus'),
-                    (26, 'Job Category List', 2, 'jobCategory'),
-                    (27, 'Work Shift List', 2, 'workShift'),
-                    (28, 'Skill List', 2, 'viewSkills'),
-                    (29, 'Education List', 2, 'viewEducation'),
-                    (30, 'License List', 2, 'viewLicenses'),
-                    (31, 'Language List', 2, 'viewLanguages'),
-                    (32, 'Membership List', 2, 'membership'),
-                    (33, 'Nationality List', 2, 'nationality'),
-                    (34, 'Add/Edit Mail Configuration', 2, 'listMailConfiguration'),
-                    (35, 'Notification List', 2, 'viewEmailNotification'),
-                    (36, 'Customer List', 2, 'viewCustomers'),
-                    (37, 'Project List', 2, 'viewProjects'),
-                    (38, 'Localization', 2, 'localization'),
-                    (39, 'Module Configuration', 2, 'viewModules'),
-                    (40, 'Configure PIM', 3, 'configurePim'),
-                    (41, 'Custom Field List', 3, 'listCustomFields'),
-                    (42, 'Data Import', 2, 'pimCsvImport'),
-                    (43, 'Reporting Method List', 3, 'viewReportingMethods'),
-                    (44, 'Termination Reason List', 3, 'viewTerminationReasons'),
-                    (45, 'PIM Reports List', 1, 'viewDefinedPredefinedReports'),
-                    (46, 'View MyInfo', 3, 'viewMyDetails'),
-                    (47, 'Define Leave Period', 4, 'defineLeavePeriod'),
-                    (48, 'View My Leave List', 4, 'viewMyLeaveList'),
-                    (49, 'Apply Leave', 4, 'applyLeave'),
-                    (50, 'Define Timesheet Start Date', 5, 'defineTimesheetPeriod'),
-                    (51, 'View My Timesheet', 5, 'viewMyTimesheet'),
-                    (52, 'View Employee Timesheet', 5, 'viewEmployeeTimesheet'),
-                    (53, 'View My Attendance', 6, 'viewMyAttendanceRecord'),
-                    (54, 'Punch In/Out', 6, 'punchIn'),
-                    (55, 'View Employee Attendance', 6, 'viewAttendanceRecord'),
-                    (56, 'Attendance Configuration', 6, 'configure'),
-                    (57, 'View Employee Report Criteria', 5, 'displayProjectReportCriteria'),
-                    (58, 'View Project Report Criteria', 5, 'displayEmployeeReportCriteria'),
-                    (59, 'View Attendance Report Criteria', 5, 'displayAttendanceSummaryReportCriteria'),
-                    (60, 'Candidate List', 7, 'viewCandidates'),
-                    (61, 'Vacancy List', 7, 'viewJobVacancy'),
-                    (62, 'KPI List', 9, 'listDefineKpi'),
-                    (63, 'Add/Edit KPI', 9, 'saveKpi'),
-                    (64, 'Copy KPI', 9, 'copyKpi'),
-                    (65, 'Add Review', 9, 'saveReview'),
-                    (66, 'Review List', 9, 'viewReview'),
-                    (67, 'View Time Module', 5, 'viewTimeModule'),
-                    (68, 'View Leave Module', 4, 'viewLeaveModule'),
-                    (69, 'Leave Entitlements', 4, 'viewLeaveEntitlements'),
-                    (70, 'My Leave Entitlements', 4, 'viewMyLeaveEntitlements'),
-                    (71, 'Delete Leave Entitlements', 4, 'deleteLeaveEntitlements'),
-                    (72, 'Add Leave Entitlement', 4, 'addLeaveEntitlement'),
-                    (73, 'Edit Leave Entitlement', 4, 'editLeaveEntitlement'),
-                    (74, 'View Admin Module', 2, 'viewAdminModule'),
-                    (75, 'View PIM Module', 3, 'viewPimModule'),
-                    (76, 'View Recruitment Module', 7, 'viewRecruitmentModule'),
-                    (77, 'View Performance Module', 9, 'viewPerformanceModule'),
-                    (78, 'Leave Balance Report', 4, 'viewLeaveBalanceReport'),
-                    (79, 'My Leave Balance Report', 4, 'viewMyLeaveBalanceReport');";
+        $sql[] = "INSERT INTO ohrm_screen 
+            (`id`, `name`, `module_id`, `action_url`) VALUES
+            (" . ($id) . ", 'General Information', 2, 'viewOrganizationGeneralInformation'),
+            (" . ($id+1) . ", 'Location List', 2, 'viewLocations'),
+            (" . ($id+2) . ", 'View Company Structure', 2, 'viewCompanyStructure'),
+            (" . ($id+3) . ", 'Job Title List', 2, 'viewJobTitleList'),
+            (" . ($id+4) . ", 'Pay Grade List', 2, 'viewPayGrades'),
+            (" . ($id+5) . ", 'Employment Status List', 2, 'employmentStatus'),
+            (" . ($id+6) . ", 'Job Category List', 2, 'jobCategory'),
+            (" . ($id+7) . ", 'Work Shift List', 2, 'workShift'),
+            (" . ($id+8) . ", 'Skill List', 2, 'viewSkills'),
+            (" . ($id+9) . ", 'Education List', 2, 'viewEducation'),
+            (" . ($id+10) . ", 'License List', 2, 'viewLicenses'),
+            (" . ($id+11) . ", 'Language List', 2, 'viewLanguages'),
+            (" . ($id+12) . ", 'Membership List', 2, 'membership'),
+            (" . ($id+13) . ", 'Nationality List', 2, 'nationality'),
+            (" . ($id+14) . ", 'Add/Edit Mail Configuration', 2, 'listMailConfiguration'),
+            (" . ($id+15) . ", 'Notification List', 2, 'viewEmailNotification'),
+            (" . ($id+16) . ", 'Customer List', 2, 'viewCustomers'),
+            (" . ($id+17) . ", 'Project List', 2, 'viewProjects'),
+            (" . ($id+18) . ", 'Localization', 2, 'localization'),
+            (" . ($id+19) . ", 'Module Configuration', 2, 'viewModules'),
+            (" . ($id+20) . ", 'Configure PIM', 3, 'configurePim'),
+            (" . ($id+21) . ", 'Custom Field List', 3, 'listCustomFields'),
+            (" . ($id+22) . ", 'Data Import', 2, 'pimCsvImport'),
+            (" . ($id+23) . ", 'Reporting Method List', 3, 'viewReportingMethods'),
+            (" . ($id+24) . ", 'Termination Reason List', 3, 'viewTerminationReasons'),
+            (" . ($id+25) . ", 'PIM Reports List', 1, 'viewDefinedPredefinedReports'),
+            (" . ($id+26) . ", 'View MyInfo', 3, 'viewMyDetails'),
+            (" . ($id+27) . ", 'Define Leave Period', 4, 'defineLeavePeriod'),
+            (" . ($id+28) . ", 'View My Leave List', 4, 'viewMyLeaveList'),
+            (" . ($id+29) . ", 'Apply Leave', 4, 'applyLeave'),
+            (" . ($id+30) . ", 'Define Timesheet Start Date', 5, 'defineTimesheetPeriod'),
+            (" . ($id+31) . ", 'View My Timesheet', 5, 'viewMyTimesheet'),
+            (" . ($id+32) . ", 'View Employee Timesheet', 5, 'viewEmployeeTimesheet'),
+            (" . ($id+33) . ", 'View My Attendance', 6, 'viewMyAttendanceRecord'),
+            (" . ($id+34) . ", 'Punch In/Out', 6, 'punchIn'),
+            (" . ($id+35) . ", 'View Employee Attendance', 6, 'viewAttendanceRecord'),
+            (" . ($id+36) . ", 'Attendance Configuration', 6, 'configure'),
+            (" . ($id+37) . ", 'View Employee Report Criteria', 5, 'displayProjectReportCriteria'),
+            (" . ($id+38) . ", 'View Project Report Criteria', 5, 'displayEmployeeReportCriteria'),
+            (" . ($id+39) . ", 'View Attendance Report Criteria', 5, 'displayAttendanceSummaryReportCriteria'),
+            (" . ($id+40) . ", 'Candidate List', 7, 'viewCandidates'),
+            (" . ($id+41) . ", 'Vacancy List', 7, 'viewJobVacancy'),
+            (" . ($id+42) . ", 'KPI List', 9, 'listDefineKpi'),
+            (" . ($id+43) . ", 'Add/Edit KPI', 9, 'saveKpi'),
+            (" . ($id+44) . ", 'Copy KPI', 9, 'copyKpi'),
+            (" . ($id+45) . ", 'Add Review', 9, 'saveReview'),
+            (" . ($id+46) . ", 'Review List', 9, 'viewReview'),
+            (" . ($id+47) . ", 'View Time Module', 5, 'viewTimeModule'),
+            (" . ($id+48) . ", 'View Leave Module', 4, 'viewLeaveModule'),
+            (" . ($id+49) . ", 'Leave Entitlements', 4, 'viewLeaveEntitlements'),
+            (" . ($id+50) . ", 'My Leave Entitlements', 4, 'viewMyLeaveEntitlements'),
+            (" . ($id+51) . ", 'Delete Leave Entitlements', 4, 'deleteLeaveEntitlements'),
+            (" . ($id+52) . ", 'Add Leave Entitlement', 4, 'addLeaveEntitlement'),
+            (" . ($id+53) . ", 'Edit Leave Entitlement', 4, 'editLeaveEntitlement'),
+            (" . ($id+54) . ", 'View Admin Module', 2, 'viewAdminModule'),
+            (" . ($id+55) . ", 'View PIM Module', 3, 'viewPimModule'),
+            (" . ($id+56) . ", 'View Recruitment Module', 7, 'viewRecruitmentModule'),
+            (" . ($id+57) . ", 'View Performance Module', 9, 'viewPerformanceModule'),
+            (" . ($id+58) . ", 'Leave Balance Report', 4, 'viewLeaveBalanceReport'),
+            (" . ($id+59) . ", 'My Leave Balance Report', 4, 'viewMyLeaveBalanceReport');";
 
 
-
-        // Menu entries - assumes id's haven't changed from 2.7.1 install
-        $sql[] = "INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
-                (1, 'Admin', 74, NULL, 1, 100, NULL, 1),
-                (2, 'User Management', NULL, 1, 2, 100, NULL, 1),
-                (3, 'Project Info', NULL, 52, 2, 400, NULL, 0),
-                (4, 'Customers', 36, 3, 3, 100, NULL, 0),
-                (5, 'Projects', 37, 3, 3, 200, NULL, 0),
-                (6, 'Job', NULL, 1, 2, 300, NULL, 1),
-                (7, 'Job Titles', 23, 6, 3, 100, NULL, 1),
-                (8, 'Pay Grades', 24, 6, 3, 200, NULL, 1),
-                (9, 'Employment Status', 25, 6, 3, 300, NULL, 1),
-                (10, 'Job Categories', 26, 6, 3, 400, NULL, 1),
-                (11, 'Work Shifts', 27, 6, 3, 500, NULL, 1),
-                (12, 'Organization', NULL, 1, 2, 400, NULL, 1),
-                (13, 'General Information', 20, 12, 3, 100, NULL, 1),
-                (14, 'Locations', 21, 12, 3, 200, NULL, 1),
-                (15, 'Structure', 22, 12, 3, 300, NULL, 1),
-                (16, 'Qualifications', NULL, 1, 2, 500, NULL, 1),
-                (17, 'Skills', 28, 16, 3, 100, NULL, 1),
-                (18, 'Education', 29, 16, 3, 200, NULL, 1),
-                (19, 'Licenses', 30, 16, 3, 300, NULL, 1),
-                (20, 'Languages', 31, 16, 3, 400, NULL, 1),
-                (21, 'Memberships', 32, 16, 3, 500, NULL, 1),
-                (22, 'Nationalities', 33, 1, 2, 700, NULL, 1),
-                (23, 'Configuration', NULL, 1, 2, 900, NULL, 1),
-                (24, 'Email Configuration', 34, 23, 3, 100, NULL, 1),
-                (25, 'Email Subscriptions', 35, 23, 3, 200, NULL, 1),
-                (27, 'Localization', 38, 23, 3, 300, NULL, 1),
-                (28, 'Modules', 39, 23, 3, 400, NULL, 1),
-                (30, 'PIM', 75, NULL, 1, 200, NULL, 1),
-                (31, 'Configuration', NULL, 30, 2, 100, NULL, 1),
-                (32, 'Optional Fields', 40, 31, 3, 100, NULL, 1),
-                (33, 'Custom Fields', 41, 31, 3, 200, NULL, 1),
-                (34, 'Data Import', 42, 31, 3, 300, NULL, 1),
-                (35, 'Reporting Methods', 43, 31, 3, 400, NULL, 1),
-                (36, 'Termination Reasons', 44, 31, 3, 500, NULL, 1),
-                (37, 'Employee List', 5, 30, 2, 200, '/reset/1', 1),
-                (38, 'Add Employee', 4, 30, 2, 300, NULL, 1),
-                (39, 'Reports', 45, 30, 2, 400, '/reportGroup/3/reportType/PIM_DEFINED', 1),
-                (40, 'My Info', 46, NULL, 1, 700, NULL, 1),
-                (41, 'Leave', 68, NULL, 1, 300, NULL, 1),
-                (42, 'Configure', NULL, 41, 2, 500, NULL, 0),
-                (43, 'Leave Period', 47, 42, 3, 100, NULL, 0),
-                (44, 'Leave Types', 7, 42, 3, 200, NULL, 0),
-                (45, 'Work Week', 14, 42, 3, 300, NULL, 0),
-                (46, 'Holidays', 11, 42, 3, 400, NULL, 0),
-                (48, 'Leave List', 16, 41, 2, 600, '/reset/1', 0),
-                (49, 'Assign Leave', 17, 41, 2, 700, NULL, 0),
-                (50, 'My Leave', 48, 41, 2, 200, '/reset/1', 0),
-                (51, 'Apply', 49, 41, 2, 100, NULL, 0),
-                (52, 'Time', 67, NULL, 1, 400, NULL, 1),
-                (53, 'Timesheets', NULL, 52, 2, 100, NULL, 1),
-                (54, 'My Timesheets', 51, 53, 3, 100, NULL, 0),
-                (55, 'Employee Timesheets', 52, 53, 3, 200, NULL, 0),
-                (56, 'Attendance', NULL, 52, 2, 200, NULL, 1),
-                (57, 'My Records', 53, 56, 3, 100, NULL, 0),
-                (58, 'Punch In/Out', 54, 56, 3, 200, NULL, 0),
-                (59, 'Employee Records', 55, 56, 3, 300, NULL, 0),
-                (60, 'Configuration', 56, 56, 3, 400, NULL, 0),
-                (61, 'Reports', NULL, 52, 2, 300, NULL, 1),
-                (62, 'Project Reports', 57, 61, 3, 100, '?reportId=1', 0),
-                (63, 'Employee Reports', 58, 61, 3, 200, '?reportId=2', 0),
-                (64, 'Attendance Summary', 59, 61, 3, 300, '?reportId=4', 0),
-                (65, 'Recruitment', 76, NULL, 1, 500, NULL, 1),
-                (66, 'Candidates', 60, 65, 2, 100, NULL, 1),
-                (67, 'Vacancies', 61, 65, 2, 200, NULL, 1),
-                (68, 'Performance', 77, NULL, 1, 600, NULL, 1),
-                (69, 'KPI List', 62, 68, 2, 100, NULL, 1),
-                (70, 'Add KPI', 63, 68, 2, 200, NULL, 1),
-                (71, 'Copy KPI', 64, 68, 2, 300, NULL, 1),
-                (72, 'Add Review', 65, 68, 2, 400, NULL, 1),
-                (73, 'Reviews', 66, 68, 2, 500, '/mode/new', 1),
-                (74, 'Entitlements', NULL, 41, 2, 300, NULL, 0),
-                (75, 'Add Entitlements', 72, 74, 3, 100, NULL, 0),
-                (76, 'My Entitlements', 70, 74, 3, 300, '/reset/1', 0),
-                (77, 'Employee Entitlements', 69, 74, 3, 200, '/reset/1', 0),
-                (78, 'Reports', NULL, 41, 2, 400, NULL, 0),
-                (79, 'Leave Entitlements and Usage Report', 78, 78, 3, 100, NULL, 0),
-                (80, 'My Leave Entitlements and Usage Report', 79, 78, 3, 200, NULL, 0),
-                (81, 'Users', 1, 2, 3, 100, NULL, 1);";
+        // Menu entries relative to the start id
+        // Generated by: 
+        // select concat('(', id, ", '",  menu_title, "', ", IFNULL(concat('" . ', '$id + ', (screen_id - 20), ' . "'), 
+        // 'NULL'), ", ", IFNULL(parent_id, 'NULL'), ", ", level, ", ", order_hint, ", ", 
+        // IFNULL(CONCAT('\'', url_extras, '\''), 'NULL'), ", ", status, "),") as row from ohrm_menu_item;
+        $sql[] = "INSERT INTO ohrm_menu_item 
+            (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
+            (1, 'Admin', " . ($id + 54) . ", NULL, 1, 100, NULL, 1),                                     
+            (2, 'User Management', NULL, 1, 2, 100, NULL, 1),                                          
+            (3, 'Project Info', NULL, 52, 2, 400, NULL, 0),                                            
+            (4, 'Customers', " . ($id + 16) . ", 3, 3, 100, NULL, 0),                                    
+            (5, 'Projects', " . ($id + 17) . ", 3, 3, 200, NULL, 0),                                     
+            (6, 'Job', NULL, 1, 2, 300, NULL, 1),                                                      
+            (7, 'Job Titles', " . ($id + 3) . ", 6, 3, 100, NULL, 1),                                    
+            (8, 'Pay Grades', " . ($id + 4) . ", 6, 3, 200, NULL, 1),                                    
+            (9, 'Employment Status', " . ($id + 5) . ", 6, 3, 300, NULL, 1),                             
+            (10, 'Job Categories', " . ($id + 6) . ", 6, 3, 400, NULL, 1),                               
+            (11, 'Work Shifts', " . ($id + 7) . ", 6, 3, 500, NULL, 1),                                  
+            (12, 'Organization', NULL, 1, 2, 400, NULL, 1),                                            
+            (13, 'General Information', " . ($id + 0) . ", 12, 3, 100, NULL, 1),                         
+            (14, 'Locations', " . ($id + 1) . ", 12, 3, 200, NULL, 1),                                   
+            (15, 'Structure', " . ($id + 2) . ", 12, 3, 300, NULL, 1),                                   
+            (16, 'Qualifications', NULL, 1, 2, 500, NULL, 1),                                          
+            (17, 'Skills', " . ($id + 8) . ", 16, 3, 100, NULL, 1),                                      
+            (18, 'Education', " . ($id + 9) . ", 16, 3, 200, NULL, 1),                                   
+            (19, 'Licenses', " . ($id + 10) . ", 16, 3, 300, NULL, 1),                                   
+            (20, 'Languages', " . ($id + 11) . ", 16, 3, 400, NULL, 1),                                  
+            (21, 'Memberships', " . ($id + 12) . ", 16, 3, 500, NULL, 1),                                
+            (22, 'Nationalities', " . ($id + 13) . ", 1, 2, 700, NULL, 1),                               
+            (23, 'Configuration', NULL, 1, 2, 900, NULL, 1),                                           
+            (24, 'Email Configuration', " . ($id + 14) . ", 23, 3, 100, NULL, 1),                        
+            (25, 'Email Subscriptions', " . ($id + 15) . ", 23, 3, 200, NULL, 1),                        
+            (27, 'Localization', " . ($id + 18) . ", 23, 3, 300, NULL, 1),                               
+            (28, 'Modules', " . ($id + 19) . ", 23, 3, 400, NULL, 1),                                    
+            (30, 'PIM', " . ($id + 55) . ", NULL, 1, 200, NULL, 1),                                      
+            (31, 'Configuration', NULL, 30, 2, 100, NULL, 1),                                          
+            (32, 'Optional Fields', " . ($id + 20) . ", 31, 3, 100, NULL, 1),                            
+            (33, 'Custom Fields', " . ($id + 21) . ", 31, 3, 200, NULL, 1),                              
+            (34, 'Data Import', " . ($id + 22) . ", 31, 3, 300, NULL, 1),                                
+            (35, 'Reporting Methods', " . ($id + 23) . ", 31, 3, 400, NULL, 1),                          
+            (36, 'Termination Reasons', " . ($id + 24) . ", 31, 3, 500, NULL, 1),                        
+            (37, 'Employee List', 5, 30, 2, 200, '/reset/1', 1),                       
+            (38, 'Add Employee', 4, 30, 2, 300, NULL, 1),                              
+            (39, 'Reports', " . ($id + 25) . ", 30, 2, 400, '/reportGroup/3/reportType/PIM_DEFINED', 1), 
+            (40, 'My Info', " . ($id + 26) . ", NULL, 1, 700, NULL, 1),                                  
+            (41, 'Leave', " . ($id + 48) . ", NULL, 1, 300, NULL, 1),                                    
+            (42, 'Configure', NULL, 41, 2, 500, NULL, 0),                                              
+            (43, 'Leave Period', " . ($id + 27) . ", 42, 3, 100, NULL, 0),                               
+            (44, 'Leave Types', 7, 42, 3, 200, NULL, 0),                               
+            (45, 'Work Week', 14, 42, 3, 300, NULL, 0),                                  
+            (46, 'Holidays', 11, 42, 3, 400, NULL, 0),                                   
+            (48, 'Leave List', 16, 41, 2, 600, '/reset/1', 0),                           
+            (49, 'Assign Leave', 17, 41, 2, 700, NULL, 0),                               
+            (50, 'My Leave', " . ($id + 28) . ", 41, 2, 200, '/reset/1', 0),                             
+            (51, 'Apply', " . ($id + 29) . ", 41, 2, 100, NULL, 0),                                      
+            (52, 'Time', " . ($id + 47) . ", NULL, 1, 400, NULL, 1),                                     
+            (53, 'Timesheets', NULL, 52, 2, 100, NULL, 1),                                             
+            (54, 'My Timesheets', " . ($id + 31) . ", 53, 3, 100, NULL, 0),                              
+            (55, 'Employee Timesheets', " . ($id + 32) . ", 53, 3, 200, NULL, 0),                        
+            (56, 'Attendance', NULL, 52, 2, 200, NULL, 1),                                             
+            (57, 'My Records', " . ($id + 33) . ", 56, 3, 100, NULL, 0),                                 
+            (58, 'Punch In/Out', " . ($id + 34) . ", 56, 3, 200, NULL, 0),                               
+            (59, 'Employee Records', " . ($id + 35) . ", 56, 3, 300, NULL, 0),                           
+            (60, 'Configuration', " . ($id + 36) . ", 56, 3, 400, NULL, 0),                              
+            (61, 'Reports', NULL, 52, 2, 300, NULL, 1),                                                
+            (62, 'Project Reports', " . ($id + 37) . ", 61, 3, 100, '?reportId=1', 0),                   
+            (63, 'Employee Reports', " . ($id + 38) . ", 61, 3, 200, '?reportId=2', 0),                  
+            (64, 'Attendance Summary', " . ($id + 39) . ", 61, 3, 300, '?reportId=4', 0),                
+            (65, 'Recruitment', " . ($id + 56) . ", NULL, 1, 500, NULL, 1),                              
+            (66, 'Candidates', " . ($id + 40) . ", 65, 2, 100, NULL, 1),                                 
+            (67, 'Vacancies', " . ($id + 41) . ", 65, 2, 200, NULL, 1),                                  
+            (68, 'Performance', " . ($id + 57) . ", NULL, 1, 600, NULL, 1),                              
+            (69, 'KPI List', " . ($id + 42) . ", 68, 2, 100, NULL, 1),                                   
+            (70, 'Add KPI', " . ($id + 43) . ", 68, 2, 200, NULL, 1),                                    
+            (71, 'Copy KPI', " . ($id + 44) . ", 68, 2, 300, NULL, 1),                                   
+            (72, 'Add Review', " . ($id + 45) . ", 68, 2, 400, NULL, 1),                                 
+            (73, 'Reviews', " . ($id + 46) . ", 68, 2, 500, '/mode/new', 1),                             
+            (74, 'Entitlements', NULL, 41, 2, 300, NULL, 0),                                           
+            (75, 'Add Entitlements', " . ($id + 52) . ", 74, 3, 100, NULL, 0),                           
+            (76, 'My Entitlements', " . ($id + 50) . ", 74, 3, 300, '/reset/1', 0),                      
+            (77, 'Employee Entitlements', " . ($id + 49) . ", 74, 3, 200, '/reset/1', 0),                
+            (78, 'Reports', NULL, 41, 2, 400, NULL, 0),                                                
+            (79, 'Leave Entitlements and Usage Report', " . ($id + 58) . ", 78, 3, 100, NULL, 0),        
+            (80, 'My Leave Entitlements and Usage Report', " . ($id + 59) . ", 78, 3, 200, NULL, 0),     
+            (81, 'Users', 1, 2, 3, 100, NULL, 1);";
 
         /** TODO: Improve here to support upgrading installs with modified user role tables. */
-        $sql[] = "DELETE FROM ohrm_user_role_screen";
+        $sql[] = "DELETE FROM ohrm_user_role_screen WHERE 
+            (user_role_id = 2 AND screen_id = 1) OR 
+            (user_role_id = 3 AND screen_id = 1)";
+        
+        $sql[] = "UPDATE ohrm_user_role_screen SET user_role_id = 3 WHERE 
+            user_role_id = 2 AND (screen_id = 16 OR screen_id = 17)";
+        
         $sql[] = "ALTER TABLE ohrm_user_role_screen AUTO_INCREMENT = 0";
 
         $sql[] = "INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
-                (1, 1, 1, 1, 1, 1),
-                (1, 2, 1, 1, 1, 1),
-                (2, 2, 0, 0, 0, 0),
-                (3, 2, 0, 0, 0, 0),
-                (1, 3, 1, 1, 1, 1),
-                (2, 3, 0, 0, 0, 0),
-                (3, 3, 0, 0, 0, 0),
-                (1, 4, 1, 1, 1, 1),
-                (1, 5, 1, 1, 1, 1),
-                (3, 5, 1, 0, 0, 0),
-                (1, 6, 1, 0, 0, 1),
-                (1, 7, 1, 1, 1, 1),
-                (1, 8, 1, 1, 1, 1),
-                (1, 9, 1, 1, 1, 1),
-                (1, 10, 1, 1, 1, 1),
-                (1, 11, 1, 1, 1, 1),
-                (1, 12, 1, 1, 1, 1),
-                (1, 13, 1, 1, 1, 1),
-                (1, 14, 1, 1, 1, 1),
-                (1, 16, 1, 1, 1, 0),
-                (3, 16, 1, 1, 1, 0),
-                (1, 17, 1, 1, 1, 0),
-                (3, 17, 1, 1, 1, 0),
-                (1, 18, 1, 1, 1, 0),
-                (2, 18, 1, 0, 0, 0),
-                (3, 18, 1, 0, 0, 0),
-                (1, 19, 1, 1, 1, 1),
-                (1, 20, 1, 1, 1, 1),
-                (1, 21, 1, 1, 1, 1),
-                (1, 22, 1, 1, 1, 1),
-                (1, 23, 1, 1, 1, 1),
-                (1, 24, 1, 1, 1, 1),
-                (1, 25, 1, 1, 1, 1),
-                (1, 26, 1, 1, 1, 1),
-                (1, 27, 1, 1, 1, 1),
-                (1, 28, 1, 1, 1, 1),
-                (1, 29, 1, 1, 1, 1),
-                (1, 30, 1, 1, 1, 1),
-                (1, 31, 1, 1, 1, 1),
-                (1, 32, 1, 1, 1, 1),
-                (1, 33, 1, 1, 1, 1),
-                (1, 34, 1, 1, 1, 1),
-                (1, 35, 1, 1, 1, 1),
-                (1, 36, 1, 1, 1, 1),
-                (1, 37, 1, 1, 1, 1),
-                (4, 37, 1, 0, 0, 0),
-                (1, 38, 1, 1, 1, 1),
-                (1, 39, 1, 1, 1, 1),
-                (1, 40, 1, 1, 1, 1),
-                (1, 41, 1, 1, 1, 1),
-                (1, 42, 1, 1, 1, 1),
-                (1, 43, 1, 1, 1, 1),
-                (1, 44, 1, 1, 1, 1),
-                (1, 45, 1, 1, 1, 1),
-                (2, 46, 1, 1, 1, 1),
-                (1, 47, 1, 1, 1, 1),
-                (2, 48, 1, 1, 1, 0),
-                (2, 49, 1, 1, 1, 1),
-                (1, 50, 1, 1, 1, 1),
-                (2, 50, 1, 0, 0, 0),
-                (2, 51, 1, 1, 1, 1),
-                (1, 52, 1, 1, 1, 1),
-                (3, 52, 1, 1, 1, 1),
-                (2, 53, 1, 1, 0, 0),
-                (2, 54, 1, 1, 1, 1),
-                (1, 55, 1, 1, 0, 1),
-                (3, 55, 1, 1, 0, 0),
-                (1, 56, 1, 1, 1, 1),
-                (1, 57, 1, 1, 1, 1),
-                (4, 57, 1, 1, 1, 1),
-                (1, 58, 1, 1, 1, 1),
-                (3, 58, 1, 1, 1, 1),
-                (1, 59, 1, 1, 1, 1),
-                (3, 59, 1, 1, 1, 1),
-                (1, 60, 1, 1, 1, 1),
-                (6, 60, 1, 1, 1, 1),
-                (5, 60, 1, 0, 1, 0),
-                (1, 61, 1, 1, 1, 1),
-                (1, 62, 1, 1, 1, 1),
-                (1, 63, 1, 1, 1, 1),
-                (1, 64, 1, 1, 1, 1),
-                (1, 65, 1, 1, 1, 1),
-                (1, 66, 1, 1, 1, 1),
-                (2, 66, 1, 0, 1, 0),
-                (7, 66, 1, 0, 1, 0),
-                (1, 67, 1, 1, 1, 1),
-                (2, 67, 1, 0, 1, 0),
-                (3, 67, 1, 0, 1, 0),
-                (1, 68, 1, 1, 1, 1),
-                (2, 68, 1, 0, 1, 0),
-                (3, 68, 1, 0, 1, 0),
-                (1, 69, 1, 1, 1, 1),
-                -- (2, 69, 0, 0, 0, 0),
-                (3, 69, 1, 0, 0, 0),
-                -- (1, 70, 0, 0, 0, 0),
-                (2, 70, 1, 0, 0, 0),
-                -- (3, 70, 0, 0, 0, 0),
-                (1, 71, 1, 0, 0, 1),
-                (1, 72, 1, 1, 1, 0),
-                (1, 73, 1, 0, 1, 0),
-                (1, 74, 1, 1, 1, 1),
-                (1, 75, 1, 1, 1, 1),
-                (3, 75, 1, 1, 1, 1),
-                (1, 76, 1, 1, 1, 1),
-                (5, 76, 1, 1, 1, 1),
-                (6, 76, 1, 1, 1, 1),
-                (1, 77, 1, 1, 1, 1),
-                (2, 77, 1, 1, 1, 1),
-                (7, 77, 1, 1, 1, 1),
-                (1, 78, 1, 0, 0, 0),
-                (3, 78, 1, 0, 0, 0),
-                (2, 79, 1, 0, 0, 0);";
+            (1, " . ($id + 0) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 1) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 2) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 3) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 4) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 5) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 6) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 7) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 8) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 9) . ", 1, 1, 1, 1),  
+            (1, " . ($id + 10) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 11) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 12) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 13) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 14) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 15) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 16) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 17) . ", 1, 1, 1, 1), 
+            (4, " . ($id + 17) . ", 1, 0, 0, 0), 
+            (1, " . ($id + 18) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 19) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 20) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 21) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 22) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 23) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 24) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 25) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 26) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 27) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 28) . ", 1, 1, 1, 0), 
+            (2, " . ($id + 29) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 30) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 30) . ", 1, 0, 0, 0), 
+            (2, " . ($id + 31) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 32) . ", 1, 1, 1, 1), 
+            (3, " . ($id + 32) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 33) . ", 1, 1, 0, 0), 
+            (2, " . ($id + 34) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 35) . ", 1, 1, 0, 1), 
+            (3, " . ($id + 35) . ", 1, 1, 0, 0), 
+            (1, " . ($id + 36) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 37) . ", 1, 1, 1, 1), 
+            (4, " . ($id + 37) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 38) . ", 1, 1, 1, 1), 
+            (3, " . ($id + 38) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 39) . ", 1, 1, 1, 1), 
+            (3, " . ($id + 39) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 40) . ", 1, 1, 1, 1), 
+            (6, " . ($id + 40) . ", 1, 1, 1, 1), 
+            (5, " . ($id + 40) . ", 1, 0, 1, 0), 
+            (1, " . ($id + 41) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 42) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 43) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 44) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 45) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 46) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 46) . ", 1, 0, 1, 0), 
+            (7, " . ($id + 46) . ", 1, 0, 1, 0), 
+            (1, " . ($id + 47) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 47) . ", 1, 0, 1, 0), 
+            (3, " . ($id + 47) . ", 1, 0, 1, 0), 
+            (1, " . ($id + 48) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 48) . ", 1, 0, 1, 0), 
+            (3, " . ($id + 48) . ", 1, 0, 1, 0), 
+            (1, " . ($id + 49) . ", 1, 1, 1, 1), 
+            (3, " . ($id + 49) . ", 1, 0, 0, 0), 
+            (2, " . ($id + 50) . ", 1, 0, 0, 0), 
+            (1, " . ($id + 51) . ", 1, 0, 0, 1), 
+            (1, " . ($id + 52) . ", 1, 1, 1, 0), 
+            (1, " . ($id + 53) . ", 1, 0, 1, 0), 
+            (1, " . ($id + 54) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 55) . ", 1, 1, 1, 1), 
+            (3, " . ($id + 55) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 56) . ", 1, 1, 1, 1), 
+            (5, " . ($id + 56) . ", 1, 1, 1, 1), 
+            (6, " . ($id + 56) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 57) . ", 1, 1, 1, 1), 
+            (2, " . ($id + 57) . ", 1, 1, 1, 1), 
+            (7, " . ($id + 57) . ", 1, 1, 1, 1), 
+            (1, " . ($id + 58) . ", 1, 0, 0, 0), 
+            (3, " . ($id + 58) . ", 1, 0, 0, 0), 
+            (3, " . ($id + 59) . ", 1, 0, 0, 0);";
 
+        /* -- Enable time module menu items if timesheet period is defined -- */
+        $sql[] = "UPDATE `ohrm_menu_item` menu
+            SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'timesheet_period_set') 
+            WHERE screen_id in 
+            (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id 
+            where m.`name` IN ('time', 'attendance'))
+            OR (menu.menu_title in ('Project Info', 'Customers', 'Projects'));";
+     
+
+        /* -- Enable leave module menu items if leave period is defined */
+        $sql[] = "UPDATE `ohrm_menu_item` 
+            SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'leave_period_defined') 
+            WHERE screen_id in 
+            (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id where m.`name` = 'leave')";
+                
         /* ----------- Start Data group related data ---------- */
 
-        $sql[] = "DELETE FROM `ohrm_user_role_data_group WHERE id = 40`;";
+        $sql[] = "DELETE FROM ohrm_data_group WHERE name = 'leave_summary';";
+        $nextDataGroupId = $this->getNextDataGroupId();
+        $entitlementsDataGroupId = $nextDataGroupId;
+        $reportDataGroupId = $nextDataGroupId + 1;
 
         $sql[] = "INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
-            (40, 'leave_entitlements', 'Leave - Leave Entitlements', 1, 1, 1, 1),
-            (41, 'leave_entitlements_usage_report', 'Leave - Leave Entitlements and Usage Report', 1, NULL, NULL, NULL);";
+            ($entitlementsDataGroupId, 'leave_entitlements', 'Leave - Leave Entitlements', 1, 1, 1, 1),
+            ($reportDataGroupId, 'leave_entitlements_usage_report', 'Leave - Leave Entitlements and Usage Report', 1, NULL, NULL, NULL);";
 
         $sql[] = "INSERT INTO `ohrm_user_role_data_group` 
             (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 
-            (1, 40, 1, 1, 1, 1, 0),
-            (1, 41, 1, NULL, NULL, NULL, 0),
+            (1, $entitlementsDataGroupId, 1, 1, 1, 1, 0),
+            (1, $reportDataGroupId, 1, NULL, NULL, NULL, 0),
  
-            (1, 40, 1, 1, 1, 1, 1),
-            (1, 41, 1, NULL, NULL, NULL, 1),
+            (1, $entitlementsDataGroupId, 1, 1, 1, 1, 1),
+            (1, $reportDataGroupId, 1, NULL, NULL, NULL, 1),
          
-            (2, 40, 1, 0, 0, 0, 1),
-            (2, 41, 1, NULL, NULL, NULL, 1),
+            (2, $entitlementsDataGroupId, 1, 0, 0, 0, 1),
+            (2, $reportDataGroupId, 1, NULL, NULL, NULL, 1),
             
-            (3, 40, 1, 0, 0, 0, 0),
-            (3, 41, 1, NULL, NULL, NULL, 0),
+            (3, $entitlementsDataGroupId, 1, 0, 0, 0, 0),
+            (3, $reportDataGroupId, 1, NULL, NULL, NULL, 0),
             
-            (3, 40, 1, 0, 0, 0, 1),
-            (3, 41, 1, NULL, NULL, NULL, 1);";
+            (3, $entitlementsDataGroupId, 1, 0, 0, 0, 1),
+            (3, $reportDataGroupId, 1, NULL, NULL, NULL, 1);";
 
         /* ----------- End Data group related data ---------- */        
         
-
         /* insert leave period data to ohrm_leave_period_history */
         
         $sql[] = "INSERT INTO `ohrm_leave_period_history` (`id`, `leave_period_start_month`, `leave_period_start_day`, `created_at` )
@@ -784,18 +796,18 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
         $sql[] = "alter table `hs_hr_leavetype` drop column int_id;";
 
 
-        $sql[] = "DROP TABLE `hs_hr_employee_leave_quota`;";
-        $sql[] = "DROP TABLE `hs_hr_empreport`;";
-        $sql[] = "DROP TABLE `hs_hr_emprep_usergroup`;";
-        $sql[] = "DROP TABLE `hs_hr_hsp`;";
-        $sql[] = "DROP TABLE `hs_hr_hsp_payment_request`;";
-        $sql[] = "DROP TABLE `hs_hr_hsp_summary`;";
-        $sql[] = "DROP TABLE `hs_hr_leave`;";
-        $sql[] = "DROP TABLE `hs_hr_leavetype`;";
-        $sql[] = "DROP TABLE `hs_hr_leave_period`;";
-        $sql[] = "DROP TABLE `hs_hr_leave_requests`;";
-        $sql[] = "DROP TABLE `hs_hr_rights`;";
-        $sql[] = "DROP TABLE `hs_hr_user_group`;";
+//        $sql[] = "DROP TABLE `hs_hr_employee_leave_quota`;";
+//        $sql[] = "DROP TABLE `hs_hr_empreport`;";
+//        $sql[] = "DROP TABLE `hs_hr_emprep_usergroup`;";
+//        $sql[] = "DROP TABLE `hs_hr_hsp`;";
+//        $sql[] = "DROP TABLE `hs_hr_hsp_payment_request`;";
+//        $sql[] = "DROP TABLE `hs_hr_hsp_summary`;";
+//        $sql[] = "DROP TABLE `hs_hr_leave`;";
+//        $sql[] = "DROP TABLE `hs_hr_leavetype`;";
+//        $sql[] = "DROP TABLE `hs_hr_leave_period`;";
+//        $sql[] = "DROP TABLE `hs_hr_leave_requests`;";
+//        $sql[] = "DROP TABLE `hs_hr_rights`;";
+//        $sql[] = "DROP TABLE `hs_hr_user_group`;";
 
         $sql[] = "SET foreign_key_checks = 1;";
 

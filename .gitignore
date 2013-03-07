@@ -33,5 +33,6 @@ symfony/web/orangehrm*Plugin
 symfony/web/resource_dir_inc.php
 symfony/web/sf
 symfony/web/webres_*
+upgrader/apps/upgrader/lib/schemaIncrementTasks/.swp
 upgrader/cache/*
 upgrader/log/*

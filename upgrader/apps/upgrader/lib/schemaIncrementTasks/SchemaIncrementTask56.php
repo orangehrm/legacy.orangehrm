@@ -55,13 +55,14 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
     public function loadSql() {
 
         $sql = array();   
-        $sql[] = "ALTER TABLE ohrm_workflow_state_machine MODIFY COLUMN `id`  `id` bigint(20) NOT NULL AUTO_INCREMENT;";
+        $sql[] = "ALTER TABLE ohrm_workflow_state_machine MODIFY COLUMN `id` bigint(20) NOT NULL AUTO_INCREMENT;";
              
         $sql[] = "create table ohrm_home_page (
             `id` int(11) not null auto_increment,
             `user_role_id` int not null,
             `action` varchar(255),
             `enable_class` varchar(100) default null,
+            `priority` int not null default 0 COMMENT 'lowest priority 0',
             primary key (`id`)
         ) engine=innodb default charset=utf8;";
 
@@ -71,6 +72,7 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
             `user_role_id` int not null,
             `action` varchar(255),
             `enable_class` varchar(100) default null,
+            `priority` int not null default 0 COMMENT 'lowest priority 0',
             primary key (`id`)
         ) engine=innodb default charset=utf8;";
 
@@ -116,8 +118,11 @@ class SchemaIncrementTask56 extends SchemaIncrementTask {
             MODIFY COLUMN `length_days` decimal(6,4) unsigned default NULL;"; 
         
         $sql[] = "ALTER TABLE ohrm_leave_leave_entitlement  
-            MODIFY COLUMN `length_days` decimal(6,4) unsigned default NULL;";         
+            MODIFY COLUMN `length_days` decimal(6,4) unsigned default NULL;";     
+        
+        $this->sql = $sql;
     }
+    
     public function getNotes() {
         return array();
     }

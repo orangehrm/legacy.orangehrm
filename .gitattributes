@@ -5037,6 +5037,7 @@ upgrader/apps/upgrader/lib/form/DatabaseInfoForm.php -text
 upgrader/apps/upgrader/lib/form/SystemCheckForm.php -text
 upgrader/apps/upgrader/lib/form/VersionInfoForm.php -text
 upgrader/apps/upgrader/lib/myUser.class.php -text
+upgrader/apps/upgrader/lib/schemaIncrementTasks/AddLeaveLeaveEntitlement.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask41.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask42.php -text
@@ -5052,6 +5053,7 @@ upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask51.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask52.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask53.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask54.php -text
+upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask55-1.php.old -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask55.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask56.php -text
 upgrader/apps/upgrader/lib/utility/SystemCheckUtility.php -text

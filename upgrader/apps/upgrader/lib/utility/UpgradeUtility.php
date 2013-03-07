@@ -46,6 +46,8 @@ class UpgradeUtility {
     public function executeSql($query) {
         $result = mysqli_query($this->dbConnection, $query);
         
+        UpgradeLogger::writeLogMessage('Executing SQL:' . $query);
+        
         if (!$result) {
             $logMessage = 'MySQL Error: ' . mysqli_error($this->dbConnection) . ". \nQuery: $query\n";
             UpgradeLogger::writeErrorMessage($logMessage);
@@ -232,7 +234,7 @@ CONFCONT;
         $a['2.6.12.1']  = 50;
         $a['2.7']       = 51;
         $a['2.7.1']     = 55;
-        $a['3.0.1']     = 56;
+        $a['3.0']       = 56;
         
         return $a;
         
