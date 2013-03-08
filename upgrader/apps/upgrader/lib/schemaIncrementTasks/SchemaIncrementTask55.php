@@ -18,7 +18,14 @@
  * Boston, MA  02110-1301, USA
  *
  */
-
+if (PHP_SAPI === 'cli') {
+	require_once './SchemaIncrementTask.php';
+        require_once '../utility/UpgradeLogger.php';
+        require_once '../utility/UpgradeUtility.php';
+        require_once '../../../../../symfony/lib/vendor/symfony/lib/config/sfConfig.class.php';
+        
+        sfConfig::set('sf_root_dir', dirname(__FILE__) . '/../../../..');
+}
 /**
  * Upgrade for menu changes, new ui changes and leave changes:
  * 
@@ -26,6 +33,8 @@
  */
 class SchemaIncrementTask55 extends SchemaIncrementTask {
     public $userInputs;
+    
+    protected $leavePeriodList = NULL;
 
     public function execute() {
         $this->incrementNumber = 55;
@@ -36,10 +45,13 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
         foreach ($this->sql as $sql) {
             $result[] = $this->upgradeUtility->executeSql($sql);
         }
-
-        //$this->addLeaveEntitlement();
+        
+        $this->addLeaveEntitlement();
         
         $this->checkTransactionComplete($result);
+        
+        $this->transactionComplete = true;
+        
         $this->updateOhrmUpgradeInfo($this->transactionComplete, $this->incrementNumber);
         $this->upgradeUtility->finalizeTransaction($this->transactionComplete);
         $this->upgradeUtility->closeDbConnection();
@@ -818,7 +830,11 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
     protected function addLeaveEntitlement() {
         $result = $this->upgradeUtility->executeSql("SELECT * FROM `ohrm_leave`");
 
-        while ($leave = mysqli_fetch_row($result)) {
+        if (!$result) {
+            throw new Exception("SELECT * FROM ohrm_leave failed");
+        }
+        
+        while ($leave = mysqli_fetch_array($result)) {
 
             $status = $leave['status'];
             $new_entitlement_id = $leave['new_entitlement_id'];
@@ -829,11 +845,18 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
             $date = $leave['date'];
 
             if (($status != 4) && ($status != 5)) {
-                $lengthCountRes = $this->upgradeUtility->executeSql("SELECT SUM(`length_days`) FROM `ohrm_leave` WHERE `entitlement_id` = " . $new_entitlement_id);
+                $lengthCountRes = $this->upgradeUtility->executeSql("SELECT SUM(`length_days`) FROM `ohrm_leave` WHERE `new_entitlement_id` = " . $new_entitlement_id);
+                if (!$lengthCountRes) {
+                    throw new Exception("lengthCountRes failed" . mysqli_e);
+                }
                 $lengthCountRow = mysqli_fetch_row($lengthCountRes);
                 $leave_sum = $lengthCountRow[0];
 
                 $daysUsedRes = $this->upgradeUtility->executeSql("SELECT `no_of_days` - `days_used` FROM `ohrm_leave_entitlement` WHERE `id` = " . $new_entitlement_id);
+                if (!$daysUsedRes) {
+                    throw new Exception("query failed");
+                }
+
                 $daysUsedResRow = mysqli_fetch_row($daysUsedRes);
                 $curr_bal = $daysUsedResRow[0];
 
@@ -841,8 +864,9 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
                 if ($new_entitlement_id == 0) {
 
                     //$insert_ohrm_leave_entitlement_sql = "INSERT INTO `ohrm_leave_entitlement` (emp_number, no_of_days, leave_type_id, from_date, to_date, credited_date, note, entitlement_type, `deleted`) VALUES (" . $emp_number . ", 0.00, ". $leave_type_id . ", CONCAT(YEAR(" . $date . "), '-01-01'), CONCAT(YEAR(" . $date . "), '-12-31'), CONCAT(YEAR(" . $date . "), '-01-01'), 'added by the script', 1, 0) ;";
-                    $from_date = date('Y', strtotime($date)) . "-01-01";
-                    $to_date = date('Y', strtotime($date)) . "-12-31";
+                    $leavePeriodForDate = $this->getLeavePeriodForDate($date);
+                    $from_date = $leavePeriodForDate[0];
+                    $to_date = $leavePeriodForDate[1];
 
                     $insertOhrmLeaveEntitlementSql = "INSERT INTO `ohrm_leave_entitlement` (emp_number, no_of_days, leave_type_id, from_date, to_date, credited_date, note, entitlement_type, `deleted`) VALUES (" . $emp_number . ", 0.00, " . $leave_type_id . ", '" . $from_date . "', '" . $to_date . "', '" . $from_date . "', 'added by the script', 1, 0) ;";
 
@@ -902,39 +926,97 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
             UpgradeLogger::writeErrorMessage("Could not save leave entitlement!\nError: " . mysql_error());
             throw new Exception("Upgrade Failed");  
         }
-
-        //updating terminated employees - specific to internal system due to some issues related to old upgrades
-        $get_to_be_terminated_employees_sql = "SELECT emp_number FROM hs_hr_employee WHERE termination_id IS NULL AND emp_status = 1;";
-        $get_to_be_terminated_employees_result = $this->upgradeUtility->executeSql($get_to_be_terminated_employees_sql);
-
-        while ($get_to_be_terminated_employees_row = mysqli_fetch_row($get_to_be_terminated_employees_result)) {
-            $empNum = $get_to_be_terminated_employees_row['emp_number'];
-
-            $add_missing_termination_sql = "INSERT INTO ohrm_emp_termination (`emp_number`, `reason_id`, `termination_date`) VALUES (" . $empNum . ", 1, date(now()));";
-
-            $savedTerm = $this->upgradeUtility->executeSql($add_missing_termination_sql);
-
-            if ($savedTerm) {
-                echo ">>> Saved missing emp termination <br/>";
-
-                $update_sql = "UPDATE hs_hr_employee e SET e.termination_id=(SELECT t.id FROM ohrm_emp_termination t WHERE t.emp_number = " . $empNum . " AND t.termination_date = date(now())) WHERE e.emp_number = " . $empNum . ";";
-
-                $updatedTerm = $this->upgradeUtility->executeSql($update_sql);
-
-                if ($updatedTerm) {
-                    echo ">>> Updated missing emp termination <br/>";
-                } else {
-                    die("Could not Update!\nError: " . mysql_error());
-                }
-            } else {
-                die("Could not Save!\nError: " . mysql_error());
-            }
-        }
-        /////////////////////////////////////
     }
 
     public function getNotes() {
         return array();
+    }
+    
+    public function getGeneratedLeavePeriodList($leavePeriodHistoryList){
+        $leavePeriodList = array();
+        $result = array();
+
+        if (count($leavePeriodHistoryList) > 0){
+        
+            $endDate = new DateTime();
+            $endDate->add(new DateInterval('P1Y'));
+            
+            $firstHistoryItem = $leavePeriodHistoryList[0];
+            
+            $firstCreatedDate = new DateTime($firstHistoryItem['created_at']);
+            $startDate = new DateTime($firstCreatedDate->format('Y')."-".$firstHistoryItem['leave_period_start_month']."-".
+                    $firstHistoryItem['leave_period_start_day']);
+            if($firstCreatedDate < $startDate){
+                $startDate->sub(new DateInterval('P1Y'));
+            }
+            $tempDate = $startDate;
+            $i= 0;
+            while( $tempDate <=  $endDate){
+
+               $projectedSatrtDate = ($i==0)?$tempDate:new DateTime(date('Y-m-d',  strtotime($tempDate->format('Y-m-d')."+1 day")));
+               $projectedEndDate = new DateTime(date('Y-m-d',  strtotime($projectedSatrtDate->format('Y-m-d')." +1 year -1 day")));
+
+                foreach( $leavePeriodHistoryList as $leavePeriodHistory){
+
+                    $createdDate = new DateTime( $leavePeriodHistory['created_at']);
+
+                    if( ($projectedSatrtDate < $createdDate) && ($createdDate < $projectedEndDate)) {
+                        $newSatrtDate = new DateTime($createdDate->format('Y')."-".$leavePeriodHistory['leave_period_start_month']."-".$leavePeriodHistory['leave_period_start_day']);
+                        if($createdDate <  $newSatrtDate){
+                            $newSatrtDate->sub(new DateInterval('P1Y'));
+                        }
+                        $projectedEndDate = $newSatrtDate->add(DateInterval::createFromDateString('+1 year -1 day'));
+
+                    }
+
+                }
+
+               $tempDate = $projectedEndDate;
+
+                $leavePeriodList[] = array($projectedSatrtDate->format('Y-m-d') , $projectedEndDate->format('Y-m-d'));
+                $i++;
+            }
+            $result = $leavePeriodList;
+        }
+        
+        return $result;
+    }
+    
+    protected function getLeavePeriodForDate($date) {
+
+        $matchLeavePeriod = null;
+        $leavePeriodList = $this->getLeavePeriodList();
+        $currentDate = new DateTime($date);
+        foreach ($leavePeriodList as $leavePeriod) {
+            $startDate = new DateTime($leavePeriod[0]);
+            $endDate = new DateTime($leavePeriod[1]);
+            if (($startDate <= $currentDate) && ($currentDate <= $endDate)) {
+                $matchLeavePeriod = $leavePeriod;
+                break;
+            }
+        }
+        return $matchLeavePeriod;
+    }
+    
+    protected function getLeavePeriodList() {
+        
+        if (is_null($this->leavePeriodList)) {
+            
+            $leavePeriods = array();
+            $result = $this->upgradeUtility->executeSql('select * from ohrm_leave_period_history order by created_at, id');
+            
+            if (!$result) {
+                throw new Exception("query failed");
+            }            
+            while ($row = mysqli_fetch_array($result)) {
+                $leavePeriods = $row;
+            }
+            
+            $this->leavePeriodList = $this->getGeneratedLeavePeriodList($leavePeriods);
+
+        }
+        
+        return $this->leavePeriodList;
     }
     
     protected function getReportForEmployee() {
@@ -1238,7 +1320,7 @@ ORDER BY ohrm_leave.leave_type_id
                     <width>1</width>	
                 </field>   
                 <field display="true">
-                    <field_name>CONCAT(hs_hr_employee.emp_firstname, \' \', hs_hr_employee.emp_lastname)</field_name>
+                    <field_name>CONCAT(hs_hr_employee.emp_firstname, \\\' \\\', hs_hr_employee.emp_lastname)</field_name>
                     <field_alias>employeeName</field_alias>
                     <display_name>Employee</display_name>
                     <width>150</width>
@@ -1440,9 +1522,11 @@ ORDER BY ohrm_leave.emp_number
     }
 }
 
+if (PHP_SAPI === 'cli') {
 
-$dbInfo = array(
-    'host' => 'localhost', 'port' => '3306', 'username' => 'root', 'password' => 'rahasa',
-    'database' => 'os271');
-$task = new SchemaIncrementTask56($dbInfo);
-$task->execute();
+	$dbInfo = array(
+	    'host' => 'localhost', 'port' => '3306', 'username' => 'root', 'password' => 'rahasa',
+	    'database' => 'os271');
+	$task = new SchemaIncrementTask55($dbInfo);
+	$task->execute();
+}
