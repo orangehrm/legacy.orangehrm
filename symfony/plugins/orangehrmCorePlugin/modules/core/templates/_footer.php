@@ -1,6 +1,6 @@
 <?php
 $imagePath = theme_path("images/login");
-$version = '3.0.1-rc.2';
+$version = '3.0.1-rc.3';
 $copyrightYear = date('Y');
 ?>
 
