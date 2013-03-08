@@ -675,7 +675,7 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
         /* -- Enable time module menu items if timesheet period is defined -- */
         $sql[] = "UPDATE `ohrm_menu_item` menu
             SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'timesheet_period_set') 
-            WHERE screen_id in 
+            WHERE parent_id is not null and screen_id in 
             (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id 
             where m.`name` IN ('time', 'attendance'))
             OR (menu.menu_title in ('Project Info', 'Customers', 'Projects'));";
@@ -684,7 +684,7 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
         /* -- Enable leave module menu items if leave period is defined */
         $sql[] = "UPDATE `ohrm_menu_item` 
             SET `status` = (select if(value = 'Yes', 1, 0)  from hs_hr_config where `key` = 'leave_period_defined') 
-            WHERE screen_id in 
+            WHERE parent_id is not null and screen_id in 
             (select s.id from ohrm_screen s left join ohrm_module m on s.module_id = m.id where m.`name` = 'leave')";
                 
         /* ----------- Start Data group related data ---------- */
@@ -1438,5 +1438,8 @@ ORDER BY ohrm_leave.emp_number
 </report>';
         return $report;
     }
+    
+    
+    
 }
 
