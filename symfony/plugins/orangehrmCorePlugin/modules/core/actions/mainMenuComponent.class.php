@@ -18,7 +18,7 @@
  */
 
 class mainMenuComponent extends sfComponent {
-    
+
     const MAIN_MENU_USER_ATTRIBUTE = 'mainMenu.menuItemArray';
     
     protected $menuService;
@@ -38,9 +38,9 @@ class mainMenuComponent extends sfComponent {
     }    
 
     public function execute($request) {
-        
+
         $menuItemDetails = $this->_getMenuItemDetails();
-        
+
         $this->menuItemArray = $menuItemDetails['menuItemArray'];
 
         $initialModule = $request->getParameter('initialModuleName', '');
@@ -70,8 +70,14 @@ class mainMenuComponent extends sfComponent {
     }
 
     protected function _getMenuItemDetails() {
-        
-        if (!$this->getUser()->hasAttribute(self::MAIN_MENU_USER_ATTRIBUTE)) {
+
+        $menuItemArray = $this->getUser()->getAttribute(self::MAIN_MENU_USER_ATTRIBUTE);
+
+        // If menu items not set or menu items are empty, recreate them.
+        // We check if the menu items are empty, because in some scenarios, we can get an
+        // empty menu item list when accessing some login related urls where user role manager
+        // is not properly initialized yet, and does not have any user roles set.
+        if (!isset($menuItemArray['menuItemArray']) || empty($menuItemArray['menuItemArray'])) {
             
             // $menuItemArray = $this->getContext()->getUserRoleManager()->getAccessibleMenuItemDetails();
             // Above leads to an internal error when ESS tries to access unauthorized URL
@@ -79,11 +85,11 @@ class mainMenuComponent extends sfComponent {
             $menuItemArray = UserRoleManagerFactory::getUserRoleManager()->getAccessibleMenuItemDetails();
             $this->getUser()->setAttribute(self::MAIN_MENU_USER_ATTRIBUTE, $menuItemArray);
             
-        }
-        
-        return $this->getUser()->getAttribute(self::MAIN_MENU_USER_ATTRIBUTE);
-        
     }
+
+        return $menuItemArray;
+        
+}
     
     
 

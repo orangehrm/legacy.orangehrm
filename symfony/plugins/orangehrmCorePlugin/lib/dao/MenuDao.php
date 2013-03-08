@@ -25,6 +25,10 @@ class MenuDao {
     public function getMenuItemList($userRoleList) {
         
         try {
+                
+            if (count($userRoleList) == 0) {
+                return new Doctrine_Collection('MenuItem');
+            }
             
             $roleNames = array();
             
