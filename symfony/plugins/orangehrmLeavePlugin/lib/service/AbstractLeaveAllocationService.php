@@ -270,15 +270,22 @@ abstract class AbstractLeaveAllocationService extends BaseService {
             $totalDuration = $this->getLeaveRequestService()->getTotalLeaveDuration($empNumber, $fromDate);
             $workShiftLength = $this->getWorkShiftDurationForEmployee($empNumber);
             $totalLeaveTime = $leaveAssignmentData->getLeaveTotalTime();
+            
+            $workingDayLength = $workShiftLength;
+            
+            if ($this->isHalfDay($fromDate, $leaveAssignmentData)) {
+                $workingDayLength = $workShiftLength / 2;
+            }
+            
 
             if ($logger->isDebugEnabled()) {
                 $logger->debug("fromDate=$fromDate, toDate=$toDate, totalDuration=$totalDuration, " . 
-                        "workShiftLength=$workShiftLength, totalLeaveTime=$totalLeaveTime");                            
+                        "workShiftLength=$workShiftLength, totalLeaveTime=$totalLeaveTime,workDayLength=$workingDayLength");                            
             }
 
             // We only show workshift exceeded warning for partial leave days (length < workshift)
             
-            if (($totalDuration + $totalLeaveTime) > $workShiftLength) {
+            if (($totalDuration + $totalLeaveTime) > $workingDayLength) {
 
                 if ($logger->isDebugEnabled()) {
                     $logger->debug('Workshift length exceeded!');
