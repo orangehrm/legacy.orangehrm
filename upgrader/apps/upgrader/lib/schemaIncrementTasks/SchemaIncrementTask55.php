@@ -1438,8 +1438,11 @@ ORDER BY ohrm_leave.emp_number
 </report>';
         return $report;
     }
-    
-    
-    
 }
 
+
+$dbInfo = array(
+    'host' => 'localhost', 'port' => '3306', 'username' => 'root', 'password' => 'rahasa',
+    'database' => 'os271');
+$task = new SchemaIncrementTask56($dbInfo);
+$task->execute();
