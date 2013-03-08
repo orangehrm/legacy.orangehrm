@@ -1566,6 +1566,11 @@ div#timesheet table.table tbody tr td.comments, div#edit-timesheet table.table t
 #sidebar #sidenav a:hover {
 	background-color:#ce6d1d;
 }
+
+#sidebar #sidenav a.disabled {
+    background-color: #CE6D1D;
+}
+
 #sidebar #sidenav .selected a {
 	background-color:#555657;
 	color:#fff;
