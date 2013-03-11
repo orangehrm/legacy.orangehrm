@@ -50,7 +50,7 @@ class LeaveEntitlementListConfigurationFactory extends ohrmListConfigurationFact
                 'isSortable' => false,
                 'elementType' => 'label',
                 'textAlignmentStyle' => 'left',
-                'elementProperty' => array('getter' => array('getLeaveType', 'getName'))
+                'elementProperty' => array('getter' => array('getLeaveType', 'getDescriptiveLeaveTypeName'))
             ));
             
             $headers[] = $leaveTypeHeader;            
