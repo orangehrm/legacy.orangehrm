@@ -323,6 +323,8 @@ CONFCONT;
         
         $notes = array();
         
+        $notes[] = "If you have enabled data encryption in your current version, you need to copy the file 'lib/confs/cryptokeys/key.ohrm' from your current installation to corresponding location in the new version.";
+        
         for ($i = $startIncNumber; $i <= $endIncNumber; $i++) {
             
             $className      = 'SchemaIncrementTask' . $i;      
