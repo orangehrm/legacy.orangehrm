@@ -135,8 +135,8 @@ class getLeaveBalanceAjaxAction extends sfAction {
                     
                     $days = $leavePeriod['days'];
                     if (count($days) > 0) {
-                        $firstDayInPeriod = array_shift(array_keys($days));
-                        $lastDayInPeriod = array_pop(array_keys($days));
+                        $firstDayInPeriod = $localizationService->convertPHPFormatDateToISOFormatDate(array_shift(array_keys($days)));
+                        $lastDayInPeriod = $localizationService->convertPHPFormatDateToISOFormatDate(array_pop(array_keys($days)));
                     } else {
                         $firstDayInPeriod = $leavePeriod['period'][0];
                         $lastDayInPeriod = $leavePeriod['period'][1];                        
