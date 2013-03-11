@@ -5089,8 +5089,8 @@ upgrader/config/rsync_exclude.txt -text
 upgrader/data/fixtures/fixtures.yml -text
 upgrader/lib/form/BaseForm.class.php -text
 upgrader/symfony -text
-upgrader/test/bootstrap/functional.php -text
-upgrader/test/bootstrap/unit.php -text
+upgrader/test/UpgraderTests.php -text
+upgrader/test/schemaIncrementTasks/SchemaIncrementTask55Test.php -text
 upgrader/web/.htaccess -text
 upgrader/web/css/executeDbChangeSuccess.css -text
 upgrader/web/css/main.css -text

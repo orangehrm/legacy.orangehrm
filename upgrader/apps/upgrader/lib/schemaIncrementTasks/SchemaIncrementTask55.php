@@ -18,14 +18,7 @@
  * Boston, MA  02110-1301, USA
  *
  */
-if (PHP_SAPI === 'cli') {
-	require_once './SchemaIncrementTask.php';
-        require_once '../utility/UpgradeLogger.php';
-        require_once '../utility/UpgradeUtility.php';
-        require_once '../../../../../symfony/lib/vendor/symfony/lib/config/sfConfig.class.php';
-        
-        sfConfig::set('sf_root_dir', dirname(__FILE__) . '/../../../..');
-}
+
 /**
  * Upgrade for menu changes, new ui changes and leave changes:
  * 
@@ -87,6 +80,47 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
     
     protected function getNextDataGroupId() {
         return $this->getScalarValueFromQuery('SELECT MAX(id) FROM ohrm_data_group');       
+    }
+    
+    protected function getOldLeavePeriodRecords() {
+        $result = $this->upgradeUtility->executeSql('SELECT * FROM hs_hr_leave_period ORDER BY leave_period_id');
+        
+        $records = array();
+        while ($row = mysqli_fetch_array($result)) {
+            $records[] = $row;
+        }
+        
+        return $records;
+    }
+    
+    public function getLeavePeriodHistoryRecords($oldRecords) {        
+        $history = array();
+        $previousStartDate = NULL;
+        $previousEndDate = NULL;
+        
+        foreach ($oldRecords as $row) {
+            $startDate = new DateTime($row['leave_period_start_date']);
+            $endDate = new DateTime($row['leave_period_end_date']);
+            $startDay = $startDate->format('j');
+            $startMonth = $startDate->format('n');
+            
+            if (empty($history)) {
+                $history[] = array($startDay, $startMonth, $startDate->format('Y-m-d'));
+            } else {
+                // only add record if the leave period changed
+                if (($startDay != $previousStartDate->format('j')) ||
+                        ($startMonth != $previousStartDate->format('n'))) {
+                    $previousStartDate->add(new DateInterval('P1Y'));
+                    $previousStartDate->sub(new DateInterval('P2D'));
+                    $history[] = array($startDay, $startMonth, $previousStartDate->format('Y-m-d'));
+                }                
+            }
+            
+            $previousStartDate = $startDate;
+            $previousEndDate = $endDate;
+        }
+
+        return $history;      
     }
 
     public function loadSql() {
@@ -731,11 +765,19 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
         /* ----------- End Data group related data ---------- */        
         
         /* insert leave period data to ohrm_leave_period_history */
+        $oldRecords = $this->getOldLeavePeriodRecords();
+        $leavePeriodHistory = $this->getLeavePeriodHistoryRecords($oldRecords);
         
-        $sql[] = "INSERT INTO `ohrm_leave_period_history` (`id`, `leave_period_start_month`, `leave_period_start_day`, `created_at` )
-                SELECT old_lp.`leave_period_id`, MONTH(old_lp.`leave_period_start_date`), DAY(old_lp.`leave_period_start_date`), old_lp.`leave_period_start_date`
-                FROM `hs_hr_leave_period` old_lp ORDER BY old_lp.leave_period_id ASC;";
+        $leavePeriodHistorySql = "INSERT INTO `ohrm_leave_period_history` 
+            (`leave_period_start_day`, `leave_period_start_month`, `created_at`) VALUES ";
+        
+        for ($i = 0; $i < count($leavePeriodHistory); $i++) {
+            $comma = ($i == 0) ? '' : ', ';
+            $leavePeriodHistorySql .= "{$comma}({$leavePeriodHistory[$i][0]}, {$leavePeriodHistory[$i][1]}, '{$leavePeriodHistory[$i][2]}')";
+        }
 
+        $sql[] = $leavePeriodHistorySql;
+        
         /* ------------ Importing leave type and entitlement data -------------- */        
         $sql[] = "alter table `hs_hr_leavetype` add column int_id int not null auto_increment unique key;";
 
@@ -1522,11 +1564,3 @@ ORDER BY ohrm_leave.emp_number
     }
 }
 
-if (PHP_SAPI === 'cli') {
-
-	$dbInfo = array(
-	    'host' => 'localhost', 'port' => '3306', 'username' => 'root', 'password' => 'rahasa',
-	    'database' => 'os271');
-	$task = new SchemaIncrementTask55($dbInfo);
-	$task->execute();
-}
