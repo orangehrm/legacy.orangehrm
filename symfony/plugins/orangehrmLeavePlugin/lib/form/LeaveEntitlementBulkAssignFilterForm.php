@@ -33,8 +33,9 @@ class LeaveEntitlementBulkAssignFilterForm extends BaseForm {
         //$this->setValidator('bulk_assign', new sfValidatorChoice(array('choices' => array(1), 'required' => false)));
         $this->setValidator('bulk_assign', new sfValidatorPass());
         $labels['bulk_assign'] = __('Add to Multiple Employees');
-
-        $locationWidget = new ohrmReportWidgetOperationalCountryLocationDropDown();
+        
+        $locationOptions = array('set_all_option_value' => true, 'all_option_value' => NULL);                
+        $locationWidget = new ohrmReportWidgetOperationalCountryLocationDropDown($locationOptions);
         $this->setWidget('location', $locationWidget);
         $labels['location'] = __('Location');
         //$locationChoices = $locationWidget->getValidValues();
