@@ -51,7 +51,7 @@
     var lang_locationRequired = "<?php echo __(ValidationMessages::REQUIRED); ?>";
     var cancelNavigateUrl = "<?php echo public_path("../../index.php?menu_no_top=hr"); ?>";
     var createUserAccount = "<?php echo $createUserAccount; ?>";
-    var ldapInstalled = <?php echo ($sf_user->getAttribute('ldap.available')) ? 'true' : 'false'; ?>;
+    var ldapInstalled = '<?php echo ($sf_user->getAttribute('ldap.available')) ? 'true' : 'false'; ?>';
     var fieldHelpBottom = <?php echo '"' . __(CommonMessages::FILE_LABEL_IMAGE) . '. ' . __('Recommended dimensions: 200px X 200px') . '"'; ?>;
     //]]>
 </script>
