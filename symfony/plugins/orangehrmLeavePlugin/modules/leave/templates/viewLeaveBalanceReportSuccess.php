@@ -29,7 +29,8 @@ use_stylesheet(plugin_web_path('orangehrmLeavePlugin', 'css/viewLeaveBalanceRepo
                     </li>                    
                 </ol>                   
                 <p>
-                    <input type="button" name="view" id="viewBtn" value="<?php echo __('View');?>"/>                    
+                    <input type="button" name="view" id="viewBtn" value="<?php echo __('View');?>"/>
+                    <?php include_component('core', 'ohrmPluginPannel', array('location' => 'search_form_buttons_section')); ?>
                 </p>
             </fieldset>
         </form>
