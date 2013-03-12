@@ -629,6 +629,8 @@ class performanceActions extends sfActions {
             $this->empJson = $employeeService->getEmployeeListAsJson();
         } elseif ($this->loggedReviewer) {
             $this->empJson = $performanceReviewService->getRevieweeListAsJson($this->loggedEmpId, true);
+        } else {
+            $this->empJson = json_encode(array());
         }
 
         /* Showing Performance Review Search form
