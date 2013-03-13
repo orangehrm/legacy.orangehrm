@@ -972,7 +972,7 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
 
     public function getNotes() {
         $notes = array();
-        $notes[] = "If you have already set email configuration details, you have to re-enter the smtp password at Admin > Configuration > Email Configuration.";
+        $notes[] = "If you have enabled data encryption, you have to re-enter the smtp password at Admin > Configuration > Email Configuration and save. (after copying the key.ohrm file to the new version)";
         return $notes;
     }
     
