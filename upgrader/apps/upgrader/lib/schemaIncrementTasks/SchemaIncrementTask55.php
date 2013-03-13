@@ -971,7 +971,9 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
     }
 
     public function getNotes() {
-        return array();
+        $notes = array();
+        $notes[] = "If you have already set email configuration details, you have to re-enter the smtp password at Admin > Configuration > Email Configuration.";
+        return $notes;
     }
     
     public function getGeneratedLeavePeriodList($leavePeriodHistoryList){
