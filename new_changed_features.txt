@@ -1,3 +1,33 @@
+New & Changed Features for OrangeHRM ver 3.0.1
+    New Features
+    ------------
+    Upgrader from 2.7.1 available
+    Configurable home page and module default page
+
+    Bug Fixes
+    ---------
+    0004716 - Employee auto completion records are not loaded with expected width in Leave Entitlements and Usage Report search page
+    0004659 - It doesn't give any result when viewing the leave list by selecting the "All" check box
+    0004715 - If employee is not assigned to a defined Location, Those employee are not shown at Leave Entitlements and Usage Report
+    0004379 - Assign Leave->There should be a confirmation message if the leave balance become minus after assigning
+    0004895 - When assigning leave for 3 hours and 5 hours for a same leave type, leave balance is given as -1.01 (should be -1))
+    0004929 - Although a day has set as "Half Day", an employee can apply for leave up to 8 hours (within more than one time)
+    0004958 - If Location defined in the system, we can't add leave entitlement for all employees
+    0004957 - Deleted leave type display without having deleted prefix in Employee Entitlements
+    0004956 - Can't Apply/Assign leave after upgrade and change the date format
+    0004959 - Leave Periods are not properly upgraded if it is not default period
+    0004967 - It shows encrypted value for salary when encryption enabled
+    0005028 - Email configuration password is showing when install 2.7.1 with encrypt mode
+    0004395 - When employee applies for leaves for multiple days, it allows to specify time as well
+            - Show progress dialog when adding entitlement to a single employee.
+            - Show required asterix in leave entitlements and usage report
+            - Changes to "Leave Entitlements and Usage Report": Entitlements column is now a link to "Employee Entitlements".  Values with 0.00 in columns are also links.
+            - Fix validation of employee name field in bulk assign entitlements mode.
+            - Remove permission to admin menu from project admins since project menu is now under time module
+            - fix link to leave entitlements from my leave entitlements and usage report
+            - Add top level jobs.php to redirect to vacancy page for backwards compatibility
+            - Performance->Reviews as ESS users. Search & Cancel buttons are not working for ESS users
+
 New & Changed Features for OrangeHRM ver 3.0
 
     New Features
