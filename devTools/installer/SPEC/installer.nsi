@@ -47,27 +47,33 @@ Function AdminUserDetailsEnterValidate
 
 FunctionEnd
 
-; Registration functions
-Function ContactDetailsEnter
 
-	!insertmacro MUI_HEADER_TEXT "Registration" "Please take a moment to register"
-    !insertmacro MUI_INSTALLOPTIONS_DISPLAY "ContactDetails.ini"
+Function VerifyRegister
+		MessageBox MB_YESNO|MB_ICONEXCLAMATION "Do you want to Register OrangeHRM ?" IDNO labelno
 
+                  !insertmacro MUI_HEADER_TEXT "Registration" "Please take a moment to register"
+                  !insertmacro MUI_INSTALLOPTIONS_DISPLAY "ContactDetails.ini"
+                  labelno:
+                  
 FunctionEnd
+; Registration functions
 
 Function ContactDetailsEnterValidate
+
 
   !insertmacro MUI_INSTALLOPTIONS_READ $0 "ContactDetails.ini" "Field 2" "State"
   !insertmacro MUI_INSTALLOPTIONS_READ $1 "ContactDetails.ini" "Field 4" "State"
   !insertmacro MUI_INSTALLOPTIONS_READ $2 "ContactDetails.ini" "Field 6" "State"
   !insertmacro MUI_INSTALLOPTIONS_READ $3 "ContactDetails.ini" "Field 8" "State"
+  !insertmacro MUI_INSTALLOPTIONS_READ $4 "ContactDetails.ini" "Field 9" "State"
+  !insertmacro MUI_INSTALLOPTIONS_READ $5 "ContactDetails.ini" "Field 2" "MinLen"
 
   ${CheckUserEmailAddress} "$1" "$R1"
 
   StrCmpS $R1 "1" error done
 
   error:
-  		MessageBox MB_OK|MB_ICONEXCLAMATION "E-mail address provided is invalid"
+  		MessageBox MB_OK|MB_ICONEXCLAMATION "Please Prvide a valid email address. eg: myid@.com"
   		Abort
 
   done:
@@ -75,15 +81,16 @@ Function ContactDetailsEnterValidate
   		StrCpy $ContactEmail "$1"
   		StrCpy $Coments "$2"
   		StrCpy $Updates "$3"
-
   		StrCpy $PostStr "userName=$ContactName&userEmail=$ContactEmail&userComments=$Coments&updates=$Updates"
+		
 
-  		;inetc::post "$PostStr" "http://www.orangehrm.com/registration/registerAcceptor.php" \
+  		inetc::post "$PostStr" "http://www.orangehrm.com/registration/registerAcceptor.php" "$INSTDIR\output.txt" /END
 
-  		nsExec::ExecToLog '"$INSTDIR\php\php" "$INSTDIR\install\register.php" "$PostStr"'
+
+  		;nsExec::ExecToLog '"$INSTDIR\php\php" "$INSTDIR\install\register.php" "$PostStr"'
   		Pop $0
-
-  		StrCmpS $0 "0" success failedToSubmit
+  		StrCmpS $0 "OK" success failedToSubmit
+		
 
   failedToSubmit:
   		MessageBox MB_OK|MB_ICONEXCLAMATION "There was an error submitting the registration information"
@@ -92,7 +99,10 @@ Function ContactDetailsEnterValidate
   success:
   		MessageBox MB_OK|MB_ICONINFORMATION "Your information was successfully received by OrangeHRM"
 
+
+
 FunctionEnd
+
 
 ;--------------------------------
 ; Installer Sections
@@ -155,6 +165,10 @@ SectionGroup /e "OrangeHRM Appliance" SecGrpOrangeHRMAppliance
         File /a /r "${SourceLocation}\${OrangeHRMPath}\"
         File /a /r "${SourceLocation}\content\orangehrm2\"
 
+        SetOutPath "$INSTDIR"
+        File /a "${SourceLocation}\content\logo.ico"
+        File /a "${SourceLocation}\content\start.vbs"
+
     SectionEnd
 
 SectionGroupEnd
@@ -191,7 +205,7 @@ Section "-Register the application"
       WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${ProductName}" "UninstallString" "$INSTDIR\uninstall.exe"
 
       WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${ProductName}" "InstallLocation" "$INSTDIR"
-      WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${ProductName}" "VersionMajor" "2.2"
+      WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${ProductName}" "VersionMajor" "3.0.1"
       WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${ProductName}" "VersionMinor" "2"
       WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${ProductName}" "DisplayVersion" "3.0.1"
 
@@ -205,10 +219,13 @@ Section "-Register the application"
 
       CreateDirectory "$SMPROGRAMS\${ProductName}\Documentation"
       CreateShortCut "$SMPROGRAMS\${ProductName}\Documentation\Installation Guide.lnk" "$INSTDIR\htdocs\${OrangeHRMPath}\installer\guide\index.html"
-      CreateShortCut "$SMPROGRAMS\${ProductName}\Documentation\Upgrade Guide.lnk" "$INSTDIR\htdocs\${OrangeHRMPath}\upgrader\guide\index.html"
       CreateShortCut "$SMPROGRAMS\${ProductName}\Documentation\FAQ.lnk" "$INSTDIR\htdocs\${OrangeHRMPath}\faq.html"
       CreateDirectory "$SMPROGRAMS\${ProductName}"
       CreateShortCut "$SMPROGRAMS\${ProductName}\XAMPP.lnk" "$INSTDIR\xampp-control.exe"
+      CreateShortCut "$SMPROGRAMS\${ProductName}\OrangeHRM.lnk" "$INSTDIR\start.vbs" ""  "${SHORTCUT_ICON}"
+      CreateShortCut "$SMPROGRAMS\${ProductName}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+	  CreateShortCut "$DESKTOP\${ProductName}.lnk" "$INSTDIR\start.vbs" ""  "${SHORTCUT_ICON}"
+
 
 SectionEnd
 
@@ -255,72 +272,111 @@ Section "-Complete"
       SetOutPath "$INSTDIR\htdocs\orangehrm-${ProductVersion}"
 
       DetailPrint "Creating OrangeHRM database"
-      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -e "CREATE DATABASE hr_mysql;"'
+      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -e "CREATE DATABASE orangehrm_mysql;"'
 
       DetailPrint "Creating OrangeHRM tables"
-      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -D hr_mysql -e "source $INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-1.sql"'
+      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -D orangehrm_mysql -e "source $INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-1.sql"'
 
       DetailPrint "Filling required data"
-      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -D hr_mysql -e "source $INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-2.sql"'
+      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -D orangehrm_mysql -e "source $INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-2.sql"'
 
       !insertmacro ReplaceInFile "$INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-user.sql" "?UserName" "$UserName"
       !insertmacro ReplaceInFile "$INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-user.sql" "?PasswordHash" "$PasswordHash"
 
       DetailPrint "Creating the admin user"
-      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -D hr_mysql -e "source $INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-user.sql"'
+      nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -D orangehrm_mysql -e "source $INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-user.sql"'
 
       Delete /REBOOTOK "$INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-user.sql"
 
 SectionEnd
 
-SectionGroup /e "XAMPP Components" SecGrpXamppComponents
+;SectionGroup /e "XAMPP Components" SecGrpXamppComponents
+;
+;    Section "Webalizer" SecWebalizer
+;
+;        SetOutPath "$INSTDIR\webalizer"
+;        File /a /r "${SourceLocation}\${XamppPath}\webalizer\"
+;
+;    SectionEnd
+;
+;    Section "FileZillaFTP" SecFileZillaFTP
+;
+;        SetOutPath "$INSTDIR\FileZillaFTP"
+;        File /a /r "${SourceLocation}\${XamppPath}\FileZillaFTP\"
+;        SetOutPath "$INSTDIR\anonymous"
+;        File /a /r "${SourceLocation}\${XamppPath}\anonymous\"
+;
+;    SectionEnd
+;
+;    Section "MercuryMail" SecMercuryMail
+;
+;        SetOutPath "$INSTDIR\MercuryMail"
+;        File /a /r "${SourceLocation}\${XamppPath}\MercuryMail\"
+;
+;    SectionEnd
+;
+;    Section "perl" SecPerl
+;
+;        SetOutPath "$INSTDIR\perl"
+;        File /a /r "${SourceLocation}\${XamppPath}\perl\"
+;
+;    SectionEnd
+;
+;    Section "webdav" SecWebdav
+;
+;        SetOutPath "$INSTDIR\webdav"
+;        File /a /r "${SourceLocation}\${XamppPath}\webdav\"
+;
+;    SectionEnd
+;
+;SectionGroupEnd
 
-    Section "Webalizer" SecWebalizer
-
-        SetOutPath "$INSTDIR\webalizer"
-        File /a /r "${SourceLocation}\${XamppPath}\webalizer\"
-
-    SectionEnd
-
-    Section "FileZillaFTP" SecFileZillaFTP
-
-        SetOutPath "$INSTDIR\FileZillaFTP"
-        File /a /r "${SourceLocation}\${XamppPath}\FileZillaFTP\"
-        SetOutPath "$INSTDIR\anonymous"
-        File /a /r "${SourceLocation}\${XamppPath}\anonymous\"
-
-    SectionEnd
-
-    Section "MercuryMail" SecMercuryMail
-
-        SetOutPath "$INSTDIR\MercuryMail"
-        File /a /r "${SourceLocation}\${XamppPath}\MercuryMail\"
-
-    SectionEnd
-
-    Section "perl" SecPerl
-
-        SetOutPath "$INSTDIR\perl"
-        File /a /r "${SourceLocation}\${XamppPath}\perl\"
-
-    SectionEnd
-
-    Section "webdav" SecWebdav
-
-        SetOutPath "$INSTDIR\webdav"
-        File /a /r "${SourceLocation}\${XamppPath}\webdav\"
-
-    SectionEnd
-
-SectionGroupEnd
-
-Section "Demo data" SecDemoData
-
-    SetOutPath "$INSTDIR\mysql\data\hr_mysql"
-
-SectionEnd
+;Section "Demo data" SecDemoData
+;
+;    SetOutPath "$INSTDIR\mysql\data\orangehrm_mysql"
+;
+;SectionEnd
 
 Function .onInit
+		MessageBox MB_OK "If you encounter issues in running OrangeHRM, try disabling your virus guard temporarily. Visit www.orangehrm.com/exe-faq.shtml for more details."
+         #MessageBox MB_OK "httpd running"
+         
+         Push "Status"
+         Push "Apache2.2"
+         Push ""
+         Call Service
+         Pop $0 ;response
+
+${If} $0 == "stopped"
+         MessageBox MB_OK|MB_ICONSTOP "Apache web server is already installed. Please consider using OrangeHRM web installer with ZIP version. Visit www.orangehrm.com/exe-faq.shtml for more details."
+         Abort
+${EndIf}
+${If} $0 == "running" 
+
+
+         MessageBox MB_OK|MB_ICONSTOP "Apache web server is already installed. Please consider using OrangeHRM web installer with ZIP version. Visit www.orangehrm.com/exe-faq.shtml for more details."
+         Abort
+         ${Else}
+         Push "Status"
+         Push "mysql"
+         Push ""
+         Call Service
+         Pop $1 ;response
+         ${If} $1 == "running"
+         MessageBox MB_OK|MB_ICONSTOP "MySQL is already installed. Please consider using OrangeHRM web installer with ZIP version. Visit www.orangehrm.com/exe-faq.shtml for more details."
+         Abort
+         ${EndIf}
+${EndIf}
+${If} ${TCPPortOpen} 80
+	 GetTempFileName $0
+     File /oname=$0 `TestPort80.vbs` 
+     nsExec::ExecToStack `"$SYSDIR\CScript.exe" $0 //e:vbscript //B //NOLOGO`
+	 Pop $0
+	 Pop $1
+	 MessageBox MB_OK|MB_ICONSTOP '$1'
+	 Abort
+${EndIf}
+
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "AdminUserDetails.ini"
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ContactDetails.ini"
 
@@ -331,13 +387,13 @@ Function .onInit
   SectionSetFlags ${SecOrangeHRM} 17
 
   ; Optional sections
-  SectionSetFlags ${SecWebalizer} 0
-  SectionSetFlags ${SecFileZillaFTP} 0
-  SectionSetFlags ${SecMercuryMail} 0
-  SectionSetFlags ${SecPerl} 0
-  SectionSetFlags ${SecWebdav} 0
+  ;SectionSetFlags ${SecWebalizer} 0
+  ;SectionSetFlags ${SecFileZillaFTP} 0
+  ;SectionSetFlags ${SecMercuryMail} 0
+  ;SectionSetFlags ${SecPerl} 0
+  ;SectionSetFlags ${SecWebdav} 0
 
-  SectionSetFlags ${SecDemoData} 16
+  ;SectionSetFlags ${SecDemoData} 16
 
 FunctionEnd
 
