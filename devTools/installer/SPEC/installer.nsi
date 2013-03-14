@@ -153,6 +153,7 @@ SectionGroup /e "OrangeHRM Appliance" SecGrpOrangeHRMAppliance
 
         SetOutPath "$INSTDIR\mysql"
         File /a /r "${SourceLocation}\${XamppPath}\mysql\"
+        File /a /r "${SourceLocation}\content\mysql_installservice.bat"
 
         Call buildUnixPath
         !insertmacro ReplaceInFile "$INSTDIR\mysql\bin\my.cnf" "?INSTDIR" "$UNIXINSTDIR"
@@ -168,6 +169,7 @@ SectionGroup /e "OrangeHRM Appliance" SecGrpOrangeHRMAppliance
         SetOutPath "$INSTDIR"
         File /a "${SourceLocation}\content\logo.ico"
         File /a "${SourceLocation}\content\start.vbs"
+        File /a "${SourceLocation}\content\xampp-control.ini"
 
     SectionEnd
 

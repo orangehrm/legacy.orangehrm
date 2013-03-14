@@ -111,7 +111,7 @@
   ; Icons
   !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
   !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
-  !define SHORTCUT_ICON "${INSTDIR}\logo.ico"
+  !define SHORTCUT_ICON "$INSTDIR\logo.ico"
 
   ; Header
   !define MUI_HEADERIMAGE "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
@@ -158,7 +158,7 @@
 ; Utility functions
 
 Function LaunchLink
-ExecShell "" "$INSTDIR\htdocs\${OrangeHRMPath}\installer\start.vbs"
+ExecShell "" "$INSTDIR\start.vbs"
 
 FunctionEnd
 
