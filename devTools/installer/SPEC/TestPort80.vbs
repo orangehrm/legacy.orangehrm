@@ -1,63 +1,61 @@
-Dim WshShell, oExec, key
-Set WshShell = CreateObject("WScript.Shell")
-Set oExec = WshShell.Exec("netstat -ano")
-key = "0.0:80"
+Dim Key
+Dim Match
+Dim CommandTxt
+Dim WshShell
 
-Dim values
-values = checkPortStatus(oExec, key)
-portInUse = values(0)
-input = values(1)
+Set WshShell = WScript.CreateObject("WScript.Shell") 
 
-If portInUse Then
-  x = InStrRev(input, " ")
+' Find if program using port 80
+Key = "0.0:80 "
+Match = GrepCmdOutput("netstat -o -n -a", Key)
 
-  ProcessID = Mid(input, x+1)
+If Match <> "" Then
+    Pos = InStrRev(Match, " ")
+    ProcessID = Mid(Match, Pos+1)
   
-  commandTxt = "tasklist /FI " & Chr(34) & "PID eq " & ProcessID & Chr(34)
-  
-	Dim oExec2, key2
-	Set oExec2 = WshShell.Exec(commandTxt)
-	key2 = ProcessID
+    CommandTxt = "tasklist /FI " & Chr(34) & "PID eq " & ProcessID & Chr(34)
+ 
+    ' Find Process name of program
+    Key = " " & ProcessID & " "
+	Match = GrepCmdOutput(CommandTxt, Key)
 
-	Dim values2
-	values2	= checkPortStatus(oExec2, key2)
-	Found = values2(0)
-	input2 = values2(1)
-
-	If Found Then
-		y = InStr(input2, " ")
-		ExeName = Left(input2, y-1)
-			WScript.StdOut.WriteLine "Quit " & ExeName & " and restart OrangeHRM installation. Once OrangeHRM is installed, you can start using "  & ExeName & " again. Visit www.orangehrm.com/exe-faq.shtml for more details." 
+	If Match <> "" Then
+		Pos = InStr(Match, " ")
+		ExeName = Left(Match, Pos-1)
+        WScript.StdOut.WriteLine "Quit " & ExeName & " and restart OrangeHRM installation. Once OrangeHRM is installed, you can start using "  & ExeName & " again. Visit www.orangehrm.com/exe-faq.shtml for more details." 
+        
 	End If
 End If
-'## If we explicitly set a Success code then we can avoid this.
-	WScript.Quit 512
 
-Function checkPortStatus(oExec, key)
-	portInUse = false
-	input = ""
-	Do While True
+'## If we explicitly set a Success code then we can avoid this. (avoid what??)
+WScript.Quit 512
 
-		 If Not oExec.StdOut.AtEndOfStream Then
-			  input = oExec.StdOut.ReadLine()
-			  If InStr(input, key) <> 0 Then 
+Function GrepCmdOutput(cmd, Key)
+    Dim WshShell, oExec
+	Dim LineStr
+	Dim PortInUse
+
+	Set WshShell = CreateObject("WScript.Shell")
+	Set oExec = WshShell.Exec(cmd)
+	LineStr = ""
+	PortInUse = false
+
+	Do Until oExec.Status = 0
+	    Wscript.Sleep 250
+	Loop 
+
+	Do While Not oExec.StdOut.AtEndOfStream 
+		LineStr = oExec.StdOut.ReadLine()
+	        If InStr(LineStr, key) <> 0 Then 
 			' Found Port 80
-					portInUse = true
-					Exit DO
-			  End If
-		 Else
+			PortInUse = true
 			Exit DO
-		 End If
-		 WScript.Sleep 100
+	        End If
 	Loop
 	
-	Do While oExec.Status <> 1
-     WScript.Sleep 100
-	Loop
-	Dim values(1)
-	values(0) = portInUse
-	values(1) = input
-	
-	checkPortStatus = values
-
+	If PortInUse Then
+		GrepCmdOutput = LineStr
+	Else
+		GrepCmdOutput = ""
+	End If
 End Function
