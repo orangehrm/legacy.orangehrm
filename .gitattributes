@@ -33,11 +33,13 @@ devTools/general/reset-installation.php -text
 devTools/general/update-version.php -text
 devTools/installer/SOURCE/content/license.txt -text
 devTools/installer/SOURCE/content/logo.ico -text
+devTools/installer/SOURCE/content/mysql_installservice.bat -text
 devTools/installer/SOURCE/content/orangehrm2/dbscript/dbscript-user.sql -text
 devTools/installer/SOURCE/content/orangehrm2/lib/confs/Conf.php -text
 devTools/installer/SOURCE/content/orangehrm2/lib/confs/mailConf.php -text
 devTools/installer/SOURCE/content/orangehrm2/symfony/config/databases.yml -text
 devTools/installer/SOURCE/content/start.vbs -text
+devTools/installer/SOURCE/content/xampp-control.ini -text
 devTools/installer/SOURCE/my.ini -text
 devTools/installer/SOURCE/trim-xampp.bat -text
 devTools/installer/SPEC/AdminUserDetails.ini -text
