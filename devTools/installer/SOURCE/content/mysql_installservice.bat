@@ -1,20 +1,4 @@
 @echo off 
-REM Changes done to ensure service path is in lower case and matches
-REM What is expected by the XAMPP control panel so that it doesn't complain about
-REM Service path not matching expected path
-REM Check if command line argument is given
-if [%1] == [] GOTO SetDir
-
-REM If arg given, set base dir to that value
-SET BASE_DIR=%1
-GOTO DirSet
-
-:SetDir
-REM if arg not given, set to current directory
-SET BASE_DIR=%cd%
-
-:DirSet
-
 
 if "%OS%" == "Windows_NT" goto WinNT 
 
@@ -43,8 +27,14 @@ GOTO WinNT
 
 :MainNT 
 echo Installing MySQL as an Service 
-rem copy "%BASE_DIR%\bin\my.cnf" /-y %windir%\my.ini
-"%BASE_DIR%\bin\mysqld.exe" --install mysql --defaults-file="%BASE_DIR%\bin\my.ini"
+REM Commented out since that file is missing
+REM copy "%cd%\bin\my.cnf" /-y %windir%\my.ini
+
+REM In the following line mysqld was changed to mysqld.exe since otherwise
+REM the service name is set as mysqld and xampp-control complains that the
+REM service path is different from the expected value
+bin\mysqld.exe --install mysql --defaults-file="%cd%\bin\my.ini"
+
 echo Try to start the MySQL deamon as service ... 
 net start MySQL 
 
