@@ -55,6 +55,7 @@ devTools/installer/SPEC/README -text
 devTools/installer/SPEC/TestPort80.vbs -text
 devTools/installer/SPEC/installer.nsi -text
 devTools/installer/SPEC/main.nsi -text
+devTools/installer/SPEC/nsis-test.nsi -text
 devTools/installer/SPEC/uninstaller.nsi -text
 devTools/load/general/ReadMe-load-employees.txt -text
 devTools/load/general/load-employees.php -text

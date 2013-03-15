@@ -272,6 +272,32 @@ SectionGroupEnd
 Section "-Complete"
 
       SetOutPath "$INSTDIR\htdocs\orangehrm-${ProductVersion}"
+      
+      ; Create encryption key
+      ; Based on installUtil.php. Concat 4 MD5 Sums
+      pwgen::GeneratePassword 60
+      pop $0
+      md5dll::GetMD5String "$0"
+      pop $1
+
+      pwgen::GeneratePassword 60
+      pop $0
+      md5dll::GetMD5String "$0"
+      pop $2
+
+      pwgen::GeneratePassword 60
+      pop $0
+      md5dll::GetMD5String "$0"
+      pop $3
+
+      pwgen::GeneratePassword 60
+      pop $0
+      md5dll::GetMD5String "$0"
+      pop $4
+
+      StrCpy $5 "$1$2$3$4"
+
+      ${WriteToFile} "$INSTDIR\htdocs\orangehrm-${ProductVersion}\lib\confs\cryptokeys\key.ohrm" "$5"
 
       DetailPrint "Creating OrangeHRM database"
       nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -e "CREATE DATABASE orangehrm_mysql;"'

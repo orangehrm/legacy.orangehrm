@@ -68,6 +68,7 @@
   !include "Include\CheckUserEmailAddress.nsh"
   !include "Include\Ports.nsh"
   !include "Include\servicelib.nsh"
+  !include "Include\WriteToFile.nsh"
 
   ; InstallOptions
 
