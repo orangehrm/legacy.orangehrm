@@ -405,6 +405,58 @@ ${If} ${TCPPortOpen} 80
 	 Abort
 ${EndIf}
 
+; Missing MS C++ 2008 runtime library warning here
+  ReadRegStr $R2 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{FF66E9F6-83E7-3A3E-AF14-8DE9A809A6A4}' DisplayVersion
+  ReadRegStr $R3 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{350AA351-21FA-3270-8B7A-835434E766AD}' DisplayVersion
+  ReadRegStr $R4 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{2B547B43-DB50-3139-9EBE-37D419E0F5FA}' DisplayVersion
+
+  ReadRegStr $R5 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{9A25302D-30C0-39D9-BD6F-21E6EC160475}' DisplayVersion
+  ReadRegStr $R6 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{8220EEFE-38CD-377E-8595-13398D740ACE}' DisplayVersion
+  ReadRegStr $R7 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{5827ECE1-AEB0-328E-B813-6FC68622C1F9}' DisplayVersion
+
+  ReadRegStr $R8 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1F1C2DFC-2D24-3E06-BCB8-725134ADF989}' DisplayVersion
+  ReadRegStr $R9 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{4B6C7001-C7D6-3710-913E-5BC23FCE91E6}' DisplayVersion
+  ReadRegStr $R0 HKLM 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{977AD349-C2A8-39DD-9273-285C08987C7B}' DisplayVersion  
+  
+  StrCmp $R2 "" vc9_test2
+  GOTO init_end
+  vc9_test2:
+  StrCmp $R3 "" vc9_test3
+  GOTO init_end
+  vc9_test3:
+  StrCmp $R4 "" vc9_test4
+  GOTO init_end
+  vc9_test4:
+  StrCmp $R5 "" vc9_test5
+  GOTO init_end
+  vc9_test5:
+  StrCmp $R6 "" vc9_test6
+  GOTO init_end
+  vc9_test6:
+  StrCmp $R7 "" vc9_test7
+  GOTO init_end
+  vc9_test7:
+  StrCmp $R8 "" vc9_test8
+  GOTO init_end
+  vc9_test8:
+  StrCmp $R9 "" vc9_test9
+  GOTO init_end
+  vc9_test9:
+  StrCmp $R0 "" no_vc9
+  GOTO init_end
+
+  no_vc9:
+    MessageBox MB_YESNO "Warning: XAMPP (PHP) cannot work without the Microsoft Visual C++ 2008 Redistributable Package. Now open the Microsoft page for this download?" IDNO MsPageOut
+    ExecShell "open" "http://www.microsoft.com/en-us/download/details.aspx?id=5582"
+    GOTO MsPageOut
+    MsPageOut:
+    ; StrCmp $LANGUAGE "1031" lang_de2
+    ; MessageBox MB_YESNO "Perhaps XAMPP do not work without the MS VC++ 2008 runtime library. Still go on with the XAMPP installation?" IDNO GoOut
+    ; GOTO init_end
+    ; GoOut:
+    ; Abort "Exit by user."
+  init_end:
+
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "AdminUserDetails.ini"
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ContactDetails.ini"
 
