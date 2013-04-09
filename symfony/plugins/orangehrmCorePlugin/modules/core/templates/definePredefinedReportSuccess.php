@@ -67,6 +67,7 @@ use_javascript('orangehrm.datepicker.js');
                 
                 foreach ($form->requiredFilterWidgets as $widget) {
     
+                    $filterName = $widget->getName();
                     $formField = $form[$filterName];
                     echo "<li id='li_" . $filterName . "' class='requiredFilter'>" . $formField->renderLabel() .
                     $formField->render() .
