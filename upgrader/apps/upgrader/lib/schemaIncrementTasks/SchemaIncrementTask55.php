@@ -716,7 +716,7 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
             ($reviewerId, " . ($id + 57) . ", 1, 1, 1, 1), 
             (1, " . ($id + 58) . ", 1, 0, 0, 0), 
             (3, " . ($id + 58) . ", 1, 0, 0, 0), 
-            (3, " . ($id + 59) . ", 1, 0, 0, 0);";
+            (2, " . ($id + 59) . ", 1, 0, 0, 0);";
 
         /* -- Enable time module menu items if timesheet period is defined -- */
         $sql[] = "UPDATE `ohrm_menu_item` menu
@@ -847,7 +847,8 @@ SELECT l.`id`, now(), 'record created by upgrade', 1, (SELECT u.`emp_number` FRO
         //Update Time (hours) to Time (Hours) - labels should be consistent for gettin the total
         $sql[] = "UPDATE `ohrm_summary_display_field` SET `label` = 'Time (Hours)' WHERE `summary_display_field_id` = 2;";
 
-        $sql[] = "alter table `hs_hr_leavetype` drop column int_id;";
+       // keep since useful for add-on upgraders
+       // $sql[] = "alter table `hs_hr_leavetype` drop column int_id;";
 
 
 //        $sql[] = "DROP TABLE `hs_hr_employee_leave_quota`;";
