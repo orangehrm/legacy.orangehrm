@@ -103,17 +103,46 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
             $endDate = new DateTime($row['leave_period_end_date']);
             $startDay = $startDate->format('j');
             $startMonth = $startDate->format('n');
-            
+                      
             if (empty($history)) {
-                $history[] = array($startDay, $startMonth, $startDate->format('Y-m-d'));
+                $historyItem = array($startDay, $startMonth, $startDate->format('Y-m-d'));                
+                $history[] = $historyItem;
+
+                UpgradeLogger::writeLogMessage("leave_period_history item: " . print_r($historyItem, true));  
+                
             } else {
                 // only add record if the leave period changed
                 if (($startDay != $previousStartDate->format('j')) ||
                         ($startMonth != $previousStartDate->format('n'))) {
                     $previousStartDate->add(new DateInterval('P1Y'));
                     $previousStartDate->sub(new DateInterval('P2D'));
-                    $history[] = array($startDay, $startMonth, $previousStartDate->format('Y-m-d'));
+                    $historyItem = array($startDay, $startMonth, $previousStartDate->format('Y-m-d'));
+                    UpgradeLogger::writeLogMessage("leave_period_history item: " . print_r($historyItem, true));
+                    $history[] = $historyItem;
                 }                
+            }            
+
+            // check and handle if period is more than one year : means that end date was changed in the middle.
+            $endDateIfPeriodIsOneYear = clone $startDate;
+            $endDateIfPeriodIsOneYear->add(new DateInterval('P1Y'));
+            $endDateIfPeriodIsOneYear->sub(new DateInterval('P1D'));
+                        
+            // leave period is more than one year.
+            if ($endDate > $endDateIfPeriodIsOneYear) {
+                UpgradeLogger::writeLogMessage("Leave Period " . $row['leave_period_start_date'] . " to " .
+                        $row['leave_period_end_date'] . " is more than one year. Leave Period change detected.");
+                
+                $newStartDate = clone $endDate;
+                $newStartDate->add(new DateInterval('P1D'));
+                $newStartDay = $newStartDate->format('j');
+                $newStartMonth = $newStartDate->format('n');
+                $changedDate = clone $endDateIfPeriodIsOneYear;
+                $changedDate->sub(new DateInterval('P30D'));
+                
+                $historyItem = array($newStartDay, $newStartMonth, $changedDate->format('Y-m-d'));
+                UpgradeLogger::writeLogMessage("leave_period_history item: " . print_r($historyItem, true));                
+                
+                $history[] = $historyItem;
             }
             
             $previousStartDate = $startDate;
