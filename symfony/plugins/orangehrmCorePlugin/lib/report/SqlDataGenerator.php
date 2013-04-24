@@ -33,10 +33,26 @@ class SqlDataGenerator extends DataGenerator {
     const SEPERATOR = '|\n|';
 
     private $reportDefinition;
+    private $logger;
 
+    
     function __construct($reportDefinition) {
         $this->reportDefinition = $reportDefinition;
     }
+    
+
+    /**
+     * Get Logger instance. Creates if not already created.
+     *
+     * @return Logger
+     */
+    protected function getLogger() {
+        if (is_null($this->logger)) {
+            $this->logger = Logger::getLogger('report.sqldatagenerator');
+        }
+
+        return($this->logger);
+    }    
 
     /**
      * Constructs query using report definition and return results for a single
@@ -62,7 +78,7 @@ class SqlDataGenerator extends DataGenerator {
         } else {
             throw new ReportException("Both offset and page limit should have a value or both should not have a value!!!!");
         }
-
+        $this->getLogger()->debug($query);
         $results = $this->executeQuery($query, $parameters);
         return $results;
     }
@@ -94,19 +110,27 @@ class SqlDataGenerator extends DataGenerator {
         $callback = function($matches) use ($values, &$parameters) {
                     $val = explode(",", $matches[1]);
                     
-                    if (count($val) < 3) {
-                        throw new ReportException('Invalid filter definition: ' . $matches[0]);
-                    }
+                    // $X{VAR,name}
                     
-                    $operator = $val[0];
-                    $field = $val[1];
-                    $name = $val[2];
-
+                    if ((count($val) == 2 && $val[0] == 'VAR')) {
+                        
+                        $operator = $val[0];
+                        $name = $val[1];                        
+                    } else {
+                    
+                        if (count($val) < 3) {                        
+                                throw new ReportException('Invalid filter definition: ' . $matches[0]);
+                        }
+                        
+                        $operator = $val[0];
+                        $field = $val[1];
+                        $name = $val[2];                        
+                    }
+                   
                     // If no value defined for this filter, ignore it (filter is set to true)
                     if (!isset($values[$name]) || is_null($values[$name])) {
                         return "true";
                     }
-
                     if ($operator == 'IN') {
                         
                         $valueArray = $values[$name];
@@ -153,7 +177,9 @@ class SqlDataGenerator extends DataGenerator {
                         } else {
                             $clause = 'true';
                         }
-                    }
+                    } else if ($operator == 'VAR') {
+                        $clause = $values[$name];
+                    } 
 
                     return $clause;
                 };
