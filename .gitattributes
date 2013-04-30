@@ -4273,7 +4273,9 @@ symfony/plugins/orangehrmPimPlugin/test/fixtures/EmployeeDao.yml -text
 symfony/plugins/orangehrmPimPlugin/test/fixtures/ReportingMethodConfigurationDao.yml -text
 symfony/plugins/orangehrmPimPlugin/test/fixtures/TerminationReasonConfigurationDao.yml -text
 symfony/plugins/orangehrmPimPlugin/test/fixtures/employee.yml -text
+symfony/plugins/orangehrmPimPlugin/test/fixtures/reporting-chain-test-data.yml -text
 symfony/plugins/orangehrmPimPlugin/test/model/dao/CustomFieldConfigurationDaoTest.php -text
+symfony/plugins/orangehrmPimPlugin/test/model/dao/EmployeeDaoReportingChainTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/model/dao/EmployeeDaoTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/model/dao/EmployeeListDaoTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/model/dao/ReportingMethodConfigurationDaoTest.php -text
