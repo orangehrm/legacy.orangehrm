@@ -818,7 +818,7 @@ class SchemaIncrementTask55 extends SchemaIncrementTask {
         $sql[] = "INSERT INTO `ohrm_leave_entitlement`(emp_number, no_of_days, leave_type_id, from_date, to_date, 
                                         credited_date, note, entitlement_type, `deleted`)
                     SELECT q.employee_id, q.no_of_days_allotted, lt.int_id, p.leave_period_start_date, p.leave_period_end_date, 
-                    p.leave_period_start_date, 'record created by upgrade', 1, 0
+                    p.leave_period_start_date, 'Author not tracked prior to v3.0', 1, 0
                     FROM `hs_hr_employee_leave_quota` q, `hs_hr_leavetype` lt, hs_hr_leave_period p WHERE lt.leave_type_id = q.leave_type_id AND p.leave_period_id = q.leave_period_id
                     AND ((q.no_of_days_allotted <> 0) or (q.leave_brought_forward <> 0) or (q.leave_carried_forward <> 0));";
 
