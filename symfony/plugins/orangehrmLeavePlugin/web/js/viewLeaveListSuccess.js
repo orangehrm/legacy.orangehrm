@@ -66,23 +66,27 @@ $(document).ready(function() {
     $("#commentSave").click(function() {
 
         $('#commentError').html('').removeClass('validation-error');
-        var comment = $('#leaveComment').val().trim();
-        comment = $('<div/>').text(comment).html();
-        
-        if(comment.length > 250) {
+        var rawComment = $('#leaveComment').val().trim();
+                
+        if(rawComment.length > 250) {
             $('#commentError').html(lang_length_exceeded_error).addClass('validation-error');
             return;
-        } else if (comment.length == 0) {
+        } else if (rawComment.length == 0) {
             $('#commentError').html(lang_Required).addClass('validation-error');
             return;                                
         }
+        
+        var comment = $('<div/>').text(rawComment).html();
 
         /* Setting the comment in the label */
          
         var commentLabel = trimComment(comment);
 
         /* Posting the comment */
-        var data = 'leaveRequestId=' + $('#leaveId').val() + '&leaveComment=' + encodeURIComponent(comment);
+        var data = {
+            leaveRequestId: $('#leaveId').val(),
+            leaveComment: rawComment
+        }
 
         $.ajax({
             type: 'POST',
@@ -162,8 +166,9 @@ function fetchComments(leaveRequestId) {
                     if (rows % 2) {
                         css = "even";
                     }
+                    var comment = $('<div/>').text(data[i]['comments']).html();
                     html = html + '<tr class="' + css + '"><td>'+data[i]['date']+'</td><td>'+data[i]['time']+'</td><td>'
-                        +data[i]['author']+'</td><td>'+data[i]['comments']+'</td></tr>';
+                        +data[i]['author']+'</td><td>'+comment+'</td></tr>';
                 }
                 html = html + '</table>';
             } else {

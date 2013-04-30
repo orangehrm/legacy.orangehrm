@@ -86,30 +86,35 @@ $(document).ready(function(){
     $("#commentSave").click(function() {
 
         $('#commentError').html('').removeClass('validation-error');
-        var comment = $('#leaveComment').val().trim();
-        comment = $('<div/>').text(comment).html();
-        if(comment.length > 255) {
+        var rawComment = $('#leaveComment').val().trim();
+        
+        if(rawComment.length > 255) {
             $('#commentError').html(lang_LengthExceeded).addClass('validation-error');
             return;
-        } else if (comment.length == 0) {
+        } else if (rawComment.length == 0) {
             $('#commentError').html(lang_Required).addClass('validation-error');
             return;                                
         }
+
+        var comment = $('<div/>').text(rawComment).html();
 
         /* Setting the comment in the label */
         var commentLabel = trimComment(comment);
 
         var leaveOrRequest = $('#leaveOrRequest').val();
-        var data = '';
+        
+        // Comment will be encoded by jquery .ajax method
+        var data = {
+            leaveComment: rawComment
+        };
         
         if (leaveOrRequest == 'leave') {
-            data = 'leaveId=';
+            data['leaveId'] = $('#leaveId').val();
         } else {
-            data = 'leaveRequestId=';
-        }
+            data['leaveRequestId'] = $('#leaveId').val();
+        }        
+        
         /* Posting the comment */
-        data = data + $('#leaveId').val() + '&leaveComment=' + encodeURIComponent(comment);
-
         $.ajax({
             type: 'POST',
             url: commentUpdateUrl,
@@ -201,8 +206,9 @@ function fetchComments(id) {
                     if (rows % 2) {
                         css = "even";
                     }
+                    var comment = $('<div/>').text(data[i]['comments']).html();
                     html = html + '<tr class="' + css + '"><td>'+data[i]['date']+'</td><td>'+data[i]['time']+'</td><td>'
-                        +data[i]['author']+'</td><td>'+data[i]['comments']+'</td></tr>';
+                        +data[i]['author']+'</td><td>'+comment+'</td></tr>';
                 }
                 html = html + '</table>';
             } else {

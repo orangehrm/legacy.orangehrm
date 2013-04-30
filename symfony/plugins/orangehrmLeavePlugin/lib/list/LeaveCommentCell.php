@@ -59,9 +59,25 @@ class LeaveCommentCell extends Cell {
         return $commentHTML . $this->getHiddenFieldHTML();
     }
     
+    /**
+     * Trim comment to 30 characters
+     * 
+     * @param string $comment
+     * @return string
+     */
     protected function trimComment($comment) {
         if (strlen($comment) > 30) {
+            
+            $escape = sfConfig::get('sf_escaping_strategy');
+
+            if ($escape) {
+                $comment = sfOutputEscaper::unescape($comment);
+            }
             $comment = substr($comment, 0, 30) . '...';
+            
+            if ($escape) {
+                $comment = sfOutputEscaper::escape(sfConfig::get('sf_escaping_method'), $comment);
+            }
         }
         return $comment;
     }
