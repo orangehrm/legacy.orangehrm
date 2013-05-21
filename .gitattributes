@@ -3230,6 +3230,7 @@ symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/WorkShiftService.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addCustomerAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addProjectActivityAction.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/baseAdminAction.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/changeUserPasswordAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/checkLanguageNameExistenceAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/checkSkillNameExistenceAction.class.php -text
