@@ -10,8 +10,12 @@
  *
  * @author nirmal
  */
-abstract class baseAdminAction extends sfAction{
-    //put your code here
+abstract class baseAdminAction extends sfAction {
+
+    public function getDataGroupPermissions($dataGroups) {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), false, array());
+    }
+
 }
 
 ?>
