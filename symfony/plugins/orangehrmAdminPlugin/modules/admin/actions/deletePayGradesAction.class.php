@@ -17,35 +17,38 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class deletePayGradesAction extends sfAction {
-	
-	private $payGradeService;
+class deletePayGradesAction extends baseAdminAction {
 
+    private $payGradeService;
 
-	public function getPayGradeService() {
-		if (is_null($this->payGradeService)) {
-			$this->payGradeService = new PayGradeService();
-			$this->payGradeService->setPayGradeDao(new PayGradeDao());
-		}
-		return $this->payGradeService;
-	}
-	
-	public function execute($request) {
+    public function getPayGradeService() {
+        if (is_null($this->payGradeService)) {
+            $this->payGradeService = new PayGradeService();
+            $this->payGradeService->setPayGradeDao(new PayGradeDao());
+        }
+        return $this->payGradeService;
+    }
 
-		$toBeDeletedPayGradeIds = $request->getParameter('chkSelectRow');
+    public function execute($request) {
 
-		if (!empty($toBeDeletedPayGradeIds)) {
+        $toBeDeletedPayGradeIds = $request->getParameter('chkSelectRow');
+        $payGradePermissions = $this->getDataGroupPermissions('pay_grades');
 
-			foreach ($toBeDeletedPayGradeIds as $toBeDeletedPayGradeId) {
+        if ($payGradePermissions->canDelete()) {
+            if (!empty($toBeDeletedPayGradeIds)) {
 
-				$payGrade = $this->getPayGradeService()->getPayGradeById($toBeDeletedPayGradeId);
-				$payGrade->delete();
-			}
-			$this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
-		}
+                foreach ($toBeDeletedPayGradeIds as $toBeDeletedPayGradeId) {
 
-		$this->redirect('admin/viewPayGrades');
-	}
+                    $payGrade = $this->getPayGradeService()->getPayGradeById($toBeDeletedPayGradeId);
+                    $payGrade->delete();
+                }
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+            }
+
+            $this->redirect('admin/viewPayGrades');
+        }
+    }
+
 }
 
 ?>

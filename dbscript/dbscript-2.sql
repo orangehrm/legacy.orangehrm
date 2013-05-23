@@ -1615,7 +1615,9 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (38, 'membership_custom_fields', 'PIM - Membership - Custom Fields', 1, NULL, 1, NULL),
 (39, 'photograph', 'PIM - Employee Photograph', 1, NULL, 1, 1),
 (40, 'leave_entitlements', 'Leave - Leave Entitlements', 1, 1, 1, 1),
-(41, 'leave_entitlements_usage_report', 'Leave - Leave Entitlements and Usage Report', 1, NULL, NULL, NULL);
+(41, 'leave_entitlements_usage_report', 'Leave - Leave Entitlements and Usage Report', 1, NULL, NULL, NULL),
+(42, 'job_titles', 'Admin - Job Titles', 1, 1, 1, 1),
+(43, 'pay_grades', 'Admin - Pay Grades', 1, 1, 1, 1);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 (1, 1, 1, NULL, 1, NULL, 0),
@@ -1826,7 +1828,15 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (3, 38, 1, NULL, 1, NULL, 1),
 (3, 39, 1, NULL, 1, 1, 1),
 (3, 40, 1, 0, 0, 0, 1),
-(3, 41, 1, NULL, NULL, NULL, 1);
+(3, 41, 1, NULL, NULL, NULL, 1),
+
+(1, 42, 1, 1, 1, 1, 0),
+(2, 42, 0, 0, 0, 0, 0),
+(3, 42, 0, 0, 0, 0, 0),
+
+(1, 43, 1, 1, 1, 1, 0),
+(2, 43, 0, 0, 0, 0, 0),
+(3, 43, 0, 0, 0, 0, 0);
 
 
 INSERT INTO `ohrm_job_category` (`name`) VALUES ('Officials and Managers'),

@@ -433,15 +433,6 @@ PayGrade:
   tableWidth: 100%
   hasSummary: false
   summary: []
-  buttons:
-    Add:
-      label: Add
-    Delete:
-      label: Delete
-      type: submit
-      class: delete
-      data-toggle: modal 
-      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'admin/deletePayGrades'
