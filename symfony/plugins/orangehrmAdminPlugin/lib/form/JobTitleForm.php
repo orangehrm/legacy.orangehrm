@@ -42,15 +42,19 @@ class JobTitleForm extends BaseForm {
         $this->jobTitleId = $this->getOption('jobTitleId');
         $this->jobTitlePermissions = $this->getOption('jobTitlePermissions');
 
-        $jobTitleWidgets = $this->getJobTitleWidgets();
-        $jobTitleValidators = $this->getJobTitleValidators();
+        $jobTitleWidgets = array();
+        $jobTitleValidators = array();
+        
+        if ($this->jobTitlePermissions->canRead()) {
+            $jobTitleWidgets = $this->getJobTitleWidgets();
+            $jobTitleValidators = $this->getJobTitleValidators();
 
-        if (!($this->jobTitlePermissions->canUpdate() || $this->jobTitlePermissions->canCreate())) {
-            foreach ($jobTitleWidgets as $widgetName => $widget) {
-                $widget->setAttribute('disabled', 'disabled');
+            if (!($this->jobTitlePermissions->canUpdate() || $this->jobTitlePermissions->canCreate())) {
+                foreach ($jobTitleWidgets as $widgetName => $widget) {
+                    $widget->setAttribute('disabled', 'disabled');
+                }
             }
         }
-
         $this->setWidgets($jobTitleWidgets);
         $this->setValidators($jobTitleValidators);
 

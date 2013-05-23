@@ -1,7 +1,7 @@
 <?php
 use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/addCustomerSuccess')); 
 ?>
-
+<?php if($customerPermissions->canRead()){?>
 <div class="box"  id="addCustomer">
     <div class="head">
         <h1 id="addCustomerHeading"><?php echo __("Add Customer"); ?></h1>
@@ -35,7 +35,9 @@ use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/addCustomerSuccess'))
                 </ol>
                     
                 <p>
+                    <?php if(($customerPermissions->canCreate() && empty($customerId)) || ($customerPermissions->canUpdate() && ($customerId > 0))){?>
                     <input type="button" class="" name="btnSave" data-toggle="modal" id="btnSave" value="<?php echo __("Save"); ?>"/>
+                    <?php }?>
                     <input type="button" class="btn reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>
                 </p>
             
@@ -50,7 +52,7 @@ use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/addCustomerSuccess'))
 <form name="frmUndeleteCustomer" id="frmUndeleteCustomer" method="post" action="<?php echo url_for('admin/undeleteCustomer'); ?>">
     <?php echo $undeleteForm; ?>
 </form>
-
+<?php }?>
 <a id="undeleteDialogLink" data-toggle="modal" href="#undeleteDialog" ></a>
 <div class="modal hide" id="undeleteDialog">
     <div class="modal-header">

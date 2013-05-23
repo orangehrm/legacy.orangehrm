@@ -17,7 +17,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class addCustomerAction extends sfAction {
+class addCustomerAction extends baseAdminAction {
 
     /**
      * @param sfForm $form
@@ -37,26 +37,28 @@ class addCustomerAction extends sfAction {
 
         /* For highlighting corresponding menu item */
         $request->setParameter('initialActionName', 'viewCustomers');
-            
-		$usrObj = $this->getUser()->getAttribute('user');
-		if (!$usrObj->isAdmin()) {
-			$this->redirect('pim/viewPersonalDetails');
-		}
-        
+
+        $usrObj = $this->getUser()->getAttribute('user');
+
+        $this->customerPermissions = $this->getDataGroupPermissions('time_customers');
+
         $this->customerId = $request->getParameter('customerId');
-		$values = array('customerId' => $this->customerId);
-		$this->setForm(new CustomerForm(array(), $values));
-		
-		$this->getUser()->setAttribute('addScreen', true);
+        $values = array('customerId' => $this->customerId, 'customerPermissions' => $this->customerPermissions);
+        
+        $this->setForm(new CustomerForm(array(), $values));
+
+        $this->getUser()->setAttribute('addScreen', true);
 
         if ($request->isMethod('post')) {
+            if ($this->customerPermissions->canCreate() || $this->customerPermissions->canUpdate()) {
 
-            $this->form->bind($request->getParameter($this->form->getName()));
-            if ($this->form->isValid()) {
-                $result = $this->form->save();
-                $this->getUser()->setAttribute('addScreen', false);
-				$this->getUser()->setFlash($result['messageType'], $result['message']);
-                $this->redirect('admin/viewCustomers');
+                $this->form->bind($request->getParameter($this->form->getName()));
+                if ($this->form->isValid()) {
+                    $result = $this->form->save();
+                    $this->getUser()->setAttribute('addScreen', false);
+                    $this->getUser()->setFlash($result['messageType'], $result['message']);
+                    $this->redirect('admin/viewCustomers');
+                }
             }
         } else {
 
@@ -67,7 +69,6 @@ class addCustomerAction extends sfAction {
                 $this->form->setUpdateMode();
             }
         }
-
     }
 
 }

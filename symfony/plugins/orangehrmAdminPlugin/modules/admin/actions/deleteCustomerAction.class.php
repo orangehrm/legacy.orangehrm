@@ -17,47 +17,51 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
+class deleteCustomerAction extends baseAdminAction {
 
-class deleteCustomerAction extends sfAction {
+    public function getCustomerService() {
+        if (is_null($this->customerService)) {
+            $this->customerService = new CustomerService();
+            $this->customerService->setCustomerDao(new CustomerDao());
+        }
+        return $this->customerService;
+    }
 
-	public function getCustomerService() {
-		if (is_null($this->customerService)) {
-			$this->customerService = new CustomerService();
-			$this->customerService->setCustomerDao(new CustomerDao());
-		}
-		return $this->customerService;
-	}
+    /**
+     *
+     * @param <type> $request
+     */
+    public function execute($request) {
 
-	/**
-	 *
-	 * @param <type> $request
-	 */
-	public function execute($request) {
+        $toBeDeletedCustomerIds = $request->getParameter('chkSelectRow');
 
-		$toBeDeletedCustomerIds = $request->getParameter('chkSelectRow');
+        $customerPermissions = $this->getDataGroupPermissions('time_customers');
 
-		if (!empty($toBeDeletedCustomerIds)) {
-			$delete = true;
-			foreach ($toBeDeletedCustomerIds as $toBeDeletedCustomerId) {
-				$deletable = $this->getCustomerService()->hasCustomerGotTimesheetItems($toBeDeletedCustomerId);
-				if ($deletable) {
-					$delete = false;
-					break;
-				}
-			}
-			if ($delete) {
-				foreach ($toBeDeletedCustomerIds as $toBeDeletedCustomerId) {
+        if ($customerPermissions->canDelete()) {
 
-					$customer = $this->getCustomerService()->deleteCustomer($toBeDeletedCustomerId);
-				}
-				$this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
-			} else {
-				$this->getUser()->setFlash('error', __('Not Allowed to Delete Customer(s) Which Have Time Logged Against'));
-			}
-		}
+            if (!empty($toBeDeletedCustomerIds)) {
+                $delete = true;
+                foreach ($toBeDeletedCustomerIds as $toBeDeletedCustomerId) {
+                    $deletable = $this->getCustomerService()->hasCustomerGotTimesheetItems($toBeDeletedCustomerId);
+                    if ($deletable) {
+                        $delete = false;
+                        break;
+                    }
+                }
+                if ($delete) {
+                    foreach ($toBeDeletedCustomerIds as $toBeDeletedCustomerId) {
 
-		$this->redirect('admin/viewCustomers');
-	}
+                        $customer = $this->getCustomerService()->deleteCustomer($toBeDeletedCustomerId);
+                    }
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                } else {
+                    $this->getUser()->setFlash('error', __('Not Allowed to Delete Customer(s) Which Have Time Logged Against'));
+                }
+            }
+
+            $this->redirect('admin/viewCustomers');
+        }
+    }
 
 }
 
