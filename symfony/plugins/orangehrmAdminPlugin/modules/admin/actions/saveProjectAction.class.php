@@ -125,7 +125,7 @@ class saveProjectAction extends baseAdminAction {
         if ($permissions->canCreate() || $permissions->canUpdate()) {
             $configurationFactory->setAllowEdit(true);
             $buttons['Add'] = array('label' => 'Add');
-            $runtimeDefinitions['hasSelectableRows'] = false;
+            $runtimeDefinitions['hasSelectableRows'] = true;
             $buttons['Delete'] = array('label' => 'Delete',
                 'type' => 'submit',
                 'data-toggle' => 'modal',
@@ -136,6 +136,7 @@ class saveProjectAction extends baseAdminAction {
                 'data-target' => '#copyActivityModal',
                 'class' => 'reset');
         }else{
+            $runtimeDefinitions['hasSelectableRows'] = false;
             $configurationFactory->setAllowEdit(false);
         }
         
