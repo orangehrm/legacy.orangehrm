@@ -10,28 +10,28 @@
  *
  * @author orangehrm
  */
-class savePayGradeCurrencyAction extends sfAction {
+class savePayGradeCurrencyAction extends baseAdminAction {
 
-	public function execute($request) {
+    public function execute($request) {
 
-		$usrObj = $this->getUser()->getAttribute('user');
-		if (!$usrObj->isAdmin()) {
-			$this->redirect('pim/viewPersonalDetails');
-		}
-		$payGradeId = $request->getParameter('payGradeId');
-		$values = array('payGradeId' => $payGradeId);
-		$this->form = new PayGradeCurrencyForm(array(), $values);
-	
-		if ($request->isMethod('post')) {
+        $payGradePermissions = $this->getDataGroupPermissions('pay_grades');
 
-			$this->form->bind($request->getParameter($this->form->getName()));
-			if ($this->form->isValid()) {
-				$payGradeId = $this->form->save();
-				$this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
-				$this->redirect('admin/payGrade?payGradeId='.$payGradeId . '#Currencies');
-			}
-		}
-	}
+        $payGradeId = $request->getParameter('payGradeId');
+        $values = array('payGradeId' => $payGradeId);
+        $this->form = new PayGradeCurrencyForm(array(), $values);
+
+        if ($request->isMethod('post')) {
+            if ($payGradePermissions->canCreate() || $payGradePermissions->canUpdate()) {
+
+                $this->form->bind($request->getParameter($this->form->getName()));
+                if ($this->form->isValid()) {
+                    $payGradeId = $this->form->save();
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                    $this->redirect('admin/payGrade?payGradeId=' . $payGradeId . '#Currencies');
+                }
+            }
+        }
+    }
 
 }
 

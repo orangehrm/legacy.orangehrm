@@ -129,7 +129,9 @@ use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/payGradeSuccess'));
             <table class="table hover" id="tblCurrencies">
                 <thead>
                     <tr>
+                        <?php if($payGradePermissions->canCreate() || $payGradePermissions->canUpdate()){?>
                         <th class="check" style="width:2%"><input type="checkbox" id="currencyCheckAll" class="checkboxCurr"/></th>
+                        <?php }?>
                         <th style="width:40%"><?php echo __("Currency") ?></th>
                         <th style="width:34%"><?php echo __("Minimum Salary") ?></th>
                         <th style="width:34%"><?php echo __("Maximum Salary") ?></th>
@@ -144,8 +146,12 @@ use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/payGradeSuccess'));
                         $cssClass = ($row % 2) ? 'even' : 'odd';
                 ?>
                         <tr class="<?php echo $cssClass; ?>">
+                            <?php if($payGradePermissions->canCreate() || $payGradePermissions->canUpdate()){?>
                             <td class="check"><input type='checkbox' class='checkboxCurr' name='delCurrencies[]' value="<?php echo $currency->currency_id; ?>"/></td>
                             <td><a href="#" class="editLink"><?php echo __($currency->getCurrencyType()->getCurrencyName()); ?></a></td>
+                            <?php }else{?>
+                                <td><?php echo __($currency->getCurrencyType()->getCurrencyName()); ?></td>
+                            <?php }?>
                             <td class=""><?php echo number_format($currency->minSalary, 2, '.', ','); ?></td>
                             <td class=""><?php echo number_format($currency->maxSalary, 2, '.', ','); ?></td>
                         </tr>
