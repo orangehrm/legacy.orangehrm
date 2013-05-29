@@ -227,15 +227,6 @@ Project:
   tableWidth: 100%
   hasSummary: false
   summary: []
-  buttons:
-    Add:
-      label: Add
-    Delete:
-      label: Delete
-      type: submit
-      class: delete
-      data-toggle: modal 
-      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'admin/deleteProject'
@@ -244,26 +235,12 @@ Project:
 
 ProjectActivity:
   pluginName: orangehrmAdminPlugin
-  hasSelectableRows: true
   unselectableRowIds: []
   idValueGetter: getActivityId
   title: "<?php echo __("Activities");?>"
   tableWidth: 100%
   hasSummary: false
   summary: []
-  buttons:
-    Add:
-      label: Add
-    Delete:
-      label: Delete
-      class: delete
-      data-toggle: modal 
-      data-target: '#deleteConfModal'
-    Copy:
-      label: Copy From
-      class: reset
-      data-toggle: modal 
-      data-target: '#copyActivityModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: '#'
