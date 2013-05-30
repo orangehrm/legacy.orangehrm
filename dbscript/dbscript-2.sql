@@ -1621,7 +1621,11 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (44, 'time_customers', 'Time - Customers', 1, 1, 1, 1),
 (45, 'time_projects', 'Time - Projects', 1, 1, 1, 1),
 (46, 'pim_reports', 'PIM - Reports', 1, 1, 1, 1),
-(47, 'attendance_configuration', 'Attendance - Configuration', 1, 0, 1, 0);
+(47, 'attendance_configuration', 'Attendance - Configuration', 1, 0, 1, 0),
+(48, 'attendance_configuration', 'Attendance - Configuration', 1, 0, 1, 0),
+(49, 'attendance_configuration', 'Attendance - Configuration', 1, 0, 1, 0),
+(50, 'attendance_configuration', 'Attendance - Configuration', 1, 0, 1, 0),
+(51, 'leave_period', 'Leave - Leave Periods', 1, 0, 1, 0);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 (1, 1, 1, NULL, 1, NULL, 0),
@@ -1856,7 +1860,11 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 
 (1, 47, 1, NULL, 1, NULL, 0),
 (2, 47, 0, 0, 0, 0, 0),
-(3, 47, 0, 0, 0, 0, 0);
+(3, 47, 0, 0, 0, 0, 0),
+
+(1, 51, 1, NULL, 1, NULL, 0),
+(2, 51, 0, 0, 0, 0, 0),
+(3, 51, 0, 0, 0, 0, 0);
 
 INSERT INTO `ohrm_job_category` (`name`) VALUES ('Officials and Managers'),
                                                 ('Professionals'),

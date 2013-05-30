@@ -22,4 +22,13 @@ abstract class baseLeaveAction extends sfAction {
     protected function setLeaveTypeService(LeaveTypeService $service) {
         $this->leaveTypeService = $service;
     }
+    
+    /**
+     * 
+     * @param type $dataGroups
+     * @return type
+     */
+    public function getDataGroupPermissions($dataGroups) {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), false, array());
+    }
 }
