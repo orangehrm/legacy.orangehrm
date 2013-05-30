@@ -3748,6 +3748,7 @@ symfony/plugins/orangehrmCorePlugin/lib/utility/PluginQueryExtensionManager.php 
 symfony/plugins/orangehrmCorePlugin/lib/utility/PluginUIManager.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/actions.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/baseCsvImportAction.class.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/actions/basePimReportAction.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/definePredefinedReportAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/displayPredefinedReportAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/mainMenuComponent.class.php -text
