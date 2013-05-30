@@ -3470,6 +3470,7 @@ symfony/plugins/orangehrmAttendancePlugin/lib/model/doctrine/PluginAttendanceRec
 symfony/plugins/orangehrmAttendancePlugin/lib/model/doctrine/PluginAttendanceRecordTable.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/lib/service/AttendanceService.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/actions.class.php -text
+symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/baseAttendanceAction.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/configureAction.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/editAttendanceRecordAction.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/punchInAction.class.php -text
