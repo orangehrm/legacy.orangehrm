@@ -289,16 +289,6 @@ ViewPredefinedReport:
   hasSummary: false
   isValueList: ''
   summary: []
-  buttons:
-    Add:
-      label: Add
-      function: addPredefinedReport
-    Delete:
-      label: Delete
-      class: delete
-      type: submit
-      data-toggle: modal 
-      data-target: '#deleteConfModal'
   buttonsPosition: before-data
   formMethod: post
   formAction: 'core/viewDefinedPredefinedReports'

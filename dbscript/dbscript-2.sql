@@ -1619,7 +1619,8 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (42, 'job_titles', 'Admin - Job Titles', 1, 1, 1, 1),
 (43, 'pay_grades', 'Admin - Pay Grades', 1, 1, 1, 1),
 (44, 'time_customers', 'Time - Customers', 1, 1, 1, 1),
-(45, 'time_projects', 'Time - Projects', 1, 1, 1, 1);
+(45, 'time_projects', 'Time - Projects', 1, 1, 1, 1),
+(46, 'pim_reports', 'PIM - Reports', 1, 1, 1, 1);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 (1, 1, 1, NULL, 1, NULL, 0),
@@ -1846,7 +1847,11 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 
 (1, 45, 1, 1, 1, 1, 0),
 (2, 45, 0, 0, 0, 0, 0),
-(3, 45, 0, 0, 0, 0, 0);
+(3, 45, 0, 0, 0, 0, 0),
+
+(1, 46, 1, 1, 1, 1, 0),
+(2, 46, 0, 0, 0, 0, 0),
+(3, 46, 0, 0, 0, 0, 0);
 
 
 INSERT INTO `ohrm_job_category` (`name`) VALUES ('Officials and Managers'),

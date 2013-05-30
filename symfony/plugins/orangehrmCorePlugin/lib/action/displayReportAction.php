@@ -17,7 +17,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-abstract class displayReportAction extends sfAction {
+abstract class displayReportAction extends basePimReportAction {
 
     private $confFactory;
     private $form;

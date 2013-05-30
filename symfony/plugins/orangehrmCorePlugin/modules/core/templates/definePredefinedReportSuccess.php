@@ -2,6 +2,7 @@
 echo stylesheet_tag(theme_path('css/orangehrm.datepicker.css'));
 use_javascript('orangehrm.datepicker.js');
 ?>
+<?php if(($reportPermissions->canCreate() && empty($reportId)) || ($reportPermissions->canUpdate() && $reportId > 0)){?>
 <div class="box single">
    
     <div class="head">
@@ -180,6 +181,7 @@ use_javascript('orangehrm.datepicker.js');
         </form>
         </div>
     </div>
+<?php }?>
 
     <style type="text/css">
         label {
