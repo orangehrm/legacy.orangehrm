@@ -1623,7 +1623,7 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (46, 'pim_reports', 'PIM - Reports', 1, 1, 1, 1),
 (47, 'attendance_configuration', 'Attendance - Configuration', 1, 0, 1, 0),
 (48, 'attendance_manage_records', 'Attendance - Manage Attendance Records', 1, 1, 1, 1),
-(59, 'time_project_reports', 'Time - Project Reports', 1, 0, 0, 0),
+(49, 'time_project_reports', 'Time - Project Reports', 1, 0, 0, 0),
 (50, 'time_employee_reports', 'Time - Employee Reports', 1, 0, 0, 0),
 (51, 'attendance_summary', 'Attendance - Summary', 1, 0, 0, 0),
 (52, 'leave_period', 'Leave - Leave Periods', 1, 0, 1, 0);
