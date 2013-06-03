@@ -1626,7 +1626,10 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (49, 'time_project_reports', 'Time - Project Reports', 1, 0, 0, 0),
 (50, 'time_employee_reports', 'Time - Employee Reports', 1, 0, 0, 0),
 (51, 'attendance_summary', 'Attendance - Summary', 1, 0, 0, 0),
-(52, 'leave_period', 'Leave Config - Leave Period', 1, 0, 1, 0);
+(52, 'leave_period', 'Leave - Leave Period', 1, 0, 1, 0),
+(53, 'leave_types', 'Leave - Leave Types', 1, 1, 1, 1),
+(54, 'work_week', 'Leave - Work Week', 1, 0, 1, 0),
+(55, 'holidays', 'Leave - Holidays', 1, 0, 1, 0);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 (1, 1, 1, NULL, 1, NULL, 0),
