@@ -43,7 +43,7 @@ class leaveTypeListAction extends baseLeaveAction {
         $runtimeDefinitions['buttons'] = $buttons;
 
         $configurationFactory = $this->getListConfigurationFactory();
-
+        
         $configurationFactory->setRuntimeDefinitions($runtimeDefinitions);
         ohrmListComponent::setActivePlugin('orangehrmLeavePlugin');
         ohrmListComponent::setConfigurationFactory($configurationFactory);

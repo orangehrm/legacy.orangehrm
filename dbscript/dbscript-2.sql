@@ -1629,7 +1629,7 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (52, 'leave_period', 'Leave - Leave Period', 1, 0, 1, 0),
 (53, 'leave_types', 'Leave - Leave Types', 1, 1, 1, 1),
 (54, 'work_week', 'Leave - Work Week', 1, 0, 1, 0),
-(55, 'holidays', 'Leave - Holidays', 1, 0, 1, 0);
+(55, 'holidays', 'Leave - Holidays', 1, 1, 1, 1);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 (1, 1, 1, NULL, 1, NULL, 0),
@@ -1876,7 +1876,11 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 
 (1, 54, 1, 0, 1, 0, 0),
 (2, 54, 0, 0, 0, 0, 0),
-(3, 54, 0, 0, 0, 0, 0);
+(3, 54, 0, 0, 0, 0, 0),
+
+(1, 55, 1, 1, 1, 1, 0),
+(2, 55, 0, 0, 0, 0, 0),
+(3, 55, 0, 0, 0, 0, 0);
 
 INSERT INTO `ohrm_job_category` (`name`) VALUES ('Officials and Managers'),
                                                 ('Professionals'),

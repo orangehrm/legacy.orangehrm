@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
@@ -22,7 +23,7 @@
 /**
  * delete holiday(s)
  */
-class deleteHolidayAction extends sfAction {
+class deleteHolidayAction extends baseLeaveAction {
 
     private $holidayService;
 
@@ -45,29 +46,31 @@ class deleteHolidayAction extends sfAction {
     public function setHolidayService(HolidayService $holidayService) {
         $this->holidayService = $holidayService;
     }
-    
-    
+
     /**
      * view Holiday list
      * @param sfWebRequest $request
-     */ 
+     */
     public function execute($request) {
+
+        $holidayPermissions = $this->getDataGroupPermissions('holidays');
 
         $holidayIds = $request->getPostParameter('chkSelectRow[]');
 
-        if (!empty($holidayIds)) {
+        if ($holidayPermissions->canDelete()) {
+            if (!empty($holidayIds)) {
 
-            foreach ($holidayIds as $key => $id) {
-                $this->getHolidayService()->deleteHoliday($id);
+                foreach ($holidayIds as $key => $id) {
+                    $this->getHolidayService()->deleteHoliday($id);
+                }
+
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+            } else {
+                $this->getUser()->setFlash('warning', __(TopLevelMessages::SELECT_RECORDS));
             }
 
-            $this->getUser()->setFlash('templateMessage', array('SUCCESS', __(TopLevelMessages::DELETE_SUCCESS)));
-        } else {
-            $this->getUser()->setFlash('templateMessage', array('NOTICE', __(TopLevelMessages::SELECT_RECORDS)));
+            $this->redirect('leave/viewHolidayList');
         }
-
-
-        $this->redirect('leave/viewHolidayList');
     }
 
 }

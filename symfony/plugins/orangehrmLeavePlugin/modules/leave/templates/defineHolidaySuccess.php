@@ -19,7 +19,7 @@
 ?>
 <?php use_javascripts_for_form($form); ?>
 <?php use_stylesheets_for_form($form); ?>
-
+<?php if($holidayPermissions->canRead()){?>
 <div id="location" class="box single">
 
     <div class="head">
@@ -43,9 +43,11 @@
 
                 <p>
 
-                <div class="formbuttons">            
+                <div class="formbuttons">    
+                    <?php if(($holidayPermissions->canCreate() && empty($id)) || ($holidayPermissions->canUpdate() && $id > 0)){?>
                     <input type="button" class="savebutton" id="saveBtn" value="<?php echo __('Save'); ?>" />
-                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>               
+                    <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/> 
+                    <?php }?>
                 </div>
 
                 </p>
@@ -55,7 +57,7 @@
         </form>
     </div>
 </div>
-
+<?php }?>
 <script type="text/javascript">
     //<![CDATA[
     
