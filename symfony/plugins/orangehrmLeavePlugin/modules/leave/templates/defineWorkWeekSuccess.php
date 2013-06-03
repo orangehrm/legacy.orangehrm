@@ -1,6 +1,6 @@
 <?php use_javascripts_for_form($workWeekForm); ?>
 <?php use_stylesheets_for_form($workWeekForm); ?>
-
+<?php if($workWeekPermissions->canRead()){?>
 <div id="location" class="box single">
 
     <div class="head">
@@ -21,7 +21,7 @@
                 <p>
                     <?php 
                         $permissions = $sf_context->get('screen_permissions');
-                        if ($permissions->canUpdate()) {
+                        if ($workWeekPermissions->canUpdate()) {
                     ?>
                                 <div class="formbuttons">            
                                     <input type="button" class="savebutton" id="saveBtn" value="<?php echo __('Edit'); ?>" />
@@ -35,6 +35,7 @@
         </form>
         </div>
 </div>
+<?php }?>
 <script type="text/javascript">
         //<![CDATA[
         var permissions = {

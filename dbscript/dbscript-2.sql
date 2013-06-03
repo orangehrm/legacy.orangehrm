@@ -1868,7 +1868,15 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 
 (1, 52, 1, NULL, 1, NULL, 0),
 (2, 52, 0, 0, 0, 0, 0),
-(3, 52, 0, 0, 0, 0, 0);
+(3, 52, 0, 0, 0, 0, 0),
+
+(1, 53, 1, 1, 1, 1, 0),
+(2, 53, 0, 0, 0, 0, 0),
+(3, 53, 0, 0, 0, 0, 0),
+
+(1, 54, 1, 0, 1, 0, 0),
+(2, 54, 0, 0, 0, 0, 0),
+(3, 54, 0, 0, 0, 0, 0);
 
 INSERT INTO `ohrm_job_category` (`name`) VALUES ('Officials and Managers'),
                                                 ('Professionals'),

@@ -1,6 +1,6 @@
 <?php
 
-abstract class baseLeaveAction extends sfAction {
+abstract class baseLeaveAction extends orangehrmAction {
 
     protected $leaveTypeService;
 
