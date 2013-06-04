@@ -3575,6 +3575,7 @@ symfony/plugins/orangehrmCorePlugin/lib/component/PropertyPopulator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/SelectSingleCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/SortableHeaderCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/TextboxCell.php -text
+symfony/plugins/orangehrmCorePlugin/lib/component/TimeFormatCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/UCFirstCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ohrmCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ohrmComponentInterface.php -text
@@ -3609,6 +3610,7 @@ symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php 
 symfony/plugins/orangehrmCorePlugin/lib/form/orangehrmForm.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorEmployeeNameAutoFill.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorSchemaCompare.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorTimeRange.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/orangehrmValidatedFile.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetCheckboxGroup.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/widget/ohrmWidgetDatePicker.php -text
@@ -3845,6 +3847,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/dao/WorkWeekDao.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/EntitlementConsumptionStrategy.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/FIFOEntitlementConsumptionStrategy.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entitlement/LeaveBalance.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/entity/LeaveDuration.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/entity/LeaveParameterObject.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/event/LeaveEvents.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/event/ohrmObserver.php -text
@@ -3866,6 +3869,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/MyLeaveEntitlementForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/UndeleteLeaveTypeForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/WorkWeekForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/sfWidgetFormSchemaFormatterPlain.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/widget/ohrmWidgetFormLeaveDuration.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/widget/ohrmWidgetFormLeavePeriod.class.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/DetailedLeaveListConfigurationFactory.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/list/HolidayListConfigurationFactory.php -text
@@ -4070,6 +4074,7 @@ symfony/plugins/orangehrmLeavePlugin/web/css/applyLeaveSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/assignLeaveSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/defineLeavePeriodSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/leaveTypeListSuccess.css -text
+symfony/plugins/orangehrmLeavePlugin/web/css/ohrmWidgetFormLeaveDuration.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/viewHolidayListSuccess.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/viewHolidayListSuccessSearch.css -text
 symfony/plugins/orangehrmLeavePlugin/web/css/viewLeaveBalanceReport.css -text
@@ -4082,6 +4087,7 @@ symfony/plugins/orangehrmLeavePlugin/web/js/defineLeaveTypeSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/defineWorkWeekSuccessValidate.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/leaveTypeListSuccess.js -text
+symfony/plugins/orangehrmLeavePlugin/web/js/ohrmWidgetFormLeaveDuration.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewHolidayListSuccessSearch.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewLeaveListSuccess.js -text
 symfony/plugins/orangehrmLeavePlugin/web/js/viewLeaveRequestSuccess.js -text
@@ -4778,7 +4784,6 @@ upgrader/apps/upgrader/lib/form/DatabaseInfoForm.php -text
 upgrader/apps/upgrader/lib/form/SystemCheckForm.php -text
 upgrader/apps/upgrader/lib/form/VersionInfoForm.php -text
 upgrader/apps/upgrader/lib/myUser.class.php -text
-upgrader/apps/upgrader/lib/schemaIncrementTasks/AddLeaveLeaveEntitlement.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask41.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask42.php -text
@@ -4794,9 +4799,9 @@ upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask51.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask52.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask53.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask54.php -text
-upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask55-1.php.old -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask55.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask56.php -text
+upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask57.php -text
 upgrader/apps/upgrader/lib/utility/SystemCheckUtility.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeLogger.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeUtility.php -text
