@@ -18,7 +18,7 @@
  *
  */
 ?>
-
+<?php if($vacancyPermissions->canRead()){?>
 <div class="box searchForm toggableForm" id="srchVacancy">
     
     <div class="head">
@@ -81,7 +81,7 @@
     <input type="hidden" name="pageNo" id="pageNo" value="<?php //echo $form->pageNo;         ?>" />
     <input type="hidden" name="hdnAction" id="hdnAction" value="search" />
 </form>
-
+<?php }?>
 <script type="text/javascript">
 
     function submitPage(pageNo) {

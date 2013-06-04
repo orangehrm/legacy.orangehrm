@@ -19,5 +19,9 @@ abstract class baseRecruitmentAction extends sfAction {
         ));
         $sessionVariableManager->registerVariables();
     }
+    
+    public function getDataGroupPermissions($dataGroups) {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), false, array());
+    }
 
 }

@@ -1625,11 +1625,13 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (48, 'attendance_manage_records', 'Attendance - Manage Attendance Records', 1, 1, 1, 1),
 (49, 'time_project_reports', 'Time - Project Reports', 1, 0, 0, 0),
 (50, 'time_employee_reports', 'Time - Employee Reports', 1, 0, 0, 0),
-(51, 'attendance_summary', 'Attendance - Summary', 1, 0, 0, 0),
+(51, 'attendance_summary', 'Time - Attendance Summary', 1, 0, 0, 0),
 (52, 'leave_period', 'Leave - Leave Period', 1, 0, 1, 0),
 (53, 'leave_types', 'Leave - Leave Types', 1, 1, 1, 1),
 (54, 'work_week', 'Leave - Work Week', 1, 0, 1, 0),
-(55, 'holidays', 'Leave - Holidays', 1, 1, 1, 1);
+(55, 'holidays', 'Leave - Holidays', 1, 1, 1, 1),
+(56, 'recruitment_vacancies', 'Recruitment - Vacancies', 1, 1, 1, 1),
+(57, 'recruitment_candidates', 'Recruitment - Candidates', 1, 1, 1, 1);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
 (1, 1, 1, NULL, 1, NULL, 0),
@@ -1866,6 +1868,19 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (2, 47, 0, 0, 0, 0, 0),
 (3, 47, 0, 0, 0, 0, 0),
 
+(1, 49, 1, 0, 0, 0, 0),
+(2, 49, 0, 0, 0, 0, 0),
+(3, 49, 0, 0, 0, 0, 0),
+(4, 49, 1, 0, 0, 0, 0),
+
+(1, 50, 1, 0, 0, 0, 0),
+(2, 50, 0, 0, 0, 0, 0),
+(3, 50, 1, 0, 0, 0, 0),
+
+(1, 51, 1, 0, 0, 0, 0),
+(2, 51, 0, 0, 0, 0, 0),
+(3, 51, 1, 0, 0, 0, 0),
+
 (1, 52, 1, NULL, 1, NULL, 0),
 (2, 52, 0, 0, 0, 0, 0),
 (3, 52, 0, 0, 0, 0, 0),
@@ -1880,7 +1895,15 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 
 (1, 55, 1, 1, 1, 1, 0),
 (2, 55, 0, 0, 0, 0, 0),
-(3, 55, 0, 0, 0, 0, 0);
+(3, 55, 0, 0, 0, 0, 0),
+
+(1, 56, 1, 1, 1, 1, 0),
+(2, 56, 0, 0, 0, 0, 0),
+(3, 56, 0, 0, 0, 0, 0),
+
+(1, 57, 1, 1, 1, 1, 0),
+(6, 57, 1, 1, 1, 1, 0),
+(5, 57, 1, 0, 1, 0, 0);
 
 INSERT INTO `ohrm_job_category` (`name`) VALUES ('Officials and Managers'),
                                                 ('Professionals'),
