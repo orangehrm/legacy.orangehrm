@@ -21,15 +21,21 @@ class displayProjectReportCriteriaAction extends displayReportCriteriaAction {
 
     public function execute($request) {
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $accessibleMenus = $this->userObj->getAccessibleReportSubMenus();
+        //$accessibleMenus = $this->userObj->getAccessibleReportSubMenus();
         $hasRight = false;
-
-        foreach ($accessibleMenus as $menu) {
-            if ($menu->getDisplayName() === __("Project Reports")) {
-                $hasRight = true;
-                break;
-            }
+        
+        $this->projectReportPermissions = $this->getDataGroupPermissions('time_project_reports');
+        
+        if($this->projectReportPermissions->canRead()){
+            $hasRight = true;
         }
+
+//        foreach ($accessibleMenus as $menu) {
+//            if ($menu->getDisplayName() === __("Project Reports")) {
+//                $hasRight = true;
+//                break;
+//            }
+//        }
 
         if (!$hasRight) {
             return $this->renderText(__("You are not allowed to view this page").'!');

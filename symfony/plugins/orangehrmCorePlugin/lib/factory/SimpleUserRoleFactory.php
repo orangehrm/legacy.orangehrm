@@ -35,6 +35,16 @@ class SimpleUserRoleFactory {
         if (isset($userRoleArray['isHiringManager']) && $userRoleArray['isHiringManager']) {
             $userObj = new HiringManagerUserRoleDecorator($userObj);
         }
+        
+        $sfUser = sfContext::getInstance()->getUser();
+        
+        // Consider user defined user roles as admin
+        if (!$sfUser->getAttribute('auth.userRole.predefined')) {
+            $userObj = new AdminUserRoleDecorator($userObj);
+            $userObj->isAdmin(true);
+        }
+        $userId = $userObj->getUserId();
+        
         return $userObj;
     }
 

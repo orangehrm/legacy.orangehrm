@@ -17,19 +17,25 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class displayAttendanceSummaryReportCriteriaAction extends sfAction {
+class displayAttendanceSummaryReportCriteriaAction extends baseTimeAction {
 
     public function execute($request) {
 
         $userObj = $this->getContext()->getUser()->getAttribute('user');
-        $accessibleMenus = $userObj->getAccessibleReportSubMenus();
+//        $accessibleMenus = $userObj->getAccessibleReportSubMenus();
         $hasRight = false;
 
-        foreach ($accessibleMenus as $menu) {
-            if ($menu->getDisplayName() === __("Attendance Summary")) {
-                $hasRight = true;
-                break;
-            }
+//        foreach ($accessibleMenus as $menu) {
+//            if ($menu->getDisplayName() === __("Attendance Summary")) {
+//                $hasRight = true;
+//                break;
+//            }
+//        }
+        
+        $this->attendancePermissions = $this->getDataGroupPermissions('attendance_summary');
+        
+        if($this->attendancePermissions->canRead()){
+            $hasRight = true;
         }
 
         if (!$hasRight) {

@@ -21,15 +21,22 @@ class displayEmployeeReportCriteriaAction extends displayReportCriteriaAction {
 
     public function execute($request) {
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $accessibleMenus = $this->userObj->getAccessibleReportSubMenus();
+        
+        //$accessibleMenus = $this->userObj->getAccessibleReportSubMenus();
         $hasRight = false;
-
-        foreach ($accessibleMenus as $menu) {
-            if ($menu->getDisplayName() === __("Employee Reports")) {
-                $hasRight = true;
-                break;
-            }
+        
+        $this->employeeReportsPermissions = $this->getDataGroupPermissions('time_employee_reports');
+        
+        if($this->employeeReportsPermissions->canRead()){
+            $hasRight = true;
         }
+
+//        foreach ($accessibleMenus as $menu) {
+//            if ($menu->getDisplayName() === __("Employee Reports")) {
+//                $hasRight = true;
+//                break;
+//            }
+//        }
 
         if (!$hasRight) {
             return $this->renderText(__("You are not allowed to view this page")."!");
