@@ -18,13 +18,12 @@
  * Boston, MA  02110-1301, USA
  *
  */
-class deleteCandidateVacanciesAction extends sfAction {
+class deleteCandidateVacanciesAction extends baseAction {
 
-    
     /**
      * Get CandidateService
      * @returns CandidateService
-     */ 
+     */
     public function getCandidateService() {
         if (is_null($this->candidateService)) {
             $this->candidateService = new CandidateService();
@@ -34,13 +33,16 @@ class deleteCandidateVacanciesAction extends sfAction {
     }
 
     public function execute($request) {
+        $candidaatePermissions = $this->getDataGroupPermissions('recruitment_candidates');
 
-        $candidateVacancyIds = $request->getParameter("chkSelectRow");
-        $toBeDeletedCandiates = $this->getCandidateService()->processCandidatesVacancyArray($candidateVacancyIds);
-        $isDeleteSuccess = $this->getCandidateService()->deleteCandidate($toBeDeletedCandiates);
-        
-        if($isDeleteSuccess) {
-            $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+        if ($candidaatePermissions->canDelete()) {
+            $candidateVacancyIds = $request->getParameter("chkSelectRow");
+            $toBeDeletedCandiates = $this->getCandidateService()->processCandidatesVacancyArray($candidateVacancyIds);
+            $isDeleteSuccess = $this->getCandidateService()->deleteCandidate($toBeDeletedCandiates);
+
+            if ($isDeleteSuccess) {
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+            }
         }
         $this->redirect('recruitment/viewCandidates');
     }

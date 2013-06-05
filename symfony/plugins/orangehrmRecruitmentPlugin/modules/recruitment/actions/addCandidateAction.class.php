@@ -18,7 +18,7 @@
  * Boston, MA  02110-1301, USA
  *
  */
-class addCandidateAction extends sfAction {
+class addCandidateAction extends baseAction {
 
     /**
      * @param sfForm $form
@@ -63,8 +63,10 @@ class addCandidateAction extends sfAction {
      * @param <type> $request
      */
     public function execute($request) {
-         /* For highlighting corresponding menu item */  
+        /* For highlighting corresponding menu item */
         $request->setParameter('initialActionName', 'viewCandidates');
+
+        $this->candidatePermissions = $this->getDataGroupPermissions('recruitment_candidates');
 
         $userObj = $this->getUser()->getAttribute('user');
         $allowedVacancyList = $userObj->getAllowedVacancyList();
@@ -77,15 +79,15 @@ class addCandidateAction extends sfAction {
             $reDirect = true;
             $this->edit = false;
         }
-        $param = array('candidateId' => $this->candidateId, 'allowedVacancyList' => $allowedVacancyList, 'empNumber' => $userObj->getEmployeeNumber(), 'isAdmin' => $userObj->isAdmin());
+        $param = array('candidateId' => $this->candidateId, 'allowedVacancyList' => $allowedVacancyList, 'empNumber' => $userObj->getEmployeeNumber(), 'isAdmin' => $userObj->isAdmin(), 'candidatePermissions' => $this->candidatePermissions);
         $this->setForm(new AddCandidateForm(array(), $param, true));
 
-       
-        $vacancyProperties = array('name', 'id', 'status' );
+
+        $vacancyProperties = array('name', 'id', 'status');
         $this->jobVacancyList = $this->getVacancyService()->getVacancyPropertyList($vacancyProperties);
-        
+
         $this->candidateStatus = JobCandidate::ACTIVE;
-        
+
         if ($this->candidateId > 0) {
             $allowedCandidateList = $userObj->getAllowedCandidateList();
             if (!in_array($this->candidateId, $allowedCandidateList)) {
@@ -96,44 +98,48 @@ class addCandidateAction extends sfAction {
 
             $candidateHistory = $this->getCandidateService()->getCandidateHistoryForCandidateId($this->candidateId, $allowedHistoryList);
             $candidateHistoryService = new CandidateHistoryService();
-            $this->_setListComponent($candidateHistoryService->getCandidateHistoryList($candidateHistory));
+            if ($this->candidatePermissions->canRead()) {
+                $this->_setListComponent($candidateHistoryService->getCandidateHistoryList($candidateHistory));
+            }
             $params = array();
             $this->parmetersForListCompoment = $params;
             $this->candidateStatus = $this->getCandidateService()->getCandidateById($this->candidateId)->getStatus();
         } else {
-            if (!($userObj->isAdmin() || $userObj->isHiringManager())) {
+            if (!($userObj->isAdmin() || $userObj->isHiringManager() || $this->candidatePermissions->canRead())) {
                 $this->redirect('recruitment/viewCandidates');
             }
         }
 
         if ($request->isMethod('post')) {
+            if ($this->candidatePermissions->canCreate() || $this->candidatePermissions->canUpdate()) {
 
-            $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
-            $file = $request->getFiles($this->form->getName());
-
-            if (($_FILES['addCandidate']['size']['resume'] > 1024000) || ($_FILES['addCandidate']['error']['resume'] && $_FILES['addCandidate']['name']['resume'])) {
-                $title = ($this->candidateId > 0) ? __('Editing Candidate') : __('Adding Candidate');	 
-                $this->getUser()->setFlash('addcandidate.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
-            } elseif ($_FILES == null) {
-                $title = ($this->candidateId > 0) ? __('Editing Candidate') : __('Adding Candidate');
-                $this->getUser()->setFlash('addcandidate.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
-                $this->redirect('recruitment/addCandidate');
-            } else {
                 $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
                 $file = $request->getFiles($this->form->getName());
 
-                if ($this->form->isValid()) {
+                if (($_FILES['addCandidate']['size']['resume'] > 1024000) || ($_FILES['addCandidate']['error']['resume'] && $_FILES['addCandidate']['name']['resume'])) {
+                    $title = ($this->candidateId > 0) ? __('Editing Candidate') : __('Adding Candidate');
+                    $this->getUser()->setFlash('addcandidate.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
+                } elseif ($_FILES == null) {
+                    $title = ($this->candidateId > 0) ? __('Editing Candidate') : __('Adding Candidate');
+                    $this->getUser()->setFlash('addcandidate.warning', __(TopLevelMessages::FILE_SIZE_SAVE_FAILURE));
+                    $this->redirect('recruitment/addCandidate');
+                } else {
+                    $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+                    $file = $request->getFiles($this->form->getName());
 
-                    $result = $this->form->save();
+                    if ($this->form->isValid()) {
 
-                    if (isset($result['messageType'])) {
-                        $this->messageType = $result['messageType'];
-                        $this->message = $result['message'];
-                        $this->invalidFile = true;
-                    } else {
-                        $this->candidateId = $result['candidateId'];
-                        $this->getUser()->setFlash('addcandidate.success', __(TopLevelMessages::SAVE_SUCCESS));
-                        $this->redirect('recruitment/addCandidate?id=' . $this->candidateId);
+                        $result = $this->form->save();
+
+                        if (isset($result['messageType'])) {
+                            $this->messageType = $result['messageType'];
+                            $this->message = $result['message'];
+                            $this->invalidFile = true;
+                        } else {
+                            $this->candidateId = $result['candidateId'];
+                            $this->getUser()->setFlash('addcandidate.success', __(TopLevelMessages::SAVE_SUCCESS));
+                            $this->redirect('recruitment/addCandidate?id=' . $this->candidateId);
+                        }
                     }
                 }
             }
