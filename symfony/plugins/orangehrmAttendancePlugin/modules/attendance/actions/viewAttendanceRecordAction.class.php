@@ -17,7 +17,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class viewAttendanceRecordAction extends sfAction {
+class viewAttendanceRecordAction extends baseAttendanceAction {
 
     private $employeeService;
 
@@ -39,17 +39,24 @@ class viewAttendanceRecordAction extends sfAction {
     public function execute($request) {
 
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $accessibleMenus = $this->userObj->getAccessibleAttendanceSubMenus();
+//        $accessibleMenus = $this->userObj->getAccessibleAttendanceSubMenus();
         $hasRight = false;
         $this->parmetersForListCompoment = array();
         $this->showEdit = false;
+//
+//        foreach ($accessibleMenus as $menu) {
+//            if ($menu->getDisplayName() === __("Employee Records")) {
+//                $hasRight = true;
+//                break;
+//            }
+//        }
 
-        foreach ($accessibleMenus as $menu) {
-            if ($menu->getDisplayName() === __("Employee Records")) {
-                $hasRight = true;
-                break;
-            }
+        $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_manage_records');
+
+        if ($this->attendanceManagePermissios->canRead()) {
+            $hasRight = true;
         }
+
 
         if (!$hasRight) {
             return $this->renderText(__("You are not allowed to view this page") . "!");
@@ -77,10 +84,11 @@ class viewAttendanceRecordAction extends sfAction {
 
         $records = array();
 
-        $this->_setListComponent($records, $noOfRecords, $pageNumber, null, $this->showEdit);
+        if ($this->attendanceManagePermissios->canRead()) {
+            $this->_setListComponent($records, $noOfRecords, $pageNumber, null, $this->showEdit);
+        }
 
         if (!$this->trigger) {
-
 
             if ($request->isMethod('post')) {
 
@@ -100,7 +108,7 @@ class viewAttendanceRecordAction extends sfAction {
                     $userEmployeeNumber = $this->userObj->getEmployeeNumber();
 
                     $post = $this->form->getValues();
-                    
+
                     if (!$this->employeeId) {
                         $empData = $post['employeeName'];
                         $this->employeeId = $empData['empId'];
@@ -112,7 +120,7 @@ class viewAttendanceRecordAction extends sfAction {
                     if ($this->employeeId) {
                         $this->showEdit = true;
                     }
-
+                    
                     $userRoleFactory = new UserRoleFactory();
                     $this->decoratedUser = $decoratedUser = $userRoleFactory->decorateUserRole($userId, $this->employeeId, $userEmployeeNumber);
 
@@ -128,7 +136,7 @@ class viewAttendanceRecordAction extends sfAction {
 //                        $empRecords = $this->employeeService->getEmployeeList('firstName', 'ASC', false);
                         $empRecords = UserRoleManagerFactory::getUserRoleManager()->getAccessibleEntities('Employee');
                         $count = count($empRecords);
-                    } else {                        
+                    } else {
                         $empRecords = $this->employeeService->getEmployee($this->employeeId);
                         $empRecords = array($empRecords);
                         $count = 1;
@@ -162,7 +170,6 @@ class viewAttendanceRecordAction extends sfAction {
                             $records[] = $attendance;
                         }
                     }
-
                     
                     $params = array();
                     $this->parmetersForListCompoment = $params;
@@ -176,7 +183,9 @@ class viewAttendanceRecordAction extends sfAction {
                             foreach ($actionableStates as $state) {
                                 foreach ($records as $record) {
                                     if ($state == $record->getState()) {
-                                        $this->allowedActions['Edit'] = true;
+                                        if ($this->attendanceManagePermissios->canUpdate()) {
+                                            $this->allowedActions['Edit'] = true;
+                                        }
                                         break;
                                     }
                                 }
@@ -190,7 +199,9 @@ class viewAttendanceRecordAction extends sfAction {
                             foreach ($actionableStates as $state) {
                                 foreach ($records as $record) {
                                     if ($state == $record->getState()) {
-                                        $this->allowedActions['Delete'] = true;
+                                        if ($this->attendanceManagePermissios->canDelete()) {
+                                            $this->allowedActions['Delete'] = true;
+                                        }
                                         break;
                                     }
                                 }
@@ -230,24 +241,28 @@ class viewAttendanceRecordAction extends sfAction {
                         }
 
                         if ((is_null($attendanceRecord)) && (in_array(WorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN, $allowedActionsList))) {
-
-                            $this->allowedActions['PunchIn'] = true;
+                            if ($this->attendanceManagePermissios->canCreate()) {
+                                $this->allowedActions['PunchIn'] = true;
+                            }
                         }
                         if ((!is_null($attendanceRecord)) && (in_array(WorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT, $allowedActionsList))) {
-
-                            $this->allowedActions['PunchOut'] = true;
+                            if ($this->attendanceManagePermissios->canCreate()) {
+                                $this->allowedActions['PunchOut'] = true;
+                            }
                         }
                     }
                     if ($this->employeeId == '') {
                         $this->showEdit = FALSE;
                     }
+                    var_dump($this->allowedActions);
+                    die;
                     $this->_setListComponent($records, $noOfRecords, $pageNumber, $count, $this->showEdit, $this->allowedActions);
                 }
             }
         }
     }
 
-    private function _setListComponent($records, $noOfRecords, $pageNumber, $count=null, $showEdit=null, $allowedActions=null) {
+    private function _setListComponent($records, $noOfRecords, $pageNumber, $count = null, $showEdit = null, $allowedActions = null) {
 
         $configurationFactory = new AttendanceRecordHeaderFactory();
 
@@ -257,9 +272,9 @@ class viewAttendanceRecordAction extends sfAction {
                 $notSelectable[] = $record->getId();
             }
         }
-        
-//        print_r($allowedActions);
+
         $buttons = array();
+        $canSelect = false;
         if (isset($allowedActions)) {
             if (isset($showEdit) && $showEdit) {
                 if ($allowedActions['Edit']) :
@@ -273,16 +288,18 @@ class viewAttendanceRecordAction extends sfAction {
                 endif;
             }
             if ($allowedActions['Delete']) :
+                $canSelect = true;
                 $buttons['Delete'] = array('label' => __('Delete'),
-                        'type' => 'submit',
-                        'data-toggle' => 'modal',
-                        'data-target' => '#dialogBox',
-                        'class' => 'delete');
+                    'type' => 'submit',
+                    'data-toggle' => 'modal',
+                    'data-target' => '#dialogBox',
+                    'class' => 'delete');
             endif;
         }
         $configurationFactory->setRuntimeDefinitions(array(
             'buttons' => $buttons,
             'unselectableRowIds' => $notSelectable,
+            'hasSelectableRows' => $canSelect
         ));
 
         ohrmListComponent::setActivePlugin('orangehrmAttendancePlugin');

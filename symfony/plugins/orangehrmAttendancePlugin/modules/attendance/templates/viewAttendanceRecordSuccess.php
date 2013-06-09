@@ -2,6 +2,7 @@
 <?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/viewAttendanceRecordSuccess')); ?>
 <?php echo javascript_include_tag(plugin_web_path('orangehrmAttendancePlugin', 'js/getRelatedAttendanceRecordsSuccess')); ?>
 
+<?php if($attendanceManagePermissios->canRead()){?>
 <div class="box">
 
     <div class="head">
@@ -43,7 +44,7 @@
     <div id="msg" ><?php echo isset($messageData[0]) ? displayMainMessage($messageData[0], $messageData[1]) : ''; ?></div>
     <?php include_component('core', 'ohrmList', $parmetersForListCompoment); ?>
 </div>
-
+<?php }?>
 <div id="punchInOut">
 
 </div>

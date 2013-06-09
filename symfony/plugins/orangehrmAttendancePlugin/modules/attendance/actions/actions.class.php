@@ -62,7 +62,7 @@ class AttendanceActions extends sfActions {
 
 
         $employeeId = $request->getParameter('employeeId');
-        $this->isValid = $this->getAttendanceService()->checkForPunchOutOverLappingRecords($punchIn, $punchOut, $employeeId,$recordId);
+        $this->isValid = $this->getAttendanceService()->checkForPunchOutOverLappingRecords($punchIn, $punchOut, $employeeId, $recordId);
     }
 
     public function executeValidatePunchInOverLapping($request) {
@@ -249,16 +249,16 @@ class AttendanceActions extends sfActions {
         $attendanceRecordId = $request->getParameter('id');
 
         $this->isDeleted = $this->getAttendanceService()->deleteAttendanceRecords($attendanceRecordId);
-        
+
         $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
 
         return $this->renderText($this->isDeleted);
     }
 
     public function executeProxyPunchInPunchOut($request) {
-        /* For highlighting corresponding menu item */  
-        $request->setParameter('initialActionName', 'viewAttendanceRecord');  
-        
+        /* For highlighting corresponding menu item */
+        $request->setParameter('initialActionName', 'viewAttendanceRecord');
+
         $this->punchInTime = null;
         $this->punchInUtcTime = null;
         $this->punchInNote = null;
@@ -269,6 +269,7 @@ class AttendanceActions extends sfActions {
         $this->date = $request->getParameter('date');
         $this->actionRecorder = $request->getParameter('actionRecorder');
 
+        $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_manage_records');
 
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
         $timeZoneOffset = $this->userObj->getUserTimeZoneOffset();
@@ -301,38 +302,40 @@ class AttendanceActions extends sfActions {
             if ($request->getParameter('path')) {
 
                 if ($request->isMethod('post')) {
+                    if ($this->attendanceManagePermissios->canCreate()) {
 
-                    $accessFlowStateMachineService = new AccessFlowStateMachineService();
-                    $attendanceRecord = new AttendanceRecord();
-                    $attendanceRecord->setEmployeeId($this->employeeId);
+                        $accessFlowStateMachineService = new AccessFlowStateMachineService();
+                        $attendanceRecord = new AttendanceRecord();
+                        $attendanceRecord->setEmployeeId($this->employeeId);
 
 
-                    $this->form->bind($request->getParameter('attendance'));
+                        $this->form->bind($request->getParameter('attendance'));
 
-                    if ($this->form->isValid()) {
+                        if ($this->form->isValid()) {
 
-                        $punchInDate = $this->form->getValue('date');
-                        $punchIntime = $this->form->getValue('time');
-                        $punchInNote = $this->form->getValue('note');
-                        $timeValue = $this->form->getValue('timezone');
-                        $employeeTimezone = $this->getAttendanceService()->getTimezone($timeValue);
-                        if ($employeeTimezone == 'GMT') {
-                            $employeeTimezone = 0;
+                            $punchInDate = $this->form->getValue('date');
+                            $punchIntime = $this->form->getValue('time');
+                            $punchInNote = $this->form->getValue('note');
+                            $timeValue = $this->form->getValue('timezone');
+                            $employeeTimezone = $this->getAttendanceService()->getTimezone($timeValue);
+                            if ($employeeTimezone == 'GMT') {
+                                $employeeTimezone = 0;
+                            }
+                            $punchInEditModeTime = mktime(date('H', strtotime($punchIntime)), date('i', strtotime($punchIntime)), 0, date('m', strtotime($punchInDate)), date('d', strtotime($punchInDate)), date('Y', strtotime($punchInDate)));
+
+
+                            $nextState = $this->userObj->getNextState(WorkflowStateMachine::FLOW_ATTENDANCE, AttendanceRecord::STATE_INITIAL, WorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN);
+
+                            $attendanceRecord->setState($nextState);
+                            $attendanceRecord->setPunchInUtcTime(date('Y-m-d H:i', $punchInEditModeTime - $employeeTimezone * 3600));
+                            $attendanceRecord->setPunchInNote($punchInNote);
+                            $attendanceRecord->setPunchInUserTime(date('Y-m-d H:i', $punchInEditModeTime));
+                            $attendanceRecord->setPunchInTimeOffset($employeeTimezone);
+
+                            $this->getAttendanceService()->savePunchRecord($attendanceRecord);
+
+                            $this->redirect("attendance/viewAttendanceRecord?employeeId=" . $this->employeeId . "&date=" . $this->date . "&trigger=" . true . "&actionRecorder=" . $this->actionRecorder);
                         }
-                        $punchInEditModeTime = mktime(date('H', strtotime($punchIntime)), date('i', strtotime($punchIntime)), 0, date('m', strtotime($punchInDate)), date('d', strtotime($punchInDate)), date('Y', strtotime($punchInDate)));
-
-
-                        $nextState = $this->userObj->getNextState(WorkflowStateMachine::FLOW_ATTENDANCE, AttendanceRecord::STATE_INITIAL, WorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN);
-
-                        $attendanceRecord->setState($nextState);
-                        $attendanceRecord->setPunchInUtcTime(date('Y-m-d H:i', $punchInEditModeTime - $employeeTimezone * 3600));
-                        $attendanceRecord->setPunchInNote($punchInNote);
-                        $attendanceRecord->setPunchInUserTime(date('Y-m-d H:i', $punchInEditModeTime));
-                        $attendanceRecord->setPunchInTimeOffset($employeeTimezone);
-
-                        $this->getAttendanceService()->savePunchRecord($attendanceRecord);
-
-                        $this->redirect("attendance/viewAttendanceRecord?employeeId=" . $this->employeeId . "&date=" . $this->date . "&trigger=" . true . "&actionRecorder=" . $this->actionRecorder);
                     }
                 }
             }
@@ -348,28 +351,30 @@ class AttendanceActions extends sfActions {
             $this->punchInNote = $attendanceRecord->getPunchInNote();
             if ($request->getParameter('path')) {
                 if ($request->isMethod('post')) {
-                    $this->form->bind($request->getParameter('attendance'));
-                    if ($this->form->isValid()) {
+                    if ($this->attendanceManagePermissios->canCreate()) {
+                        $this->form->bind($request->getParameter('attendance'));
+                        if ($this->form->isValid()) {
 
-                        $punchOutTime = $this->form->getValue('time');
-                        $punchOutNote = $this->form->getValue('note');
-                        $punchOutDate = $this->form->getValue('date');
-                        $timeValue = $this->form->getValue('timezone');
-                        $employeeTimezone = $this->getAttendanceService()->getTimezone($timeValue);
-                        if ($employeeTimezone == 'GMT') {
-                            $employeeTimezone = 0;
+                            $punchOutTime = $this->form->getValue('time');
+                            $punchOutNote = $this->form->getValue('note');
+                            $punchOutDate = $this->form->getValue('date');
+                            $timeValue = $this->form->getValue('timezone');
+                            $employeeTimezone = $this->getAttendanceService()->getTimezone($timeValue);
+                            if ($employeeTimezone == 'GMT') {
+                                $employeeTimezone = 0;
+                            }
+
+                            $punchOutEditModeTime = mktime(date('H', strtotime($punchOutTime)), date('i', strtotime($punchOutTime)), 0, date('m', strtotime($punchOutDate)), date('d', strtotime($punchOutDate)), date('Y', strtotime($punchOutDate)));
+                            $nextState = $this->userObj->getNextState(PluginWorkflowStateMachine::FLOW_ATTENDANCE, PluginAttendanceRecord::STATE_PUNCHED_IN, PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT);
+                            $attendanceRecord->setState($nextState);
+                            $attendanceRecord->setPunchOutUtcTime(date('Y-m-d H:i', $punchOutEditModeTime - $employeeTimezone * 3600));
+                            $attendanceRecord->setPunchOutNote($punchOutNote);
+                            $attendanceRecord->setPunchOutUserTime(date('Y-m-d H:i', $punchOutEditModeTime));
+                            $attendanceRecord->setPunchOutTimeOffset($employeeTimezone);
+                            $this->getAttendanceService()->savePunchRecord($attendanceRecord);
+                            $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
+                            $this->redirect("attendance/viewAttendanceRecord?employeeId=" . $this->employeeId . "&date=" . $this->date . "&trigger=" . true);
                         }
-
-                        $punchOutEditModeTime = mktime(date('H', strtotime($punchOutTime)), date('i', strtotime($punchOutTime)), 0, date('m', strtotime($punchOutDate)), date('d', strtotime($punchOutDate)), date('Y', strtotime($punchOutDate)));
-                        $nextState = $this->userObj->getNextState(PluginWorkflowStateMachine::FLOW_ATTENDANCE, PluginAttendanceRecord::STATE_PUNCHED_IN, PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT);
-                        $attendanceRecord->setState($nextState);
-                        $attendanceRecord->setPunchOutUtcTime(date('Y-m-d H:i', $punchOutEditModeTime - $employeeTimezone * 3600));
-                        $attendanceRecord->setPunchOutNote($punchOutNote);
-                        $attendanceRecord->setPunchOutUserTime(date('Y-m-d H:i', $punchOutEditModeTime));
-                        $attendanceRecord->setPunchOutTimeOffset($employeeTimezone);
-                        $this->getAttendanceService()->savePunchRecord($attendanceRecord);
-                        $this->getUser()->setFlash('templateMessage', array('success', __(TopLevelMessages::SAVE_SUCCESS)));
-                        $this->redirect("attendance/viewAttendanceRecord?employeeId=" . $this->employeeId . "&date=" . $this->date . "&trigger=" . true);
                     }
                 }
             }
@@ -410,6 +415,10 @@ class AttendanceActions extends sfActions {
 
     public function executeGetDaylightSavingTimeZone($request) {
         
+    }
+
+    public function getDataGroupPermissions($dataGroups) {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), false, array());
     }
 
 }
