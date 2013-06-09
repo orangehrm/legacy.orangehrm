@@ -4483,6 +4483,7 @@ symfony/plugins/orangehrmTimePlugin/lib/timesheetPeriod/TimesheetPeriod.php -tex
 symfony/plugins/orangehrmTimePlugin/lib/timesheetPeriod/WeeklyTimesheetPeriod.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/actions.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/baseTimeAction.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/actions/createTimesheetForSubourdinateAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/defineTimesheetPeriodAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceSummaryReportAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceSummaryReportCriteriaAction.class.php -text

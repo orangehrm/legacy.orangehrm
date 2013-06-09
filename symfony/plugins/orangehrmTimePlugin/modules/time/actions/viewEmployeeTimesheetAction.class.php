@@ -17,7 +17,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class viewEmployeeTimesheetAction extends sfAction {
+class viewEmployeeTimesheetAction extends baseTimeAction {
 
     private $employeeNumber;
     private $timesheetService;
@@ -33,6 +33,8 @@ class viewEmployeeTimesheetAction extends sfAction {
     }
 
     public function execute($request) {
+        
+        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees');
 
         $this->form = new viewEmployeeTimesheetForm();
 

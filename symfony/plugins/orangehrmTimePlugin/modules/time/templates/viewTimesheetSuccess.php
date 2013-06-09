@@ -31,7 +31,7 @@ $actionName = sfContext::getInstance()->getActionName();
     margin-bottom: 5px;
 }
 </style>
-
+<?if($timesheetManagePermissions->canRead()){?>
 <?php if (isset($messageData[0])): ?>
     <div class="box timesheet">
         <div class="inner">
@@ -60,9 +60,11 @@ $actionName = sfContext::getInstance()->getActionName();
                 <ol class="normal" style="padding-bottom:0">
                     <li style="margin-bottom:5px">
                         <?php echo $dateForm['startDates']->render(array('onchange' => 'clicked(event)')); ?>
-                        <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))) : ?>
-                            <a id="btnAddTimesheet" data-toggle="modal" href="#createTimesheet" class="fieldHelpRight"><?php echo __("Add Timesheet"); ?></a>
-                        <?php endif; ?>
+                        <?if($timesheetManagePermissions->canCreate()){?>
+                            <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))) : ?>
+                                <a id="btnAddTimesheet" data-toggle="modal" href="#createTimesheet" class="fieldHelpRight"><?php echo __("Add Timesheet"); ?></a>
+                            <?php endif; ?>
+                        <?php }?>
                     </li>
                 </ol>
             </form>
@@ -226,17 +228,19 @@ $actionName = sfContext::getInstance()->getActionName();
             <form id="timesheetFrm" name="timesheetFrm"  method="post">
                 <?php echo $formToImplementCsrfToken['_csrf_token']; ?>
                 <p>
-                    <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_MODIFY, $sf_data->getRaw('allowedActions'))) : ?>
-                    <input type="button" class="edit" name="button" id="btnEdit" value="<?php echo __('Edit'); ?>" />
-                    <?php endif; ?>
+                    <?if($timesheetManagePermissions->canUpdate()){?>
+                        <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_MODIFY, $sf_data->getRaw('allowedActions'))) : ?>
+                        <input type="button" class="edit" name="button" id="btnEdit" value="<?php echo __('Edit'); ?>" />
+                        <?php endif; ?>
 
-                    <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_SUBMIT, $sf_data->getRaw('allowedActions'))) : ?>
-                    <input type="button" class="" name="button" id="btnSubmit" value="<?php echo __('Submit'); ?>" />
-                    <?php endif; ?>
+                        <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_SUBMIT, $sf_data->getRaw('allowedActions'))) : ?>
+                        <input type="button" class="" name="button" id="btnSubmit" value="<?php echo __('Submit'); ?>" />
+                        <?php endif; ?>
                     
-                    <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_RESET, $sf_data->getRaw('allowedActions'))) : ?>
-                    <input type="button" class="reset"  name="button" id="btnReset" value="<?php echo __('Reset') ?>" />
-                    <?php endif; ?>
+                        <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_RESET, $sf_data->getRaw('allowedActions'))) : ?>
+                        <input type="button" class="reset"  name="button" id="btnReset" value="<?php echo __('Reset') ?>" />
+                        <?php endif; ?>
+                    <?php }?>
                 </p>         
             </form>
         </div>
@@ -378,7 +382,7 @@ $actionName = sfContext::getInstance()->getActionName();
 </div> <!-- createTimesheet -->
 
 <?php endif; ?>
-
+<?php }?>
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
     var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';

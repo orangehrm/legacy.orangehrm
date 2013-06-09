@@ -17,7 +17,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class viewMyTimesheetAction extends sfAction {
+class viewMyTimesheetAction extends baseTimeAction {
 
     private $timesheetService;
     private $timesheetActionLog;
@@ -38,6 +38,10 @@ class viewMyTimesheetAction extends sfAction {
         $startDateSelectedFromDropDown = $request->getParameter('timesheetStartDateFromDropDown');
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
         $userId = $this->userObj->getUserId();
+        
+        $empNumber = $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
+        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $empNumber);
+        
         $this->format = $this->getTimesheetService()->getTimesheetTimeFormat();
         $this->timeService = $this->getTimesheetService();
         $clientTimeZoneOffset = $this->userObj->getUserTimeZoneOffset();

@@ -12,8 +12,19 @@
  */
 abstract class baseTimeAction extends sfAction {
 
-    public function getDataGroupPermissions($dataGroups) {
-        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), false, array());
+    public function getDataGroupPermissions($dataGroups, $empNumber = null) {
+        $loggedInEmpNum = $this->getUser()->getEmployeeNumber();
+
+        $entities = array();
+        $self = false;
+        if (isset($empNumber)) {
+            $entities = array('Employee' => $empNumber);
+            if ($empNumber == $loggedInEmpNum) {
+                $self = true;
+            }
+        }
+
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), $self, $entities);
     }
 
 }

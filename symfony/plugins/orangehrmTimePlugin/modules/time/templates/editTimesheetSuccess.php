@@ -34,7 +34,7 @@ form ol li.largeTextBox textarea {
 </style>
 
 <!--<div id="validationMsg"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>-->
-
+<?php if($timesheetManagePermissions->canUpdate()){?>
 <div class="box editTimesheet noHeader" id="edit-timesheet">
     <div class="inner">
         
@@ -213,6 +213,7 @@ form ol li.largeTextBox textarea {
         <input type="button" id="commentCancel" class="reset" data-dismiss="modal" value="<?php echo __('Cancel'); ?>" />
     </div>
 </div> <!-- commentDialog -->
+<?php }?>
 
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';

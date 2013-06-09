@@ -17,7 +17,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class viewTimesheetAction extends sfAction {
+class viewTimesheetAction extends baseTimeAction {
 
     private $timesheetService;
     private $timesheetPeriodService;
@@ -45,6 +45,8 @@ class viewTimesheetAction extends sfAction {
         $request->setParameter('initialActionName', 'viewEmployeeTimesheet');  
 
         $employeeId = $request->getParameter('employeeId');
+        
+        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $employeeId);
 
         $this->_checkAuthentication($employeeId);
 

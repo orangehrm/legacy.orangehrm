@@ -17,7 +17,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class editTimesheetAction extends sfAction {
+class editTimesheetAction extends baseTimeAction {
 
     private $timesheetService;
     private $timesheetPeriodService;
@@ -61,21 +61,23 @@ class editTimesheetAction extends sfAction {
     }
 
     public function execute($request) {
-        
-        
+
+
 
         $userObj = $this->getContext()->getUser()->getAttribute('user');
         $employeeIdOfTheUser = $userObj->getEmployeeNumber();
 
-        /* For highlighting corresponding menu item */  
+        /* For highlighting corresponding menu item */
         if ($userObj->isAdmin()) {
-            $request->setParameter('initialActionName', 'viewEmployeeTimesheet'); 
+            $request->setParameter('initialActionName', 'viewEmployeeTimesheet');
         } else {
-            $request->setParameter('initialActionName', 'viewMyTimesheet'); 
+            $request->setParameter('initialActionName', 'viewMyTimesheet');
         }
         $this->backAction = $request->getParameter('actionName');
         $this->timesheetId = $request->getParameter('timesheetId');
         $this->employeeId = $request->getParameter('employeeId');
+
+        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $this->employeeId);
 
         $this->_checkAuthentication($this->employeeId, $userObj);
 
@@ -111,22 +113,23 @@ class editTimesheetAction extends sfAction {
         }
 
         if ($request->isMethod('post')) {
+            if ($this->timesheetManagePermissions->canUpdate()) {
+
+                if ($request->getParameter('btnSave')) {
+                    $backAction = $this->backAction;
+                    $this->getTimesheetService()->saveTimesheetItems($request->getParameter('initialRows'), $this->employeeId, $this->timesheetId, $this->currentWeekDates, $this->totalRows);
+                    $this->messageData = array('success', __(TopLevelMessages::SAVE_SUCCESS));
+                    $startingDate = $this->timesheetService->getTimesheetById($this->timesheetId)->getStartDate();
+                    $this->redirect('time/' . $backAction . '?' . http_build_query(array('message' => $this->messageData, 'timesheetStartDate' => $startingDate, 'employeeId' => $this->employeeId)));
+                }
 
 
-            if ($request->getParameter('btnSave')) {
-                $backAction = $this->backAction;
-                $this->getTimesheetService()->saveTimesheetItems($request->getParameter('initialRows'), $this->employeeId, $this->timesheetId, $this->currentWeekDates, $this->totalRows);
-                $this->messageData = array('success', __(TopLevelMessages::SAVE_SUCCESS));
-                $startingDate = $this->timesheetService->getTimesheetById($this->timesheetId)->getStartDate();
-                $this->redirect('time/' . $backAction . '?' . http_build_query(array('message' => $this->messageData, 'timesheetStartDate' => $startingDate, 'employeeId' => $this->employeeId)));
-            }
+
+                if ($request->getParameter('buttonRemoveRows')) {
 
 
-
-            if ($request->getParameter('buttonRemoveRows')) {
-
-
-                $this->messageData = array('success', __('Successfully Removed'));
+                    $this->messageData = array('success', __('Successfully Removed'));
+                }
             }
         }
     }

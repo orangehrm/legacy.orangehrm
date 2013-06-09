@@ -236,26 +236,26 @@ class timeActions extends sfActions {
         $this->endDate = $this->getTimesheetService()->returnEndDate($startDate);
     }
 
-    public function executeCreateTimesheetForSubourdinate($request) {
-
-        /* For highlighting corresponding menu item */
-        $request->setParameter('initialActionName', 'viewEmployeeTimesheet');
-
-        $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $userId = $this->userObj->getUserId();
-        $userEmployeeNumber = $this->userObj->getEmployeeNumber();
-        $this->employeeId = $request->getParameter('employeeId');
-        $userRoleFactory = new UserRoleFactory();
-        $decoratedUser = $userRoleFactory->decorateUserRole($userId, $this->employeeId, $userEmployeeNumber);
-        $this->allowedToCreateTimesheets = $decoratedUser->getAllowedActions(PluginWorkflowStateMachine::FLOW_TIME_TIMESHEET, PluginTimesheet::STATE_INITIAL);
-
-        $this->createTimesheetForm = new CreateTimesheetForm();
-        $this->currentDate = date('Y-m-d');
-        if ($this->getContext()->getUser()->hasFlash('errorMessage')) {
-
-            $this->messageData = array('error', __($this->getContext()->getUser()->getFlash('errorMessage')));
-        }
-    }
+//    public function executeCreateTimesheetForSubourdinate($request) {
+//
+//        /* For highlighting corresponding menu item */
+//        $request->setParameter('initialActionName', 'viewEmployeeTimesheet');
+//
+//        $this->userObj = $this->getContext()->getUser()->getAttribute('user');
+//        $userId = $this->userObj->getUserId();
+//        $userEmployeeNumber = $this->userObj->getEmployeeNumber();
+//        $this->employeeId = $request->getParameter('employeeId');
+//        $userRoleFactory = new UserRoleFactory();
+//        $decoratedUser = $userRoleFactory->decorateUserRole($userId, $this->employeeId, $userEmployeeNumber);
+//        $this->allowedToCreateTimesheets = $decoratedUser->getAllowedActions(PluginWorkflowStateMachine::FLOW_TIME_TIMESHEET, PluginTimesheet::STATE_INITIAL);
+//
+//        $this->createTimesheetForm = new CreateTimesheetForm();
+//        $this->currentDate = date('Y-m-d');
+//        if ($this->getContext()->getUser()->hasFlash('errorMessage')) {
+//
+//            $this->messageData = array('error', __($this->getContext()->getUser()->getFlash('errorMessage')));
+//        }
+//    }
 
 }
 

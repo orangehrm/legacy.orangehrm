@@ -17,7 +17,7 @@
  */ ?>
 
 <?php echo javascript_include_tag(plugin_web_path('orangehrmTimePlugin', 'js/createTimesheetForSubourdinateSuccess')); ?>
-
+<?php if($timesheetManagePermissions->canRead()){?>
 <div class="box noHeader">
     <div class="inner">
         <?php include_partial('global/flash_messages'); ?>
@@ -34,15 +34,18 @@
                         <?php echo $createTimesheetForm['date']->renderError() ?>
                     </li>
                 </ol>
-                <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))): ?>
-                    <p>
-                        <input type="button" class="" name="button" id="btnAddTimesheet" value="<?php echo __('Add Timesheet') ?>" />
-                    </p>
-                <?php endif; ?>
+                <?php if($timesheetManagePermissions->canCreate()){?>
+                    <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))): ?>
+                        <p>
+                            <input type="button" class="" name="button" id="btnAddTimesheet" value="<?php echo __('Add Timesheet') ?>" />
+                        </p>
+                    <?php endif; ?>
+                <?php }?>
             </fieldset>
         </form>
     </div>
 </div>
+<?php }?>
 
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
