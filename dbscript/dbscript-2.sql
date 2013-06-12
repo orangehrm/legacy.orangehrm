@@ -1634,7 +1634,7 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (55, 'holidays', 'Leave - Holidays', 1, 1, 1, 1),
 (56, 'recruitment_vacancies', 'Recruitment - Vacancies', 1, 1, 1, 1),
 (57, 'recruitment_candidates', 'Recruitment - Candidates', 1, 1, 1, 1),
-(58, 'time_manage_employees', 'Time - Employee Timesheets', 1, 1, 1, 0),
+(58, 'time_manage_employees', 'Time - Employee Timesheets', 1, 0, 0, 0),
 (59, 'leave_list', 'Leave - Leave List', 1, 0, 0, 0);
 
 INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
@@ -1914,10 +1914,10 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (6, 57, 1, 1, 1, 1, 0),
 (5, 57, 1, 0, 1, 0, 0),
 
-(1, 58, 1, 1, 1, 0, 0),
+(1, 58, 1, 0, 0, 0, 0),
 (2, 58, 0, 0, 0, 0, 0),
-(2, 58, 1, 1, 1, 0, 1),
-(3, 58, 1, 1, 1, 0, 0),
+(2, 58, 1, 0, 0, 0, 1),
+(3, 58, 1, 0, 0, 0, 0),
 
 (1, 59, 1, 0, 0, 0, 0),
 (2, 59, 1, 0, 0, 0, 1),

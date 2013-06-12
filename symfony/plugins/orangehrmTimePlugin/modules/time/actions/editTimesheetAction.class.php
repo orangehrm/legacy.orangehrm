@@ -113,23 +113,21 @@ class editTimesheetAction extends baseTimeAction {
         }
 
         if ($request->isMethod('post')) {
-            if ($this->timesheetManagePermissions->canUpdate()) {
 
-                if ($request->getParameter('btnSave')) {
-                    $backAction = $this->backAction;
-                    $this->getTimesheetService()->saveTimesheetItems($request->getParameter('initialRows'), $this->employeeId, $this->timesheetId, $this->currentWeekDates, $this->totalRows);
-                    $this->messageData = array('success', __(TopLevelMessages::SAVE_SUCCESS));
-                    $startingDate = $this->timesheetService->getTimesheetById($this->timesheetId)->getStartDate();
-                    $this->redirect('time/' . $backAction . '?' . http_build_query(array('message' => $this->messageData, 'timesheetStartDate' => $startingDate, 'employeeId' => $this->employeeId)));
-                }
-
+            if ($request->getParameter('btnSave')) {
+                $backAction = $this->backAction;
+                $this->getTimesheetService()->saveTimesheetItems($request->getParameter('initialRows'), $this->employeeId, $this->timesheetId, $this->currentWeekDates, $this->totalRows);
+                $this->messageData = array('success', __(TopLevelMessages::SAVE_SUCCESS));
+                $startingDate = $this->timesheetService->getTimesheetById($this->timesheetId)->getStartDate();
+                $this->redirect('time/' . $backAction . '?' . http_build_query(array('message' => $this->messageData, 'timesheetStartDate' => $startingDate, 'employeeId' => $this->employeeId)));
+            }
 
 
-                if ($request->getParameter('buttonRemoveRows')) {
+
+            if ($request->getParameter('buttonRemoveRows')) {
 
 
-                    $this->messageData = array('success', __('Successfully Removed'));
-                }
+                $this->messageData = array('success', __('Successfully Removed'));
             }
         }
     }
