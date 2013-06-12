@@ -28,7 +28,7 @@ abstract class baseLeaveAction extends orangehrmAction {
      * @param type $dataGroups
      * @return type
      */
-    public function getDataGroupPermissions($dataGroups) {
-        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), false, array());
+    public function getDataGroupPermissions($dataGroups, $self = false) {
+        return $this->getContext()->getUserRoleManager()->getDataGroupPermissions($dataGroups, array(), array(), $self, array());
     }
 }
