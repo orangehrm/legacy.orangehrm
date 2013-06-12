@@ -183,9 +183,7 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                             foreach ($actionableStates as $state) {
                                 foreach ($records as $record) {
                                     if ($state == $record->getState()) {
-                                        if ($this->attendanceManagePermissios->canUpdate()) {
                                             $this->allowedActions['Edit'] = true;
-                                        }
                                         break;
                                     }
                                 }
@@ -199,9 +197,7 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                             foreach ($actionableStates as $state) {
                                 foreach ($records as $record) {
                                     if ($state == $record->getState()) {
-                                        if ($this->attendanceManagePermissios->canDelete()) {
                                             $this->allowedActions['Delete'] = true;
-                                        }
                                         break;
                                     }
                                 }
@@ -241,21 +237,16 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                         }
 
                         if ((is_null($attendanceRecord)) && (in_array(WorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN, $allowedActionsList))) {
-                            if ($this->attendanceManagePermissios->canCreate()) {
                                 $this->allowedActions['PunchIn'] = true;
-                            }
                         }
                         if ((!is_null($attendanceRecord)) && (in_array(WorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT, $allowedActionsList))) {
-                            if ($this->attendanceManagePermissios->canCreate()) {
                                 $this->allowedActions['PunchOut'] = true;
-                            }
                         }
                     }
                     if ($this->employeeId == '') {
                         $this->showEdit = FALSE;
                     }
-                    var_dump($this->allowedActions);
-                    die;
+                    
                     $this->_setListComponent($records, $noOfRecords, $pageNumber, $count, $this->showEdit, $this->allowedActions);
                 }
             }

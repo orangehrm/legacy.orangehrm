@@ -1624,7 +1624,7 @@ INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_cre
 (45, 'time_projects', 'Time - Project Info - Projects', 1, 1, 1, 1),
 (46, 'pim_reports', 'PIM - Reports', 1, 1, 1, 1),
 (47, 'attendance_configuration', 'Time - Attendance Configuration', 1, 0, 1, 0),
-(48, 'attendance_manage_records', 'Time - Attendance Manage Records', 1, 1, 1, 1),
+(48, 'attendance_manage_records', 'Time - Attendance Manage Records', 1, 0, 0, 0),
 (49, 'time_project_reports', 'Time - Project Reports', 1, 0, 0, 0),
 (50, 'time_employee_reports', 'Time - Employee Reports', 1, 0, 0, 0),
 (51, 'attendance_summary', 'Time - Attendance Summary', 1, 0, 0, 0),
@@ -1872,10 +1872,10 @@ INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_r
 (2, 47, 0, 0, 0, 0, 0),
 (3, 47, 0, 0, 0, 0, 0),
 
-(1, 48, 1, 1, 1, 1, 0),
+(1, 48, 1, 0, 0, 0, 0),
 (2, 48, 0, 0, 0, 0, 0),
-(2, 48, 1, 1, 0, 0, 1),
-(3, 48, 1, 1, 0, 0, 0),
+(2, 48, 1, 0, 0, 0, 1),
+(3, 48, 1, 0, 0, 0, 0),
 
 (1, 49, 1, 0, 0, 0, 0),
 (2, 49, 0, 0, 0, 0, 0),
