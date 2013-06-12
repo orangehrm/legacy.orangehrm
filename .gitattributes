@@ -257,6 +257,7 @@ symfony/apps/orangehrm/lib/form/performance/ListKpiForm.php -text
 symfony/apps/orangehrm/lib/form/performance/PerformanceReviewForm.php -text
 symfony/apps/orangehrm/lib/form/performance/SaveKpiForm.php -text
 symfony/apps/orangehrm/lib/form/performance/SaveReviewForm.php -text
+symfony/apps/orangehrm/lib/form/performance/SearchKpiForm.php -text
 symfony/apps/orangehrm/lib/form/performance/ViewReviewForm.php -text
 symfony/apps/orangehrm/lib/form/validator/ohrmDateValidator.php -text
 symfony/apps/orangehrm/lib/form/widget/ohrmWidgetButton.php -text
