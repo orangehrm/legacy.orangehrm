@@ -32,6 +32,10 @@ class definePredefinedReportAction extends basePimReportAction {
 
         $reportId = $request->getParameter('reportId');
         $this->reportId = $reportId;
+        if(!(($this->reportPermissions->canCreate() && empty($this->reportId)) || ($this->reportPermissions->canUpdate() && $this->reportId > 0))){
+            $this->getUser()->setFlash('warning.nofade', CommonMessages::CREDENTIALS_REQUIRED);
+        }
+        
         $reportName;
 
         if (!empty($reportId)) {

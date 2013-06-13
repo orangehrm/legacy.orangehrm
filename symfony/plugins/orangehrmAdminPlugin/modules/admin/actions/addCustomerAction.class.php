@@ -43,6 +43,11 @@ class addCustomerAction extends baseAdminAction {
         $this->customerPermissions = $this->getDataGroupPermissions('time_customers');
 
         $this->customerId = $request->getParameter('customerId');
+        
+        if(!(($this->customerPermissions->canCreate() && empty($this->customerId)) || ($this->customerPermissions->canUpdate() && $this->customerId > 0))){
+            $this->getUser()->setFlash('warning.nofade', CommonMessages::CREDENTIALS_REQUIRED);
+        }
+        
         $values = array('customerId' => $this->customerId, 'customerPermissions' => $this->customerPermissions);
         
         $this->setForm(new CustomerForm(array(), $values));
