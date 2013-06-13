@@ -86,10 +86,15 @@ class viewCustomersAction extends baseAdminAction {
                 'data-target' => '#deleteConfModal',
                 'class' => 'delete');
         }
+        $isLinkable = false;
+        if($permissions->canUpdate()){
+            $isLinkable = true;
+        }
 
         $runtimeDefinitions['buttons'] = $buttons;
-
+   
         $configurationFactory = new CustomerHeaderFactory();
+        $configurationFactory->setIsLinkable($isLinkable);
         $configurationFactory->setRuntimeDefinitions($runtimeDefinitions);
         ohrmListComponent::setPageNumber($pageNumber);
         ohrmListComponent::setConfigurationFactory($configurationFactory);
