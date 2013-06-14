@@ -1295,6 +1295,14 @@ create table ohrm_module_default_page (
     primary key (`id`)
 ) engine=innodb default charset=utf8;
 
+CREATE TABLE ohrm_data_group_screen (
+    `id` int AUTO_INCREMENT, 
+    `data_group_id` int, 
+    `screen_id` int, 
+    `permission` int,
+    PRIMARY KEY(`id`)
+) ENGINE = INNODB DEFAULT CHARSET=utf8;
+
 alter table ohrm_home_page 
     add foreign key (user_role_id) references ohrm_user_role(id) on delete cascade;
 
@@ -1793,3 +1801,9 @@ alter table ohrm_user_role_screen
 alter table ohrm_user_role_screen
        add constraint foreign key (screen_id)
                              references ohrm_screen(id) on delete cascade;
+
+alter table ohrm_data_group_screen
+    add foreign key (data_group_id) references ohrm_data_group(id) on delete cascade;
+
+alter table ohrm_data_group_screen
+    add foreign key (screen_id) references ohrm_screen(id) on delete cascade;
