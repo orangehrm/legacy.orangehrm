@@ -594,6 +594,10 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/ConfigTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupPermission.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupPermissionTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreen.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreenPermission.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreenPermissionTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreenTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DisplayFieldGroup.class.php -text
@@ -654,6 +658,8 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseCompositeDisplayField.cl
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseConfig.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroupPermission.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroupScreen.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroupScreenPermission.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayFieldGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseEmail.class.php -text
@@ -3657,6 +3663,10 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginConfigTable.class.p
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroup.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupPermission.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupPermissionTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreen.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreenPermission.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreenPermissionTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreenTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDisplayField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDisplayFieldGroup.class.php -text
