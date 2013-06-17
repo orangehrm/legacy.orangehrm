@@ -3856,6 +3856,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/AssignLeaveForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/HolidayForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/HolidayListSearchForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveBalanceReportForm.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveCommentForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementAddForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementBulkAssignFilterForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementForm.php -text
