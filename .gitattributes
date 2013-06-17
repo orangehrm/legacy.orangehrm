@@ -4099,6 +4099,7 @@ symfony/plugins/orangehrmPimPlugin/lib/dao/EmployeeDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/ReportingMethodConfigurationDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/TerminationReasonConfigurationDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/events/EmployeeEvents.php -text
+symfony/plugins/orangehrmPimPlugin/lib/form/ActiveEmploymentForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/AddEmployeeForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/ConfigPimForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/CustomFieldDeleteForm.php -text
