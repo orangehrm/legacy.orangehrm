@@ -1400,7 +1400,8 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (96, 'Add Candidate', 7, 'addCandidate'),
 (97, 'Delete Candidate', 7, 'deleteCandidateVacancies'),
 (98, 'View Leave Request', 4, 'viewLeaveRequest'),
-(99, 'Change Leave Status', 4, 'changeLeaveStatus');
+(99, 'Change Leave Status', 4, 'changeLeaveStatus'),
+(100, 'Terminate Employment', 3, 'terminateEmployement');
 
 INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
 (1, 'Admin', 74, NULL, 1, 100, NULL, 1),
