@@ -284,6 +284,22 @@ class AccessFlowStateMachineServiceTest extends PHPUnit_Framework_TestCase {
 
         $this->assertTrue($returnedValue);
     }    
+    
+    public function testHandleUserRoleRename() {
+        $oldName = "ADMIN";
+        $newName = "MANAGER";
+
+        $mockDao = $this->getMock('AccessFlowStateMachineDao', array('handleUserRoleRename'));
+        $mockDao->expects($this->once())
+                ->method('handleUserRoleRename')
+                ->with($oldName, $newName)
+                ->will($this->returnValue(true));
+
+        $this->accessFlowStateMachineService->setAccessFlowStateMachineDao($mockDao);
+        $returnedValue = $this->accessFlowStateMachineService->handleUserRoleRename($oldName, $newName);
+
+        $this->assertTrue($returnedValue);        
+    }
 
 }
 

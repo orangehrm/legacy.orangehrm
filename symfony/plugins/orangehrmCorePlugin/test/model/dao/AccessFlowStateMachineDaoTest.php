@@ -164,6 +164,24 @@ class AccessFlowStateMachineDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, count($employeeWorkflowItems));
     }    
     
+    public function testHandleUserRoleRename() {
+        $oldName = 'ADMIN';
+        $newName = 'SECRETARY';
+        
+        $oldIds = $this->getWorkflowItemIdsForRole('Time', $oldName);
+        $this->assertTrue(count($oldIds) > 0);
+        $newIds = $this->getWorkflowItemIdsForRole('Time', $newName);
+        $this->assertEquals(0, count($newIds));
+        
+        $this->accessFlowStateMachineDao->handleUserRoleRename($oldName, $newName);
+        
+        $oldIdsAfterRename = $this->getWorkflowItemIdsForRole('Time', $oldName);
+        $this->assertEquals(0, count($oldIdsAfterRename));
+        
+        $newIdsAfterRename = $this->getWorkflowItemIdsForRole('Time', $newName);
+        $this->assertEquals(count($oldIds), count($newIdsAfterRename));        
+    }
+    
     protected function getWorkflowItemIdsForRole($flow, $role) {
         $conn = Doctrine_Manager::connection()->getDbh();
         

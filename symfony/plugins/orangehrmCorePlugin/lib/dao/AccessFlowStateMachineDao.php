@@ -162,8 +162,21 @@ class AccessFlowStateMachineDao {
 
             return $q->execute();
         } catch (Exception $e) {
-            throw new DaoException($e->getMessage());
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
         }        
+    }
+    
+    public function handleUserRoleRename($oldName, $newName) {
+        try {
+            $q = Doctrine_Query::create()
+                    ->update('WorkflowStateMachine w')
+                    ->set('w.role', '?', $newName)
+                    ->where("w.role = ?", $oldName);
+            
+            return $q->execute();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage(), $e->getCode(), $e);
+        }         
     }
 
     public function getAllAlowedRecruitmentApplicationStates($flow, $role) {

@@ -199,5 +199,9 @@ class AccessFlowStateMachineService {
     public function deleteWorkflowRecordsForUserRole($flow, $role) {
         return $this->getAccessFlowStateMachineDao()->deleteWorkflowRecordsForUserRole($flow, $role);
     }    
+    
+    public function handleUserRoleRename($oldName, $newName) {
+        return $this->getAccessFlowStateMachineDao()->handleUserRoleRename($oldName, $newName);
+    }    
 
 }
