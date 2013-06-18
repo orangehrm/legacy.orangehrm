@@ -4504,6 +4504,7 @@ symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectReportAct
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectReportCriteriaAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/editTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/saveTimesheetAction.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/actions/timesheetPeriodNotDefinedAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewEmployeeTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewMyTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewTimeModuleAction.class.php -text
@@ -4543,6 +4544,7 @@ symfony/plugins/orangehrmTimePlugin/modules/time/templates/getRelatedActiviesFor
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/overLappingTimesheetErrorSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/returnEndDateSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/showTimesheetItemCommentSuccess.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/templates/timesheetPeriodNotDefinedSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/viewEmployeeTimesheetSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/viewTimesheetSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/test/fixtures/MonthlyTimesheetPeriod.yml -text
