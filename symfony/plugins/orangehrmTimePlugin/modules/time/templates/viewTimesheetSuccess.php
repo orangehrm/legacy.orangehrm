@@ -31,7 +31,7 @@ $actionName = sfContext::getInstance()->getActionName();
         margin-bottom: 5px;
     }
 </style>
-<? if ($timesheetManagePermissions->canRead()) { ?>
+<?php if ($timesheetManagePermissions->canRead()) { ?>
     <?php if (isset($messageData[0])): ?>
         <div class="box timesheet">
             <div class="inner">
