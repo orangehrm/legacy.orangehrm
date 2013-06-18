@@ -154,8 +154,11 @@ class AccessFlowStateMachineDao {
         try {
             $q = Doctrine_Query:: create()
                     ->delete('WorkflowStateMachine')
-                    ->where("workflow = ?", $flow)
-                    ->andWhere("role = ?", $role);
+                    ->where("role = ?", $role);
+            
+            if (!is_null($flow)) {
+                $q->andWhere("workflow = ?", $flow);
+            }
 
             return $q->execute();
         } catch (Exception $e) {

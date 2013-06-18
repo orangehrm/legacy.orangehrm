@@ -148,6 +148,22 @@ class AccessFlowStateMachineDaoTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(count($supervisorIds), count($supervisorIdsAfter));
     }
     
+    public function testDeleteWorkflowRecordsForUserRoleAllWorkflows() {
+        $ids = $this->getWorkflowItemIdsForRole('Time', 'ADMIN');
+        $this->assertTrue(count($ids) > 0);
+        
+        $employeeWorkflowItems = $this->getWorkflowItemIdsForRole('3', 'ADMIN');
+        $this->assertTrue(count($employeeWorkflowItems) > 0);
+         
+        $this->accessFlowStateMachineDao->deleteWorkflowRecordsForUserRole(null, 'ADMIN');
+        
+        $ids = $this->getWorkflowItemIdsForRole('Time', 'ADMIN');
+        $this->assertEquals(0, count($ids));   
+        
+        $employeeWorkflowItems = $this->getWorkflowItemIdsForRole('3', 'ADMIN');
+        $this->assertEquals(0, count($employeeWorkflowItems));
+    }    
+    
     protected function getWorkflowItemIdsForRole($flow, $role) {
         $conn = Doctrine_Manager::connection()->getDbh();
         
