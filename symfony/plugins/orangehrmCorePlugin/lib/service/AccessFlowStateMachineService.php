@@ -195,5 +195,9 @@ class AccessFlowStateMachineService {
     public function getWorkflowItemByStateActionAndRole($workFlow, $state, $action, $role) {
          return $this->getAccessFlowStateMachineDao()->getWorkflowItemByStateActionAndRole($workFlow, $state, $action, $role);
     }
+    
+    public function deleteWorkflowRecordsForUserRole($flow, $role) {
+        return $this->getAccessFlowStateMachineDao()->deleteWorkflowRecordsForUserRole($flow, $role);
+    }    
 
 }

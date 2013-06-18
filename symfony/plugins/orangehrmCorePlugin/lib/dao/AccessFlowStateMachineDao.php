@@ -149,6 +149,19 @@ class AccessFlowStateMachineDao {
             throw new DaoException($e->getMessage());
         }
     }
+    
+    public function deleteWorkflowRecordsForUserRole($flow, $role) {
+        try {
+            $q = Doctrine_Query:: create()
+                    ->delete('WorkflowStateMachine')
+                    ->where("workflow = ?", $flow)
+                    ->andWhere("role = ?", $role);
+
+            return $q->execute();
+        } catch (Exception $e) {
+            throw new DaoException($e->getMessage());
+        }        
+    }
 
     public function getAllAlowedRecruitmentApplicationStates($flow, $role) {
 
