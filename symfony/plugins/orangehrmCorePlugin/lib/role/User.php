@@ -44,6 +44,7 @@ class User {
 	private $employeeListForAttendanceTotalSummaryReport;
 	private $employeeNameList = null;
 
+        // Not in use
 	public function getEmployeeListForAttendanceTotalSummaryReport() {
 		return $this->employeeListForAttendanceTotalSummaryReport;
 	}

@@ -20,8 +20,6 @@
 class displayAttendanceSummaryReportCriteriaAction extends baseTimeAction {
 
     public function execute($request) {
-
-        $userObj = $this->getContext()->getUser()->getAttribute('user');
         $hasRight = false;
 
         $this->attendancePermissions = $this->getDataGroupPermissions('attendance_summary');
@@ -36,19 +34,17 @@ class displayAttendanceSummaryReportCriteriaAction extends baseTimeAction {
 
         $this->reportId = $request->getParameter("reportId");
         
-        $employeeList = $userObj->getEmployeeListForAttendanceTotalSummaryReport();
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        
+        $properties = array("empNumber","firstName", "middleName", "lastName", "termination_id");
+        $employeeList = $userRoleManager->getAccessibleEntityProperties('Employee', $properties);
 
         if (is_array($employeeList)) {
             $lastRecord = end($employeeList);
-            $this->lastEmpNumber = $lastRecord->getEmpNumber();
-        } else {
-            
-            $this->lastEmpNumber = $employeeList->getLast()->getEmpNumber();
+            $this->lastEmpNumber = $lastRecord['empNumber'];
         }
 
-        $this->form = new AttendanceTotalSummaryReportForm();
-
-        $this->form->emoloyeeList = $employeeList;
+        $this->form = new AttendanceTotalSummaryReportForm(array(), array('employeeList' => $employeeList));
     }
 
 }
