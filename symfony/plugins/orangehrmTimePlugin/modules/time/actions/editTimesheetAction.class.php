@@ -62,26 +62,26 @@ class editTimesheetAction extends baseTimeAction {
 
     public function execute($request) {
 
-
-
-        $userObj = $this->getContext()->getUser()->getAttribute('user');
-        $employeeIdOfTheUser = $userObj->getEmployeeNumber();
-
-        /* For highlighting corresponding menu item */
-        if ($userObj->isAdmin()) {
-            $request->setParameter('initialActionName', 'viewEmployeeTimesheet');
-        } else {
-            $request->setParameter('initialActionName', 'viewMyTimesheet');
-        }
         $this->backAction = $request->getParameter('actionName');
         $this->timesheetId = $request->getParameter('timesheetId');
         $this->employeeId = $request->getParameter('employeeId');
+
+        $userObj = $this->getContext()->getUser()->getAttribute('user');
+        $loggedInEmpNumber = $this->getContext()->getUser()->getEmployeeNumber();
+
+        /* For highlighting corresponding menu item */
+        if ($this->employeeId == $loggedInEmpNumber) {
+            $request->setParameter('initialActionName', 'viewMyTimesheet');
+        } else {
+            $request->setParameter('initialActionName', 'viewEmployeeTimesheet');            
+        }
+
 
         $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $this->employeeId);
 
         $this->_checkAuthentication($this->employeeId, $userObj);
 
-        if ($this->employeeId == $employeeIdOfTheUser) {
+        if ($this->employeeId == $loggedInEmpNumber) {
             $this->employeeName == null;
         } else {
             $this->employeeName = $this->getEmployeeName($this->employeeId);
@@ -122,11 +122,7 @@ class editTimesheetAction extends baseTimeAction {
                 $this->redirect('time/' . $backAction . '?' . http_build_query(array('message' => $this->messageData, 'timesheetStartDate' => $startingDate, 'employeeId' => $this->employeeId)));
             }
 
-
-
             if ($request->getParameter('buttonRemoveRows')) {
-
-
                 $this->messageData = array('success', __('Successfully Removed'));
             }
         }
@@ -140,19 +136,11 @@ class editTimesheetAction extends baseTimeAction {
             return;
         }
 
-        if ($user->isAdmin()) {
-            return;
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        if (!$userRoleManager->isEntityAccessible('Employee', $empNumber)) {
+            $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
 
-        $subordinateIdList = $this->getEmployeeService()->getSubordinateIdListBySupervisorId($logedInEmpNumber);
-
-        if (empty($subordinateIdList)) {
-            $this->redirect('auth/login');
-        }
-
-        if (!in_array($empNumber, $subordinateIdList)) {
-            $this->redirect('auth/login');
-        }
     }
 
     private function getEmployeeName($employeeId) {

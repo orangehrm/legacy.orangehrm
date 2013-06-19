@@ -15,23 +15,20 @@ class createTimesheetForSubourdinateAction extends baseTimeAction{
         $request->setParameter('initialActionName', 'viewEmployeeTimesheet');
         
         $this->employeeId = $request->getParameter('employeeId');
-        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $this->employeeId);
+        $this->permission = $this->getDataGroupPermissions('time_manage_employees', $this->employeeId);
 
-        $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $userId = $this->userObj->getUserId();
-        $userEmployeeNumber = $this->userObj->getEmployeeNumber();
+        $userRoleManager = $this->getContext()->getUserRoleManager();
         
-        $userRoleFactory = new UserRoleFactory();
-        $decoratedUser = $userRoleFactory->decorateUserRole($userId, $this->employeeId, $userEmployeeNumber);
-        $this->allowedToCreateTimesheets = $decoratedUser->getAllowedActions(PluginWorkflowStateMachine::FLOW_TIME_TIMESHEET, PluginTimesheet::STATE_INITIAL);
+        $actions = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_TIME_TIMESHEET, PluginTimesheet::STATE_INITIAL);
 
+        $this->canCreateTimesheets = isset($actions[WorkflowStateMachine::TIMESHEET_ACTION_CREATE]);
+                
         $this->createTimesheetForm = new CreateTimesheetForm();
         $this->currentDate = date('Y-m-d');
+        
         if ($this->getContext()->getUser()->hasFlash('errorMessage')) {
-
             $this->messageData = array('error', __($this->getContext()->getUser()->getFlash('errorMessage')));
         }
     }
 }
 
-?>

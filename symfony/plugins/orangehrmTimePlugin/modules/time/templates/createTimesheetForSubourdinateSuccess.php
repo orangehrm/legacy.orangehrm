@@ -17,7 +17,7 @@
  */ ?>
 
 <?php echo javascript_include_tag(plugin_web_path('orangehrmTimePlugin', 'js/createTimesheetForSubourdinateSuccess')); ?>
-<?php if ($timesheetManagePermissions->canRead()) { ?>
+<?php if ($permission->canRead()) { ?>
     <div class="box noHeader">
         <div class="inner">
             <?php include_partial('global/flash_messages'); ?>
@@ -34,7 +34,7 @@
                             <?php echo $createTimesheetForm['date']->renderError() ?>
                         </li>
                     </ol>
-                    <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))): ?>
+                    <?php if ($canCreateTimesheets): ?>
                         <p>
                             <input type="button" class="" name="button" id="btnAddTimesheet" value="<?php echo __('Add Timesheet') ?>" />
                         </p>

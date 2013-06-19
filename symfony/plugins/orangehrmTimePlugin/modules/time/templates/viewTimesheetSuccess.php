@@ -59,7 +59,7 @@ $actionName = sfContext::getInstance()->getActionName();
                         <ol class="normal" style="padding-bottom:0">
                             <li style="margin-bottom:5px">
                                 <?php echo $dateForm['startDates']->render(array('onchange' => 'clicked(event)')); ?>
-                                <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_CREATE, $sf_data->getRaw('allowedToCreateTimesheets'))) : ?>
+                                <?php if ($allowedToCreateTimesheets) : ?>
                                     <a id="btnAddTimesheet" data-toggle="modal" href="#createTimesheet" class="fieldHelpRight"><?php echo __("Add Timesheet"); ?></a>
                                 <?php endif; ?>
                             </li>
@@ -231,15 +231,15 @@ $actionName = sfContext::getInstance()->getActionName();
                     <form id="timesheetFrm" name="timesheetFrm"  method="post">
                             <?php echo $formToImplementCsrfToken['_csrf_token']; ?>
                         <p>
-                                <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_MODIFY, $sf_data->getRaw('allowedActions'))) : ?>
+                                <?php if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_MODIFY])) : ?>
                                     <input type="button" class="edit" name="button" id="btnEdit" value="<?php echo __('Edit'); ?>" />
                                 <?php endif; ?>
 
-                                <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_SUBMIT, $sf_data->getRaw('allowedActions'))) : ?>
+                                <?php if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_SUBMIT])) : ?>
                                     <input type="button" class="" name="button" id="btnSubmit" value="<?php echo __('Submit'); ?>" />
                                 <?php endif; ?>
 
-                                <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_RESET, $sf_data->getRaw('allowedActions'))) : ?>
+                                <?php if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_RESET])) : ?>
                                     <input type="button" class="reset"  name="button" id="btnReset" value="<?php echo __('Reset') ?>" />
                                 <?php endif; ?>
                         </p>         
@@ -249,8 +249,8 @@ $actionName = sfContext::getInstance()->getActionName();
 
         </div> <!-- Box -->
 
-        <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_APPROVE, $sf_data->getRaw('allowedActions')) ||
-                (in_array(WorkflowStateMachine::TIMESHEET_ACTION_REJECT, $sf_data->getRaw('allowedActions')))) :
+        <?php if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_APPROVE]) ||
+                isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_REJECT])) :
             ?>
             <div class="box">
                 <div class="head">
@@ -267,10 +267,10 @@ $actionName = sfContext::getInstance()->getActionName();
                                 </li>
                             </ol>
                             <p>
-            <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_APPROVE, $sf_data->getRaw('allowedActions'))): ?>
+            <?php if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_APPROVE])): ?>
                                     <input type="button" class="" name="button" id="btnApprove" value="<?php echo __('Approve') ?>" />
             <?php endif; ?>
-            <?php if (in_array(WorkflowStateMachine::TIMESHEET_ACTION_REJECT, $sf_data->getRaw('allowedActions'))) : ?>
+            <?php if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_REJECT])) : ?>
                                     <input type="button" class="delete"  name="button" id="btnReject" value="<?php echo __('Reject') ?>" />
             <?php endif; ?>
                             </p>
@@ -389,11 +389,10 @@ $actionName = sfContext::getInstance()->getActionName();
 <script type="text/javascript">
     var datepickerDateFormat = '<?php echo get_datepicker_date_format($sf_user->getDateFormat()); ?>';
     var displayDateFormat = '<?php echo str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())); ?>';
-    var submitNextState = "<?php echo $submitNextState; ?>";
-    var approveNextState = "<?php echo $approveNextState; ?>";
-    var submitNextState = "<?php echo $submitNextState; ?>";
-    var rejectNextState = "<?php echo $rejectNextState; ?>";
-    var resetNextState = "<?php echo $resetNextState; ?>";
+    var submitAction = "<?php echo WorkflowStateMachine::TIMESHEET_ACTION_SUBMIT; ?>";
+    var approveAction = "<?php echo WorkflowStateMachine::TIMESHEET_ACTION_APPROVE; ?>";
+    var rejectAction = "<?php echo WorkflowStateMachine::TIMESHEET_ACTION_REJECT; ?>";
+    var resetAction = "<?php echo WorkflowStateMachine::TIMESHEET_ACTION_RESET; ?>";
     var employeeId = "<?php echo $timesheet->getEmployeeId(); ?>";
     var timesheetId = "<?php echo $timesheet->getTimesheetId(); ?>";
     var linkForViewTimesheet="<?php echo url_for('time/' . $actionName) ?>";

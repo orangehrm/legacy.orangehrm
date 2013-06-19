@@ -48,6 +48,7 @@ class User {
 		return $this->employeeListForAttendanceTotalSummaryReport;
 	}
 
+        // Not in use
 	public function getAccessibleTimeMenus() {
 
 		return $this->topMenuItemsArray;
@@ -62,6 +63,7 @@ class User {
         return $this->employeeNameList;
     }
 
+        // Not in use
 	public function getAccessibleTimeSubMenus() {
 
 		return $this->topMenuItemsArray;
@@ -77,19 +79,20 @@ class User {
 		return $this->applicationStates;
 	}
 
+        // Not in use
 	public function getAccessibleConfigurationSubMenus() {
 		return $this->topMenuItemsArray;
 	}
-
+        // Not in use
 	public function getAccessibleReportSubMenus() {
 		return $this->topMenuItemsArray;
 	}
-
+        // Not in use
 	public function getAccessibleAttendanceSubMenus() {
 
 		return $this->topMenuItemsArray;
 	}
-
+        // Not in use
 	public function getAccessibleRecruitmentMenus() {
 		return $this->topMenuItemsArray;
 	}
@@ -138,6 +141,7 @@ class User {
 		return $this->userTimeZoneOffset;
 	}
 
+        // Not in use
 	public function isAllowedToDefineTimeheetPeriod() {
 		return $this->canDefineTimesheetPeriod;
 	}
