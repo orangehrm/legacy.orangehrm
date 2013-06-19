@@ -4817,6 +4817,7 @@ upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask54.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask55.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask56.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask57.php -text
+upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask58.php -text
 upgrader/apps/upgrader/lib/utility/SystemCheckUtility.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeLogger.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeUtility.php -text
