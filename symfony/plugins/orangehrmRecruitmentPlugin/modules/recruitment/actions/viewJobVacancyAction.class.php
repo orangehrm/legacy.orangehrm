@@ -110,7 +110,7 @@ class viewJobVacancyAction extends baseRecruitmentAction {
                     $srchParams['offset'] = 0;
                     $this->getUser()->setAttribute('searchParameters', $srchParams);
                     $vacancyList = $this->getVacancyService()->searchVacancies($srchParams);
-                    $this->_setListComponent($vacancyList, $noOfRecords, $srchParams, $pageNumber);
+                    $this->_setListComponent($vacancyList, $noOfRecords, $srchParams, $pageNumber, $this->vacancyPermissions);
                 }
             }
         }
