@@ -1358,8 +1358,8 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (54, 'Punch In/Out', 6, 'punchIn'),
 (55, 'View Employee Attendance', 6, 'viewAttendanceRecord'),
 (56, 'Attendance Configuration', 6, 'configure'),
-(57, 'View Employee Report Criteria', 5, 'displayProjectReportCriteria'),
-(58, 'View Project Report Criteria', 5, 'displayEmployeeReportCriteria'),
+(57, 'View Project Report Criteria', 5, 'displayProjectReportCriteria'),
+(58, 'View Employee Report Criteria', 5, 'displayEmployeeReportCriteria'),
 (59, 'View Attendance Report Criteria', 5, 'displayAttendanceSummaryReportCriteria'),
 (60, 'Candidate List', 7, 'viewCandidates'),
 (61, 'Vacancy List', 7, 'viewJobVacancy'),
@@ -1402,7 +1402,8 @@ INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
 (98, 'View Leave Request', 4, 'viewLeaveRequest'),
 (99, 'Change Leave Status', 4, 'changeLeaveStatus'),
 (100, 'Terminate Employment', 3, 'terminateEmployement'),
-(101, 'View Attendance Summary Report', 5, 'displayAttendanceSummaryReport');
+(101, 'View Attendance Summary Report', 5, 'displayAttendanceSummaryReport'),
+(102, 'View Project Activity Details Report', 5, 'displayProjectActivityDetailsReport');
 
 INSERT INTO ohrm_menu_item (`id`, `menu_title`, `screen_id`, `parent_id`, `level`, `order_hint`, `url_extras`, `status`) VALUES
 (1, 'Admin', 74, NULL, 1, 100, NULL, 1),
@@ -1624,7 +1625,9 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (1, 98, 1, 1, 1, 1),
 (1, 99, 1, 1, 1, 1),
 (1, 101, 1, 1, 1, 1),
-(3, 101, 1, 1, 1, 1);
+(3, 101, 1, 1, 1, 1),
+(1, 102, 1, 1, 1, 1),
+(4, 102, 1, 1, 1, 1);
 
 INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
 (1, 'personal_information', 'PIM - Personal Details', 1, NULL, 1, NULL),
@@ -2022,6 +2025,7 @@ INSERT INTO `ohrm_data_group_screen`(`data_group_id`, `screen_id`, `permission`)
 (48, 55, 1),
 
 (49, 57, 1),
+(49, 102, 1),
 
 (50, 58, 1),
 
