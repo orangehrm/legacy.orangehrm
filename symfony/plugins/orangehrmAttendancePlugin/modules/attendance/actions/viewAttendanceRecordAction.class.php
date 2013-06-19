@@ -39,26 +39,14 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
     public function execute($request) {
 
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-//        $accessibleMenus = $this->userObj->getAccessibleAttendanceSubMenus();
-        $hasRight = false;
+
         $this->parmetersForListCompoment = array();
         $this->showEdit = false;
-//
-//        foreach ($accessibleMenus as $menu) {
-//            if ($menu->getDisplayName() === __("Employee Records")) {
-//                $hasRight = true;
-//                break;
-//            }
-//        }
 
         $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_manage_records');
 
-        if ($this->attendanceManagePermissios->canRead()) {
-            $hasRight = true;
-        }
 
-
-        if (!$hasRight) {
+        if (!$this->attendanceManagePermissios->canRead()) {
             return $this->renderText(__("You are not allowed to view this page") . "!");
         }
 

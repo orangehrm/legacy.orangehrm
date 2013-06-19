@@ -22,16 +22,8 @@ class displayAttendanceSummaryReportCriteriaAction extends baseTimeAction {
     public function execute($request) {
 
         $userObj = $this->getContext()->getUser()->getAttribute('user');
-//        $accessibleMenus = $userObj->getAccessibleReportSubMenus();
         $hasRight = false;
 
-//        foreach ($accessibleMenus as $menu) {
-//            if ($menu->getDisplayName() === __("Attendance Summary")) {
-//                $hasRight = true;
-//                break;
-//            }
-//        }
-        
         $this->attendancePermissions = $this->getDataGroupPermissions('attendance_summary');
         
         if($this->attendancePermissions->canRead()){

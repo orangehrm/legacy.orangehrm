@@ -54,21 +54,12 @@ class configureAction extends baseAttendanceAction {
     public function execute($request) {
 
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $accessibleMenus = $this->userObj->getAccessibleAttendanceSubMenus();
-        $hasRight = false;
-
-        foreach ($accessibleMenus as $menu) {
-            if ($menu->getDisplayName() === __("Configuration")) {
-                $hasRight = true;
-                break;
-            }
-        }
 
         $this->attendancePermissios = $this->getDataGroupPermissions('attendance_configuration');
 
         $values = array('attendancePermissios' => $this->attendancePermissios);
 
-        if (!$hasRight && !$this->attendancePermissios->canRead()) {
+        if (!$this->attendancePermissios->canRead()) {
             return $this->renderText(__("You are not allowed to view this page") . "!");
         }
 
