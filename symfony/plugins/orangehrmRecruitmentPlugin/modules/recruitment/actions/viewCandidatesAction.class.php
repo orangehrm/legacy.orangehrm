@@ -123,7 +123,7 @@ class viewCandidatesAction extends baseAction {
                     $srchParams = $this->form->getSearchParamsBindwithFormData($searchParam);
                     $this->getUser()->setAttribute('searchParameters', $srchParams);
                     $candidates = $this->getCandidateService()->searchCandidates($srchParams);
-                    $this->_setListComponent($usrObj, $candidates, $noOfRecords, $searchParam, $pageNumber);
+                    $this->_setListComponent($usrObj, $candidates, $noOfRecords, $searchParam, $pageNumber, $this->candidaatePermissions);
                 }
             }
         }
