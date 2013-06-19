@@ -29,8 +29,8 @@ class editAttendanceRecordAction extends baseAttendanceAction {
         /* For highlighting corresponding menu item */
         $request->setParameter('initialActionName', 'viewAttendanceRecord');
 
-        $userObj = sfContext::getInstance()->getUser()->getAttribute('user');
-
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        
         $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_manage_records');
 
         $this->editPunchIn = array();
@@ -38,15 +38,16 @@ class editAttendanceRecordAction extends baseAttendanceAction {
         $this->employeeId = $request->getParameter('employeeId');
         $this->messageData = array($request->getParameter('message[0]'), $request->getParameter('message[1]'));
 
-        $this->_checkAuthentication($this->employeeId, $userObj);
+        $this->_checkAuthentication($this->employeeId);
 
         $this->date = $request->getParameter('date');
 
         $this->actionRecorder = $request->getParameter('actionRecorder');
         $this->errorRows = $request->getParameter('errorRows');
-        $userObj = sfContext::getInstance()->getUser()->getAttribute('user');
-        $userId = $userObj->getUserId();
-        $userEmployeeNumber = $userObj->getEmployeeNumber();
+
+        $userId = $userRoleManager->getUser()->getId();
+        
+        $userEmployeeNumber = $this->getUser()->getEmployeeNumber();
         $this->records = $this->getAttendanceService()->getAttendanceRecord($this->employeeId, $this->date);
         $totalRows = sizeOf($this->records);
 
@@ -126,26 +127,18 @@ class editAttendanceRecordAction extends baseAttendanceAction {
         $this->attendanceService = $attendanceService;
     }
 
-    protected function _checkAuthentication($empNumber, $user) {
+    protected function _checkAuthentication($empNumber) {
 
-        $logedInEmpNumber = $user->getEmployeeNumber();
+        $loggedInEmpNumber = $this->getUser()->getEmployeeNumber();
 
-        if ($logedInEmpNumber == $empNumber) {
+        if ($loggedInEmpNumber == $empNumber) {
             return;
         }
 
-        if ($user->isAdmin()) {
-            return;
-        }
-
-        $subordinateIdList = $this->getEmployeeService()->getSubordinateIdListBySupervisorId($logedInEmpNumber);
-
-        if (empty($subordinateIdList)) {
-            $this->redirect('auth/login');
-        }
-
-        if (!in_array($empNumber, $subordinateIdList)) {
-            $this->redirect('auth/login');
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        
+        if (!$userRoleManager->isEntityAccessible('Employee', $empNumber)) {
+            $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
     }
 

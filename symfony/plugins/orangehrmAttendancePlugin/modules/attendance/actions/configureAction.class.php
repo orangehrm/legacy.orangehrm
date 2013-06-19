@@ -53,8 +53,6 @@ class configureAction extends baseAttendanceAction {
 
     public function execute($request) {
 
-        $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-
         $this->attendancePermissios = $this->getDataGroupPermissions('attendance_configuration');
 
         $values = array('attendancePermissios' => $this->attendancePermissios);

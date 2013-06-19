@@ -295,16 +295,6 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
         ohrmListComponent::setItemsPerPage($noOfRecords);
         ohrmListComponent::setNumberOfRecords($count);
     }
-
-    public function allowedToPerformAction($flow, $action, $state, $userObject) {
-        $actionsArray = $userObject->getAllowedActions($flow, $state);
-
-        if (in_array($action, $actionsArray)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     
 }
 

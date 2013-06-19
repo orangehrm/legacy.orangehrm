@@ -66,7 +66,6 @@ class editTimesheetAction extends baseTimeAction {
         $this->timesheetId = $request->getParameter('timesheetId');
         $this->employeeId = $request->getParameter('employeeId');
 
-        $userObj = $this->getContext()->getUser()->getAttribute('user');
         $loggedInEmpNumber = $this->getContext()->getUser()->getEmployeeNumber();
 
         /* For highlighting corresponding menu item */
@@ -79,10 +78,10 @@ class editTimesheetAction extends baseTimeAction {
 
         $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $this->employeeId);
 
-        $this->_checkAuthentication($this->employeeId, $userObj);
+        $this->_checkAuthentication($this->employeeId);
 
         if ($this->employeeId == $loggedInEmpNumber) {
-            $this->employeeName == null;
+            $this->employeeName = null;
         } else {
             $this->employeeName = $this->getEmployeeName($this->employeeId);
         }
@@ -130,9 +129,9 @@ class editTimesheetAction extends baseTimeAction {
 
     protected function _checkAuthentication($empNumber, $user) {
 
-        $logedInEmpNumber = $user->getEmployeeNumber();
+        $loggedInEmpNumber = $this->getUser()->getEmployeeNumber();
 
-        if ($logedInEmpNumber == $empNumber) {
+        if ($loggedInEmpNumber == $empNumber) {
             return;
         }
 

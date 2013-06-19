@@ -244,22 +244,12 @@ class viewTimesheetAction extends baseTimeAction {
 
     protected function _checkAuthentication($empNumber) {
 
-        $user = $this->getUser()->getAttribute('user');
-
-        if ($user->isAdmin()) {
-            return;
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        
+        if (!$userRoleManager->isEntityAccessible('Employee', $empNumber)) {
+            $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
 
-        $logedInEmpNumber = $user->getEmployeeNumber();
-        $subordinateIdList = $this->getEmployeeService()->getSubordinateIdListBySupervisorId($logedInEmpNumber);
-
-        if (empty($subordinateIdList)) {
-            $this->redirect('auth/login');
-        }
-
-        if (!in_array($empNumber, $subordinateIdList)) {
-            $this->redirect('auth/login');
-        }
     }
 
 }
