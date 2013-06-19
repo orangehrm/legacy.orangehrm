@@ -272,7 +272,7 @@ class AttendanceActions extends sfActions {
         $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_manage_records');
 
         $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $timeZoneOffset = $this->userObj->getUserTimeZoneOffset();
+        $timeZoneOffset = $this->getUser()->getUserTimeZoneOffset();
 
         $timeStampDiff = $timeZoneOffset * 3600 - date('Z');
         $this->currentDate = date('Y-m-d', time() + $timeStampDiff);

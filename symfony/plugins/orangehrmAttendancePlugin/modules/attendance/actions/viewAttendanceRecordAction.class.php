@@ -38,8 +38,10 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
 
     public function execute($request) {
 
-        $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-
+        $loggedInEmpNumber = $this->getContext()->getUser()->getEmployeeNumber();
+        
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        
         $this->parmetersForListCompoment = array();
         $this->showEdit = false;
 
@@ -91,9 +93,6 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                     $this->allowedActions['Edit'] = false;
                     $this->allowedActions['PunchIn'] = false;
                     $this->allowedActions['PunchOut'] = false;
-                    $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-                    $userId = $this->userObj->getUserId();
-                    $userEmployeeNumber = $this->userObj->getEmployeeNumber();
 
                     $post = $this->form->getValues();
 
@@ -108,9 +107,6 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                     if ($this->employeeId) {
                         $this->showEdit = true;
                     }
-                    
-                    $userRoleFactory = new UserRoleFactory();
-                    $this->decoratedUser = $decoratedUser = $userRoleFactory->decorateUserRole($userId, $this->employeeId, $userEmployeeNumber);
 
                     $isPaging = $request->getParameter('hdnAction') == 'search' ? 1 : $request->getParameter('pageNo', 1);
 
@@ -163,7 +159,8 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                     $this->parmetersForListCompoment = $params;
 
                     $actions = array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_OUT_TIME, PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_IN_TIME);
-                    $actionableStates = $decoratedUser->getActionableAttendanceStates($actions);
+                    $actionableStates = $userRoleManager->getActionableStates(WorkflowStateMachine::FLOW_ATTENDANCE, 
+                            $actions, array(), array(), array('Employee' => $loggedInEmpNumber));
                     $recArray = array();
 
                     if ($records != null) {
@@ -179,7 +176,8 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                         }
 
                         $actions = array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_DELETE);
-                        $actionableStates = $decoratedUser->getActionableAttendanceStates($actions);
+                        $actionableStates = $userRoleManager->getActionableStates(WorkflowStateMachine::FLOW_ATTENDANCE, 
+                            $actions, array(), array(), array('Employee' => $loggedInEmpNumber));
 
                         if ($actionableStates != null) {
                             foreach ($actionableStates as $state) {
@@ -193,17 +191,20 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                         }
 
                         foreach ($records as $record) {
-                            $this->allowedToDelete[] = $this->allowedToPerformAction(WorkflowStateMachine::FLOW_ATTENDANCE, PluginWorkflowStateMachine::ATTENDANCE_ACTION_DELETE, $record->getState(), $decoratedUser);
+                            $this->allowedToDelete[] = $userRoleManager->isActionAllowed(WorkflowStateMachine::FLOW_ATTENDANCE, $record->getState(), PluginWorkflowStateMachine::ATTENDANCE_ACTION_DELETE, array(), array(), array('Employee' => $loggedInEmpNumber));
                             $recArray[] = $record;
                         }
                     } else {
                         $attendanceRecord = null;
                     }
 
+                    /** 
+                     * TODO: Following code looks overly complicated. Simplify
+                     */
                     $actions = array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_IN, PluginWorkflowStateMachine::ATTENDANCE_ACTION_PROXY_PUNCH_OUT);
                     $allowedActionsList = array();
-
-                    $actionableStates = $decoratedUser->getActionableAttendanceStates($actions);
+                    $actionableStates = $userRoleManager->getActionableStates(WorkflowStateMachine::FLOW_ATTENDANCE, 
+                            $actions, array(), array(), array('Employee' => $loggedInEmpNumber));
 
                     if ($actionableStates != null) {
                         if (!empty($recArray)) {
@@ -216,11 +217,13 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
                         }
 
                         foreach ($actionableStates as $actionableState) {
-
-                            $allowedActionsArray = $decoratedUser->getAllowedActions(PluginWorkflowStateMachine::FLOW_ATTENDANCE, $actionableState);
+  
+                            $allowedActionsArray = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_ATTENDANCE, 
+                                $actionableState, array(), array(), array('Employee' => $loggedInEmpNumber));
+                            
                             if (!is_null($allowedActionsArray)) {
 
-                                $allowedActionsList = array_unique(array_merge($allowedActionsArray, $allowedActionsList));
+                                $allowedActionsList = array_unique(array_merge(array_keys($allowedActionsArray), $allowedActionsList));
                             }
                         }
 
@@ -244,10 +247,14 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
     private function _setListComponent($records, $noOfRecords, $pageNumber, $count = null, $showEdit = null, $allowedActions = null) {
 
         $configurationFactory = new AttendanceRecordHeaderFactory();
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        $loggedInEmpNumber = $this->getUser()->getEmployeeNumber();
 
         $notSelectable = array();
         foreach ($records as $record) {
-            if (!$this->allowedToPerformAction(WorkflowStateMachine::FLOW_ATTENDANCE, PluginWorkflowStateMachine::ATTENDANCE_ACTION_DELETE, $record->getState(), $this->decoratedUser)) {
+            if (!$userRoleManager->isActionAllowed(WorkflowStateMachine::FLOW_ATTENDANCE, 
+                    $record->getState(), WorkflowStateMachine::ATTENDANCE_ACTION_DELETE, 
+                    array(), array(), array('Employee' => $loggedInEmpNumber))) {          
                 $notSelectable[] = $record->getId();
             }
         }
@@ -290,7 +297,6 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
     }
 
     public function allowedToPerformAction($flow, $action, $state, $userObject) {
-        //  $userObj = $this->getContext()->getUser()->getAttribute('user');
         $actionsArray = $userObject->getAllowedActions($flow, $state);
 
         if (in_array($action, $actionsArray)) {
@@ -299,6 +305,6 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
             return false;
         }
     }
-
+    
 }
 

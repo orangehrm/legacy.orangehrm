@@ -44,11 +44,13 @@ class punchOutAction extends sfAction {
         $request->setParameter('initialActionName', 'punchIn');          
 
         $inputDatePattern = sfContext::getInstance()->getUser()->getDateFormat();
-        $this->userObj = $this->getContext()->getUser()->getAttribute('user');
-        $this->employeeId = $this->userObj->getEmployeeNumber();
+        $userObj = $this->getContext()->getUser()->getAttribute('user');
+        
+        $this->employeeId = $this->getUser()->getEmployeeNumber();
         $actions = array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT);
-        $actionableStatesList = $this->userObj->getActionableAttendanceStates($actions);
-        $timeZoneOffset = $this->userObj->getUserTimeZoneOffset();
+        $actionableStatesList = $userObj->getActionableAttendanceStates($actions);
+        $timeZoneOffset = $this->getUser()->getUserTimeZoneOffset();
+        
         $timeStampDiff = $timeZoneOffset * 3600 - date('Z');
         $this->currentDate = date('Y-m-d', time() + $timeStampDiff);
         $this->currentTime = date('H:i', time() + $timeStampDiff);
@@ -76,7 +78,7 @@ class punchOutAction extends sfAction {
         $this->attendanceFormToImplementCsrfToken = new AttendanceFormToImplementCsrfToken();
         $this->actionPunchOut = $this->getActionName();
 
-        $this->allowedActions = $this->userObj->getAllowedActions(PluginWorkflowStateMachine::FLOW_ATTENDANCE, $attendanceRecord->getState());
+        $this->allowedActions = $userObj->getAllowedActions(PluginWorkflowStateMachine::FLOW_ATTENDANCE, $attendanceRecord->getState());
         if ($request->isMethod('post')) {
             if (!(in_array(PluginWorkflowStateMachine::ATTENDANCE_ACTION_EDIT_PUNCH_TIME, $this->allowedActions))) {
                 $this->attendanceFormToImplementCsrfToken->bind($request->getParameter('attendance'));
@@ -87,7 +89,7 @@ class punchOutAction extends sfAction {
                     $punchOutTime = $this->request->getParameter('time');
                     $punchOutNote = $this->request->getParameter('note');
                     $timeZoneOffset = $this->request->getParameter('timeZone');
-                    $nextState = $this->userObj->getNextState(PluginWorkflowStateMachine::FLOW_ATTENDANCE, PluginAttendanceRecord::STATE_PUNCHED_IN, PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT);
+                    $nextState = $userObj->getNextState(PluginWorkflowStateMachine::FLOW_ATTENDANCE, PluginAttendanceRecord::STATE_PUNCHED_IN, PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT);
                     $punchOutdateTime = strtotime($punchOutDate . " " . $punchOutTime);
 
                     $attendanceRecord = $this->setAttendanceRecord($attendanceRecord, $nextState, date('Y-m-d H:i', $punchOutdateTime - $timeZoneOffset), date('Y-m-d H:i', $punchOutdateTime), $timeZoneOffset / 3600, $punchOutNote);
@@ -105,7 +107,7 @@ class punchOutAction extends sfAction {
                     $punchOutDate = $this->form->getValue('date');
                     $timeZoneOffset = $this->request->getParameter('timeZone');
                     $punchOutEditModeTime = mktime(date('H', strtotime($punchOutTime)), date('i', strtotime($punchOutTime)), 0, date('m', strtotime($punchOutDate)), date('d', strtotime($punchOutDate)), date('Y', strtotime($punchOutDate)));
-                    $nextState = $this->userObj->getNextState(PluginWorkflowStateMachine::FLOW_ATTENDANCE, PluginAttendanceRecord::STATE_PUNCHED_IN, PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT);
+                    $nextState = $userObj->getNextState(PluginWorkflowStateMachine::FLOW_ATTENDANCE, PluginAttendanceRecord::STATE_PUNCHED_IN, PluginWorkflowStateMachine::ATTENDANCE_ACTION_PUNCH_OUT);
 
                     $attendanceRecord = $this->setAttendanceRecord($attendanceRecord, $nextState, date('Y-m-d H:i', $punchOutEditModeTime - $timeZoneOffset), date('Y-m-d H:i', $punchOutEditModeTime), $timeZoneOffset / 3600, $punchOutNote);
 

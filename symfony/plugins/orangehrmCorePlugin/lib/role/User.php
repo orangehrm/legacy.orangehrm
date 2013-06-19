@@ -134,10 +134,12 @@ class User {
 		$this->userId = $userId;
 	}
 
+        // Not needed
 	public function setUserTimeZoneOffset($timeZoneOffset) {
 		$this->userTimeZoneOffset = $timeZoneOffset;
 	}
 
+        // Not in use
 	public function getUserTimeZoneOffset() {
 		return $this->userTimeZoneOffset;
 	}
