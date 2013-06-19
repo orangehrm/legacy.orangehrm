@@ -346,6 +346,35 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         return $allActions;
     }
     
+    /**
+     * Given an array of actions, returns the states for which those actions can be applied
+     * by the current logged in user
+     * 
+     * @param string $workflow Workflow 
+     * @param array $actions Array of Action names
+     * @param array $rolesToExclude
+     * @param array $rolesToInclude
+     * @param array $entities
+     * 
+     * @return array Array of states
+     */
+    public function getActionableStates($workflow, $actions, $rolesToExclude = array(), $rolesToInclude = array(), $entities = array()) {
+
+        $accessFlowStateMachineService = new AccessFlowStateMachineService();
+        $actionableStates = array();
+        
+        $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude, $entities);
+        
+        foreach ($filteredRoles as $role) {        
+            $states = $accessFlowStateMachineService->getActionableStates($workflow, $role->getName(), $actions); 
+
+            if (!empty($states)) {
+                $actionableStates = array_unique(array_merge($actionableStates, $states));
+            }
+        }
+        return $actionableStates;
+    }
+    
     protected function getUniqueActionsBasedOnPriority($currentItems, $itemsToMerge) {
         
         foreach($itemsToMerge as $item) {
