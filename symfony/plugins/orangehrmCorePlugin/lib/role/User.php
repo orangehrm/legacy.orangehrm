@@ -54,6 +54,7 @@ class User {
 		return $this->topMenuItemsArray;
 	}
 
+        // Not in use
 	public function getActionableTimesheets() {
 
 		return $this->actionableTimesheets;

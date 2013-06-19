@@ -19,6 +19,7 @@
  */
 class viewEmployeeTimesheetAction extends baseTimeAction {
 
+    const NUM_PENDING_TIMESHEETS = 100;
     private $employeeNumber;
     private $timesheetService;
 
@@ -59,11 +60,36 @@ class viewEmployeeTimesheetAction extends baseTimeAction {
             }
         }
 
-        $userObj = $this->getContext()->getUser()->getAttribute("user");
-        $this->form->employeeList = $userObj->getEmployeeNameList();
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+                
+        $properties = array("empNumber","firstName", "middleName", "lastName", "termination_id");
+        $employeeList = UserRoleManagerFactory::getUserRoleManager()
+                ->getAccessibleEntityProperties('Employee', $properties);
 
-        $this->pendingApprovelTimesheets = $userObj->getActionableTimesheets();
+        $this->form->employeeList = $employeeList;
+
+        $this->pendingApprovelTimesheets = $this->getActionableTimesheets($employeeList);
     }
+    
+    public function getActionableTimesheets($employeeList) {
+        $timesheetList = null;
+        
+        $accessFlowStateMachinService = new AccessFlowStateMachineService();
+        $action = array(PluginWorkflowStateMachine::TIMESHEET_ACTION_APPROVE, PluginWorkflowStateMachine::TIMESHEET_ACTION_REJECT);
+        $actionableStatesList = $accessFlowStateMachinService->getActionableStates(PluginWorkflowStateMachine::FLOW_TIME_TIMESHEET, AdminUserRoleDecorator::ADMIN_USER, $action);
+        
+        $empNumbers = array();
+        
+        foreach ($employeeList as $employee) {
+            $empNumbers[] = $employee['empNumber'];
+        }
+        
+        if ($actionableStatesList != null) {
+            $timesheetList = $this->getTimesheetService()->getTimesheetListByEmployeeIdAndState($empNumbers, $actionableStatesList, self::NUM_PENDING_TIMESHEETS);
+        }
+        
+        return $timesheetList;
+    }    
 
 }
 
