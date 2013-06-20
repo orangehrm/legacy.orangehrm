@@ -33,32 +33,35 @@ class deleteCustomerAction extends baseAdminAction {
      */
     public function execute($request) {
 
-        $toBeDeletedCustomerIds = $request->getParameter('chkSelectRow');
-
         $customerPermissions = $this->getDataGroupPermissions('time_customers');
 
         if ($customerPermissions->canDelete()) {
 
-            if (!empty($toBeDeletedCustomerIds)) {
-                $delete = true;
-                foreach ($toBeDeletedCustomerIds as $toBeDeletedCustomerId) {
-                    $deletable = $this->getCustomerService()->hasCustomerGotTimesheetItems($toBeDeletedCustomerId);
-                    if ($deletable) {
-                        $delete = false;
-                        break;
-                    }
-                }
-                if ($delete) {
+            $form = new DefaultListForm(array(), array(), true);
+            $form->bind($request->getParameter($form->getName()));
+            
+            if ($form->isValid()) {
+                $toBeDeletedCustomerIds = $request->getParameter('chkSelectRow');            
+                if (!empty($toBeDeletedCustomerIds)) {
+                    $delete = true;
                     foreach ($toBeDeletedCustomerIds as $toBeDeletedCustomerId) {
-
-                        $customer = $this->getCustomerService()->deleteCustomer($toBeDeletedCustomerId);
+                        $deletable = $this->getCustomerService()->hasCustomerGotTimesheetItems($toBeDeletedCustomerId);
+                        if ($deletable) {
+                            $delete = false;
+                            break;
+                        }
                     }
-                    $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
-                } else {
-                    $this->getUser()->setFlash('error', __('Not Allowed to Delete Customer(s) Which Have Time Logged Against'));
+                    if ($delete) {
+                        foreach ($toBeDeletedCustomerIds as $toBeDeletedCustomerId) {
+
+                            $customer = $this->getCustomerService()->deleteCustomer($toBeDeletedCustomerId);
+                        }
+                        $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                    } else {
+                        $this->getUser()->setFlash('error', __('Not Allowed to Delete Customer(s) Which Have Time Logged Against'));
+                    }
                 }
             }
-
             $this->redirect('admin/viewCustomers');
         }
     }

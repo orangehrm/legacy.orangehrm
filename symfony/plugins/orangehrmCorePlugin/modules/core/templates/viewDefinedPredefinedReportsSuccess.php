@@ -7,6 +7,7 @@
     </div>
     <div class="inner" >
         <form action="<?php echo url_for("core/viewDefinedPredefinedReports"); ?>" id="searchForm" method="post">
+            <?php echo $form['_csrf_token']->render(); ?>
             <fieldset>
                 
                 <ol>

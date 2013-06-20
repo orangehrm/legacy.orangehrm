@@ -18,11 +18,15 @@ class deleteLeaveTypeAction extends baseLeaveAction {
                     $this->getUser()->setFlash('notice', __(TopLevelMessages::SELECT_RECORDS));
                 } else {
                     if ($this->leaveTypePermissions->canDelete()) {
-                        $leaveTypeService = $this->getLeaveTypeService();
+                        $form = new DefaultListForm(array(), array(), true);
+                        $form->bind($request->getParameter($form->getName()));
+                        if ($form->isValid()) {
+                            $leaveTypeService = $this->getLeaveTypeService();
 
-                        $leaveTypeIds = $request->getParameter('chkSelectRow');
-                        $leaveTypeService->deleteLeaveType($leaveTypeIds);
-                        $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                            $leaveTypeIds = $request->getParameter('chkSelectRow');
+                            $leaveTypeService->deleteLeaveType($leaveTypeIds);
+                            $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                        }
                     }
                 }
 

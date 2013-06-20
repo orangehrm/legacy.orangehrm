@@ -1,5 +1,4 @@
 <?php
-
 /**
  * OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures
  * all the essential functionalities required for any enterprise.
@@ -17,28 +16,17 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
-class deleteMembershipsAction extends sfAction {
 
-    private $membershipService;
+/**
+ * Search KPI Form
+ * @todo Need to add all widgets in search kpi form
+ */
+class SearchKpiForm extends BaseForm {
+	
+     public function configure() {
 
-    public function getMembershipService() {
-        if (is_null($this->membershipService)) {
-            $this->membershipService = new MembershipService();
-            $this->membershipService->setMembershipDao(new MembershipDao());
-        }
-        return $this->membershipService;
-    }
+        $this->widgetSchema->setNameFormat('searchKpi[%s]');
 
-    public function execute($request) {
-        $form = new DefaultListForm(array(), array(), true);
-        $form->bind($request->getParameter($form->getName()));
-        $toBeDeletedIds = $request->getParameter('chkSelectRow');
-        if ($form->isValid()) {
-            $this->getMembershipService()->deleteMemberships($toBeDeletedIds);
-            $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
-        }
-        $this->redirect('admin/membership');
-    }
+     }
 
 }
-

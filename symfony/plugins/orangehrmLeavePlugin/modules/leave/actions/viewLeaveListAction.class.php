@@ -87,7 +87,7 @@ class viewLeaveListAction extends baseLeaveAction {
         $this->mode = $mode = $this->getMode();
         $this->essMode = $this->isEssMode();
         $this->leaveListPermissions = $this->getPermissions();
-        
+        $this->leavecommentForm = new LeaveCommentForm(array(),array(),true);
         $this->form = $this->getLeaveListForm($mode);
         $values = array();
 

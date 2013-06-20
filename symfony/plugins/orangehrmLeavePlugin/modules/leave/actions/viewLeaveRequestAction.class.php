@@ -145,7 +145,7 @@ class viewLeaveRequestAction extends baseLeaveAction {
 
         $this->mode = $this->getMode($employee->getEmpNumber());
         $this->essMode = $this->isEssMode($employee->getEmpNumber());
-
+        $this->leavecommentForm = new LeaveCommentForm(array(),array(),true);
         $list = $this->getLeaveRequestService()->searchLeave($this->leaveRequestId);
 
         $this->title = $this->getTitle($this->mode, $employee, $list);

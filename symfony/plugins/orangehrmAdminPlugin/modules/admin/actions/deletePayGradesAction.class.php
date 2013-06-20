@@ -31,18 +31,24 @@ class deletePayGradesAction extends baseAdminAction {
 
     public function execute($request) {
 
-        $toBeDeletedPayGradeIds = $request->getParameter('chkSelectRow');
         $payGradePermissions = $this->getDataGroupPermissions('pay_grades');
 
         if ($payGradePermissions->canDelete()) {
-            if (!empty($toBeDeletedPayGradeIds)) {
+            
+            $form = new DefaultListForm(array(), array(), true);
+            $form->bind($request->getParameter($form->getName())); 
+            
+            if ($form->isValid()) {
+                $toBeDeletedPayGradeIds = $request->getParameter('chkSelectRow');            
+                if (!empty($toBeDeletedPayGradeIds)) {
 
-                foreach ($toBeDeletedPayGradeIds as $toBeDeletedPayGradeId) {
+                    foreach ($toBeDeletedPayGradeIds as $toBeDeletedPayGradeId) {
 
-                    $payGrade = $this->getPayGradeService()->getPayGradeById($toBeDeletedPayGradeId);
-                    $payGrade->delete();
+                        $payGrade = $this->getPayGradeService()->getPayGradeById($toBeDeletedPayGradeId);
+                        $payGrade->delete();
+                    }
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
                 }
-                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
             }
 
             $this->redirect('admin/viewPayGrades');
@@ -51,4 +57,3 @@ class deletePayGradesAction extends baseAdminAction {
 
 }
 
-?>

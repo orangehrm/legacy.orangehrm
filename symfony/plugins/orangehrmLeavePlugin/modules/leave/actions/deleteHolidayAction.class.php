@@ -55,16 +55,22 @@ class deleteHolidayAction extends baseLeaveAction {
 
         $holidayPermissions = $this->getDataGroupPermissions('holidays');
 
-        $holidayIds = $request->getPostParameter('chkSelectRow[]');
+        if ($holidayPermissions->canDelete()) {            
 
-        if ($holidayPermissions->canDelete()) {
+            $holidayIds = $request->getPostParameter('chkSelectRow[]');            
             if (!empty($holidayIds)) {
 
-                foreach ($holidayIds as $key => $id) {
-                    $this->getHolidayService()->deleteHoliday($id);
+                $form = new DefaultListForm(array(), array(), true) ;
+                $form->bind($request->getParameter($form->getName()));  
+                
+                if ($form->isValid()) {
+                    foreach ($holidayIds as $key => $id) {
+                        $this->getHolidayService()->deleteHoliday($id);
+                    }
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));                    
+                } else {
+                    $this->getUser()->setFlash('warning', __(TopLevelMessages::ACCESS_DENIED));
                 }
-
-                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
             } else {
                 $this->getUser()->setFlash('warning', __(TopLevelMessages::SELECT_RECORDS));
             }

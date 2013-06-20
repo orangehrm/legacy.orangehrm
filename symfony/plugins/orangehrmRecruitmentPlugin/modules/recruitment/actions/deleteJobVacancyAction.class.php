@@ -39,15 +39,21 @@ class deleteJobVacancyAction extends baseRecruitmentAction {
      * @param <type> $request
      */
     public function execute($request) {
-
-        $toBeDeletedVacancyIds = $request->getParameter('chkSelectRow');
         $vacancyPermissions = $this->getDataGroupPermissions('recruitment_vacancies');
 
         if ($vacancyPermissions->canDelete()) {
-            $isDeletionSucceeded = $this->getVacancyService()->deleteVacancies($toBeDeletedVacancyIds);
-            $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
-            $this->redirect('recruitment/viewJobVacancy');
+            
+            $form = new DefaultListForm(array(), array(), true);
+            $form->bind($request->getParameter($form->getName()));
+            if ($form->isValid()) {        
+
+                $toBeDeletedVacancyIds = $request->getParameter('chkSelectRow');                
+                $isDeletionSucceeded = $this->getVacancyService()->deleteVacancies($toBeDeletedVacancyIds);
+                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+            }
         }
+        
+        $this->redirect('recruitment/viewJobVacancy');        
     }
 
 }

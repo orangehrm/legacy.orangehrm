@@ -32,12 +32,17 @@ class deleteJobTitleAction extends baseAdminAction {
     public function execute($request) {
         $jobTitlePermissions = $this->getDataGroupPermissions('job_titles');
         if ($jobTitlePermissions->canDelete()) {
-            $toBeDeletedJobTitleIds = $request->getParameter('chkSelectRow');
+            
+            $form = new DefaultListForm(array(), array(), true);
+            $form->bind($request->getParameter($form->getName()));
+            if ($form->isValid()) {
+                $toBeDeletedJobTitleIds = $request->getParameter('chkSelectRow');
 
-            if (!empty($toBeDeletedJobTitleIds)) {
-                $this->getJobTitleService()->deleteJobTitle($toBeDeletedJobTitleIds);
-                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
-                $this->redirect('admin/viewJobTitleList');
+                if (!empty($toBeDeletedJobTitleIds)) {
+                    $this->getJobTitleService()->deleteJobTitle($toBeDeletedJobTitleIds);
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                    $this->redirect('admin/viewJobTitleList');
+                }
             }
         }
     }

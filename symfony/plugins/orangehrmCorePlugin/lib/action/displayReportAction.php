@@ -88,6 +88,8 @@ abstract class displayReportAction extends basePimReportAction {
                     $formValues = $this->form->getValues();
                     $this->setReportCriteriaInfoInRequest($formValues);
                     $sql = $reportGeneratorService->generateSqlForNotUseFilterFieldReports($reportId, $formValues);
+                }else{
+                    $this->redirect($request->getReferer());
                 }
             }
         } else {

@@ -61,6 +61,8 @@ class editTimesheetAction extends baseTimeAction {
     }
 
     public function execute($request) {
+        
+        $this->listForm = new DefaultListForm(array(),array(),true);
 
         $this->backAction = $request->getParameter('actionName');
         $this->timesheetId = $request->getParameter('timesheetId');
@@ -114,11 +116,15 @@ class editTimesheetAction extends baseTimeAction {
         if ($request->isMethod('post')) {
 
             if ($request->getParameter('btnSave')) {
-                $backAction = $this->backAction;
-                $this->getTimesheetService()->saveTimesheetItems($request->getParameter('initialRows'), $this->employeeId, $this->timesheetId, $this->currentWeekDates, $this->totalRows);
-                $this->messageData = array('success', __(TopLevelMessages::SAVE_SUCCESS));
-                $startingDate = $this->timesheetService->getTimesheetById($this->timesheetId)->getStartDate();
-                $this->redirect('time/' . $backAction . '?' . http_build_query(array('message' => $this->messageData, 'timesheetStartDate' => $startingDate, 'employeeId' => $this->employeeId)));
+                
+                if( $this->timesheetForm->getCSRFtoken() == $request->getParameter('_csrf_token')){
+                    $backAction = $this->backAction;
+                    $this->getTimesheetService()->saveTimesheetItems($request->getParameter('initialRows'), $this->employeeId, $this->timesheetId, $this->currentWeekDates, $this->totalRows);
+                    $this->messageData = array('success', __(TopLevelMessages::SAVE_SUCCESS));
+                    $startingDate = $this->timesheetService->getTimesheetById($this->timesheetId)->getStartDate();
+                    $this->redirect('time/' . $backAction . '?' . http_build_query(array('message' => $this->messageData, 'timesheetStartDate' => $startingDate, 'employeeId' => $this->employeeId)));
+                 }
+
             }
 
             if ($request->getParameter('buttonRemoveRows')) {

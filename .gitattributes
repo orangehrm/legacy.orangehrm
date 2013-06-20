@@ -257,6 +257,7 @@ symfony/apps/orangehrm/lib/form/performance/ListKpiForm.php -text
 symfony/apps/orangehrm/lib/form/performance/PerformanceReviewForm.php -text
 symfony/apps/orangehrm/lib/form/performance/SaveKpiForm.php -text
 symfony/apps/orangehrm/lib/form/performance/SaveReviewForm.php -text
+symfony/apps/orangehrm/lib/form/performance/SearchKpiForm.php -text
 symfony/apps/orangehrm/lib/form/performance/ViewReviewForm.php -text
 symfony/apps/orangehrm/lib/form/validator/ohrmDateValidator.php -text
 symfony/apps/orangehrm/lib/form/widget/ohrmWidgetButton.php -text
@@ -3614,6 +3615,7 @@ symfony/plugins/orangehrmCorePlugin/lib/factory/SimpleUserRoleFactory.php -text
 symfony/plugins/orangehrmCorePlugin/lib/factory/UserRoleFactory.php -text
 symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmExecutionFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php -text
+symfony/plugins/orangehrmCorePlugin/lib/form/DefaultListForm.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/orangehrmForm.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorEmployeeNameAutoFill.php -text
 symfony/plugins/orangehrmCorePlugin/lib/form/validate/ohrmValidatorSchemaCompare.class.php -text
@@ -3869,6 +3871,7 @@ symfony/plugins/orangehrmLeavePlugin/lib/form/AssignLeaveForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/HolidayForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/HolidayListSearchForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveBalanceReportForm.php -text
+symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveCommentForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementAddForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementBulkAssignFilterForm.php -text
 symfony/plugins/orangehrmLeavePlugin/lib/form/LeaveEntitlementForm.php -text
@@ -4112,6 +4115,7 @@ symfony/plugins/orangehrmPimPlugin/lib/dao/EmployeeDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/ReportingMethodConfigurationDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/dao/TerminationReasonConfigurationDao.php -text
 symfony/plugins/orangehrmPimPlugin/lib/events/EmployeeEvents.php -text
+symfony/plugins/orangehrmPimPlugin/lib/form/ActiveEmploymentForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/AddEmployeeForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/ConfigPimForm.php -text
 symfony/plugins/orangehrmPimPlugin/lib/form/CustomFieldDeleteForm.php -text

@@ -170,6 +170,8 @@ class SqlDataGenerator extends DataGenerator {
                     } else if ($operator == 'IS NOT NULL') {
                         if ($values[$name] == 'TRUE') {
                             $clause = $field . ' IS NOT NULL';
+                        } else {
+                            $clause = 'true';
                         }
                     } else if ($operator == 'IS NULL') {
                         if ($values[$name] == 'TRUE') {

@@ -33,15 +33,20 @@ class deleteCandidateVacanciesAction extends baseAction {
     }
 
     public function execute($request) {
-        $candidaatePermissions = $this->getDataGroupPermissions('recruitment_candidates');
+        $candidatePermissions = $this->getDataGroupPermissions('recruitment_candidates');
 
-        if ($candidaatePermissions->canDelete()) {
-            $candidateVacancyIds = $request->getParameter("chkSelectRow");
-            $toBeDeletedCandiates = $this->getCandidateService()->processCandidatesVacancyArray($candidateVacancyIds);
-            $isDeleteSuccess = $this->getCandidateService()->deleteCandidate($toBeDeletedCandiates);
+        if ($candidatePermissions->canDelete()) {
+            
+            $form = new DefaultListForm(array(), array(), true);
+            $form->bind($request->getParameter($form->getName()));
+            if ($form->isValid()) {
+                $candidateVacancyIds = $request->getParameter("chkSelectRow");
+                $toBeDeletedCandiates = $this->getCandidateService()->processCandidatesVacancyArray($candidateVacancyIds);
+                $isDeleteSuccess = $this->getCandidateService()->deleteCandidate($toBeDeletedCandiates);
 
-            if ($isDeleteSuccess) {
-                $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                if ($isDeleteSuccess) {
+                    $this->getUser()->setFlash('success', __(TopLevelMessages::DELETE_SUCCESS));
+                }
             }
         }
         $this->redirect('recruitment/viewCandidates');
