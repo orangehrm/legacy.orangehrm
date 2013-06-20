@@ -3738,6 +3738,7 @@ symfony/plugins/orangehrmCorePlugin/lib/role/ProjectAdminUserRoleDecorator.php -
 symfony/plugins/orangehrmCorePlugin/lib/role/SupervisorUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/TopMenuItem.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/User.php -text
+symfony/plugins/orangehrmCorePlugin/lib/role/UserDefinedUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/UserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/ohrmUserSelectionRule.php -text
 symfony/plugins/orangehrmCorePlugin/lib/service/AccessFlowStateMachineService.php -text
