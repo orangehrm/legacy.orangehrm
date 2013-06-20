@@ -199,9 +199,12 @@ class AddCandidateForm extends BaseForm {
         $list = array("" => "-- " . __('Select') . " --");
         $vacancyProperties = array('name', 'id', 'hiringManagerId');
         $activeVacancyList = $this->getVacancyService()->getVacancyPropertyList($vacancyProperties, JobVacancy::ACTIVE);
+        
+        $predefined = sfContext::getInstance()->getUser()->getAttribute('auth.userRole.predefined');
         foreach ($activeVacancyList as $vacancy) {
             $vacancyId = $vacancy['id'];
-            if (in_array($vacancyId, $this->allowedVacancyList) && ($vacancy['hiringManagerId'] == $this->empNumber || $this->isAdmin)) {
+            if (in_array($vacancyId, $this->allowedVacancyList) && ($vacancy['hiringManagerId'] == $this->empNumber || $this->isAdmin
+                    || !$predefined)) {
                 $list[$vacancyId] = $vacancy['name'];
              }
         }
