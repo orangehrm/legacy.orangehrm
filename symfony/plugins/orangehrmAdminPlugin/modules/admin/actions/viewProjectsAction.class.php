@@ -41,11 +41,11 @@ class viewProjectsAction extends baseAdminAction {
      */
     public function execute($request) {
 
-        $usrObj = $this->getUser()->getAttribute('user');
-
         $this->projectPermissions = $this->getDataGroupPermissions('time_projects');
 
-        $allowedProjectList = $usrObj->getAllowedProjectList();
+        $userRoleManager = sfContext::getInstance()->getUserRoleManager();
+        $allowedProjectList = $userRoleManager->getAccessibleEntityIds('Project'); 
+        
         $isPaging = $request->getParameter('pageNo');
         $sortField = $request->getParameter('sortField');
         $sortOrder = $request->getParameter('sortOrder');

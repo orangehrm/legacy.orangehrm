@@ -19,72 +19,55 @@
  */
 
 /**
- * Description of SupervisorUserRole
+ * Project Admin User Role
  *
- * @author Chameera Senarathna
  */
-class SupervisorUserRole extends AbstractUserRole {
+class ProjectAdminUserRole extends AbstractUserRole {
+    
+    /**
+     * Returns all projects (active and inactive)
+     */
+    public function getAccessibleProjects($operation = null, $returnType = null, $requiredPermissions = array()) {
+        $projectList = $this->getProjectService()->getProjectListByProjectAdmin($this->getEmployeeNumber());
+        return $projectList;        
+    }
 
-    public function getAccessibleEmployeeIds($operation = null, $returnType = null, $requiredPermissions = array()) {
+    /**
+     * Returns all project ids (active and inactive)
+     */
+    public function getAccessibleProjectIds($operation = null, $returnType = null) {
+        return $this->getProjectService()->getProjectListForUserRole(ProjectAdminUserRoleDecorator::PROJECT_ADMIN_USER, $this->getEmployeeNumber());
+    }
 
-        $employeeIdArray = array();
-
-        $empNumber = $this->getEmployeeNumber();
-        if (!empty($empNumber)) {
-            $employeeIdArray = $this->getEmployeeService()->getSubordinateIdListBySupervisorId($empNumber);
-        }
-
-        return $employeeIdArray;
+    
+    public function getAccessibleEmployeeIds($operation, $returnType, $requiredPermissions = array()) {
+        return array();
     }
 
     public function getAccessibleEmployeePropertyList($properties, $orderField, $orderBy, $requiredPermissions = array()) {
-
-        $employeeProperties = array();
-
-        $empNumber = $this->getEmployeeNumber();
-        if (!empty($empNumber)) {
-            $employeeProperties = $this->getEmployeeService()->getSubordinatePropertyListBySupervisorId($empNumber, $properties, $orderField, $orderBy, true);
-        }
-
-        return $employeeProperties;
+        return array();
     }
 
     public function getAccessibleEmployees($operation = null, $returnType = null, $requiredPermissions = array()) {
-
-        $employees = array();
-
-        $empNumber = $this->getEmployeeNumber();
-        if (!empty($empNumber)) {
-            $employees = $this->getEmployeeService()->getSubordinateList($empNumber, true);
-        }
-
-        $employeesWithIds = array();
-
-        foreach ($employees as $employee) {
-            $employeesWithIds[$employee->getEmpNumber()] = $employee;
-        }
-
-        return $employeesWithIds;
+        return array();
     }
 
     public function getAccessibleLocationIds($operation, $returnType) {
-
         return array();
     }
 
     public function getAccessibleOperationalCountryIds($operation, $returnType) {
-
         return array();
     }
 
     public function getAccessibleSystemUserIds($operation, $returnType) {
-
         return array();
     }
 
     public function getAccessibleUserRoleIds($operation, $returnType) {
-
         return array();
     }
-
+    
+    
 }
+

@@ -4,3 +4,6 @@ Supervisor:
   class: SupervisorUserRole
 ESS:
   class: EssUserRole
+ProjectAdmin:
+  class: ProjectAdminUserRole
+  

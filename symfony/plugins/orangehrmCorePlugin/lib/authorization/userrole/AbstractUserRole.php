@@ -28,9 +28,12 @@ abstract class AbstractUserRole {
     protected $employeeService;
     protected $systemUserService;
     protected $operationalCountryService;
-    protected $locationService;
+    protected $locationService;       
+    protected $projectService;
     
     protected $userRoleManager;
+    
+    protected $employeeNumber;
     
     protected $roleName;
  
@@ -38,6 +41,17 @@ abstract class AbstractUserRole {
         $this->userRoleManager = $userRoleManager;
         $this->roleName = $roleName;        
     }
+    
+    public function getEmployeeNumber() {
+        if(empty($this->employeeNumber)) {
+            $this->employeeNumber = sfContext::getInstance()->getUser()->getEmployeeNumber();
+        }
+        return $this->employeeNumber;
+    }
+
+    public function setEmployeeNumber($employeeNumber) {
+        $this->employeeNumber = $employeeNumber;
+    }    
 
     public function getSystemUserService() {
         if (empty($this->systemUserService)) {
@@ -83,13 +97,37 @@ abstract class AbstractUserRole {
     public function setOperationalCountryService($operationalCountryService) {
         $this->operationalCountryService = $operationalCountryService;
     }
-       
+    
+    /**
+     * Get the Project Data Access Object
+     * @return ProjectService
+     */
+    public function getProjectService() {
+        if (is_null($this->projectService)) {
+            $this->projectService = new ProjectService();
+        }
+        return $this->projectService;
+    }
+
+    /**
+     * Set Project Data Access Object
+     * @param ProjectService $projectService
+     * @return void
+     */
+    public function setProjectService(ProjectService $projectService) {
+        $this->projectService = $projectService;
+    }    
+    
     public function getAccessibleEntities($entityType, $operation = null, $returnType = null, $requiredPermissions = array()) {
 
         switch ($entityType) {
             case 'Employee':
                 $entities = $this->getAccessibleEmployees($operation, $returnType, $requiredPermissions);
                 break;
+            case 'Project':
+                $entities = $this->getAccessibleProjects($operation, $returnType, $requiredPermissions);
+                break;
+                
         }
         return $entities;
     }
@@ -122,6 +160,9 @@ abstract class AbstractUserRole {
             case 'Location':
                 $ids = $this->getAccessibleLocationIds($operation, $returnType);
                 break;
+            case 'Project':
+                $ids = $this->getAccessibleProjectIds($operation, $returnType);
+                break;            
         }
         return $ids;
     }
@@ -130,6 +171,14 @@ abstract class AbstractUserRole {
         return array();
     }    
 
+    public function getAccessibleProjects($operation = null, $returnType = null, $requiredPermissions = array()) {
+        return array();
+    }
+    
+    public function getAccessibleProjectIds($operation =  null, $returnType = null) {
+        return array();
+    }
+    
     public abstract function getAccessibleEmployees($operation = null, $returnType = null, $requiredPermissions = array());
     
     public abstract function getAccessibleEmployeePropertyList($properties, $orderField, $orderBy, $requiredPermissions = array());
