@@ -132,7 +132,7 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (1, 102, 1, 1, 1, 1),
                     (4, 102, 1, 1, 1, 1);";
         
-        $sql[8] = "INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
+        $sql[8] = "INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
                     (42, 'job_titles', 'Admin - Job Titles', 1, 1, 1, 1),
                     (43, 'pay_grades', 'Admin - Pay Grades', 1, 1, 1, 1),
                     (44, 'time_customers', 'Time - Project Info - Customers', 1, 1, 1, 1),
@@ -152,27 +152,7 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (58, 'time_manage_employees', 'Time - Employee Timesheets', 1, 0, 0, 0),
                     (59, 'leave_list', 'Leave - Leave List', 1, 0, 0, 0);";
         
-        $sql[9] = "INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
-                    (42, 'job_titles', 'Admin - Job Titles', 1, 1, 1, 1),
-                    (43, 'pay_grades', 'Admin - Pay Grades', 1, 1, 1, 1),
-                    (44, 'time_customers', 'Time - Project Info - Customers', 1, 1, 1, 1),
-                    (45, 'time_projects', 'Time - Project Info - Projects', 1, 1, 1, 1),
-                    (46, 'pim_reports', 'PIM - Reports', 1, 1, 1, 1),
-                    (47, 'attendance_configuration', 'Time - Attendance Configuration', 1, 0, 1, 0),
-                    (48, 'attendance_manage_records', 'Time - Attendance Manage Records', 1, 0, 0, 0),
-                    (49, 'time_project_reports', 'Time - Project Reports', 1, 0, 0, 0),
-                    (50, 'time_employee_reports', 'Time - Employee Reports', 1, 0, 0, 0),
-                    (51, 'attendance_summary', 'Time - Attendance Summary', 1, 0, 0, 0),
-                    (52, 'leave_period', 'Leave - Leave Period', 1, 0, 1, 0),
-                    (53, 'leave_types', 'Leave - Leave Types', 1, 1, 1, 1),
-                    (54, 'work_week', 'Leave - Work Week', 1, 0, 1, 0),
-                    (55, 'holidays', 'Leave - Holidays', 1, 1, 1, 1),
-                    (56, 'recruitment_vacancies', 'Recruitment - Vacancies', 1, 1, 1, 1),
-                    (57, 'recruitment_candidates', 'Recruitment - Candidates', 1, 1, 1, 1),
-                    (58, 'time_manage_employees', 'Time - Employee Timesheets', 1, 0, 0, 0),
-                    (59, 'leave_list', 'Leave - Leave List', 1, 0, 0, 0);";
-        
-        $sql[10] = "INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
+        $sql[9] = "INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
                     (1, 42, 1, 1, 1, 1, 0),
                     (2, 42, 0, 0, 0, 0, 0),
                     (3, 42, 0, 0, 0, 0, 0),
@@ -249,7 +229,7 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (2, 59, 1, 0, 0, 0, 1),
                     (3, 59, 1, 0, 0, 0, 0);";
         
-        $sql[11] = "INSERT INTO `ohrm_data_group_screen`(`data_group_id`, `screen_id`, `permission`) VALUES
+        $sql[10] = "INSERT INTO `ohrm_data_group_screen`(`data_group_id`, `screen_id`, `permission`) VALUES
                     (40, 69, 1),
                     (40, 72, 2),
                     (40, 72, 3),
@@ -343,7 +323,7 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (59, 98, 1),
                     (59, 99, 1);";
         
-        $sql[12] = "UPDATE ohrm_module_default_page SET action='time/timesheetPeriodNotDefined'
+        $sql[11] = "UPDATE ohrm_module_default_page SET action='time/timesheetPeriodNotDefined'
                     WHERE module_id=5 AND user_role_id=2;";
                 
         $this->sql = $sql;
