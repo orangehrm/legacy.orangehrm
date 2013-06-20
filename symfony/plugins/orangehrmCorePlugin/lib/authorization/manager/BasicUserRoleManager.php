@@ -315,7 +315,12 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude, $entities);
         
         foreach ($filteredRoles as $role) {
-           $isAllowed = $accessFlowStateMachineService->isActionAllowed($workFlowId, $state, $role->getName(), $action);
+           $roleName = $role->getName();
+           if ($roleName == 'ESS' && $workFlowId != 4) {
+               $roleName = 'ESS User';
+           }
+           
+           $isAllowed = $accessFlowStateMachineService->isActionAllowed($workFlowId, $state, $roleName, $action);
            if($isAllowed){
                break;
            }
@@ -336,8 +341,13 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
         $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude, $entities);
         
-        foreach ($filteredRoles as $role) {        
-            $workFlowItems = $accessFlowStateMachineService->getAllowedWorkflowItems($workflow, $state, $role->getName());     
+        foreach ($filteredRoles as $role) {
+            $roleName = $role->getName();
+           if ($roleName == 'ESS' && $workFlowId != 4) {
+               $roleName = 'ESS User';
+           }
+            
+            $workFlowItems = $accessFlowStateMachineService->getAllowedWorkflowItems($workflow, $state, $roleName);     
 
             if (count($workFlowItems) > 0) {
                 $allActions = $this->getUniqueActionsBasedOnPriority($allActions, $workFlowItems);
@@ -365,8 +375,13 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
         
         $filteredRoles = $this->filterRoles($this->userRoles, $rolesToExclude, $rolesToInclude, $entities);
         
-        foreach ($filteredRoles as $role) {        
-            $states = $accessFlowStateMachineService->getActionableStates($workflow, $role->getName(), $actions); 
+        foreach ($filteredRoles as $role) {   
+            $roleName = $role->getName();
+           if ($roleName == 'ESS' && $workFlowId != 4) {
+               $roleName = 'ESS User';
+           }
+           
+            $states = $accessFlowStateMachineService->getActionableStates($workflow, $roleName, $actions); 
 
             if (!empty($states)) {
                 $actionableStates = array_unique(array_merge($actionableStates, $states));
