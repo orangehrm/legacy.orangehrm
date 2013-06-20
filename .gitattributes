@@ -4792,6 +4792,7 @@ upgrader/apps/upgrader/config/filters.yml -text
 upgrader/apps/upgrader/config/routing.yml -text
 upgrader/apps/upgrader/config/security.yml -text
 upgrader/apps/upgrader/config/settings.yml -text
+upgrader/apps/upgrader/config/test_db.yml -text
 upgrader/apps/upgrader/config/upgraderConfiguration.class.php -text
 upgrader/apps/upgrader/config/view.yml -text
 upgrader/apps/upgrader/lib/filter/ActionFilter.php -text
@@ -4855,6 +4856,7 @@ upgrader/lib/form/BaseForm.class.php -text
 upgrader/symfony -text
 upgrader/test/UpgraderTests.php -text
 upgrader/test/schemaIncrementTasks/SchemaIncrementTask55Test.php -text
+upgrader/test/schemaIncrementTasks/SchemaIncrementTask58Test.php -text
 upgrader/web/.htaccess -text
 upgrader/web/css/executeDbChangeSuccess.css -text
 upgrader/web/css/main.css -text
