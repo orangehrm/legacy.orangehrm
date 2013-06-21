@@ -92,7 +92,10 @@ class AddJobVacancyForm extends BaseForm {
             'publishedInFeed' => new sfValidatorString(array('required' => false)),
         );
         
-        if(!($vacancyPermissions->canCreate() && empty($this->vacancyId)) || ($vacancyPermissions->canUpdate() && $this->vacancyId > 0)){
+        // check create and update permissions
+        if((!$vacancyPermissions->canCreate() && empty($this->vacancyId)) || 
+                (!$vacancyPermissions->canUpdate() && $this->vacancyId > 0)){
+
             foreach ($widgets as $widget){
                 $widget->setAttribute('disabled', 'disabled');
             }
