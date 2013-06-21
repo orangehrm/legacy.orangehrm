@@ -534,7 +534,7 @@ create table `hs_hr_kpi` (
 create table `hs_hr_performance_review` (
   `id` int(13) not null,
   `employee_id` int(13) not null,
-  `reviewer_id` int(13) not null,
+  `reviewer_id` int(13) null,
   `creator_id` varchar(36) default null,
   `job_title_code` varchar(10) not null,
   `sub_division_id` int(13) default null,  
@@ -1807,3 +1807,12 @@ alter table ohrm_data_group_screen
 
 alter table ohrm_data_group_screen
     add foreign key (screen_id) references ohrm_screen(id) on delete cascade;
+
+
+alter table hs_hr_performance_review
+    add constraint foreign key (employee_id)
+        references hs_hr_employee (emp_number) on delete cascade;
+
+alter table hs_hr_performance_review
+    add constraint foreign key (reviewer_id)
+        references hs_hr_employee (emp_number) on delete set null;

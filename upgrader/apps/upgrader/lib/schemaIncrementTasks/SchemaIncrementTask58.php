@@ -330,6 +330,26 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
         $sql[11] = "UPDATE ohrm_module_default_page SET action='time/timesheetPeriodNotDefined'
                     WHERE module_id=5 AND user_role_id=2;";
 
+
+        // Allow null in reviewer_id
+        $sql[12] = "ALTER TABLE hs_hr_performance_review 
+                        CHANGE reviewer_id reviewer_id int(13) null;";
+        
+        // Delete records with invalid employee_id (linked to deleted ids)        
+        $sql[13] = "delete from hs_hr_performance_review where employee_id not in (select emp_number from hs_hr_employee);";
+        
+        // Set reviewer_id = null where reviewer employee is deleted
+        $sql[14] = "update hs_hr_performance_review set reviewer_id = null where reviewer_id not in (select emp_number from hs_hr_employee);";
+        
+        // Add constraints
+        $sql[15] = "alter table hs_hr_performance_review
+                        add constraint foreign key (employee_id)
+                            references hs_hr_employee (emp_number) on delete cascade;";
+
+        $sql[16] = "alter table hs_hr_performance_review
+                        add constraint foreign key (reviewer_id)
+                            references hs_hr_employee (emp_number) on delete set null;";
+
         $this->sql = $sql;
     }
 
