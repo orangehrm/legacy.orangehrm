@@ -101,7 +101,9 @@ $hasAttachments = count($attachmentList) > 0;
                 <table id="tblAttachments" cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
                     <thead>
                         <tr>
+                            <?php if ($permission->canDelete()){?>
                             <th width="2%"><input type="checkbox" id="attachmentsCheckAll" class="checkboxAtch"/></th>
+                            <?php }?>
                             <th width="15%"><?php echo __("File Name")?></th>
                             <th width="38%"><?php echo __("Description")?></th>
                             <th width="10%"><?php echo __("Size")?></th>
@@ -122,11 +124,12 @@ $hasAttachments = count($attachmentList) > 0;
                         <?php $cssClass = ($row%2) ? 'even' : 'odd'; ?>
                             
                             <tr class="<?php echo $cssClass;?>">
-                                
+                                <?php if ($permission->canDelete()){?>
                                 <td class="center">
                                     <input type="checkbox" <?php echo $disabled;?> class="checkboxAtch" 
                                     name="chkattdel[]" value="<?php echo $attachment->attach_id; ?>"/>
                                 </td>
+                                <?php }?>
                                 <td>
                                     <a title="<?php echo __('Click to download'); ?>" target="_blank" class="fileLink tiptip"
                                     href="<?php echo url_for('pim/viewAttachment?empNumber='.$employee->empNumber . '&attachId=' . $attachment->attach_id);?>">
