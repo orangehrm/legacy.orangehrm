@@ -45,7 +45,7 @@ class addCustomerAction extends baseAdminAction {
         $this->customerId = $request->getParameter('customerId');
         
         if(!(($this->customerPermissions->canCreate() && empty($this->customerId)) || ($this->customerPermissions->canUpdate() && $this->customerId > 0))){
-            $this->getUser()->setFlash('warning.nofade', CommonMessages::CREDENTIALS_REQUIRED);
+            $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
         }
         
         $values = array('customerId' => $this->customerId, 'customerPermissions' => $this->customerPermissions);

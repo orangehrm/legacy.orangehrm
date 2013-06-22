@@ -1,7 +1,7 @@
 <?php
 use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/addCustomerSuccess')); 
 ?>
-
+<?php if(($customerPermissions->canCreate() && empty($customerId)) || ($customerPermissions->canUpdate() && $customerId > 0)){?>
 <div class="box"  id="addCustomer">
     <div class="head">
         <h1 id="addCustomerHeading"><?php echo __("Add Customer"); ?></h1>
@@ -10,7 +10,6 @@ use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/addCustomerSuccess'))
     <div class="inner">
             
         <?php include_partial('global/flash_messages'); ?>
-        <?php if(($customerPermissions->canCreate() && empty($customerId)) || ($customerPermissions->canUpdate() && $customerId > 0)){?>
         <form name="frmAddCustomer" id="frmAddCustomer" method="post" action="<?php echo url_for('admin/addCustomer'); ?>" >
             
             <?php echo $form['_csrf_token']; ?>
@@ -42,13 +41,11 @@ use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/addCustomerSuccess'))
             </fieldset>
             
         </form>
-        <?php }?>
         
     </div> <!-- End-inner -->
     
 </div> <!-- End-addCustomer -->
 
-<?php if(($customerPermissions->canCreate() && empty($customerId)) || ($customerPermissions->canUpdate() && $customerId > 0)){?>
 <form name="frmUndeleteCustomer" id="frmUndeleteCustomer" method="post" action="<?php echo url_for('admin/undeleteCustomer'); ?>">
     <?php echo $undeleteForm; ?>
 </form>

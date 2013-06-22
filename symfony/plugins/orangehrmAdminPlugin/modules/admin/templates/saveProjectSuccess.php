@@ -61,7 +61,7 @@ use_javascript(plugin_web_path('orangehrmAdminPlugin', 'js/saveProjectSuccess'))
                 </ol>
                 
                 <p>
-                    <?php if(($projectPermissions->canCreate() && empty($projectId)) || ($projectPermissions->canUpdate() && $projectId > 0) ){?>
+                    <?php if(($projectPermissions->canCreate() && empty($projectId)) || ($projectPermissions->canUpdate() && $projectId > 0)){?>
                     <input type="button" class="" name="btnSave" id="btnSave" value="<?php echo __("Save"); ?>"/>
                     <?php }?>
                     <input type="button" class="reset" name="btnCancel" id="btnCancel" value="<?php echo __("Cancel"); ?>"/>

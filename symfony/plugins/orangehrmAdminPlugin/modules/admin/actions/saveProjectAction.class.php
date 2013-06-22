@@ -61,7 +61,7 @@ class saveProjectAction extends baseAdminAction {
 
         $this->projectPermissions = $this->getDataGroupPermissions('time_projects');
         $this->customerPermissions = $this->getDataGroupPermissions('time_customers');
-
+        
         $this->isProjectAdmin = false;
         if ($usrObj->isProjectAdmin()) {
             $this->isProjectAdmin = true;
