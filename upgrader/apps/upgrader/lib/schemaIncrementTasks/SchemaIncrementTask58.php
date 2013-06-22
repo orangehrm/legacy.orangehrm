@@ -250,7 +250,9 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (" . ($dataGroupId+1) . ", " . ($screenId+2) . ", 2),
                     (" . ($dataGroupId+1) . ", " . ($screenId+2) . ", 3),
                     (" . ($dataGroupId+1) . ", " . ($screenId+3) . ", 4),
+                    (" . ($dataGroupId+1) . ", " . ($screenId+4) . ", 2),
                     (" . ($dataGroupId+1) . ", " . ($screenId+4) . ", 3),
+                    (" . ($dataGroupId+1) . ", " . ($screenId+5) . ", 2),
                     (" . ($dataGroupId+1) . ", " . ($screenId+5) . ", 3),
 
                     (" . $dataGroupId . ", 74, 1),
