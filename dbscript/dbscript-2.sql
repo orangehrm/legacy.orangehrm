@@ -2010,7 +2010,9 @@ INSERT INTO `ohrm_data_group_screen`(`data_group_id`, `screen_id`, `permission`)
 (45, 88, 2),
 (45, 88, 3),
 (45, 89, 4),
+(45, 90, 2),
 (45, 90, 3),
+(45, 91, 2),
 (45, 91, 3),
 
 (46, 45, 1),
