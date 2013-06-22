@@ -239,7 +239,7 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (40, 72, 3),
                     (40, 71, 4),
 
-                    (41, 78, 4),
+                    (41, 78, 1),
 
                     (" . ($dataGroupId) . ", 23, 1),
                     (" . ($dataGroupId) . ", " . ($screenId) . ", 2),

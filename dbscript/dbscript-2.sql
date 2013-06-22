@@ -1983,7 +1983,7 @@ INSERT INTO `ohrm_data_group_screen`(`data_group_id`, `screen_id`, `permission`)
 (40, 72, 3),
 (40, 71, 4),
 
-(41, 78, 4),
+(41, 78, 1),
 
 (42, 23, 1),
 (42, 80, 2),
