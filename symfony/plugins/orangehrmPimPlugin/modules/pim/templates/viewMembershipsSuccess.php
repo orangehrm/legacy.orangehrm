@@ -42,7 +42,7 @@ $allowEdit = true;
 
 <div class="box pimPane">
     
-    <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form)); ?>
+    <?php echo include_component('pim', 'pimLeftMenu', array('empNumber'=>$empNumber, 'form' => $form));?>
         
     <?php if ($membershipPermissions->canCreate() || ($hasMemDetails && $membershipPermissions->canUpdate())) { ?>
         <div id="addPaneMembership">

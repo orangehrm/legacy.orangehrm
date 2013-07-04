@@ -19,7 +19,7 @@ $haveWorkExperience = count($workExperienceForm->workExperiences)>0;
 
     <?php 
         $form = $workExperienceForm;
-        include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form)); 
+        echo include_component('pim', 'pimLeftMenu', array('empNumber'=>$empNumber, 'form' => $form));
     ?>
 <!--    
     <div class="head">

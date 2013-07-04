@@ -1,7 +1,7 @@
 
 <div class="box pimPane">
     
-    <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
+    <?php echo include_component('pim', 'pimLeftMenu', array('empNumber'=>$empNumber, 'form' => $form));?>
     
     <?php if ($salaryPermissions->canCreate() || (count($salaryList) > 0 && $salaryPermissions->canUpdate())) { ?>
     <div id="changeSalary">

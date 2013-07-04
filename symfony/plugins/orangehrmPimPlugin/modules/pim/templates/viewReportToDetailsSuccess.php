@@ -34,7 +34,7 @@ $allowEdit = true;
     
     <?php include_partial('global/form_errors', array('form' => $form)); ?>
 
-    <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form)); ?>
+    <?php echo include_component('pim', 'pimLeftMenu', array('empNumber'=>$empNumber, 'form' => $form));?>
 
     <?php // if ($Permissions->canCreate() || ($have && $Permissions->canUpdate())) { ?>
     <?php if ($reportToPermissions->canCreate()) { ?>

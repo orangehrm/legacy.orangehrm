@@ -4139,6 +4139,7 @@ symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginTerminationReasonTab
 symfony/plugins/orangehrmPimPlugin/lib/parameterholder/EmployeeSearchParameterHolder.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/CustomFieldConfigurationService.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/EmployeeService.php -text
+symfony/plugins/orangehrmPimPlugin/lib/service/PIMLeftMenuService.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/ReportingMethodConfigurationService.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/TerminationReasonConfigurationService.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/activateEmployementAction.class.php -text
@@ -4164,6 +4165,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/actions/deleteTerminationReasonsA
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/getAvailableCurrenciesJsonAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/getEmployeeListAjaxAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/listCustomFieldsAction.class.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/actions/pimLeftMenuComponent.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/saveDeleteEducationAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/saveDeleteLanguageAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/saveDeleteLicenseAction.class.php -text
@@ -4179,6 +4181,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/actions/updateReportToDetailActio
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewAttachmentAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewDependentsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewEmergencyContactsAction.class.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewEmployeeAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewEmployeeListAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewImmigrationAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewJobDetailsAction.class.php -text
@@ -4225,7 +4228,9 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/templates/listCustomFieldsSuccess
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/pim_sample_template.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewDependentsSuccess.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmergencyContactsSuccess.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmployeeDenied.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmployeeListSuccess.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmployeeNotFound.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewImmigrationSuccess.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewJobDetailsSuccess.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewMembershipsSuccess.php -text

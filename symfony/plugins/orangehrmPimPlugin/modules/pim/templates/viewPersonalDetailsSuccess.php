@@ -4,7 +4,7 @@ use_stylesheet(plugin_web_path('orangehrmPimPlugin', 'css/viewPersonalDetailsSuc
 
 <div class="box pimPane" id="employee-details">
     
-    <?php include_partial('pimLeftMenu', array('empNumber' => $empNumber, 'form' => $form));?>
+    <?php echo include_component('pim', 'pimLeftMenu', array('empNumber'=>$empNumber, 'form' => $form));?>
     
     <div class="personalDetails" id="pdMainContainer">
         

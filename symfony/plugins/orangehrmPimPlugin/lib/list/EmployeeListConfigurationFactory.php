@@ -23,7 +23,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
             'elementProperty' => array(
                 'labelGetter' => array('getEmployeeId'),
                 'placeholderGetters' => array('id' => 'getEmpNumber'),
-                'urlPattern' => public_path('index.php/pim/viewPersonalDetails/empNumber/{id}'),
+                'urlPattern' => public_path('index.php/pim/viewEmployee/empNumber/{id}'),
             ),
         ));
 
@@ -37,7 +37,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
             'elementProperty' => array(
                 'labelGetter' => array('getFirstAndMiddleName'),
                 'placeholderGetters' => array('id' => 'getEmpNumber'),
-                'urlPattern' => public_path('index.php/pim/viewPersonalDetails/empNumber/{id}'),
+                'urlPattern' => public_path('index.php/pim/viewEmployee/empNumber/{id}'),
             ),
         ));
 
@@ -51,7 +51,7 @@ class EmployeeListConfigurationFactory extends ohrmListConfigurationFactory {
             'elementProperty' => array(
                 'labelGetter' => array('getFullLastName'),
                 'placeholderGetters' => array('id' => 'getEmpNumber'),
-                'urlPattern' => public_path('index.php/pim/viewPersonalDetails/empNumber/{id}'),
+                'urlPattern' => public_path('index.php/pim/viewEmployee/empNumber/{id}'),
             ),
         ));
 
