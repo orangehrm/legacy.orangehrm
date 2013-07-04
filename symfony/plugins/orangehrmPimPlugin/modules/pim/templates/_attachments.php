@@ -90,7 +90,9 @@ $hasAttachments = count($attachmentList) > 0;
             <p id="attachmentActions">
                 <?php if ($permission->canCreate()) : ?>
                 <input type="button" class="addbutton" id="btnAddAttachment" value="<?php echo __("Add");?>" />
-                <?php endif; // $permission->canCreate() ?>
+                <?php elseif (!$hasAttachments) :
+                        echo __(TopLevelMessages::NO_RECORDS_FOUND);
+                      endif; // $permission->canCreate() ?>
                 <?php if ($permission->canDelete() && $hasAttachments) : ?>
                  <input type="button" class="delete" id="btnDeleteAttachment" value="<?php echo __("Delete");?>"/>
                 <?php endif; // $permission->canDelete() && $hasAttachments ?>
