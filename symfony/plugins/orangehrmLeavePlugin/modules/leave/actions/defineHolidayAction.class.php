@@ -86,7 +86,7 @@ class defineHolidayAction extends baseLeaveAction {
         $this->id = $editId;
 
         $valuesForForm = array('holidayPermissions' => $this->holidayPermissions, 'holidayId' => $editId);
-        $this->form = new HolidayForm($valuesForForm);
+        $this->form = $this->getForm($valuesForForm);
 
         $this->editMode = false; // Pass edit mode for teh view
         $this->form->editMode = false; // Pass edit mode for form
@@ -164,9 +164,9 @@ class defineHolidayAction extends baseLeaveAction {
      * Get form object 
      * @return
      */
-    public function getForm() {
+    public function getForm($valuesForForm) {
         if (!($this->form instanceof HolidayForm)) {
-            $this->form = new HolidayForm();
+            $this->form = new HolidayForm($valuesForForm);
         }
         return $this->form;
     }
