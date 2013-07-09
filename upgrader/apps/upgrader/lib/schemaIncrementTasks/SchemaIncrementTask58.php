@@ -153,7 +153,7 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (" . ($dataGroupId+13) . ", 'holidays', 'Leave - Holidays', 1, 1, 1, 1),
                     (" . ($dataGroupId+14) . ", 'recruitment_vacancies', 'Recruitment - Vacancies', 1, 1, 1, 1),
                     (" . ($dataGroupId+15) . ", 'recruitment_candidates', 'Recruitment - Candidates', 1, 1, 1, 1),
-                    (" . ($dataGroupId+16) . ", 'time_manage_employees', 'Time - Employee Timesheets', 1, 0, 0, 0),
+                    (" . ($dataGroupId+16) . ", 'time_employee_timesheets', 'Time - Employee Timesheets', 1, 0, 0, 0),
                     (" . ($dataGroupId+17) . ", 'leave_list', 'Leave - Leave List', 1, 0, 0, 0);";
 
         $sql[9] = "INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES

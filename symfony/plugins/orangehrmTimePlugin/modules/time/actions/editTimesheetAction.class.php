@@ -78,7 +78,7 @@ class editTimesheetAction extends baseTimeAction {
         }
 
 
-        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $this->employeeId);
+        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_employee_timesheets', $this->employeeId);
 
         $this->_checkAuthentication($this->employeeId);
 

@@ -15,7 +15,7 @@ class createTimesheetForSubourdinateAction extends baseTimeAction{
         $request->setParameter('initialActionName', 'viewEmployeeTimesheet');
         
         $this->employeeId = $request->getParameter('employeeId');
-        $this->permission = $this->getDataGroupPermissions('time_manage_employees', $this->employeeId);
+        $this->permission = $this->getDataGroupPermissions('time_employee_timesheets', $this->employeeId);
 
         $userRoleManager = $this->getContext()->getUserRoleManager();
         

@@ -40,7 +40,7 @@ class startDaysListForm extends sfFormSymfony {
         $i = 0;
 	if($timesheets != null){
             
-        $dataGroupPermissions = $userRoleManager->getDataGroupPermissions(array('time_manage_employees'), array(), array(), $employeeId == $user->getEmpNumber(), $entities);
+        $dataGroupPermissions = $userRoleManager->getDataGroupPermissions(array('time_employee_timesheets'), array(), array(), $employeeId == $user->getEmpNumber(), $entities);
             
         foreach ($timesheets as $timesheet) {
 

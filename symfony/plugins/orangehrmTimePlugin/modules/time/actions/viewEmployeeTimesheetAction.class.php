@@ -35,7 +35,7 @@ class viewEmployeeTimesheetAction extends baseTimeAction {
 
     public function execute($request) {
         
-        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees');
+        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_employee_timesheets');
 
         $this->form = new viewEmployeeTimesheetForm();
 

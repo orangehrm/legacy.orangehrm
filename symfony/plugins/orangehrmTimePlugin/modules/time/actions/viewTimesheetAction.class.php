@@ -46,7 +46,7 @@ class viewTimesheetAction extends baseTimeAction {
 
         $employeeId = $request->getParameter('employeeId');
         
-        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_manage_employees', $employeeId);
+        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_employee_timesheets', $employeeId);
 
         $this->_checkAuthentication($employeeId);
 
