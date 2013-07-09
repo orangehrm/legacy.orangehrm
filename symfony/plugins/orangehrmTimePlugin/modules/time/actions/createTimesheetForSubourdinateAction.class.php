@@ -19,7 +19,8 @@ class createTimesheetForSubourdinateAction extends baseTimeAction{
 
         $userRoleManager = $this->getContext()->getUserRoleManager();
         
-        $actions = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_TIME_TIMESHEET, PluginTimesheet::STATE_INITIAL);
+        $rolesToExclude = array('ESS');
+        $actions = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_TIME_TIMESHEET, PluginTimesheet::STATE_INITIAL, $rolesToExclude);
 
         $this->canCreateTimesheets = isset($actions[WorkflowStateMachine::TIMESHEET_ACTION_CREATE]);
                 
