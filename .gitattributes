@@ -4258,6 +4258,7 @@ symfony/plugins/orangehrmPimPlugin/test/model/parameterholder/EmployeeSearchPara
 symfony/plugins/orangehrmPimPlugin/test/model/service/CustomFieldConfigurationServiceTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/model/service/EmployeeServiceTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/model/service/EmployeeYearsOfServiceTest.php -text
+symfony/plugins/orangehrmPimPlugin/test/model/service/PIMLeftMenuServiceTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/orangehrmPimPluginAllTests.php -text
 symfony/plugins/orangehrmPimPlugin/web/css/viewPersonalDetailsSuccess.css -text
 symfony/plugins/orangehrmPimPlugin/web/js/addEmployeeSuccess.js -text
