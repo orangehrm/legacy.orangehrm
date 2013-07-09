@@ -39,12 +39,15 @@ class startDaysListForm extends sfFormSymfony {
 
         $i = 0;
 	if($timesheets != null){
+            
+        $dataGroupPermissions = $userRoleManager->getDataGroupPermissions(array('time_manage_employees'), array(), array(), $employeeId == $user->getEmpNumber(), $entities);
+            
         foreach ($timesheets as $timesheet) {
 
             $allowedActions = $userRoleManager->getAllowedActions(WorkflowStateMachine::FLOW_TIME_TIMESHEET, 
                     $timesheet->getState(), $excludeRoles, $includeRoles, $entities);
 
-            if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_VIEW])) {
+            if (isset($allowedActions[WorkflowStateMachine::TIMESHEET_ACTION_VIEW]) || $dataGroupPermissions->canRead()) {
 
                 $dateOptions[$i] = $timesheet->getStartDate(). " ".__("to")." " . $timesheet->getEndDate();
                 $dateOptionsToDrpDwn[$i] = set_datepicker_date_format($timesheet->getStartDate() ). " ".__("to")." "  . set_datepicker_date_format($timesheet->getEndDate());
