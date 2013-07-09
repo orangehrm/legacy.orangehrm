@@ -1,6 +1,6 @@
 
 <?php use_javascript(plugin_web_path('orangehrmTimePlugin', 'js/viewEmployeeTimesheet')); ?>
-<?php if($timesheetManagePermissions->canRead()){?>
+<?php if($timesheetPermissions->canRead()){?>
 <div class="box">
     <div class="head">
         <h1><?php echo __("Select Employee"); ?></h1>

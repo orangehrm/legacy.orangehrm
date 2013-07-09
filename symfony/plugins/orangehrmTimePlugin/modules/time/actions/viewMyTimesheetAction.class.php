@@ -42,7 +42,7 @@ class viewMyTimesheetAction extends baseTimeAction {
         $userId = $user->getId();
         $employeeId = $this->getUser()->getEmployeeNumber();
         
-        $this->timesheetManagePermissions = $this->getDataGroupPermissions('time_employee_timesheets', $employeeId);
+        $this->timesheetPermissions = $this->getDataGroupPermissions('time_employee_timesheets', $employeeId);
         
         $this->format = $this->getTimesheetService()->getTimesheetTimeFormat();
         $this->timeService = $this->getTimesheetService();
