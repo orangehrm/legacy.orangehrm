@@ -218,7 +218,11 @@ class viewMyTimesheetAction extends baseTimeAction {
 
     protected function updateTimesheetState($request) {
         
-        $timesheetStartDate = $request->getParameter('timesheetStartDateFromDropDown');
+        $timesheetStartDate = $request->getParameter('timesheetStartDate');
+        if (empty($timesheetStartDate)) {
+            $timesheetStartDate = $request->getParameter('timesheetStartDateFromDropDown');            
+        }
+        
         $employeeId = $request->getParameter('employeeId');
         $timesheet = $this->getTimesheetService()->getTimesheetByStartDateAndEmployeeId($timesheetStartDate, $employeeId);
         
@@ -239,7 +243,7 @@ class viewMyTimesheetAction extends baseTimeAction {
             $this->successMessage = array('success', __("Timesheet " . ucwords(strtolower($state))));
 
             $timesheet->setState($state);
-            $timesheet = $this->getTimesheetService()->saveTimesheet($this->timesheet);
+            $timesheet = $this->getTimesheetService()->saveTimesheet($timesheet);
 
             if ($request->getParameter('updateActionLog')) {
 
@@ -247,9 +251,9 @@ class viewMyTimesheetAction extends baseTimeAction {
                 $userId = $userRoleManager->getUser()->getId();
                 
                 if ($action == WorkflowStateMachine::TIMESHEET_ACTION_RESET) {
-                    $this->setTimesheetActionLog(Timesheet::RESET_ACTION, $comment, $this->timesheet->getTimesheetId(), $userId);
+                    $this->setTimesheetActionLog(Timesheet::RESET_ACTION, $comment, $timesheet->getTimesheetId(), $userId);
                 } else {
-                    $this->setTimesheetActionLog($state, $comment, $this->timesheet->getTimesheetId(), $userId);
+                    $this->setTimesheetActionLog($state, $comment, $timesheet->getTimesheetId(), $userId);
                 }
 
                 if ($action == WorkflowStateMachine::TIMESHEET_ACTION_SUBMIT) {
