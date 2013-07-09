@@ -218,7 +218,7 @@ class viewMyTimesheetAction extends baseTimeAction {
 
     protected function updateTimesheetState($request) {
         
-        $timesheetStartDate = $request->getParameter('timesheetStartDate');
+        $timesheetStartDate = $request->getParameter('timesheetStartDateFromDropDown');
         $employeeId = $request->getParameter('employeeId');
         $timesheet = $this->getTimesheetService()->getTimesheetByStartDateAndEmployeeId($timesheetStartDate, $employeeId);
         
