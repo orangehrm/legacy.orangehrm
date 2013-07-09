@@ -284,7 +284,7 @@ class AttendanceActions extends sfActions {
         
         $userRoleManager = $this->getContext()->getUserRoleManager();
         
-        $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_manage_records');
+        $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_records');
 
         $timeZoneOffset = $this->getUser()->getUserTimeZoneOffset();
 

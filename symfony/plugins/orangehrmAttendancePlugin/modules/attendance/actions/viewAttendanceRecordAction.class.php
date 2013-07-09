@@ -45,7 +45,7 @@ class viewAttendanceRecordAction extends baseAttendanceAction {
         $this->parmetersForListCompoment = array();
         $this->showEdit = false;
 
-        $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_manage_records');
+        $this->attendanceManagePermissios = $this->getDataGroupPermissions('attendance_records');
 
 
         if (!$this->attendanceManagePermissios->canRead()) {

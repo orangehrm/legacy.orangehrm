@@ -143,7 +143,7 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (" . ($dataGroupId+3) . ", 'time_projects', 'Time - Project Info - Projects', 1, 1, 1, 1),
                     (" . ($dataGroupId+4) . ", 'pim_reports', 'PIM - Reports', 1, 1, 1, 1),
                     (" . ($dataGroupId+5) . ", 'attendance_configuration', 'Time - Attendance Configuration', 1, 0, 1, 0),
-                    (" . ($dataGroupId+6) . ", 'attendance_manage_records', 'Time - Attendance Manage Records', 1, 0, 0, 0),
+                    (" . ($dataGroupId+6) . ", 'attendance_records', 'Time - Attendance Manage Records', 1, 0, 0, 0),
                     (" . ($dataGroupId+7) . ", 'time_project_reports', 'Time - Project Reports', 1, 0, 0, 0),
                     (" . ($dataGroupId+8) . ", 'time_employee_reports', 'Time - Employee Reports', 1, 0, 0, 0),
                     (" . ($dataGroupId+9) . ", 'attendance_summary', 'Time - Attendance Summary', 1, 0, 0, 0),
