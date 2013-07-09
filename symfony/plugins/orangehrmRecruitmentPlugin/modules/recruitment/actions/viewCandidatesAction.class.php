@@ -140,8 +140,7 @@ class viewCandidatesAction extends baseAction {
         $buttons = array();
 
         if ($permissions->canCreate()) {
-            $buttons['Add'] = array('label' => 'Add',
-                'function' => 'addJobVacancy');
+            $buttons['Add'] = array('label' => 'Add');
         }
 
         if (!$permissions->canDelete()) {
