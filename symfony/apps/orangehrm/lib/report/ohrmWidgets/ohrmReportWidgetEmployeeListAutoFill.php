@@ -64,6 +64,8 @@ class ohrmReportWidgetEmployeeListAutoFill extends sfWidgetForm implements ohrmE
         $invalidMessage = __(ValidationMessages::INVALID);
         $typeHint = __('Type for hints') . ' ...';
         
+        $userRoleManager = UserRoleManagerFactory::getUserRoleManager();
+        $employeeList = $userRoleManager->getAccessibleEntities('Employee');
         $javaScript = $javaScript = sprintf(<<<EOF
 <script type="text/javascript">
 
@@ -164,7 +166,7 @@ function validateInput(){
  </script>
 EOF
                         ,
-                        $this->getEmployeeListAsJson(sfContext::getInstance()->getUser()->getAttribute("user")->getEmployeeList()),
+                        $this->getEmployeeListAsJson($employeeList),
                         $this->attributes['id'],
                         $this->attributes['id'],
                         $typeHint,
