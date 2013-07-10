@@ -66,10 +66,20 @@ class addCandidateAction extends baseAction {
         /* For highlighting corresponding menu item */
         $request->setParameter('initialActionName', 'viewCandidates');
 
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        $requiredPermissions = array(
+            BasicUserRoleManager::PERMISSION_TYPE_DATA_GROUP => array(
+                'recruitment_candidates' => new ResourcePermission(true, false, false, false)
+            )
+        );
+            
+        $allowedVacancyList = $userRoleManager->getAccessibleEntityIds('Vacancy', 
+                null, null, array(), array(), $requiredPermissions);
+        
         $this->candidatePermissions = $this->getDataGroupPermissions('recruitment_candidates');
 
         $userObj = $this->getUser()->getAttribute('user');
-        $allowedVacancyList = $userObj->getAllowedVacancyList();
+
         $allowedCandidateListToDelete = $userObj->getAllowedCandidateListToDelete();
         $this->candidateId = $request->getParameter('id');
         $this->invalidFile = false;
