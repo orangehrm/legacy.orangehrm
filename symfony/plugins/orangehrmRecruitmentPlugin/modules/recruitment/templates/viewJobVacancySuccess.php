@@ -93,7 +93,7 @@
     }
     //<![CDATA[
     var addJobVacancyUrl = '<?php echo url_for('recruitment/addJobVacancy'); ?>';
-    var vacancyListUrl = '<?php echo url_for('recruitment/getVacancyListForJobTitleJson?jobTitle='); ?>';
+    var vacancyListUrl = '<?php echo url_for('recruitment/getVacancyListForJobTitleJson?mode=' . getVacancyListForJobTitleJsonAction::MODE_VACANCIES . '&jobTitle='); ?>';
     var hiringManagerListUrlForJobTitle = '<?php echo url_for('recruitment/getHiringManagerListJson?jobTitle='); ?>';
     var hiringManagerListUrlForVacancyId = '<?php echo url_for('recruitment/getHiringManagerListJson?vacancyId='); ?>';
     var lang_all = '<?php echo __("All") ?>';
