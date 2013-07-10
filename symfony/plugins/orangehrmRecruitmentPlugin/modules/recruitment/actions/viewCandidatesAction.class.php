@@ -57,9 +57,20 @@ class viewCandidatesAction extends baseAction {
      */
     public function execute($request) {
 
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        $requiredPermissions = array(
+            BasicUserRoleManager::PERMISSION_TYPE_DATA_GROUP => array(
+                'recruitment_candidates' => new ResourcePermission(true, false, false, false)
+            )
+        );
+            
+        $allowedVacancyList = $userRoleManager->getAccessibleEntityIds('Vacancy', 
+                null, null, array(), array(), $requiredPermissions);
+
         $usrObj = $this->getUser()->getAttribute('user');
         $allowedCandidateList = $usrObj->getAllowedCandidateList();
-        $allowedVacancyList = $usrObj->getAllowedVacancyList();
+        
+        
         $allowedCandidateListToDelete = $usrObj->getAllowedCandidateListToDelete();
 
         $this->candidaatePermissions = $this->getDataGroupPermissions('recruitment_candidates');
