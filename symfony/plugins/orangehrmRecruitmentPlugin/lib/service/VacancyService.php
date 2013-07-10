@@ -176,6 +176,18 @@ class VacancyService extends BaseService {
         return $this->getVacancyDao()->getVacancyListForUserRole($role, $empNumber);
     }
 
+    public function getVacancyIdList() {
+        return $this->getVacancyDao()->getVacancyIdList();       
+    }
+
+    public function getVacancyIdListForHiringManager($empNumber) {
+        return $this->getVacancyDao()->getVacancyIdListForHiringManager();
+    }
+    
+    public function getVacancyIdListForInterviewer($empNumber) {
+        return $this->getVacancyDao()->getVacancyIdListForInterviewer();        
+    }    
+    
     /**
      *
      * @param int $empNumber
