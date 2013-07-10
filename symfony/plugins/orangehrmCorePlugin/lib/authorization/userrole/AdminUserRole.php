@@ -111,6 +111,9 @@ class AdminUserRole extends AbstractUserRole {
         return $this->getProjectService()->getProjectListForUserRole(null, null);
     }
 
+    public function getAccessibleVacancyIds($operation = null, $returnType = null, $requiredPermissions = array()) {
+        return $this->getVacancyService()->getVacancyIdList();
+    }
 
-
+    
 }

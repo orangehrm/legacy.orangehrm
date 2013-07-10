@@ -3500,6 +3500,8 @@ symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AbstractUserRole.
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AbstractUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AdminUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/EssUserRole.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/HiringManagerUserRole.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/InterviewerUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/ProjectAdminUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/SupervisorUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Button.php -text

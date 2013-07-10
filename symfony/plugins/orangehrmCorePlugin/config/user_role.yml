@@ -6,4 +6,7 @@ ESS:
   class: EssUserRole
 ProjectAdmin:
   class: ProjectAdminUserRole
-  
+HiringManager:
+  class: HiringManagerUserRole
+Interviewer:
+  class: InterviewerUserRole
