@@ -1,6 +1,6 @@
 <?php
 $imagePath = theme_path("images/login");
-$version = '2~3.1.1-beta.2';
+$version = '3.1.1-beta.2';
 $copyrightYear = date('Y');
 ?>
 
@@ -58,7 +58,7 @@ $copyrightYear = date('Y');
             </div>
         </td>
         <td class="column2">
-            <span>OrangeHRM ver 2~3.1.1-beta.2</span><br/>
+            <span>OrangeHRM ver 3.1.1-beta.2</span><br/>
             <span>&copy; 2005 - <?php echo $copyrightYear?> <a href="http://www.orangehrm.com" target="_blank">OrangeHRM, Inc</a>. All rights reserved.</span>
         </td>
         <td class="column3">

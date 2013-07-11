@@ -46,7 +46,7 @@ $currentYear = date('Y');
         </div> <!-- wrapper -->
         
         <div id="footer">
-            OrangeHRM ver 2~3.1.1-beta.2<br />
+            OrangeHRM ver 3.1.1-beta.2<br />
             &copy; 2005 - <?php echo $currentYear?> <a href="http://www.orangehrm.com" target="_blank">OrangeHRM, Inc</a>. All rights reserved.
         </div> <!-- footer -->        
         
