@@ -132,7 +132,7 @@ switch ($currScreen) {
 ?>
 
 </form>
-<div id="footer"><a href="http://www.orangehrm.com" target="_blank" tabindex="37">OrangeHRM</a> Web Installation Wizard ver 0.2 &copy; OrangeHRM Inc 2005 - 2013 All rights reserved. </div>
+<div id="footer">OrangeHRM Web Installation Wizard ver 0.2<br/> &copy; 2005 - 2013 <a href="http://www.orangehrm.com" target="_blank" tabindex="37">OrangeHRM Inc.</a> All rights reserved. </div>  
 </div>
 </body>
 </html>
