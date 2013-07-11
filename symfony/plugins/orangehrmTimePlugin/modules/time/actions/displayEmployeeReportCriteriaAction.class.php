@@ -51,6 +51,10 @@ class displayEmployeeReportCriteriaAction extends displayReportCriteriaAction {
     public function setStaticColumns($formValues) {
         
     }
+    
+    public function getDataGroups() {
+        return array('time_employee_reports');
+    }
 
 }
 
