@@ -337,9 +337,11 @@ symfony/apps/orangehrm/modules/performance/templates/saveReviewSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/showDefineKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/updateKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/viewReviewSuccess.php -text
+symfony/apps/orangehrm/templates/_copyright.php -text
 symfony/apps/orangehrm/templates/_delete_confirmation.php -text
 symfony/apps/orangehrm/templates/_flash_messages.php -text
 symfony/apps/orangehrm/templates/_footer.php -text
+symfony/apps/orangehrm/templates/_footer_copyright_social_links.php -text
 symfony/apps/orangehrm/templates/_form_errors.php -text
 symfony/apps/orangehrm/templates/_header.php -text
 symfony/apps/orangehrm/templates/_paging_links.php -text
@@ -3718,7 +3720,6 @@ symfony/plugins/orangehrmCorePlugin/modules/core/actions/mainMenuComponent.class
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmListComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmPluginPannelComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/viewDefinedPredefinedReportsAction.class.php -text
-symfony/plugins/orangehrmCorePlugin/modules/core/templates/_footer.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_mainMenu.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmList.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmPluginPannel.php -text

@@ -3,7 +3,6 @@
 // Allow header partial to be overridden in individual actions
 // Can be overridden by: slot('header', get_partial('module/partial'));
 include_slot('header', get_partial('global/header'));
-$currentYear = date('Y');
 ?>
 
     </head>
@@ -46,8 +45,7 @@ $currentYear = date('Y');
         </div> <!-- wrapper -->
         
         <div id="footer">
-            OrangeHRM ver 3.1.1-beta.2<br />
-            &copy; 2005 - <?php echo $currentYear?> <a href="http://www.orangehrm.com" target="_blank">OrangeHRM, Inc</a>. All rights reserved.
+            <?php include_partial('global/copyright');?>
         </div> <!-- footer -->        
         
         
