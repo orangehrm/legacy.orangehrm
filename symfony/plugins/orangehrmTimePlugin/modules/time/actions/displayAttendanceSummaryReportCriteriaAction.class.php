@@ -37,7 +37,14 @@ class displayAttendanceSummaryReportCriteriaAction extends baseTimeAction {
         $userRoleManager = $this->getContext()->getUserRoleManager();
         
         $properties = array("empNumber","firstName", "middleName", "lastName", "termination_id");
-        $employeeList = $userRoleManager->getAccessibleEntityProperties('Employee', $properties);
+        $requiredPermissions = array(
+            BasicUserRoleManager::PERMISSION_TYPE_DATA_GROUP => array(
+                'attendance_summary' => new ResourcePermission(true, false, false, false)
+            )
+        );
+        
+        $employeeList = $userRoleManager->getAccessibleEntityProperties('Employee', $properties,
+                null, null, array(), array(), $requiredPermissions);
 
         if (is_array($employeeList)) {
             $lastRecord = end($employeeList);
