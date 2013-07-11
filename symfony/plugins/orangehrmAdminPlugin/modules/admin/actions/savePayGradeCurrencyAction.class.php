@@ -12,11 +12,28 @@
  */
 class savePayGradeCurrencyAction extends baseAdminAction {
 
+    private $payGradeService;
+
+    public function getPayGradeService() {
+        if (is_null($this->payGradeService)) {
+            $this->payGradeService = new PayGradeService();
+        }
+        return $this->payGradeService;
+    }
+        
     public function execute($request) {
 
         $payGradePermissions = $this->getDataGroupPermissions('pay_grades');
 
         $payGradeId = $request->getParameter('payGradeId');
+        
+        // Check paygrade exists: handle case where it is deleted.
+        $payGrade = $this->getPayGradeService()->getPayGradeById($payGradeId);
+        
+        if (empty($payGrade)) {
+            $this->getUser()->setFlash('warning', __("PayGrade not found!"));
+            $this->redirect('admin/viewPayGrades');
+        }
         $values = array('payGradeId' => $payGradeId);
         $this->form = new PayGradeCurrencyForm(array(), $values);
 
