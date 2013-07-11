@@ -31,10 +31,28 @@ class displayProjectActivityDetailsReportAction extends displayReportAction {
         $projectService = new ProjectService();
 
         $projectId = $this->getRequest()->getParameter("projectId");
+        
+        $userRoleManager = $this->getContext()->getUserRoleManager();
+        $requiredPermissions = array(
+            BasicUserRoleManager::PERMISSION_TYPE_DATA_GROUP => array(
+                'time_project_reports' => new ResourcePermission(true, false, false, false)
+            )
+        );
+        
+        $accessible = $userRoleManager->isEntityAccessible('Project', $projectId, 
+                null, array(), array(), $requiredPermissions);                
+
+
+        $activityId = $this->getRequest()->getParameter("activityId");        
+        $activity = $projectService->getProjectActivityById($activityId);
+        
+                
+        if (!$accessible || $activity->getProjectId() != $projectId) {
+            $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+        }        
+        
         $projectName = $projectService->getProjectNameWithCustomerName($projectId);
-
-        $activityId = $this->getRequest()->getParameter("activityId");
-
+        
         $reportGeneratorService = new ReportGeneratorService();
         $activityName = $reportGeneratorService->getProjectActivityNameByActivityId($activityId);
         $params = array(
