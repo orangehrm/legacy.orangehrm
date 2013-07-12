@@ -452,7 +452,7 @@ Nationality:
 
 EmailNotification:
   pluginName: orangehrmAdminPlugin
-  hasSelectableRows: true
+  hasSelectableRows: false
   unselectableRowIds: []
   idValueGetter: getId
   title: "<?php echo __("Email Notification");?>"

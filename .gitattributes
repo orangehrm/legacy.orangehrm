@@ -3069,7 +3069,6 @@ symfony/plugins/orangehrmAdminPlugin/lib/form/ChangeUserPasswordForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/CopyActivityForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/CustomerForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/EducationForm.php -text
-symfony/plugins/orangehrmAdminPlugin/lib/form/EmailNotificationListForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/EmploymentStatusForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/JobCategoryForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/JobTitleForm.php -text
@@ -3510,6 +3509,7 @@ symfony/plugins/orangehrmCorePlugin/lib/component/Button.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/CallbackCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Cell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Checkbox.php -text
+symfony/plugins/orangehrmCorePlugin/lib/component/CheckboxCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/CommentCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ComponentProperty.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Control.php -text
