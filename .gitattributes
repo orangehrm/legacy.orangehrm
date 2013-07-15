@@ -3715,6 +3715,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/actions/actions.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/baseCsvImportAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/basePimReportAction.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/definePredefinedReportAction.class.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/actions/displayMessageAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/displayPredefinedReportAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/mainMenuComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmListComponent.class.php -text
@@ -3725,6 +3726,7 @@ symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmList.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmPluginPannel.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_report_paging.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/definePredefinedReportSuccess.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayMessageSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedReportSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text

@@ -25,6 +25,17 @@ abstract class displayReportAction extends basePimReportAction {
     protected $reportTitle = 'PIM Report';
     
     /**
+     * Get Logger instance
+     * @return Logger
+     */
+    protected function getLoggerInstance() {
+        if (is_null($this->logger)) {
+            $this->logger = Logger::getLogger('core.report.displayReportAction');
+        }
+        return $this->logger;
+    }
+    
+    /**
      *
      * @return string
      */
@@ -125,8 +136,16 @@ abstract class displayReportAction extends basePimReportAction {
 
 
         $params = (!empty($paramArray)) ? $paramArray : $this->setParametersForListComponent();
-        $rawDataSet = $reportableGeneratorService->generateReportDataSet($reportId, $sql);
-
+        
+        try {
+            $rawDataSet = $reportableGeneratorService->generateReportDataSet($reportId, $sql);
+        } catch (Exception $e) {
+            $this->getLoggerInstance()->error($e->getMessage(), $e);
+            $this->getUser()->setFlash(displayMessageAction::MESSAGE_HEADING, __('Report could not be generated'), false);
+            $this->getUser()->setFlash('error.nofade', __('Please run the report again.'), false);
+            $this->forward('core', 'displayMessage');
+        }
+        
         $dataSet = self::escapeData($rawDataSet);
         
         $headerGroups = $reportableGeneratorService->getHeaderGroups($reportId);
