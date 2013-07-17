@@ -110,14 +110,13 @@ class defineHolidayAction extends baseLeaveAction {
                     $post = $this->form->getValues();
                     /* Save holiday */
 
-                    if ($post['id'] != '') {
-                        $this->getUser()->setFlash('success', __(TopLevelMessages::UPDATE_SUCCESS));
-                    } else {
-                        $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
-                    }
-
                     $date = $post['date'];
                     $holidayId = $post['id'];
+                    
+                    if (($post['id'] == '' && !$this->holidayPermissions->canCreate()) || 
+                            ($post['id'] != '' && !$this->holidayPermissions->canUpdate())) {
+                        $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+                    }                    
 
                     /* Read the holiday by date */
                     $holidayObjectDate = $this->getHolidayService()->readHolidayByDate($date);
@@ -143,7 +142,6 @@ class defineHolidayAction extends baseLeaveAction {
                     } else {
 
 
-
                         $holidayObject = $this->getHolidayService()->readHoliday($post['id']);
                         $holidayObject->setDescription($post['description']);
                         $holidayObject->setDate($post['date']);
@@ -152,10 +150,26 @@ class defineHolidayAction extends baseLeaveAction {
                         $holidayObject->setRecurring($recurringValue);
 
                         $holidayObject->setLength($post['length']);
-                        $this->getHolidayService()->saveHoliday($holidayObject);
+                        $this->getHolidayService()->saveHoliday($holidayObject);                        
+
+                        if ($post['id'] != '') {
+                            $this->getUser()->setFlash('success', __(TopLevelMessages::UPDATE_SUCCESS));
+                        } else {
+                            $this->getUser()->setFlash('success', __(TopLevelMessages::SAVE_SUCCESS));
+                        }
+                    
                         $this->redirect('leave/viewHolidayList');
                     }
                 }
+            } else {
+                $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+            }
+        } else {
+            // Check if user has permissions
+            if (!$this->holidayPermissions->canRead() || 
+                    ($this->editMode && !$this->holidayPermissions->canUpdate()) || 
+                    (!$this->editMode && !$this->holidayPermissions->canCreate())) {
+                $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
             }
         }
     }

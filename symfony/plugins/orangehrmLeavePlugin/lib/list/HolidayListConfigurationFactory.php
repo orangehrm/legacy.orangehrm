@@ -99,6 +99,10 @@ class HolidayListConfigurationFactory extends ohrmListConfigurationFactory {
     public function setIsLinkable($isLinkable) {
         $this->isLinkable = $isLinkable;
     }
+    
+    public function getIsLinkable() {
+        return $this->isLinkable;
+    }    
 
 }
 

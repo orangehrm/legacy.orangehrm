@@ -66,7 +66,8 @@
 
     var lang_Required = '<?php echo __(ValidationMessages::REQUIRED); ?>';
     var lang_DateFormatIsWrong = '<?php echo __(ValidationMessages::DATE_FORMAT_INVALID, array('%format%' => str_replace('yy', 'yyyy', get_datepicker_date_format($sf_user->getDateFormat())))) ?>';
-    var lang_NameIsOverLimit = "<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 200)); ?>";        
+    var lang_NameIsOverLimit = "<?php echo __(ValidationMessages::TEXT_LENGTH_EXCEEDS, array('%amount%' => 200)); ?>";
+    var disableWidgets = <?php echo ($editMode && !$holidayPermissions->canUpdate()) || (!$editMode && !$holidayPermissions->canCreate()) ? 'true' : 'false';?>;
 
     //]]>
 </script>
