@@ -1626,6 +1626,7 @@ INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create
 (2, 98, 1, 1, 1, 1),
 (3, 98, 1, 1, 1, 1),
 (1, 99, 1, 1, 1, 1),
+(1, 100, 1, 0, 0, 0),
 (1, 101, 1, 1, 1, 1),
 (3, 101, 1, 1, 1, 1),
 (1, 102, 1, 1, 1, 1),
