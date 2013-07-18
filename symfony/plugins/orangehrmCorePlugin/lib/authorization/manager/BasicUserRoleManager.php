@@ -40,6 +40,7 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
     protected $homePageDao;
     
     protected $userRoleClasses;
+    protected $decoratorClasses;
 
     public function __construct() {
         $this->_init();
@@ -84,6 +85,12 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
                     }
 
                     foreach ($configuraiton as $roleName => $roleObj) {
+                        if (!isset($this->decoratorClasses[$roleName])) {
+                            $this->decoratorClasses[$roleName] = array($roleObj);
+                        } else {
+                            $this->decoratorClasses[$roleName][] = $roleObj;
+                        }
+
                         $this->userRoleClasses[$roleName] = new $roleObj['class']($roleName, $this, $this->userRoleClasses[$roleName]);
                     }
                 }
