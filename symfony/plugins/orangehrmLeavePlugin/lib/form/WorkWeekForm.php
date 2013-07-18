@@ -72,13 +72,6 @@ class WorkWeekForm extends sfForm {
 
         $widgets = $this->getDayLengthWidgets();
 
-        if (!$this->workWeekPermissions->canUpdate()) {
-            foreach ($widgets as $widgetName => $widget) {
-                $widget->setAttribute('disabled', 'disabled');
-            }
-        }
-
-
         $this->setValidators($this->getDayLengthValidators());
         $this->setWidgets($widgets);
         $this->setDefaults($this->getDayLengthDefaults());
@@ -157,7 +150,7 @@ class WorkWeekForm extends sfForm {
 
         foreach ($daysOfWeek as $day) {
             $formWidgets['day_length_' . $day] = new sfWidgetFormSelect(
-                            array('choices' => $dayLengths)
+                            array('choices' => $dayLengths), array('disabled' => 'disabled')
             );
         }
 
