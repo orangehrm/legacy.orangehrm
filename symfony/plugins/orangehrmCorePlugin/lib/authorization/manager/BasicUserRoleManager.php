@@ -86,9 +86,9 @@ class BasicUserRoleManager extends AbstractUserRoleManager {
 
                     foreach ($configuraiton as $roleName => $roleObj) {
                         if (!isset($this->decoratorClasses[$roleName])) {
-                            $this->decoratorClasses[$roleName] = array($roleObj);
+                            $this->decoratorClasses[$roleName] = array($roleObj['class']);
                         } else {
-                            $this->decoratorClasses[$roleName][] = $roleObj;
+                            $this->decoratorClasses[$roleName][] = $roleObj['class'];
                         }
 
                         $this->userRoleClasses[$roleName] = new $roleObj['class']($roleName, $this, $this->userRoleClasses[$roleName]);
