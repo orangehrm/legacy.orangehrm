@@ -41,7 +41,12 @@ class leaveTypeListAction extends baseLeaveAction {
                 'class' => 'delete');
         }
         $runtimeDefinitions['buttons'] = $buttons;
-
+        
+        $readOnlyLeaveTypeIds = $this->getUnselectableLeaveTypeIds();
+        if (count($readOnlyLeaveTypeIds) > 0) {
+            $runtimeDefinitions['unselectableRowIds'] = $readOnlyLeaveTypeIds;
+        }
+        
         $configurationFactory = $this->getListConfigurationFactory();
         
         $configurationFactory->setRuntimeDefinitions($runtimeDefinitions);
@@ -56,6 +61,10 @@ class leaveTypeListAction extends baseLeaveAction {
 
     protected function getListConfigurationFactory() {
         return new LeaveTypeListConfigurationFactory();
+    }
+    
+    protected function getUnselectableLeaveTypeIds() {
+        return array();
     }
 
 }
