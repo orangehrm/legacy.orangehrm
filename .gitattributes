@@ -337,9 +337,11 @@ symfony/apps/orangehrm/modules/performance/templates/saveReviewSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/showDefineKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/updateKpiSuccess.php -text
 symfony/apps/orangehrm/modules/performance/templates/viewReviewSuccess.php -text
+symfony/apps/orangehrm/templates/_copyright.php -text
 symfony/apps/orangehrm/templates/_delete_confirmation.php -text
 symfony/apps/orangehrm/templates/_flash_messages.php -text
 symfony/apps/orangehrm/templates/_footer.php -text
+symfony/apps/orangehrm/templates/_footer_copyright_social_links.php -text
 symfony/apps/orangehrm/templates/_form_errors.php -text
 symfony/apps/orangehrm/templates/_header.php -text
 symfony/apps/orangehrm/templates/_paging_links.php -text
@@ -539,6 +541,10 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/ConfigTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupPermission.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupPermissionTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreen.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreenPermission.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreenPermissionTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupScreenTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DataGroupTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/DisplayFieldGroup.class.php -text
@@ -599,6 +605,8 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseCompositeDisplayField.cl
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseConfig.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroupPermission.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroupScreen.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDataGroupScreenPermission.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseDisplayFieldGroup.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseEmail.class.php -text
@@ -3061,7 +3069,6 @@ symfony/plugins/orangehrmAdminPlugin/lib/form/ChangeUserPasswordForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/CopyActivityForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/CustomerForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/EducationForm.php -text
-symfony/plugins/orangehrmAdminPlugin/lib/form/EmailNotificationListForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/EmploymentStatusForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/JobCategoryForm.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/form/JobTitleForm.php -text
@@ -3175,6 +3182,7 @@ symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/WorkShiftService.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addCustomerAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addProjectActivityAction.class.php -text
+symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/baseAdminAction.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/changeUserPasswordAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/checkLanguageNameExistenceAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/checkSkillNameExistenceAction.class.php -text
@@ -3414,6 +3422,7 @@ symfony/plugins/orangehrmAttendancePlugin/lib/model/doctrine/PluginAttendanceRec
 symfony/plugins/orangehrmAttendancePlugin/lib/model/doctrine/PluginAttendanceRecordTable.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/lib/service/AttendanceService.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/actions.class.php -text
+symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/baseAttendanceAction.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/configureAction.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/editAttendanceRecordAction.class.php -text
 symfony/plugins/orangehrmAttendancePlugin/modules/attendance/actions/punchInAction.class.php -text
@@ -3492,11 +3501,15 @@ symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AbstractUserRole.
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AbstractUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/AdminUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/EssUserRole.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/HiringManagerUserRole.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/InterviewerUserRole.php -text
+symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/ProjectAdminUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/SupervisorUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Button.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/CallbackCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Cell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Checkbox.php -text
+symfony/plugins/orangehrmCorePlugin/lib/component/CheckboxCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/CommentCell.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/ComponentProperty.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Control.php -text
@@ -3601,6 +3614,10 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginConfigTable.class.p
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroup.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupPermission.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupPermissionTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreen.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreenPermission.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreenPermissionTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupScreenTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDataGroupTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDisplayField.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginDisplayFieldGroup.class.php -text
@@ -3671,6 +3688,7 @@ symfony/plugins/orangehrmCorePlugin/lib/role/ProjectAdminUserRoleDecorator.php -
 symfony/plugins/orangehrmCorePlugin/lib/role/SupervisorUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/TopMenuItem.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/User.php -text
+symfony/plugins/orangehrmCorePlugin/lib/role/UserDefinedUserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/UserRoleDecorator.php -text
 symfony/plugins/orangehrmCorePlugin/lib/role/ohrmUserSelectionRule.php -text
 symfony/plugins/orangehrmCorePlugin/lib/service/AccessFlowStateMachineService.php -text
@@ -3695,18 +3713,20 @@ symfony/plugins/orangehrmCorePlugin/lib/utility/PluginQueryExtensionManager.php 
 symfony/plugins/orangehrmCorePlugin/lib/utility/PluginUIManager.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/actions.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/baseCsvImportAction.class.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/actions/basePimReportAction.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/definePredefinedReportAction.class.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/actions/displayMessageAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/displayPredefinedReportAction.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/mainMenuComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmListComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/ohrmPluginPannelComponent.class.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/actions/viewDefinedPredefinedReportsAction.class.php -text
-symfony/plugins/orangehrmCorePlugin/modules/core/templates/_footer.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_mainMenu.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmList.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_ohrmPluginPannel.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/_report_paging.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/definePredefinedReportSuccess.php -text
+symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayMessageSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/displayPredefinedReportSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/indexSuccess.php -text
 symfony/plugins/orangehrmCorePlugin/modules/core/templates/viewDefinedPredefinedReportsSuccess.php -text
@@ -4124,6 +4144,7 @@ symfony/plugins/orangehrmPimPlugin/lib/model/doctrine/PluginTerminationReasonTab
 symfony/plugins/orangehrmPimPlugin/lib/parameterholder/EmployeeSearchParameterHolder.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/CustomFieldConfigurationService.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/EmployeeService.php -text
+symfony/plugins/orangehrmPimPlugin/lib/service/PIMLeftMenuService.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/ReportingMethodConfigurationService.php -text
 symfony/plugins/orangehrmPimPlugin/lib/service/TerminationReasonConfigurationService.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/activateEmployementAction.class.php -text
@@ -4149,6 +4170,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/actions/deleteTerminationReasonsA
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/getAvailableCurrenciesJsonAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/getEmployeeListAjaxAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/listCustomFieldsAction.class.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/actions/pimLeftMenuComponent.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/saveDeleteEducationAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/saveDeleteLanguageAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/saveDeleteLicenseAction.class.php -text
@@ -4164,6 +4186,7 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/actions/updateReportToDetailActio
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewAttachmentAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewDependentsAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewEmergencyContactsAction.class.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewEmployeeAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewEmployeeListAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewImmigrationAction.class.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/actions/viewJobDetailsAction.class.php -text
@@ -4210,7 +4233,9 @@ symfony/plugins/orangehrmPimPlugin/modules/pim/templates/listCustomFieldsSuccess
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/pim_sample_template.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewDependentsSuccess.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmergencyContactsSuccess.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmployeeDenied.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmployeeListSuccess.php -text
+symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewEmployeeNotFound.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewImmigrationSuccess.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewJobDetailsSuccess.php -text
 symfony/plugins/orangehrmPimPlugin/modules/pim/templates/viewMembershipsSuccess.php -text
@@ -4238,6 +4263,7 @@ symfony/plugins/orangehrmPimPlugin/test/model/parameterholder/EmployeeSearchPara
 symfony/plugins/orangehrmPimPlugin/test/model/service/CustomFieldConfigurationServiceTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/model/service/EmployeeServiceTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/model/service/EmployeeYearsOfServiceTest.php -text
+symfony/plugins/orangehrmPimPlugin/test/model/service/PIMLeftMenuServiceTest.php -text
 symfony/plugins/orangehrmPimPlugin/test/orangehrmPimPluginAllTests.php -text
 symfony/plugins/orangehrmPimPlugin/web/css/viewPersonalDetailsSuccess.css -text
 symfony/plugins/orangehrmPimPlugin/web/js/addEmployeeSuccess.js -text
@@ -4297,6 +4323,7 @@ symfony/plugins/orangehrmRecruitmentPlugin/lib/service/VacancyService.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/addCandidateAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/addJobVacancyAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/attachmentsComponent.class.php -text
+symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/baseAction.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/baseRecruitmentAction.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/changeCandidateVacancyStatusAction.class.php -text
 symfony/plugins/orangehrmRecruitmentPlugin/modules/recruitment/actions/deleteAttachmentsAction.class.php -text
@@ -4426,6 +4453,8 @@ symfony/plugins/orangehrmTimePlugin/lib/timesheetPeriod/MonthlyTimesheetPeriod.p
 symfony/plugins/orangehrmTimePlugin/lib/timesheetPeriod/TimesheetPeriod.php -text
 symfony/plugins/orangehrmTimePlugin/lib/timesheetPeriod/WeeklyTimesheetPeriod.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/actions.class.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/actions/baseTimeAction.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/actions/createTimesheetForSubourdinateAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/defineTimesheetPeriodAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceSummaryReportAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayAttendanceSummaryReportCriteriaAction.class.php -text
@@ -4436,6 +4465,7 @@ symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectReportAct
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/displayProjectReportCriteriaAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/editTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/saveTimesheetAction.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/actions/timesheetPeriodNotDefinedAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewEmployeeTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewMyTimesheetAction.class.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/actions/viewTimeModuleAction.class.php -text
@@ -4475,6 +4505,7 @@ symfony/plugins/orangehrmTimePlugin/modules/time/templates/getRelatedActiviesFor
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/overLappingTimesheetErrorSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/returnEndDateSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/showTimesheetItemCommentSuccess.php -text
+symfony/plugins/orangehrmTimePlugin/modules/time/templates/timesheetPeriodNotDefinedSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/viewEmployeeTimesheetSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/modules/time/templates/viewTimesheetSuccess.php -text
 symfony/plugins/orangehrmTimePlugin/test/fixtures/MonthlyTimesheetPeriod.yml -text
@@ -4720,6 +4751,7 @@ upgrader/apps/upgrader/config/filters.yml -text
 upgrader/apps/upgrader/config/routing.yml -text
 upgrader/apps/upgrader/config/security.yml -text
 upgrader/apps/upgrader/config/settings.yml -text
+upgrader/apps/upgrader/config/test_db.yml -text
 upgrader/apps/upgrader/config/upgraderConfiguration.class.php -text
 upgrader/apps/upgrader/config/view.yml -text
 upgrader/apps/upgrader/lib/filter/ActionFilter.php -text
@@ -4747,6 +4779,7 @@ upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask54.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask55.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask56.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask57.php -text
+upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask58.php -text
 upgrader/apps/upgrader/lib/utility/SystemCheckUtility.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeLogger.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeUtility.php -text
@@ -4782,6 +4815,7 @@ upgrader/lib/form/BaseForm.class.php -text
 upgrader/symfony -text
 upgrader/test/UpgraderTests.php -text
 upgrader/test/schemaIncrementTasks/SchemaIncrementTask55Test.php -text
+upgrader/test/schemaIncrementTasks/SchemaIncrementTask58Test.php -text
 upgrader/web/.htaccess -text
 upgrader/web/css/executeDbChangeSuccess.css -text
 upgrader/web/css/main.css -text
