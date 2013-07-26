@@ -50,7 +50,7 @@ class UpgradeUtility {
         
         if (!$result) {
             $logMessage = 'MySQL Error: ' . mysqli_error($this->dbConnection) . ". \nQuery: $query\n";
-            UpgradeLogger::writeErrorMessage($logMessage);
+            UpgradeLogger::writeErrorMessage($logMessage, true);
         }
 
         return $result;

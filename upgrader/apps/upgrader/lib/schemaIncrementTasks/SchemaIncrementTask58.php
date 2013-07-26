@@ -56,6 +56,9 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
 
         $screenId = $this->getNextScreenId();
         $dataGroupId = $this->getNextDataGroupId();
+        $userRoleIds = $this->getUserRoleIds();
+        $dataGroupIds = $this->getDataGroupIds();
+        $screenIds = $this->getScreenIds();
 
         $sql = array();
 
@@ -74,10 +77,10 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     add foreign key (screen_id) references ohrm_screen(id) on delete cascade;";
 
         $sql[4] = "UPDATE ohrm_screen SET name='View Project Report Criteria'
-                    WHERE id=57;";
+                    WHERE id={$screenIds['displayProjectReportCriteria']};";
 
         $sql[5] = "UPDATE ohrm_screen SET name='View Employee Report Criteria'
-                    WHERE id=58;";
+                    WHERE id={$screenIds['displayEmployeeReportCriteria']};";
 
         $sql[6] = "INSERT INTO ohrm_screen (`id`, `name`, `module_id`, `action_url`) VALUES
                     (" . ($screenId) . ", 'Save Job Title', 2, 'saveJobTitle'),
@@ -105,36 +108,36 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (" . ($screenId+22) . ", 'View Project Activity Details Report', 5, 'displayProjectActivityDetailsReport');";
 
         $sql[7] = "INSERT INTO ohrm_user_role_screen (user_role_id, screen_id, can_read, can_create, can_update, can_delete) VALUES
-                    (1, " . ($screenId) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+1) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+2) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+3) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+4) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+5) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+6) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+7) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+8) . ", 1, 1, 1, 1),
-                    (4, " . ($screenId+8) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+9) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+10) . ", 1, 1, 1, 1),
-                    (4, " . ($screenId+10) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+11) . ", 1, 1, 1, 1),
-                    (4, " . ($screenId+11) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+12) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+13) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+14)  . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+15) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+16) . ", 1, 1, 1, 1),
-                    (5, " . ($screenId+16) . ", 1, 1, 1, 1),
-                    (6, " . ($screenId+16) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+17) . ", 1, 1, 1, 1),
-                    (6, " . ($screenId+17) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+18) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+19) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+21) . ", 1, 1, 1, 1),
-                    (3, " . ($screenId+21) . ", 1, 1, 1, 1),
-                    (1, " . ($screenId+22) . ", 1, 1, 1, 1),
-                    (4, " . ($screenId+22) . ", 1, 1, 1, 1);";
+                    ({$userRoleIds['Admin']}, " . ($screenId) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+1) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+2) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+3) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+4) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+5) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+6) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+7) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+8) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['ProjectAdmin']}, " . ($screenId+8) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+9) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+10) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['ProjectAdmin']}, " . ($screenId+10) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+11) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['ProjectAdmin']}, " . ($screenId+11) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+12) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+13) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+14)  . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+15) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+16) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Interviewer']}, " . ($screenId+16) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['HiringManager']}, " . ($screenId+16) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+17) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['HiringManager']}, " . ($screenId+17) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+18) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+19) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+21) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Supervisor']}, " . ($screenId+21) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['Admin']}, " . ($screenId+22) . ", 1, 1, 1, 1),
+                    ({$userRoleIds['ProjectAdmin']}, " . ($screenId+22) . ", 1, 1, 1, 1);";
 
         $sql[8] = "INSERT INTO `ohrm_data_group` (`id`, `name`, `description`, `can_read`, `can_create`, `can_update`, `can_delete`) VALUES
                     (" . ($dataGroupId) . ", 'job_titles', 'Admin - Job Titles', 1, 1, 1, 1),
@@ -157,96 +160,96 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (" . ($dataGroupId+17) . ", 'leave_list', 'Leave - Leave List', 1, 0, 0, 0);";
 
         $sql[9] = "INSERT INTO `ohrm_user_role_data_group` (`user_role_id`, `data_group_id`, `can_read`, `can_create`, `can_update`, `can_delete`, `self`) VALUES
-                    (1, " . ($dataGroupId) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+1) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId+1) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+1) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+1) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+1) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+1) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+2) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId+2) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+2) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+2) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+2) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+2) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+3) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId+3) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+3) . ", 0, 0, 0, 0, 0),
-                    (4, " . ($dataGroupId+3) . ", 1, 0, 1, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+3) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+3) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+3) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['ProjectAdmin']}, " . ($dataGroupId+3) . ", 1, 0, 1, 0, 0),
 
-                    (1, " . ($dataGroupId+4) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId+4) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+4) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+4) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+4) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+4) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+5) . ", 1, NULL, 1, NULL, 0),
-                    (2, " . ($dataGroupId+5) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+5) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+5) . ", 1, NULL, 1, NULL, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+5) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+5) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+6) . ", 1, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+6) . ", 0, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+6) . ", 1, 0, 0, 0, 1),
-                    (3, " . ($dataGroupId+6) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+6) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+6) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+6) . ", 1, 0, 0, 0, 1),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+6) . ", 1, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+7) . ", 1, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+7) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+7) . ", 0, 0, 0, 0, 0),
-                    (4, " . ($dataGroupId+7) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+7) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+7) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+7) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['ProjectAdmin']}, " . ($dataGroupId+7) . ", 1, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+8) . ", 1, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+8) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+8) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+8) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+8) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+8) . ", 1, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+9) . ", 1, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+9) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+9) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+9) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+9) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+9) . ", 1, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+10) . ", 1, NULL, 1, NULL, 0),
-                    (2, " . ($dataGroupId+10) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+10) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+10) . ", 1, NULL, 1, NULL, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+10) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+10) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+11) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId+11) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+11) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+11) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+11) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+11) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+12) . ", 1, 0, 1, 0, 0),
-                    (2, " . ($dataGroupId+12) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+12) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+12) . ", 1, 0, 1, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+12) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+12) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+13) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId+13) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+13) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+13) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+13) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+13) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+14) . ", 1, 1, 1, 1, 0),
-                    (2, " . ($dataGroupId+14) . ", 0, 0, 0, 0, 0),
-                    (3, " . ($dataGroupId+14) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+14) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+14) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+14) . ", 0, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+15) . ", 1, 1, 1, 1, 0),
-                    (6, " . ($dataGroupId+15) . ", 1, 1, 1, 1, 0),
-                    (5, " . ($dataGroupId+15) . ", 1, 0, 1, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+15) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['HiringManager']}, " . ($dataGroupId+15) . ", 1, 1, 1, 1, 0),
+                    ({$userRoleIds['Interviewer']}, " . ($dataGroupId+15) . ", 1, 0, 1, 0, 0),
 
-                    (1, " . ($dataGroupId+16) . ", 1, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+16) . ", 0, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+16) . ", 1, 0, 0, 0, 1),
-                    (3, " . ($dataGroupId+16) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+16) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+16) . ", 0, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+16) . ", 1, 0, 0, 0, 1),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+16) . ", 1, 0, 0, 0, 0),
 
-                    (1, " . ($dataGroupId+17) . ", 1, 0, 0, 0, 0),
-                    (2, " . ($dataGroupId+17) . ", 1, 0, 0, 0, 1),
-                    (3, " . ($dataGroupId+17) . ", 1, 0, 0, 0, 0);";
+                    ({$userRoleIds['Admin']}, " . ($dataGroupId+17) . ", 1, 0, 0, 0, 0),
+                    ({$userRoleIds['ESS']}, " . ($dataGroupId+17) . ", 1, 0, 0, 0, 1),
+                    ({$userRoleIds['Supervisor']}, " . ($dataGroupId+17) . ", 1, 0, 0, 0, 0);";
 
         $sql[10] = "INSERT INTO `ohrm_data_group_screen`(`data_group_id`, `screen_id`, `permission`) VALUES
-                    (40, 69, 1),
-                    (40, 72, 2),
-                    (40, 72, 3),
-                    (40, 71, 4),
+                    ({$dataGroupIds['leave_entitlements']}, {$screenIds['viewLeaveEntitlements']}, 1),
+                    ({$dataGroupIds['leave_entitlements']}, {$screenIds['addLeaveEntitlement']}, 2),
+                    ({$dataGroupIds['leave_entitlements']}, {$screenIds['addLeaveEntitlement']}, 3),
+                    ({$dataGroupIds['leave_entitlements']}, {$screenIds['deleteLeaveEntitlements']}, 4),
 
-                    (41, 78, 1),
+                    ({$dataGroupIds['leave_entitlements_usage_report']}, {$screenIds['viewLeaveBalanceReport']}, 1),
 
-                    (" . ($dataGroupId) . ", 23, 1),
+                    (" . ($dataGroupId) . ", {$screenIds['viewJobTitleList']}, 1),
                     (" . ($dataGroupId) . ", " . ($screenId) . ", 2),
                     (" . ($dataGroupId) . ", " . ($screenId) . ", 3),
                     (" . ($dataGroupId) . ", " . ($screenId+1) . ", 4),
 
-                    (" . ($dataGroupId+1) . ", 24, 1),
+                    (" . ($dataGroupId+1) . ", {$screenIds['viewPayGrades']}, 1),
                     (" . ($dataGroupId+1) . ", " . ($screenId+2) . ", 2),
                     (" . ($dataGroupId+1) . ", " . ($screenId+2) . ", 3),
                     (" . ($dataGroupId+1) . ", " . ($screenId+3) . ", 4),
@@ -255,15 +258,15 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (" . ($dataGroupId+1) . ", " . ($screenId+5) . ", 2),
                     (" . ($dataGroupId+1) . ", " . ($screenId+5) . ", 3),
 
-                    (" . $dataGroupId . ", 74, 1),
-                    (" . ($dataGroupId+1) . ", 74, 1),
+                    (" . $dataGroupId . ", {$screenIds['viewAdminModule']}, 1),
+                    (" . ($dataGroupId+1) . ", {$screenIds['viewAdminModule']}, 1),
 
-                    (" . ($dataGroupId+2) . ", 36, 1),
+                    (" . ($dataGroupId+2) . ", {$screenIds['viewCustomers']}, 1),
                     (" . ($dataGroupId+2) . ", " . ($screenId+6) . ", 2),
                     (" . ($dataGroupId+2) . ", " . ($screenId+6) . ", 3),
                     (" . ($dataGroupId+2) . ", " . ($screenId+7) . ", 4),
 
-                    (" . ($dataGroupId+3) . ", 37, 1),
+                    (" . ($dataGroupId+3) . ", {$screenIds['viewProjects']}, 1),
                     (" . ($dataGroupId+3) . ", " . ($screenId+8) . ", 1),
                     (" . ($dataGroupId+3) . ", " . ($screenId+8) . ", 2),
                     (" . ($dataGroupId+3) . ", " . ($screenId+8) . ", 3),
@@ -273,66 +276,66 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
                     (" . ($dataGroupId+3) . ", " . ($screenId+11) . ", 2),
                     (" . ($dataGroupId+3) . ", " . ($screenId+11) . ", 3),
 
-                    (" . ($dataGroupId+4) . ", 45, 1),
-                    (" . ($dataGroupId+4) . ", 45, 4),
+                    (" . ($dataGroupId+4) . ", {$screenIds['viewDefinedPredefinedReports']}, 1),
+                    (" . ($dataGroupId+4) . ", {$screenIds['viewDefinedPredefinedReports']}, 4),
                     (" . ($dataGroupId+4) . ", " . ($screenId+12) . ", 2),
                     (" . ($dataGroupId+4) . ", " . ($screenId+12) . ", 3),
                     (" . ($dataGroupId+4) . ", " . ($screenId+13) . ", 1),
 
-                    (" . ($dataGroupId+5) . ", 56, 1),
-                    (" . ($dataGroupId+5) . ", 56, 3),
+                    (" . ($dataGroupId+5) . ", {$screenIds['configure']}, 1),
+                    (" . ($dataGroupId+5) . ", {$screenIds['configure']}, 3),
 
-                    (" . ($dataGroupId+6) . ", 55, 1),
+                    (" . ($dataGroupId+6) . ", {$screenIds['viewAttendanceRecord']}, 1),
 
-                    (" . ($dataGroupId+7) . ", 57, 1),
+                    (" . ($dataGroupId+7) . ", {$screenIds['displayProjectReportCriteria']}, 1),
                     (" . ($dataGroupId+7) . ", " . ($screenId+22) . ", 1),
 
-                    (" . ($dataGroupId+8) . ", 58, 1),
+                    (" . ($dataGroupId+8) . ", {$screenIds['displayEmployeeReportCriteria']}, 1),
 
-                    (" . ($dataGroupId+9) . ", 59, 1),
+                    (" . ($dataGroupId+9) . ", {$screenIds['displayAttendanceSummaryReportCriteria']}, 1),
                     (" . ($dataGroupId+9) . ", " . ($screenId+21) . ", 1),
 
-                    (" . ($dataGroupId+10) . ", 47, 1),
-                    (" . ($dataGroupId+10) . ", 47, 3),
+                    (" . ($dataGroupId+10) . ", {$screenIds['defineLeavePeriod']}, 1),
+                    (" . ($dataGroupId+10) . ", {$screenIds['defineLeavePeriod']}, 3),
 
-                    (" . ($dataGroupId+11) . ", 7, 1),
-                    (" . ($dataGroupId+11) . ", 8, 1),
-                    (" . ($dataGroupId+11) . ", 8, 2),
-                    (" . ($dataGroupId+11) . ", 8, 3),
-                    (" . ($dataGroupId+11) . ", 9, 2),
-                    (" . ($dataGroupId+11) . ", 10, 4),
+                    (" . ($dataGroupId+11) . ", {$screenIds['leaveTypeList']}, 1),
+                    (" . ($dataGroupId+11) . ", {$screenIds['defineLeaveType']}, 1),
+                    (" . ($dataGroupId+11) . ", {$screenIds['defineLeaveType']}, 2),
+                    (" . ($dataGroupId+11) . ", {$screenIds['defineLeaveType']}, 3),
+                    (" . ($dataGroupId+11) . ", {$screenIds['undeleteLeaveType']}, 2),
+                    (" . ($dataGroupId+11) . ", {$screenIds['deleteLeaveType']}, 4),
 
-                    (" . ($dataGroupId+12) . ", 14, 1),
-                    (" . ($dataGroupId+12) . ", 14, 3),
+                    (" . ($dataGroupId+12) . ", {$screenIds['defineWorkWeek']}, 1),
+                    (" . ($dataGroupId+12) . ", {$screenIds['defineWorkWeek']}, 3),
 
-                    (" . ($dataGroupId+13) . ", 11, 1),
-                    (" . ($dataGroupId+13) . ", 12, 2),
-                    (" . ($dataGroupId+13) . ", 12, 3),
-                    (" . ($dataGroupId+13) . ", 13, 4),
+                    (" . ($dataGroupId+13) . ", {$screenIds['viewHolidayList']}, 1),
+                    (" . ($dataGroupId+13) . ", {$screenIds['defineHoliday']}, 2),
+                    (" . ($dataGroupId+13) . ", {$screenIds['defineHoliday']}, 3),
+                    (" . ($dataGroupId+13) . ", {$screenIds['deleteHoliday']}, 4),
 
-                    (" . ($dataGroupId+14) . ", 61, 1),
+                    (" . ($dataGroupId+14) . ", {$screenIds['viewJobVacancy']}, 1),
                     (" . ($dataGroupId+14) . ", " . ($screenId+14) . ", 1),
                     (" . ($dataGroupId+14) . ", " . ($screenId+14) . ", 2),
                     (" . ($dataGroupId+14) . ", " . ($screenId+14) . ", 3),
                     (" . ($dataGroupId+14) . ", " . ($screenId+15) . ", 4),
 
-                    (" . ($dataGroupId+15) . ", 60, 1),
+                    (" . ($dataGroupId+15) . ", {$screenIds['viewCandidates']}, 1),
                     (" . ($dataGroupId+15) . ", " . ($screenId+16) . ", 1),
                     (" . ($dataGroupId+15) . ", " . ($screenId+16) . ", 2),
                     (" . ($dataGroupId+15) . ", " . ($screenId+16) . ", 3),
                     (" . ($dataGroupId+15) . ", " . ($screenId+17) . ", 4),
 
-                    (" . ($dataGroupId+14) . ", 76, 1),
-                    (" . ($dataGroupId+15) . ", 76, 1),
+                    (" . ($dataGroupId+14) . ", {$screenIds['viewRecruitmentModule']}, 1),
+                    (" . ($dataGroupId+15) . ", {$screenIds['viewRecruitmentModule']}, 1),
 
-                    (" . ($dataGroupId+16) . ", 52, 1),
+                    (" . ($dataGroupId+16) . ", {$screenIds['viewEmployeeTimesheet']}, 1),
 
-                    (" . ($dataGroupId+17) . ", 16, 1),
+                    (" . ($dataGroupId+17) . ", {$screenIds['viewLeaveList']}, 1),
                     (" . ($dataGroupId+17) . ", " . ($screenId+18) . ", 1),
                     (" . ($dataGroupId+17) . ", " . ($screenId+19) . ", 1);";
 
         $sql[11] = "UPDATE ohrm_module_default_page SET action='time/timesheetPeriodNotDefined'
-                    WHERE module_id=5 AND user_role_id=2;";
+                    WHERE module_id=5 AND user_role_id={$userRoleIds['ESS']};";
 
 
         // Allow null in reviewer_id
@@ -380,5 +383,80 @@ class SchemaIncrementTask58 extends SchemaIncrementTask {
     public function getNextDataGroupId() {
         return $this->getScalarValueFromQuery('SELECT MAX(id) FROM ohrm_data_group');
     }
+    
+    /**
+     * Get user role ids into an array indexed by user role name
+     * Eg:
+     *  array('Admin' => 1, 'ESS' => 2, 'Supervisor' => 3 ....);
+     * 
+     * @return array Array of user role ids
+     */
+    public function getUserRoleIds() {
+        
+        $userRoleIds = array();
+        $query = 'SELECT id, name FROM ohrm_user_role';
+        $result = $this->upgradeUtility->executeSql($query);
+        
+        if ($result) {
+            while ($row = mysqli_fetch_row($result)) {
+                $userRoleIds[$row[1]] = $row[0];
+            }
+
+            /* free result set */
+            mysqli_free_result($result);
+        }
+        
+        return $userRoleIds;
+    }
+    
+    /**
+     * Get data group ids into an array indexed by data group name
+     * Eg:
+     *  array('Admin' => 1, 'ESS' => 2, 'Supervisor' => 3 ....);
+     * 
+     * @return array Array of user role ids
+     */
+    public function getDataGroupIds() {
+        
+        $dataGroupIds = array();
+        $query = 'SELECT id, name FROM ohrm_data_group';
+        $result = $this->upgradeUtility->executeSql($query);
+        
+        if ($result) {
+            while ($row = mysqli_fetch_row($result)) {
+                $dataGroupIds[$row[1]] = $row[0];
+            }
+
+            /* free result set */
+            mysqli_free_result($result);
+        }
+        
+        return $dataGroupIds;
+    }   
+    
+    /**
+     * Get screen ids into an array indexed by action_url name
+     * Eg:
+     *  array('Admin' => 1, 'ESS' => 2, 'Supervisor' => 3 ....);
+     * 
+     * @return array Array of user role ids
+     */
+    public function getScreenIds() {
+        
+        $screenIds = array();
+        $query = 'SELECT id, action_url FROM ohrm_screen';
+        $result = $this->upgradeUtility->executeSql($query);
+        
+        if ($result) {
+            while ($row = mysqli_fetch_row($result)) {
+                $screenIds[$row[1]] = $row[0];
+            }
+
+            /* free result set */
+            mysqli_free_result($result);
+        }
+        
+        return $screenIds;
+    }       
 
 }
