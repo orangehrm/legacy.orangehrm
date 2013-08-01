@@ -184,6 +184,7 @@ symfony/apps/orangehrm/i18n/messages.th_TH.xml -text
 symfony/apps/orangehrm/i18n/messages.vi_VN.xml -text
 symfony/apps/orangehrm/i18n/messages.zh_CN.xml -text
 symfony/apps/orangehrm/i18n/messages.zz_ZZ.xml -text
+symfony/apps/orangehrm/lib/action/baseMessageAction.class.php -text
 symfony/apps/orangehrm/lib/config/EmailConfiguration.php -text
 symfony/apps/orangehrm/lib/config/ParameterService.php -text
 symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php -text
@@ -306,7 +307,9 @@ symfony/apps/orangehrm/modules/auth/actions/unauthorizedAction.class.php -text
 symfony/apps/orangehrm/modules/auth/actions/validateCredentialsAction.class.php -text
 symfony/apps/orangehrm/modules/auth/config/security.yml -text
 symfony/apps/orangehrm/modules/auth/templates/loginSuccess.php -text
-symfony/apps/orangehrm/modules/default/actions/actions.class.php -text
+symfony/apps/orangehrm/modules/default/actions/error404Action.class.php -text
+symfony/apps/orangehrm/modules/default/actions/indexAction.class.php -text
+symfony/apps/orangehrm/modules/default/actions/secureAction.class.php -text
 symfony/apps/orangehrm/modules/default/config/view.yml -text
 symfony/apps/orangehrm/modules/default/templates/error404Success.php -text
 symfony/apps/orangehrm/modules/default/templates/indexSuccess.php -text
