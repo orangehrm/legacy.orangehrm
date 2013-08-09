@@ -4539,12 +4539,7 @@ symfony/plugins/orangehrmTimePlugin/web/js/report.js -text
 symfony/plugins/orangehrmTimePlugin/web/js/viewEmployeeTimesheet.js -text
 symfony/plugins/orangehrmTimePlugin/web/js/viewTimesheet.js -text
 symfony/symfony -text
-symfony/test/AdminModuleAllTests.php -text
-symfony/test/AllTests.php -text
-symfony/test/AppsOrangeHRMAllTests.php -text
-symfony/test/PerformanceTests.php -text
 symfony/test/PluginAllTests.php -text
-symfony/test/RecruitmentModuleAllTests.php -text
 symfony/test/actions/PerformanceActionsTest.php -text
 symfony/test/config/EmailConfigurationTest.php -text
 symfony/test/fixtures/admin/dao/ProjectDao.yml -text
