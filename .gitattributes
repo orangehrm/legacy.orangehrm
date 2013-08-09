@@ -3908,6 +3908,7 @@ symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/defineWorkWeekAction.
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/deleteHolidayAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/deleteLeaveEntitlementsAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/deleteLeaveTypeAction.class.php -text
+symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/editLeaveEntitlementAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getCurrentStartDateAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getEmployeeEntitlementAjaxAction.class.php -text
 symfony/plugins/orangehrmLeavePlugin/modules/leave/actions/getFilteredEmployeeCountAjaxAction.class.php -text
