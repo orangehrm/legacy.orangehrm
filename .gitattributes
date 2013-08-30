@@ -4667,6 +4667,7 @@ symfony/web/themes/default/css/orangehrm.datepicker.css -text
 symfony/web/themes/default/css/reset.css -text
 symfony/web/themes/default/css/tipTip.css -text
 symfony/web/themes/default/images/calendar.png -text
+symfony/web/themes/default/images/callout-left.png -text
 symfony/web/themes/default/images/close.png -text
 symfony/web/themes/default/images/comment.png -text
 symfony/web/themes/default/images/default-photo.png -text
