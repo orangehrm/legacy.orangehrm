@@ -227,7 +227,6 @@ symfony/apps/orangehrm/lib/model/admin/service/CountryService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/CurrencyService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/MailService.php -text
 symfony/apps/orangehrm/lib/model/admin/service/UserService.php -text
-symfony/apps/orangehrm/lib/model/auth/dao/AuthenticationDao.php -text
 symfony/apps/orangehrm/lib/model/auth/service/AuthenticationService.php -text
 symfony/apps/orangehrm/lib/model/auth/service/AuthenticationServiceException.php -text
 symfony/apps/orangehrm/lib/model/core/Service/AuthorizeService.php -text
@@ -832,6 +831,9 @@ symfony/lib/vendor/log4php/renderers/LoggerRendererException.php -text
 symfony/lib/vendor/log4php/renderers/LoggerRendererMap.php -text
 symfony/lib/vendor/log4php/renderers/LoggerRendererObject.php -text
 symfony/lib/vendor/log4php/xml/log4php.dtd -text
+symfony/lib/vendor/phpass/PasswordHash.php -text
+symfony/lib/vendor/phpass/README -text
+symfony/lib/vendor/phpass/test.php -text
 symfony/lib/vendor/phpseclib/Crypt/AES.php -text
 symfony/lib/vendor/phpseclib/Crypt/DES.php -text
 symfony/lib/vendor/phpseclib/Crypt/Hash.php -text
@@ -3508,6 +3510,7 @@ symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/HiringManagerUser
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/InterviewerUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/ProjectAdminUserRole.php -text
 symfony/plugins/orangehrmCorePlugin/lib/authorization/userrole/SupervisorUserRole.php -text
+symfony/plugins/orangehrmCorePlugin/lib/cache/ohrmKeyValueCache.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Button.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/CallbackCellFilter.php -text
 symfony/plugins/orangehrmCorePlugin/lib/component/Cell.php -text
@@ -3745,6 +3748,7 @@ symfony/plugins/orangehrmCorePlugin/test/authorization/service/ScreenPermissionS
 symfony/plugins/orangehrmCorePlugin/test/authorization/service/UserRoleManagerServiceTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/userrole/AdminUserRoleTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/authorization/userrole/SupervisorUserRoleTest.php -text
+symfony/plugins/orangehrmCorePlugin/test/cache/ohrmKeyValueCacheTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/ButtonTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/CellTest.php -text
 symfony/plugins/orangehrmCorePlugin/test/components/CheckboxTest.php -text
@@ -4555,7 +4559,6 @@ symfony/test/model/EmployeeTableTest.php -text
 symfony/test/model/EmployeeTest.php -text
 symfony/test/model/admin/dao/ProjectDaoTest.php -text
 symfony/test/model/admin/service/CompanyServiceTest.php -text
-symfony/test/model/auth/dao/AuthenticationDaoTest.php -text
 symfony/test/model/auth/service/AuthenticationServiceTest.php -text
 symfony/test/model/core/service/EmailServiceTest.php -text
 symfony/test/model/core/service/IDGeneratorServiceTest.php -text
@@ -4781,6 +4784,7 @@ upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask55.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask56.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask57.php -text
 upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask58.php -text
+upgrader/apps/upgrader/lib/schemaIncrementTasks/SchemaIncrementTask59.php -text
 upgrader/apps/upgrader/lib/utility/SystemCheckUtility.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeLogger.php -text
 upgrader/apps/upgrader/lib/utility/UpgradeUtility.php -text
