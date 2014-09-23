@@ -573,6 +573,10 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/GroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/GroupFieldTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/HomePage.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/HomePageTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/Login.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/LoginTable.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/Logins.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/LoginsTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/MenuItem.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/MenuItemTable.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/ModuleDefaultPage.class.php -text
@@ -626,6 +630,8 @@ symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseEmailTemplate.class.php 
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseFilterField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseGroupField.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseHomePage.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseLogin.class.php -text
+symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseLogins.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseMenuItem.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseModuleDefaultPage.class.php -text
 symfony/lib/model/doctrine/orangehrmCorePlugin/base/BaseReport.class.php -text
@@ -3526,6 +3532,7 @@ symfony/plugins/orangehrmBeaconPlugin/modules/communication/templates/_beaconNot
 symfony/plugins/orangehrmBeaconPlugin/test/orangehrmBeaconPluginAllTests.php -text
 symfony/plugins/orangehrmBeaconPlugin/web/css/_beaconAbout.css -text
 symfony/plugins/orangehrmBeaconPlugin/web/css/_beaconNotification.css -text
+symfony/plugins/orangehrmCorePlugin/config/action_extensions.yml -text
 symfony/plugins/orangehrmCorePlugin/config/configurations_by_plugins.yml -text
 symfony/plugins/orangehrmCorePlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmCorePlugin/config/list_component.yml -text
@@ -3688,6 +3695,10 @@ symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginGroupField.class.ph
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginGroupFieldTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginHomePage.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginHomePageTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginLogin.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginLoginTable.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginLogins.class.php -text
+symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginLoginsTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginMenuItem.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginMenuItemTable.class.php -text
 symfony/plugins/orangehrmCorePlugin/lib/model/doctrine/PluginModuleDefaultPage.class.php -text
@@ -3748,6 +3759,7 @@ symfony/plugins/orangehrmCorePlugin/lib/service/AccessFlowStateMachineService.ph
 symfony/plugins/orangehrmCorePlugin/lib/service/ConfigService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/service/CsvDataImportService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/service/IDGeneratorService.php -text
+symfony/plugins/orangehrmCorePlugin/lib/service/LoginService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/service/ReportGeneratorService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/service/ReportableService.php -text
 symfony/plugins/orangehrmCorePlugin/lib/service/SampleService.php -text
