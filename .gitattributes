@@ -3501,6 +3501,7 @@ symfony/plugins/orangehrmBeaconPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmBeaconPlugin/config/orangehrmBeaconPluginConfiguration.class.php -text
 symfony/plugins/orangehrmBeaconPlugin/install/dbscript.sql -text
 symfony/plugins/orangehrmBeaconPlugin/install/installer.yml -text
+symfony/plugins/orangehrmBeaconPlugin/lib/certificates/testcert.pem -text
 symfony/plugins/orangehrmBeaconPlugin/lib/dao/BeaconConfigurationDao.php -text
 symfony/plugins/orangehrmBeaconPlugin/lib/dao/BeaconDatapointDao.php -text
 symfony/plugins/orangehrmBeaconPlugin/lib/dao/BeaconNotificationDao.php -text
