@@ -121,6 +121,7 @@ installer/installerUI.php -text
 installer/license.php -text
 installer/progress.php -text
 installer/registration.php -text
+installer/registrationMessage.php -text
 installer/style.css -text
 installer/utils/DMLFunctions.php -text
 installer/utils/ExceptionHandler.php -text

@@ -81,12 +81,14 @@ class sendBeaconMessageAjaxAction extends sfAction {
      */
     public function sendRegistrationMessage() {
         echo 'registering \n';
-        $url = "https://opensource-updates.orangehrm.com/app.php/register";
+        $url = "http://localhost/opensource-updates/web/app.php/register";
         $data = http_build_query(array(
-            'remoteAddr' => urlencode($_SERVER['REMOTE_ADDR']),
-            'host' => urlencode($_SERVER['HTTP_HOST']),
+            'serverAddr' => array_key_exists('SERVER_ADDR',$_SERVER)?urlencode($_SERVER['SERVER_ADDR']):urlencode($_SERVER['LOCAL_ADDR']),
+            'host' => urlencode(php_uname("s")." ".php_uname("r")),
+            'httphost'=> urlencode($_SERVER['HTTP_HOST']),
             'phpVersion' => urlencode(constant('PHP_VERSION')),
-            'server' => urlencode($_SERVER['SERVER_SOFTWARE'])
+            'server' => urlencode($_SERVER['SERVER_SOFTWARE']),           
+            'ohrmVersion'=> urlencode('Open Source 3.1.3'),            
         ));
 
 
@@ -148,7 +150,7 @@ class sendBeaconMessageAjaxAction extends sfAction {
 
     public function sendBeaconFlash() {
         echo 'flashing \n';
-        $url = "https://opensource-updates.orangehrm.com/app.php/flash";
+        $url = "http://localhost/opensource-updates/web/app.php/flash";
         $data = $this->getBeaconDatapointService()->resolveAllDatapoints();
         $uuid = base64_decode($this->getBeaconConfigService()->getBeaconUuid());
 
@@ -206,7 +208,7 @@ class sendBeaconMessageAjaxAction extends sfAction {
 
     public function getBeaconMessages() {
         echo "messages \n";
-        $url = "https://opensource-updates.orangehrm.com/app.php/messages";
+        $url = "http://localhost/opensource-updates/web/app.php/messages";
         $uuid = base64_decode($this->getBeaconConfigService()->getBeaconUuid());
 
         $content = array();
