@@ -4297,6 +4297,7 @@ symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/form/AddPerformanceTracker
 symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/form/AddPerformanceTrackerLogForm.php -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/list/PerformanceTrackListAdminConfigurationFactory.php -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/list/PerformanceTrackListConfigurationFactory[!!-~].php -text
+symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/list/PerformanceTrackListConfigurationFactory.php -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/list/PerformanceTrackLogListConfigurationFactory.php -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/list/PerformanceTrackerLogLinkCell.php -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/lib/list/PerformanceTrackerLogListHeader.php -text
