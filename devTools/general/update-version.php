@@ -17,7 +17,9 @@ $files = array(
     'orangehrm-quick-start-guide.html', 
     'symfony/apps/orangehrm/templates/_copyright.php', 
     'sysinfo.php',
-    'faq.html'   
+    'faq.html',
+    'symfony/plugins/orangehrmBeaconPlugin/modules/communication/actions/sendBeaconMessageAjaxAction.class.php',
+    'symfony/plugins/orangehrmBeaconPlugin/modules/communication/actions/beaconAboutComponent.class.php'
 );
 
 if ($argc != 3) {
