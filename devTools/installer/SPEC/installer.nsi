@@ -77,11 +77,11 @@ Function ContactDetailsEnterValidate
   		Abort
 
   done:
-  		StrCpy $ContactName "$0"
-  		StrCpy $ContactEmail "$1"
-  		StrCpy $Coments "$2"
-  		StrCpy $Updates "$3"
-  		StrCpy $PostStr "userName=$ContactName&userEmail=$ContactEmail&userComments=$Coments&updates=$Updates"
+  		;StrCpy $ContactName "$0"
+  		;StrCpy $ContactEmail "$1"
+  		;StrCpy $Coments "$2"
+  		;StrCpy $Updates "$3"
+  		;StrCpy $PostStr "userName=$ContactName&userEmail=$ContactEmail&userComments=$Coments&updates=$Updates"
 		
 
   		inetc::post "$PostStr" "http://www.orangehrm.com/registration/registerAcceptor.php" "$INSTDIR\output.txt" /END
@@ -315,6 +315,8 @@ Section "-Complete"
       nsExec::ExecToLog '"$INSTDIR\mysql\bin\mysql" -u root -D orangehrm_mysql -e "source $INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-user.sql"'
 
       Delete /REBOOTOK "$INSTDIR\htdocs\orangehrm-${ProductVersion}\dbscript\dbscript-user.sql"
+      DetailPrint "Registering Product"
+      inetc::post "register" "http://127.0.0.1/orangehrm-3.1.4/installer/registrationMessage.php" "$INSTDIR\output.txt" 
 
 SectionEnd
 
