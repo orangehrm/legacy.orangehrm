@@ -60,7 +60,7 @@ define('ROOT_PATH', $cupath);
 //
         document.frmInstall.actionResponse.value = 'REGINFO';
         registerAJAX();
-        document.frmInstall.submit();
+        
         document.frmInstall.btnRegister.disabled = true;
     }
 
@@ -79,11 +79,14 @@ define('ROOT_PATH', $cupath);
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
                 
+            } else if (xmlhttp.readyState == 2) {
+                document.frmInstall.submit();
             }
         }
 
         xmlhttp.open("GET", "registrationMessage.php", true);
         xmlhttp.send();
+        
     }
 
 </script>
