@@ -208,15 +208,15 @@ class sendBeaconMessageAjaxAction extends sfAction {
 
     public function getBeaconMessages() {
         echo "messages \n";
-        $url = "http://192.168.1.134/opensource-updates/web/add.php/messages";
+        $url = "http://192.168.1.134/opensource-updates/web/app.php/messages";
         $uuid = base64_decode($this->getBeaconConfigService()->getBeaconUuid());
 
         $content = array();
         $content['uuid'] = urlencode($uuid);
         $content['type'] = 'REQ';
-
+        
         $contentJSON = json_encode($content);
-
+        var_dump($contentJSON);
 //        $ch = curl_init();
 //
 //        curl_setopt($ch, CURLOPT_URL, $url);
