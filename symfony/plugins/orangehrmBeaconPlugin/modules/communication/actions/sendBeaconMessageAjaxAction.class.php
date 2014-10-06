@@ -61,7 +61,7 @@ class sendBeaconMessageAjaxAction extends sfAction {
         if ($this->getUser()->hasAttribute(BeaconCommunicationsService::BEACON_ACTIVATION_REQUIRED) && $this->getUser()->getAttribute(BeaconCommunicationsService::BEACON_ACTIVATION_REQUIRED)) {
             $this->getUser()->setAttribute(BeaconCommunicationsService::BEACON_ACTIVATION_REQUIRED, false);
             $result = $this->sendRegistrationMessage();
-            if ($result) {
+            if ($result && $this->getBeaconConfigService()->getBeaconActivationAcceptanceStatus()=='on') {
                 $this->getBeaconMessages();
                 $this->sendBeaconFlash();
             }
