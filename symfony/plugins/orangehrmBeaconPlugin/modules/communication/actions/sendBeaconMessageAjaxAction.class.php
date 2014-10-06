@@ -81,7 +81,7 @@ class sendBeaconMessageAjaxAction extends sfAction {
      */
     public function sendRegistrationMessage() {
         echo 'registering \n';
-        $url = "http://localhost/opensource-updates/web/app.php/register";
+        $url = "http://192.168.1.134/opensource-updates/web/app.php/register";
         $data = http_build_query(array(
             'serverAddr' => array_key_exists('SERVER_ADDR',$_SERVER)?urlencode($_SERVER['SERVER_ADDR']):urlencode($_SERVER['LOCAL_ADDR']),
             'host' => urlencode(php_uname("s")." ".php_uname("r")),
@@ -150,7 +150,7 @@ class sendBeaconMessageAjaxAction extends sfAction {
 
     public function sendBeaconFlash() {
         echo 'flashing \n';
-        $url = "http://localhost/opensource-updates/web/app_dev.php/flash";
+        $url = "http://192.168.1.134/opensource-updates/web/app.php/flash";
         $data = $this->getBeaconDatapointService()->resolveAllDatapoints();
         $uuid = base64_decode($this->getBeaconConfigService()->getBeaconUuid());
 
@@ -208,7 +208,7 @@ class sendBeaconMessageAjaxAction extends sfAction {
 
     public function getBeaconMessages() {
         echo "messages \n";
-        $url = "http://localhost/opensource-updates/web/app_dev.php/messages";
+        $url = "http://192.168.1.134/opensource-updates/web/add.php/messages";
         $uuid = base64_decode($this->getBeaconConfigService()->getBeaconUuid());
 
         $content = array();

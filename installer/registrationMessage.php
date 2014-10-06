@@ -7,7 +7,7 @@ require(ROOT_PATH .'/lib/confs/Conf.php');
 global $dbConnection;
 
 
-$url = "http://localhost/opensource-updates/web/app.php/register";
+$url = "http://192.168.1.134/opensource-updates/web/app.php/register";
 $data = http_build_query(array(
     'serverAddr' => array_key_exists('SERVER_ADDR', $_SERVER) ? urlencode($_SERVER['SERVER_ADDR']) : urlencode($_SERVER['LOCAL_ADDR']),
     'host' => urlencode(php_uname("s") . " " . php_uname("r")),
