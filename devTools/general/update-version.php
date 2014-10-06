@@ -18,6 +18,7 @@ $files = array(
     'symfony/apps/orangehrm/templates/_copyright.php', 
     'sysinfo.php',
     'faq.html',
+    'installer/registrationMessage.php',
     'symfony/plugins/orangehrmBeaconPlugin/modules/communication/actions/sendBeaconMessageAjaxAction.class.php',
     'symfony/plugins/orangehrmBeaconPlugin/modules/communication/actions/beaconAboutComponent.class.php'
 );
