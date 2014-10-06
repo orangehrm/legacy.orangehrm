@@ -19,7 +19,7 @@
  */
 $cupath = realpath(dirname(__FILE__) . '/../');
 define('ROOT_PATH', $cupath);
-require(ROOT_PATH . '/installer/registrationMessage.php');
+//require(ROOT_PATH . '/installer/registrationMessage.php');
 
 ?>
 <script language="JavaScript">
@@ -82,7 +82,7 @@ require(ROOT_PATH . '/installer/registrationMessage.php');
             }
         }
 
-        xmlhttp.open("GET", "<?php echo ROOT_PATH . '/installer/registrationMessage.php'; ?>", true);
+        xmlhttp.open("GET", "registrationMessage.php", true);
         xmlhttp.send();
     }
 
