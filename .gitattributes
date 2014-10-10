@@ -4826,8 +4826,6 @@ symfony/test/fixtures/admin/dao/ProjectDao.yml -text
 symfony/test/fixtures/auth/credentials.yml -text
 symfony/test/fixtures/config/EmailConfiguration.yml -text
 symfony/test/fixtures/core/idgen.yml -text
-symfony/test/fixtures/performance/kpi.yml -text
-symfony/test/fixtures/performance/performanceReview.yml -text
 symfony/test/functional/orangehrm/defaultActionsTest.php -text
 symfony/test/lib/utility/EncryptionListenerTest.php -text
 symfony/test/model/EmployeeTableTest.php -text
