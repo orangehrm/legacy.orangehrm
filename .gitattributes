@@ -3850,6 +3850,7 @@ symfony/plugins/orangehrmDashboardPlugin/lib/graph/PieChart.php -text
 symfony/plugins/orangehrmDashboardPlugin/lib/service/DashboardService.php -text
 symfony/plugins/orangehrmDashboardPlugin/lib/service/GraphService.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/actions/BaseDashboardAction.class.php -text
+symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/actions/baseLegendAction.class.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/actions/employeeDistributionAction.class.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/actions/indexAction.class.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/actions/ohrmDashboardSectionComponent.class.php -text
@@ -3858,6 +3859,7 @@ symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/actions/pendingLeaveR
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/actions/quickLaunchPanelAction.class.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/templates/_ohrmDashboardSection.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/templates/_ohrmGraphVisualizer.php -text
+symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/templates/baseLegendSuccess.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/templates/employeeDistributionSuccess.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/templates/indexSuccess.php -text
 symfony/plugins/orangehrmDashboardPlugin/modules/dashboard/templates/pendingLeaveRequestsSuccess.php -text
