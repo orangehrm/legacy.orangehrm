@@ -4290,7 +4290,6 @@ symfony/plugins/orangehrmPerformanceTrackerPlugin/config/doctrine/schema.yml -te
 symfony/plugins/orangehrmPerformanceTrackerPlugin/config/list_component.yml -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/config/orangehrmPerformanceTrackerPluginConfiguration.class.php -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/config/supported_languages.yml -text
-symfony/plugins/orangehrmPerformanceTrackerPlugin/config/ui_extensions.yml -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/config/view.yml -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/dbscripts/install.sql -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/i18n/messages.en_US.xml -text
