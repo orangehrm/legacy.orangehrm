@@ -4283,6 +4283,7 @@ symfony/plugins/orangehrmPerformancePlugin/web/css/performanceReviewSearchSucces
 symfony/plugins/orangehrmPerformancePlugin/web/css/reviewEvaluateByAdminSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/css/reviewEvaluationSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/css/saveReviewSuccess.css -text
+symfony/plugins/orangehrmPerformancePlugin/web/css/searchReviewSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/images/h1-bg.png -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/build/build.xml -text
 symfony/plugins/orangehrmPerformanceTrackerPlugin/config/app.yml -text
