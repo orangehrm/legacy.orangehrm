@@ -50,6 +50,7 @@ devTools/installer/SPEC/Include/Ports.nsh -text
 devTools/installer/SPEC/Include/ReplaceInFile.nsh -text
 devTools/installer/SPEC/Include/StrRep.nsh -text
 devTools/installer/SPEC/Include/WordFunc.nsh -text
+devTools/installer/SPEC/Include/WriteToFile.nsh -text
 devTools/installer/SPEC/Include/servicelib.nsh -text
 devTools/installer/SPEC/README -text
 devTools/installer/SPEC/TestPort80.vbs -text
