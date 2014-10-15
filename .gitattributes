@@ -4246,7 +4246,6 @@ symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/deleteRev
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/getSubordinateListAjaxAction.class.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/getSupervisorListAjaxAction.class.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/myPerformanceReviewAction.class.php -text
-symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/performanceReviewProgressAction.class.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/reviewEvaluateAction.class.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/reviewEvaluateByAdminAction.class.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/saveKpiAction.class.php -text
@@ -4256,7 +4255,6 @@ symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/searchKpi
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/actions/searchPerformancReviewAction.class.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/i18n/messages.zz_ZZ.xml -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/templates/myPerformanceReviewSuccess.php -text
-symfony/plugins/orangehrmPerformancePlugin/modules/performance/templates/performanceReviewProgressSuccess.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/templates/reviewEvaluateByAdminSuccess.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/templates/reviewEvaluateSuccess.php -text
 symfony/plugins/orangehrmPerformancePlugin/modules/performance/templates/saveKpiSuccess.php -text
@@ -4278,7 +4276,6 @@ symfony/plugins/orangehrmPerformancePlugin/test/orangehrmPerformancePluginAllTes
 symfony/plugins/orangehrmPerformancePlugin/web/css/defineKpiSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/css/kpiSearchSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/css/myPerformanceReviewSuccess.css -text
-symfony/plugins/orangehrmPerformancePlugin/web/css/performanceReviewProgressSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/css/performanceReviewSearchSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/css/reviewEvaluateByAdminSuccess.css -text
 symfony/plugins/orangehrmPerformancePlugin/web/css/reviewEvaluationSuccess.css -text
