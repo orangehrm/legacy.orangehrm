@@ -15,6 +15,7 @@ build/report-styles/phpunit2-noframes.xsl -text
 build/report-styles/str.replace.function.xsl -text
 dbscript/dbscript-1.sql -text
 dbscript/dbscript-2.sql -text
+dbscript/dbscript-functions.sql -text
 devDocs/OrangeHRM-2.1.xmi -text
 devDocs/OrangeHRM-2.2.1.xmi -text
 devDocs/OrangeHRM-2.2.2.xmi -text
