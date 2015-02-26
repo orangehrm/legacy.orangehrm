@@ -3041,6 +3041,7 @@ symfony/plugins/.registry/.channel.plugins.symfony-project.org/sfphpunitplugin.r
 symfony/plugins/orangehrmAdminPlugin/config/doctrine/schema.yml -text
 symfony/plugins/orangehrmAdminPlugin/config/supported_languages.yml -text
 symfony/plugins/orangehrmAdminPlugin/config/view.yml -text
+symfony/plugins/orangehrmAdminPlugin/config/ws_config.yml -text
 symfony/plugins/orangehrmAdminPlugin/lib/dao/CompanyStructureDao.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/dao/CustomerDao.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/dao/DeletePayGradeCurrenciesForm.php -text
@@ -3179,6 +3180,8 @@ symfony/plugins/orangehrmAdminPlugin/lib/service/ProjectService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/SkillService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php -text
 symfony/plugins/orangehrmAdminPlugin/lib/service/WorkShiftService.php -text
+symfony/plugins/orangehrmAdminPlugin/lib/wrapper/AdminWebServiceHelper.php -text
+symfony/plugins/orangehrmAdminPlugin/lib/wrapper/AdminWebServiceWrapper.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addCustomerAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/addProjectActivityAction.class.php -text
 symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/baseAdminAction.php -text
@@ -3916,6 +3919,7 @@ symfony/plugins/orangehrmCorporateDirectoryPlugin/config/app.yml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/config/form_extensions.yml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/config/orangehrmCorporateDirectoryPluginConfiguration.class.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/config/view.yml -text
+symfony/plugins/orangehrmCorporateDirectoryPlugin/config/ws_config.yml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/i18n/messages.bg_BG.xml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/i18n/messages.da_DK.xml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/i18n/messages.en_US.xml -text
@@ -3938,6 +3942,8 @@ symfony/plugins/orangehrmCorporateDirectoryPlugin/lib/form/EmployeeDirectorySear
 symfony/plugins/orangehrmCorporateDirectoryPlugin/lib/form/EmployeeDirectorySearchLocationForm.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/lib/form/widget/ohrmDirectoryWidgetOperationalCountryLocationDropDown.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/lib/service/EmployeeDirectoryService.php -text
+symfony/plugins/orangehrmCorporateDirectoryPlugin/lib/wrapper/CorporateDirectoryWebServiceHelper.php -text
+symfony/plugins/orangehrmCorporateDirectoryPlugin/lib/wrapper/CorporateDirectoryWebServiceWrapper.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/modules/directory/actions/viewDirectoryAction.class.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/modules/directory/actions/viewDirectoryPhotoAction.class.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/modules/directory/i18n/messages.fr_FR.xml -text
@@ -3945,6 +3951,7 @@ symfony/plugins/orangehrmCorporateDirectoryPlugin/modules/directory/templates/vi
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/fixtures/EmployeeDirectoryDao.yml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/model/dao/EmployeeDirectoryDaoTest.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/model/service/EmployeeDirectoryServiceTest.php -text
+symfony/plugins/orangehrmCorporateDirectoryPlugin/test/model/wrapper/CorporateDirectoryWebServiceHelperTest.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/orangehrmCorporateDirectoryPluginAllTests.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/web/css/viewDirectorySuccess.css -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/web/js/viewDirectorySuccess.js -text
