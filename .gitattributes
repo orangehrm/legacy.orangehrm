@@ -209,6 +209,7 @@ symfony/apps/orangehrm/lib/form/widget/sfWidgetFormSchemaFormatterDefault.php -t
 symfony/apps/orangehrm/lib/helper/OrangeActionHelper.php -text
 symfony/apps/orangehrm/lib/helper/OrangeDateHelper.php -text
 symfony/apps/orangehrm/lib/helper/OrangeHelper.php -text
+symfony/apps/orangehrm/lib/helper/VersionCompatibilityHelper.php -text
 symfony/apps/orangehrm/lib/message/CommonMessages.php -text
 symfony/apps/orangehrm/lib/message/TopLevelMessages.php -text
 symfony/apps/orangehrm/lib/message/ValidationMessages.php -text
