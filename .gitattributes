@@ -3361,6 +3361,7 @@ symfony/plugins/orangehrmAdminPlugin/test/model/service/PimCsvDataImportServiceT
 symfony/plugins/orangehrmAdminPlugin/test/model/service/ProjectServiceTest.php -text
 symfony/plugins/orangehrmAdminPlugin/test/model/service/SystemUserServiceTest.php -text
 symfony/plugins/orangehrmAdminPlugin/test/model/service/WorkShiftServiceTest.php -text
+symfony/plugins/orangehrmAdminPlugin/test/model/wrapper/AdminWebServiceWrapperTest.php -text
 symfony/plugins/orangehrmAdminPlugin/test/orangehrmAdminPluginAllTests.php -text
 symfony/plugins/orangehrmAdminPlugin/web/js/addCustomerSuccess.js -text
 symfony/plugins/orangehrmAdminPlugin/web/js/changeUserPasswordSuccess.js -text
