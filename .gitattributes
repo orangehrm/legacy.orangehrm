@@ -3971,9 +3971,11 @@ symfony/plugins/orangehrmCorporateDirectoryPlugin/modules/directory/actions/view
 symfony/plugins/orangehrmCorporateDirectoryPlugin/modules/directory/i18n/messages.fr_FR.xml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/modules/directory/templates/viewDirectorySuccess.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/fixtures/EmployeeDirectoryDao.yml -text
+symfony/plugins/orangehrmCorporateDirectoryPlugin/test/fixtures/EmployeeDirectoryWrapperData.yml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/model/dao/EmployeeDirectoryDaoTest.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/model/service/EmployeeDirectoryServiceTest.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/model/wrapper/CorporateDirectoryWebServiceHelperTest.php -text
+symfony/plugins/orangehrmCorporateDirectoryPlugin/test/model/wrapper/CorporateDirectoryWebServiceWrapperTest.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/test/orangehrmCorporateDirectoryPluginAllTests.php -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/web/css/viewDirectorySuccess.css -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/web/js/viewDirectorySuccess.js -text
