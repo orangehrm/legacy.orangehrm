@@ -3932,7 +3932,7 @@ symfony/plugins/orangehrmCoreWebServicePlugin/test/oAuthClient/get_employee.php 
 symfony/plugins/orangehrmCoreWebServicePlugin/test/oAuthClient/lib/ohrmWebServiceClient.php -text
 symfony/plugins/orangehrmCoreWebServicePlugin/test/oAuthClient/update_employee.php -text
 symfony/plugins/orangehrmCoreWebServicePlugin/test/oAuthClient/update_user.php -text
-symfony/plugins/orangehrmCoreWebServicePlugin/test/orangehrmWebServicesPluginAllTests.php -text
+symfony/plugins/orangehrmCoreWebServicePlugin/test/orangehrmCoreWebServicePluginAllTests.php -text
 symfony/plugins/orangehrmCoreWebServicePlugin/test/testPluginDirectoryStructure/orangehrmBarPlugin/config/ws_config.yml -text
 symfony/plugins/orangehrmCoreWebServicePlugin/test/testPluginDirectoryStructure/orangehrmFooPlugin/config/ws_config.yml -text
 symfony/plugins/orangehrmCorporateDirectoryPlugin/README -text
