@@ -21,6 +21,9 @@ symfony/apps/orangehrm/config/emailConfiguration.yml
 symfony/apps/orangehrm/config/parameters.yml
 symfony/cache/*
 symfony/config/databases.yml
+symfony/lib/model/doctrine/orangehrmCoreOAuthPlugin
+symfony/lib/model/doctrine/orangehrmCoreWebServicePlugin
+symfony/lib/model/doctrine/orangehrmOpenidAuthenticationPlugin
 symfony/lib/model/doctrine/orangehrmRegionalAdminExecutivePlugin
 symfony/lib/vendor/symfony/lib/action/.sfComponent.class.php.swp
 symfony/log/*
